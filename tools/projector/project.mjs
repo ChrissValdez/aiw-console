@@ -1,0 +1,220 @@
+// AIW Project Console — Projector v0.
+//
+// Given a project root in AIW format (an `objectives/` tree, a `logs/` run-evidence
+// tree, and a Git repository), emits the single REQUIRED console artifact
+//   <project-root>/.aiw/project_console.snapshot.json
+// conforming to docs/snapshot-schema-v1.md (schema_version 1).
+//
+// Boundaries (see objective 001):
+//   - Node built-ins only. No dependencies.
+//   - Reads ONLY inside the given project root (objectives/, logs/, config.json).
+//   - Writes ONLY <project-root>/.aiw/project_console.snapshot.json (atomic temp + rename).
+//     Never writes, moves, or deletes anything outside <project-root>/.aiw/.
+//   - Fail-soft: a missing objectives/ or logs/ tree yields empty groups, never an error.
+//   - Git history is optional §3 enrichment produced by build-git-history-snapshot.mjs,
+//     not this file; the required snapshot does not depend on Git being present.
+
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  renameSync,
+  writeFileSync
+} from "node:fs";
+import { basename, join, relative, resolve, sep } from "node:path";
+import { fileURLToPath } from "node:url";
+
+export const SCHEMA_VERSION = 1;
+export const PROJECTOR_VERSION = "0.1.0";
+export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
+export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "project_console.snapshot.json");
+
+// The three AIW objective lifecycle folders, in operator reading order.
+const OBJECTIVE_CLASSIFICATIONS = ["pending", "parked", "processed"];
+// One-line operator status values the UI groups/colours by.
+const OPERATIONAL_STATUSES = ["active", "blocked", "idle"];
+
+function safeReadText(filePath) {
+  try {
+    return readFileSync(filePath, "utf8");
+  } catch {
+    return "";
+  }
+}
+
+function safeReadDirNames(dirPath, opts = {}) {
+  if (!existsSync(dirPath)) return [];
+  try {
+    const entries = readdirSync(dirPath, { withFileTypes: true });
+    return entries
+      .filter((entry) => (opts.dirsOnly ? entry.isDirectory() : entry.isFile()))
+      .map((entry) => entry.name)
+      .sort();
+  } catch {
+    return [];
+  }
+}
+
+// First Markdown H1 as the human title, else the id.
+function titleFromMarkdown(body, fallback) {
+  const match = body.match(/^#\s+(.+?)\s*$/m);
+  return match ? match[1].trim() : fallback;
+}
+
+// Read objectives/{pending,parked,processed}/*.md into flat objective records.
+function readObjectives(root) {
+  const objectivesDir = join(root, "objectives");
+  const objectives = [];
+  for (const classification of OBJECTIVE_CLASSIFICATIONS) {
+    const dir = join(objectivesDir, classification);
+    for (const name of safeReadDirNames(dir)) {
+      if (!name.toLowerCase().endsWith(".md")) continue;
+      const id = name.replace(/\.md$/i, "");
+      const body = safeReadText(join(dir, name));
+      objectives.push({
+        id,
+        title: titleFromMarkdown(body, id),
+        classification,
+        source: `objectives/${classification}/${name}`
+      });
+    }
+  }
+  return objectives;
+}
+
+// Read logs/<run-id>/ run-evidence folders into flat run records.
+function readRuns(root) {
+  const logsDir = join(root, "logs");
+  const runs = [];
+  for (const id of safeReadDirNames(logsDir, { dirsOnly: true })) {
+    const runDir = join(logsDir, id);
+    runs.push({
+      id,
+      has_summary: existsSync(join(runDir, "summary.md")),
+      source: `logs/${id}`
+    });
+  }
+  return runs;
+}
+
+// project_id from config.json when it declares one, else the root folder name
+// normalized to a stable slug.
+function readProjectId(root, config) {
+  if (config && typeof config.project_id === "string" && config.project_id) {
+    return config.project_id;
+  }
+  const slug = basename(resolve(root))
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+  return slug || "aiw_project";
+}
+
+function readConfig(root) {
+  const configPath = join(root, "config.json");
+  if (!existsSync(configPath)) return null;
+  try {
+    return JSON.parse(readFileSync(configPath, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+// Build the snapshot object from the project root. Pure read: touches nothing on disk.
+// opts.now: injected ISO timestamp (defaults to current time) so callers/tests are deterministic.
+export function buildSnapshot(root, opts = {}) {
+  const config = readConfig(root);
+  const objectives = readObjectives(root);
+  const runs = readRuns(root);
+
+  const pending = objectives.filter((o) => o.classification === "pending");
+  const parked = objectives.filter((o) => o.classification === "parked");
+  const processed = objectives.filter((o) => o.classification === "processed");
+
+  const operationalStatus = pending.length > 0 ? "active" : "idle";
+
+  const projectId = readProjectId(root, config);
+  const projectSummary =
+    (config && typeof config.summary === "string" && config.summary) ||
+    (config && typeof config.description === "string" && config.description) ||
+    `AIW project ${projectId}: ${objectives.length} objectives, ${runs.length} recorded runs.`;
+
+  let currentStatusSummary;
+  if (pending.length > 0) {
+    currentStatusSummary = `Next objective: ${pending[0].id}${pending.length > 1 ? ` (+${pending.length - 1} more pending)` : ""}.`;
+  } else if (runs.length > 0) {
+    currentStatusSummary = `No pending objectives; last recorded run ${runs[runs.length - 1].id}.`;
+  } else {
+    currentStatusSummary = "No pending objectives and no recorded runs.";
+  }
+
+  return {
+    schema_version: SCHEMA_VERSION,
+    project_id: projectId,
+    generated_at: opts.now || new Date().toISOString(),
+    generated_from: GENERATED_FROM,
+    operational_status: operationalStatus,
+    project_summary: projectSummary,
+    current_status_summary: currentStatusSummary,
+    roadmap_tree: {
+      model: "aiw_flat_objectives_v1",
+      counts: {
+        pending: pending.length,
+        parked: parked.length,
+        processed: processed.length,
+        total: objectives.length
+      },
+      objectives
+    },
+    blockers: [],
+    followups: [],
+    no_claims_summary: {},
+    validation_summary: {},
+    taxonomy_model: {
+      objective_classifications: OBJECTIVE_CLASSIFICATIONS,
+      operational_statuses: OPERATIONAL_STATUSES
+    }
+  };
+}
+
+// Resolve the snapshot output path and prove it lives inside <root>/.aiw/. Throws
+// otherwise so the projector can never write outside the project root's .aiw/.
+export function resolveSnapshotPath(root) {
+  const aiwDir = resolve(root, ".aiw");
+  const outPath = resolve(root, SNAPSHOT_RELATIVE_PATH);
+  const rel = relative(aiwDir, outPath);
+  if (rel.startsWith("..") || rel.includes("..") || rel.startsWith(sep) || resolve(aiwDir, rel) !== outPath) {
+    throw new Error(`Refusing to write snapshot outside ${aiwDir}: ${outPath}`);
+  }
+  return { aiwDir, outPath };
+}
+
+// Build and atomically write the snapshot to <root>/.aiw/project_console.snapshot.json.
+// Returns { ok, path, snapshot }.
+export function writeSnapshot(root, opts = {}) {
+  const snapshot = buildSnapshot(root, opts);
+  const { aiwDir, outPath } = resolveSnapshotPath(root);
+  mkdirSync(aiwDir, { recursive: true });
+  const tmp = `${outPath}.tmp`;
+  writeFileSync(tmp, JSON.stringify(snapshot, null, 2) + "\n", "utf8");
+  renameSync(tmp, outPath);
+  return { ok: true, path: outPath, snapshot };
+}
+
+// CLI entry: `node tools/projector/project.mjs [project-root]` (defaults to cwd).
+const invokedDirectly = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (invokedDirectly) {
+  const root = resolve(process.argv[2] || process.cwd());
+  try {
+    const result = writeSnapshot(root);
+    console.log(
+      `[projector] wrote ${result.path} — project=${result.snapshot.project_id}; ` +
+      `status=${result.snapshot.operational_status}; objectives=${result.snapshot.roadmap_tree.counts.total}`
+    );
+    process.exit(0);
+  } catch (error) {
+    console.error(`[projector] failed: ${String(error.message || error)}`);
+    process.exit(1);
+  }
+}

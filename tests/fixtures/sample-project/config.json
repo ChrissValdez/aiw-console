@@ -1,0 +1,6 @@
+{
+  "project_id": "sample_aiw_project",
+  "summary": "Fixture AIW project used by the projector tests.",
+  "base_branch": "main",
+  "verification": "npm test"
+}

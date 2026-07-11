@@ -22,18 +22,34 @@ import {
   renameSync,
   writeFileSync
 } from "node:fs";
-import { basename, join, relative, resolve, sep } from "node:path";
+import { basename, dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const SCHEMA_VERSION = 1;
 export const PROJECTOR_VERSION = "0.1.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "project_console.snapshot.json");
+// Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
+// (Roadmap v3 model, `v3Model()` in docs/project-console/assets/project-console.js).
+export const ROADMAP_RELATIVE_PATH = join(".aiw", "views", "roadmap.json");
 
 // The three AIW objective lifecycle folders, in operator reading order.
 const OBJECTIVE_CLASSIFICATIONS = ["pending", "parked", "processed"];
 // One-line operator status values the UI groups/colours by.
 const OPERATIONAL_STATUSES = ["active", "blocked", "idle"];
+
+// Roadmap-v3 run statuses the console recognises (ROADMAP_V3_STATUS_TONES). The console
+// derives the Now/Ready Next/Later/History queue groups from status + depends_on
+// (`v3QueueGroupKey`); it never reads a persisted group field, so we emit none.
+const ROADMAP_RUN_STATUSES = ["planned", "active", "completed", "blocked"];
+// processed/<PREFIX>-*.md → a terminal run status. Anything not listed as a negative
+// outcome (including APPROVED- and no prefix) is treated as a successful completion.
+const PROCESSED_STATUS_BY_PREFIX = {
+  REJECTED: "blocked",
+  BLOCKED: "blocked",
+  FAILED: "blocked",
+  CANCELLED: "blocked"
+};
 
 function safeReadText(filePath) {
   try {
@@ -81,6 +97,139 @@ function readObjectives(root) {
     }
   }
   return objectives;
+}
+
+// First non-empty line of the body after the H1 title, as a one-line summary.
+function summaryFromMarkdown(body, fallback) {
+  const lines = body.split(/\r?\n/);
+  let seenTitle = false;
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) continue;
+    if (!seenTitle && /^#\s+/.test(line)) {
+      seenTitle = true;
+      continue;
+    }
+    if (/^#{1,6}\s+/.test(line)) continue; // skip further headings
+    return line;
+  }
+  return fallback;
+}
+
+// Read objectives/{pending,parked,processed}/*.md into detailed records (title,
+// summary, full body, and — for processed — the UPPERCASE filename status prefix).
+function readObjectiveDetails(root) {
+  const objectivesDir = join(root, "objectives");
+  const byClassification = { pending: [], parked: [], processed: [] };
+  for (const classification of OBJECTIVE_CLASSIFICATIONS) {
+    const dir = join(objectivesDir, classification);
+    for (const name of safeReadDirNames(dir)) {
+      if (!name.toLowerCase().endsWith(".md")) continue;
+      const id = name.replace(/\.md$/i, "");
+      const body = safeReadText(join(dir, name));
+      const prefixMatch = id.match(/^([A-Z][A-Z0-9]*)-/);
+      byClassification[classification].push({
+        id,
+        title: titleFromMarkdown(body, id),
+        summary: summaryFromMarkdown(body, `Objective ${id}.`),
+        full_description: body.trim(),
+        classification,
+        prefix: prefixMatch ? prefixMatch[1] : null,
+        source: `objectives/${classification}/${name}`
+      });
+    }
+  }
+  return byClassification;
+}
+
+// Build the Roadmap-v3 view the console's Roadmap tab reads. Mapping (per objective 003):
+//   pending/*   → first alphabetical = active (Now); the rest = planned (Ready Next)
+//   parked/*    → planned, waiting on the pending queue → Later
+//   processed/* → terminal (completed / blocked from the filename prefix) → History
+// AIW has no phase tree, so all runs live under a single objective/phase container; the
+// console flattens runs across objectives for the queue groups, so the shape is faithful.
+export function buildRoadmap(root, opts = {}) {
+  const config = readConfig(root);
+  const projectId = readProjectId(root, config);
+  const { pending, parked, processed } = readObjectiveDetails(root);
+
+  // depends_on target for parked runs: the pending run ids. The Now run is `active`
+  // (never `completed`), so the dependency is unsatisfied → the console files parked
+  // runs under Later. With no pending objectives this list is empty (parked would then
+  // read as Ready Next — the degenerate "nothing ahead of it" case).
+  const pendingIds = pending.map((o) => o.id);
+
+  let queueOrder = 0;
+  const runs = [];
+
+  pending.forEach((objective, index) => {
+    runs.push({
+      run_id: objective.id,
+      queue_order: ++queueOrder,
+      title: objective.title,
+      summary: objective.summary,
+      full_description: objective.full_description,
+      status: index === 0 ? "active" : "planned",
+      depends_on: []
+    });
+  });
+
+  parked.forEach((objective) => {
+    runs.push({
+      run_id: objective.id,
+      queue_order: ++queueOrder,
+      title: objective.title,
+      summary: objective.summary,
+      full_description: objective.full_description,
+      status: "planned",
+      depends_on: [...pendingIds]
+    });
+  });
+
+  processed.forEach((objective) => {
+    const status = objective.prefix
+      ? PROCESSED_STATUS_BY_PREFIX[objective.prefix] || "completed"
+      : "completed";
+    runs.push({
+      run_id: objective.id,
+      queue_order: ++queueOrder,
+      title: objective.title,
+      summary: objective.summary,
+      full_description: objective.full_description,
+      status,
+      depends_on: [],
+      closeout_result: objective.prefix ? objective.prefix.toLowerCase() : "completed"
+    });
+  });
+
+  return {
+    generated_at: opts.now || new Date().toISOString(),
+    generated_from: GENERATED_FROM,
+    objectives: [
+      {
+        title: projectId,
+        summary: `${runs.length} AIW objectives (pending, parked, processed).`,
+        phases: [
+          {
+            title: "Objective queue",
+            runs
+          }
+        ]
+      }
+    ]
+  };
+}
+
+// Mirror of the console's `v3QueueGroupKey`: derive an objective's queue group from a
+// run's status + depends_on exactly as the Roadmap tab does. Used by tests to assert the
+// mapping rules against the console's own grouping logic; not part of the emitted view.
+export function roadmapQueueGroup(run, runsById) {
+  if (run.status === "active") return "now";
+  if (run.status === "planned") {
+    const ready = (run.depends_on || []).every((id) => runsById.get(id)?.status === "completed");
+    return ready ? "ready_next" : "later";
+  }
+  return "history";
 }
 
 // Read logs/<run-id>/ run-evidence folders into flat run records.
@@ -178,28 +327,58 @@ export function buildSnapshot(root, opts = {}) {
   };
 }
 
-// Resolve the snapshot output path and prove it lives inside <root>/.aiw/. Throws
-// otherwise so the projector can never write outside the project root's .aiw/.
-export function resolveSnapshotPath(root) {
+// Resolve <root>/<relativePath> and prove it lives inside <root>/.aiw/. Throws otherwise
+// so the projector can never write outside the project root's .aiw/.
+function resolveInsideAiw(root, relativePath) {
   const aiwDir = resolve(root, ".aiw");
-  const outPath = resolve(root, SNAPSHOT_RELATIVE_PATH);
+  const outPath = resolve(root, relativePath);
   const rel = relative(aiwDir, outPath);
   if (rel.startsWith("..") || rel.includes("..") || rel.startsWith(sep) || resolve(aiwDir, rel) !== outPath) {
-    throw new Error(`Refusing to write snapshot outside ${aiwDir}: ${outPath}`);
+    throw new Error(`Refusing to write outside ${aiwDir}: ${outPath}`);
   }
   return { aiwDir, outPath };
 }
 
-// Build and atomically write the snapshot to <root>/.aiw/project_console.snapshot.json.
-// Returns { ok, path, snapshot }.
+export function resolveSnapshotPath(root) {
+  return resolveInsideAiw(root, SNAPSHOT_RELATIVE_PATH);
+}
+
+export function resolveRoadmapPath(root) {
+  return resolveInsideAiw(root, ROADMAP_RELATIVE_PATH);
+}
+
+// Atomically write `data` (pretty JSON) to `outPath`, creating parent dirs first.
+function writeJsonAtomic(outPath, data) {
+  mkdirSync(dirname(outPath), { recursive: true });
+  const tmp = `${outPath}.tmp`;
+  writeFileSync(tmp, JSON.stringify(data, null, 2) + "\n", "utf8");
+  renameSync(tmp, outPath);
+}
+
+// Build and atomically write the Roadmap-v3 view to <root>/.aiw/views/roadmap.json.
+// Returns { ok, path, roadmap }.
+export function writeRoadmap(root, opts = {}) {
+  const roadmap = buildRoadmap(root, opts);
+  const { outPath } = resolveRoadmapPath(root);
+  writeJsonAtomic(outPath, roadmap);
+  return { ok: true, path: outPath, roadmap };
+}
+
+// Build and atomically write the snapshot to <root>/.aiw/project_console.snapshot.json,
+// and emit the optional Roadmap-v3 view alongside it. Returns { ok, path, snapshot,
+// roadmap, roadmapPath }.
 export function writeSnapshot(root, opts = {}) {
   const snapshot = buildSnapshot(root, opts);
-  const { aiwDir, outPath } = resolveSnapshotPath(root);
-  mkdirSync(aiwDir, { recursive: true });
-  const tmp = `${outPath}.tmp`;
-  writeFileSync(tmp, JSON.stringify(snapshot, null, 2) + "\n", "utf8");
-  renameSync(tmp, outPath);
-  return { ok: true, path: outPath, snapshot };
+  const { outPath } = resolveSnapshotPath(root);
+  writeJsonAtomic(outPath, snapshot);
+  const roadmapResult = writeRoadmap(root, opts);
+  return {
+    ok: true,
+    path: outPath,
+    snapshot,
+    roadmap: roadmapResult.roadmap,
+    roadmapPath: roadmapResult.path
+  };
 }
 
 // CLI entry: `node tools/projector/project.mjs [project-root]` (defaults to cwd).
@@ -212,6 +391,7 @@ if (invokedDirectly) {
       `[projector] wrote ${result.path} — project=${result.snapshot.project_id}; ` +
       `status=${result.snapshot.operational_status}; objectives=${result.snapshot.roadmap_tree.counts.total}`
     );
+    console.log(`[projector] wrote ${result.roadmapPath} — Roadmap view (${result.roadmap.objectives[0].phases[0].runs.length} runs)`);
     process.exit(0);
   } catch (error) {
     console.error(`[projector] failed: ${String(error.message || error)}`);

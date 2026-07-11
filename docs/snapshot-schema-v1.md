@@ -48,6 +48,49 @@ its primary views without falling back to empty states:
 absent → the console uses only what is inline here.
 
 ## 3. Optional enrichment groups (fail-soft; absent → empty state, never an error)
+
+### 3a. Inline snapshot enrichment (emitted by the projector; objective 004)
+Optional top-level snapshot keys the projector emits when it can honestly derive them from
+AIW state. Each is OMITTED (never faked) when its source is absent, and every consuming
+Overview panel reads it fail-soft (absent → the panel falls back to its other sources):
+
+- `latest_history_items` — per-run history derived from `logs/<id>/summary.md`, one entry per
+  run-evidence folder in ascending run-id order. Consumed by `historyItems()` /
+  `renderHistory()` (`docs/project-console/assets/project-console.js`), which reads
+  `type`, `id`, `summary`, `source_refs`. Each entry:
+
+  ```jsonc
+  {
+    "type": "RUN",                              // history-item kind
+    "id": "005-shipped-objective",              // logs/<id> folder name
+    "state": "APPROVED",                        // OPTIONAL — first token of the summary.md "State:" field, uppercased
+    "rounds": 1,                                // OPTIONAL — integer from the "Rounds:" field
+    "timestamp": "2026-07-08T09:15:00.000Z",    // OPTIONAL — parseable date from the "Completed:" field
+    "summary": "Shipped the objective …",       // first narrative line of summary.md, else composed from state/rounds
+    "source_refs": ["logs/005-shipped-objective/summary.md"]  // evidence pointer (the folder when no summary.md)
+  }
+  ```
+
+  **Derivation & honesty.** `state`/`rounds`/`timestamp` are parsed from labelled lines in
+  `summary.md` (tolerating `- ` bullets and `**bold**` wrappers); any field that is absent or
+  unparseable is OMITTED from the entry, not invented. A run with no `summary.md` still yields
+  an entry (id + a composed summary + a folder `source_ref`). The whole key is omitted when the
+  project has no `logs/` run-evidence folders.
+
+  **Current/last run.** `current_status_summary` (a required string, §2) is likewise enriched
+  from this history: with no pending objectives it names the last recorded run and, when known,
+  its final state (`… last recorded run 006-abandoned-objective (REJECTED).`). The queue /
+  operational counts the Overview needs by folder are already carried by `roadmap_tree.counts`
+  (`pending`/`parked`/`processed`/`total`, §2).
+
+  > Object-shaped Overview reads that collide with the §2 required *string* fields
+  > (`project_summary.current_run_id`, `operational_status.summary`,
+  > `current_status_summary.current_focus`) are the forked UI's secondary fallbacks; the v1
+  > required fields stay strings and those sub-fields are omitted rather than restructure the
+  > finalized §2 contract. Reconciling that wiring would be a UI-file change (out of scope,
+  > cf. the §6 path note).
+
+### 3b. Sidecar enrichment files
 Each lives at its own `.aiw/...` path and is loaded only if present:
 
 - `project.json` (`aiw.project.v0.1`) — `project_id`, `mode`, `source_control`, dashboard hints.

@@ -6,7 +6,7 @@
 // project still produces a schema-conforming snapshot (fail-soft, never an error).
 import test from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve, sep } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
@@ -118,6 +118,74 @@ test("writeSnapshot emits the roadmap.json view alongside the snapshot", () => {
     assert.deepEqual(onDisk, result.roadmap);
   } finally {
     rmSync(join(FIXTURE, ".aiw"), { recursive: true, force: true });
+  }
+});
+
+test("buildSnapshot enriches latest_history_items from logs/<id>/summary.md", () => {
+  const snapshot = buildSnapshot(FIXTURE, { now: FIXED_NOW });
+  const items = snapshot.latest_history_items;
+  assert.ok(Array.isArray(items), "latest_history_items should be an array");
+  // One entry per logs/<id>/ folder, ascending (directory) order: 000, 005, 006.
+  assert.deepEqual(items.map((i) => i.id), [
+    "000-done-objective",
+    "005-shipped-objective",
+    "006-abandoned-objective"
+  ]);
+  for (const item of items) {
+    assert.equal(item.type, "RUN");
+    assert.equal(typeof item.summary, "string");
+    assert.ok(item.summary.length > 0, "each history item needs a non-empty summary");
+    assert.ok(Array.isArray(item.source_refs) && item.source_refs.length === 1);
+  }
+
+  // A run whose summary.md carries the labelled fields → they are parsed honestly.
+  const shipped = items.find((i) => i.id === "005-shipped-objective");
+  assert.equal(shipped.state, "APPROVED");
+  assert.equal(shipped.rounds, 1);
+  assert.equal(shipped.timestamp, "2026-07-08T09:15:00.000Z");
+  assert.deepEqual(shipped.source_refs, ["logs/005-shipped-objective/summary.md"]);
+  assert.match(shipped.summary, /Shipped/);
+
+  const abandoned = items.find((i) => i.id === "006-abandoned-objective");
+  assert.equal(abandoned.state, "REJECTED");
+  assert.equal(abandoned.rounds, 3);
+  assert.equal(abandoned.timestamp, "2026-07-09T18:40:00.000Z");
+
+  // A run whose summary.md carries NO labelled fields → they are OMITTED, never faked.
+  const done = items.find((i) => i.id === "000-done-objective");
+  assert.ok(!("state" in done), "unparseable state must be omitted, not invented");
+  assert.ok(!("rounds" in done), "unparseable rounds must be omitted, not invented");
+  assert.ok(!("timestamp" in done), "unparseable timestamp must be omitted, not invented");
+  assert.equal(done.summary, "Completed the done objective. This is the run-evidence summary the run drawer reads.");
+});
+
+test("a project with no run-evidence omits latest_history_items entirely (fail-soft)", () => {
+  const dir = mkdtempSync(join(tmpdir(), "aiw-nohist-"));
+  try {
+    const snapshot = buildSnapshot(dir, { now: FIXED_NOW });
+    assertConformsToSchema(snapshot);
+    assert.ok(!("latest_history_items" in snapshot), "absent logs/ → no latest_history_items key");
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("current_status_summary surfaces the last run's state when there are no pending objectives", () => {
+  const dir = mkdtempSync(join(tmpdir(), "aiw-lastrun-"));
+  try {
+    const runDir = join(dir, "logs", "010-final-run");
+    mkdirSync(runDir, { recursive: true });
+    writeFileSync(
+      join(runDir, "summary.md"),
+      "# Run summary: 010-final-run\n\n- State: APPROVED\n- Rounds: 2\n\nWrapped up cleanly.\n",
+      "utf8"
+    );
+    const snapshot = buildSnapshot(dir, { now: FIXED_NOW });
+    assert.equal(snapshot.operational_status, "idle"); // no pending objectives
+    assert.equal(snapshot.current_status_summary, "No pending objectives; last recorded run 010-final-run (APPROVED).");
+    assert.deepEqual(snapshot.latest_history_items.map((i) => i.id), ["010-final-run"]);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
   }
 });
 

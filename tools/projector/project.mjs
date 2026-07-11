@@ -233,19 +233,90 @@ export function roadmapQueueGroup(run, runsById) {
   return "history";
 }
 
-// Read logs/<run-id>/ run-evidence folders into flat run records.
-function readRuns(root) {
+// Pull a single labelled metadata field out of a run summary.md body. Tolerates
+// Markdown list bullets (`- State: …`) and bold wrappers (`**State:** …`), returning
+// the trimmed first capture or null when the field is absent. Honest by construction:
+// a field that is not written is not derived.
+function matchSummaryField(body, labelPattern) {
+  const re = new RegExp(
+    `^\\s*[-*]?\\s*(?:\\*\\*)?\\s*(?:${labelPattern})\\s*(?:\\*\\*)?\\s*[:=]\\s*(?:\\*\\*)?\\s*(.+?)\\s*(?:\\*\\*)?\\s*$`,
+    "im"
+  );
+  const match = body.match(re);
+  return match ? match[1].trim() : null;
+}
+
+// First narrative line of a run summary.md: skips the H1/headings and the labelled
+// metadata lines (state/rounds/completed) so the human summary is the prose, not a field.
+function firstNarrativeLine(body) {
+  const metaLabel = /^\s*[-*]?\s*(?:\*\*)?\s*(?:final\s+state|state|result|outcome|rounds?|completed(?:\s+at)?|finished(?:\s+at)?|timestamp|date|when)\s*(?:\*\*)?\s*[:=]/i;
+  for (const raw of body.split(/\r?\n/)) {
+    const line = raw.trim();
+    if (!line) continue;
+    if (/^#{1,6}\s+/.test(line)) continue; // heading
+    if (metaLabel.test(line)) continue; // labelled metadata
+    return line.replace(/^[-*]\s+/, "").trim();
+  }
+  return "";
+}
+
+// Read logs/<run-id>/ run-evidence folders into per-run history records, parsing the
+// optional summary.md for final state, round count and completion timestamp. Every parsed
+// field is fail-soft: absent or unparseable → the field is OMITTED, never invented. Returns
+// records in ascending run-id (directory) order — oldest first, newest last.
+function readRunHistory(root) {
   const logsDir = join(root, "logs");
   const runs = [];
   for (const id of safeReadDirNames(logsDir, { dirsOnly: true })) {
-    const runDir = join(logsDir, id);
+    const summaryPath = join(logsDir, id, "summary.md");
+    const hasSummary = existsSync(summaryPath);
+    const body = hasSummary ? safeReadText(summaryPath) : "";
+
+    const stateRaw = matchSummaryField(body, "final\\s+state|state|result|outcome");
+    const state = stateRaw ? stateRaw.split(/\s+/)[0].toUpperCase() : null;
+
+    const roundsRaw = matchSummaryField(body, "rounds?");
+    const rounds = roundsRaw && /^\d+$/.test(roundsRaw) ? Number(roundsRaw) : null;
+
+    const timestampRaw = matchSummaryField(body, "completed(?:\\s+at)?|finished(?:\\s+at)?|timestamp|date|when");
+    const timestamp = timestampRaw && !Number.isNaN(Date.parse(timestampRaw)) ? timestampRaw : null;
+
+    let summary = firstNarrativeLine(body);
+    if (!summary) {
+      const bits = [];
+      if (state) bits.push(state);
+      if (rounds != null) bits.push(`${rounds} round${rounds === 1 ? "" : "s"}`);
+      summary = bits.length ? `Run ${id}: ${bits.join(", ")}.` : `Run ${id}.`;
+    }
+
     runs.push({
       id,
-      has_summary: existsSync(join(runDir, "summary.md")),
-      source: `logs/${id}`
+      has_summary: hasSummary,
+      source: hasSummary ? `logs/${id}/summary.md` : `logs/${id}`,
+      state,
+      rounds,
+      timestamp,
+      summary
     });
   }
   return runs;
+}
+
+// Project the run history into the console's optional `latest_history_items` group
+// (docs/snapshot-schema-v1.md §3; consumed by `historyItems()` in
+// docs/project-console/assets/project-console.js). Each entry carries the reader-required
+// fields (type, id, summary, source_refs) plus the honestly-derived run fields — state,
+// rounds, timestamp — which are OMITTED per-field when they could not be parsed.
+function latestHistoryItems(runHistory) {
+  return runHistory.map((run) => {
+    const item = { type: "RUN", id: run.id };
+    if (run.state) item.state = run.state;
+    if (run.rounds != null) item.rounds = run.rounds;
+    if (run.timestamp) item.timestamp = run.timestamp;
+    item.summary = run.summary;
+    item.source_refs = [run.source];
+    return item;
+  });
 }
 
 // project_id from config.json when it declares one, else the root folder name
@@ -276,7 +347,7 @@ function readConfig(root) {
 export function buildSnapshot(root, opts = {}) {
   const config = readConfig(root);
   const objectives = readObjectives(root);
-  const runs = readRuns(root);
+  const runs = readRunHistory(root);
 
   const pending = objectives.filter((o) => o.classification === "pending");
   const parked = objectives.filter((o) => o.classification === "parked");
@@ -290,11 +361,12 @@ export function buildSnapshot(root, opts = {}) {
     (config && typeof config.description === "string" && config.description) ||
     `AIW project ${projectId}: ${objectives.length} objectives, ${runs.length} recorded runs.`;
 
+  const lastRun = runs.length > 0 ? runs[runs.length - 1] : null;
   let currentStatusSummary;
   if (pending.length > 0) {
     currentStatusSummary = `Next objective: ${pending[0].id}${pending.length > 1 ? ` (+${pending.length - 1} more pending)` : ""}.`;
-  } else if (runs.length > 0) {
-    currentStatusSummary = `No pending objectives; last recorded run ${runs[runs.length - 1].id}.`;
+  } else if (lastRun) {
+    currentStatusSummary = `No pending objectives; last recorded run ${lastRun.id}${lastRun.state ? ` (${lastRun.state})` : ""}.`;
   } else {
     currentStatusSummary = "No pending objectives and no recorded runs.";
   }
@@ -324,7 +396,10 @@ export function buildSnapshot(root, opts = {}) {
     taxonomy_model: {
       objective_classifications: OBJECTIVE_CLASSIFICATIONS,
       operational_statuses: OPERATIONAL_STATUSES
-    }
+    },
+    // Optional §3 enrichment: per-run history derived from logs/<id>/summary.md. Omitted
+    // entirely (fail-soft) when the project has no run-evidence folders.
+    ...(runs.length > 0 ? { latest_history_items: latestHistoryItems(runs) } : {})
   };
 }
 

@@ -12,6 +12,7 @@ import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import {
   GENERATED_FROM,
+  ROADMAP_RELATIVE_PATH,
   SCHEMA_VERSION,
   SNAPSHOT_RELATIVE_PATH,
   buildSnapshot,
@@ -62,8 +63,8 @@ test("buildSnapshot projects objectives into a flat roadmap_tree", () => {
   assert.equal(snapshot.operational_status, "active"); // pending objectives exist
 
   const { counts, objectives } = snapshot.roadmap_tree;
-  assert.deepEqual(counts, { pending: 2, parked: 1, processed: 1, total: 4 });
-  assert.equal(objectives.length, 4);
+  assert.deepEqual(counts, { pending: 2, parked: 2, processed: 3, total: 7 });
+  assert.equal(objectives.length, 7);
   for (const objective of objectives) {
     assert.equal(typeof objective.id, "string");
     assert.equal(typeof objective.title, "string");
@@ -104,6 +105,19 @@ test("writeSnapshot lands the artifact at the canonical <root>/.aiw/views/projec
     assert.deepEqual(onDisk, result.snapshot);
   } finally {
     rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("writeSnapshot emits the roadmap.json view alongside the snapshot", () => {
+  const result = writeSnapshot(FIXTURE, { now: FIXED_NOW });
+  try {
+    const roadmapPath = join(FIXTURE, ROADMAP_RELATIVE_PATH);
+    assert.equal(result.roadmapPath, resolve(roadmapPath));
+    assert.ok(existsSync(roadmapPath), "roadmap.json was not written alongside the snapshot");
+    const onDisk = JSON.parse(readFileSync(roadmapPath, "utf8"));
+    assert.deepEqual(onDisk, result.roadmap);
+  } finally {
+    rmSync(join(FIXTURE, ".aiw"), { recursive: true, force: true });
   }
 });
 

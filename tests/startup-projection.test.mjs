@@ -50,7 +50,8 @@ test("runStartupProjection lands the snapshot in .aiw/views/ for a configured fa
     assert.equal(onDisk.schema_version, 1);
     assert.equal(onDisk.project_id, "sample_aiw_project"); // from the fixture config.json
     assert.equal(onDisk.generated_at, FIXED_NOW);
-    assert.equal(onDisk.roadmap_tree.counts.total, 4);
+    // Tracks the shared sample-project fixture: 2 pending + 2 parked + 3 processed.
+    assert.equal(onDisk.roadmap_tree.counts.total, 7);
   } finally {
     repo.cleanup();
   }

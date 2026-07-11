@@ -55,6 +55,7 @@ Each lives at its own `.aiw/...` path and is loaded only if present:
 - `roadmap/queue.json` — ordered queue: `order`, `run_id`/`objective_id`, `classification`, `blocked_by[]`.
 - `roadmap/objectives.jsonl` / `runs.jsonl` — per-item legacy records for the run drawer.
 - `views/git_history.snapshot.json` (`aiw.git_history_snapshot.v1`) — `head`, `current_branch`, `branches[]`, `commits[]` (produced by `build-git-history-snapshot.mjs`; git-ignored, regenerated locally).
+- `views/roadmap.json` — the Roadmap tab's **Roadmap v3** source (see §6). Emitted by the projector alongside the required snapshot (`writeSnapshot` / `writeRoadmap` in `tools/projector/project.mjs`). Absent → the Roadmap/Overview tabs show their read-only "source unavailable" banner; the rest of the console is unaffected.
 - `docs/docs_index.json` + doc bodies — governance docs (CONSTITUCION, DECISIONES, …) for the Docs tab.
 - `guardrails/*.json`, `project_memory.jsonl` — guardrails / no-claims / memory for the Governance tab.
 
@@ -100,3 +101,49 @@ no manual projection step.
 - **The UI reads `.aiw/views/` only.** The console fetches the committed/regenerated snapshots
   from `.aiw/views/`; it never reads the legacy `<root>/.aiw/project_console.snapshot.json` path
   and never runs the projector itself.
+
+## 6. `views/roadmap.json` — Roadmap v3 view (optional; objective 003)
+The console's Roadmap tab reads this file with `v3Model()`
+(`docs/project-console/assets/project-console.js`). The **format spec is that reader**: it
+consumes `objectives[]` → `phases[]` → `runs[]`, and derives the Now / Ready Next / Later /
+History queue groups itself from each run's `status` + `depends_on` (`v3QueueGroupKey`) — it
+reads no persisted group field, so the projector emits none.
+
+```jsonc
+{
+  "generated_at": "2026-07-10T00:00:00.000Z",
+  "generated_from": "aiw-projector@0.1.0",
+  "objectives": [{
+    "title": "sample_aiw_project",
+    "summary": "…",
+    "phases": [{
+      "title": "Objective queue",
+      "runs": [{
+        "run_id": "001-first-objective",   // objective filename stem
+        "queue_order": 1,                    // dense 1..N, operator reading order
+        "title": "First objective",          // objective's "# …" H1 first line
+        "summary": "…",                      // first body line after the H1
+        "full_description": "…",             // trimmed objective body
+        "status": "active",                  // planned | active | completed | blocked
+        "depends_on": [],                    // run_ids; drives Ready Next vs Later
+        "closeout_result": "approved"        // processed runs only (History cell)
+      }]
+    }]
+  }]
+}
+```
+
+AIW has no phase tree, so every objective becomes a `run` under one synthetic
+objective/phase container; the console flattens runs across objectives for the queue
+groups, so the flat shape renders faithfully. Mapping (objective 003):
+
+| Source | `status` / `depends_on` | Console group |
+|---|---|---|
+| `objectives/pending/*` (first alphabetical) | `active` | Now |
+| `objectives/pending/*` (the rest) | `planned`, `depends_on: []` | Ready Next |
+| `objectives/parked/*` | `planned`, `depends_on: [all pending ids]` (the `active` run is never `completed`, so unsatisfied) | Later |
+| `objectives/processed/PREFIX-*` | terminal — `APPROVED-`/none → `completed`; `REJECTED-`/`BLOCKED-`/`FAILED-`/`CANCELLED-` → `blocked` | History |
+
+> Path note: the projector emits at `.aiw/views/roadmap.json` (objective 003). The forked
+> reader's `PATHS.roadmapV3` currently points at `.aiw/roadmap/roadmap.json`; reconciling
+> that wiring is a UI-file change, out of scope for objective 003.

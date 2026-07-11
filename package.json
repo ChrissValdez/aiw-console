@@ -1,0 +1,10 @@
+{
+  "name": "aiw-console",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "AIW project console — verbatim fork of the JAME project console (zero dependencies).",
+  "scripts": {
+    "test": "node --test"
+  }
+}

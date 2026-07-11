@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JAME Project Console</title>
+    <link rel="stylesheet" href="assets/project-console.css">
+  </head>
+  <body>
+    <div class="project-console">
+      <div class="project-header">
+        <div class="tabs">
+          <button class="tab active" type="button" data-tab="overview">Overview</button>
+          <button class="tab" type="button" data-tab="roadmap">Roadmap</button>
+          <button class="tab" type="button" data-tab="history">History</button>
+          <button class="tab" type="button" data-tab="docs">Docs</button>
+          <button class="tab" type="button" data-tab="governance">Governance</button>
+          <button class="tab" type="button" data-tab="sources">Sources</button>
+        </div>
+      </div>
+
+      <main class="content">
+        <noscript>
+          <div class="readonly-banner">JavaScript is required to render this read-only view from local Contract Lite state.</div>
+        </noscript>
+        <div id="load-notice" class="readonly-banner" hidden></div>
+
+        <section id="tab-overview" class="tab-content active">
+          <div class="overview-grid mb-6">
+            <div class="overview-card">
+              <div class="overview-card-title">Project Overview</div>
+              <div id="project-overview" class="overview-identity"></div>
+            </div>
+
+            <div class="flex flex-col gap-6">
+              <div class="overview-card next-runs-card">
+                <div class="overview-card-title accent">Next Pending Runs</div>
+                <div id="next-pending-runs" class="next-runs-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="overview-card">
+            <div class="overview-card-title">Recent Activity</div>
+            <div id="overview-activity" class="activity-list"></div>
+          </div>
+        </section>
+
+        <section id="tab-roadmap" class="tab-content">
+          <div class="flex justify-between items-center mb-6">
+            <div class="segmented-control">
+              <button class="segment active" type="button" data-subview="v3queue">Run Queue</button>
+              <button class="segment" type="button" data-subview="v3roadmap">Roadmap</button>
+            </div>
+          </div>
+
+          <div id="roadmap-sub-v3queue" class="roadmap-subview active">
+            <div id="run-queue-v3"></div>
+          </div>
+
+          <div id="roadmap-sub-v3roadmap" class="roadmap-subview">
+            <div id="roadmap-v3-tree"></div>
+          </div>
+        </section>
+
+        <section id="tab-history" class="tab-content">
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <h2>Project History</h2>
+              <p class="section-copy">History combines verified project events and local change ledger entries. Prototype sample events are not shown.</p>
+            </div>
+          </div>
+          <div class="flex gap-2 mb-4">
+            <button class="btn btn-secondary btn-sm active-filter" type="button">All</button>
+            <button class="btn btn-secondary btn-sm" type="button" disabled>Commits</button>
+            <button class="btn btn-secondary btn-sm" type="button" disabled>Human QA</button>
+            <button class="btn btn-secondary btn-sm" type="button" disabled>AI Review</button>
+            <button class="btn btn-secondary btn-sm" type="button" disabled>Project Events</button>
+            <button class="btn btn-secondary btn-sm" type="button" disabled>State Scans</button>
+          </div>
+          <div class="panel">
+            <div id="history-list" class="history-list"></div>
+          </div>
+        </section>
+
+        <section id="tab-docs" class="tab-content">
+          <div class="docs-layout">
+            <nav class="docs-nav" aria-label="Documentation">
+              <div class="docs-nav-title">Documentation</div>
+              <div id="docs-nav-list"></div>
+            </nav>
+            <article id="docs-reader" class="docs-reader"></article>
+          </div>
+        </section>
+
+        <section id="tab-governance" class="tab-content">
+          <div class="gov-section">
+            <div class="gov-section-title">1. Review & Approval Policy</div>
+            <div class="gov-section-desc">AI review is not human approval. Certification is separate from both review types.</div>
+            <div id="review-policy" class="panel"></div>
+          </div>
+          <div class="gov-section">
+            <div class="gov-section-title">2. Project Guardrails</div>
+            <div class="gov-section-desc">Constraints that apply across the project-local console.</div>
+            <div id="project-guardrails" class="panel"></div>
+          </div>
+          <div class="gov-section">
+            <div class="gov-section-title">3. Run Guardrails</div>
+            <div class="gov-section-desc">Run-level constraints are rendered from each real run record when available.</div>
+            <div id="run-guardrails" class="panel"></div>
+          </div>
+          <div class="gov-section">
+            <div class="gov-section-title">4. Project Memory</div>
+            <div id="project-memory" class="panel"></div>
+          </div>
+          <div class="gov-section">
+            <div class="gov-section-title">5. Claims Not Allowed Yet</div>
+            <div id="no-claims" class="panel"></div>
+          </div>
+        </section>
+
+        <section id="tab-sources" class="tab-content">
+          <div class="sources-grid">
+            <div class="panel">
+              <div class="panel-header">State Sources</div>
+              <div id="state-sources" class="panel-body"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header">Repo Structure</div>
+              <div id="repo-structure" class="panel-body"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header">Console Source Files</div>
+              <div id="console-source-files" class="panel-body"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+    <aside id="run-drawer" class="drawer" aria-label="Run details" aria-hidden="true">
+      <div class="drawer-header">
+        <div>
+          <div id="drawer-title" class="drawer-header-title">Run Details</div>
+          <div id="drawer-id" class="drawer-header-id"></div>
+        </div>
+        <button id="drawer-close" class="btn btn-secondary btn-sm" type="button">Close</button>
+      </div>
+      <div id="drawer-body" class="drawer-body"></div>
+    </aside>
+
+    <script src="assets/project-console.js" defer></script>
+  </body>
+</html>

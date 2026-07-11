@@ -1,0 +1,4690 @@
+:root {
+  color-scheme: dark;
+  /* Dark theme tokens translated from JAME_ROADMAP_VISUAL_HANDOFF_V1 specs/01-design-tokens.md
+     (Adminto Dark was a visual reference only; values live here as plain CSS custom properties).
+     Existing token names are kept so every pre-existing selector keeps resolving. */
+  --bg-body: #1c1d27;
+  --bg-nav: #17181f;
+  --bg-panel: #252631;
+  --bg-subtle: #21222c;
+  --bg-inset: #2b2d3b;
+  --bg-inset-2: #2e303f;
+  --text-strong: #eceef8;
+  --text-primary: #dee2e6;
+  --text-secondary: #aab8c5;
+  --text-tertiary: #8b93a5;
+  --text-faint: #666e7e;
+  --text-faint-2: #565e6e;
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --accent: #8f9aec;
+  --accent-hover: #b7c0f6;
+  --accent-solid: #5b69bc;
+  --accent-underline: #6b78d6;
+  --accent-text-2: #a8b1f0;
+  --accent-bg: rgba(91, 105, 188, 0.14);
+  --accent-chip-bg: rgba(91, 105, 188, 0.22);
+  --accent-border: rgba(143, 154, 236, 0.35);
+  --blue-link: #3aa0e8;
+  --blue-link-hover: #55b4f2;
+  --blue-bg: rgba(24, 138, 226, 0.16);
+  --green: #2fc37e;
+  --green-fill: #10c469;
+  --green-bg: rgba(16, 196, 105, 0.14);
+  --green-border: rgba(47, 195, 126, 0.32);
+  --amber: #f9c851;
+  --amber-bg: rgba(249, 200, 81, 0.12);
+  --amber-border: rgba(249, 200, 81, 0.32);
+  --red: #ff5b5b;
+  --red-text: #ff7b7b;
+  --red-bg: rgba(255, 91, 91, 0.12);
+  --red-border: rgba(255, 91, 91, 0.32);
+  --neutral: #aab8c5;
+  --neutral-bg: rgba(255, 255, 255, 0.08);
+  --neutral-border: rgba(255, 255, 255, 0.14);
+  --overlay: rgba(10, 11, 16, 0.55);
+  /* Graceful stacks only: no web-font fetch, no CDN, no bundled font files (operator
+     decision). Segoe UI is preferred over Inter as the Windows fallback because it is
+     the closest installed humanist face to Nunito Sans; Cascadia Mono (when present)
+     is the closest installed face to Geist Mono. */
+  --font-sans: "Nunito Sans", "Segoe UI", Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Cascadia Mono", "SF Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  /* Heavy title weight for the v3 surfaces (prototype value: 800). This avoids Windows
+     Chrome resolving 800 to Segoe UI Black when Nunito Sans is unavailable. If real
+     Nunito Sans is later installed or self-hosted, this token can be restored to 800. */
+  --weight-heavy: 700;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-pill: 20px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-nav: 0 1px 0 rgba(0, 0, 0, 0.3);
+  --shadow-drawer: -18px 0 44px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.18);
+  --shadow-card-hover: 0 2px 8px rgba(0, 0, 0, 0.28);
+  /* Centered content column width for the Overview and Roadmap surfaces. Raised on large
+     desktops by the min-width scale block at the end of this file so wide monitors use the
+     available space better instead of leaving rows feeling thin. */
+  --pc-content-max: 1200px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-body);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  /* Never synthesize bold: fallback families must use their real designed cuts. */
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+button,
+select,
+input,
+textarea {
+  font-family: var(--font-sans);
+}
+
+button {
+  color: inherit;
+}
+
+h1 {
+  color: var(--text-primary);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+h2 {
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+h3 {
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+a {
+  color: var(--blue-link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--blue-link-hover);
+  text-decoration: underline;
+}
+
+.project-console {
+  display: flex;
+  height: 100vh;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.project-header {
+  display: flex;
+  min-height: 54px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-nav);
+  box-shadow: var(--shadow-nav);
+  /* Center the shell composition on wide monitors (prototype: inner row max-width 1200). */
+  padding: 0 max(32px, calc((100% - var(--pc-content-max)) / 2));
+}
+
+/* Header status badges were removed from the nav band by operator-directed Human QA
+   (RUN-JAME-PROJECT-CONSOLE-ROADMAP-V3-PROTOTYPE-001 section 28); the read-only /
+   external-manual / not-AIW-managed / not-certified governance state is preserved in the
+   .aiw guardrails/no-claims data, the Governance tab, and the Sources tab. */
+.tabs {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
+  gap: 0;
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  border: 0;
+  border-bottom: 2.5px solid transparent;
+  background: transparent;
+  color: #838b9d;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 0 18px;
+  transition: color 0.12s, border-color 0.12s, background 0.12s;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text-primary);
+}
+
+.tab.active {
+  border-bottom-color: var(--accent-underline);
+  background: var(--accent-bg);
+  color: var(--text-strong);
+  font-weight: 700;
+}
+
+.content {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  background: var(--bg-body);
+  padding: 28px 32px;
+}
+
+.tab-content {
+  display: none;
+  animation: contentIn 0.2s ease-out;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes contentIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  padding: 3px 9px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-blue {
+  border-color: transparent;
+  background: var(--accent-chip-bg);
+  color: var(--accent-text-2);
+}
+
+.badge-amber {
+  border-color: var(--amber-border);
+  background: var(--amber-bg);
+  color: var(--amber);
+}
+
+.badge-green {
+  border-color: var(--green-border);
+  background: var(--green-bg);
+  color: var(--green);
+}
+
+.badge-red {
+  border-color: var(--red-border);
+  background: var(--red-bg);
+  color: var(--red);
+}
+
+.badge-gray {
+  border-color: var(--neutral-border);
+  background: var(--neutral-bg);
+  color: var(--neutral);
+}
+
+.badge-operator {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.badge-outline {
+  border-color: var(--border-strong);
+  background: transparent;
+  color: var(--text-tertiary);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 7px 14px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--accent-solid);
+  color: #fff;
+}
+
+.btn-secondary {
+  border-color: var(--border-strong);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-sm {
+  font-size: 13px;
+  padding: 4px 10px;
+}
+
+.btn-disabled,
+button:disabled,
+select:disabled,
+input:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.select-sm {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  cursor: default;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding: 7px 28px 7px 12px;
+}
+
+.panel {
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-panel);
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 20px;
+}
+
+.panel-body {
+  padding: 18px 20px;
+}
+
+.data-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 3px 0;
+}
+
+.data-label {
+  width: 120px;
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.data-value {
+  min-width: 0;
+  flex: 1;
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.group-label {
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 1fr);
+  align-items: stretch;
+  gap: 24px;
+}
+
+.overview-card {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-panel);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
+}
+
+.next-runs-card {
+  display: flex;
+  flex: 1;
+  min-height: 100%;
+  flex-direction: column;
+}
+
+.overview-grid > .flex-col {
+  min-height: 100%;
+}
+
+.overview-card-title {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.overview-card-title.accent {
+  color: var(--accent);
+}
+
+.overview-card-title.amber {
+  color: var(--amber);
+}
+
+.action-panel {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-subtle);
+  margin-bottom: 14px;
+  padding: 16px;
+}
+
+.action-panel h2,
+.action-panel h3 {
+  margin-bottom: 6px;
+}
+
+.action-panel p {
+  margin-bottom: 10px;
+}
+
+.action-panel-muted {
+  background: var(--bg-panel);
+}
+
+.overview-section {
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 14px;
+  padding-top: 14px;
+}
+
+.overview-section-title {
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.action-steps {
+  display: grid;
+  gap: 8px;
+  list-style-position: inside;
+}
+
+.action-steps li {
+  color: var(--text-tertiary);
+  font-weight: 700;
+}
+
+.action-steps button {
+  display: inline-grid;
+  width: calc(100% - 24px);
+  gap: 2px;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-weight: 600;
+  text-align: left;
+}
+
+.action-steps small {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.operator-note {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.operator-badge-row {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.progress-area-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.progress-area-grid div {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-inset);
+  padding: 9px 10px;
+}
+
+.progress-area-grid span {
+  display: block;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.progress-area-grid strong {
+  color: var(--text-primary);
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.no-claims-compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.technical-disclosure {
+  margin-top: 12px;
+}
+
+.overview-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.overview-identity .data-row {
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 4px 0;
+}
+
+.overview-identity .data-row:last-child {
+  border-bottom: none;
+}
+
+.mini-label {
+  display: block;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.mini-value {
+  min-width: 0;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 20px;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.status-grid.compact {
+  margin-top: 16px;
+}
+
+.status-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  padding: 10px 12px;
+}
+
+.status-card span:not(.badge) {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.status-line {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 10px 0;
+}
+
+.status-line:last-child {
+  border-bottom: 0;
+}
+
+.status-line-title {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.component-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.component-card {
+  min-width: 0;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-panel);
+  padding: 12px;
+}
+
+.component-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.component-id {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.component-note {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+
+.component-meta {
+  display: grid;
+  gap: 3px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.component-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.next-runs-list {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 0;
+  overflow: auto;
+}
+
+.next-run-item {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 12px 0;
+  text-align: left;
+}
+
+.next-run-item:last-child {
+  border-bottom: none;
+}
+
+.next-run-num {
+  padding-top: 2px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.next-run-body {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.next-run-title {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.next-run-context {
+  color: var(--text-tertiary);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.next-run-reason {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.next-runs-footer {
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+  font-size: 14px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.queue-summary-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0 0 10px;
+}
+
+.queue-summary-strip span {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 7px;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 14px 0;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-badge {
+  flex-shrink: 0;
+  min-width: 72px;
+}
+
+.activity-badge .badge {
+  min-width: 56px;
+  justify-content: center;
+}
+
+.activity-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.activity-title {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 2px;
+}
+
+.activity-desc {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.activity-context {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+/* Second-level Run Queue / Roadmap sub-tabs: underline tab set per the approved
+   handoff (TAB-B): flush 2px indigo underline under the label + mono count. */
+.segmented-control {
+  display: flex;
+  width: 100%;
+  gap: 26px;
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.segment {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-size: 14.5px;
+  font-weight: 600;
+  margin-bottom: -1px;
+  padding: 6px 0 10px;
+  transition: color 0.12s, border-color 0.12s;
+  white-space: nowrap;
+}
+
+.segment:hover {
+  color: var(--text-primary);
+}
+
+.segment.active {
+  border-bottom-color: var(--accent-solid);
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-strong);
+  font-weight: 700;
+}
+
+/* Mono count injected by the v3 renderer next to each sub-tab label
+   (Run Queue = pending runs, Roadmap = objectives). */
+.v3-subtab-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-faint-2);
+}
+
+.segment.active .v3-subtab-count {
+  color: var(--accent);
+}
+
+/* Center the Overview, Roadmap, and History content columns on the shared --pc-content-max
+   token (raised on large desktops by the min-width scale block at the end of this file), so
+   History aligns with the same content column and top-tab rhythm. Other tab layouts (Docs)
+   keep their existing widths. */
+#tab-roadmap,
+#tab-overview,
+#tab-history {
+  max-width: var(--pc-content-max);
+  margin: 0 auto;
+}
+
+.roadmap-subview {
+  display: none;
+}
+
+.roadmap-subview.active {
+  display: block;
+  animation: contentIn 0.15s ease-out;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  margin-bottom: 16px;
+  padding: 10px 16px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-group span {
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.filter-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-default);
+}
+
+.queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.queue-group-header {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 16px 0 6px;
+  text-transform: uppercase;
+}
+
+.queue-counts {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.queue-counts.operator-counts {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.queue-counts div {
+  min-width: 0;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-panel);
+  padding: 10px 12px;
+}
+
+.queue-counts span {
+  display: block;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.queue-counts strong {
+  color: var(--text-primary);
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.model-stats {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+}
+
+.model-stats summary {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.model-stats-grid,
+.model-stat-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 8px;
+}
+
+.model-stats-grid span,
+.model-stat-breakdown span {
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+.model-stat-breakdown {
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+
+.queue-definition {
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-md);
+  background: var(--accent-bg);
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+}
+
+.queue-definition strong {
+  color: var(--accent-hover);
+}
+
+.queue-item {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-panel);
+  color: inherit;
+  cursor: pointer;
+  padding: 18px 20px;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.queue-item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-bg), var(--shadow-sm);
+}
+
+.queue-item-expanded {
+  align-items: start;
+}
+
+.queue-order {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-default);
+  border-radius: 50%;
+  background: var(--bg-inset);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.queue-info {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.queue-title {
+  min-width: 0;
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.queue-meta {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-tertiary);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.stage-strip,
+.stage-list {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.stage-list {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stage-pill {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.2;
+  padding: 5px 9px;
+}
+
+.stage-list .stage-pill {
+  width: 100%;
+  border-radius: var(--radius-md);
+}
+
+.stage-pill span,
+.stage-pill strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.stage-pill strong {
+  color: var(--text-primary);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.stage-done {
+  border-color: var(--green-border);
+  background: var(--green-bg);
+}
+
+.stage-current {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+}
+
+.stage-changes {
+  border-color: var(--amber-border);
+  background: var(--amber-bg);
+}
+
+.stage-pending {
+  border-color: var(--border-default);
+  background: var(--bg-panel);
+}
+
+.queue-extra {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.blocker-line {
+  color: var(--amber);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.queue-primary-badges {
+  justify-content: flex-end;
+  max-width: 220px;
+}
+
+.queue-statuses,
+.run-row-badges {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  max-width: 360px;
+  min-width: 0;
+}
+
+.roadmap-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.objective-card {
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-panel);
+  box-shadow: var(--shadow-sm);
+}
+
+.objective-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-default);
+  background: rgba(255, 255, 255, 0.035);
+  padding: 16px 24px;
+}
+
+.objective-header h3 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.phase-group {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.phase-group:first-child {
+  border-top: none;
+}
+
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 24px 12px 32px;
+}
+
+.run-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 24px 16px 44px;
+}
+
+.run-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  color: inherit;
+  cursor: pointer;
+  padding: 14px 16px;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.run-row:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.run-row-info {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+}
+
+.run-row-title {
+  display: block;
+  min-width: 0;
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.run-row-summary {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+
+.objective-purpose {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.45;
+  margin-top: 4px;
+  max-width: 760px;
+  overflow-wrap: anywhere;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 24px;
+}
+
+.history-entry {
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 20px 0;
+}
+
+.history-entry:last-child {
+  border-bottom: none;
+}
+
+.history-dot {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--border-strong);
+  margin-top: 6px;
+}
+
+.history-dot.commit,
+.history-dot.decision,
+.history-dot.scan {
+  background: var(--accent);
+}
+
+.history-dot.event {
+  background: var(--green);
+}
+
+.history-dot.qa {
+  background: var(--amber);
+}
+
+.history-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.history-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.history-title {
+  min-width: 0;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.history-summary {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.history-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.history-meta-item {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.source-details {
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 10px;
+  padding-top: 8px;
+}
+
+.source-details summary {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.source-list {
+  display: grid;
+  gap: 5px;
+  list-style: none;
+  margin-top: 8px;
+  padding: 0;
+}
+
+.source-ref {
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.section-copy {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 4px 0 0;
+}
+
+/* Docs tab layout (RUN-JAME-PROJECT-CONSOLE-DOCS-V3-001-UX-TREE-NAV-REPAIR-001): two zones
+   only - a wider tree navigation plus the reader. The former fixed right metadata column is
+   retired; document metadata renders inside the reader as a collapsible section instead. */
+.docs-layout {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 0;
+  height: calc(100vh - 48px);
+  margin: -28px -32px;
+}
+
+.docs-nav {
+  overflow-y: auto;
+  border-right: 1px solid var(--border-default);
+  background: var(--bg-panel);
+  padding: 24px 0;
+}
+
+.docs-nav-title {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0 20px 12px;
+  text-transform: uppercase;
+}
+
+.docs-nav-item {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-left: 3px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: 8px 20px;
+  text-align: left;
+  transition: all 0.12s;
+}
+
+.docs-nav-item:hover {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+.docs-nav-item.active {
+  border-left-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Collapsible Docs navigation groups: category tree derived from docs_index metadata.
+   Open/collapsed state is local UI state only. */
+.docs-nav-group {
+  margin-bottom: 2px;
+}
+
+.docs-nav-group-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  list-style: none;
+  padding: 9px 20px 7px;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.docs-nav-group-header::-webkit-details-marker {
+  display: none;
+}
+
+.docs-nav-group-header::before {
+  content: "";
+  flex: 0 0 auto;
+  border-style: solid;
+  border-width: 4px 0 4px 6px;
+  border-color: transparent transparent transparent currentColor;
+  transition: transform 0.12s;
+}
+
+.docs-nav-group[open] > .docs-nav-group-header::before {
+  transform: rotate(90deg);
+}
+
+.docs-nav-group-header:hover {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+.docs-nav-group-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.docs-nav-group-items {
+  padding-bottom: 6px;
+}
+
+.docs-nav-group-items .docs-nav-item {
+  padding-left: 34px;
+}
+
+/* Curated Docs visibility controls (RUN-JAME-PROJECT-CONSOLE-DOCS-CURATED-DEFAULT-VIEW-001):
+   compact Primary KB / All registered toggle plus a count summary above the category tree.
+   Display-only navigation state; asserts no document status. */
+.docs-nav-controls {
+  padding: 0 20px 12px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.docs-mode-toggle {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+  padding: 3px;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  background: var(--bg-subtle);
+}
+
+.docs-mode-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 8px;
+  transition: all 0.12s;
+}
+
+.docs-mode-btn:hover {
+  color: var(--text-primary);
+}
+
+.docs-mode-btn.active {
+  background: var(--bg-panel);
+  color: var(--accent);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.docs-nav-summary {
+  color: var(--text-tertiary);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.docs-nav-summary strong {
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.docs-nav-mode-note {
+  margin-top: 6px;
+  color: var(--text-faint);
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+.docs-nav-mode-note-active {
+  color: var(--accent);
+}
+
+/* Item layout: title on the left, an optional tier tag on the right (shown only in All
+   registered mode for non-primary docs so advanced/evidence/history/proposal docs do not
+   visually compete with the primary KB). Long titles stay readable via overflow-wrap. */
+.docs-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.docs-nav-item-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.docs-tier-tag {
+  flex: 0 0 auto;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 1px 6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.docs-tier-secondary {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.docs-tier-advanced,
+.docs-tier-proposal {
+  background: var(--amber-bg);
+  color: var(--amber);
+}
+
+.docs-tier-evidence,
+.docs-tier-history {
+  background: var(--bg-subtle);
+  color: var(--text-tertiary);
+}
+
+.docs-reader {
+  min-width: 0;
+  overflow-y: auto;
+  background: var(--bg-panel);
+  padding: 40px 48px;
+}
+
+/* Reader content starts against the navigation and fills the full remaining width
+   (operator preference: no wasted right margin); breakpoints below keep it responsive. */
+.docs-reader-inner {
+  margin: 0;
+  min-width: 0;
+}
+
+.docs-reader h1 {
+  display: inline-block;
+  border-bottom: 2px solid var(--accent);
+  font-size: 32px;
+  /* Pre-existing Docs heading weight; Docs is out of scope for the v3 typography pass. */
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+}
+
+.docs-reader h2 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  margin-top: 36px;
+}
+
+.docs-reader p,
+.docs-reader li {
+  color: var(--text-secondary);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.docs-reader p {
+  margin-bottom: 14px;
+}
+
+.docs-reader ul {
+  margin-bottom: 16px;
+  padding-left: 18px;
+}
+
+/* Collapsible reader metadata: replaces the retired fixed right metadata rail so metadata
+   stays available without consuming permanent reader width. */
+.docs-meta-details {
+  margin-bottom: 18px;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  background: var(--bg-subtle);
+}
+
+.docs-meta-details > summary {
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 10px 14px;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.docs-meta-details > summary:hover {
+  color: var(--text-primary);
+}
+
+.docs-meta-details[open] > summary {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.docs-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 4px 24px;
+  padding: 12px 14px;
+}
+
+.docs-meta-field {
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 10px;
+  padding: 0 0 10px;
+}
+
+.docs-meta-field:last-child {
+  border-bottom: 0;
+}
+
+.docs-meta-label {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.docs-meta-value {
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.docs-meta-value.mono {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+/* Docs body rendering (RUN-JAME-PROJECT-CONSOLE-DOCS-V3-001): read-only body panel, no-claims
+   reference note, and a conservative escaped Markdown-lite / preformatted body. */
+.docs-claim-note {
+  margin-bottom: 18px;
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent-bg);
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.55;
+  padding: 12px 14px;
+}
+
+.docs-summary-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.docs-body-source {
+  color: var(--text-tertiary);
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 18px;
+  overflow-wrap: anywhere;
+}
+
+.docs-body {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 18px;
+}
+
+.docs-body-loading {
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+.docs-body-note {
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  background: var(--bg-subtle);
+  padding: 14px 16px;
+}
+
+.docs-body-note span {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.docs-body .docs-body-h {
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin: 22px 0 10px;
+}
+
+.docs-body h2.docs-body-h {
+  font-size: 24px;
+}
+
+.docs-body h3.docs-body-h {
+  font-size: 20px;
+}
+
+.docs-body h4.docs-body-h {
+  font-size: 18px;
+}
+
+.docs-body blockquote {
+  border-left: 3px solid var(--border-default);
+  color: var(--text-tertiary);
+  margin: 0 0 14px;
+  padding: 4px 0 4px 14px;
+}
+
+.docs-body ol {
+  margin-bottom: 16px;
+  padding-left: 22px;
+}
+
+.docs-body code {
+  background: var(--bg-subtle);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  padding: 1px 5px;
+}
+
+.docs-code,
+.docs-body-pre {
+  overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  white-space: pre;
+}
+
+.docs-code code {
+  background: transparent;
+  padding: 0;
+}
+
+.gov-section {
+  margin-bottom: 32px;
+}
+
+.gov-section:last-child {
+  margin-bottom: 0;
+}
+
+.gov-section-title {
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.gov-section-desc {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-subtle);
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 10px 16px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+td {
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  padding: 11px 16px;
+  vertical-align: top;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.readonly-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--amber-border);
+  border-radius: var(--radius-md);
+  background: var(--amber-bg);
+  color: var(--amber);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 16px;
+}
+
+.sources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.sources-grid .panel:first-child {
+  grid-column: span 2;
+}
+
+.source-status-list {
+  display: grid;
+  gap: 8px;
+}
+
+.source-status-item {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 8px;
+}
+
+.source-status-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.source-status-label {
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.source-path {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.guardrail-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  padding: 4px 9px;
+}
+
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-label {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--text-tertiary);
+  cursor: not-allowed;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding: 8px 12px;
+}
+
+.form-textarea {
+  min-height: 100px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: none;
+  background: var(--overlay);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.drawer-overlay.open {
+  display: block;
+  opacity: 1;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  width: 560px;
+  max-width: 96vw;
+  flex-direction: column;
+  border-left: 1px solid var(--border-default);
+  background: var(--bg-panel);
+  box-shadow: var(--shadow-drawer);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-subtle);
+  padding: 20px 28px;
+}
+
+.drawer-header-title {
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+
+.drawer-header-id {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.drawer-section {
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 20px 28px;
+}
+
+.drawer-section:last-child {
+  border-bottom: none;
+}
+
+.drawer-section-title {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.drawer-primary-badges {
+  margin-bottom: 10px;
+}
+
+.drawer-callout {
+  border-left: 3px solid var(--amber-border);
+  background: var(--amber-bg);
+  color: var(--text-secondary);
+  margin: 8px 0 0;
+  padding: 9px 12px;
+}
+
+.drawer-link-button {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-md);
+  background: var(--accent-bg);
+  color: var(--accent-hover);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.drawer-link-button:hover {
+  border-color: var(--accent);
+}
+
+.empty-state {
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 14px 16px;
+}
+
+.detail-list {
+  display: grid;
+  gap: 5px;
+  margin-top: 8px;
+  padding-left: 18px;
+}
+
+details {
+  margin-top: 8px;
+}
+
+summary {
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.text-amber {
+  color: var(--amber);
+}
+
+.text-tertiary {
+  color: var(--text-tertiary);
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.mono,
+.font-mono {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-2 {
+  gap: 8px;
+}
+
+.gap-6 {
+  gap: 24px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.mb-4 {
+  margin-bottom: 16px;
+}
+
+.mb-6 {
+  margin-bottom: 24px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: #3a3d4d;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4e63;
+}
+
+@media (max-width: 1040px) {
+  body {
+    height: auto;
+    overflow: auto;
+  }
+
+  .project-console {
+    min-height: 100vh;
+    height: auto;
+    overflow: visible;
+  }
+
+  .project-header {
+    height: auto;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px 16px;
+  }
+
+  .tabs {
+    height: auto;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    min-height: 38px;
+  }
+
+  .content {
+    overflow: visible;
+    padding: 16px;
+  }
+
+  .overview-grid,
+  .sources-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .queue-counts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .queue-counts.operator-counts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sources-grid .panel:first-child {
+    grid-column: auto;
+  }
+
+  .docs-layout {
+    grid-template-columns: 260px minmax(0, 1fr);
+    height: auto;
+    margin: 0;
+  }
+
+  .docs-reader {
+    padding: 28px 24px;
+  }
+}
+
+@media (max-width: 720px) {
+  .docs-layout,
+  .queue-counts,
+  .queue-item,
+  .next-run-item,
+  .mini-grid,
+  .status-grid,
+  .component-grid,
+  .progress-area-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .queue-statuses,
+  .run-row-badges {
+    justify-content: flex-start;
+  }
+
+  .run-list {
+    padding-left: 24px;
+  }
+
+  .data-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .data-label {
+    width: auto;
+  }
+}
+
+/* Roadmap v2 draft subview (draft preview, not active).
+   Additive, namespaced rules only - no existing selector is modified.
+   Added by RUN-JAME-PROJECT-CONSOLE-ROADMAP-V2-IN-CONSOLE-DRAFT-VIEW-001. */
+
+.rv2-draft-strip {
+  margin-bottom: 10px;
+}
+
+.rv2-draft-objective-body .queue-group-header {
+  margin: 14px 24px 2px;
+}
+
+.rv2-draft-objective-body .run-list {
+  padding: 10px 24px 14px 32px;
+}
+
+.rv2-draft-objective-details {
+  margin: 0;
+}
+
+.rv2-draft-objective-details > summary {
+  padding: 12px 24px;
+  color: var(--text-secondary);
+}
+
+.rv2-draft-objective-details > summary:hover {
+  color: var(--text-primary);
+}
+
+.rv2-draft-status-note {
+  color: var(--text-tertiary);
+  font-size: 13px;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.rv2-draft-section-head h2 {
+  font-size: 20px;
+}
+
+.rv2-draft-section-head .section-copy {
+  max-width: 520px;
+  text-align: right;
+}
+
+.rv2-draft-gov-stack details.technical-disclosure {
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 0;
+  padding: 10px 0;
+}
+
+.rv2-draft-gov-stack details.technical-disclosure:first-child {
+  border-top: none;
+}
+
+@media (max-width: 720px) {
+  .rv2-draft-section-head {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .rv2-draft-section-head .section-copy {
+    max-width: none;
+    text-align: left;
+  }
+
+  .rv2-draft-objective-body .run-list {
+    padding-left: 20px;
+  }
+}
+
+/* Roadmap v2 draft render repair (RUN-JAME-PROJECT-CONSOLE-ROADMAP-V2-RENDER-REPAIR-001).
+   Additive namespaced rules only - no existing selector is modified. */
+
+.rv2-draft-phase-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rv2-draft-phase-id {
+  color: var(--text-tertiary);
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.rv2-draft-count-line {
+  display: block;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  line-height: 1.4;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+
+.rv2-draft-deliverable-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--accent-border);
+  border-radius: var(--radius-md);
+  background: var(--bg-panel);
+  margin-left: 26px;
+  padding: 10px 14px;
+}
+
+.rv2-draft-deliverable-info {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rv2-draft-deliverable-head {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.rv2-draft-deliverable-id {
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.rv2-draft-deliverable-title {
+  min-width: 0;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.rv2-draft-deliverable-outcome {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.rv2-draft-family-note {
+  margin-bottom: 8px;
+}
+
+#roadmap-sub-v2draft [data-rv2-phase]:focus-visible,
+.rv2-draft-objective-details > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .rv2-draft-deliverable-row {
+    flex-direction: column;
+    margin-left: 12px;
+  }
+
+  .rv2-draft-deliverable-row .run-row-badges {
+    justify-content: flex-start;
+  }
+}
+
+/* ==================================================================================== */
+/* RUN-JAME-PROJECT-CONSOLE-ROADMAP-V3-PROTOTYPE-001 - Roadmap v3 visual system         */
+/* Translated from JAME_ROADMAP_VISUAL_HANDOFF_V1 (approved prototype) and repaired for */
+/* visual parity after QA_CHANGES_REQUIRED_ROADMAP_V3_PROTOTYPE. Metrics below are      */
+/* taken verbatim from the prototype source. Namespaced .v3-* rules plus the            */
+/* .drawer.v3-detail scoped modifier only; no framework or external dependency.         */
+/* ==================================================================================== */
+
+@keyframes pc-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(91, 105, 188, 0.28);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(91, 105, 188, 0.06);
+  }
+}
+
+/* Shared SVG caret for v3 disclosure summaries (points right; rotates down when open). */
+.v3-caret {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-faint);
+  transition: transform 0.15s ease;
+}
+
+details[open] > summary > .v3-caret {
+  transform: rotate(90deg);
+}
+
+.v3-phases-details > summary::-webkit-details-marker,
+.v3-phase > summary::-webkit-details-marker,
+.v3-disclosure > summary::-webkit-details-marker,
+.v3-section-details > summary::-webkit-details-marker,
+.v3-progress-round > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ------------------------------ Roadmap: Objective card (OH-A) ------------------------------ */
+
+.v3-objective-card {
+  /* Prototype OH-A: flat panel — surface + radius only, no hairline border. */
+  background: var(--bg-panel);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+
+.v3-objective-title {
+  font-size: 18.5px;
+  font-weight: var(--weight-heavy);
+  color: var(--text-primary);
+}
+
+.v3-objective-summary {
+  color: var(--text-tertiary);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-top: 5px;
+}
+
+.v3-objective-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 26px;
+  margin-top: 16px;
+}
+
+.v3-stat-value {
+  display: block;
+  font-size: 16.5px;
+  font-weight: var(--weight-heavy);
+  color: var(--text-primary);
+}
+
+.v3-stat-completed .v3-stat-value {
+  color: var(--green);
+}
+
+.v3-stat-active .v3-stat-value,
+.v3-stat-blocked .v3-stat-value {
+  color: var(--text-faint-2);
+}
+
+.v3-stat-active.is-nonzero .v3-stat-value {
+  color: var(--accent-text-2);
+}
+
+.v3-stat-blocked.is-nonzero .v3-stat-value {
+  color: var(--amber);
+}
+
+.v3-stat-label {
+  display: block;
+  font-size: 12.5px;
+  color: var(--text-faint);
+  margin-top: 1px;
+}
+
+.v3-objective-progress {
+  flex: 1;
+  min-width: 170px;
+  margin-left: 8px;
+}
+
+.v3-objective-progress-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.v3-objective-progress-label {
+  font-size: 12.5px;
+  color: var(--text-faint);
+}
+
+.v3-objective-progress-value {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.v3-progressbar {
+  display: block;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--bg-inset-2);
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.v3-progressbar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--accent-solid);
+}
+
+/* Footer disclosure labeled "Phases" (identical label open and closed). */
+.v3-phases-details {
+  margin-top: 16px;
+}
+
+.v3-phases-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 12px;
+  cursor: pointer;
+  color: var(--blue-link);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.v3-phases-toggle > .v3-caret {
+  color: currentColor;
+}
+
+.v3-phases-toggle:hover {
+  color: var(--blue-link-hover);
+}
+
+.v3-phases-toggle:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: 2px;
+}
+
+.v3-phase-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* ------------------------------ Roadmap: Phase band (PH-D) ------------------------------ */
+
+.v3-phase {
+  margin: 0;
+  background: var(--bg-inset);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.v3-phase-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  background: rgba(255, 255, 255, 0.035);
+  padding: 12px 14px;
+  cursor: pointer;
+}
+
+.v3-phase-header:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: -2px;
+}
+
+.v3-phase[open] > .v3-phase-header > .v3-caret {
+  color: var(--accent-text-2);
+}
+
+.v3-phase-title {
+  font-size: 15.5px;
+  font-weight: var(--weight-heavy);
+  color: var(--text-strong);
+}
+
+.v3-phase-ratio {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+.v3-run-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------------------------ Roadmap run row (RR-A) ------------------------------ */
+
+.v3-run-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0;
+  padding: 11px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.v3-run-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.v3-run-row:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: -2px;
+}
+
+.v3-run-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+/* Stable order reference rendered inline at the start of the title line. */
+.v3-run-order {
+  color: var(--text-faint);
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.v3-run-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.v3-run-summary {
+  font-size: 13.5px;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+/* Status-based recession: only the active run reads full-bright (prototype RR-A). */
+.v3-run-row.is-completed .v3-run-title {
+  color: #c6cbd9;
+}
+
+.v3-run-row.is-planned .v3-run-title,
+.v3-run-row.is-blocked .v3-run-title {
+  color: #c6cbd9;
+  font-weight: 600;
+}
+
+.v3-run-row.is-completed .v3-run-summary,
+.v3-run-row.is-planned .v3-run-summary,
+.v3-run-row.is-blocked .v3-run-summary {
+  color: #7c8496;
+}
+
+.v3-status-badge {
+  align-self: center;
+  border-color: transparent;
+  font-size: 11.5px;
+  font-weight: var(--weight-heavy);
+  letter-spacing: 0;
+  padding: 3px 9px;
+  text-transform: capitalize;
+}
+
+/* Roadmap rows only (prototype RR-A): the badge tops-out with the title line. Queue
+   rows and drawer chips keep their own alignment. */
+.v3-run-row .v3-status-badge {
+  align-self: flex-start;
+  margin-top: 1px;
+}
+
+/* Semantic status discs. Colour is a reinforcement only; each disc carries an
+   aria-label so meaning never depends on colour alone. */
+.v3-terminal-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+.v3-terminal-icon svg {
+  width: 13px;
+  height: 13px;
+}
+
+.v3-terminal-completed {
+  background: var(--green-bg);
+  color: var(--green);
+}
+
+.v3-terminal-blocked {
+  background: rgba(255, 91, 91, 0.15);
+  color: var(--red);
+}
+
+.v3-terminal-active {
+  background: rgba(91, 105, 188, 0.2);
+  color: var(--accent-text-2);
+  animation: pc-pulse 2.2s ease-in-out infinite;
+}
+
+.v3-terminal-planned {
+  background: var(--bg-inset-2);
+  color: var(--text-secondary);
+}
+
+/* ------------------------------ Run Queue: group card (QG-C) ------------------------------ */
+
+.v3-queue-group {
+  background: var(--bg-panel);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.v3-queue-group.is-empty {
+  opacity: 0.48;
+}
+
+.v3-queue-group-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 11px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.v3-queue-group-toggle:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.v3-queue-group-toggle:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: -2px;
+}
+
+/* SVG chevron: faint when closed, indigo and rotated down when the group is open. */
+.v3-queue-group-chevron {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-faint);
+  transition: transform 0.15s ease;
+}
+
+.v3-queue-group-toggle[aria-expanded="true"] .v3-queue-group-chevron {
+  color: var(--accent-text-2);
+  transform: rotate(90deg);
+}
+
+/* Group name states: heavy/#dee2e6 open, 600/#aab8c5 closed, muted when empty. The
+   closed state sits one real Segoe cut below the open state so the open/closed weight
+   contrast survives the --weight-heavy fallback mapping. */
+.v3-queue-group-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.v3-queue-group-toggle[aria-expanded="true"] .v3-queue-group-title {
+  font-weight: var(--weight-heavy);
+  color: var(--text-primary);
+}
+
+.v3-queue-group.is-empty .v3-queue-group-title {
+  color: var(--text-tertiary);
+}
+
+.v3-queue-group-count {
+  margin-left: auto;
+  background: var(--bg-inset-2);
+  border: none;
+  border-radius: 3px;
+  padding: 3px 10px;
+  font-size: 13.5px;
+  font-weight: var(--weight-heavy);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-tertiary);
+}
+
+.v3-queue-group-count.is-active {
+  background: var(--accent-chip-bg);
+  color: var(--accent-text-2);
+}
+
+.v3-queue-group-count.is-zero {
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-faint-2);
+  padding: 3px 4px;
+}
+
+/* Collapsible group body: rows sit indented under the header (prototype QG-C). */
+.v3-queue-group-body {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px 4px 22px;
+}
+
+/* ------------------------------ Run Queue rows (QR-ACT/PLN/HIS-A) ------------------------------ */
+
+.v3-queue-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 11px 12px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.v3-queue-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.v3-queue-row:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: -2px;
+}
+
+.v3-queue-row .v3-run-title {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.v3-queue-row.is-later .v3-run-title {
+  color: #c6cbd9;
+}
+
+.v3-queue-row .v3-run-summary {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Leading 38px order tile holding the stable queue number. */
+.v3-order-tile {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-inset-2);
+  color: var(--text-tertiary);
+  font-size: 16px;
+  font-weight: var(--weight-heavy);
+  font-variant-numeric: tabular-nums;
+}
+
+.v3-order-tile.is-active {
+  background: rgba(91, 105, 188, 0.18);
+  color: var(--accent-text-2);
+}
+
+/* Fixed labeled cells (Stage / Waiting on / Dependencies / Closeout). */
+.v3-row-cell {
+  flex-shrink: 0;
+  width: 158px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.v3-row-cell-label {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.v3-row-cell-value {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v3-row-cell-value.is-muted {
+  color: var(--text-tertiary);
+}
+
+.v3-row-cell-value.is-link {
+  color: var(--blue-link);
+}
+
+.v3-row-cell-value.is-green {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.v3-row-chip {
+  flex-shrink: 0;
+  width: 76px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.v3-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 3px;
+  padding: 3px 9px;
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: var(--weight-heavy);
+  white-space: nowrap;
+}
+
+.v3-chip-active {
+  background: var(--accent-chip-bg);
+  color: var(--accent-text-2);
+}
+
+.v3-chip-ready {
+  background: var(--blue-bg);
+  color: var(--blue-link);
+}
+
+.v3-chip-planned {
+  background: var(--neutral-bg);
+  color: var(--text-secondary);
+}
+
+.v3-row-chevron {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-faint);
+}
+
+/* History rows: 30px success disc leads; #N demotes into the title line; texts recede. */
+.v3-run-marker {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.v3-queue-row-terminal .v3-terminal-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.v3-queue-row-terminal .v3-run-title {
+  font-size: 14.5px;
+  color: var(--text-secondary);
+}
+
+.v3-queue-row-terminal .v3-run-summary {
+  color: #7c8496;
+}
+
+/* Empty-group / empty-list note: quiet mono line, not a boxed state (prototype). */
+.v3-empty-note {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--text-faint-2);
+  border-top: 1px solid var(--border-subtle);
+  padding: 10px 2px 12px;
+}
+
+/* ------------------------------ Run Detail drawer (RDH-A / RDM-C / DEP-B) ------------------------------ */
+
+.drawer.v3-detail {
+  width: 560px;
+}
+
+/* RDH-A header: Back pill row (injected at runtime), then "#N Title", then run_id + chip.
+   The shared close control pins to the top-right corner in v3 mode only. */
+.drawer.v3-detail .drawer-header {
+  display: block;
+  position: relative;
+  background: var(--bg-panel);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 16px 22px;
+}
+
+.drawer.v3-detail .drawer-header .v3-back {
+  margin: 0 0 14px;
+}
+
+.drawer.v3-detail #drawer-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--text-faint);
+  font-size: 17px;
+  line-height: 1;
+  padding: 2px 8px;
+}
+
+.drawer.v3-detail #drawer-close:hover {
+  color: var(--text-primary);
+}
+
+.drawer.v3-detail .drawer-header-title {
+  font-size: 17px;
+  font-weight: var(--weight-heavy);
+  line-height: 1.35;
+  color: var(--text-primary);
+  margin-bottom: 0;
+  padding-right: 30px;
+}
+
+.v3-detail-order {
+  color: var(--accent);
+  margin-right: 7px;
+}
+
+.drawer.v3-detail .drawer-header-id {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 9px;
+}
+
+.v3-detail-runid {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Solid status chip beside the run_id (completed = green fill with dark text). */
+.v3-chip-solid {
+  border-color: transparent;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: var(--weight-heavy);
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  text-transform: uppercase;
+}
+
+.v3-chip-solid.badge-blue {
+  background: var(--accent-solid);
+  color: #fff;
+}
+
+.v3-chip-solid.badge-green {
+  background: var(--green-fill);
+  color: #0b2417;
+}
+
+.v3-chip-solid.badge-red {
+  background: var(--red);
+  color: #fff;
+}
+
+.v3-chip-solid.badge-gray {
+  background: var(--bg-inset-2);
+  color: var(--text-secondary);
+}
+
+/* Backward navigation pill (top-left of the drawer header). */
+.v3-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  max-width: calc(100% - 44px);
+}
+
+.v3-back:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--text-primary);
+}
+
+.v3-back:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: 2px;
+}
+
+.v3-back-arrow {
+  display: inline-flex;
+  align-items: center;
+}
+
+.v3-back-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.drawer.v3-detail .drawer-section {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 14px 22px 16px;
+}
+
+.drawer.v3-detail .drawer-section:last-child {
+  border-bottom: none;
+}
+
+.drawer.v3-detail .drawer-section-title {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: var(--weight-heavy);
+  letter-spacing: 0;
+  margin-bottom: 8px;
+  text-transform: none;
+}
+
+.v3-detail-summary {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #c6cbd9;
+  margin-bottom: 0;
+}
+
+.v3-detail-description {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-tertiary);
+  margin: 8px 0 0;
+}
+
+/* Link-style disclosures (Full description / Details): mono accent label + caret. */
+.v3-disclosure {
+  margin-top: 14px;
+}
+
+.v3-disclosure > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  list-style: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+}
+
+.v3-disclosure > summary > .v3-caret {
+  color: currentColor;
+}
+
+.v3-disclosure > summary:hover {
+  color: var(--accent-hover);
+}
+
+.v3-disclosure > summary:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: 2px;
+}
+
+/* Two-cell metadata block (RDM-C): Run order 16/800, Current stage 15.5/700. */
+.v3-detail-cells {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+}
+
+.v3-detail-cell {
+  padding: 4px 0;
+}
+
+.v3-detail-cell-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.v3-detail-cell-value {
+  display: block;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #c6cbd9;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v3-detail-cell.is-order .v3-detail-cell-value {
+  font-size: 16px;
+  font-weight: var(--weight-heavy);
+  color: var(--text-primary);
+}
+
+.v3-detail-cell-value .is-faint {
+  color: var(--text-faint);
+  font-weight: 400;
+  font-size: 12.5px;
+}
+
+/* Details disclosure rows: mono uppercase micro-labels + calm values. */
+.v3-detail-rows {
+  margin-top: 6px;
+}
+
+.drawer.v3-detail .data-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 9px 0;
+}
+
+.drawer.v3-detail .data-row:last-child {
+  border-bottom: none;
+}
+
+.drawer.v3-detail .data-label {
+  width: 72px;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint-2);
+}
+
+.drawer.v3-detail .data-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #c6cbd9;
+}
+
+.drawer.v3-detail .data-value.mono {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Collapsible Dependencies section heading. */
+.v3-section-details {
+  margin-top: 0;
+}
+
+.v3-section-details > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: var(--weight-heavy);
+}
+
+.v3-section-details[open] > summary > .v3-caret {
+  color: var(--accent);
+}
+
+.v3-section-details > summary:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: 2px;
+}
+
+.v3-section-count {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-faint-2);
+}
+
+.v3-section-body {
+  margin-top: 4px;
+}
+
+.v3-section-body .v3-empty-note {
+  border-top: none;
+  font-size: 12.5px;
+  padding: 6px 0;
+}
+
+/* Dependency cross-reference rows (whole row push-navigates to that run). */
+.v3-dependency-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 11px 0;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.v3-dependency-row:last-child {
+  border-bottom: none;
+}
+
+.v3-dependency-row:hover {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.v3-dependency-row:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: -2px;
+}
+
+.v3-dep-order {
+  flex-shrink: 0;
+  width: 32px;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.v3-dep-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #c6cbd9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v3-dep-state {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 400;
+}
+
+.v3-dep-state.is-satisfied {
+  color: #3ea877;
+}
+
+.v3-dep-state.is-waiting {
+  color: var(--text-tertiary);
+}
+
+.v3-dep-state svg {
+  width: 11px;
+  height: 11px;
+}
+
+.v3-dep-dot {
+  width: 6px;
+  height: 6px;
+  border: 1.5px solid var(--text-tertiary);
+  border-radius: 50%;
+}
+
+/* ------------------------------ Progress timeline (PR-A, Round bands) ------------------------------ */
+
+/* No-progress note (terminal or not-started runs). */
+.v3-progress-note-line {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-faint-2);
+  padding: 4px 0;
+}
+
+.v3-progress-note-line.is-closed {
+  color: #3ea877;
+}
+
+.v3-progress-round {
+  margin: 0 0 6px;
+}
+
+.v3-progress-round > summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  cursor: pointer;
+  background: var(--bg-inset);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: var(--weight-heavy);
+}
+
+.v3-progress-round.is-current > summary {
+  background: var(--accent-bg);
+  color: var(--text-primary);
+}
+
+.v3-progress-round[open] > summary > .v3-caret {
+  color: var(--accent-text-2);
+}
+
+.v3-progress-round > summary:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: -2px;
+}
+
+.v3-progress-rollup {
+  margin-left: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+
+.v3-progress-rollup.is-current {
+  color: var(--accent-text-2);
+  font-weight: var(--weight-heavy);
+}
+
+.v3-progress-rollup.is-changes {
+  color: var(--amber);
+}
+
+.v3-progress-rollup.is-ok {
+  color: var(--green);
+}
+
+/* Icon-disc stage timeline with a connecting rail inside an open round. */
+.v3-progress-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 12px 4px 2px;
+}
+
+.v3-progress-entry {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.v3-progress-railcell {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  width: 24px;
+}
+
+.v3-progress-rail {
+  width: 2px;
+  flex: 1;
+  background: var(--bg-inset-2);
+  margin: 3px 0;
+}
+
+.v3-progress-disc {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.v3-progress-disc.is-done {
+  background: rgba(16, 196, 105, 0.16);
+  color: var(--green);
+}
+
+.v3-progress-disc.is-current {
+  background: var(--accent-solid);
+  animation: pc-pulse 2.2s ease-in-out infinite;
+}
+
+.v3-progress-disc.is-waiting {
+  background: var(--bg-panel);
+  border: 2px solid var(--bg-inset-2);
+}
+
+.v3-progress-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.v3-progress-body {
+  flex: 1;
+  min-width: 0;
+  padding: 3px 0 16px;
+}
+
+.v3-progress-entry:last-child .v3-progress-body {
+  padding-bottom: 4px;
+}
+
+.v3-progress-head {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.v3-progress-done .v3-progress-head {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.v3-progress-current .v3-progress-head,
+.v3-progress-running .v3-progress-head {
+  font-weight: 700;
+  color: var(--accent-text-2);
+}
+
+.v3-progress-attempt {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-faint);
+}
+
+.v3-progress-sub {
+  display: block;
+  font-size: 13px;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+
+.v3-progress-done .v3-progress-sub {
+  color: var(--text-tertiary);
+}
+
+.v3-progress-current .v3-progress-sub,
+.v3-progress-running .v3-progress-sub {
+  color: var(--accent-text-2);
+}
+
+.v3-progress-note {
+  display: block;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+
+/* ------------------------------ Narrow layouts ------------------------------ */
+
+@media (max-width: 820px) {
+  .v3-queue-row {
+    flex-wrap: wrap;
+  }
+
+  .v3-row-cell {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .v3-objective-progress {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+
+  .v3-queue-group-body {
+    padding-left: 12px;
+  }
+}
+
+@media (max-width: 720px) {
+  .v3-detail-cells {
+    grid-template-columns: 1fr;
+  }
+
+  .v3-run-row {
+    flex-wrap: wrap;
+  }
+
+  .drawer.v3-detail .drawer-section {
+    padding: 14px 18px;
+  }
+
+  .drawer.v3-detail .drawer-header {
+    padding: 14px 18px;
+  }
+}
+
+/* ------------------------------ Overview (v3, target screenshot parity) ------------------------------ */
+/* Scoped to #tab-overview + .v3-ov-* classes only. The static index.html card wrappers
+   become invisible scaffolding: their chrome is neutralized and their title divs render
+   as the section eyebrows (texts rewritten at runtime by setOverviewCardTitles). */
+
+#tab-overview .overview-grid {
+  grid-template-columns: 1.55fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+#tab-overview .overview-grid.mb-6 {
+  margin-bottom: 20px;
+}
+
+#tab-overview .overview-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+#tab-overview .next-runs-card {
+  display: block;
+  min-height: 0;
+}
+
+#tab-overview .overview-grid > .flex-col {
+  min-height: 0;
+  gap: 0;
+}
+
+#tab-overview .next-runs-list {
+  display: block;
+  overflow: visible;
+}
+
+#tab-overview .overview-card-title {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+#tab-overview .overview-card-title.accent {
+  color: var(--accent);
+}
+
+/* Clickable Current work / Next up cards. */
+.v3-ov-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: border-color 0.12s;
+}
+
+.v3-ov-card:hover {
+  border-color: var(--accent-border);
+}
+
+.v3-ov-card:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: 2px;
+}
+
+.v3-ov-card-next {
+  padding: 16px 18px;
+  margin-top: 14px;
+}
+
+.v3-ov-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint-2);
+}
+
+.v3-ov-titleline {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.v3-ov-order {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.v3-ov-card-next .v3-ov-order {
+  font-size: 13px;
+}
+
+.v3-ov-title {
+  font-size: 17px;
+  font-weight: var(--weight-heavy);
+  line-height: 1.3;
+  color: var(--text-strong);
+}
+
+.v3-ov-card-next .v3-ov-title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.v3-ov-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.v3-ov-chip {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  padding: 3px 9px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.v3-ov-chip.is-status-active {
+  background: rgba(91, 105, 188, 0.2);
+  color: var(--accent-text-2);
+  font-weight: var(--weight-heavy);
+  text-transform: capitalize;
+}
+
+.v3-ov-chip.is-status-blocked {
+  background: var(--red-bg);
+  color: var(--red-text);
+  font-weight: var(--weight-heavy);
+  text-transform: capitalize;
+}
+
+.v3-ov-chip.is-ready-next {
+  background: var(--blue-bg);
+  color: var(--blue-link);
+  font-weight: var(--weight-heavy);
+}
+
+.v3-ov-summary {
+  display: block;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-tertiary);
+  margin-top: 12px;
+}
+
+.v3-ov-card-next .v3-ov-summary {
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+/* Next action list: bare rows on the page background. */
+.v3-ov-upcoming {
+  display: flex;
+  gap: 13px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0;
+  padding: 10px 4px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.v3-ov-upcoming:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.v3-ov-upcoming:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: -2px;
+}
+
+.v3-ov-upcoming-order {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--accent);
+  padding-top: 1px;
+}
+
+.v3-ov-upcoming-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.v3-ov-upcoming-title {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v3-ov-upcoming-summary {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-tertiary);
+  margin-top: 3px;
+}
+
+/* Queue snapshot: one bordered container with a hairline internal grid. */
+.v3-ov-snapshot {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.v3-ov-snapshot-cell {
+  background: var(--bg-panel);
+  padding: 15px 16px;
+}
+
+.v3-ov-snapshot-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.v3-ov-snapshot-num {
+  display: block;
+  font-size: 23px;
+  font-weight: var(--weight-heavy);
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+  margin-top: 5px;
+}
+
+.v3-ov-snapshot-num.is-muted {
+  color: #7c8496;
+}
+
+.v3-ov-snapshot-num.is-amber {
+  color: var(--amber);
+}
+
+.v3-ov-snapshot-num.is-indigo {
+  color: var(--accent-text-2);
+}
+
+.v3-ov-snapshot-num.is-blue {
+  color: var(--blue-link);
+}
+
+.v3-ov-snapshot-num.is-soft {
+  color: #c6cbd9;
+}
+
+.v3-ov-snapshot-num.is-green {
+  color: var(--green);
+}
+
+.v3-ov-snapshot-num.is-strong {
+  color: var(--text-strong);
+}
+
+@media (max-width: 1040px) {
+  #tab-overview .overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .v3-ov-snapshot {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .v3-ov-snapshot {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ------------------------------ History (Git commit history) ------------------------------ */
+/* Scoped to #tab-history + .v3-hist-* only. The static index.html header block, filter
+   bar, and panel chrome become invisible scaffolding; the commit history renders inside
+   #history-list from the derived read-only git_history snapshot. */
+
+#tab-history > .flex.justify-between {
+  display: none;
+}
+
+#tab-history > .flex.gap-2 {
+  display: none;
+}
+
+#tab-history .panel {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+#tab-history .history-list {
+  padding: 0;
+}
+
+.v3-hist-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+/* Manual History sync control: an operator-forced snapshot rebuild sitting beside the
+   eyebrow. Local fallback for the auto-sync; disabled while a sync is in flight. The inline
+   status is amber while syncing, green on success, red on failure. */
+.v3-hist-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.v3-hist-head .v3-hist-eyebrow {
+  margin-bottom: 0;
+}
+.v3-hist-sync-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.v3-hist-sync-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--accent-solid);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--accent);
+  padding: 6px 16px;
+  cursor: pointer;
+}
+.v3-hist-sync-btn:hover:not(:disabled) {
+  background: var(--accent-solid);
+  color: #fff;
+}
+.v3-hist-sync-btn:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: 2px;
+}
+.v3-hist-sync-btn:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+.v3-hist-sync-state {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+}
+.v3-hist-sync-state.is-idle {
+  color: transparent;
+}
+.v3-hist-sync-state.is-syncing {
+  color: var(--amber);
+}
+.v3-hist-sync-state.is-synced {
+  color: var(--green);
+}
+.v3-hist-sync-state.is-failed {
+  color: var(--red-text);
+}
+
+/* Branch pills: mono, radius 20; exactly one selected (solid indigo). */
+.v3-hist-branches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.v3-hist-branch {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.v3-hist-branch.tint-green {
+  color: var(--green);
+}
+
+.v3-hist-branch.tint-indigo {
+  color: var(--accent);
+}
+
+.v3-hist-branch:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.v3-hist-branch.is-active {
+  background: var(--accent-solid);
+  border-color: var(--accent-solid);
+  color: #fff;
+}
+
+.v3-hist-branch:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: 2px;
+}
+
+.v3-hist-group-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint-2);
+  margin: 6px 0 2px;
+}
+
+/* Commit rows: rail dot (solid = commit, ring = merge) + connecting rail. */
+.v3-hist-row {
+  display: flex;
+  gap: 14px;
+}
+
+.v3-hist-rail {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  padding-top: 15px;
+  width: 10px;
+}
+
+.v3-hist-dot {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.v3-hist-dot.is-merge {
+  background: transparent;
+  border: 2px solid var(--accent);
+}
+
+.v3-hist-line {
+  width: 2px;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.09);
+  margin-top: 5px;
+}
+
+.v3-hist-body {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 0 18px;
+}
+
+.v3-hist-subject {
+  display: block;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+/* Neutral placeholder title for a commit whose real message is shell/prompt noise. */
+.v3-hist-subject.is-noise {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-faint);
+}
+
+.v3-hist-message {
+  color: var(--text-tertiary);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-top: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.v3-hist-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 11px;
+}
+
+.v3-hist-run {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--accent);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.v3-hist-run:hover {
+  color: var(--accent-hover);
+}
+
+.v3-hist-run:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: 2px;
+}
+
+.v3-hist-sha {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-faint);
+}
+
+.v3-hist-time {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--text-faint-2);
+}
+
+/* ============================================================================
+   Large-desktop presentation scale
+   (RUN-JAME-PROJECT-CONSOLE-ROADMAP-V3-PROTOTYPE-001 sections 28 + 29, defect D1).
+
+   On monitors with >= 1600px CSS width the Overview and Roadmap v3 surfaces render
+   markedly larger so 100% browser zoom on a large monitor approaches the browser's
+   150%-zoom feel. Amplified after operator retest (section 29): the centered content
+   column grows 1200 -> 1600 through the shared --pc-content-max token and the main v3
+   surfaces scale roughly 1.30-1.45x. Gated by min-width so normal laptop widths
+   (~1280-1536px) are unchanged. Dark system, Roadmap v3 structure/derivations, Run Queue
+   groups and counts, History auto-sync, drawer behavior, and responsive rules are all
+   preserved; base body font-size stays 16px. History commit typography is intentionally
+   left as-is (it only inherits the wider column and larger nav labels).
+   ========================================================================= */
+@media (min-width: 1600px) {
+  :root {
+    --pc-content-max: 1600px;
+  }
+
+  /* Shell: taller nav band, larger nav labels, content padding, sub-tab counts. */
+  .project-header {
+    min-height: 64px;
+  }
+  .content {
+    padding: 38px 48px;
+  }
+  .tab {
+    font-size: 19px;
+    padding: 0 26px;
+  }
+  .v3-subtab-count {
+    font-size: 16px;
+  }
+
+  /* Overview: eyebrows, cards, chips, next-action rows, queue snapshot metrics. */
+  #tab-overview .overview-grid {
+    gap: 26px;
+  }
+  #tab-overview .overview-grid.mb-6 {
+    margin-bottom: 32px;
+  }
+  #tab-overview .overview-card-title {
+    font-size: 14px;
+  }
+  .v3-ov-card {
+    padding: 30px 34px;
+  }
+  .v3-ov-card-next {
+    padding: 26px 30px;
+  }
+  .v3-ov-label {
+    font-size: 13px;
+  }
+  .v3-ov-order {
+    font-size: 22px;
+  }
+  .v3-ov-card-next .v3-ov-order {
+    font-size: 18px;
+  }
+  .v3-ov-title {
+    font-size: 25px;
+  }
+  .v3-ov-card-next .v3-ov-title {
+    font-size: 21px;
+  }
+  .v3-ov-chip {
+    font-size: 15px;
+  }
+  .v3-ov-summary {
+    font-size: 18px;
+  }
+  .v3-ov-card-next .v3-ov-summary {
+    font-size: 16px;
+  }
+  .v3-ov-upcoming {
+    gap: 20px;
+    padding: 16px 8px;
+  }
+  .v3-ov-upcoming-order {
+    font-size: 22px;
+  }
+  .v3-ov-upcoming-title {
+    font-size: 18px;
+  }
+  .v3-ov-upcoming-summary {
+    font-size: 15px;
+  }
+  .v3-ov-snapshot-cell {
+    padding: 24px 26px;
+  }
+  .v3-ov-snapshot-label {
+    font-size: 13px;
+  }
+  .v3-ov-snapshot-num {
+    font-size: 34px;
+  }
+
+  /* Roadmap: objective cards, phase bands, run rows, status markers. */
+  .v3-objective-card {
+    padding: 28px 32px;
+    margin-bottom: 22px;
+  }
+  .v3-objective-title {
+    font-size: 26px;
+  }
+  .v3-objective-summary {
+    font-size: 18px;
+  }
+  .v3-objective-stats {
+    gap: 22px 36px;
+  }
+  .v3-stat-value {
+    font-size: 24px;
+  }
+  .v3-stat-label {
+    font-size: 15px;
+  }
+  .v3-objective-progress-label {
+    font-size: 15px;
+  }
+  .v3-objective-progress-value {
+    font-size: 17px;
+  }
+  .v3-progressbar {
+    height: 8px;
+  }
+  .v3-phase-header {
+    padding: 17px 22px;
+  }
+  .v3-phase-title {
+    font-size: 21px;
+  }
+  .v3-phase-ratio {
+    font-size: 16px;
+  }
+  .v3-run-row {
+    padding: 16px 22px;
+  }
+  .v3-run-title {
+    font-size: 20px;
+  }
+  .v3-run-summary {
+    font-size: 17.5px;
+  }
+  .v3-status-badge {
+    font-size: 15px;
+  }
+  .v3-terminal-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .v3-terminal-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Run Queue: group headers, rows, order tiles, labeled cells, chips. */
+  .v3-queue-group-toggle {
+    padding: 17px 22px;
+  }
+  .v3-queue-group-title {
+    font-size: 20px;
+  }
+  .v3-queue-group-count {
+    font-size: 18px;
+    padding: 5px 14px;
+  }
+  .v3-queue-group-count.is-zero {
+    font-size: 15px;
+  }
+  .v3-queue-group-body {
+    padding: 0 14px 8px 32px;
+  }
+  .v3-queue-row {
+    gap: 20px;
+    padding: 16px 20px;
+  }
+  .v3-queue-row .v3-run-title {
+    font-size: 21px;
+  }
+  .v3-order-tile {
+    width: 56px;
+    height: 56px;
+    font-size: 23px;
+  }
+  .v3-row-cell {
+    width: 210px;
+  }
+  .v3-row-cell-label {
+    font-size: 15px;
+  }
+  .v3-row-cell-value {
+    font-size: 18px;
+  }
+  .v3-row-chip {
+    width: 100px;
+  }
+  .v3-chip {
+    font-size: 16px;
+  }
+  .v3-queue-row-terminal .v3-terminal-icon {
+    width: 42px;
+    height: 42px;
+  }
+  .v3-queue-row-terminal .v3-run-title {
+    font-size: 20px;
+  }
+  .v3-empty-note {
+    font-size: 14px;
+  }
+
+  /* Shared Run Detail drawer: wider panel and larger detail typography and spacing. */
+  .drawer.v3-detail {
+    width: 720px;
+  }
+  .drawer.v3-detail .drawer-header {
+    padding: 24px 30px;
+  }
+  .drawer.v3-detail .drawer-header-title {
+    font-size: 24px;
+  }
+  .v3-back {
+    font-size: 14px;
+  }
+  .drawer.v3-detail .drawer-section {
+    padding: 20px 30px 22px;
+  }
+  .drawer.v3-detail .drawer-section-title {
+    font-size: 19px;
+  }
+  .v3-detail-summary {
+    font-size: 19px;
+  }
+  .v3-detail-description {
+    font-size: 17.5px;
+  }
+  .v3-detail-cells {
+    gap: 0 30px;
+  }
+  .v3-detail-cell-label {
+    font-size: 15px;
+  }
+  .v3-detail-cell-value {
+    font-size: 21px;
+  }
+  .v3-detail-cell.is-order .v3-detail-cell-value {
+    font-size: 23px;
+  }
+  .drawer.v3-detail .data-label {
+    font-size: 12px;
+  }
+  .drawer.v3-detail .data-value {
+    font-size: 18px;
+  }
+  .drawer.v3-detail .data-value.mono {
+    font-size: 15px;
+  }
+
+  /* History: eyebrow, sync note, branch tabs, commit subject/body, and metadata match the
+     amplified scale so the tab no longer feels small on a large monitor. */
+  .v3-hist-eyebrow {
+    font-size: 14px;
+  }
+  .v3-hist-sync-btn {
+    font-size: 14px;
+    padding: 8px 20px;
+  }
+  .v3-hist-sync-state {
+    font-size: 14px;
+  }
+  .v3-hist-branches {
+    gap: 10px;
+  }
+  .v3-hist-branch {
+    font-size: 15px;
+    padding: 8px 18px;
+  }
+  .v3-hist-group-label {
+    font-size: 13px;
+  }
+  .v3-hist-rail {
+    padding-top: 18px;
+  }
+  .v3-hist-body {
+    padding: 15px 0 22px;
+  }
+  .v3-hist-subject {
+    font-size: 20px;
+  }
+  .v3-hist-message {
+    font-size: 16.5px;
+  }
+  .v3-hist-meta {
+    gap: 18px;
+  }
+  .v3-hist-run {
+    font-size: 14px;
+  }
+  .v3-hist-sha {
+    font-size: 14px;
+  }
+  .v3-hist-time {
+    font-size: 14px;
+  }
+}

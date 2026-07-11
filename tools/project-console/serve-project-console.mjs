@@ -7,9 +7,10 @@
 // pull, merge, or reset. No Git hooks, no scheduler, no dependencies.
 //
 // At startup it ALSO runs the AIW projector once per project listed in an optional
-// projects.config.json at the repo root, writing each resulting console snapshot into this
-// repo's .aiw/views/project_console.snapshot.json (the canonical path the UI fetches) — the
-// same auto-rebuild treatment git_history already gets, killing the manual snapshot ritual.
+// projects.config.json at the repo root, writing every view the projector produces (the console
+// snapshot AND roadmap.json) into this repo's .aiw/views/ (the canonical paths the UI fetches) —
+// the same auto-rebuild treatment git_history already gets, killing the manual snapshot ritual.
+// Each view lands independently; a view a project cannot produce is skipped (logged), not fatal.
 // Missing or invalid config → serve exactly as today (fail-soft, logged).
 //
 // Boundaries:
@@ -26,17 +27,41 @@
 import http from "node:http";
 import { readFile } from "node:fs/promises";
 import { watch, existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
-import { extname, join, normalize, resolve, sep, dirname } from "node:path";
+import { basename, extname, join, normalize, resolve, sep, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildGitHistorySnapshot, gitSignature } from "./build-git-history-snapshot.mjs";
-import { buildSnapshot } from "../projector/project.mjs";
+import {
+  buildSnapshot,
+  buildRoadmap,
+  SNAPSHOT_RELATIVE_PATH,
+  ROADMAP_RELATIVE_PATH
+} from "../projector/project.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..", "..");
 const GIT_DIR = join(REPO_ROOT, ".git");
 const PROJECTS_CONFIG = join(REPO_ROOT, "projects.config.json");
 const VIEWS_DIR = join(REPO_ROOT, ".aiw", "views");
-const CONSOLE_SNAPSHOT_NAME = "project_console.snapshot.json";
+
+// The views startup projection transfers from each project, keyed by the projector's own
+// canonical filenames (basename of its exported relative paths — no duplicated string literals)
+// and produced by its existing build APIs. Each is landed independently and fail-soft: a view a
+// project cannot produce is logged and skipped, never an error. Adding a projector view here is
+// the only change needed to carry it across. The console snapshot is the primary view — it
+// supplies the project_id used in logs and the `path` on the projected entry.
+const CONSOLE_SNAPSHOT_NAME = basename(SNAPSHOT_RELATIVE_PATH);
+const PROJECTED_VIEWS = [
+  {
+    name: CONSOLE_SNAPSHOT_NAME,
+    build: buildSnapshot,
+    summarize: (data) => `project=${data.project_id}; objectives=${data.roadmap_tree.counts.total}`
+  },
+  {
+    name: basename(ROADMAP_RELATIVE_PATH),
+    build: buildRoadmap,
+    summarize: (data) => `runs=${data.objectives?.[0]?.phases?.[0]?.runs?.length ?? 0}`
+  }
+];
 const ENTRY = "/docs/project-console/index.html";
 // Internal, local-only endpoint the History tab POSTs to force a snapshot rebuild.
 const HISTORY_SYNC_PATH = "/__project-console/history/sync";
@@ -142,21 +167,22 @@ export function loadProjectsConfig(configPath, log = logLine) {
     .filter(Boolean);
 }
 
-// Atomically write the console snapshot into this repo's .aiw/views/ (temp + rename), mirroring
-// how the projector writes its own artifact. Returns the absolute output path.
-function writeConsoleSnapshot(viewsDir, snapshot) {
+// Atomically write a view (`name`) into this repo's .aiw/views/ (temp + rename), mirroring
+// how the projector writes its own artifacts. Returns the absolute output path.
+function writeView(viewsDir, name, data) {
   mkdirSync(viewsDir, { recursive: true });
-  const outPath = join(viewsDir, CONSOLE_SNAPSHOT_NAME);
+  const outPath = join(viewsDir, name);
   const tmp = `${outPath}.tmp`;
-  writeFileSync(tmp, JSON.stringify(snapshot, null, 2) + "\n", "utf8");
+  writeFileSync(tmp, JSON.stringify(data, null, 2) + "\n", "utf8");
   renameSync(tmp, outPath);
   return outPath;
 }
 
-// Run the projector once per configured project and land the resulting snapshot in this repo's
-// .aiw/views/ (the canonical path the UI fetches). Fail-soft per project and overall: any error
-// is logged and the server keeps serving. When several projects are configured they populate the
-// same canonical file (last successful projection wins); the console renders one project.
+// Run the projector once per configured project and land every view it produces (console
+// snapshot + roadmap) in this repo's .aiw/views/ (the canonical paths the UI fetches). Fail-soft
+// per view, per project, and overall: any error is logged and the server keeps serving — a view a
+// project cannot produce is skipped, never fatal. When several projects are configured they
+// populate the same canonical files (last successful projection wins); the console renders one.
 export function runStartupProjection(opts = {}) {
   const repoRoot = opts.repoRoot || REPO_ROOT;
   const configPath = opts.configPath || (repoRoot === REPO_ROOT ? PROJECTS_CONFIG : join(repoRoot, "projects.config.json"));
@@ -178,13 +204,22 @@ export function runStartupProjection(opts = {}) {
       log(`startup projection skipped for '${label}': project root ${root} does not exist.`);
       continue;
     }
-    try {
-      const snapshot = buildSnapshot(root, now ? { now } : {});
-      const outPath = writeConsoleSnapshot(viewsDir, snapshot);
-      log(`startup projection ok (${label}): project=${snapshot.project_id}; objectives=${snapshot.roadmap_tree.counts.total}; wrote ${outPath}`);
-      projected.push({ id: label, root, path: outPath, project_id: snapshot.project_id });
-    } catch (error) {
-      log(`startup projection failed for '${label}': ${String(error && error.message || error).slice(0, 200)}; existing snapshot left untouched.`);
+    // Land each view independently so one the projector cannot produce never sinks the others.
+    const views = {};
+    let projectId = null;
+    for (const view of PROJECTED_VIEWS) {
+      try {
+        const data = view.build(root, now ? { now } : {});
+        const outPath = writeView(viewsDir, view.name, data);
+        views[view.name] = outPath;
+        if (view.name === CONSOLE_SNAPSHOT_NAME) projectId = data.project_id;
+        log(`startup projection ok (${label}): ${view.name} — ${view.summarize(data)}; wrote ${outPath}`);
+      } catch (error) {
+        log(`startup projection skipped '${view.name}' for '${label}': ${String(error && error.message || error).slice(0, 200)}; existing view left untouched.`);
+      }
+    }
+    if (Object.keys(views).length > 0) {
+      projected.push({ id: label, root, path: views[CONSOLE_SNAPSHOT_NAME] || null, views, project_id: projectId });
     }
   }
   return { projected };

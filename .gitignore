@@ -1,3 +1,5 @@
 node_modules/
 # The only locally-generated console artifact (the versioned snapshot is committed).
 .aiw/views/git_history.snapshot.json
+
+.aiw/

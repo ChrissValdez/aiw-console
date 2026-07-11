@@ -2,13 +2,14 @@
 //
 // Given a project root in AIW format (an `objectives/` tree, a `logs/` run-evidence
 // tree, and a Git repository), emits the single REQUIRED console artifact
-//   <project-root>/.aiw/project_console.snapshot.json
-// conforming to docs/snapshot-schema-v1.md (schema_version 1).
+//   <project-root>/.aiw/views/project_console.snapshot.json
+// conforming to docs/snapshot-schema-v1.md (schema_version 1). This is the canonical
+// path the console UI fetches (docs/project-console/assets/project-console.js).
 //
 // Boundaries (see objective 001):
 //   - Node built-ins only. No dependencies.
 //   - Reads ONLY inside the given project root (objectives/, logs/, config.json).
-//   - Writes ONLY <project-root>/.aiw/project_console.snapshot.json (atomic temp + rename).
+//   - Writes ONLY <project-root>/.aiw/views/project_console.snapshot.json (atomic temp + rename).
 //     Never writes, moves, or deletes anything outside <project-root>/.aiw/.
 //   - Fail-soft: a missing objectives/ or logs/ tree yields empty groups, never an error.
 //   - Git history is optional §3 enrichment produced by build-git-history-snapshot.mjs,
@@ -22,13 +23,13 @@ import {
   renameSync,
   writeFileSync
 } from "node:fs";
-import { basename, join, relative, resolve, sep } from "node:path";
+import { basename, dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const SCHEMA_VERSION = 1;
 export const PROJECTOR_VERSION = "0.1.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
-export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "project_console.snapshot.json");
+export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 
 // The three AIW objective lifecycle folders, in operator reading order.
 const OBJECTIVE_CLASSIFICATIONS = ["pending", "parked", "processed"];
@@ -190,12 +191,12 @@ export function resolveSnapshotPath(root) {
   return { aiwDir, outPath };
 }
 
-// Build and atomically write the snapshot to <root>/.aiw/project_console.snapshot.json.
+// Build and atomically write the snapshot to <root>/.aiw/views/project_console.snapshot.json.
 // Returns { ok, path, snapshot }.
 export function writeSnapshot(root, opts = {}) {
   const snapshot = buildSnapshot(root, opts);
-  const { aiwDir, outPath } = resolveSnapshotPath(root);
-  mkdirSync(aiwDir, { recursive: true });
+  const { outPath } = resolveSnapshotPath(root);
+  mkdirSync(dirname(outPath), { recursive: true });
   const tmp = `${outPath}.tmp`;
   writeFileSync(tmp, JSON.stringify(snapshot, null, 2) + "\n", "utf8");
   renameSync(tmp, outPath);

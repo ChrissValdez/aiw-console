@@ -1,8 +1,8 @@
 // Fixture-based tests for the AIW projector (tools/projector/project.mjs).
 //
 // They assert that buildSnapshot() emits every key required by docs/snapshot-schema-v1.md
-// with the right type, that writeSnapshot() lands the artifact at
-// <root>/.aiw/project_console.snapshot.json and never outside .aiw/, and that an empty
+// with the right type, that writeSnapshot() lands the artifact at the canonical path
+// <root>/.aiw/views/project_console.snapshot.json and never outside .aiw/, and that an empty
 // project still produces a schema-conforming snapshot (fail-soft, never an error).
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -89,12 +89,14 @@ test("empty project still produces a schema-conforming, idle snapshot", () => {
   }
 });
 
-test("writeSnapshot lands the artifact at <root>/.aiw/project_console.snapshot.json", () => {
+test("writeSnapshot lands the artifact at the canonical <root>/.aiw/views/project_console.snapshot.json", () => {
   const dir = mkdtempSync(join(tmpdir(), "aiw-write-"));
   try {
     const result = writeSnapshot(dir, { now: FIXED_NOW });
     const expected = join(dir, SNAPSHOT_RELATIVE_PATH);
     assert.equal(result.path, resolve(expected));
+    // The canonical path the UI fetches: .aiw/views/project_console.snapshot.json.
+    assert.equal(SNAPSHOT_RELATIVE_PATH, join(".aiw", "views", "project_console.snapshot.json"));
     assert.ok(existsSync(expected), "snapshot file was not written");
 
     const onDisk = JSON.parse(readFileSync(expected, "utf8"));

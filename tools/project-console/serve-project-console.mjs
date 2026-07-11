@@ -1,4 +1,4 @@
-// Project Console — local static server with automatic Git history sync.
+// Project Console — local static server with automatic Git history sync + project projection.
 //
 // Serves the repository root over HTTP (so docs/project-console can fetch ../../.aiw/...)
 // and keeps .aiw/views/git_history.snapshot.json current: it builds the snapshot once at
@@ -6,9 +6,16 @@
 // Git signature) whenever HEAD / refs / logs change — i.e. on commit, branch switch,
 // pull, merge, or reset. No Git hooks, no scheduler, no dependencies.
 //
+// At startup it ALSO runs the AIW projector once per project listed in an optional
+// projects.config.json at the repo root, writing each resulting console snapshot into this
+// repo's .aiw/views/project_console.snapshot.json (the canonical path the UI fetches) — the
+// same auto-rebuild treatment git_history already gets, killing the manual snapshot ritual.
+// Missing or invalid config → serve exactly as today (fail-soft, logged).
+//
 // Boundaries:
 //   - Node built-ins only. No package.json / npm install required.
-//   - Mutates ONLY .aiw/views/git_history.snapshot.json (via the builder).
+//   - Mutates ONLY .aiw/views/*.snapshot.json (git history via its builder, project console
+//     via the projector). Reads each configured project root; writes only into this repo.
 //   - Runs read-only Git commands (through build-git-history-snapshot.mjs).
 //   - Never serves the .git directory.
 //
@@ -18,14 +25,18 @@
 
 import http from "node:http";
 import { readFile } from "node:fs/promises";
-import { watch } from "node:fs";
+import { watch, existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { extname, join, normalize, resolve, sep, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildGitHistorySnapshot, gitSignature } from "./build-git-history-snapshot.mjs";
+import { buildSnapshot } from "../projector/project.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..", "..");
 const GIT_DIR = join(REPO_ROOT, ".git");
+const PROJECTS_CONFIG = join(REPO_ROOT, "projects.config.json");
+const VIEWS_DIR = join(REPO_ROOT, ".aiw", "views");
+const CONSOLE_SNAPSHOT_NAME = "project_console.snapshot.json";
 const ENTRY = "/docs/project-console/index.html";
 // Internal, local-only endpoint the History tab POSTs to force a snapshot rebuild.
 const HISTORY_SYNC_PATH = "/__project-console/history/sync";
@@ -102,6 +113,81 @@ function scheduleRebuild(trigger) {
     debounceTimer = null;
     maybeRebuild(trigger);
   }, DEBOUNCE_MS);
+}
+
+// ---------------------------------------------------------------- startup projection
+
+// Read projects.config.json → an array of { root, id? } entries. Fail-soft: a missing,
+// unreadable, or malformed config yields [] and the server proceeds exactly as before.
+// Shape (documented in docs/snapshot-schema-v1.md):
+//   { "projects": [ { "root": "../aiw", "id": "aiw" } ] }
+// `root` is a project root (relative to the repo root, or absolute); `id` is an optional
+// label used only in logs. Entries without a usable `root` string are skipped.
+export function loadProjectsConfig(configPath, log = logLine) {
+  if (!existsSync(configPath)) return [];
+  let parsed;
+  try {
+    parsed = JSON.parse(readFileSync(configPath, "utf8"));
+  } catch (error) {
+    log(`projects.config.json is invalid JSON (${String(error && error.message || error).slice(0, 160)}); skipping startup projection.`);
+    return [];
+  }
+  const list = parsed && Array.isArray(parsed.projects) ? parsed.projects : null;
+  if (!list) {
+    log("projects.config.json has no `projects` array; skipping startup projection.");
+    return [];
+  }
+  return list
+    .map((entry) => (entry && typeof entry.root === "string" && entry.root.trim() ? { root: entry.root.trim(), id: typeof entry.id === "string" ? entry.id : null } : null))
+    .filter(Boolean);
+}
+
+// Atomically write the console snapshot into this repo's .aiw/views/ (temp + rename), mirroring
+// how the projector writes its own artifact. Returns the absolute output path.
+function writeConsoleSnapshot(viewsDir, snapshot) {
+  mkdirSync(viewsDir, { recursive: true });
+  const outPath = join(viewsDir, CONSOLE_SNAPSHOT_NAME);
+  const tmp = `${outPath}.tmp`;
+  writeFileSync(tmp, JSON.stringify(snapshot, null, 2) + "\n", "utf8");
+  renameSync(tmp, outPath);
+  return outPath;
+}
+
+// Run the projector once per configured project and land the resulting snapshot in this repo's
+// .aiw/views/ (the canonical path the UI fetches). Fail-soft per project and overall: any error
+// is logged and the server keeps serving. When several projects are configured they populate the
+// same canonical file (last successful projection wins); the console renders one project.
+export function runStartupProjection(opts = {}) {
+  const repoRoot = opts.repoRoot || REPO_ROOT;
+  const configPath = opts.configPath || (repoRoot === REPO_ROOT ? PROJECTS_CONFIG : join(repoRoot, "projects.config.json"));
+  const viewsDir = opts.viewsDir || join(repoRoot, ".aiw", "views");
+  const log = opts.log || logLine;
+  const now = opts.now;
+
+  const projects = loadProjectsConfig(configPath, log);
+  if (projects.length === 0) {
+    log("no projects.config.json (or no projects listed); serving without startup projection.");
+    return { projected: [] };
+  }
+
+  const projected = [];
+  for (const entry of projects) {
+    const label = entry.id || entry.root;
+    const root = resolve(repoRoot, entry.root);
+    if (!existsSync(root)) {
+      log(`startup projection skipped for '${label}': project root ${root} does not exist.`);
+      continue;
+    }
+    try {
+      const snapshot = buildSnapshot(root, now ? { now } : {});
+      const outPath = writeConsoleSnapshot(viewsDir, snapshot);
+      log(`startup projection ok (${label}): project=${snapshot.project_id}; objectives=${snapshot.roadmap_tree.counts.total}; wrote ${outPath}`);
+      projected.push({ id: label, root, path: outPath, project_id: snapshot.project_id });
+    } catch (error) {
+      log(`startup projection failed for '${label}': ${String(error && error.message || error).slice(0, 200)}; existing snapshot left untouched.`);
+    }
+  }
+  return { projected };
 }
 
 // ---------------------------------------------------------------- .git watchers
@@ -233,14 +319,20 @@ server.on("error", (error) => {
 
 // ---------------------------------------------------------------- startup
 
-logLine("starting…");
-runBuild("startup");
-lastSignature = gitSignature();
-startWatchers();
-setInterval(() => maybeRebuild("safety-poll"), SAFETY_POLL_MS).unref();
+// Guard the side-effectful startup so importing this module (e.g. from tests) does not bind a
+// port or spawn watchers; only a direct `node serve-project-console.mjs` invocation starts up.
+const invokedDirectly = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (invokedDirectly) {
+  logLine("starting…");
+  runStartupProjection();
+  runBuild("startup");
+  lastSignature = gitSignature();
+  startWatchers();
+  setInterval(() => maybeRebuild("safety-poll"), SAFETY_POLL_MS).unref();
 
-server.listen(PORT, HOST, () => {
-  logLine(`serving ${REPO_ROOT}`);
-  logLine(`open  http://${HOST}:${PORT}${ENTRY}`);
-  logLine("watching .git for commits / branch switches / merges / pulls — History auto-syncs.");
-});
+  server.listen(PORT, HOST, () => {
+    logLine(`serving ${REPO_ROOT}`);
+    logLine(`open  http://${HOST}:${PORT}${ENTRY}`);
+    logLine("watching .git for commits / branch switches / merges / pulls — History auto-syncs.");
+  });
+}

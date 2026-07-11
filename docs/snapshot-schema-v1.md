@@ -2,9 +2,10 @@
 
 > Derived from the JAME console data contract (audit §B.2, snapshot v0.3). This is the AIW
 > projection contract: the shape the AIW projector emits at
-> `<project-root>/.aiw/project_console.snapshot.json`. **Finalized by objective 001**
+> `<project-root>/.aiw/views/project_console.snapshot.json`. **Finalized by objective 001**
 > (`001-console-projector`), which built the projector (`tools/projector/project.mjs`) and its
-> fixture tests; this document matches that implementation.
+> fixture tests; this document matches that implementation. See §5 for the canonical location
+> and the server startup projection flow.
 
 ## Why this file exists
 The forked console reads many `.aiw/*` sources, but **exactly one is required**:
@@ -22,8 +23,8 @@ projector emits just this file; richer views come from the optional groups (§3)
 ```
 
 The projector writes exactly one file, atomically (temp + rename), at
-`<project-root>/.aiw/project_console.snapshot.json`, and never writes, moves, or deletes anything
-outside `<project-root>/.aiw/`.
+`<project-root>/.aiw/views/project_console.snapshot.json`, and never writes, moves, or deletes
+anything outside `<project-root>/.aiw/`. See §5 for the canonical location and flow.
 
 ## 2. Required keys (the console reads these directly)
 Top-level keys observed as read by the console (audit §B.2). Required for the console to render
@@ -67,3 +68,35 @@ Each lives at its own `.aiw/...` path and is loaded only if present:
   branch fallback) for `git_history.snapshot.json`.
 - `config.json` (`projects{path,base_branch,verification,push}`) → `project.json` 1:1.
 - The projector MUST NOT write anywhere except the given project root's `.aiw/` (see objective 001).
+
+## 5. Canonical location & flow
+There is exactly one canonical path for the console snapshot, and one flow that keeps it fresh —
+no manual projection step.
+
+- **Projector output path.** `tools/projector/project.mjs` writes to
+  `<project-root>/.aiw/views/project_console.snapshot.json` (atomic temp + rename). This is the
+  canonical location: it sits next to `views/git_history.snapshot.json`, and it is exactly what
+  the UI fetches (`docs/project-console/assets/project-console.js` →
+  `../../.aiw/views/project_console.snapshot.json`).
+- **Server startup projection.** `tools/project-console/serve-project-console.mjs` reads an
+  optional `projects.config.json` at the repo root on startup and, for each listed project, runs
+  the projector and writes the resulting snapshot into **this repo's**
+  `.aiw/views/project_console.snapshot.json` — the same auto-rebuild treatment
+  `git_history.snapshot.json` already gets. The config shape is:
+
+  ```jsonc
+  {
+    "projects": [
+      { "root": "../aiw", "id": "aiw" }   // root: project root, relative to the repo root or absolute; id: optional log label
+    ]
+  }
+  ```
+
+  Only `root` is required per entry; entries without a usable `root` are skipped. When several
+  projects are listed they populate the same canonical file (last successful projection wins; the
+  console renders one project). A **missing or invalid** `projects.config.json`, or a project root
+  that does not exist, is **fail-soft**: it is logged and the server serves exactly as it did
+  before, leaving any existing snapshot untouched.
+- **The UI reads `.aiw/views/` only.** The console fetches the committed/regenerated snapshots
+  from `.aiw/views/`; it never reads the legacy `<root>/.aiw/project_console.snapshot.json` path
+  and never runs the projector itself.

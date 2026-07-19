@@ -27,6 +27,9 @@ function makeFakeRepo(prefix) {
     viewsDir,
     snapshotPath: join(viewsDir, "project_console.snapshot.json"),
     roadmapPath: join(viewsDir, "roadmap.json"),
+    // The delivery copy of the roadmap view at the path the frozen UI reads
+    // (docs/project-console/assets/project-console.js:11 → ../../.aiw/roadmap/roadmap.json).
+    roadmapDeliveryPath: join(repoRoot, ".aiw", "roadmap", "roadmap.json"),
     cleanup: () => rmSync(repoRoot, { recursive: true, force: true })
   };
 }
@@ -84,6 +87,32 @@ test("runStartupProjection also lands roadmap.json alongside the console snapsho
   }
 });
 
+test("runStartupProjection also delivers the roadmap at .aiw/roadmap/roadmap.json for the frozen UI", () => {
+  const repo = makeFakeRepo("aiw-startup-delivery-");
+  try {
+    writeFileSync(
+      join(repo.repoRoot, "projects.config.json"),
+      JSON.stringify({ projects: [{ root: FIXTURE, id: "sample" }] }) + "\n",
+      "utf8"
+    );
+    const result = runStartupProjection({ repoRoot: repo.repoRoot, now: FIXED_NOW, log: () => {} });
+
+    // The delivery copy lands at the path the frozen console reads (project-console.js:11).
+    assert.ok(existsSync(repo.roadmapDeliveryPath), "roadmap delivery copy did not land in .aiw/roadmap/");
+    assert.equal(result.projected[0].delivered["roadmap.json"], resolve(repo.roadmapDeliveryPath));
+
+    // The delivery copy is byte-identical to the canonical view; the canonical path is unchanged.
+    assert.ok(existsSync(repo.roadmapPath), "canonical roadmap view must remain in .aiw/views/");
+    assert.equal(
+      readFileSync(repo.roadmapDeliveryPath, "utf8"),
+      readFileSync(repo.roadmapPath, "utf8"),
+      "delivery copy must match the canonical roadmap view byte-for-byte"
+    );
+  } finally {
+    repo.cleanup();
+  }
+});
+
 test("runStartupProjection resolves a relative project root against the repo root", () => {
   const repo = makeFakeRepo("aiw-startup-rel-");
   try {
@@ -111,6 +140,7 @@ test("missing projects.config.json is fail-soft: no snapshot, no throw", () => {
     assert.deepEqual(result.projected, []);
     assert.ok(!existsSync(repo.snapshotPath), "no snapshot should be written without a config");
     assert.ok(!existsSync(repo.roadmapPath), "no roadmap should be written without a config");
+    assert.ok(!existsSync(repo.roadmapDeliveryPath), "no roadmap delivery copy should be written without a config");
     assert.ok(logs.some((m) => /without startup projection/.test(m)), "expected a fail-soft log line");
   } finally {
     repo.cleanup();
@@ -126,6 +156,7 @@ test("invalid projects.config.json is fail-soft: no snapshot, no throw", () => {
     assert.deepEqual(result.projected, []);
     assert.ok(!existsSync(repo.snapshotPath));
     assert.ok(!existsSync(repo.roadmapPath));
+    assert.ok(!existsSync(repo.roadmapDeliveryPath));
     assert.ok(logs.some((m) => /invalid JSON/.test(m)));
   } finally {
     repo.cleanup();
@@ -144,6 +175,7 @@ test("a configured project root that does not exist is skipped, not written", ()
     assert.deepEqual(result.projected, []);
     assert.ok(!existsSync(repo.snapshotPath));
     assert.ok(!existsSync(repo.roadmapPath));
+    assert.ok(!existsSync(repo.roadmapDeliveryPath));
   } finally {
     repo.cleanup();
   }

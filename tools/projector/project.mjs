@@ -43,13 +43,25 @@ const OPERATIONAL_STATUSES = ["active", "blocked", "idle"];
 // derives the Now/Ready Next/Later/History queue groups from status + depends_on
 // (`v3QueueGroupKey`); it never reads a persisted group field, so we emit none.
 const ROADMAP_RUN_STATUSES = ["planned", "active", "completed", "blocked"];
+// A `planned` run reaches the console's Later group ONLY when it has ≥1 unsatisfied
+// dependency (v3QueueGroupKey, pc.js:2654-2655). Parked objectives are deferred behind
+// the pending queue; they depend on the pending run ids so the never-`completed` Now run
+// keeps them Later. When there are no pending objectives, they depend on this sentinel
+// instead — it matches no run_id, so `runsById.get(sentinel)` is undefined and the
+// dependency is unsatisfied, keeping parked runs in Later rather than Ready Next.
+const PARKED_QUEUE_SENTINEL = "__pending_queue__";
 // processed/<PREFIX>-*.md → a terminal run status. Anything not listed as a negative
 // outcome (including APPROVED- and no prefix) is treated as a successful completion.
+// ERROR- and HUMAN_REVIEW- runs must NOT read as clean green completions: the reader's
+// only non-green terminal icon is `blocked` (v3TerminalIcon, pc.js:2625-2626), so they
+// map to `blocked` with their real outcome preserved in closeout_result.
 const PROCESSED_STATUS_BY_PREFIX = {
   REJECTED: "blocked",
   BLOCKED: "blocked",
   FAILED: "blocked",
-  CANCELLED: "blocked"
+  CANCELLED: "blocked",
+  ERROR: "blocked",
+  HUMAN_REVIEW: "blocked"
 };
 
 function safeReadText(filePath) {
@@ -117,6 +129,57 @@ function summaryFromMarkdown(body, fallback) {
   return fallback;
 }
 
+// AIW objective files lead with a `# Project` H1 (the project name) then a `# Objective`
+// section holding the actual objective prose. Return the trimmed text between the
+// `# Objective` heading and the next heading, or null when the file has no such heading
+// (older/flat objective files that carry the objective directly in their H1).
+function objectiveSectionBody(body) {
+  let inSection = false;
+  const collected = [];
+  for (const raw of body.split(/\r?\n/)) {
+    if (/^#{1,6}\s+/.test(raw.trim())) {
+      if (inSection) break; // the next heading closes the Objective section
+      if (/^#\s+objective\s*$/i.test(raw.trim())) inSection = true;
+      continue;
+    }
+    if (inSection) collected.push(raw);
+  }
+  return inSection ? collected.join("\n").trim() : null;
+}
+
+// First sentence of a block of prose: collapse whitespace and cut at the first sentence
+// terminator (., !, ?), keeping it. Returns the whole text when it has no terminator.
+function firstSentence(prose) {
+  const normalized = prose.replace(/\s+/g, " ").trim();
+  if (!normalized) return "";
+  const match = normalized.match(/^(.*?[.!?])(?:\s|$)/);
+  return match ? match[1].trim() : normalized;
+}
+
+// Roadmap run title: the first non-empty line under the objective file's `# Objective`
+// heading (NOT the `# Project` H1). Falls back to the H1 for flat objective files that
+// have no `# Objective` section. Reader consumes this at pc.js:2812.
+function roadmapTitle(body, fallbackId) {
+  const section = objectiveSectionBody(body);
+  if (section) {
+    const firstLine = section.split(/\r?\n/).map((l) => l.trim()).find(Boolean);
+    if (firstLine) return firstLine;
+  }
+  return titleFromMarkdown(body, fallbackId);
+}
+
+// Roadmap run summary: the first sentence of the objective body under `# Objective` (NOT
+// the project-name line). Falls back to the first post-H1 line for flat objective files.
+// Reader consumes this at pc.js:2813.
+function roadmapSummary(body, fallbackId) {
+  const section = objectiveSectionBody(body);
+  if (section) {
+    const sentence = firstSentence(section);
+    if (sentence) return sentence;
+  }
+  return summaryFromMarkdown(body, `Objective ${fallbackId}.`);
+}
+
 // Read objectives/{pending,parked,processed}/*.md into detailed records (title,
 // summary, full body, and — for processed — the UPPERCASE filename status prefix).
 function readObjectiveDetails(root) {
@@ -128,11 +191,13 @@ function readObjectiveDetails(root) {
       if (!name.toLowerCase().endsWith(".md")) continue;
       const id = name.replace(/\.md$/i, "");
       const body = safeReadText(join(dir, name));
-      const prefixMatch = id.match(/^([A-Z][A-Z0-9]*)-/);
+      // Include `_` so underscore prefixes like HUMAN_REVIEW- are captured whole
+      // (not truncated to HUMAN); the trailing `-` still bounds the prefix.
+      const prefixMatch = id.match(/^([A-Z][A-Z0-9_]*)-/);
       byClassification[classification].push({
         id,
-        title: titleFromMarkdown(body, id),
-        summary: summaryFromMarkdown(body, `Objective ${id}.`),
+        title: roadmapTitle(body, id),
+        summary: roadmapSummary(body, id),
         full_description: body.trim(),
         classification,
         prefix: prefixMatch ? prefixMatch[1] : null,
@@ -156,9 +221,11 @@ export function buildRoadmap(root, opts = {}) {
 
   // depends_on target for parked runs: the pending run ids. The Now run is `active`
   // (never `completed`), so the dependency is unsatisfied → the console files parked
-  // runs under Later. With no pending objectives this list is empty (parked would then
-  // read as Ready Next — the degenerate "nothing ahead of it" case).
+  // runs under Later. With no pending objectives, fall back to PARKED_QUEUE_SENTINEL so
+  // parked runs still carry an unsatisfied dependency and stay in Later (the reader's
+  // only route there, pc.js:2654-2655) rather than degenerating into Ready Next.
   const pendingIds = pending.map((o) => o.id);
+  const parkedDependsOn = pendingIds.length ? pendingIds : [PARKED_QUEUE_SENTINEL];
 
   let queueOrder = 0;
   const runs = [];
@@ -183,7 +250,7 @@ export function buildRoadmap(root, opts = {}) {
       summary: objective.summary,
       full_description: objective.full_description,
       status: "planned",
-      depends_on: [...pendingIds]
+      depends_on: [...parkedDependsOn]
     });
   });
 

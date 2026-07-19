@@ -187,6 +187,25 @@ groups, so the flat shape renders faithfully. Mapping (objective 003):
 | `objectives/parked/*` | `planned`, `depends_on: [all pending ids]` (the `active` run is never `completed`, so unsatisfied) | Later |
 | `objectives/processed/PREFIX-*` | terminal — `APPROVED-`/none → `completed`; `REJECTED-`/`BLOCKED-`/`FAILED-`/`CANCELLED-` → `blocked` | History |
 
-> Path note: the projector emits at `.aiw/views/roadmap.json` (objective 003). The forked
-> reader's `PATHS.roadmapV3` currently points at `.aiw/roadmap/roadmap.json`; reconciling
-> that wiring is a UI-file change, out of scope for objective 003.
+> Path note: the projector emits the canonical roadmap at `.aiw/views/roadmap.json`
+> (objective 003), but the forked reader's `PATHS.roadmapV3` fetches
+> `../../.aiw/roadmap/roadmap.json` (`docs/project-console/assets/project-console.js:11`). The UI
+> is frozen, so instead of rewiring it, startup projection **also delivers an identical copy of the
+> roadmap view at `.aiw/roadmap/roadmap.json`** — the delivery path the reader actually reads —
+> so the Roadmap tab resolves instead of 404ing.
+
+### Delivery copy — `.aiw/roadmap/roadmap.json`
+After startup projection, the roadmap view lands at **two** paths for each configured project:
+
+- `.aiw/views/roadmap.json` — the **canonical** view (unchanged; sits beside the console snapshot
+  and `git_history.snapshot.json`, per §5). This is the source of truth.
+- `.aiw/roadmap/roadmap.json` — a byte-identical **delivery copy**, written solely because the
+  frozen console fetches the roadmap from that path (`PATHS.roadmapV3` →
+  `../../.aiw/roadmap/roadmap.json`, `docs/project-console/assets/project-console.js:11`). It exists
+  only to satisfy the reader; nothing else consumes it, and it is not a new schema.
+
+Both are written atomically (temp + rename) by
+`tools/project-console/serve-project-console.mjs` (`PROJECTED_VIEWS[].deliverTo` +
+`writeJsonAtomic`). The delivery copy is **fail-soft and contingent**: it is written only after the
+canonical view is produced, so a project that cannot produce the roadmap gets neither file, and a
+failure writing the copy is logged and skipped, leaving the canonical view in place.

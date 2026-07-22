@@ -164,8 +164,8 @@ reads no persisted group field, so the projector emits none.
       "runs": [{
         "run_id": "001-first-objective",   // objective filename stem
         "queue_order": 1,                    // dense 1..N, operator reading order
-        "title": "First objective",          // objective's "# …" H1 first line
-        "summary": "…",                      // first body line after the H1
+        "title": "First objective",          // first line under the `# Objective` heading
+        "summary": "…",                      // first sentence of the objective body
         "full_description": "…",             // trimmed objective body
         "status": "active",                  // planned | active | completed | blocked
         "depends_on": [],                    // run_ids; drives Ready Next vs Later
@@ -180,12 +180,17 @@ AIW has no phase tree, so every objective becomes a `run` under one synthetic
 objective/phase container; the console flattens runs across objectives for the queue
 groups, so the flat shape renders faithfully. Mapping (objective 003):
 
+Run `title` is the first non-empty line under the objective file's `# Objective` heading
+(AIW objective files lead with a `# Project` H1, then a `# Objective` section) and `summary`
+is the first sentence of that objective body — never the `# Project` project name. Files
+with no `# Objective` heading fall back to the H1/first-line derivation.
+
 | Source | `status` / `depends_on` | Console group |
 |---|---|---|
 | `objectives/pending/*` (first alphabetical) | `active` | Now |
 | `objectives/pending/*` (the rest) | `planned`, `depends_on: []` | Ready Next |
-| `objectives/parked/*` | `planned`, `depends_on: [all pending ids]` (the `active` run is never `completed`, so unsatisfied) | Later |
-| `objectives/processed/PREFIX-*` | terminal — `APPROVED-`/none → `completed`; `REJECTED-`/`BLOCKED-`/`FAILED-`/`CANCELLED-` → `blocked` | History |
+| `objectives/parked/*` | `planned`, `depends_on: [all pending ids]` (the `active` run is never `completed`, so unsatisfied); when pending is empty, `depends_on: ["__pending_queue__"]` (a sentinel that matches no run, so still unsatisfied) | Later |
+| `objectives/processed/PREFIX-*` | terminal — `APPROVED-`/none → `completed`; `REJECTED-`/`BLOCKED-`/`FAILED-`/`CANCELLED-`/`ERROR-`/`HUMAN_REVIEW-` → `blocked` (with the real outcome kept in `closeout_result`, e.g. `error`, `human_review` — never a green `completed`) | History |
 
 > Path note: the projector emits the canonical roadmap at `.aiw/views/roadmap.json`
 > (objective 003), but the forked reader's `PATHS.roadmapV3` fetches

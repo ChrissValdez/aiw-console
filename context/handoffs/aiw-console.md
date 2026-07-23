@@ -1,18 +1,20 @@
-# HANDOFF — O4 tramo 1: el contrato de normalización
+# HANDOFF — hilo `aiw-console` (la consola)
 
-Cierre de la sesión de cabina del 2026-07-23 (audit Phase 0).
-Este documento abre la sesión del tramo 1. No repite el audit: lo referencia.
+> **Este archivo es EFÍMERO y se SOBRESCRIBE.** Es el relevo del hilo de la
+> consola: se reescribe al cerrar cada sesión de este hilo y se consume al abrir
+> la siguiente. No es un record — no acumula historia, no se versiona por tramo.
+> Git guarda las versiones anteriores si alguna vez hicieran falta.
 
-## Insumos que la sesión nueva necesita adjuntos
+**Estado del hilo:** O4 tramo 1 — el contrato de normalización.
+Última actualización: 2026-07-23, al cerrar la sesión del audit Phase 0.
 
-1. `aiw/records/AUDIT-CONSOLE-O4-PHASE0.md` — el mapa (commit `dc76b49`)
-2. `projects/cantu-studio/.aiw/roadmap/roadmap.json` — el roadmap real de Cantu
-3. `aiw/DECISIONES.md` — al día hasta D-036
-4. `aiw/roadmap_AIW_temp.md` — el roadmap de AIW en Markdown (a convertir)
+## Lecturas de arranque (todas dentro del repo sincronizado)
 
-Antes de abrir: **sincronizar el repo `aiw` como knowledge del proyecto.** Acaba de
-recibir el audit y el DECISIONES nuevo. Sin sync, la cabina los lee viejos y hay que
-tratarlos como `[NO VERIFICADO]`.
+1. `context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md` — el mapa (commit `dc76b49`)
+2. `context/DECISIONES.md` — log del sistema, al día hasta D-038
+3. `context/aiw/roadmap_AIW_temp.md` — el roadmap donde O4 vive HOY (migrará)
+4. `projects/cantu-studio/.aiw/roadmap/roadmap.json` — el roadmap real de Cantu
+   (único que hay que pedir al operador: no está en el repo sincronizado)
 
 Modelo recomendado: **Fable, potencia alta o max.** Es deliberación de diseño, no
 volumen: poca lectura, mucha consecuencia. (Fable no tiene modalidad rápida; en una
@@ -161,3 +163,13 @@ rehace después, contra la consola nueva, si se quiere.
 - `aiw-console/projects.config.json.bak` sin trackear: borrar o commitear, que no quede en
   limbo.
 - `aiw/.aiw/project_console.snapshot.json` es una copia stale; residuo a limpiar.
+
+## Nota de estructura (D-038)
+
+O4 vive hoy en el roadmap de AIW porque la consola aún no tiene roadmap propio —
+el propio roadmap lo declara: "Consola global (migrará a su propio roadmap cuando
+nazca)". **Esa migración es trabajo del tramo 1**: cuando el contrato defina qué
+expone un proyecto, `aiw-console` gana su `roadmap.json` y O4 se muda ahí, junto
+con la migración de O0 desde el roadmap de Cantu.
+
+Hasta entonces, `context/aiw-console/` contiene solo `records/`.

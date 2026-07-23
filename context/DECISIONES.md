@@ -490,3 +490,42 @@ rutas viejas; (c) escribir `context/aiw-console/` al cerrar el tramo 1 de O4,
 cuando el contrato le dé forma a la identidad de la consola.
 Criterio de borrado: N/A (define dónde vive el contexto; la sustituye una
 decisión futura).
+
+
+
+## D-038 — 2026-07-23 — Taxonomía del contexto: permanente vs efímero; DECISIONES es del sistema
+Al preguntar el operador por qué el handoff de O4 vivía en `context/aiw/records/`,
+se destaparon tres errores de modelado con una raíz común: **`aiw` nombra dos
+cosas** — el SISTEMA (nivel raíz del workspace, D-031) y el kernel como proyecto —
+y lo transversal se estaba archivando como si fuera del kernel.
+**1. Handoff ≠ record.** Un record (audit, diagnóstico) mide un estado real con
+evidencia citada y sigue valiendo como prueba: es **permanente**. Un handoff es
+empaquetado de conveniencia para cruzar una frontera de sesión: es **efímero** y
+muere al ser leído. Guardarlos juntos convertía estado que se pudre en contexto
+canónico. Decisión: los handoffs salen de las carpetas de proyecto y pasan a
+`context/handoffs/`, **uno por hilo de conversación, siempre sobrescrito**
+(`orquestacion.md`, `aiw.md`, `aiw-console.md`, `cantu-studio.md`). Sin sufijos de
+tramo ni fecha: solo hay uno, así que nunca hay ambigüedad sobre cuál es el
+vigente. Git conserva las versiones anteriores. Esto es además lo que hace
+operable el modelo de conversaciones simultáneas de D-034: cada hilo tiene un
+archivo obvio que leer al abrir y que reescribir al cerrar. Se nombra un cuarto
+hilo que no tenía casa: **orquestación general** (topología, metodología,
+decisiones de sistema) — es el hilo en el que se tomó esta decisión.
+**2. `DECISIONES.md` es el log del SISTEMA, no de AIW.** Su contenido reciente es
+transversal (D-031 topología, D-033 limpieza, D-035 el fork, D-036 la carpeta de
+Cantu, D-037 la mudanza) y casi nada es del kernel. Sube a `context/DECISIONES.md`.
+Rutas actualizadas en `aiw/claude.md` y `aiw/CONSTITUCION.md`.
+**3. El audit de O4 pertenece a la consola.** Midió el código de la consola, no del
+kernel. Va a `context/aiw-console/records/`, que es también el nacimiento de esa
+carpeta (pendiente (c) de D-037, cerrado).
+**Regla que ordena todo:** contexto de proyecto es permanente y va en la carpeta
+del proyecto; relevo de sesión es efímero y va en `handoffs/`. Ante la duda:
+¿seguirá siendo cierto dentro de un mes?
+**Anomalía declarada, con fecha de caducidad:** O4 vive en el roadmap de AIW
+porque la consola aún no tiene roadmap propio — el propio roadmap lo dice
+("migrará a su propio roadmap cuando nazca"). El handoff quedó ahí por herencia,
+no por diseño. Esa migración es trabajo del tramo 1, junto con la migración de O0
+desde el roadmap de Cantu (D-034).
+**Pendiente (a) de D-037 cerrado:** el `README.md` de `context/` se reescribió con
+esta taxonomía y ya no afirma que `cantu-studio` carece de carpeta.
+Criterio de borrado: N/A (define cómo se organiza el contexto).

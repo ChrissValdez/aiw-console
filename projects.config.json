@@ -1,5 +1,5 @@
 {
   "projects": [
-    { "root": "../aiw", "id": "aiw" }
+    { "root": "../../aiw", "id": "aiw" }
   ]
 }

@@ -449,3 +449,44 @@ nombre se decide en el contrato de normalización. Regla operativa mientras tant
 **en la consola, la ruta base es UNA constante en UN archivo**, para que el
 rename cueste una línea.
 Criterio de borrado: se cierra cuando `.aiw` se borre en el corte.
+
+## D-037 — 2026-07-23 — El contexto de cabina se muda a aiw-console (enmienda el mecanismo de D-034)
+D-034 registró que el repo `aiw` se sincronizaría como knowledge del Project de
+Claude. **Esa premisa era falsa:** solo `aiw-console` resultó sincronizable. El
+mecanismo se reemplaza sin cambiar el propósito.
+**Decisión:** el contexto de gobernanza se **MUDA** (no se copia) a
+`aiw-console/context/`, con estructura simétrica por proyecto: `context/aiw/`,
+`context/cantu-studio/`, y `context/aiw-console/` cuando exista. El operador
+descartó explícitamente el espejo con manifest: sin copia no hay deriva.
+**Ejecutado y verificado:** 7 archivos mudados desde `aiw` con hash SHA-256
+comprobado antes de borrar el origen (`DECISIONES.md`, `ESTADO.md`,
+`AIW_CONTEXT.md`, `roadmap_AIW_temp.md`, `DELEGACION.md`, y los dos records de
+O4); puntero `aiw/CONTEXTO.md` creado; rutas actualizadas en `claude.md` y
+`CONSTITUCION.md`; prosa de registros históricos NO tocada. Commits `48c427b`
+(aiw) y `a229785`/`fbbae21` (aiw-console).
+**`CANTU_STUDIO_CONTEXT.md` adoptado:** se verificó que **no existía en ningún
+repo** — vivía solo como adjunto del Project, huérfano y sin forma de
+verificarlo. Se adopta como canónico en `context/cantu-studio/`.
+**Lo que NO se muda, por dos razones independientes:** `CLAUDE.md`, `AGENTS.md` y
+`CONSTITUCION.md` son reglas que el agente lee del repo donde trabaja; y en
+`cantu-studio` además están listados en `.aiw/docs/docs_index.json`, cuyo
+validador exige su existencia física (medido: `AGENTS.md`, `CLAUDE.md` y
+`README.md` están en `docs[]`; solo `README_PHASE1.md` queda fuera).
+**Acoplamiento nuevo, declarado:** `aiw/claude.md` y `aiw/CONSTITUCION.md` ahora
+referencian `../projects/aiw-console/context/aiw/…` — una ruta relativa que SALE
+del repo. Funciona dentro del workspace; si alguien clona `aiw` solo, esas
+referencias apuntan al vacío. Se acepta a sabiendas.
+**Disciplina que reemplaza a la de D-034:** el ciclo ya no es "push → sync" sino
+**"editar contexto en `aiw-console` → commit → push → sync"**. Un cierre de
+sesión toca DOS repos: `aiw` para código, `aiw-console` para contexto. Prohibido
+subir archivos sueltos al knowledge del Project: crean una segunda copia que
+deriva (ocurrió con `roadmap_AIW_temp.md`, que llegó a contradecir al del repo
+sobre el estado del merge de 005).
+**Pendientes derivados:** (a) corregir el párrafo de `context/README.md` que dice
+que `cantu-studio` no tiene carpeta — ya la tiene; (b) reconciliar
+`CANTU_STUDIO_CONTEXT.md` contra la topología nueva: apunta a
+`AI_Workflow_Workspace`, workspace retirado en D-031, y probablemente tenga más
+rutas viejas; (c) escribir `context/aiw-console/` al cerrar el tramo 1 de O4,
+cuando el contrato le dé forma a la identidad de la consola.
+Criterio de borrado: N/A (define dónde vive el contexto; la sustituye una
+decisión futura).

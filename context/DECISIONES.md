@@ -529,3 +529,68 @@ desde el roadmap de Cantu (D-034).
 **Pendiente (a) de D-037 cerrado:** el `README.md` de `context/` se reescribió con
 esta taxonomía y ya no afirma que `cantu-studio` carece de carpeta.
 Criterio de borrado: N/A (define cómo se organiza el contexto).
+
+## D-039 — 2026-07-23 — Contrato de la carpeta, capa 1: familia v1, `.project/`, frescura
+Tramo 1 de O4. El contrato queda escrito en `context/aiw-console/CONTRATO.md` y
+**supersede a `docs/snapshot-schema-v1.md` como norma**; ese documento pasa a valer
+como evidencia de lo que el proyector emite hoy. Vive en la carpeta de la consola
+porque el contrato lo cumplen todos los proyectos pero lo define y lo consume la
+consola: la norma la escribe quien lee.
+**Familia de schema: v1 del proyector.** Se descarta la v0.3 de Cantu, y el motivo
+no es estético. La v0.3 no es un formato *emitido*: es un artefacto **escrito a
+mano** que se pudrió. Adoptarla habría comprometido al sistema a mantener a mano
+exactamente lo que nadie mantuvo. La v1 tiene emisor real
+(`tools/projector/project.mjs`) y es identidad-neutral — el audit la midió como la
+única pieza del toolchain que no hornea `JAME`, `Cantu`, ni ids de run o rama.
+**Corolario:** el proyector pasa a emitir también el snapshot de Cantu, con lo que
+la podredumbre se arregla como efecto lateral en vez de como ticket propio.
+**Nombre de la carpeta: `.project/`.** Cierra el pendiente que D-036 dejó abierto
+a propósito; **no lo enmienda**. El criterio que decide: `.aiw` nombra al emisor y
+un nombre tomado de la consola nombraría al consumidor — ninguno de los dos nombra
+el **contenido**, que es lo único que no cambia. Que hoy lea esa carpeta una
+consola es circunstancial. La vaguedad de `.project/` no es defecto sino el
+requisito: debe servir a cualquier proyecto y a cualquier consumidor. D-036 ya
+había anticipado el error de simetría (`:447`) y tenía razón. **`.project/`
+reemplaza también al nivel `views/`**: la carpeta entera es derivada, así que
+`views/` ya no distingue nada. Se conserva la regla operativa de D-036 (`:448-450`)
+—la ruta base como UNA constante en UN archivo— pero con justificación nueva: ya no
+por provisionalidad (el nombre está decidido) sino como disciplina permanente
+contra el acoplamiento que el audit midió (15 literales `../../.aiw/…` horneados en
+`CANTU-PCJS:1-27`, más el prefijo repetido en server, builder y validador).
+**Frescura.** `generated_at` pasa a **REQUERIDA** — no es clave nueva: ya existe en
+v1 (`snapshot-schema-v1.md:20`) y el proyector la emite (`CON-PROJ:274,444`); lo que
+cambia es que deja de ser presente-de-hecho para ser exigida-de-derecho. `sources`
+es la **única clave nueva**, con `{path, mtime}` por fuente leída. Se elige `mtime`
+sobre hash de contenido **por modo-de-fallo**: un checkout de git resetea mtimes
+hacia adelante, así que su error es "stale cuando está fresco" — falla **ruidoso,
+nunca silencioso**, y el fallo que este contrato existe para impedir es el
+silencioso. Revisión a hash si aparece un falso positivo real en operación, no por
+hipótesis. **`generated_from` NO se renombra:** v1 ya cumple el requisito emitiendo
+`aiw-projector@0.1.0` (`CON-PROJ:30-31`); renombrarla habría sido churn.
+**Provenance de Cantu — triple fallo medido en disco.** El snapshot de Cantu falla
+en las tres a la vez: `generated_from_run` lleva un run_id (un run es un evento, no
+una herramienta, y no se lo puede volver a correr); `generated_from` está ocupado
+por una cadena que no nombra herramienta ni versión; y `generated_at` está
+**ausente por completo**. Ese tercero es el portante: sin fecha de emisión, su
+staleness **no es detectable ni en principio**, porque no hay contra qué comparar
+ningún `mtime`. Medido aparte con `stat`: el snapshot lleva **21.57 días** sin
+tocarse mientras el roadmap que dice describir se tocó hoy — cifra que solo se pudo
+obtener desde fuera del artefacto, que es el argumento entero. Su `run_queue_ref`
+apunta además a un archivo que no existe en disco.
+**`no_claims_summary` y `validation_summary` quedan OPACOS** — tipo objeto,
+contenido sin especificar, pass-through. Su única evidencia es `{}` en los dos
+snapshots que el proyector emite. Especificar un schema sin emisor y sin un solo
+ejemplo **es exactamente cómo nació la v0.3**; fijar su forma ahora repetiría, con
+la misma mecánica, el error que este tramo existe para corregir. Se decide en el
+tramo donde algo real las llene. `taxonomy_model` no queda opaco: tiene contenido,
+es idéntico en ambos archivos y es candidato a la capa 2.
+**D-026 no aplica en el tramo 1** — por su propio texto, que la condiciona a un
+consumidor **EXISTENTE** (`:198`). Ningún lector en disco lee la ruta nueva: los dos
+que hay fetchan el literal `../../.aiw/views/project_console.snapshot.json`
+(`CANTU-PCJS:2` required en `:5559`; `CON-PCJS:2` en `:3806`). Tampoco se emite copia
+de entrega en la ruta vieja: del lado de `aiw-console` el único lector pertenece al
+fork descartado por D-035, y del lado de Cantu la copia pisaría el único archivo
+requerido de la consola viva, contra la premisa aditiva de D-036. **D-026 se activa
+en el tramo 3**, contra el shell multi-proyecto, y el apartado que la exime lleva
+caducidad explícita escrita en el contrato.
+Criterio de borrado: N/A — lo sustituye una revisión futura del contrato.

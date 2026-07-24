@@ -1,0 +1,4 @@
+{
+  "note": "Declared source, maintained by hand. Where THIS project's normative contract lives. The projector emits it as taxonomy_model.specified_by so a reader can find the prose behind the vocabulary and the derivation rule that travel in the snapshot; it emits nothing when this file is absent, and omits the pointer when the path does not resolve (CONTRATO.md §7).",
+  "specified_by": "context/aiw-console/CONTRATO.md"
+}

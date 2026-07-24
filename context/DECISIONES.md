@@ -1184,3 +1184,134 @@ ningún `status`, `title`, `summary` o `closeout_result` cambió; solo los tres
 de aprobación).
 
 Criterio de borrado: N/A.
+
+## D-048 — 2026-07-24 — Migración idéntica antes que multiconsola: reorden de O4, retiro del prototipo y emisor redefinido por medición
+Revierte el orden que [[D-047]] estableció (el prototipo primero) y redefine el
+alcance del emisor con dos mediciones enfrente:
+`context/aiw-console/records/MEDICION-FUENTES-CONSOLA.md` (qué datos tiene HOY
+aiw-console para una consola idéntica) y
+`context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md` (el veredicto que dejó el
+prototipo). Se editaron **solo tres archivos**:
+`projects/aiw-console/roadmap/roadmap.json`, este log y el handoff del hilo. No se
+tocó `CONTRATO.md` ni ningún record —son insumo, no se editan—; no se borró el
+prototipo `console/`; no se ejecutó git en ninguna forma.
+
+**El defecto que se corrige.** [[D-047]] puso el prototipo primero para dar
+resultado visible temprano y ejercitar `roadmap_tree_v1` antes del emisor. Cumplió:
+el veredicto existe y es favorable. Pero el operador no quiere un prototipo propio
+como camino a la consola: quiere una **MIGRACIÓN IDÉNTICA** de la consola de Cantu
+—la avanzada, la que ya funciona— antes de que aparezca la multiconsola. Un
+prototipo nuevo por delante de un port es trabajo que hay que tirar: lo que se
+aprende construyendo una vista propia no se reusa al trasplantar el renderer real.
+El orden se invierte.
+
+**Cambio 1 — el prototipo se RETIRA como entregable de fase, y no se borra.**
+`RUN-CONSOLE-PROTOTIPO-CONSOLA-001` pasa a `completed` con
+`closeout_result: "descartado_por_D-048"`, su `full_description` gana la nota del
+retiro, y su fase (`O4.P10`, retitulada "…(RETIRADO por D-048 — historia)") baja al
+**final** de O4: es historia, no plan. **El `summary` y el veredicto se conservan
+intactos** — `records/VEREDICTO-ROADMAP-TREE-V1.md` no se tocó, y su hallazgo pasa
+entero al emisor: el árbol suelto **no es auto-descriptivo** (ni el vocabulario de
+`status` ni la regla de derivación de §12 viajan dentro del archivo), así que el
+envelope del snapshot debe cargar `taxonomy_model` (§17). El código de `console/`
+sigue en disco.
+*Nota de vocabulario, escrita para que no se lea como descuido:* **no existe token
+`descartado`** en el vocabulario cerrado de run (§11.a: `planned·active·blocked·
+completed`) y esta decisión **no lo inventa** —acuñar un quinto token es enmienda de
+contrato, no efecto lateral de un reorden—. Por eso el retiro viaja en
+`closeout_result`, que §14 mantiene string libre sin enum, y en la prosa del run. El
+`status: completed` dice lo cierto: el run corrió y cerró (hay código y hay
+veredicto); el `closeout_result` dice **cómo** cerró. §21 lo admite: la implicación
+`closeout_result ⇒ completed` se respeta.
+
+**Cambio 2 — nuevo orden de O4: EMISOR → PORT IDÉNTICO → MULTICONSOLA → aguas
+abajo.** Posición por posición: `O4.P0` audit, `O4.P1` contrato/migraciones (ambas
+`completed`, intactas), **`O4.P2` el emisor**, **`O4.P11` el port idéntico (fase
+nueva)**, `O4.P3` la multiconsola, `O4.P4` Cantu emite, `O4.P5` paridad, `O4.P8`
+UI/UX, `O4.P6` AIW tercer proyecto, `O4.P7` corte, `O4.P9` transversal, `O4.P10`
+prototipo retirado. El emisor va primero por una razón medida, no por gusto: **el
+snapshot es la única ruta `required` de las 15**; sin él las vistas primarias caen a
+fallback completo, así que un port sin fuentes propias no tendría qué renderizar.
+
+**Cambio 3 — fase nueva `O4.P11`, el PORT IDÉNTICO**, con
+`RUN-CONSOLE-PORT-IDENTICO-001` (`planned`, prefijo `RUN-CONSOLE-` por §10.d Regla
+1.a). Su `full_description` fija el trasplante en concreto: las **tres piezas
+reales** de `projects/cantu-studio/docs/project-console/` — `index.html` con sus
+cinco pestañas (Overview; Roadmap con sus dos subviews Run Queue y Roadmap; History;
+Docs; Status con Governance State y Console Diagnostics), `assets/project-console.css`
+y `assets/project-console.js`, **el renderer real, no una reescritura**—; la capa de
+datos **reapuntada** de `../../.aiw/**` (que en este repo es el área de entrega de la
+proyección de AIW, [[D-044]]) a las fuentes propias que emite el run anterior; y la
+**identidad JAME quitada** en los puntos ya localizados por el audit (Bloque E):
+regex `RUN-JAME-` del history-builder y el de strip del renderer (E.1), constantes de
+run y `RUN_OPERATOR_OVERRIDES` (E.2), rutas `.aiw/` horneadas (E.3), fallback de rama
+`jame-parallel-audit-001` (E.4). Es la consola idéntica **de un solo proyecto**: el
+menú lateral y la pantalla multiproyecto quedan explícitamente fuera. `phase_id`
+opaco (`O4.P11` es el siguiente id libre, no una posición), como fijó [[D-047]].
+
+**Cambio 4 — el emisor (`O4.P2`) redefinido por la medición: 3 + 3, y 9 diferidas.**
+La medición contó, renderer en mano, cuántas de las 15 rutas **pintan píxeles
+vivos**: seis. Tres ya tienen origen y emisor —snapshot (compuerta), roadmap propio
+(Overview + Roadmap + Cola) e historia git (History, 42 commits ya materializados)—;
+tres **no existen y sí pintan**: `docs/docs_index.json` (la pestaña Docs entera),
+`guardrails/project_guardrails.json` y `guardrails/no_claims.json` (las dos tablas de
+datos de Governance). Ése es el **mínimo funcional**. Las otras **nueve** de las doce
+sin emisor —`project.json`, `state/project_status.json`,
+`state/component_status.json`, `state/events.jsonl`, `ledgers/change_ledger.jsonl`,
+`ledgers/git_provenance.jsonl`, `ledgers/human_qa.jsonl`, `ledgers/ai_reviews.jsonl`,
+`guardrails/project_memory.jsonl`— **no compran un solo píxel vivo**: alimentan
+código dormido (la `renderHistory` huérfana, la `renderOverview` legacy), silencian el
+banner de fuentes opcionales, y dos de ellas llenan dos conteos de Diagnostics;
+`project_memory.jsonl` no tiene **ningún** consumidor en el renderer. Se **DIFIEREN a
+una fase de paridad cosmética posterior y OPCIONAL**, y esta decisión **NO la abre**:
+se abrirá solo si el operador la pide, y cada fuente entra por la puerta normal del
+contrato (§18.b) el día que tenga emisor. Nombrarlas diferidas es la mitad del valor
+de la medición: son deuda de paridad-con-Cantu, no de consola funcional.
+
+**Cambio 5 — los dos trabajos NUEVOS que la medición destapó, anotados en el emisor.**
+Ninguno estaba en el alcance que [[D-046]] le escribió:
+- **(a) el proyector no puede proyectar `aiw-console` hoy.** Lee el layout
+  `objectives/{pending,parked,processed}/*.md` + `logs/<id>/summary.md` +
+  `config.json` de un project root, y **aiw-console no tiene ninguno de los tres**.
+  Hay que enseñarle a proyectar este proyecto tomando su propio
+  `roadmap/roadmap.json` (`roadmap_tree_v1`) **como raíz del árbol** y `package.json`
+  como identidad mínima. Sumado al bloqueo ya conocido de `resolveInsideAiw`
+  ([[D-043]]), el emisor tiene ahora **dos** trabajos de fondo, no uno.
+- **(b) `docs_index.json` hay que CREARLO desde cero.** No existe en ninguna ruta del
+  repo (glob de todo el repo = 0 hits), pero el corpus sí: **23 `.md` reales**. Es el
+  único caso "cuerpos sin índice": crear el índice **es** crear la fuente, con
+  curaduría de `nav_tier`/`default_visible` y paths que existan en disco.
+
+**Cambio 6 — la compuerta prototipo→shell se disuelve; las de [[D-047]] se
+conservan.** `RUN-CONSOLE-SHELL-MULTIPROYECTO-001` deja de depender del prototipo
+retirado y **depende ahora de `RUN-CONSOLE-PORT-IDENTICO-001`**; el port, a su vez,
+**depende del emisor**. La cadena queda emisor → port → multiconsola. **Las dos
+compuertas que [[D-047]] existía para poner siguen en pie, sin cambio**:
+`RUN-CONSOLE-CORTE-RETIRO-LOCAL-001` conserva su `depends_on` de
+`RUN-CONSOLE-PARIDAD-RENDER-CANTU-001` **y** de `RUN-CONSOLE-UI-UX-001`, y UI/UX
+sigue **antes** del corte en la secuencia (posiciones 8 y 10). El corte es
+irreversible y no procede sin la revisión de uso: esa era la corrección central de
+[[D-047]] y este reorden no la toca.
+
+**Lo que NO se hizo, dicho explícitamente.** No se renumeró ningún `phase_id` ni
+`objective_id` —identidad opaca ([[D-047]])—; ningún `run_id` cambió; no se borró el
+prototipo ni su run; no se abrió la fase de paridad cosmética; no se construyó
+emisor, port ni fuente alguna: esta decisión **solo reordena y registra el plan**.
+
+**Verificación con números, post-edición.** Roadmap: **2 objetivos, 31 runs**,
+`queue_order` **1..31** único, denso y contiguo. **O4: 12 fases, 19 runs — 9
+`completed`, 10 `planned`** (el prototipo pasó de `planned` a `completed`; el port
+nace `planned`). O0: 3 fases, 12 runs (9 `completed`, 1 `active`, 2 `planned`), **sin
+tocar** — comparación campo a campo contra el respaldo pre-escritura: **0
+diferencias, byte-idéntico** (19 844 bytes de un lado y del otro), `queue_order` 1..12
+inalterados. **7 aristas `depends_on`** (eran 6; el par shell→prototipo se sustituyó
+por port→emisor y shell→port): **0 colgantes**, **0 dependencias que no precedan a su
+dependiente**. **0 fases con 0 runs.** `run_id` y `phase_id` únicos. Un solo run
+`active` en todo el roadmap, como manda la convención observada (§11.a).
+
+Referencias: [[D-047]] (el orden que esto revierte, y las compuertas que conserva),
+[[D-046]] (la redacción original de O4), [[D-044]] (el `.aiw/` que no es estado
+propio), [[D-043]] (`resolveInsideAiw` y la forma de `run_id`), y los dos records de
+medición citados arriba.
+
+Criterio de borrado: N/A.

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Identity-neutral shell: the document title is a generic label; the project's own
+         name is written by the renderer at runtime from roadmap_tree_v1 (roadmap.title).
+         No project identity ("JAME"/"CANTU"/…) is baked into this file. -->
+    <title>Consola global — prototipo</title>
+    <link rel="stylesheet" href="assets/console.css" />
+  </head>
+  <body>
+    <div class="console">
+      <header class="console-header">
+        <div class="console-brand">
+          <!-- Filled from the roadmap file (title + roadmap_id). Read-only. -->
+          <div id="brand-title" class="console-brand-title">Consola global</div>
+          <div id="brand-sub" class="console-brand-sub"></div>
+        </div>
+        <nav class="tabs" aria-label="Vistas">
+          <button class="tab active" type="button" data-view="roadmap">Roadmap</button>
+          <button class="tab" type="button" data-view="queue">Cola</button>
+        </nav>
+        <div class="console-flags">
+          <span class="badge badge-outline" title="El prototipo no escribe nada en disco">Solo lectura</span>
+        </div>
+      </header>
+
+      <main class="content">
+        <div id="load-notice" class="notice" hidden></div>
+
+        <!-- VISTA 1 — árbol objetivo → fase → run -->
+        <section id="view-roadmap" class="view active" aria-label="Roadmap">
+          <div class="view-intro">
+            <h1>Roadmap</h1>
+            <p class="view-copy">
+              Árbol <strong>objetivo → fase → run</strong>. El estado de cada objetivo y de cada
+              fase se <strong>deriva al leer</strong> los <code>status</code> de sus runs — no está
+              almacenado en el archivo.
+            </p>
+            <div id="roadmap-legend" class="legend"></div>
+          </div>
+          <div id="roadmap-tree" class="roadmap-tree"></div>
+        </section>
+
+        <!-- VISTA 3 — cola por queue_order global -->
+        <section id="view-queue" class="view" aria-label="Cola">
+          <div class="view-intro">
+            <h1>Cola</h1>
+            <p class="view-copy">
+              Orden global por <code>queue_order</code> (1..N), atravesando todos los objetivos y
+              fases. Es el orden de presentación del roadmap, no una cronología.
+            </p>
+            <div id="queue-summary" class="queue-summary"></div>
+          </div>
+          <div id="queue-list" class="queue-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <!-- VISTA 2 — detalle de run (superficie compartida, abierta desde cualquier fila de run) -->
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+    <aside id="run-drawer" class="drawer" aria-label="Detalle de run" aria-hidden="true">
+      <div class="drawer-header">
+        <div class="drawer-header-main">
+          <div id="drawer-title" class="drawer-title">Detalle de run</div>
+          <div id="drawer-id" class="drawer-id mono"></div>
+        </div>
+        <button id="drawer-close" class="btn btn-secondary btn-sm" type="button">Cerrar</button>
+      </div>
+      <div id="drawer-body" class="drawer-body"></div>
+    </aside>
+
+    <script src="assets/console.js" defer></script>
+  </body>
+</html>

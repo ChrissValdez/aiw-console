@@ -1,0 +1,52 @@
+{
+  "note": "Declared source, maintained by hand. The projector (tools/projector/project.mjs, roadmap_tree mode) reads `claims` from here and republishes it under the contract envelope at .project/no_claims.json. Each entry names something this project must NOT claim yet, the condition that would make the claim true, and why it is not true today.",
+  "claims": [
+    {
+      "claim": "aiw-console has its own console",
+      "status": "DISALLOWED",
+      "allowed_only_if": "The identical port (O4.P11, RUN-CONSOLE-PORT-IDENTICO-001) is delivered and rendering this project's own sources.",
+      "current_reason": "The prototype under console/ was retired by D-048 and the port has not run. Today the only console that renders is Cantu's, over Cantu's data.",
+      "source_refs": [
+        "context/DECISIONES.md D-048",
+        "roadmap/roadmap.json (O4.P11)"
+      ]
+    },
+    {
+      "claim": "Parity with the Cantu console",
+      "status": "DISALLOWED",
+      "allowed_only_if": "The parity run (O4.P5, RUN-CONSOLE-PARIDAD-RENDER-CANTU-001) is delivered with operator QA.",
+      "current_reason": "Parity is a verified result, not a side effect of the port; nothing has verified it.",
+      "source_refs": ["roadmap/roadmap.json (O4.P5)"]
+    },
+    {
+      "claim": "The full set of console sources is emitted",
+      "status": "DISALLOWED",
+      "allowed_only_if": "The nine deferred sources gain an emitter and enter through the normal door of CONTRATO §18.b, one by one.",
+      "current_reason": "Measured: of the twelve sources without an emitter, only three buy live pixels (docs index and the two governance tables) and only those three are emitted. The other nine are deferred and are not stubbed.",
+      "source_refs": [
+        "context/aiw-console/records/MEDICION-FUENTES-CONSOLA.md (Bloque F.2)",
+        "context/aiw-console/CONTRATO.md §18.a"
+      ]
+    },
+    {
+      "claim": "What is emitted under .project/ is schema-validated",
+      "status": "DISALLOWED",
+      "allowed_only_if": "A validator for the contract folder exists and runs over the emitted files.",
+      "current_reason": "The capa-3 validator does not exist. The validator that does exist belongs to Cantu, checks .aiw/ and its own literals, and never reads this folder.",
+      "source_refs": [
+        "context/aiw-console/CONTRATO.md §12.b",
+        "context/aiw-console/records/MEDICION-VALIDADOR-ROJO.md"
+      ]
+    },
+    {
+      "claim": "aiw-console is a verbatim fork of the JAME console",
+      "status": "DISALLOWED",
+      "allowed_only_if": "Never: it was measured false.",
+      "current_reason": "package.json still describes this repo that way; the audit measured that it is not. The description is stale text, not a fact about the repo.",
+      "source_refs": [
+        "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md (Bloque A.4)",
+        "package.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "project_id": "aiw_console",
+  "generated_at": "2026-07-24T22:53:20.033Z",
+  "generated_from": "aiw-projector@0.3.0",
+  "sources": [
+    {
+      "path": "governance/guardrails.json",
+      "mtime": "2026-07-24T21:52:47.316Z"
+    }
+  ],
+  "guardrails": [
+    {
+      "id": "guardrail-aiw-delivery-area",
+      "rule": "The .aiw/ folder of this repo is the delivery area of the AIW projection, not this project's own state. Nothing that describes aiw-console is read from it, and no emitter of this project writes into it.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "context/aiw-console/records/MEDICION-FUENTES-CONSOLA.md (Bloque D)",
+        "context/DECISIONES.md D-044"
+      ]
+    },
+    {
+      "id": "guardrail-every-required-file-has-an-emitter",
+      "rule": "Every file under .project/ has an emitter and is regenerated. No file there is written or edited by hand; a file without an emitter does not enter the folder.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "context/aiw-console/CONTRATO.md §2",
+        "context/aiw-console/CONTRATO.md §18"
+      ]
+    },
+    {
+      "id": "guardrail-nothing-derivable-is-stored",
+      "rule": "No derivable value is persisted at any level of the roadmap tree: the status of an objective and of a phase is derived when reading, never stored.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "context/aiw-console/CONTRATO.md §10.b",
+        "context/aiw-console/CONTRATO.md §12.c"
+      ]
+    },
+    {
+      "id": "guardrail-project-id-is-opaque",
+      "rule": "No consumer compares project_id against a literal or branches behaviour on its value. It serves to group and to route, never to decide.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "context/aiw-console/CONTRATO.md §5"
+      ]
+    },
+    {
+      "id": "guardrail-run-id-never-changes",
+      "rule": "A run_id never changes — not by status, not on archiving, not on migrating. An emitter that derives it from a mutable source violates the contract.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "context/aiw-console/CONTRATO.md §10.d (Regla 1.b)",
+        "context/DECISIONES.md D-043"
+      ]
+    },
+    {
+      "id": "guardrail-additive-until-the-cut",
+      "rule": "The contract folder is created ADDITIVELY: everything under .aiw/ stays untouched until the cut of tramo 7, so what works today keeps working while the new folder exists.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "context/DECISIONES.md D-036",
+        "context/aiw-console/CONTRATO.md §1.b"
+      ]
+    },
+    {
+      "id": "guardrail-no-git-in-the-workshop",
+      "rule": "The workshop does not run git in any form. Repository history is read only by the history builder through its own read-only commands.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "context/aiw-console/records/MEDICION-FUENTES-CONSOLA.md (nota de medición)",
+        "context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md (nota de medición)"
+      ]
+    }
+  ]
+}

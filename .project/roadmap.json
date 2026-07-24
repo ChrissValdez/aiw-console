@@ -1,5 +1,15 @@
 {
-  "schema_version": "roadmap_tree_v1",
+  "schema_version": 1,
+  "project_id": "aiw_console",
+  "generated_at": "2026-07-24T22:53:20.033Z",
+  "generated_from": "aiw-projector@0.3.0",
+  "sources": [
+    {
+      "path": "roadmap/roadmap.json",
+      "mtime": "2026-07-24T21:29:32.928Z"
+    }
+  ],
+  "model": "roadmap_tree_v1",
   "roadmap_id": "roadmap",
   "title": "AIW Console Roadmap",
   "objectives": [

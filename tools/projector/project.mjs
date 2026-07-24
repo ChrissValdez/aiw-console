@@ -1,19 +1,37 @@
 // AIW Project Console — Projector v0.
 //
-// Given a project root in AIW format (an `objectives/` tree, a `logs/` run-evidence
-// tree, and a Git repository), emits the single REQUIRED console artifact
-//   <project-root>/.aiw/views/project_console.snapshot.json
-// conforming to docs/snapshot-schema-v1.md (schema_version 1). This is the canonical
-// path the console UI fetches (docs/project-console/assets/project-console.js).
+// TWO ROOT MODES, one emitter. The mode is detected from the shape of the project root
+// (`detectRootMode`), never from its name — no project identity is baked in anywhere.
+//
+//   1. `aiw_objectives` (the original, unchanged). A project root in AIW format (an
+//      `objectives/` tree, a `logs/` run-evidence tree, and a Git repository) emits the
+//      single REQUIRED console artifact
+//        <project-root>/.aiw/views/project_console.snapshot.json
+//      conforming to docs/snapshot-schema-v1.md (schema_version 1) — the canonical path
+//      the frozen console UI fetches — plus the optional Roadmap view.
+//
+//   2. `roadmap_tree` (added by O4.P2, RUN-CONSOLE-EMISOR-CARPETA-PROPIA-001). A project
+//      root whose own plan lives in `roadmap/roadmap.json` as a `roadmap_tree_v1` tree
+//      (context/aiw-console/CONTRATO.md capa 2) — no objectives/, no logs/, no config.json.
+//      It emits the contract folder of CONTRATO §1/§1.b:
+//        <project-root>/.project/snapshot.json      (REQUIRED, capa 1)
+//        <project-root>/.project/roadmap.json       (optional, §19; added by O4.P11)
+//        <project-root>/.project/docs_index.json    (optional, §18.b)
+//        <project-root>/.project/guardrails.json    (optional, §18.b)
+//        <project-root>/.project/no_claims.json     (optional, §18.b)
+//
+// The two modes share nothing but the atomic-write helper: mode 2 is purely ADDITIVE and
+// mode 1 keeps writing exactly what it wrote before, to exactly where it wrote it.
 //
 // Boundaries (see objective 001):
 //   - Node built-ins only. No dependencies.
-//   - Reads ONLY inside the given project root (objectives/, logs/, config.json).
-//   - Writes ONLY <project-root>/.aiw/views/project_console.snapshot.json (atomic temp + rename).
-//     Never writes, moves, or deletes anything outside <project-root>/.aiw/.
-//   - Fail-soft: a missing objectives/ or logs/ tree yields empty groups, never an error.
+//   - Reads ONLY inside the given project root (mode 1: objectives/, logs/, config.json;
+//     mode 2: roadmap/, governance/, package.json and the repo's Markdown corpus).
+//   - Writes ONLY under <project-root>/.aiw/ (mode 1) or <project-root>/.project/ (mode 2),
+//     atomically (temp + rename), each destination behind its own path guard.
+//   - Fail-soft: a missing input yields an empty group or an omitted key, never an error.
 //   - Git history is optional §3 enrichment produced by build-git-history-snapshot.mjs,
-//     not this file; the required snapshot does not depend on Git being present.
+//     not this file; neither mode depends on Git being present.
 
 import {
   existsSync,
@@ -21,13 +39,18 @@ import {
   readFileSync,
   readdirSync,
   renameSync,
+  statSync,
   writeFileSync
 } from "node:fs";
 import { basename, dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const SCHEMA_VERSION = 1;
-export const PROJECTOR_VERSION = "0.1.0";
+// CONTRATO §6 — `generated_from` names tool AND version, so the version moves whenever the
+// emitter's behaviour moves. 0.2.0 added root mode 2 (O4.P2); 0.3.0 adds the optional
+// `.project/roadmap.json` of §19 (O4.P11): an emitter that writes five files is not the same
+// emitter that wrote four, and two different behaviours must not answer to one version.
+export const PROJECTOR_VERSION = "0.3.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 // Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
@@ -524,11 +547,520 @@ export function writeSnapshot(root, opts = {}) {
   };
 }
 
-// CLI entry: `node tools/projector/project.mjs [project-root]` (defaults to cwd).
+// ---------------------------------------------------------------------------
+// ROOT MODE 2 — `roadmap_tree`: the contract folder (.project/)
+//
+// Everything below is additive. It reads a project whose own plan is a `roadmap_tree_v1`
+// tree at <root>/roadmap/roadmap.json and emits <root>/.project/, the folder specified by
+// context/aiw-console/CONTRATO.md. Nothing above this line changed behaviour.
+// ---------------------------------------------------------------------------
+
+// CONTRATO §1.a — the base path of the contract folder is ONE constant in ONE file. Every
+// emitted path below is derived from it; no route literal is repeated anywhere else.
+export const PROJECT_DIR = ".project";
+export const PROJECT_SNAPSHOT_RELATIVE_PATH = join(PROJECT_DIR, "snapshot.json");
+export const PROJECT_ROADMAP_RELATIVE_PATH = join(PROJECT_DIR, "roadmap.json");
+export const PROJECT_DOCS_INDEX_RELATIVE_PATH = join(PROJECT_DIR, "docs_index.json");
+export const PROJECT_GUARDRAILS_RELATIVE_PATH = join(PROJECT_DIR, "guardrails.json");
+export const PROJECT_NO_CLAIMS_RELATIVE_PATH = join(PROJECT_DIR, "no_claims.json");
+
+// Inputs of this mode, all inside the project root, all read-only.
+export const ROADMAP_TREE_SOURCE_PATH = join("roadmap", "roadmap.json");
+const PACKAGE_SOURCE_PATH = "package.json";
+const GUARDRAILS_SOURCE_PATH = join("governance", "guardrails.json");
+const NO_CLAIMS_SOURCE_PATH = join("governance", "no_claims.json");
+const CONTRACT_REF_SOURCE_PATH = join("governance", "contract.json");
+
+// CONTRATO §10.c — the tree identifies its own model. This emitter reads exactly this one.
+export const ROADMAP_TREE_MODEL = "roadmap_tree_v1";
+
+// CONTRATO §11.a — run status: STORED, four tokens, closed vocabulary.
+const RUN_STATUSES = ["planned", "active", "blocked", "completed"];
+// CONTRATO §11.b — objective/phase status: DERIVED, five tokens, never stored (§10.b, §12.c).
+const DERIVED_COLLECTION_STATUSES = ["planned", "in_progress", "active", "blocked", "completed"];
+// Project-level operational status (capa 1 §3, `operational_status`). A different axis from
+// the two above — it qualifies the PROJECT, not a run — and it is declared as such so the
+// lexical collision of `active`/`blocked` across axes stops being a trap (§11.c).
+const PROJECT_OPERATIONAL_STATUSES = ["active", "blocked", "idle"];
+
+// CONTRATO §12.a — the derivation function, as DATA, evaluated in order; the first rule that
+// applies wins. It is written once, here: `deriveCollectionStatus` executes this table and
+// `buildTaxonomyModel` declares this same table in the emitted envelope. Declaration and
+// behaviour cannot drift apart, because they are the same array.
+const COLLECTION_STATUS_RULES = [
+  { token: "active", quantifier: "any", run_status: "active" },
+  { token: "blocked", quantifier: "any", run_status: "blocked" },
+  { token: "completed", quantifier: "all", run_status: "completed" },
+  { token: "in_progress", quantifier: "any", run_status: "completed" },
+  { token: "planned", quantifier: "otherwise" }
+];
+
+// Same shape, same discipline, for the project axis. `blocked` is reachable here — unlike the
+// `pending.length > 0 ? "active" : "idle"` of mode 1, whose declared vocabulary was wider than
+// anything it could emit (CONTRATO §17, last paragraph).
+const PROJECT_STATUS_RULES = [
+  { token: "active", quantifier: "any", run_status: "active" },
+  { token: "blocked", quantifier: "any", run_status: "blocked" },
+  { token: "idle", quantifier: "otherwise" }
+];
+
+// Docs navigation tiers, in the order the reader declares them, and the rule that assigns one.
+// Navigation visibility only: it classifies nothing about a document's authority or freshness.
+const DOCS_NAV_TIERS = ["primary", "secondary", "advanced", "evidence", "history", "proposal"];
+// First match wins, on the repo-relative POSIX path. Derived from WHERE a document lives, so a
+// new document classifies itself and no hand-kept curation list can rot (§2 applied to docs).
+const DOCS_NAV_TIER_RULES = [
+  { match: "^context/[^/]+/records/", tier: "evidence" },
+  { match: "^context/handoffs/", tier: "secondary" },
+  { match: "^console/", tier: "secondary" },
+  { match: "^docs/", tier: "secondary" },
+  { match: "^[^/]+$", tier: "primary" },
+  { match: "^context/", tier: "primary" },
+  { match: ".", tier: "secondary" }
+];
+// Directories never scanned for the docs corpus: VCS metadata, dependencies, the emitted
+// folder itself, the AIW delivery area, and test fixtures (fixture Markdown is not documentation).
+const DOCS_SKIP_DIRS = new Set([".git", ".aiw", PROJECT_DIR, "node_modules", "tests"]);
+
+function safeReadJson(filePath) {
+  if (!existsSync(filePath)) return null;
+  try {
+    return JSON.parse(readFileSync(filePath, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+// Repo-relative POSIX path — the form CONTRATO §7 requires of every path in the artifact.
+function repoRelative(root, absolutePath) {
+  return relative(resolve(root), absolutePath).split(sep).join("/");
+}
+
+// A `{path, mtime}` source record (CONTRATO §6). Returns null when the file does not exist:
+// §7 — a path that does not resolve is OMITTED, never emitted as a broken pointer.
+function sourceRecord(root, relativePath) {
+  const absolute = resolve(root, relativePath);
+  if (!existsSync(absolute)) return null;
+  try {
+    return { path: repoRelative(root, absolute), mtime: statSync(absolute).mtime.toISOString() };
+  } catch {
+    return null;
+  }
+}
+
+// Read <root>/roadmap/roadmap.json and accept it only when it declares the model this emitter
+// knows how to read. Anything else — absent, unparseable, another model — returns null, which
+// is how `detectRootMode` decides this is not a roadmap_tree root.
+export function readRoadmapTree(root) {
+  const tree = safeReadJson(resolve(root, ROADMAP_TREE_SOURCE_PATH));
+  if (!tree || tree.schema_version !== ROADMAP_TREE_MODEL || !Array.isArray(tree.objectives)) {
+    return null;
+  }
+  return tree;
+}
+
+// Which root mode a project root is in, decided ONLY by what the root contains. A root with a
+// `roadmap_tree_v1` roadmap is mode 2; everything else keeps the original mode 1 behaviour,
+// including every AIW root in existence (they have objectives/, not roadmap/roadmap.json).
+export function detectRootMode(root) {
+  return readRoadmapTree(root) ? "roadmap_tree" : "aiw_objectives";
+}
+
+// Flatten the three levels into runs, each carrying the ids of the objective and phase it came
+// from. Used for derivation and counting; the emitted tree keeps its own nesting untouched.
+export function flattenRoadmapTree(tree) {
+  const runs = [];
+  for (const objective of tree.objectives || []) {
+    for (const phase of objective.phases || []) {
+      for (const run of phase.runs || []) {
+        runs.push({ objective_id: objective.objective_id, phase_id: phase.phase_id, run });
+      }
+    }
+  }
+  return runs;
+}
+
+function applyStatusRules(rules, runStatuses) {
+  for (const rule of rules) {
+    if (rule.quantifier === "otherwise") return rule.token;
+    if (rule.quantifier === "any" && runStatuses.some((status) => status === rule.run_status)) {
+      return rule.token;
+    }
+    if (rule.quantifier === "all" && runStatuses.every((status) => status === rule.run_status)) {
+      return rule.token;
+    }
+  }
+  return null;
+}
+
+// CONTRATO §12/§13 — derive the status of any collection of runs (an objective's runs, or a
+// phase's). Returns null for an empty collection: §12.b makes that MALFORMED, and a malformed
+// input gets NO token rather than an invented one ([].every() === true would say `completed`).
+export function deriveCollectionStatus(runStatuses) {
+  if (!runStatuses.length) return null;
+  return applyStatusRules(COLLECTION_STATUS_RULES, runStatuses);
+}
+
+// Project-level `operational_status`, derived from every run in the tree by the same mechanism.
+export function deriveProjectOperationalStatus(runStatuses) {
+  if (!runStatuses.length) return "idle";
+  return applyStatusRules(PROJECT_STATUS_RULES, runStatuses);
+}
+
+// CONTRATO §17 — `taxonomy_model` declares the vocabulary of the tree this snapshot carries,
+// AND the derivation rule for the tokens that are not stored. Both are read off the same
+// constants the emitter itself executes, so the declaration is derived, never a parallel literal
+// (the defect §17 measured in mode 1, `PROJ:38,40` → `:463-466`).
+function buildTaxonomyModel(root) {
+  // Pointer to the normative document, when the PROJECT declares where its own contract lives
+  // (governance/contract.json). No document path is baked in here: a project that declares
+  // nothing simply gets no pointer, and a declared path that does not resolve is omitted (§7).
+  const declared = safeReadJson(resolve(root, CONTRACT_REF_SOURCE_PATH));
+  const specifiedBy =
+    declared && typeof declared.specified_by === "string"
+      ? sourceRecord(root, declared.specified_by)
+      : null;
+  return {
+    model: ROADMAP_TREE_MODEL,
+    // One entry per axis. `axis` names WHAT the tokens qualify, so two axes sharing a token
+    // (`active` on a run vs on the project) can never be read as one vocabulary.
+    vocabularies: {
+      "project.operational_status": { axis: "project", stored: true, tokens: PROJECT_OPERATIONAL_STATUSES },
+      "run.status": { axis: "run", stored: true, tokens: RUN_STATUSES },
+      "objective.status": {
+        axis: "objective",
+        stored: false,
+        derived_by: "collection_status_from_runs",
+        tokens: DERIVED_COLLECTION_STATUSES
+      },
+      "phase.status": {
+        axis: "phase",
+        stored: false,
+        derived_by: "collection_status_from_runs",
+        tokens: DERIVED_COLLECTION_STATUSES
+      }
+    },
+    // Executable declaration: evaluate `precedence` in order against the `status` of the runs in
+    // the collection; the first rule whose quantifier holds wins. An empty collection is
+    // malformed and yields no token at all.
+    derivations: {
+      collection_status_from_runs: {
+        applies_to: ["objective", "phase"],
+        input: "run.status",
+        precedence: COLLECTION_STATUS_RULES,
+        empty_input: "malformed"
+      },
+      project_operational_status_from_runs: {
+        applies_to: ["project"],
+        input: "run.status",
+        precedence: PROJECT_STATUS_RULES,
+        empty_input: "idle"
+      }
+    },
+    ...(specifiedBy ? { specified_by: specifiedBy.path } : {})
+  };
+}
+
+// Identity of the projected project, taken FROM the project: package.json `name` when it has
+// one, else the root folder name. Same normalization as mode 1's `readProjectId`. Nothing here
+// knows the name of any particular project.
+function readRoadmapTreeProjectId(root) {
+  const pkg = safeReadJson(resolve(root, PACKAGE_SOURCE_PATH));
+  const raw = pkg && typeof pkg.name === "string" && pkg.name ? pkg.name : basename(resolve(root));
+  const slug = raw.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+  return slug || "project";
+}
+
+// The envelope every emitted file of this folder carries: what it is, whose it is, when it was
+// emitted, by what tool, and off which files (CONTRATO §4, §5, §6). `sources` is what makes
+// staleness detectable, so the optional files get it too, not just the required snapshot.
+function projectFileEnvelope(root, opts, sourcePaths) {
+  return {
+    schema_version: SCHEMA_VERSION,
+    project_id: readRoadmapTreeProjectId(root),
+    generated_at: opts.now || new Date().toISOString(),
+    generated_from: GENERATED_FROM,
+    sources: sourcePaths.map((path) => sourceRecord(root, path)).filter(Boolean)
+  };
+}
+
+// The tree, verbatim, under the identifier key mode 1 already established for the model
+// (`model`; CONTRATO §10.c leaves the carrying key to this emitter). The tree's own
+// `schema_version` is not re-emitted: two `schema_version` keys at two depths inside one file
+// is the exact confusion §10.c warns about, and `model` already carries it. No counts, no
+// per-level status: §10.b — nothing derivable is stored.
+//
+// It is written ONCE, here, because two artifacts transport it: the required snapshot
+// (`roadmap_tree`) and the optional `.project/roadmap.json` (§19). Same function, so the two
+// copies of the tree cannot drift apart — the same discipline `COLLECTION_STATUS_RULES` gets.
+function roadmapTreeBlock(tree) {
+  return {
+    model: ROADMAP_TREE_MODEL,
+    ...(tree.roadmap_id ? { roadmap_id: tree.roadmap_id } : {}),
+    ...(tree.title ? { title: tree.title } : {}),
+    objectives: tree.objectives
+  };
+}
+
+// CONTRATO §19 — `.project/roadmap.json`, OPTIONAL: the same tree the snapshot transports,
+// published as its own file. Not a second derivation and not a new reading of the roadmap: the
+// tree block is the one above, byte for byte. Returns null when the root is not a
+// `roadmap_tree` root, in which case §18/§20 apply — the file is simply not emitted.
+export function buildProjectRoadmap(root, opts = {}) {
+  const tree = readRoadmapTree(root);
+  if (!tree) return null;
+  return {
+    ...projectFileEnvelope(root, opts, [ROADMAP_TREE_SOURCE_PATH]),
+    ...roadmapTreeBlock(tree)
+  };
+}
+
+// Build the REQUIRED snapshot (CONTRATO capa 1) from a `roadmap_tree_v1` root. Pure read.
+export function buildRoadmapTreeSnapshot(root, opts = {}) {
+  const tree = readRoadmapTree(root);
+  if (!tree) {
+    throw new Error(`Not a ${ROADMAP_TREE_MODEL} root: ${resolve(root, ROADMAP_TREE_SOURCE_PATH)}`);
+  }
+
+  const flat = flattenRoadmapTree(tree);
+  const runStatuses = flat.map(({ run }) => run.status);
+  const objectiveCount = (tree.objectives || []).length;
+  const phaseCount = (tree.objectives || []).reduce((total, o) => total + (o.phases || []).length, 0);
+  const byStatus = RUN_STATUSES.map((status) => ({
+    status,
+    n: runStatuses.filter((value) => value === status).length
+  })).filter((entry) => entry.n > 0);
+
+  const activeRuns = flat.filter(({ run }) => run.status === "active");
+  const completed = runStatuses.filter((status) => status === "completed").length;
+  let currentStatusSummary;
+  if (activeRuns.length) {
+    const first = activeRuns[0];
+    currentStatusSummary =
+      `Active run: ${first.run.run_id} (${first.objective_id}/${first.phase_id}, queue ${first.run.queue_order})` +
+      `${activeRuns.length > 1 ? ` (+${activeRuns.length - 1} more active)` : ""}.`;
+  } else if (flat.length) {
+    currentStatusSummary = `No active run; ${completed} of ${flat.length} runs completed.`;
+  } else {
+    currentStatusSummary = "No runs in the roadmap.";
+  }
+
+  const noClaims = safeReadJson(resolve(root, NO_CLAIMS_SOURCE_PATH));
+  const noClaimsCount = noClaims && Array.isArray(noClaims.claims) ? noClaims.claims.length : null;
+  const noClaimsSource = sourceRecord(root, PROJECT_NO_CLAIMS_RELATIVE_PATH);
+
+  return {
+    ...projectFileEnvelope(root, opts, [ROADMAP_TREE_SOURCE_PATH, PACKAGE_SOURCE_PATH]),
+    operational_status: deriveProjectOperationalStatus(runStatuses),
+    project_summary:
+      `${tree.title || tree.roadmap_id || "Roadmap"}: ${objectiveCount} objectives, ` +
+      `${phaseCount} phases, ${flat.length} runs.`,
+    current_status_summary: currentStatusSummary,
+    // The tree, verbatim (see `roadmapTreeBlock`): same block the optional `.project/roadmap.json`
+    // publishes, built by the same function so the two cannot drift.
+    roadmap_tree: roadmapTreeBlock(tree),
+    // Runs the tree itself marks blocked. Derived at emission, never a hand-kept list.
+    blockers: flat
+      .filter(({ run }) => run.status === "blocked")
+      .map(({ objective_id, phase_id, run }) => ({
+        run_id: run.run_id,
+        objective_id,
+        phase_id,
+        title: run.title
+      })),
+    followups: [],
+    // §3.b left this OPAQUE "until there is an emitter and an example". This phase gives it
+    // both, so it opens — minimally, pointing at the file that holds the claims.
+    no_claims_summary:
+      noClaimsCount != null && noClaimsSource
+        ? { total: noClaimsCount, source: noClaimsSource.path }
+        : {},
+    // Still opaque, and honestly so: the capa-3 validator does not exist, so nothing real
+    // fills this. §3.b — no schema without emitter and example.
+    validation_summary: {},
+    taxonomy_model: buildTaxonomyModel(root)
+  };
+}
+
+function docNavTier(relativePosixPath) {
+  for (const rule of DOCS_NAV_TIER_RULES) {
+    if (new RegExp(rule.match).test(relativePosixPath)) return rule.tier;
+  }
+  return "secondary";
+}
+
+// Every Markdown document of the repo, in stable path order. Fail-soft on unreadable dirs.
+function listMarkdownFiles(root, dir = resolve(root), found = []) {
+  let entries;
+  try {
+    entries = readdirSync(dir, { withFileTypes: true });
+  } catch {
+    return found;
+  }
+  // Code-unit order, like `safeReadDirNames` above: locale-aware collation would make the
+  // emitted order depend on the machine that ran the emitter.
+  for (const entry of entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) {
+    const absolute = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (DOCS_SKIP_DIRS.has(entry.name)) continue;
+      listMarkdownFiles(root, absolute, found);
+    } else if (entry.isFile() && entry.name.toLowerCase().endsWith(".md")) {
+      found.push(absolute);
+    }
+  }
+  return found;
+}
+
+// Build the docs index the Docs tab reads: `docs[]` with the navigation fields the renderer
+// consumes (title, path, nav_tier, default_visible, ia_bucket) plus the file's own mtime as
+// its freshness. Every field is derived from the corpus on disk; nothing is curated by hand,
+// so a document added tomorrow indexes itself. Fields the emitter cannot honestly derive
+// (audience, canonicality, review status, …) are OMITTED, never invented.
+export function buildDocsIndex(root, opts = {}) {
+  const files = listMarkdownFiles(root);
+  const docs = files
+    .map((absolute) => {
+      const path = repoRelative(root, absolute);
+      const tier = docNavTier(path);
+      const directory = dirname(path);
+      const entry = {
+        // First Markdown H1 of the document, else its filename — the same rule mode 1 uses.
+        title: titleFromMarkdown(safeReadText(absolute), basename(path)),
+        path,
+        nav_tier: tier,
+        default_visible: tier === "primary",
+        ia_bucket: directory === "." ? "root" : directory
+      };
+      const source = sourceRecord(root, path);
+      if (source) entry.freshness = source.mtime;
+      return entry;
+    })
+    .sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+
+  return {
+    // Every document read IS a source of this index (§6), so `sources` means the same thing
+    // here as in the snapshot. The per-entry `freshness` is the same mtime, kept because that
+    // is the field the reader displays.
+    ...projectFileEnvelope(root, opts, docs.map((doc) => doc.path)),
+    // Same doctrine as `taxonomy_model`: the file declares the vocabulary AND the rule it was
+    // built with, so a reader never has to know this emitter's conventions in advance.
+    nav_tier_model: {
+      tiers: DOCS_NAV_TIERS,
+      derived_by: "repo_path_prefix",
+      rules: DOCS_NAV_TIER_RULES,
+      default_visible: "nav_tier === 'primary'",
+      purpose: "Docs navigation visibility only. Assigns no authority, freshness or approval."
+    },
+    docs
+  };
+}
+
+// Guardrails and no-claims are TRANSPORTED, not authored here: the project declares them in
+// governance/*.json and this emitter republishes them under the contract envelope. An absent
+// or malformed source yields null and the file is simply not emitted — §18/§20: better an
+// announced absence than an invented table.
+function buildTransportedList(root, sourcePath, key, opts) {
+  const source = safeReadJson(resolve(root, sourcePath));
+  if (!source || !Array.isArray(source[key])) return null;
+  return {
+    ...projectFileEnvelope(root, opts, [sourcePath]),
+    [key]: source[key]
+  };
+}
+
+export function buildGuardrails(root, opts = {}) {
+  return buildTransportedList(root, GUARDRAILS_SOURCE_PATH, "guardrails", opts);
+}
+
+export function buildNoClaims(root, opts = {}) {
+  return buildTransportedList(root, NO_CLAIMS_SOURCE_PATH, "claims", opts);
+}
+
+// Resolve <root>/<relativePath> and prove it lives inside <root>/.project/. The mirror of
+// `resolveInsideAiw`, guarding the other destination; neither can write where the other writes.
+function resolveInsideProject(root, relativePath) {
+  const projectDir = resolve(root, PROJECT_DIR);
+  const outPath = resolve(root, relativePath);
+  const rel = relative(projectDir, outPath);
+  if (rel.startsWith("..") || rel.includes("..") || rel.startsWith(sep) || resolve(projectDir, rel) !== outPath) {
+    throw new Error(`Refusing to write outside ${projectDir}: ${outPath}`);
+  }
+  return { projectDir, outPath };
+}
+
+export function resolveProjectFilePath(root, relativePath) {
+  return resolveInsideProject(root, relativePath);
+}
+
+// Emit the whole contract folder for a `roadmap_tree` root. Every file is written atomically
+// (temp + rename, the same helper mode 1 uses). Order matters once: the two optional governance
+// files land BEFORE the snapshot, because the snapshot's `no_claims_summary` cites one of them
+// by path and §7 forbids emitting a path that does not resolve.
+// Returns { ok, mode, project_id, files: [{ artifact, path, bytes, ... }] }.
+export function writeProjectFolder(root, opts = {}) {
+  const now = opts.now || new Date().toISOString();
+  const written = [];
+
+  const write = (artifact, relativePath, data, summary) => {
+    if (!data) return;
+    const { outPath } = resolveInsideProject(root, relativePath);
+    writeJsonAtomic(outPath, data);
+    written.push({
+      artifact,
+      path: outPath,
+      relative_path: repoRelative(root, outPath),
+      bytes: statSync(outPath).size,
+      ...summary
+    });
+  };
+
+  const guardrails = buildGuardrails(root, { now });
+  write("guardrails", PROJECT_GUARDRAILS_RELATIVE_PATH, guardrails, {
+    entries: guardrails ? guardrails.guardrails.length : 0
+  });
+
+  const noClaims = buildNoClaims(root, { now });
+  write("no_claims", PROJECT_NO_CLAIMS_RELATIVE_PATH, noClaims, {
+    entries: noClaims ? noClaims.claims.length : 0
+  });
+
+  const docsIndex = buildDocsIndex(root, { now });
+  write("docs_index", PROJECT_DOCS_INDEX_RELATIVE_PATH, docsIndex, {
+    entries: docsIndex.docs.length
+  });
+
+  const roadmap = buildProjectRoadmap(root, { now });
+  write("roadmap", PROJECT_ROADMAP_RELATIVE_PATH, roadmap, {
+    entries: roadmap ? roadmap.objectives.length : 0
+  });
+
+  const snapshot = buildRoadmapTreeSnapshot(root, { now });
+  const flat = flattenRoadmapTree(snapshot.roadmap_tree);
+  write("snapshot", PROJECT_SNAPSHOT_RELATIVE_PATH, snapshot, {
+    objectives: snapshot.roadmap_tree.objectives.length,
+    runs: flat.length
+  });
+
+  return { ok: true, mode: "roadmap_tree", project_id: snapshot.project_id, files: written };
+}
+
+// CLI entry: `node tools/projector/project.mjs [project-root]` (defaults to cwd). The root's own
+// shape picks the mode; an AIW root behaves exactly as it always did.
 const invokedDirectly = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (invokedDirectly) {
   const root = resolve(process.argv[2] || process.cwd());
   try {
+    if (detectRootMode(root) === "roadmap_tree") {
+      const result = writeProjectFolder(root);
+      console.log(`[projector] mode=roadmap_tree project=${result.project_id}`);
+      for (const file of result.files) {
+        const detail = file.artifact === "snapshot"
+          ? `objectives=${file.objectives}; runs=${file.runs}`
+          : `entries=${file.entries}`;
+        console.log(`[projector] wrote ${file.relative_path} — ${detail}; ${file.bytes} bytes`);
+      }
+      process.exit(0);
+    }
     const result = writeSnapshot(root);
     console.log(
       `[projector] wrote ${result.path} — project=${result.snapshot.project_id}; ` +

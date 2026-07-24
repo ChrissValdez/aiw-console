@@ -946,3 +946,115 @@ contrato verificados: **ninguna se desplazó**, porque este log es append-only y
 D-040…D-043 se agregaron al final. No se ejecutó git.)
 
 Criterio de borrado: N/A.
+
+## D-044 — 2026-07-24 — Migración de O0; el roadmap propio de aiw-console y dónde vive
+Registra la operación de datos ya ejecutada y el hallazgo que la reencuadró.
+Evidencia completa en `context/aiw-console/records/MIGRACION-O0.md`. No se editó
+`CONTRATO.md` ni ningún record; no se ejecutó git en ninguna forma.
+
+**Ejecutado.** Los 12 runs de O0 pasaron del roadmap de Cantu a
+`projects/aiw-console/roadmap/roadmap.json`, con `schema_version:
+"roadmap_tree_v1"` (§10.c). Cantu queda con **7 objetivos y 53 runs**,
+`schema_version` intacto. Conservación verificada: 53+12=**65**, unión 65, **0
+perdidos, 0 duplicados, 0 solapamiento, 0 runs con diferencia fuera de
+`queue_order`**.
+
+**HALLAZGO — `.aiw/` en `aiw-console` NO es estado propio de `aiw-console`.** Es
+el área de trabajo de la proyección de AIW: el proyector vive en este repo, lee
+`../../aiw/objectives/` y entrega ahí. `.aiw/roadmap/roadmap.json` contiene la
+copia de entrega de AIW (16 runs, `aiw-projector@0.1.0`), producida por el run
+`006-roadmap-delivery-path` y regenerada por `serve-project-console.mjs` en cada
+arranque. **La simetría con Cantu no existe:** allá `.aiw/` sí es del proyecto. Un
+encargo de la cabina dio ese path por libre y el taller lo detuvo antes de
+escribir; la evidencia ya estaba medida en `MEDICION-PROYECTOR.md §5.a` y no se
+había leído.
+
+**Ruta del roadmap propio: `roadmap/roadmap.json` en la raíz del repo.** Fuera de
+`.aiw/`, nombra el contenido (§1). Es **FUENTE AUTORADA, no derivada:** el contrato
+rige `.project/`, que nacerá emitida desde aquí en el tramo 2. Escribir a mano en
+`roadmap/` no viola §18; hacerlo en `.project/` sí lo violaría.
+
+**Primer ejemplar real de la Regla 2 (§10.d).** La arista
+`RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` (Cantu, O2.P4) →
+`RUN-CANTU-ROADMAP-CONTENT-AUDIT-001` (ahora aiw-console, O0.P3) se conservó
+literal y es hoy la única referencia de Cantu que no resuelve localmente.
+Dependencia externa **legal, no colgante**.
+
+**Consecuencia operativa.** Cantu queda **sin ningún run `active`** — el único se
+fue con O0. Derivación medida tras la extracción: O5 `in_progress`, los otros seis
+`planned`. En `aiw-console`, O0 deriva `active`.
+
+**Puerta de anchors: PASA.** Cero literales `"O0"` en código; todo `objective_id
+===` compara contra variable; los 12 `run_id` solo aparecen en comentarios,
+archivos históricos y fixtures. Sacar O0 no cambia ninguna rama.
+
+**Estado del validador de Cantu tras la extracción: [NO VERIFICADO]** — el operador
+no aportó resultado en este encargo.
+
+**Pendiente abierto.** Si al llegar O4 el roadmap conserva `O0`/`O4` con hueco o se
+renumeran los `objective_id`. El contrato no lo fija. Se decide en el encargo de O4.
+
+Criterio de borrado: N/A.
+
+## D-045 — 2026-07-24 — El validador de Cantu y el consumidor que sí existía
+Cierra el rojo que dejó abierto la extracción de O0 ([[D-044]]). Fuente medida:
+`context/aiw-console/records/MEDICION-VALIDADOR-ROJO.md`. Se editó
+`projects/cantu-studio/tools/project-console/validate-project-console-state.mjs`
+(solo la regla roja de `depends_on`) y `context/aiw-console/CONTRATO.md` (solo la
+afirmación de alcance de D-026, sin cambiar norma). No se tocó el roadmap de
+ningún repo; no se ejecutó git en ninguna forma.
+
+**Hecho medido.** La extracción de O0 puso rojo el validador de Cantu, verde antes.
+Dos errores. El de `git_history.snapshot.json` se cura regenerando —`deriveRunId`
+produce `null` hoy y `null` es aceptado; 1 commit de 771 afectado, puntual no
+sistémico—. El de `depends_on` exigía decisión. Verificado al correr el validador
+en este encargo (permitido): sale VERDE (exit 0); el snapshot ya venía regenerado
+por el operador y solo restaba la arista de `depends_on`, ahora advertencia.
+
+**Arreglo adoptado.** Una referencia de `depends_on` que no resuelve localmente
+pero tiene forma de `run_id` canónico degrada de `fail()` a `warn()`; una que no
+tiene forma de `run_id` sigue siendo error duro. Razón: el contrato ya lo mandaba
+(§10.d Regla 3, §20); el validador es anterior a esa doctrina y la violaba. Es el
+**primer uso real de `warn()`**, que llevaba definido (`:20-22`) y sin invocar
+desde el primer día. Verificado que las advertencias se imprimen en el resumen
+final ("Roadmap rebase warnings (non-blocking)", `:2039-2044`) sin afectar el exit
+code: el arreglo no convierte un rojo en silencio.
+
+**Coste aceptado a sabiendas.** El validador, cargando un solo roadmap, no puede
+distinguir externo de typo, así que un `run_id` mal escrito degrada de error a
+advertencia. Se mitiga con el mensaje, que nombra ambas posibilidades explícitamente
+(dependencia externa legal §10.d Regla 2 **o** error de escritura). El arreglo real
+—el que sí puede resolver globalmente— es el shell del tramo 3; este parche es la
+salida barata y contractual.
+
+**Rechazada la opción de borrar la entrada `depends_on`.** Destruiría una
+dependencia real que existe, solo que cruzando repos
+(`RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` →
+`RUN-CANTU-ROADMAP-CONTENT-AUDIT-001`, hoy en aiw-console O0.P3), conservada a
+propósito como el primer ejemplar de la Regla 2 ([[D-044]]). §10.d Regla 3 paso 2
+lo prohíbe; además toca `cantu-studio` fuera del alcance de escritura.
+
+**Deuda medida, NO arreglada, para el tramo 3.** Tres sitios comparten el supuesto
+"todo `run_id` vive en el roadmap local" y NO se tocaron: `CANTU-VALID:847`
+(`roadmapV3QueueGroupKey` mal-agrupa el run externo en `later` de forma
+permanente, aun con la regla dura relajada), `CANTU-VALID:1059-1069` (el DFS de
+ciclos salta ids externos con `?.` → no detecta ciclos que crucen proyectos), y
+`build-git-history-snapshot.mjs:103-108` (`deriveRunId` degrada limpio a `null`).
+No se tocan: la consola de Cantu muere en el tramo 7 y el sitio correcto es el
+shell que carga todos los proyectos.
+
+**CORRECCIÓN a [[D-044]].** Su campo "Estado del validador de Cantu tras la
+extracción: [NO VERIFICADO]" quedó ahora medido: verde con la arista externa
+presente como advertencia. D-044 no se reescribe; esta entrada lo verifica.
+
+**CORRECCIÓN de alcance sobre [[D-026]].** El contrato afirmaba que D-026 se activa
+en el tramo 3 "porque no hay consumidor existente". Es falso. `depends_on` tenía un
+consumidor vivo —este validador— desde el primer día. El error fue leer
+"consumidor" como consumidor del ARTEFACTO nuevo (`.project/`) en vez de consumidor
+de CUALQUIER COSA cuyo significado el contrato cambie. La Regla 2 redefinió un
+campo en uso sin ejercitarlo contra quien lo usaba. D-026 se activa cuando el
+contrato cambia el significado de algo que un consumidor ya lee, no solo cuando
+estrena un artefacto. La enmienda al pasaje correspondiente va en `CONTRATO.md`
+en este mismo encargo; ninguna norma cambia, solo la afirmación de alcance.
+
+Criterio de borrado: N/A.

@@ -417,9 +417,31 @@ roadmap). Dos razones, cada una suficiente:
    medida depende exactamente de que la carpeta nueva sea invisible para el
    validador.
 
-**D-026 se activa en el TRAMO 3**, contra el shell multi-proyecto. Ahí el
-consumidor existirá, y el test deberá citar su archivo+línea de lectura, sus
-campos y sus enums, cargando el artefacto como lo carga él.
+**Para el artefacto `.project/snapshot.json`, D-026 se activa en el TRAMO 3**,
+contra el shell multi-proyecto. Ahí el consumidor existirá, y el test deberá citar
+su archivo+línea de lectura, sus campos y sus enums, cargando el artefacto como lo
+carga él. Esto es cierto **de este artefacto**, cuyo lector aún no existe — no es
+la condición de disparo de D-026 en general.
+
+**Corrección de alcance (medida).** D-026 no se activa solo cuando un objetivo
+**estrena** un artefacto para un consumidor existente. **Se activa cuando el
+contrato cambia el significado de algo que un consumidor ya lee** — no solo cuando
+estrena un artefacto nuevo. Leer "consumidor" como consumidor del artefacto nuevo,
+en vez de consumidor de CUALQUIER COSA cuyo significado el contrato altere, es lo
+que dejó pasar el caso de abajo. La doctrina de D-026 no cambia; se corrige la
+afirmación de cuándo aplica.
+
+> **Ejemplar real, primer caso medido.** La **Regla 2 de §10.d** redefinió el
+> significado de `depends_on` (una referencia que no resuelve localmente puede ser
+> externa legal, no colgante). Ese campo tenía un consumidor **vivo desde el primer
+> día** — el validador de Cantu,
+> `projects/cantu-studio/tools/project-console/validate-project-console-state.mjs`
+> — que lo leía con el supuesto viejo y, tras la extracción de O0, se puso **rojo**.
+> La Regla 2 cambió el significado de un campo en uso sin ejercitarlo contra quien
+> lo usaba: exactamente el disparo de D-026, en un caso sin artefacto nuevo.
+> Medición y arreglo en
+> `context/aiw-console/records/MEDICION-VALIDADOR-ROJO.md` y `DECISIONES.md` D-045.
+> Vale como advertencia escrita más que la regla en abstracto.
 
 > **Caducidad explícita.** Este apartado vale **solo mientras no exista un lector
 > de `.project/snapshot.json`**. En el momento en que el shell del tramo 3 lea esa

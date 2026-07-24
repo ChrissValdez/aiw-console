@@ -761,3 +761,57 @@ concreto que dispararía la salida del punto (4).
 
 Criterio de borrado: N/A — enmienda a D-034; la sustituye una decisión futura sobre
 el alcance de la migración.
+
+## D-042 — 2026-07-23 — Re-archivo del bloque de rename; O0 queda en 12 runs
+**Ejecutado:** los 5 runs de rename (`queue_order` 17, 62, 63, 64, 65 —
+`RUN-CANTU-REPO-RENAME-001`, `…INTERNAL-CODE-RENAME-001`,
+`…DOCS-DIRECTORY-RENAME-001`, `…RUNTIME-JAME-CLASS-RENAME-001`,
+`…RUNTIME-J-NAMESPACE-RENAME-001`) pasaron de `O0.P3` a una fase nueva **`O2.P5`
+«Naming Rename Execution»** dentro del roadmap de Cantu. Evidencia, criterio y
+verificación completa en `context/aiw-console/records/REARCHIVO-BLOQUE-RENAME.md`.
+
+**Por qué O2 y no O0.** Los cinco renombran repo, código, docs y runtime de
+`cantu-studio` — no la consola. Y su prerequisito
+`RUN-CANTU-NAMING-AUDIT-DISPOSITION-001`, que vive en O2, los nombra literalmente
+como «the execution runs» de un contrato que vive en O2. El objetivo que los
+gobierna ya estaba escrito; lo que estaba mal era dónde colgaban.
+
+**Por qué fase nueva y no `O2.P4`.** El run 16 declara «nothing is renamed by this
+run». Meter las ejecuciones en la fase de la decisión borraría esa frontera: la
+fase que decide y la fase que ejecuta dejarían de distinguirse. `O2.P5` es la
+forma que el roadmap ya usa para eso, y la dependencia queda intra-objetivo
+(`O2.P4 → O2.P5`).
+
+**Invariantes preservados.** Comparando cada campo de cada run antes y después,
+**0/65 runs** presentan diferencia alguna fuera de la reubicación. `run_id`,
+`queue_order`, `depends_on`, `status` y `schema_version` intactos; `queue_order`
+sigue denso y contiguo 1..65; no se renumeró nada.
+
+**Cierra el pendiente con condición de tiempo de D-041**, y por la ruta que D-041
+prescribía: componer primero dentro del roadmap propio, mudar después. El arreglo
+se hizo antes del tramo 4, que es la puerta tras la cual D-036 congela ese roadmap
+(`DECISIONES.md:443-444`) y el mismo cambio costaría dos repos.
+
+**Enmienda de cifras a D-041.** Su «O0 completo = 17 runs, 8 aristas» describe el
+estado **PREVIO** al re-archivo. Tras él, **O0 = 12 runs** y las aristas que cruzan
+su frontera son **1** — la entrante histórica desde O2 contra un run ya
+`completed`. **La decisión de alcance NO cambia:** la migración sigue siendo O0
+COMPLETO. Lo que cambia es qué contiene O0, no cuánto de O0 se migra. Nótese que
+las cifras resultantes coinciden con el escenario «O0 menos rename» que D-041
+midió y NO adoptó: se llegó ahí por la puerta correcta —re-archivo revisable en el
+roadmap de Cantu— y no excluyendo runs por la puerta de atrás de una migración.
+
+**Consecuencia declarada.** La tabla de remap 7.A de
+`records/MEDICION-GRAFO-O0.md` queda **obsoleta**: fue calculada para la partición
+17/48 y la partición vigente es 12/53. El record NO se reescribe —es medición
+fechada—; la migración recalcula el remap cuando toque.
+
+**Pendiente trasladado al hilo `cantu-studio`.** Si O2 —«Knowledge Base and
+Documentation SoT»— es el objetivo correcto para renames de runtime queda
+**[NO VERIFICADO]**: el roadmap no declara criterio de pertenencia de run a
+objetivo, así que la pregunta no es decidible desde disco. Lo que sí está medido es
+que O2 es donde vive el contrato que ordena estos renames. La revisión de si ese
+objetivo debe alojar ejecución de runtime pertenece al hilo de Cantu; no se fuerza
+desde el hilo de la consola.
+
+Criterio de borrado: N/A.

@@ -463,6 +463,11 @@ adjudicadas por la cabina; esta redacción las fija con su evidencia. Registrada
 cruzan proyectos — y las decisiones `r`, `s` y `t` de la tabla final. La enmienda
 no toca ninguna decisión previa de esta capa: añade.
 
+**Enmendada de nuevo el 2026-07-23 por D-043**, que amplía §10.d con la FORMA y la
+ESTABILIDAD de `run_id` (Reglas 1.a y 1.b; decisiones `u` y `v`) y anota el disparo
+de la Regla 4. Tampoco toca ninguna decisión previa: añade, y cierra con regla la
+tensión que D-041 dejó anotada dentro de la propia §10.d.
+
 ## Nota de verificación (capa 2)
 
 Fuentes de evidencia, leídas completas antes de redactar:
@@ -513,6 +518,34 @@ archivos el 2026-07-23:
 - **Intersección de `run_id` entre los dos roadmaps: 0.**
 
 Todo reproduce MEDICION-GRAFO sin desviación. No se ejecutó git en ninguna forma.
+
+### Añadido por la enmienda D-043 (2026-07-23)
+
+Fuente nueva: **MEDICION-PROYECTOR** =
+`context/aiw-console/records/MEDICION-PROYECTOR.md` — medición read-only del
+emisor (el proyector de AIW y el history-builder), leída completa antes de
+redactar la ampliación de §10.d. Alias de código heredados de ese record:
+**PROJ** = `projects/aiw-console/tools/projector/project.mjs`.
+
+Para §10.d se midió además **de primera mano**, con recorrido propio de los
+archivos el 2026-07-23:
+
+- **CANTU-ROADMAP** — **65 de 65** `run_id` casan
+  `RUN-<PROYECTO>-<SLUG>-<NNN>`, **0** excepciones; prefijos `JAME` (48) y
+  `CANTU` (17); **0** ids con minúsculas; `<NNN>` = `001` en los **65**.
+- **O0 tras el re-archivo de D-042** — 12 runs, prefijos `CANTU` (8) y `JAME` (4).
+- `projects/aiw-console/.aiw/views/roadmap.json` — 16 ids, **0** casan la forma.
+- `aiw/objectives/` — los 16 nombres de archivo `.md` bajo
+  `{pending, parked, processed}` coinciden uno a uno con esos 16 ids; los de
+  `processed/` llevan prefijo de estado (`APPROVED-`, `ERROR-`, `HUMAN_REVIEW-`).
+- Releídas de primera mano las líneas citadas de `aiw/queue.mjs` (`:58`), de
+  **PROJ** (`:38`, `:40`, `:188-196`, `:235`, `:247`, `:258-262`, `:269`,
+  `:423`, `:463-466`, `:475-483`) y de
+  `projects/cantu-studio/tools/project-console/build-git-history-snapshot.mjs`
+  (`:26`, `:186`).
+
+Todo reproduce MEDICION-PROYECTOR sin desviación. No se ejecutó git en ninguna
+forma. No se ejecutó el proyector. No se modificó código alguno.
 
 ---
 
@@ -716,6 +749,198 @@ que también numere sus carpetas. Que esa colisión llegue a ocurrir es
 en disco. Se registra porque es el escenario concreto que dispara la salida de la
 Regla 4.
 
+> **Estado de esta tensión: CERRADA por la Regla 1.a** (enmienda D-043). La frase
+> «este contrato no fija en ninguna parte la FORMA de un `run_id`» describía el
+> contrato **antes** de esa regla y se conserva como registro del razonamiento que
+> la produjo, no como afirmación vigente. Lo que sigue vigente de este párrafo es
+> el hecho medido: las dos familias de id en disco no se coordinaron entre sí, y la
+> que el proyector emite es la fácil de colisionar. La Regla 1.a fija la forma
+> hacia adelante y **no** regulariza esos 16 ids; qué pasa con ellos lo resuelve la
+> Regla 1.b, como trabajo del tramo 2.
+>
+> **Precisión de ruta, también medida:** este párrafo dice que la familia del
+> proyector «se deriva de nombres de **carpeta**». Se deriva de nombres de
+> **archivo** — `objectives/pending/005-roadmap-contract-fix.md` →
+> `005-roadmap-contract-fix` (`PROJ:190-192`; MEDICION-PROYECTOR §4, «Corrección a
+> D-041»). La sustancia —ids cortos y numerados, la clase más fácil de colisionar—
+> queda intacta; y la ruta real es la que hace posible la mutación de la Regla 1.b,
+> porque los archivos se renombran y las carpetas no.
+
+#### Regla 1.a — la FORMA de un `run_id`
+
+**Añadido por la enmienda D-043 (2026-07-23).** La Regla 1 declara la unicidad
+pero no dice bajo qué construcción se sostiene. Esto lo dice.
+
+**Forma normativa, para todo `run_id` acuñado desde ahora:**
+
+    RUN-<PROYECTO>-<SLUG>-<NNN>
+
+| Parte | Qué es |
+|---|---|
+| `RUN-` | literal fijo |
+| `<PROYECTO>` | nombre corto, en mayúsculas, del proyecto que **creó** el run |
+| `<SLUG>` | tema del run, en mayúsculas, palabras separadas por `-` |
+| `<NNN>` | tres dígitos, secuencia dentro del par (proyecto, tema) |
+
+**No se inventa: se adopta la que ya existe con 65 ejemplares.** Medido de primera
+mano el 2026-07-23 sobre CANTU-ROADMAP: **65 de 65** `run_id` casan la forma, sin
+una sola excepción; los prefijos son `JAME` (48) y `CANTU` (17); **0** ids llevan
+minúsculas.
+
+**Por qué ésta y no una mejor.** Una convención con 65 ejemplares en disco **tiene
+emisor y tiene evidencia** — es exactamente lo contrario del patrón que §3.b
+prohíbe. Diseñar aquí una forma distinta —más corta, con namespace, con el
+proyecto fuera del id— sería schema nuevo sin emisor y sin un solo ejemplar que lo
+necesite; y sería peor que el caso de §3.b, porque allá no había ejemplares que
+contradecir y aquí hay 65 que quedarían declarados ilegales de un plumazo. La
+única razón para preferir una forma inventada sería estética, y este contrato ya
+adjudicó dos veces (§14, §16) que la estética no gana contra datos en disco.
+
+**Límite medido, escrito para que nadie se apoye en `<NNN>`.** Los 65 ids llevan
+`001`: la secuencia **nunca se ha ejercido más allá del primero** (medición propia
+2026-07-23). Hoy quien identifica, identifica por `<SLUG>`. `<NNN>` se conserva
+porque es parte de la forma que los 65 ejemplares tienen —quitarlo sería inventar
+igual que añadir—, pero **no es donde vive la unicidad**, y un emisor que crea
+distinguir dos runs incrementándolo se estaría apoyando en un mecanismo que ningún
+dato en disco ejercita.
+
+##### El prefijo es PROCEDENCIA, no propiedad
+
+`<PROYECTO>` identifica al proyecto que **CREÓ** el run. **No** al que lo aloja
+hoy. La consecuencia se escribe entera porque es contraintuitiva y alguien la va a
+querer "arreglar":
+
+- **Los 12 runs de O0 que migran conservan su prefijo.** Medido tras el re-archivo
+  de D-042: O0 tiene hoy 12 runs, 8 con prefijo `CANTU` y 4 con `JAME` (recuento
+  propio 2026-07-23). Los 12 llegan al roadmap de `aiw-console` como
+  `RUN-CANTU-*` y `RUN-JAME-*`, y así se quedan.
+- **El roadmap de la consola nace, por tanto, con prefijos mixtos.** Eso es
+  **correcto, no deuda**. Cambiarlos al migrar rompería la inmutabilidad de la
+  Regla 1.b — y la rompería en el momento exacto en que la identidad más se
+  necesita, porque migrar es cuando el id es lo único que sobrevive al cambio de
+  archivo, de repo y de vecinos.
+- **Corolario: `RUN-JAME-` sobrevive aunque JAME sea un nombre muerto.** El
+  contrato entero está construido para sacar `jame` de los identificadores nuevos
+  (§10.c, §19), y aquí lo conserva a propósito: son cosas distintas.
+  `jame.roadmap_v3.v0.2-progress` nombra al emisor de un **modelo** que se sigue
+  emitiendo, así que el nombre miente cada vez que se usa; `RUN-JAME-…-001` nombra
+  a quien creó un **evento** que ya ocurrió, y ese hecho no caduca cuando el
+  proyecto se renombra. **La inmutabilidad gana sobre la limpieza de nombres**: un
+  id es un dedo que señala, no una etiqueta que describe.
+
+##### `<PROYECTO>` NO es `project_id`, y nadie ramifica sobre él
+
+Los dos prefijos medidos no son el `project_id` de nadie: el proyecto de los 48
+`RUN-JAME-*` se identifica `jame_system_dual` (`CANTU-VALID:609`) y vive hoy en una
+carpeta llamada `cantu-studio`. `<PROYECTO>` es un nombre corto de época, no una
+clave.
+
+De ahí la prohibición, que es §5 aplicada a este campo: **ningún consumidor
+compara el prefijo contra un literal ni ramifica comportamiento sobre él.** Un
+`run_id` se compara entero o no se compara. Parsear el prefijo para rutear
+reintroduciría el ROMPE que §5 midió, con el agravante de que aquí el valor es
+histórico por diseño: rutear por `RUN-JAME-` sería mandar trabajo de hoy a un
+proyecto que ya no existe.
+
+##### Alcance: sólo hacia adelante
+
+**La forma aplica a los `run_id` creados desde ahora.** Los existentes **no se
+regularizan** — ni los 65 de Cantu (que ya la cumplen) ni los 16 que el proyector
+emite para AIW (que no la cumplen: **0 de 16**, medición propia). Qué pasa con esos
+16 lo resuelve la Regla 1.b, y no por vía estética.
+
+#### Regla 1.b — la ESTABILIDAD: un `run_id` no cambia NUNCA
+
+**Norma:** el `run_id` se asigna **al crear el run** y no cambia nunca. Ni al
+cambiar de `status`. Ni al archivarse. Ni al migrar de proyecto. Ni al renombrarse
+el proyecto que lo acuñó.
+
+Es lo que D-034 ya fijó como identidad inmutable (`context/DECISIONES.md:372`) y
+que la Regla 1 extendió a unicidad global. Aquí se escribe la consecuencia que
+ninguna de las dos escribió: **de qué NO puede derivarse un `run_id`.**
+
+##### Un emisor con derivación mutable VIOLA el contrato
+
+**Regla:** un emisor que derive `run_id` de una fuente que cambia durante la vida
+del run **viola este contrato**. No es preferencia de diseño: sin esto, "inmutable"
+es una promesa que el contrato hace y que ningún emisor está obligado a cumplir.
+
+**No es hipótesis. Hay un emisor medido que la viola hoy** (MEDICION-PROYECTOR §4,
+§4.a). La cadena, citada:
+
+1. El proyector fabrica el id a partir del **nombre del archivo** del objetivo:
+   `PROJ:192` — `const id = name.replace(/\.md$/i, "");`. No lee frontmatter, ni un
+   campo `run_id`, ni un índice.
+2. Ese id viaja tal cual a las tres ramas del roadmap emitido: `PROJ:235`,
+   `PROJ:247`, `PROJ:262` — `run_id: objective.id`, sin transformación.
+3. El kernel **renombra el archivo** al archivarlo, anteponiéndole el estado
+   terminal (`aiw/queue.mjs:58`):
+
+```js
+path.join(PROCESSED, `${state}-${f}`)
+```
+
+Resultado medido en disco: `aiw/objectives/processed/` contiene
+`APPROVED-001-console-projector.md`, `ERROR-000-sandbox.md`,
+`HUMAN_REVIEW-999-sandbox-imposible.md`. El objetivo que estando pendiente
+proyectaba `run_id: "001-console-projector"` proyecta, una vez completado,
+`run_id: "APPROVED-001-console-projector"`.
+
+**Muta exactamente en la transición que más importa** —cuando el run termina— y
+muta de forma silenciosa: nadie edita nada, el id simplemente es otro en la
+proyección siguiente.
+
+##### La razón de fondo: es status codificado DENTRO de la identidad
+
+El prefijo no es un adorno del nombre: es el **estado del run metido dentro de su
+id**. Y eso es el defecto que §12.c prohíbe un nivel más arriba —guardar lo que se
+deriva— en **su forma más dañina**, porque corrompe la única cosa que este contrato
+declara inmutable.
+
+La comparación, con las tres capas medidas del mismo dato:
+
+- **La clasificación ya viene de la carpeta.** El proyector recorre
+  `objectives/{pending, parked, processed}` (`PROJ:38` → `PROJ:188-190`) y de ahí
+  sale la `classification` (`PROJ:202`) que `taxonomy_model` declara como
+  vocabulario (`PROJ:463-466`).
+- **El desenlace ya viene del prefijo, extraído aparte.** El proyector lo saca con
+  su propia regex (`PROJ:196`) y lo emite **dos veces** como campo derivado: en
+  `status` (`PROJ:258-260`, vía `PROCESSED_STATUS_BY_PREFIX`, `PROJ:58-65`) y en
+  `closeout_result` (`PROJ:269`).
+- **Y además se queda dentro del `run_id`.** Ésa es la tercera copia — y la única
+  que no es un derivado más, sino la identidad misma.
+
+Que el mismo dato viaje en `status` y en `closeout_result` es §12.c operando
+normalmente: derivados que el emisor calcula al emitir. Que viaje **también** en el
+id no añade información a nadie y le quita al sistema lo único que la Regla 1
+prometía. Un derivado de más se recalcula; una identidad rota no se repara: todo lo
+que apuntaba al id viejo ya apuntaba a nada.
+
+##### Trabajo del TRAMO 2, y no rompe ninguna promesa
+
+Anotado como alcance del tramo 2, con dos exigencias:
+
+1. **Derivar el `run_id` de una fuente estable**, no del nombre de archivo. El
+   punto de cambio es único y está medido: `PROJ:192` es el **único** lugar donde
+   se fabrica el id (MEDICION-PROYECTOR §4.a). El prefijo de estado ya se extrae
+   por separado en `PROJ:196` y ya viaja en dos campos propios, así que despojarlo
+   del id no pierde un solo dato.
+2. **Aplicar la forma de la Regla 1.a** a lo que ese punto emita.
+
+**Por qué regularizar esos 16 ids no rompe nada, y por qué eso es un argumento
+incómodo pero válido:** los 16 `run_id` de AIW **no son identidad hoy** — mutan
+(cadena de arriba). Un id que cambia solo no puede haber sido prometido a nadie
+como estable, así que cambiarle la forma no incumple ninguna promesa que el sistema
+haya hecho. Es decir: la misma medición que prueba el defecto es la que abarata su
+arreglo. Ésta es la **única** ventana en la que regularizarlos es gratis; el día que
+el emisor los haga estables, dejarán de serlo y la Regla 1.b los protegerá como
+protege a los 65 de Cantu.
+
+**[NO VERIFICADO]** si algún consumidor guarda `run_id` de AIW entre proyecciones
+—y por tanto ya sufre la mutación de hoy, o sufriría la regularización de mañana—:
+no se midieron los consumidores (MEDICION-PROYECTOR §4.a, grado de verificación).
+Es la única incógnita del arreglo, y se resuelve midiendo, no deliberando.
+
 #### Regla 2 — externo es LEGAL; colgante sigue siendo malformado
 
 Los dos casos que antes se confundían en uno, separados:
@@ -788,6 +1013,23 @@ de ser cierta de hecho y el id desnudo deja de identificar.
 poder ser string U objeto, y las entradas existentes siguen válidas sin tocarse. Es
 el mismo mecanismo que §6 dejó preparado para el hash en `sources`: la forma se
 elige de modo que el cambio futuro sume en vez de romper.
+
+**Anotación de la enmienda D-043: la regla 4 SIGUE VIGENTE; su disparo se vuelve
+más improbable.** Con la forma de la Regla 1.a, la condición escrita arriba —«la
+primera colisión real de `run_id` entre dos proyectos»— pasa a requerir que **dos
+proyectos compartan el prefijo `<PROYECTO>`**, y además el mismo `<SLUG>` y el mismo
+`<NNN>`. Como el prefijo nombra al proyecto que acuña (Regla 1.a), eso solo puede
+ocurrir de dos maneras: dos proyectos que se llamen igual, o uno acuñando ids con el
+prefijo de otro —que es acuñar en nombre ajeno, no colisionar por accidente—.
+
+La regla **no se retira, y la distinción importa**: la forma hace la colisión más
+difícil, no imposible, y una forma no es un mecanismo de asignación. Nada en este
+contrato reserva prefijos ni impide que dos proyectos elijan el mismo; la Regla 1.a
+describe cómo se construye un id, no quién tiene derecho a un prefijo. Retirar la
+salida porque su disparo es improbable dejaría al sistema sin respuesta escrita
+justo para el caso que ya no se estaría vigilando. La salida sigue siendo aditiva
+(párrafo anterior), así que mantenerla anotada cuesta exactamente lo mismo que
+antes: cero.
 
 #### Qué queda de las 8 aristas
 
@@ -1409,11 +1651,13 @@ Adjudicadas por la cabina y redactadas en esta capa. Registradas en
 | r | `run_id` es GLOBALMENTE ÚNICO en todos los proyectos que exponen `.project/` | §10.d | Extiende la identidad inmutable de D-034 (`DECISIONES.md:372`); medido: 81 ids en los dos roadmaps con runs, intersección 0 — declararlo no cambia un byte. |
 | s | Una entrada de `depends_on` que no resuelve localmente es EXTERNA y LEGAL; colgante (no existe en ninguna parte) sigue MALFORMADO; el consumidor resuelve global y DECLARA sin resolver lo que no pueda | §10.d | Sin esto, las 8 aristas que crea migrar O0 nacerían malformadas; declarar sin resolver es §20 aplicado a un campo. |
 | t | La forma calificada `{project, run_id}` NO se adopta; queda como salida con condición de disparo escrita | §10.d | Un campo nuevo cuesta migración en tres repos (§16) y hoy no compra nada; adoptarla después es aditivo (mismo patrón que §6 dejó para el hash). |
+| u | La FORMA de un `run_id` es `RUN-<PROYECTO>-<SLUG>-<NNN>`, sólo para ids acuñados desde ahora; `<PROYECTO>` es PROCEDENCIA (quién lo creó), no propiedad ni `project_id`, y nadie ramifica sobre él | §10.d, Regla 1.a | Se adopta la convención con 65 ejemplares en disco en vez de inventar una: tiene emisor y evidencia — lo contrario del patrón de §3.b. Los runs migrados conservan su prefijo; el roadmap de la consola nace mixto, y eso es correcto. |
+| v | Un `run_id` NO cambia nunca (ni por `status`, ni al archivarse, ni al migrar); un emisor que lo derive de fuente mutable VIOLA el contrato | §10.d, Regla 1.b | Medido: el proyector lo deriva del nombre de archivo (`PROJ:192` → `:235,247,262`) y el kernel renombra al archivar (`aiw/queue.mjs:58`), así que muta al completarse. Es status codificado dentro de la identidad: §12.c en su forma más dañina. Tramo 2. |
 
-Las tres últimas —`r`, `s`, `t`— son la enmienda **D-041** del 2026-07-23.
-Continúan la serie después de la `q` de la capa 3, en vez de insertarse tras la
-`m`, para no renumerar decisiones ya registradas: la tabla se lee por letra, no
-por orden de aparición.
+Las tres —`r`, `s`, `t`— son la enmienda **D-041** del 2026-07-23; `u` y `v` son la
+enmienda **D-043** del mismo día. Continúan la serie después de la `q` de la capa 3,
+en vez de insertarse tras la `m`, para no renumerar decisiones ya registradas: la
+tabla se lee por letra, no por orden de aparición.
 
 Ninguna decisión de la capa 2 queda abierta. Lo que la capa deja sin fijar —
 forma interna de `progress` (§15), estructura futura de `closeout_result` (§14),
@@ -1423,7 +1667,14 @@ tipo y forma de `category`/`batch` (§16), claves de la declaración v3 en
 `depends_on` (§10.d) — no está pendiente de deliberación: está deliberadamente
 diferido a emisor y ejemplo, con la regla de §3.b. Opaco no es "sin decidir". El
 último, además, no espera emisor sino un hecho: su condición de disparo es una
-colisión de `run_id` que hoy no existe (§10.d, Regla 4).
+colisión de `run_id` que hoy no existe (§10.d, Regla 4) — y tras la enmienda D-043
+esa colisión exige además que dos proyectos compartan prefijo, así que el disparo
+es más improbable sin dejar de estar armado.
+
+La enmienda D-043 tampoco deja nada abierto a deliberación. Lo que queda pendiente
+de ella es de otra clase: **medición** —si algún consumidor guarda `run_id` de AIW
+entre proyecciones, hoy **[NO VERIFICADO]**— y **ejecución** —adecuar el emisor,
+que es tramo 2 (§10.d, Regla 1.b), como ya lo eran §1.b, §10 y §17—.
 
 ### Capa 3 — ADJUDICADAS 2026-07-23 — registradas como D-040
 

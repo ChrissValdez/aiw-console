@@ -815,3 +815,120 @@ objetivo debe alojar ejecución de runtime pertenece al hilo de Cantu; no se fue
 desde el hilo de la consola.
 
 Criterio de borrado: N/A.
+
+## D-043 — 2026-07-23 — Forma y estabilidad de `run_id`; el emisor medido
+Enmienda la capa 2 del contrato (`context/aiw-console/CONTRATO.md`, §10.d, Reglas
+1.a y 1.b, decisiones `u` y `v`); **no reemplaza a D-041**, que queda íntegra. Y
+registra las cuatro respuestas del record
+`context/aiw-console/records/MEDICION-PROYECTOR.md`, medición read-only del emisor
+leída completa antes de redactar. Todas las citas de código se releyeron de primera
+mano. No se ejecutó el proyector. No se ejecutó git en ninguna forma.
+
+**FORMA — `RUN-<PROYECTO>-<SLUG>-<NNN>`, sólo hacia adelante.** Se adopta la
+convención que Cantu ya sigue de facto: medición propia, **65 de 65** `run_id`
+casan la forma, 0 excepciones, prefijos `JAME` (48) y `CANTU` (17), 0 minúsculas.
+No se inventó una mejor porque una convención con 65 ejemplares en disco **tiene
+emisor y evidencia** —lo contrario del patrón que §3.b del contrato prohíbe—, y
+una forma inventada declararía ilegales 65 ids existentes. Límite medido y escrito:
+`<NNN>` es `001` en los 65 —la secuencia nunca se ejerció más allá del primero—,
+así que **la unicidad la carga hoy el `<SLUG>`, no el número**. **El prefijo es
+PROCEDENCIA, no propiedad:** nombra al proyecto que CREÓ el run, no al que lo aloja.
+Consecuencia declarada, no deuda: **los 12 runs de O0 que migran conservan
+`RUN-CANTU-` (8) y `RUN-JAME-` (4)** —recuento propio tras el re-archivo de D-042—
+y el roadmap de `aiw-console` **nace con prefijos mixtos**; cambiarlos al migrar
+rompería la inmutabilidad justo cuando el id es lo único que sobrevive al cambio de
+repo. Corolario: **`RUN-JAME-` sobrevive aunque JAME sea un nombre muerto** — un id
+nombra a quien creó un evento que ya ocurrió, y ese hecho no caduca; la
+inmutabilidad gana sobre la limpieza de nombres. Distinto de
+`jame.roadmap_v3.v0.2-progress`, que nombra al emisor de un modelo que se sigue
+emitiendo (§10.c). `<PROYECTO>` **no es `project_id`** (los 48 `RUN-JAME-*` son de
+`jame_system_dual`, `CANTU-VALID:609`) y **nadie ramifica sobre él**: §5 aplicado a
+este campo. **Los `run_id` existentes no se regularizan.**
+
+**ESTABILIDAD — y el emisor la viola, medido.** El `run_id` se asigna al crear el
+run y **no cambia nunca**: ni por `status`, ni al archivarse, ni al migrar de
+proyecto. Escrito además lo que D-034 (`DECISIONES.md:372`) y D-041 no escribieron:
+**un emisor que derive `run_id` de una fuente mutable VIOLA el contrato.** Hay uno
+midiendo: el proyector fabrica el id con el nombre del archivo
+(`projects/aiw-console/tools/projector/project.mjs:192` — en adelante
+`project.mjs`) y lo emite tal cual (`:235`, `:247`, `:262`),
+mientras el kernel **renombra el archivo al archivarlo con el estado como prefijo**
+(`aiw/queue.mjs:58`) — en disco, `APPROVED-001-console-projector.md`,
+`ERROR-000-sandbox.md`, `HUMAN_REVIEW-999-sandbox-imposible.md`. El mismo objetivo
+que pendiente proyecta `001-console-projector` proyecta, completado,
+`APPROVED-001-console-projector`: **muta en la transición que más importa**, y en
+silencio. **La razón de fondo:** el prefijo de estado es **status codificado dentro
+de la identidad** — el defecto que §12.c prohíbe un nivel más arriba (guardar lo
+que se deriva) en su forma más dañina, porque corrompe la única cosa que el
+contrato declara inmutable. Y es copia redundante, medida: la clasificación ya sale
+de la carpeta (`project.mjs:38` → `:188-190`, `:202`) y el desenlace ya se extrae
+aparte (`:196`) y viaja en **dos** campos derivados, `status` (`:258-260`) y
+`closeout_result` (`:269`). Un derivado de más se recalcula; una identidad rota no
+se repara. **Trabajo del tramo 2:** derivar el id de fuente estable —punto de
+cambio único, `project.mjs:192`— y aplicarle la forma. **Regularizar los 16 ids de
+AIW no rompe ninguna promesa porque hoy no son identidad: mutan.** Es la única
+ventana en que ese arreglo es gratis. **[NO VERIFICADO]** si algún consumidor
+guarda esos `run_id` entre proyecciones: no se midieron los consumidores.
+
+**Regla 4 de D-041: vigente, disparo más improbable.** Con la forma fijada, la
+«primera colisión real» exige ahora que dos proyectos compartan prefijo, además de
+slug y número. **No se retira:** la forma no es un mecanismo de asignación —nada
+reserva prefijos—, y la salida sigue siendo aditiva, así que mantenerla anotada
+cuesta cero.
+
+**Q1 — `taxonomy_model` está HORNEADO** (`project.mjs:38,40` → `:463-466`). La
+hipótesis que §17 del contrato marcó **[NO VERIFICADO]** era **cierta**: la norma
+pide función del modelo transportado y el emisor pone constante literal. Trabajo
+del tramo 2, exactamente como §17 anticipó. Precisión: hoy no lo hace incorrecto
+—el proyector emite un solo modelo, así que constante y derivación coinciden en
+valor—; el defecto es latente y se manifiesta con el segundo modelo. **Extra
+medido:** `OPERATIONAL_STATUSES` declara `blocked` (`project.mjs:40`) y el cálculo
+real del campo, `pending.length > 0 ? "active" : "idle"` (`:423`), **no puede
+producirlo nunca**. Hay que distinguirlo del `blocked` de §11.a: aquél está
+**declarado y no instanciado** —honesto, el vocabulario dice lo que un run PUEDE
+decir—; éste es **estructuralmente inalcanzable**, una promesa que el emisor no
+puede cumplir por construcción. El vocabulario declarado es más ancho que lo que el
+emisor sabe emitir, y eso es prueba adicional de que es literal y no derivación.
+
+**Q2 — la asimetría que D-040 dejó anotada (`DECISIONES.md:660-663`) queda CERRADA
+en positivo.** `aiw_flat_objectives_v1` (`project.mjs:450`) **nombra al CONTENIDO,
+no al emisor**, y lo que lo hace legítimo es que el modelo esté **atado al kernel de
+AIW**: el proyector no lista qué subcarpetas existen, itera tres literales
+(`:38`, recorridos en `:98` y `:188-190`, sobre una raíz fija en `:96`/`:186`)
+mientras el kernel tiene **siete** bajo `objectives/`
+—ignora cuatro en silencio—, traduce prefijos que son los estados terminales del
+kernel (`:58-65`, vía la convención de archivado de `queue.mjs:58`) y extrae el
+prefijo con regex sobre el nombre de archivo (`:196`). Un repo con carpetas
+`todo/doing/done` produciría un árbol vacío, no uno equivalente. Es decir: `aiw_`
+nombra una **forma de datos** que sólo existe donde ese ciclo de vida existe;
+`jame.` nombra a una **organización emisora** y sigue siendo defecto. La asimetría
+era aparente. Contorno honesto: esto dice que el identificador está bien formado
+bajo §1, **no** que el modelo plano deba sobrevivir.
+
+**Q3 — `jame.git_history_snapshot.v1` es literal horneado**
+(`projects/cantu-studio/tools/project-console/build-git-history-snapshot.mjs:26` →
+`:186`): constante de módulo, ni derivada ni
+configurable —el único `opts` reconocido es `opts.now`—, y duplicada en las dos
+copias del builder (Cantu y consola), igual que su ruta de salida. **Tercer
+identificador con nombre muerto**, y aquí el prefijo **sí** nombra al emisor: es el
+defecto que Q2 descartó para `aiw_flat_objectives_v1`. Renombrarlo es tramo 2, como
+ya anotaba la capa 3 del contrato; coste medido: una línea, en dos copias, más
+cualquier consumidor que compare el string.
+
+**Bloqueo del tramo 2 identificado.** `resolveInsideAiw`
+(`project.mjs:475-483`) **LANZA** si la ruta de salida no cae dentro de
+`<root>/.aiw/`, y está declarada como frontera del proyector en su cabecera
+(`:12-13`). El emisor, tal como está, **no puede escribir bajo `.project/` en
+absoluto**. La buena noticia es la forma del obstáculo: **no es acoplamiento
+disperso** —como sí lo es la tabla `PATHS` con 15 literales del renderer (§1.a del
+contrato)— **sino una guarda única, con archivo y línea**. Emitir a `.project/`
+empieza ahí, y ahí se decide también si durante la convivencia aditiva (D-036) el
+emisor escribe en ambos destinos o sólo en el nuevo. Lo demás del inventario del
+tramo 2 son constantes de ruta.
+
+**No se editó ningún record.** MEDICION-PROYECTOR es medición fechada y se cita, no
+se reescribe. **Tensión abierta, no resuelta aquí:** §17 del contrato sigue
+marcando **[NO VERIFICADO]** la hipótesis que Q1 acaba de verificar; actualizar ese
+párrafo quedó fuera del alcance de este encargo (que era §10.d) y va en uno aparte.
+
+Criterio de borrado: N/A.

@@ -240,6 +240,235 @@
           ]
         }
       ]
+    },
+    {
+      "objective_id": "O4",
+      "title": "Consola global",
+      "phases": [
+        {
+          "phase_id": "O4.P0",
+          "title": "Tramo 0 — Audit / Phase 0 (read-only)",
+          "runs": [
+            {
+              "run_id": "RUN-CONSOLE-AUDIT-PHASE0-001",
+              "queue_order": 13,
+              "title": "Audit / Phase 0 de la migración a la consola global",
+              "summary": "Mapa read-only de qué hace la consola hoy vs qué necesita la consola maestra, y de los tres acoplamientos que la atan a Cantu.",
+              "full_description": "Read-only. Qué hace la consola hoy vs qué necesita la maestra, y los tres acoplamientos que la atan a Cantu: anchors del validator sobre el fuente de la consola, endpoint de edición (tooling Cantu-local), regex RUN-JAME- del history builder. Sale un MAPA, no código. Ejecutado y adjudicado: el mapa vive en context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md (commit dc76b49). Marco del objetivo, preservado literal de RM-AIW:114-120 (sin hogar a nivel de objetivo bajo roadmap_tree_v1): SECUENCIA ACORDADA (D-034) — la consola es lo SIGUIENTE y va primero. Razón: no es solo que dé orden de trabajo, es que la consola es la CONDICIÓN que hace seguro el modelo de 3 conversaciones en paralelo (sin ella, cada conversación lee packs pegados a mano y las verdades divergen). Definición de \"consola estable\" = renderiza los tres proyectos, leyendo de sus propios repos, roadmap + docs + status, READ-ONLY. Nada más; edición y UX vienen después y ya pueden ir en paralelo.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            }
+          ]
+        },
+        {
+          "phase_id": "O4.P1",
+          "title": "Tramo 1 — Contrato de la carpeta, migración de O0 y redacción",
+          "runs": [
+            {
+              "run_id": "RUN-CONSOLE-CONTRATO-CARPETA-001",
+              "queue_order": 14,
+              "title": "Contrato de normalización: la carpeta que un proyecto expone (capas 1-3)",
+              "summary": "Qué expone un proyecto y DÓNDE, para que la consola lo lea igual en los tres (roadmap v3, docs canónicos, status).",
+              "full_description": "Qué expone un proyecto y DÓNDE, para que la consola lo lea igual en los tres (roadmap v3, docs canónicos, status). Es la decisión de diseño de la que cuelga todo. Aquí se resuelve el desorden de contextos de AIW: al definir qué es canónico, qué derivado y qué histórico, el criterio de limpieza sale solo. Ejecutado: el contrato vive en context/aiw-console/CONTRATO.md (capa 1 = D-039; capas 2-3 = D-040) y SUPERSEDE a docs/snapshot-schema-v1.md como norma. Enmendado por D-041 (dependencias que cruzan proyectos, §10.d) y D-043 (forma y estabilidad de run_id, Reglas 1.a/1.b). Insumos de medición leídos completos antes de redactar el contrato: MEDICION-ROADMAP-V3.md, MEDICION-GRAFO-O0.md, MEDICION-PROYECTOR.md.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-CONSOLE-REARCHIVO-BLOQUE-RENAME-001",
+              "queue_order": 15,
+              "title": "Re-archivo del bloque de rename (O0.P3 → O2.P5) en el roadmap de Cantu",
+              "summary": "Mover el bloque de 5 runs de rename fuera de O0 antes de migrarlo, para que O0 salga limpio.",
+              "full_description": "Preparación de la migración de O0: el re-archivo movió el bloque de 5 runs de rename de O0.P3 a O2.P5 en el roadmap de Cantu, con lo que O0 pasó de 17 a 12 runs y su frontera de aristas cruzadas de 8 a 1 (la entrante histórica desde O2). Registrado en context/aiw-console/records/REARCHIVO-BLOQUE-RENAME.md y adjudicado como D-042. Operó sobre el roadmap de Cantu, no sobre éste; se lista aquí por ser trabajo del tramo 1 que habilita la migración.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-CONSOLE-MIGRACION-O0-001",
+              "queue_order": 16,
+              "title": "Migración de O0 (Project Console) del roadmap de Cantu al de aiw-console",
+              "summary": "Extraer los 12 runs de O0 del roadmap canónico de Cantu y estrenar el roadmap propio de aiw-console.",
+              "full_description": "El intercalado entre los tramos 1 y 3 (D-038): migrar al roadmap de la consola los runs que hoy viven en el de Cantu. Los 12 runs de O0 se extrajeron del roadmap canónico de Cantu y estrenaron projects/aiw-console/roadmap/roadmap.json (schema_version roadmap_tree_v1); Cantu quedó en 7 objetivos / 53 runs. Operación atómica de dos lados, verificada: ningún run existe en ambos ni en ninguno; intersección de run_id CERO. Registrado en context/aiw-console/records/MIGRACION-O0.md. run_id es identidad inmutable (D-034): O0 conserva sus ids RUN-JAME y RUN-CANTU.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-CONSOLE-VALIDADOR-ROJO-REPARADO-001",
+              "queue_order": 17,
+              "title": "Reparación del validador de Cantu tras la extracción de O0",
+              "summary": "El depends_on que quedó cruzando repos tras sacar O0 puso rojo al validador de Cantu; se reparó.",
+              "full_description": "Tras la extracción de O0, un depends_on que ahora cruza proyectos puso rojo al validador de Cantu, que lo leía con el supuesto viejo (una referencia que no resuelve localmente = colgante). Es el primer caso medido del disparo de D-026 sin artefacto nuevo (contrato §9). Medición y arreglo en context/aiw-console/records/MEDICION-VALIDADOR-ROJO.md, adjudicado como D-045. Operó sobre el validador de Cantu; se lista aquí por ser consecuencia directa de la migración del tramo 1.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-CONSOLE-MEDICION-O4-001",
+              "queue_order": 18,
+              "title": "Medición de O4 en el roadmap de AIW, insumo de su redacción",
+              "summary": "Medir O4 (contenido, estructura, brecha contra la capa 2, status, los nueve tramos, duplicación con O0) antes de redactarlo.",
+              "full_description": "Medición read-only de O4 en RM-AIW como insumo de esta redacción: contenido y estructura (10 bullets, 0 fases), brecha contra las 15 claves de la capa 2 (distinguiendo acuñar de inventar), status derivado, ubicación del plan de nueve tramos (solo en el HANDOFF efímero) y riesgo de duplicación contra los 12 runs de O0 (nulo). Registrada en context/aiw-console/records/MEDICION-O4.md.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-CONSOLE-REDACCION-O4-001",
+              "queue_order": 19,
+              "title": "Redacción de O4 al roadmap de aiw-console",
+              "summary": "Convertir O4 desde el Markdown de AIW a roadmap_tree_v1, junto a O0, con fases=tramos y la estructura declarada como invención.",
+              "full_description": "Esta redacción: O4 se escribe en projects/aiw-console/roadmap/roadmap.json como segundo objetivo junto a O0. Fases = tramos (O4.P0..P8) más una fase transversal justificada (O4.P9); run_id nuevos con prefijo RUN-CONSOLE-; status al día contra la evidencia, no como la fuente; depends_on solo donde la fuente declara compuerta. La estructura de fases es INVENCIÓN declarada: la fuente no declara fases y los nueve tramos viven solo en el HANDOFF efímero (MEDICION-O4.md §4.2 y §6). Run auto-referencial: documenta su propia ejecución, registrada en context/aiw-console/records/REDACCION-O4.md.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            }
+          ]
+        },
+        {
+          "phase_id": "O4.P2",
+          "title": "Tramo 2 — aiw-console emite su propia carpeta",
+          "runs": [
+            {
+              "run_id": "RUN-CONSOLE-EMISOR-CARPETA-PROPIA-001",
+              "queue_order": 20,
+              "title": "aiw-console emite su propia carpeta .project/",
+              "summary": "El proyector pasa a emitir la carpeta .project/ de aiw-console según el contrato (schemas, nombres, frescura).",
+              "full_description": "aiw-console emite su propia carpeta .project/snapshot.json vía el proyector (tools/projector/project.mjs), materializando el contrato: familia v1, .project/ reemplaza a views/ (contrato §1.b), generated_at requerida y la clave nueva sources con mtime para hacer detectable la podredumbre (contrato §6). Trabajo de emisor que el contrato declara del tramo 2. UN run hasta que el tramo se planee en detalle.",
+              "status": "planned",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "O4.P3",
+          "title": "Tramo 3 — Shell multi-proyecto leyendo solo aiw-console",
+          "runs": [
+            {
+              "run_id": "RUN-CONSOLE-SHELL-MULTIPROYECTO-001",
+              "queue_order": 21,
+              "title": "Shell multi-proyecto leyendo solo aiw-console",
+              "summary": "Construir el shell de la consola global que lee la carpeta .project/ de aiw-console (un solo proyecto primero).",
+              "full_description": "La consola los lee: el shell multi-proyecto lee la carpeta .project/ de aiw-console (un proyecto primero). Aquí se activa el test-de-consumidor de D-026 contra el artefacto .project/snapshot.json (contrato §9, que exime al tramo 1 y dispara en el 3). Absorbe el bullet 'Pantalla multi-proyecto' (RM-AIW:152): proyectos previstos — Project Console, AIW, Cantu Studio (y los que vengan); AIW aparece como proyecto de runs manuales renderizado — el kernel nunca lo ejecuta. UN run hasta planear en detalle.",
+              "status": "planned",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "O4.P4",
+          "title": "Tramo 4 — Cantu emite la carpeta nueva al lado de .aiw",
+          "runs": [
+            {
+              "run_id": "RUN-CONSOLE-CANTU-EMITE-CARPETA-001",
+              "queue_order": 22,
+              "title": "Cantu emite la carpeta .project/ nueva al lado de .aiw",
+              "summary": "El proyector emite también la carpeta .project/ de Cantu, aditiva, sin tocar .aiw.",
+              "full_description": "Cantu emite la carpeta .project/ nueva AL LADO de .aiw (aditiva, D-036): el proyector pasa a emitir también el snapshot de Cantu, con lo que la podredumbre de tres semanas se arregla como efecto lateral (contrato §2, corolario). Es la parte-Cantu de 'Los tres roadmaps al contrato' (RM-AIW:133): Cantu ya está en v3; su carpeta .project/ nace aquí. UN run hasta planear en detalle.",
+              "status": "planned",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "O4.P5",
+          "title": "Tramo 5 — Consola global renderiza Cantu (paridad, QA de operador)",
+          "runs": [
+            {
+              "run_id": "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001",
+              "queue_order": 23,
+              "title": "Consola global renderiza Cantu (paridad, QA de operador)",
+              "summary": "Levantar la consola global sobre Cantu en read-only y alcanzar paridad con la consola local, con QA de operador.",
+              "full_description": "Absorbe el bullet 'Consola global en aiw-console' (RM-AIW:149-151): Base, la consola de Cantu (la más avanzada). Se levanta AL LADO de la local, apuntando a Cantu en read-only primero. La local no se toca hasta paridad. La consola global renderiza Cantu leyendo su carpeta .project/, y se alcanza paridad con la local con QA de operador. UN run hasta planear en detalle.",
+              "status": "planned",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "O4.P6",
+          "title": "Tramo 6 — AIW como tercer proyecto (roadmap Markdown → v3)",
+          "runs": [
+            {
+              "run_id": "RUN-CONSOLE-AIW-TERCER-PROYECTO-001",
+              "queue_order": 24,
+              "title": "AIW como tercer proyecto (roadmap Markdown → JSON v3)",
+              "summary": "AIW entra a la consola global como tercer proyecto: su roadmap pasa de Markdown temporal a JSON v3 y se emite su carpeta .project/.",
+              "full_description": "Parte-AIW de 'Los tres roadmaps al contrato' (RM-AIW:134): AIW pasa de markdown temporal (roadmap_AIW_temp.md) a JSON v3 y entra a la consola con su roadmap de verdad. AIW aparece como proyecto de runs manuales renderizado — el kernel nunca lo ejecuta. Distinción importante: esta redacción (O4) ya llevó O4 al roadmap de la CONSOLA porque O4 es el objetivo de la consola; el tramo 6 es la conversión del roadmap COMPLETO de AIW (O1, O2, O3, O5, O6) a su propio v3 y el retiro de O4 de RM-AIW, que es encargo aparte (§12 del encargo de redacción). UN run hasta planear en detalle.",
+              "status": "planned",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "O4.P7",
+          "title": "Tramo 7 — Corte: retiro de la consola de Cantu + borrado de .aiw",
+          "runs": [
+            {
+              "run_id": "RUN-CONSOLE-CORTE-RETIRO-LOCAL-001",
+              "queue_order": 25,
+              "title": "Corte: retiro de la consola local de Cantu y borrado de .aiw",
+              "summary": "Cuando la global renderice y edite igual que la local, retirar la local como acto deliberado y registrado, y borrar .aiw.",
+              "full_description": "Bullet 'Paridad y corte' (RM-AIW:155-157): cuando la global renderice y edite igual que la local, la local se retira como acto deliberado y registrado. Features nuevas (batches, UI) solo en la global. El corte incluye el borrado de .aiw, que convivió aditivo hasta aquí (contrato §0, corte del tramo 7); el costo está medido: el día que .aiw se borre se ponen rojas 10 rutas del validador de Cantu (CANTU-VALID:153-166). depends_on cita la compuerta explícita de la fuente: la local no se toca hasta paridad (RM-AIW:151, :155-156). UN run hasta planear en detalle.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "O4.P8",
+          "title": "Tramo 8 — UI/UX",
+          "runs": [
+            {
+              "run_id": "RUN-CONSOLE-UI-UX-001",
+              "queue_order": 26,
+              "title": "UI/UX de la consola global",
+              "summary": "Edición y UX de la consola global, que la fuente difiere explícitamente a después de la paridad read-only.",
+              "full_description": "El tramo 8 no tiene bullet propio en la fuente: vive solo en prosa. Edición y UX vienen después (RM-AIW:119-120) del criterio read-only de consola estable, y ya pueden ir en paralelo; Features nuevas (batches, UI) solo en la global (RM-AIW:157). Que este tramo carezca de bullet numerado es parte del desfase declarado en el record. UN run hasta planear en detalle.",
+              "status": "planned",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "O4.P9",
+          "title": "Trabajo previo y transversal (fuera de la secuencia de tramos)",
+          "runs": [
+            {
+              "run_id": "RUN-CONSOLE-MERGE-005-001",
+              "queue_order": 27,
+              "title": "Merge de 005 en aiw-console",
+              "summary": "La honestidad de estados del proyector (ERROR/HUMAN_REVIEW → blocked, parked → Later, títulos desde # Objective); la consola de AIW enciende.",
+              "full_description": "La honestidad de estados del proyector (ERROR/HUMAN_REVIEW → blocked, parked → Later, títulos desde # Objective). Verificado por tests ANTES de mergear: rama de 005 con 31 tests verdes (5 archivos), re-verde en main tras merge --no-ff (29c9478), pusheado. Ajuste de acoplamiento de la mudanza: projects.config.json corregido ../aiw → ../../aiw (el kernel subió un nivel al mudarse). La consola de AIW ENCIENDE: el server (serve-project-console.mjs, puerto 8787) re-proyecta al arrancar (project=aiw, objectives=16), Overview/Roadmap/Cola vivas con datos reales, QA visual de operador OK. 006 ya estaba mergeado de antes. Pulidos MENORES pendientes (no bloquean): banner some optional local state files could not be loaded (benigno) y el diseño se ve algo desplazado (probable caché/estado). Anterior al plan de tramos: no pertenece a ninguno; por eso vive en la fase transversal. Su queue_order alto NO refleja cronología — queue_order sigue el orden de presentación de fase, y esta fase va al final del rango de O4.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-CONSOLE-CONTEXT-PACK-001",
+              "queue_order": 28,
+              "title": "Context pack de la consola",
+              "summary": "Un pack que lleva REGLAS (no el plan): qué es la consola, el peligro del validador que asserta texto fuente, derivado vs canónico, la estructura de carpetas como regla.",
+              "full_description": "Lleva REGLAS, no el plan (el plan es estado y vive en el roadmap): qué es la consola, el peligro del validador que asserta texto fuente, qué es derivado vs canónico, la estructura de carpetas como regla. Tensión anotada: D-037/D-038 ya movieron el contexto de cabina a context/aiw-console/, con lo que este ítem queda PARCIALMENTE superado; decidir qué le queda vivo NO es de este encargo de redacción. Transversal: no mapea a un solo tramo.",
+              "status": "planned",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-CONSOLE-DIGEST-CABINA-001",
+              "queue_order": 29,
+              "title": "Digest para la cabina",
+              "summary": "Una vista más del proyector: un archivo con el estado de los tres proyectos, fechado y con SHA, para detectar obsolescencia.",
+              "full_description": "Una vista más del proyector: UN archivo con el estado de los tres proyectos (HEAD+rama+sucio, conteos por estado, runs activos, siguiente paso, no-claims), fechado y con SHA para detectar obsolescencia. Chico, derivado, jamás editado a mano. La propia fuente lo degrada de prerequisito a optimización: con el sync del repo ya no es prerequisito, es optimización de contexto (RM-AIW:148). Degradado no es muerto. Transversal: no mapea a un solo tramo.",
+              "status": "planned",
+              "depends_on": []
+            }
+          ]
+        }
+      ]
     }
   ]
 }

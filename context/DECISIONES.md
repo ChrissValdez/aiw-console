@@ -663,3 +663,101 @@ que `jame.roadmap_v3.v0.2-progress` depende de si el modelo plano es genérico o
 específico del kernel de AIW. Se resuelve leyendo el emisor, en el tramo 2.
 
 Criterio de borrado: N/A — lo sustituye una revisión futura del contrato.
+
+## D-041 — 2026-07-23 — Enmienda a D-034: la migración es O0 COMPLETO (17 runs); `depends_on` puede cruzar proyectos
+Enmienda a D-034; **no la reemplaza.** El orden de trabajo que D-034 fija —consola
+primero, tres proyectos en paralelo después— sigue vigente sin cambios. Se enmienda
+el punto (3) de su secuencia interna (qué runs migran del roadmap de Cantu al de la
+consola) y se añade la pieza de contrato que esa migración necesitaba y no existía.
+Insumo: `records/MEDICION-GRAFO-O0.md`, medición read-only del grafo alrededor de
+O0, reproducida de primera mano hoy con recorrido propio del roadmap.
+
+**El «6» de D-034 no se deriva de su propio texto. Dos errores de derivación,
+citados por línea.**
+**(a) El patrón.** D-034 escribe «migrar los runs `RUN-CANTU-PROJECT-CONSOLE-*`»
+(`DECISIONES.md:370-371`; el literal está en `:371`). En disco ese patrón encuentra
+**3** runs —`…ROADMAP-EDITING-001`, `…LATENT-DEFECTS-001`, `…DEEP-AUDIT-001`— y
+**4** sumando el que el encargo nombraba aparte
+(`RUN-JAME-PROJECT-CONSOLE-DOCS-V3-001`). El 6 solo aparece **ensanchando** el
+patrón a `RUN-*-PROJECT-CONSOLE-*`, es decir ignorando el prefijo que D-034 sí
+escribió (MEDICION-GRAFO:144-164; recuento propio 2026-07-23: literal 3,
+ensanchado 6).
+**(b) El objetivo.** Uno de esos 6 **no vive en O0**:
+`RUN-JAME-PROJECT-CONSOLE-DOCS-V3-001` está en **O2**, `queue_order` 59
+(MEDICION-GRAFO:159, :166-168; verificado de primera mano). «Migrar los 6» no es
+«migrar un trozo de O0»: parte **DOS** objetivos.
+**La cardinalidad era correcta; la derivación no.** El 6 del handoff coincide con
+lo que hay en disco bajo la lectura ensanchada — el error estaba en el camino, no
+en el número, y por eso nadie lo vio: el resultado validaba un razonamiento que no
+se sostiene.
+
+**Alcance ratificado: O0 COMPLETO, 17 runs.** Razón medida, no preferencia. Migrar
+O0 entero rompe **8** aristas de `depends_on` y **las 8 van entre objetivos
+distintos**, dejando **0 objetivos partidos**. El escenario-6 rompe solo 4, pero
+las **4 son INTRA-objetivo** y parten O0 y O2 entre dos repos
+(MEDICION-GRAFO:218-223; recuento propio: 8 aristas 0-intra/8-inter frente a 4
+aristas 4-intra/0-inter, objetivos partidos {O0, O2}). **Menos aristas no es menos
+daño:** una arista entre objetivos distintos ya cruzaba una frontera conceptual
+antes de cruzar una de repo; una arista intra-objetivo partida en dos repos deja un
+objetivo que ya no existe como unidad en ninguno de los dos. El conteo bruto
+favorece al escenario-6 y **pierde en toda otra dimensión medida**.
+
+**Escenario «O0 menos rename» (12 runs, 1 arista): MEDIDO, NO ADOPTADO.** Excluir
+los 5 runs de rename del repo `cantu-studio` (`REPO-RENAME`,
+`INTERNAL-CODE-RENAME`, `DOCS-DIRECTORY-RENAME`, `RUNTIME-JAME-CLASS-RENAME`,
+`RUNTIME-J-NAMESPACE-RENAME`) dejaría **1** sola arista cruzada, y encima histórica
+—entrante desde O2 contra un run ya `completed` (MEDICION-GRAFO:237-241; recuento
+propio: 12 runs, 1 arista, destino `completed`). Es el mejor número de los tres y
+**aun así no se adopta**, porque el número no es el problema: esos 5 runs son
+trabajo del repo de Cantu, no de la consola, y **su pertenencia a O0 es en sí el
+dato a revisar** (MEDICION-GRAFO:241-245; que «deberían» o no estar en O0 queda
+**[NO VERIFICADO]** — el roadmap no declara criterio de pertenencia). Si resultan
+mal archivados, el arreglo correcto es **re-archivarlos dentro del roadmap de Cantu
+como cambio propio**, no excluirlos por la puerta de atrás de una migración:
+componer primero, mudar después. Una migración que además reorganiza esconde dos
+cambios en uno y deja los dos sin revisar.
+**Queda como PENDIENTE con condición de tiempo:** ese re-archivado, si se hace, va
+**ANTES del tramo 4** —el tramo en que la migración ocurre
+(`context/aiw-console/CONTRATO.md:1224`, §18)— porque a partir de ahí D-036 congela
+ese roadmap: «durante la ventana, el roadmap de Cantu no se edita»
+(`DECISIONES.md:443-444`). Pasada esa puerta el arreglo deja de ser barato: hay que
+hacerlo en dos repos.
+
+**`depends_on` que cruza proyectos — la pieza que faltaba** (contrato, capa 2,
+§10.d; decisiones `r`, `s`, `t`). La medición dejó explícito que 8 vs 4 «no son
+traducibles a coste hasta que el contrato defina la arista cruzada»
+(MEDICION-GRAFO:247-255). Definida así:
+**(1) `run_id` es GLOBALMENTE ÚNICO** en todos los proyectos que exponen
+`.project/` — extensión de la identidad inmutable que D-034 ya fijó
+(`DECISIONES.md:372`), porque inmutabilidad sin unicidad no identifica nada. Y
+gratis: medidos los dos únicos roadmaps vigentes con runs (Cantu 65 + el que el
+proyector emite para AIW, 16), los **81 ids son distintos, intersección 0**.
+**(2) Una entrada que no resuelve en el roadmap local es LEGAL** y significa
+dependencia externa; **colgante** —un id que no existe en ninguna parte— sigue
+siendo malformado. Eran dos casos que el contrato confundía en uno solo.
+**(3) El consumidor resuelve globalmente** contra los proyectos que carga y, si no
+puede, **lo declara SIN RESOLVER en la superficie afectada**, nombrando el
+`run_id`: misma doctrina que §20 del contrato, aplicada a un campo en vez de a un
+archivo. Precisión que la hace implementable: «sin resolver» es lo que un consumidor
+sabe; «colgante» es un veredicto que solo puede emitir quien tiene cargados todos
+los proyectos — por eso el deber es **declarar**, no **clasificar**.
+**(4) La forma calificada (`{project, run_id}`) NO se adopta hoy:** un campo nuevo
+cuesta migración en tres repos y no compra nada mientras la unicidad global sea
+cierta de hecho. Queda como salida disponible, con condición de disparo escrita —la
+primera colisión real de `run_id`— y aditiva el día que se adopte.
+**Consecuencia directa:** las 8 aristas de la migración de O0 dejan de ser un daño
+a reparar y pasan a ser 8 dependencias externas legales y declarables. El coste de
+una arista cruzada es **cero en forma de dato** y **un requisito de declaración
+sobre el consumidor**.
+
+**Tensión registrada, no resuelta:** los dos espacios de `run_id` medidos son
+disjuntos por **convención**, no por regla — el contrato no fija en ninguna parte la
+FORMA de un `run_id`, y la familia que el proyector emite para AIW se deriva de
+nombres de carpeta (`005-roadmap-contract-fix`, `APPROVED-001-console-projector`),
+que es la clase de id más fácil de colisionar si un tercer proyecto numera igual.
+Que la colisión llegue a ocurrir es **[NO VERIFICADO]**: es inferencia sobre la
+forma de los ids medidos, no un hecho en disco. Se registra porque es el escenario
+concreto que dispararía la salida del punto (4).
+
+Criterio de borrado: N/A — enmienda a D-034; la sustituye una decisión futura sobre
+el alcance de la migración.

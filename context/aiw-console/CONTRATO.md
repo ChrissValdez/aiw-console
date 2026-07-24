@@ -459,6 +459,10 @@ objeto `roadmap_tree` que §3 declara requerido y resuelve el destino de
 adjudicadas por la cabina; esta redacción las fija con su evidencia. Registradas en
 `context/DECISIONES.md` como D-040, junto con la capa 3.
 
+**Enmendada el 2026-07-23 por D-041**, que añade §10.d — las dependencias que
+cruzan proyectos — y las decisiones `r`, `s` y `t` de la tabla final. La enmienda
+no toca ninguna decisión previa de esta capa: añade.
+
 ## Nota de verificación (capa 2)
 
 Fuentes de evidencia, leídas completas antes de redactar:
@@ -489,6 +493,26 @@ CANTU-PCJS, CANTU-VALID y
 
 No se ejecutó git en ninguna forma. No se levantó la consola, el validador ni el
 proyector. Lo no comprobable desde disco en esta sesión se marca **[NO VERIFICADO]**.
+
+### Añadido por la enmienda D-041 (2026-07-23)
+
+Fuente nueva: **MEDICION-GRAFO** =
+`context/aiw-console/records/MEDICION-GRAFO-O0.md` — medición read-only del grafo
+de dependencias alrededor de O0, leída completa antes de redactar §10.d.
+
+Para §10.d se midió además **de primera mano**, con recorrido propio de los
+archivos el 2026-07-23:
+
+- **CANTU-ROADMAP** — 65 runs, 65 `run_id` **únicos**, 101 aristas de
+  `depends_on`, **0** destinos inexistentes. Frontera de O0: **8** aristas
+  cruzadas, las **8** entre objetivos distintos. Frontera del subconjunto de 6:
+  **4** aristas, las **4** intra-objetivo, objetivos partidos {O0, O2}.
+- `projects/aiw-console/.aiw/views/roadmap.json` — 16 runs, 16 ids únicos.
+- `projects/aiw-console/.aiw/roadmap/roadmap.json` — mismo conjunto de 16 (la
+  copia de entrega del patrón canónico+copia, AUDIT:821-825).
+- **Intersección de `run_id` entre los dos roadmaps: 0.**
+
+Todo reproduce MEDICION-GRAFO sin desviación. No se ejecutó git en ninguna forma.
 
 ---
 
@@ -557,7 +581,7 @@ el audit: MEDICION:268-270):**
 | `summary` | 65/65 | string | |
 | `full_description` | 65/65 | string | |
 | `status` | 65/65 | string | uno de los cuatro tokens de §11.a |
-| `depends_on` | 65/65 | array de `run_id` | 48 con dependencias, 17 vacíos, cero referencias colgantes en disco (MEDICION:323-325) |
+| `depends_on` | 65/65 | array de `run_id` | 48 con dependencias, 17 vacíos, cero referencias colgantes en disco (MEDICION:323-325). Una entrada puede apuntar a un run de OTRO proyecto — §10.d |
 | `closeout_result` | 9/65 | string | OPCIONAL — §14 |
 | `progress` | 1/65 | array de objetos | OPCIONAL — §15 |
 
@@ -624,6 +648,161 @@ tocar el de `.aiw` (rojo del validador, contra D-036) o devolver `jame` a
 `.project/` (contra §1). La doble identidad es el mecanismo que mantiene verde lo
 viejo mientras existe lo nuevo — la lógica de §4: la ruta desambigua, y aquí
 además el identificador.
+
+### 10.d Dependencias que cruzan proyectos — `run_id` es globalmente único
+
+**Añadido por la enmienda D-041 (2026-07-23).** §10.a define `depends_on` como
+array de `run_id`, y en un roadmap suelto eso solo puede leerse como "del mismo
+roadmap". Esta subsección adjudica qué pasa cuando una entrada apunta a un run que
+vive en OTRO proyecto: el caso que la migración de O0 crea y que el contrato, tal
+como estaba, declaraba malformado.
+
+#### El hueco, medido
+
+El grafo de hoy está íntegro: **0** referencias colgantes, **0** auto-referencias,
+**0** duplicados, **0** `depends_on` ausentes o no-array (MEDICION-GRAFO:263-274;
+recorrido propio 2026-07-23 — 65 runs, 65 `run_id` únicos, 101 aristas, 0 destinos
+inexistentes). Está íntegro **porque todo vive en un solo roadmap**: hoy no existe
+una sola arista entre proyectos que pudiera estar mal.
+
+Migrar O0 crea **8** aristas que apuntan fuera del roadmap local
+(MEDICION-GRAFO:131; recuento propio: 8). Sin esta subsección el contrato las
+declararía a las ocho malformadas, porque "array de `run_id`" del mismo árbol no
+admite otra lectura. **La migración habría empezado produciendo datos que el propio
+contrato rechaza** — y el rechazo habría sido del contrato, no de los datos.
+
+#### Regla 1 — `run_id` es globalmente único
+
+**Un `run_id` identifica un run en TODOS los proyectos que exponen `.project/`, no
+solo dentro de su roadmap.** Es requisito sobre quien ACUÑA ids, no sobre quien los
+lee.
+
+No se inventa nada: es la extensión natural de D-034, que ya fijó el `run_id` como
+**identidad inmutable** (`context/DECISIONES.md:372`). Un id inmutable que se
+reusara en otro proyecto dejaría de identificar — inmutabilidad sin unicidad no
+sirve para nada.
+
+**Declararlo hoy cuesta cero, y eso está medido, no supuesto.** En disco hay hoy
+DOS roadmaps vigentes que llevan runs, no uno:
+
+| Archivo | Runs | `run_id` únicos | Familia de id |
+|---|---:|---:|---|
+| `projects/cantu-studio/.aiw/roadmap/roadmap.json` (CANTU-ROADMAP) | 65 | 65 | `RUN-<PREFIJO>-<TEMA>-NNN` |
+| `projects/aiw-console/.aiw/views/roadmap.json` (`:4`, `:13`) | 16 | 16 | `NNN-tema`, `APPROVED-*`, `ERROR-*`, `HUMAN_REVIEW-*` |
+
+**81 ids, 81 distintos, intersección CERO** (medición propia 2026-07-23). El
+segundo vive en el repo de la consola pero **describe a AIW**: su único objetivo se
+titula `aiw` y se resume "16 AIW objectives (pending, parked, processed)"
+(`projects/aiw-console/.aiw/views/roadmap.json:6-7`). Su copia de entrega
+(`projects/aiw-console/.aiw/roadmap/roadmap.json`) lleva el mismo conjunto de 16 —
+patrón canónico+copia (AUDIT:821-825), no un tercer espacio de ids. No se midieron
+los archivos legacy del mismo directorio de Cantu (`roadmap_v2.json`,
+`roadmap_v2_normalized_proposal.json`, `legacy_run_disposition_map_v2.json`):
+quedaron fuera del alcance de la medición (MEDICION-GRAFO:491-494), son modelo
+retirado y `.project/` no los expone.
+
+La unicidad global ya es cierta **de hecho**. La regla no cambia un byte en ningún
+repo: escribe lo que la medición encuentra, para que el día que alguien acuñe un id
+no sea libre de romperla.
+
+**Tensión anotada, porque la medición la deja a la vista.** Los dos espacios de id
+son disjuntos por **convención**, no por regla: este contrato no fija en ninguna
+parte la FORMA de un `run_id`, y las dos familias medidas no se coordinaron entre
+sí. La familia que el proyector emite para AIW se deriva de nombres de carpeta de
+objetivo (`005-roadmap-contract-fix`, `APPROVED-001-console-projector`) — ids
+cortos y genéricos, que son justamente los que colisionarían con un tercer proyecto
+que también numere sus carpetas. Que esa colisión llegue a ocurrir es
+**[NO VERIFICADO]**: es inferencia sobre la forma de los ids medidos, no un hecho
+en disco. Se registra porque es el escenario concreto que dispara la salida de la
+Regla 4.
+
+#### Regla 2 — externo es LEGAL; colgante sigue siendo malformado
+
+Los dos casos que antes se confundían en uno, separados:
+
+| Caso | Qué es | Veredicto |
+|---|---|---|
+| **Externo** | el `run_id` existe, en otro proyecto | **LEGAL.** Es una dependencia entre proyectos. |
+| **Colgante** | el `run_id` no existe en NINGUNA parte | **MALFORMADO.** Sin cambio respecto de lo que ya era. |
+
+**Una entrada de `depends_on` que no resuelve dentro del roadmap local NO es un
+colgante.** Es la forma que tiene este contrato de escribir una dependencia entre
+proyectos, y es la única que hay: la Regla 1 la hace suficiente.
+
+La forma del campo **no cambia**: sigue siendo array de `run_id` desnudos (§10.a).
+Un consumidor que no sepa nada de esto lee el array igual que antes. Lo que cambia
+es qué debe hacer cuando una entrada no resuelve — Regla 3.
+
+#### Regla 3 — el consumidor resuelve globalmente, y declara lo que no resuelve
+
+**Obligación del consumidor, en dos pasos:**
+
+1. **Resolver globalmente**, contra el conjunto de proyectos que tiene cargados —
+   no solo contra el roadmap en el que aparece la entrada.
+2. **Si no resuelve: declararlo SIN RESOLVER en la superficie afectada**, nombrando
+   el `run_id`. Nunca ocultarlo, nunca omitirlo de la lista de dependencias, nunca
+   renderizar el run como si esa dependencia no existiera.
+
+Es §20 aplicado a un campo en vez de a un archivo, y por la misma razón: renderizar
+sin anunciar la ausencia **afirma que el dato no existe, y eso es mentira** (§20).
+Allá el consumidor declara el archivo que le falta; aquí, la dependencia que no
+pudo resolver. Fallar ruidoso, nunca silencioso — también dentro de un campo.
+
+**Precisión que hace la regla implementable: "sin resolver" y "colgante" no son la
+misma afirmación, y casi ningún consumidor puede distinguirlas.** Quien carga UN
+proyecto no tiene cómo saber si el id que no resuelve vive en otro proyecto o no
+existe en el mundo. Por eso el deber es **declarar**, no **clasificar**: "sin
+resolver" es lo que el consumidor sabe; "colgante" es un veredicto que solo puede
+emitir quien tiene cargados todos los proyectos.
+
+**Consecuencia para el validador (capa 3):** con un roadmap suelto, una entrada que
+no resuelve es **advertencia**, nunca rojo — el criterio de §21: no se endurece a
+rojo lo que el dato disponible no permite afirmar. El rojo por colgante exige el
+conjunto completo de proyectos cargados; solo ahí "no existe en ninguna parte" es
+comprobable.
+
+#### Regla 4 — la forma calificada NO se adopta hoy
+
+La alternativa evaluada: que una entrada de `depends_on` pudiera ser
+`{project, run_id}` en vez de un `run_id` desnudo, nombrando explícitamente al
+proyecto dueño del prerequisito.
+
+**No se adopta. Queda anotada como salida disponible, con su condición de disparo
+escrita.**
+
+Por qué no hoy, con la mecánica de §16: **un campo nuevo cuesta migración en tres
+repos** — el v3 o su semilla viven en cantu-studio, en aiw-console y en aiw
+(§16; AUDIT:137-145, :671-675, :646-650) — **y hoy no compra nada.** No compra
+desambiguación: la Regla 1 la da, y la medición dice que ya es cierta (81 ids, 0
+colisiones). No compra capacidad de resolución: un consumidor que carga los
+proyectos resuelve por id sin ayuda. Compraría solo resolver *sin buscar* — una
+optimización de lectura, pagada con una migración en tres repos y con un campo de
+dos tipos posibles que todo consumidor tendría que aceptar. Adoptarla hoy sería el
+patrón de §3.b: schema nuevo sin emisor y sin un solo ejemplar que lo necesite.
+
+**Condición de disparo, escrita para no re-deliberarla:** la primera colisión real
+de `run_id` entre dos proyectos que expongan `.project/`. Ese día la Regla 1 deja
+de ser cierta de hecho y el id desnudo deja de identificar.
+
+**Adoptarla entonces es ADITIVO, y por eso esperar es barato:** una entrada pasa a
+poder ser string U objeto, y las entradas existentes siguen válidas sin tocarse. Es
+el mismo mecanismo que §6 dejó preparado para el hash en `sources`: la forma se
+elige de modo que el cambio futuro sume en vez de romper.
+
+#### Qué queda de las 8 aristas
+
+Bajo estas cuatro reglas, las 8 aristas que la migración de O0 crea
+(MEDICION-GRAFO:131) **no son un daño que reparar antes de migrar**: son 8
+dependencias externas legales, cada una declarable. Siete salen del bloque de
+rename hacia O1/O2/O3; la octava entra desde O2 contra un run ya `completed` —
+arista histórica, no bloqueo vivo (MEDICION-GRAFO:133-136; recuento propio: 8
+aristas, las 8 entre objetivos distintos, destino de la entrante `completed`).
+
+Y lo que la medición dejó explícitamente sin poder decidir — "8 vs 4 son conteos
+comparables entre sí, pero no traducibles a coste hasta que el contrato defina la
+arista cruzada" (MEDICION-GRAFO:247-255) — queda decidido aquí: **el coste de una
+arista cruzada es CERO en forma de dato** (no cambia el schema, no cambia el
+emisor) **y un requisito de declaración sobre el consumidor** (Regla 3).
 
 ## 11. Dos vocabularios de `status`, uno por nivel
 
@@ -1168,6 +1347,12 @@ cuando algo falta es obligación del que muestra. Cuando el shell exista, D-026 
 activa (§9) y su test-de-consumidor debe ejercitar esta degradación archivo por
 archivo, no solo el camino feliz.
 
+**Puntero — la misma obligación, a nivel de campo (§10.d).** La enmienda D-041
+extendió esta doctrina a una entrada de `depends_on` que el consumidor no logre
+resolver: se declara **sin resolver** en la superficie afectada, nombrando el
+`run_id`, por la razón de este apartado — renderizar sin anunciar afirma que el
+dato no existe. La regla vive en la capa 2 (§10.d, Regla 3); aquí solo el puntero.
+
 ## 21. `closeout_result ⇒ completed`: advertencia, nunca requisito
 
 §14 dejó la implicación como candidata a chequeo del validador. Se adjudica:
@@ -1221,14 +1406,24 @@ Adjudicadas por la cabina y redactadas en esta capa. Registradas en
 | k | `category` y `batch` quedan reservados: opcionales, ausentes por defecto, nunca requeridos | §16 | Ausencia explícita medida: nada que reciclar ni con qué chocar; nombrar hoy es gratis, migrar después son tres repos. |
 | l | `taxonomy_model` declara el vocabulario del árbol transportado; no es constante del contrato | §17 | Lo de hoy describe `aiw_flat_objectives_v1`, no v3; idéntico entre snapshots solo prueba mismo proyector y mismo modelo. |
 | m | El roadmap bajo `.project/` se identifica `roadmap_tree_v1`; el `schema_version` del roadmap de `.aiw` queda INTACTO hasta el corte del tramo 7 | §10.c | El identificador nombra el contenido, no a JAME ni al emisor (§1); tocar el de `.aiw` pone rojo al validador (CANTU-VALID:963-964), contra D-036. |
+| r | `run_id` es GLOBALMENTE ÚNICO en todos los proyectos que exponen `.project/` | §10.d | Extiende la identidad inmutable de D-034 (`DECISIONES.md:372`); medido: 81 ids en los dos roadmaps con runs, intersección 0 — declararlo no cambia un byte. |
+| s | Una entrada de `depends_on` que no resuelve localmente es EXTERNA y LEGAL; colgante (no existe en ninguna parte) sigue MALFORMADO; el consumidor resuelve global y DECLARA sin resolver lo que no pueda | §10.d | Sin esto, las 8 aristas que crea migrar O0 nacerían malformadas; declarar sin resolver es §20 aplicado a un campo. |
+| t | La forma calificada `{project, run_id}` NO se adopta; queda como salida con condición de disparo escrita | §10.d | Un campo nuevo cuesta migración en tres repos (§16) y hoy no compra nada; adoptarla después es aditivo (mismo patrón que §6 dejó para el hash). |
+
+Las tres últimas —`r`, `s`, `t`— son la enmienda **D-041** del 2026-07-23.
+Continúan la serie después de la `q` de la capa 3, en vez de insertarse tras la
+`m`, para no renumerar decisiones ya registradas: la tabla se lee por letra, no
+por orden de aparición.
 
 Ninguna decisión de la capa 2 queda abierta. Lo que la capa deja sin fijar —
 forma interna de `progress` (§15), estructura futura de `closeout_result` (§14),
 tipo y forma de `category`/`batch` (§16), claves de la declaración v3 en
 `taxonomy_model` (§17), clave portadora del identificador del modelo dentro de
-`roadmap_tree` en el snapshot (§10.c) — no está pendiente de deliberación: está
-deliberadamente diferido a emisor y ejemplo, con la regla de §3.b. Opaco no es
-"sin decidir".
+`roadmap_tree` en el snapshot (§10.c), forma calificada de una entrada de
+`depends_on` (§10.d) — no está pendiente de deliberación: está deliberadamente
+diferido a emisor y ejemplo, con la regla de §3.b. Opaco no es "sin decidir". El
+último, además, no espera emisor sino un hecho: su condición de disparo es una
+colisión de `run_id` que hoy no existe (§10.d, Regla 4).
 
 ### Capa 3 — ADJUDICADAS 2026-07-23 — registradas como D-040
 

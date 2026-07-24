@@ -1121,3 +1121,66 @@ enmiendas ([[D-041]], [[D-043]], [[D-045]]), migración de O0 ([[D-042]], [[D-04
 y la redacción de O4 registrada aquí. Sigue el **tramo 2**.
 
 Criterio de borrado: N/A.
+
+## D-047 — 2026-07-24 — Reorden de O4: el prototipo primero, la revisión UI/UX antes del corte
+Reordena las fases de O4 en `projects/aiw-console/roadmap/roadmap.json`, sin tocar
+O0 ni renumerar identidades. Enmienda el orden que [[D-046]] dejó asentado; no lo
+reemplaza. Solo se editó el roadmap; no se tocó `CONTRATO.md`, ningún record, ni
+código; no se ejecutó git en ninguna forma.
+
+**El defecto que se corrige.** [[D-046]] dejó la revisión UI/UX (`O4.P8`) DESPUÉS
+del corte (`O4.P7`). Eso significaba apagar la consola que funciona y pulir
+después: si la revisión de uso descubría un problema, ya no había a qué volver. El
+orden más caro posible para descubrirlo.
+
+**Cambio 1 — prototipo como fase nueva `O4.P10`, en tercer lugar** (tras el
+contrato `O4.P1`, antes del emisor `O4.P2`). Corre CONTRA DATOS REALES: lee
+`projects/aiw-console/roadmap/roadmap.json`, que ya existe con 2 objetivos y 30
+runs. NO maquetas ni datos inventados — sería el patrón de la v0.3 que el contrato
+existe para matar ([[D-039]]). Adelanta la prueba de consumidor de `roadmap_tree_v1`
+([[D-026]]) a ANTES de construir el emisor: si el formato no aguanta, se sabe aquí y
+no tres fases más tarde. Y da resultado visible temprano —tras trece horas de
+trabajo sin nada que mirar, que es el motivo declarado por el operador—.
+Run: `RUN-CONSOLE-PROTOTIPO-CONSOLA-001`, `planned` (§10.d Regla 1.a).
+
+**Cambio 2 — UI/UX sube a compuerta del corte.** Deja de ser fase final y pasa a
+decidir si el corte procede.
+
+**Cambio 3 — AIW como tercer proyecto (`O4.P6`) baja tras la revisión.** No entra
+un tercer proyecto mientras la consola se pule con dos.
+
+**Dos compuertas de aprobación del operador, escritas como `depends_on` reales, no
+como intención:**
+- prototipo → shell: `RUN-CONSOLE-SHELL-MULTIPROYECTO-001` **depende de**
+  `RUN-CONSOLE-PROTOTIPO-CONSOLA-001`. El shell se construye sobre el prototipo
+  aprobado, no en paralelo.
+- UI/UX → corte: `RUN-CONSOLE-CORTE-RETIRO-LOCAL-001` **depende ahora de**
+  `RUN-CONSOLE-UI-UX-001`, conservando su dependencia previa de
+  `RUN-CONSOLE-PARIDAD-RENDER-CANTU-001`. El corte es irreversible: no procede sin
+  la revisión de uso.
+
+Ambas requieren aprobación explícita del operador, anotada en el `full_description`
+de los runs de compuerta.
+
+**`phase_id` NO se renumeran** — `O4.P2` sigue siendo `O4.P2` aunque ahora vaya en
+cuarto lugar. Están citados en `REDACCION-O4.md` y en [[D-046]]; renumerar rompe
+referencias a cambio de estética. El orden lo cargan la posición en el array y
+`queue_order`, no el número del id (precedente en disco: las fases de Cantu O2 van
+`P1, P2, P4, P3`). Mismo criterio de identidad-sobre-estética con que [[D-046]]
+conservó el hueco `O0`/`O4`.
+
+**La alineación "número de fase = número de tramo" que [[D-046]] estableció queda
+RETIRADA por este reorden.** No se deja envejecer en silencio: con `O4.P10`
+intercalada en tercer lugar y el resto reordenado, la fase ya no nombra al tramo.
+Los `phase_id` pasan a ser identidad opaca, como los `run_id`.
+
+**Verificación con números.** Roadmap: 2 objetivos, 30 runs, `queue_order` 1..30
+denso, único y contiguo. O4: 11 fases, 18 runs (8 `completed`, 10 `planned`). Los
+12 runs de O0 sin tocar: comparación campo a campo contra el respaldo pre-escritura,
+0 diferencias (byte-idénticos). 0 `depends_on` colgantes; ninguna fase con 0 runs;
+cada dependencia precede a su dependiente. Ningún `run_id` ni `phase_id` cambió;
+ningún `status`, `title`, `summary` o `closeout_result` cambió; solo los tres
+`full_description` de compuerta (el nuevo prototipo, más shell y corte con la nota
+de aprobación).
+
+Criterio de borrado: N/A.

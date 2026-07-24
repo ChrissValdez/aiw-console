@@ -2,6 +2,58 @@
 
 Estado: VIGENTE — tramo 1 de O4. Familia de schema ratificada (v1 del proyector).
 
+## Índice
+
+**Capa 1 — el archivo requerido**
+- §0 Qué es esto · §1 Ubicación y nombre (1.a ruta base como constante, 1.b
+  `.project/` reemplaza a `views/`)
+- §2 La regla que da origen · §3 Claves requeridas (3.b opacos)
+- §4 `schema_version` entero · §5 `project_id` opaco · §6 Frescura
+- §7 Rutas · §8 El conjunto requerido no crece · §9 D-026 y el lector
+- Anexo A — evidencia no normativa
+
+**Capa 2 — el roadmap (`roadmap_tree`)**
+- §10 Forma de `roadmap_tree` (10.a claves por nivel, 10.b nada derivado, 10.c
+  identificador propio, 10.d dependencias que cruzan proyectos — Reglas 1, 1.a
+  forma, 1.b estabilidad, 2, 3, 4)
+- §11 Dos vocabularios de `status` · §12 La función de derivación (12.a–12.e)
+- §13 Fases · §14 `closeout_result` · §15 `progress` · §16 `category`/`batch` ·
+  §17 `taxonomy_model`
+- Anexo B — dos lecturas muertas
+
+**Capa 3 — los opcionales y su degradación**
+- §18 La regla de admisión (18.a los 12 sin emisor, 18.b la puerta normal)
+- §19 Los opcionales de hoy · §20 La degradación · §21 `closeout_result ⇒ completed`
+
+**Decisiones registradas en `context/DECISIONES.md`:** capa 1 = D-039; capas 2 y 3
+= D-040; enmiendas de §10.d = D-041 (decisiones `r`, `s`, `t`) y D-043 (`u`, `v`).
+La tabla vive al final de cada capa (§ "Decisiones de este contrato").
+
+## Cómo se mantiene este documento
+
+**Norma sobre el documento, no sobre los proyectos.** El contrato es **norma
+viva**: describe lo que rige AHORA. No es un record. La regla de D-042 —una
+medición fechada no se reescribe— rige los records, no este archivo.
+
+El criterio para mantenerlo no es "fechado vs no fechado" sino **qué AFIRMA la
+frase**:
+
+- **Afirmación sobre un acto pasado** —una nota de verificación ("esto medí al
+  escribir esta enmienda") o una cita que reproduce lo que un record midió— **sigue
+  siendo cierta y NO se reescribe.** Si el estado que describía cambió después, se
+  le añade un **puntero** al estado vigente; la cifra original se conserva.
+- **Afirmación sobre el estado de hoy** —cuerpo normativo o evidencia en presente—
+  **describe lo que rige ahora. Si caducó, se corrige**, con puntero a la decisión
+  que la caducó.
+
+Aplicado ya, y visible en el documento: la nota de verificación de la enmienda
+D-041 conserva sus "8 aristas" con puntero a D-042 (es un acto pasado); §10.d "El
+hueco, medido" y §17 se corrigieron porque afirmaban en presente algo que D-042 y
+D-043 caducaron. Las tablas-evidencia que se declaran reproducción de un record
+(p. ej. §12.d, "los de la medición… reproducidos") conservan la cifra del record y
+llevan puntero al estado vigente: reescribirlas rompería la reproducción que citan.
+Cada corrección de esta clase queda anotada en la decisión que la motiva.
+
 **Dónde vive y por qué.** El contrato lo cumplen todos los proyectos, pero lo
 define y lo consume la consola. Por eso vive en `context/aiw-console/` y no en
 `context/aiw/` ni en la raíz: el emisor puede ser genérico, la norma no lo es —
@@ -519,6 +571,15 @@ archivos el 2026-07-23:
 
 Todo reproduce MEDICION-GRAFO sin desviación. No se ejecutó git en ninguna forma.
 
+> **Puntero (D-042, posterior a esta enmienda).** Esta nota registra lo que se
+> midió al escribir D-041, y como tal es correcta y se conserva. Pero la
+> composición de O0 cambió **después**: D-042 re-archivó el bloque de 5 runs de
+> rename de `O0.P3` a `O2.P5`, con lo que O0 pasó de 17 a **12** runs y su frontera
+> de **8** aristas cruzadas a **1** (la entrante histórica desde O2). El estado
+> vigente está en §10.d, subsección "Qué queda de las aristas". Las cifras de arriba
+> —8 aristas, subconjunto de 6— son del estado previo al re-archivo; no se corrigen
+> porque describen lo medido entonces, no lo que rige hoy.
+
 ### Añadido por la enmienda D-043 (2026-07-23)
 
 Fuente nueva: **MEDICION-PROYECTOR** =
@@ -698,11 +759,17 @@ recorrido propio 2026-07-23 — 65 runs, 65 `run_id` únicos, 101 aristas, 0 des
 inexistentes). Está íntegro **porque todo vive en un solo roadmap**: hoy no existe
 una sola arista entre proyectos que pudiera estar mal.
 
-Migrar O0 crea **8** aristas que apuntan fuera del roadmap local
-(MEDICION-GRAFO:131; recuento propio: 8). Sin esta subsección el contrato las
-declararía a las ocho malformadas, porque "array de `run_id`" del mismo árbol no
+Migrar O0 crea aristas que apuntan fuera del roadmap local. **Cifra vigente
+(recuento propio 2026-07-24, post-D-042): 1** — la entrante histórica desde O2
+contra un run ya `completed` (detalle y disposición en "Qué queda de las aristas",
+más abajo). El diseño de esta subsección se hizo frente a las **8** que medía O0
+antes del re-archivo (MEDICION-GRAFO:131, estado previo; ver la nota de
+verificación de la capa 2). Sin esta subsección el contrato declararía malformada
+cada una de esas aristas, sean 8 o 1, porque "array de `run_id`" del mismo árbol no
 admite otra lectura. **La migración habría empezado produciendo datos que el propio
-contrato rechaza** — y el rechazo habría sido del contrato, no de los datos.
+contrato rechaza** — y el rechazo habría sido del contrato, no de los datos. Que el
+conteo bajara de 8 a 1 no toca el argumento: el hueco es de la CLASE de arista, no
+de su cantidad.
 
 #### Regla 1 — `run_id` es globalmente único
 
@@ -1031,14 +1098,34 @@ justo para el caso que ya no se estaría vigilando. La salida sigue siendo aditi
 (párrafo anterior), así que mantenerla anotada cuesta exactamente lo mismo que
 antes: cero.
 
-#### Qué queda de las 8 aristas
+#### Qué queda de las aristas: eran 8, hoy es 1 — la norma no cambia
 
-Bajo estas cuatro reglas, las 8 aristas que la migración de O0 crea
-(MEDICION-GRAFO:131) **no son un daño que reparar antes de migrar**: son 8
-dependencias externas legales, cada una declarable. Siete salen del bloque de
-rename hacia O1/O2/O3; la octava entra desde O2 contra un run ya `completed` —
-arista histórica, no bloqueo vivo (MEDICION-GRAFO:133-136; recuento propio: 8
-aristas, las 8 entre objetivos distintos, destino de la entrante `completed`).
+**Corrección de cifras (enmienda D-043).** Esta subsección se redactó con D-041,
+**antes** del re-archivo de D-042, y describía las **8** aristas del O0 de entonces
+(17 runs): siete salían del bloque de rename hacia O1/O2/O3 y una entraba desde O2
+(MEDICION-GRAFO:131, :133-136). D-042 movió ese bloque de rename a una fase nueva
+`O2.P5` (`context/DECISIONES.md:765-807`), y con él salieron de O0 las siete
+salientes. **Estado vigente, recontado de primera mano el 2026-07-23:** O0 = 12
+runs, y su frontera la cruza **1** sola arista — la **entrante** desde O2
+(`RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` depende de
+`RUN-CANTU-ROADMAP-CONTENT-AUDIT-001`, un run ya `completed`): arista histórica, no
+bloqueo vivo. **Cero salientes.** Coincide con la enmienda de cifras de D-042
+(`context/DECISIONES.md:795-798`). La cifra de MEDICION-GRAFO queda como medición
+fechada del estado previo, no como estado actual.
+
+Bajo las cuatro reglas, esa arista **no es un daño que reparar antes de migrar**:
+es una dependencia externa legal y declarable (Reglas 2 y 3).
+
+**La NORMA no cambia, y ése es el punto.** La regla se adoptó frente a 8 aristas y
+hoy protege 1; sigue valiendo porque protege la **CLASE** de arista —una
+dependencia que cruza la frontera de un proyecto— no ese conteo. Que el número
+bajara de 8 a 1 por un re-archivo (D-042) no toca ninguna de las reglas de §10.d:
+la Regla 1 (unicidad, con su forma y estabilidad en 1.a/1.b), la 2 (externo legal /
+colgante malformado), la 3 (resolver y declarar) y la 4 (forma calificada diferida)
+se escribieron sobre la clase, no sobre la cardinalidad. Una regla que se retirara
+porque el conteo bajó habría que re-deliberarla la próxima vez que suba —y subirá,
+porque migrar cualquier objetivo con dependencias entre proyectos vuelve a crear
+aristas cruzadas—. El conteo es del momento; la regla es de la clase.
 
 Y lo que la medición dejó explícitamente sin poder decidir — "8 vs 4 son conteos
 comparables entre sí, pero no traducibles a coste hasta que el contrato defina la
@@ -1189,6 +1276,17 @@ medición probó la regla anterior; abajo, por qué se descartó.
 Distribución derivada: **1 `active`, 1 `in_progress`, 6 `planned`, 0 `completed`,
 0 `blocked`.** Suma: 17+6+7+19+1+7+5+3 = 65 ✓ (MEDICION:155-156).
 
+> **Puntero (D-042).** Esta tabla reproduce MEDICION:158-167, y por eso conserva sus
+> cifras (reescribirlas rompería la reproducción que cita). El re-archivo de D-042
+> movió 5 runs `planned` de `O0.P3` a `O2.P5`, así que el **estado vigente**
+> (recuento propio 2026-07-24) difiere en dos filas: **O0 = 12** (planned **2**,
+> active 1, completed 9) y **O2 = 11** (planned **11**). Las otras seis filas y —lo
+> que importa— **los ocho tokens derivados NO cambian**: O0 sigue `active` (su run
+> `active` no se movió) y O2 sigue `planned` (sus 11 runs son `planned`). La suma
+> vigente es 12+11+7+19+1+7+5+3 = 65, y la distribución derivada es idéntica. El
+> re-archivo, lejos de invalidar la prueba, la robustece: la función da el mismo
+> resultado antes y después de mover cinco runs entre objetivos.
+
 - **O0 prueba la precedencia con datos.** Tiene a la vez 1 run `active` y 9
   `completed` (MEDICION:160): la rama 1 gana sobre la 4 — `active`, no
   `in_progress`. Contra la regla anterior la medición reportó que la precedencia no
@@ -1209,7 +1307,9 @@ Distribución derivada: **1 `active`, 1 `in_progress`, 6 `planned`, 0 `completed
 ### 12.e Ramas sin instancia en los datos de hoy
 
 - **Rama 3 (`completed`):** ningún objetivo tiene todos sus runs `completed`; el
-  más cercano, O0, está a 8 de distancia (MEDICION:192-194).
+  más cercano, O0, está a 8 de distancia (MEDICION:192-194; estado vigente
+  post-D-042: **a 3** —12 runs, 9 `completed`—, ver el puntero de §12.d. La rama
+  sigue sin instancia, que es lo único que este punto afirma).
 - **Rama 2 (`blocked`):** con 0 runs `blocked` en disco, hoy es inalcanzable por
   cualquier camino (MEDICION:195-196).
 
@@ -1311,8 +1411,13 @@ dentro del `progress` de un único run), y las cuatro convenciones que podrían
 confundirse con lo buscado quedaron descartadas una por una (MEDICION:354-363):
 
 - el prefijo `RUN-JAME-*`/`RUN-CANTU-*` marca época de nombrado, no eje de cierre —
-  inferencia de la medición a partir de los runs de rename, **[NO VERIFICADO]**
-  como afirmación fuerte (la marca es suya y se conserva);
+  era inferencia de MEDICION-ROADMAP-V3 a partir de los runs de rename, marcada por
+  ella **[NO VERIFICADO]** como afirmación fuerte. **D-043 (§10.d, Regla 1.a) la
+  corrobora por otra vía y con medición propia:** el prefijo es PROCEDENCIA —el
+  proyecto que creó el run, 65/65 ids— y "nadie ramifica sobre él"; ser procedencia
+  es, precisamente, ser época de nombrado y NO el eje de cierre que `category`/`batch`
+  reservan. Lo que D-043 midió es la procedencia; que de ahí no salga un eje de
+  cierre es consecuencia, no una segunda medición;
 - las fases agrupan por tema, no por destino de aprobación;
 - `depends_on` es un grafo de precedencia, no una partición;
 - `progress[].stage` registra lo que PASÓ, no lo que el humano ASIGNÓ al crear el
@@ -1360,10 +1465,13 @@ La evidencia, y por qué lo que hay hoy en disco no aplica al v3:
   diferencia (MEDICION:75-81). Dos emisiones así no pueden divergir en esto, se
   midan cuando se midan: la identidad prueba "mismo proyector, mismo modelo", no
   "constante del contrato". Ninguno de los dos es Cantu; qué declara el snapshot
-  v0.3 de Cantu queda **[NO VERIFICADO]** (MEDICION:90-94). La hipótesis de que el
-  bloque está horneado como constante en el emisor también quedó
-  **[NO VERIFICADO]** — la medición no leyó el emisor (MEDICION:78-81) — y no hace
-  falta resolverla para esta decisión.
+  v0.3 de Cantu queda **[NO VERIFICADO]** (MEDICION:90-94) — sigue sin medirse. La
+  hipótesis de que el bloque está horneado como constante en el emisor **quedó
+  VERIFICADA**: lo está — constantes de módulo `OBJECTIVE_CLASSIFICATIONS` y
+  `OPERATIONAL_STATUSES` (`PROJ:38,40`), emitidas tal cual en `PROJ:463-466`
+  (MEDICION-PROYECTOR §1; D-043, Q1). Aquella medición (MEDICION-ROADMAP-V3) no
+  había leído el emisor (MEDICION:78-81); la de MEDICION-PROYECTOR sí. No hacía
+  falta resolverla para tomar esta decisión, y resuelta la confirma.
 
 **Norma:** un snapshot que transporte el v3 (`roadmap_tree_v1`, §10.c) declara el
 vocabulario del v3 — los cuatro tokens de run y los cinco derivados de objetivo
@@ -1373,12 +1481,21 @@ distintos) deja de ser trampa: el vocabulario viaja declarado junto al árbol qu
 califica.
 
 **Norma, no descripción.** "Función del modelo transportado" prescribe lo que el
-campo DEBE hacer bajo este contrato; no afirma que el emisor ya lo haga. La
-hipótesis contraria — el bloque horneado como constante en el proyector — quedó
-**[NO VERIFICADO]** arriba y es compatible con todo lo medido. Si resulta cierta,
-adecuar el emisor para que derive `taxonomy_model` del modelo que emite es
+campo DEBE hacer bajo este contrato; no afirma que el emisor ya lo haga — y hoy
+**no lo hace**: el bloque está horneado como constante en el proyector
+(`PROJ:38,40` → `:463-466`), **VERIFICADO** por MEDICION-PROYECTOR §1 (D-043, Q1).
+Lo que arriba era hipótesis compatible con lo medido quedó confirmado como hecho.
+Adecuar el emisor para que derive `taxonomy_model` del modelo que emite es
 **trabajo del tramo 2**, y queda anotado como tal. Mismo patrón que §1.b y §10:
-aquí se declara la norma; la implementación tiene su tramo.
+aquí se declara la norma; la implementación tiene su tramo. Precisión de
+MEDICION-PROYECTOR §1: que hoy esté horneado **no lo hace incorrecto hoy** —el
+proyector emite un solo modelo, así que constante y derivación coinciden en valor—;
+el defecto es latente y se manifiesta el día que transporte un segundo modelo. Y un
+hallazgo extra de esa medición, del mismo defecto: `OPERATIONAL_STATUSES` declara
+`blocked` pero el cálculo real de `operational_status` (`PROJ:423`,
+`pending.length > 0 ? "active" : "idle"`) **no puede producirlo nunca** — el
+vocabulario declarado es más ancho que lo que el emisor sabe emitir, prueba
+adicional de que es literal y no derivación.
 
 Lo que esta capa NO fija: las claves internas bajo las que un snapshot v3 declara
 esos dos vocabularios. Hoy ningún emisor pone el v3 dentro de `roadmap_tree` (el
@@ -1649,7 +1766,7 @@ Adjudicadas por la cabina y redactadas en esta capa. Registradas en
 | l | `taxonomy_model` declara el vocabulario del árbol transportado; no es constante del contrato | §17 | Lo de hoy describe `aiw_flat_objectives_v1`, no v3; idéntico entre snapshots solo prueba mismo proyector y mismo modelo. |
 | m | El roadmap bajo `.project/` se identifica `roadmap_tree_v1`; el `schema_version` del roadmap de `.aiw` queda INTACTO hasta el corte del tramo 7 | §10.c | El identificador nombra el contenido, no a JAME ni al emisor (§1); tocar el de `.aiw` pone rojo al validador (CANTU-VALID:963-964), contra D-036. |
 | r | `run_id` es GLOBALMENTE ÚNICO en todos los proyectos que exponen `.project/` | §10.d | Extiende la identidad inmutable de D-034 (`DECISIONES.md:372`); medido: 81 ids en los dos roadmaps con runs, intersección 0 — declararlo no cambia un byte. |
-| s | Una entrada de `depends_on` que no resuelve localmente es EXTERNA y LEGAL; colgante (no existe en ninguna parte) sigue MALFORMADO; el consumidor resuelve global y DECLARA sin resolver lo que no pueda | §10.d | Sin esto, las 8 aristas que crea migrar O0 nacerían malformadas; declarar sin resolver es §20 aplicado a un campo. |
+| s | Una entrada de `depends_on` que no resuelve localmente es EXTERNA y LEGAL; colgante (no existe en ninguna parte) sigue MALFORMADO; el consumidor resuelve global y DECLARA sin resolver lo que no pueda | §10.d | Sin esto, la(s) arista(s) que crea migrar O0 nacerían malformadas; declarar sin resolver es §20 aplicado a un campo. La regla protege la CLASE de arista cruzada, no un conteo: se adoptó frente a 8 (O0 de D-041) y hoy protege 1 (O0 de D-042), y sigue igual de vigente. |
 | t | La forma calificada `{project, run_id}` NO se adopta; queda como salida con condición de disparo escrita | §10.d | Un campo nuevo cuesta migración en tres repos (§16) y hoy no compra nada; adoptarla después es aditivo (mismo patrón que §6 dejó para el hash). |
 | u | La FORMA de un `run_id` es `RUN-<PROYECTO>-<SLUG>-<NNN>`, sólo para ids acuñados desde ahora; `<PROYECTO>` es PROCEDENCIA (quién lo creó), no propiedad ni `project_id`, y nadie ramifica sobre él | §10.d, Regla 1.a | Se adopta la convención con 65 ejemplares en disco en vez de inventar una: tiene emisor y evidencia — lo contrario del patrón de §3.b. Los runs migrados conservan su prefijo; el roadmap de la consola nace mixto, y eso es correcto. |
 | v | Un `run_id` NO cambia nunca (ni por `status`, ni al archivarse, ni al migrar); un emisor que lo derive de fuente mutable VIOLA el contrato | §10.d, Regla 1.b | Medido: el proyector lo deriva del nombre de archivo (`PROJ:192` → `:235,247,262`) y el kernel renombra al archivar (`aiw/queue.mjs:58`), así que muta al completarse. Es status codificado dentro de la identidad: §12.c en su forma más dañina. Tramo 2. |

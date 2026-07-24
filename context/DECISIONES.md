@@ -931,4 +931,18 @@ se reescribe. **Tensión abierta, no resuelta aquí:** §17 del contrato sigue
 marcando **[NO VERIFICADO]** la hipótesis que Q1 acaba de verificar; actualizar ese
 párrafo quedó fuera del alcance de este encargo (que era §10.d) y va en uno aparte.
 
+(Addendum 2026-07-24 — pase de coherencia del contrato, el "uno aparte" anunciado
+arriba. Aplicado en `context/aiw-console/CONTRATO.md`, sin tocar records: §17 pasa
+de **[NO VERIFICADO]** a **VERIFICADO** para el `taxonomy_model` horneado, con el
+hallazgo extra de `blocked` inalcanzable (`PROJ:423`); se corrigieron las cifras de
+aristas caducadas por D-042 en §10.d "El hueco, medido" (8→1) y se conservaron con
+puntero las que reproducen mediciones fechadas (nota de verificación de la capa 2;
+tabla-evidencia §12.d, con O0 17→12 y O2 6→11 pero **misma derivación**); §16
+corrobora por D-043 la lectura de procedencia del prefijo. Se añadieron al contrato
+un índice y una subsección "Cómo se mantiene este documento" que fija el criterio
+—qué se corrige, qué se conserva con puntero, y por qué el contrato no se rige por
+la regla de records de D-042—. Punteros internos y citas `DECISIONES.md:línea` del
+contrato verificados: **ninguna se desplazó**, porque este log es append-only y
+D-040…D-043 se agregaron al final. No se ejecutó git.)
+
 Criterio de borrado: N/A.

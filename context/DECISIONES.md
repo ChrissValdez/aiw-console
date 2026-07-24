@@ -594,3 +594,72 @@ requerido de la consola viva, contra la premisa aditiva de D-036. **D-026 se act
 en el tramo 3**, contra el shell multi-proyecto, y el apartado que la exime lleva
 caducidad explícita escrita en el contrato.
 Criterio de borrado: N/A — lo sustituye una revisión futura del contrato.
+
+## D-040 — 2026-07-23 — Contrato de la carpeta, capas 2 y 3: el roadmap; los opcionales y su degradación
+
+Cierra la redacción del contrato inicial de `.project/` (la capa 1 es D-039). Una
+sola entrada para las dos capas.
+
+**Capa 2 — el roadmap (`roadmap_tree`).** Dos vocabularios de status DISTINTOS, y
+la diferencia es deliberada: el run almacena cuatro tokens (`planned · active ·
+blocked · completed`; `blocked` se declara aunque 0/65 lo instancien — declarado y
+vacío es honesto, quitarlo obligaría a re-agregarlo) y el objetivo deriva cinco
+(`planned · in_progress · active · blocked · completed`). No se reusan tokens
+porque miden cosas distintas: un run `active` corre AHORA; un objetivo puede
+llevar meses empezado sin que nada corra — reusar `active` habría metido dos
+significados bajo una palabra, la misma colisión de ejes que ya existe entre el
+modelo plano y el v3 (`active`/`blocked` califican allá al proyecto y acá al run).
+La función de derivación es NORMATIVA y NO ALMACENADA, con precedencia estricta de
+cinco ramas (`active` > `blocked` > `completed`-todos > `in_progress` >
+`planned`): almacenar el derivado sería la segunda copia que se pudre; no
+especificarla dejaría a cada consumidor derivar a su gusto y dos consolas
+mostrarían dos verdades — probado con datos, la regla vieja y la nueva difieren
+exactamente en O5 (2/7 completados: `planned` contra `in_progress`). Objetivo o
+fase con 0 runs = **MALFORMADO, sin token**: `[].every() === true` declararía
+terminado lo que nunca existió. El roadmap bajo `.project/` se identifica
+**`roadmap_tree_v1`** — nombra el contenido, no a JAME ni al emisor — y el
+`schema_version` del roadmap de `.aiw` queda INTACTO hasta el corte, porque el
+validador exige la cadena exacta (`CANTU-VALID:963`) y tocarla contradiría D-036.
+`closeout_result` queda string sin enum (en disco: 8 constantes y 1 párrafo de
+prosa; enumerar eso sería inventar schema) y opcional aun en `completed` (11
+completados, solo 9 con closeout). `progress` se documenta y NO se congela (1/65:
+caso único, no norma). `category` (D-029) y `batch` (D-030) quedan RESERVADOS como
+claves opcionales de run, ausentes por defecto, sin tipo fijado: la medición
+devolvió ausencia explícita — nada que reciclar, nada con qué chocar; nombrar hoy
+es gratis y agregar después son tres repos. `taxonomy_model` es FUNCIÓN del modelo
+transportado en `roadmap_tree`, no constante del contrato — y eso es norma, no
+descripción del emisor actual: si el proyector lo tiene horneado (hipótesis
+[NO VERIFICADO]), adecuarlo es trabajo del tramo 2.
+
+**Capa 3 — los opcionales y su degradación.** `.project/` es derivada, así que
+**sin emisor no se entra**: los 12 de 15 archivos del contrato de Cantu que se
+mantienen a mano (`project.json`, `state/*`, `ledgers/*`, `guardrails/*`,
+`docs/*` — audit F.2) se quedan en `.aiw` hasta tener emisor, y entran por la
+puerta normal (ruta nombrada por contenido, opcional por defecto, degradación
+declarada al entrar). Hoy entran dos: `.project/roadmap.json` y
+`.project/git_history.json`, ambos OPCIONALES; el conjunto requerido sigue siendo
+uno. La ausencia de un no-requerido NUNCA rompe al consumidor, y **la degradación
+se anuncia por archivo ausente, en la superficie afectada — no en agregado**: el
+banner único medido en la consola de Cantu ("Some optional local state files
+could not be loaded…", `CANTU-PCJS:4320-4325`) no dice qué falta y esconde el
+detalle en otro panel; eso no basta — renderizar vacío sin anunciar es afirmar
+que el dato no existe. Es requisito sobre el shell del tramo 3, no sobre el
+emisor. `closeout_result ⇒ completed` entra como ADVERTENCIA del validador, nunca
+requisito duro: regularidad observada de 9 ejemplares, no invariante de diseño, y
+este par de campos ya probó que endurecerlo pone rojos 2 runs legítimos.
+
+**ERRATA sobre `MEDICION-ROADMAP-V3.md`.** Su glosa de `current_stage`
+(`MEDICION:306-307`) leyó la leyenda del audit al revés: **P significa prohibido,
+no presunto** (`AUDIT:417-418`). El validador PROHÍBE leer `run.current_stage`
+(`CANTU-VALID:1387`, `:1408`, `:1426`) mientras EXIGE la celda "Current stage"
+(`:1421`, `:1166`), que se deriva de `progress` — presente en 1/65 runs. La
+sustancia del hallazgo (el lector espera un campo que el v3 nunca almacenó) queda
+en pie. El record NO se reescribe; la precisión vive en el Anexo B.1 del contrato
+y queda registrada aquí.
+
+**Asimetría anotada, no resuelta:** si `aiw_flat_objectives_v1` (y de paso
+`jame.git_history_snapshot.v1`, anotado en la capa 3) incurre en el mismo defecto
+que `jame.roadmap_v3.v0.2-progress` depende de si el modelo plano es genérico o
+específico del kernel de AIW. Se resuelve leyendo el emisor, en el tramo 2.
+
+Criterio de borrado: N/A — lo sustituye una revisión futura del contrato.

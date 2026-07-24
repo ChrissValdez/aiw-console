@@ -329,7 +329,8 @@ Hoy: **un** archivo requerido. Verificado de primera mano en el lector vivo:
 - `CANTU-PCJS:5575-5589` — las otras 14 van dentro de un `Promise.all` sin flag,
   es decir fail-soft.
 
-Los otros 14 archivos son fail-soft con degradación declarada por panel (capa 3).
+Los otros 14 archivos son fail-soft con degradación declarada por panel (capa 3:
+§§18-20).
 
 Cada archivo que se promueve a requerido es una forma nueva de ponerse rojo. La
 promoción es una decisión registrada, no un descuido de implementación.
@@ -444,7 +445,9 @@ contenido sin especificar, pass-through) hasta que exista emisor y ejemplo;
 `taxonomy_model` no queda opaco y es candidato a la capa 2 (resuelto: §17).
 
 **[NO VERIFICADO]** qué forma espera cada panel consumidor para los dos vacíos: eso
-se mide contra el renderer en la capa 3, no aquí.
+se mide contra el renderer en la capa 3, no aquí. (La capa 3 redactada adjudicó
+archivos opcionales, no la forma de estos dos objetos: la medición se hereda al
+test-de-consumidor del tramo 3, §20.)
 
 ---
 
@@ -453,8 +456,8 @@ se mide contra el renderer en la capa 3, no aquí.
 Estado: VIGENTE — tramo 1 de O4, misma pieza que la capa 1. Detalla la forma del
 objeto `roadmap_tree` que §3 declara requerido y resuelve el destino de
 `taxonomy_model` que §3.b dejó como candidato. Las decisiones de esta capa están
-adjudicadas por la cabina; esta redacción las fija con su evidencia. Su registro en
-`context/DECISIONES.md` es encargo aparte, al cierre de la capa.
+adjudicadas por la cabina; esta redacción las fija con su evidencia. Registradas en
+`context/DECISIONES.md` como D-040, junto con la capa 3.
 
 ## Nota de verificación (capa 2)
 
@@ -837,7 +840,7 @@ MEDICION:310-313). Declararlo requerido pondría rojos dos runs que ya existen.
 Hecho medido, no norma de esta capa: la implicación inversa sí se sostiene en
 disco — ningún run no-`completed` tiene `closeout_result` (MEDICION:314-315). Se
 registra como candidata a chequeo del validador (capa 3), no como requisito de
-forma.
+forma (resuelto: §21 — advertencia, nunca requisito duro).
 
 Candidato a estructurarse — separar `code` + `notes` — **el día que algo lo emita
 con esa forma**, no antes. Hoy ningún emisor lo escribe; estructurarlo sin emisor y
@@ -1013,6 +1016,180 @@ superficie donde se verá.
 
 ---
 
+# CONTRATO DE LA CARPETA — Capa 3: los archivos opcionales y su degradación
+
+Estado: VIGENTE — tramo 1 de O4, tercera y última capa del contrato inicial.
+Adjudica qué archivos acompañan al snapshot dentro de `.project/`, bajo qué regla
+de admisión, y qué le debe el consumidor a cada ausencia. Registrada en
+`context/DECISIONES.md` como D-040, junto con la capa 2.
+
+## Nota de verificación (capa 3)
+
+Fuentes: el propio contrato (capas 1 y 2), el Bloque B del audit — en especial la
+tabla de degradación B.3 (AUDIT:268-303) — y MEDICION; alias como en las capas
+anteriores. Releído de primera mano el 2026-07-23: el banner agregado y su texto
+(`CANTU-PCJS:4320-4325`, invocado en `:5622`), la condicionalidad de
+`git_history.snapshot.json` en el validador (`CANTU-VALID:1565-1566`) y el
+contenido real de `aiw-console/.aiw/`: 4 archivos en disco, que son las 3 rutas
+del contrato que el audit contó (AUDIT:629-633) más `views/roadmap.json`, la
+canónica del patrón canónico+copia (AUDIT:821-825). No se ejecutó git en ninguna
+forma. Lo no comprobable se marca **[NO VERIFICADO]**.
+
+---
+
+## 18. La regla de admisión: sin emisor no se entra
+
+`.project/` es enteramente derivada: todo lo que vive ahí tiene emisor y se
+regenera (§1.b, §2). Esta capa adjudica la consecuencia:
+
+**Un archivo sin emisor NO entra en `.project/`.** No se migra en el tramo 4. Se
+queda en `.aiw` hasta que alguien le construya emisor, y ese día entra por la
+puerta normal (§18.b).
+
+La razón, redactada: admitir archivos mantenidos a mano en una carpeta declarada
+derivada reintroduce exactamente la clase de artefacto que se pudrió tres semanas
+(§2) — solo que ahora con la bendición del contrato. La regla de §2 no es
+preferencia estética: es la única defensa que este contrato tiene contra su
+propio destino, y una carpeta "derivada salvo excepciones" es una carpeta que ya
+no puede prometer nada.
+
+### 18.a Los 12 sin emisor, enumerados
+
+El audit midió que **12 de los 15 archivos del contrato implícito de Cantu no los
+escribe ningún tool de la consola**: "son fuentes que el frontend lee pero que se
+mantienen por fuera (no hay emisor entre los tools auditados)" (AUDIT:817-819;
+las 15 rutas, tabla PATHS, AUDIT:218-236). Quedan FUERA de `.project/`:
+
+| # | Ruta en `.aiw` (Cantu) | Consumidor hoy (AUDIT B.3, :285-297) |
+|---|---|---|
+| 1 | `project.json` | manifiesto/encabezado |
+| 2 | `state/project_status.json` | "Next up" (`next_recommended_run_id`) |
+| 3 | `state/component_status.json` | panel de componentes |
+| 4 | `state/events.jsonl` | feeds de actividad |
+| 5 | `ledgers/change_ledger.jsonl` | feeds de actividad |
+| 6 | `ledgers/git_provenance.jsonl` | feeds de actividad |
+| 7 | `ledgers/human_qa.jsonl` | feeds de actividad |
+| 8 | `ledgers/ai_reviews.jsonl` | feeds de actividad |
+| 9 | `docs/docs_index.json` | Docs tab |
+| 10 | `guardrails/project_guardrails.json` | Governance tab |
+| 11 | `guardrails/no_claims.json` | Governance tab |
+| 12 | `guardrails/project_memory.jsonl` | Governance tab |
+
+Los 3 CON emisor, que por eso sí pueden entrar (AUDIT:808-816; son exactamente
+las 3 rutas del contrato presentes en `aiw-console/.aiw/`, AUDIT:629-633,
+recontado hoy):
+
+| Archivo (hoy, en `.aiw`) | Emisor medido |
+|---|---|
+| `views/project_console.snapshot.json` | el proyector (`CON-PROJ:12,32`) — es el REQUERIDO de la capa 1 |
+| `views/roadmap.json` (+ copia de entrega `roadmap/roadmap.json`) | el proyector; la copia, el server (AUDIT:808-813, :821-825) |
+| `views/git_history.snapshot.json` | el history-builder, regenerado por el server (`CANTU-BUILD:24`; AUDIT:813-814) |
+
+Nota sobre `project.json`: el schema-doc anota un mapeo `config.json →
+project.json` (AUDIT:675), pero en disco nadie lo emite — D.1 lo marca ✗ en
+aiw-console y en AIW (AUDIT:614) y el proyector solo escribe bajo `views/`
+(AUDIT:637-641). Cuenta como sin emisor hasta que ese mapeo exista de verdad.
+
+### 18.b La puerta normal
+
+Cuando un archivo gane emisor, entra así, y solo así:
+
+1. **Ruta nueva bajo `.project/`**, nombrada por contenido (§1) y sin heredar el
+   layout de `.aiw` (§1.b: sin `views/`, sin prefijos de consumidor).
+2. **Opcional por defecto.** Promoverlo a requerido es una decisión registrada
+   (§8): cada requerido nuevo es una forma nueva de ponerse rojo.
+3. **Degradación declarada en esta capa al entrar:** qué pierde el consumidor si
+   falta, qué sigue funcionando, y qué se anuncia (§20).
+
+Los 12 de §18.a no están "pendientes de ruta": están fuera. Cada uno entra por
+esta puerta el día que tenga emisor, uno a uno.
+
+## 19. Los opcionales de hoy: dos archivos
+
+Con la regla de §18, la capa 3 declara hoy exactamente DOS archivos opcionales —
+los dos con emisor que no son el snapshot requerido de la capa 1:
+
+| Ruta en `.project/` | Estatus | Contenido | Degradación declarada si falta |
+|---|---|---|---|
+| `.project/roadmap.json` | OPCIONAL | el árbol del roadmap, identificado `roadmap_tree_v1` (§10, §10.c) | Se pierden las vistas de detalle del roadmap (cola de runs, árbol por objetivo). Lo que el snapshot transporta en `roadmap_tree` sigue renderizándose. Se anuncia "roadmap no disponible", nombrando el archivo. (Degradación equivalente medida: AUDIT:292-293.) |
+| `.project/git_history.json` | OPCIONAL | la historia de commits y ramas que hoy emite el history-builder | Se pierde la historia (commits y asociación run↔commit). El resto del consumidor no se entera. Se anuncia "historia no disponible", nombrando el archivo. (Medido: AUDIT:297; el validador ya lo trata como condicional, `CANTU-VALID:1565-1566`.) |
+
+Los nombres, `roadmap.json` y `git_history.json`, nombran contenido (§1). El
+nivel `views/` y el sufijo `.snapshot` desaparecen porque en `.project/` TODO es
+derivado y regenerable: decir "snapshot" ahí es tan redundante como §1.b midió
+que era `views/` — la misma tijera que recortó `project_console.` del snapshot.
+
+**El conjunto requerido sigue siendo uno (§8): el snapshot.** Ninguno de estos
+dos lo acompaña en ese estatus; esta capa no promueve nada.
+
+Dos notas de contorno:
+
+- `.project/roadmap.json` es DERIVADO, como todo en la carpeta. El canónico
+  editable del roadmap vive donde el proyecto lo tenga — en Cantu,
+  `.aiw/roadmap/roadmap.json` con su tooling de edición, hasta el corte del
+  tramo 7 (la misma convivencia aditiva de §10.c). No se emite copia de entrega
+  bajo `.project/`: ese patrón existe "only to satisfy the [frozen] reader"
+  (schema-doc vía AUDIT:821-825) y ningún lector congelado lee esta carpeta (§9).
+- El identificador interno del git-history (`jame.git_history_snapshot.v1`,
+  `CANTU-BUILD:26` vía AUDIT:762-763) carga `jame.`, igual que lo cargaba el del
+  roadmap antes de §10.c. Renombrarlo es trabajo del emisor (tramo 2); se anota
+  aquí para que la asimetría no parezca descuido — mismo tratamiento que
+  `aiw_flat_objectives_v1` en §10.c.
+
+## 20. La degradación es requisito SOBRE EL CONSUMIDOR
+
+El punto central de esta capa, con todas sus letras:
+
+**La ausencia de cualquier archivo no-requerido NUNCA puede romper al
+consumidor.** Ni excepción, ni pantalla en blanco, ni tratamiento de requerido de
+facto. Cada opcional degrada de la forma declarada en §19 — y el consumidor **lo
+dice en pantalla, por archivo ausente, en la superficie afectada**. Renderizar
+una lista vacía sin anunciar la ausencia no es degradar: es afirmar que el dato
+no existe, y eso es mentira. El consumidor no finge que el dato no existía.
+
+El contraste está medido. La consola de Cantu, ante CUALQUIER fallo fail-soft,
+levanta UN banner agregado — "Rendered from the primary snapshot. Some optional
+local state files could not be loaded. Open the Console Diagnostics panel in the
+Status tab for details." (`CANTU-PCJS:4320-4325`, releído hoy; AUDIT:280-284) —
+que no dice QUÉ falta; el detalle vive escondido en otro panel, y la superficie
+afectada muestra su estado vacío como si nada (tabla B.3, AUDIT:285-297).
+**Adjudicado: eso no basta. La degradación se anuncia por archivo ausente, no en
+agregado.** El banner agregado puede existir como resumen, pero no sustituye el
+anuncio individual: se anuncia donde duele, nombrando lo que falta.
+
+Es la simetría de lectura de §6: allá el contrato obliga al artefacto a declarar
+su frescura para que el fallo sea ruidoso; aquí obliga al consumidor a declarar
+sus ausencias por la misma razón. Fallar ruidoso, nunca silencioso — también al
+leer.
+
+**Este requisito recae sobre el shell del tramo 3, no sobre el emisor.** El
+emisor cumple con emitir (§2) y con no dejar punteros rotos (§7); qué se muestra
+cuando algo falta es obligación del que muestra. Cuando el shell exista, D-026 se
+activa (§9) y su test-de-consumidor debe ejercitar esta degradación archivo por
+archivo, no solo el camino feliz.
+
+## 21. `closeout_result ⇒ completed`: advertencia, nunca requisito
+
+§14 dejó la implicación como candidata a chequeo del validador. Se adjudica:
+**entra como ADVERTENCIA del validador, nunca como requisito duro.**
+
+Lo medido (MEDICION:310-315): la implicación `closeout_result ⇒ completed` se
+sostiene en disco — 0 runs no-`completed` la llevan — pero 2 runs `completed` no
+tienen `closeout_result`, y §14 ya adjudicó que esos dos son legítimos.
+
+- **Advertencia:** un run no-`completed` que aparezca con `closeout_result` rompe
+  la regularidad medida y merece que el validador lo señale — en amarillo, nunca
+  en rojo.
+- **Nunca requisito duro, en ninguna de las dos direcciones.** La implicación
+  medida es una regularidad observada sobre 9 ejemplares, no un invariante de
+  diseño: endurecerla sería elevar patrón observado a ley — la mecánica de §3.b.
+  Y la dirección recíproca (`completed` exige `closeout_result`) ya está
+  descartada por §14: declararla obligatoria pondría rojos dos runs que ya
+  existen. Ese par de campos ya demostró, con datos, que hoy no tolera reglas
+  duras.
+
+---
+
 ## Decisiones de este contrato
 
 ### Capa 1 — RATIFICADAS 2026-07-23
@@ -1027,11 +1204,10 @@ Las tres quedan cerradas. Registradas en `context/DECISIONES.md` como D-039.
 
 Ninguna decisión de la capa 1 queda abierta.
 
-### Capa 2 — ADJUDICADAS 2026-07-23 — registro en `DECISIONES.md` PENDIENTE
+### Capa 2 — ADJUDICADAS 2026-07-23 — registradas como D-040
 
-Adjudicadas por la cabina y redactadas en esta capa. El registro en
-`context/DECISIONES.md` va en encargo aparte, al cerrar la capa; hasta entonces,
-esta tabla es la lista autoritativa.
+Adjudicadas por la cabina y redactadas en esta capa. Registradas en
+`context/DECISIONES.md` como **D-040**, junto con las de la capa 3.
 
 | # | Decisión | Dónde | Razón en una línea |
 |---|---|---|---|
@@ -1053,3 +1229,15 @@ tipo y forma de `category`/`batch` (§16), claves de la declaración v3 en
 `roadmap_tree` en el snapshot (§10.c) — no está pendiente de deliberación: está
 deliberadamente diferido a emisor y ejemplo, con la regla de §3.b. Opaco no es
 "sin decidir".
+
+### Capa 3 — ADJUDICADAS 2026-07-23 — registradas como D-040
+
+| # | Decisión | Dónde | Razón en una línea |
+|---|---|---|---|
+| n | Un archivo sin emisor NO entra en `.project/`; se queda en `.aiw` hasta tener emisor (hoy: 12 de 15) | §18 | Archivos a mano en una carpeta declarada derivada reintroducen la clase de artefacto que se pudrió (§2), con bendición del contrato. |
+| o | Capa 3 hoy: `.project/roadmap.json` y `.project/git_history.json`, ambos OPCIONALES; el requerido sigue siendo uno | §19 | Solo 3 de 15 tienen emisor; promover a requerido exige decisión registrada (§8). |
+| p | La ausencia de un no-requerido nunca rompe; la degradación se anuncia POR ARCHIVO, en la superficie afectada | §20 | El banner agregado medido no dice qué falta (CANTU-PCJS:4320-4325); fallar ruidoso también al leer (§6). |
+| q | `closeout_result ⇒ completed` entra como advertencia del validador, nunca requisito duro | §21 | Regularidad de 9 ejemplares, no invariante; endurecer este par de campos ya probó poner rojos runs existentes (§14). |
+
+Ninguna decisión de la capa 3 queda abierta. Los 12 sin emisor no esperan ruta:
+están fuera hasta que la puerta normal (§18.b) los reciba, con emisor, uno a uno.

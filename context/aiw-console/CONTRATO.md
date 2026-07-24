@@ -158,7 +158,7 @@ Heredadas de v1, sin cambios de forma:
 | `operational_status` | string | string, NO objeto anidado (v0.3 lo anidaba) |
 | `project_summary` | string | ídem |
 | `current_status_summary` | string | ídem |
-| `roadmap_tree` | objeto | forma detallada en capa 2 |
+| `roadmap_tree` | objeto | forma detallada en capa 2 (§10) |
 | `blockers` | array | |
 | `followups` | array | |
 | `no_claims_summary` | **objeto** | `snapshot-schema-v1.md:43` |
@@ -197,7 +197,7 @@ emisor y ejemplo.**
 
 `taxonomy_model` **NO queda opaco.** Tiene contenido real, es idéntico en ambos
 archivos y su forma es estable (Anexo A.3). Es candidato a especificarse en la
-capa 2.
+capa 2 (resuelto: §17).
 
 ## 4. `schema_version` es entero — confirmación, no decisión
 
@@ -441,14 +441,581 @@ cual cotejarse; la de `taxonomy_model` sí.
 
 **Consecuencia adjudicada en §3.b:** los dos vacíos quedan **OPACOS** (tipo objeto,
 contenido sin especificar, pass-through) hasta que exista emisor y ejemplo;
-`taxonomy_model` no queda opaco y es candidato a la capa 2.
+`taxonomy_model` no queda opaco y es candidato a la capa 2 (resuelto: §17).
 
 **[NO VERIFICADO]** qué forma espera cada panel consumidor para los dos vacíos: eso
 se mide contra el renderer en la capa 3, no aquí.
 
 ---
 
-## Decisiones de este contrato — RATIFICADAS 2026-07-23
+# CONTRATO DE LA CARPETA — Capa 2: el roadmap (`roadmap_tree`)
+
+Estado: VIGENTE — tramo 1 de O4, misma pieza que la capa 1. Detalla la forma del
+objeto `roadmap_tree` que §3 declara requerido y resuelve el destino de
+`taxonomy_model` que §3.b dejó como candidato. Las decisiones de esta capa están
+adjudicadas por la cabina; esta redacción las fija con su evidencia. Su registro en
+`context/DECISIONES.md` es encargo aparte, al cierre de la capa.
+
+## Nota de verificación (capa 2)
+
+Fuentes de evidencia, leídas completas antes de redactar:
+
+- **MEDICION** = `context/aiw-console/records/MEDICION-ROADMAP-V3.md` — medición
+  read-only del roadmap v3 de Cantu y de `taxonomy_model` (2026-07-23).
+- **AUDIT** = `context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md` — el mapa de
+  estado real del toolchain (2026-07-23).
+
+Alias de datos, heredados de la medición: **CANTU-ROADMAP** =
+`projects/cantu-studio/.aiw/roadmap/roadmap.json`; **CONSOLE-SNAP** =
+`projects/aiw-console/.aiw/views/project_console.snapshot.json`; **AIW-SNAP** =
+`aiw/.aiw/project_console.snapshot.json`. **CANTU-PCJS** y **CANTU-VALID** como en
+la cabecera de la capa 1.
+
+Cotejado de primera mano el **2026-07-23** con recorrido propio de los tres
+archivos de datos: los totales (8·30·65), los conteos de `status`, las claves de la
+raíz y de los tres niveles, los conteos de `closeout_result` (9: 8 constantes + 1
+prosa; 11 `completed`, 2 de ellos sin closeout) y de `progress` (1/65, 13 entradas,
+5 claves), la densidad de `queue_order` (1..65, únicos, sin huecos), la ausencia de
+referencias colgantes en `depends_on`, la ausencia de fases y objetivos con 0 runs,
+las 0 ocurrencias de `current_stage` y de `categor*`/`batch` como clave, la
+identidad de `taxonomy_model` entre ambos snapshots y el `model` de ambos árboles.
+**Todo reproduce la medición sin desviación.** Para §10.a, §10.c y el Anexo B se
+leyeron además de primera mano las líneas citadas de CANTU-ROADMAP (:2 y :199),
+CANTU-PCJS, CANTU-VALID y
+`projects/cantu-studio/.aiw/state/project_status.json`.
+
+No se ejecutó git en ninguna forma. No se levantó la consola, el validador ni el
+proyector. Lo no comprobable desde disco en esta sesión se marca **[NO VERIFICADO]**.
+
+---
+
+## 10. Forma de `roadmap_tree`: tres niveles, nada derivado
+
+`roadmap_tree` transporta el roadmap del proyecto dentro del snapshot (§3). Esta
+capa fija su **modelo canónico**: un árbol de tres niveles,
+
+    objetivo → fase → run
+
+con las claves del roadmap v3 medido en disco — 8 objetivos, 30 fases, 65 runs
+(MEDICION:100-101). La capa especifica el árbol que viaja DENTRO del snapshot; los
+archivos de roadmap sueltos que el toolchain emite o lee hoy
+(`.aiw/views/roadmap.json` y la copia de entrega `.aiw/roadmap/roadmap.json`,
+AUDIT:807-816) son archivos opcionales y se adjudican en la capa 3.
+
+Lo que hay hoy en disco no es esta forma: los dos snapshots del proyector
+transportan `aiw_flat_objectives_v1` (`"model"` en CONSOLE-SNAP:10 y AIW-SNAP:10,
+vía MEDICION:82-85), el modelo plano que el emisor deriva de las carpetas de
+objetivos de AIW (AUDIT:671-675). El v3 vive hoy solo en CANTU-ROADMAP. Proyectar
+el v3 al snapshot es trabajo del emisor (tramo 2, mismo patrón que §1.b: aquí se
+declara la norma); qué modelo transporta un snapshot dado lo declara el propio
+snapshot (§17).
+
+### 10.a Claves por nivel — las medidas, sin excepciones
+
+Raíz del árbol v3, tal como existe en su archivo (MEDICION:227-230):
+`schema_version`, `roadmap_id`, `title`, `objectives`.
+
+**Objetivo — 3 claves, 8/8 (MEDICION:234-238):**
+
+| Clave | Tipo |
+|---|---|
+| `objective_id` | string |
+| `title` | string |
+| `phases` | array de fases |
+
+**Fase — 3 claves, 30/30 (MEDICION:248-252):**
+
+| Clave | Tipo |
+|---|---|
+| `phase_id` | string |
+| `title` | string |
+| `runs` | array de runs |
+
+**Objetivo y fase no llevan `summary` ni `full_description`, y la ausencia es
+DELIBERADA: decisión previa que este contrato respeta, no omisión que corregir.**
+La reducción a solo-título la ejecutó el propio roadmap y quedó registrada dentro
+de él — `RUN-CANTU-ROADMAP-EDITOR-USABILITY-001` consigna: "Objectives and phases
+were reduced to a title only; summary and full_description were removed from the
+schema, the data and the console, and remain recoverable from Git"
+(CANTU-ROADMAP:199, releído de primera mano; confirmado en disco por la medición,
+MEDICION:240-244 — 3 y 3 claves, sin excepciones). Quien los "restaure" creyendo
+que faltan no estaría llenando un hueco: estaría reabriendo una decisión ya
+ejecutada en los tres lugares de los que se removieron — y no rescatando nada,
+porque el propio registro deja el texto recuperable de Git.
+
+**Run — 9 claves, y ninguna más (MEDICION:256-266; veredicto de completitud contra
+el audit: MEDICION:268-270):**
+
+| Clave | Presencia | Tipo | Nota |
+|---|---:|---|---|
+| `run_id` | 65/65 | string | |
+| `queue_order` | 65/65 | entero | secuencia GLOBAL 1..65, única y densa en el ejemplar medido (MEDICION:321-322); propiedad medida, no se congela como norma |
+| `title` | 65/65 | string | |
+| `summary` | 65/65 | string | |
+| `full_description` | 65/65 | string | |
+| `status` | 65/65 | string | uno de los cuatro tokens de §11.a |
+| `depends_on` | 65/65 | array de `run_id` | 48 con dependencias, 17 vacíos, cero referencias colgantes en disco (MEDICION:323-325) |
+| `closeout_result` | 9/65 | string | OPCIONAL — §14 |
+| `progress` | 1/65 | array de objetos | OPCIONAL — §15 |
+
+Más las dos claves RESERVADAS de §16 (`category`, `batch`), que hoy no existen en
+ningún run y nacen ausentes.
+
+### 10.b Objetivos y fases NO llevan `status` ni contadores
+
+**Ningún campo derivable se almacena. En ningún nivel.** Ni `status` de objetivo,
+ni `status` de fase, ni contadores (completados, bloqueados, ratios).
+
+Es la regla de la capa 1 (§2) aplicada un nivel arriba. §2 dice: todo archivo
+requerido tiene emisor; ninguno se escribe a mano. El equivalente a nivel de campo:
+todo valor derivable tiene función (§12) que se aplica AL LEER; ningún derivado se
+persiste. Un derivado almacenado es la versión a nivel de campo del archivo escrito
+a mano — una copia de la verdad que alguien tendría que regenerar en cada escritura
+y que nadie regenera. Las tres semanas de podredumbre de §2 son ese mecanismo
+operando a nivel de archivo; un `status` de objetivo almacenado sería el mismo
+mecanismo esperando dentro del árbol.
+
+Los contadores, además, ya viven donde deben: la consola los deriva en render
+(`v3ObjectiveStats`, `v3PhaseRatio` — AUDIT:464-468; el stat "Blocked" — AUDIT:334)
+sin persistir ninguno. Almacenarlos duplicaría lo que el consumidor ya calcula.
+
+### 10.c `schema_version` del roadmap: identificador propio; el de `.aiw` no se toca
+
+El v3 vivo se identifica hoy como `"jame.roadmap_v3.v0.2-progress"`
+(CANTU-ROADMAP:2, vía MEDICION:227; releído de primera mano). Esa cadena es uno de
+los tres ROMPE que midió el audit: el validador de Cantu exige el match EXACTO y
+se pone rojo si no lo hay (`CANTU-VALID:963-964`, releído de primera mano;
+AUDIT:762-764).
+
+**Bajo `.project/`, el roadmap lleva identificador propio: `roadmap_tree_v1`.**
+Sin `jame`, sin `cantu`, sin `aiw`, sin nombre de consola. Es el criterio de §1
+aplicado al identificador: nombra el CONTENIDO — el árbol que este contrato ya
+llama `roadmap_tree` (§3) — y no al emisor ni al consumidor. Que el nombre del
+modelo coincida con el de la clave que lo transporta es deliberado: un solo
+sustantivo para una sola cosa. La versión arranca en 1 y cuenta el linaje de ESTE
+contrato (criterio de §4): `v3` y `v0.2-progress` numeran la historia interna de
+JAME, y heredarlos importaría al nombre nuevo la historia del nombre que se
+abandona.
+
+Dónde viaja: en la raíz del árbol, el identificador es la clave `schema_version`
+(§10.a). No colisiona con §4: el `schema_version` ENTERO es el del envelope del
+snapshot y versiona el contrato del archivo; éste es string y nombra el modelo del
+árbol transportado — dos niveles, dos preguntas, y nadie los "unifica". La clave
+portadora del identificador cuando el árbol viaja dentro de `roadmap_tree` la fija
+el emisor del tramo 2 con su ejemplo — hoy el modelo plano usa `model`
+(CONSOLE-SNAP:10) — misma disciplina que §17. El identificador del modelo plano
+(`aiw_flat_objectives_v1`) es del emisor y anterior a este contrato; si le cabe
+este mismo criterio es asunto del tramo 2, no de esta capa.
+
+**El roadmap de `.aiw/` conserva su `schema_version` INTACTO hasta el corte del
+tramo 7.** Cambiarlo pondría rojo al validador vivo (el match exacto de
+`CANTU-VALID:963-964`), en contra de D-036, cuya premisa entera es que la carpeta
+nueva se crea ADITIVA y deja intacto todo lo que está en `.aiw` (§0, §9;
+`context/DECISIONES.md:427-451`).
+
+**Durante los tramos 4–7 conviven dos roadmaps con dos identificadores
+distintos** — `jame.roadmap_v3.v0.2-progress` en `.aiw/`, `roadmap_tree_v1` bajo
+`.project/`. Es la consecuencia esperada de la convivencia aditiva (D-036), no una
+anomalía, y queda escrito para que nadie lo "reconcilie": reconciliar sería o
+tocar el de `.aiw` (rojo del validador, contra D-036) o devolver `jame` a
+`.project/` (contra §1). La doble identidad es el mecanismo que mantiene verde lo
+viejo mientras existe lo nuevo — la lógica de §4: la ruta desambigua, y aquí
+además el identificador.
+
+## 11. Dos vocabularios de `status`, uno por nivel
+
+Son dos vocabularios DISTINTOS, y la diferencia es deliberada. Uno se almacena; el
+otro solo existe al derivar.
+
+### 11.a Run — almacenado, cuatro tokens
+
+    planned · active · blocked · completed
+
+Medido: 65/65 runs tienen `status`; el conjunto observado es exactamente
+`{planned: 53, completed: 11, active: 1}` — subconjunto propio del vocabulario, sin
+valores inesperados, sin null, sin variantes de capitalización (MEDICION:104-115).
+Hay exactamente un run `active` en todo el roadmap (CANTU-ROADMAP:219 vía
+MEDICION:137), coherente con la convención de un solo run en curso que el audit
+describe (AUDIT:332) — convención observada, no norma de esta capa.
+
+**`blocked` se declara aunque la medición no lo instancie (0/65,
+MEDICION:117-121).** Un estado declarado y vacío es honesto: el vocabulario
+describe lo que un run PUEDE decir, no lo que los 65 de hoy dicen. Quitarlo por no
+instanciado obligaría a re-agregarlo el día que un run se bloquee — y ese día el
+token hará falta con urgencia, no con calma. El token tampoco es invención de esta
+capa: la semilla de roadmap de AIW declara los mismos cuatro
+(`aiw/roadmap_AIW_temp.md:13` vía AUDIT:646-650), y la consola ya cuenta `blocked`
+en un stat propio (AUDIT:334; Anexo B.2).
+
+### 11.b Objetivo — derivado, cinco tokens
+
+    planned · in_progress · active · blocked · completed
+
+Estos cinco tokens **no aparecen en el archivo**: nombran el resultado de la
+función de §12 y solo existen al aplicarla. Dónde sí se escriben: en la pantalla
+del consumidor que derive, y en la declaración de vocabulario del snapshot que
+transporte v3 (§17).
+
+### 11.c Por qué los vocabularios difieren
+
+Porque miden cosas distintas. Un run `active` **se ejecuta AHORA**: es el token del
+único run en curso del roadmap entero (MEDICION:137). Un objetivo puede llevar
+meses empezado sin que nada corra: O5 tiene 2 de 7 runs `completed` y cero
+corriendo (MEDICION:162, :174-179). Si el vocabulario de objetivo reusara `active`
+para decir "empezado", la misma palabra significaría "ejecutándose en este momento"
+en un nivel y "alguna vez avanzó" en el otro — dos significados bajo una palabra.
+
+Esa trampa ya existe en el sistema y está medida: `active` y `blocked` figuran hoy
+en `taxonomy_model` calificando al PROYECTO (`operational_statuses` del modelo
+plano) y en el roadmap v3 calificando a un RUN — "ejes distintos con palabras
+iguales" (MEDICION:85-89). El vocabulario de objetivo no suma un tercer eje a esa
+colisión: donde el significado es nuevo ("empezado pero nada corre ahora"), el
+token es nuevo — `in_progress`.
+
+## 12. La función de derivación — NORMATIVA, NO ALMACENADA
+
+El status de un objetivo se DERIVA de los `status` de sus runs — la unión de los
+runs de todas sus fases, en un solo paso. La función toma runs, no derivados
+intermedios: los cinco tokens de §11.b no son entrada válida, así que "derivar
+fase→objetivo en cadena" ni siquiera tipa.
+
+### 12.a Precedencia estricta
+
+Se evalúa en este orden; gana la primera regla que aplique:
+
+1. **`active`** — algún run `active`.
+2. **`blocked`** — ningún run `active` y algún run `blocked`.
+3. **`completed`** — todos los runs `completed`, y hay al menos uno.
+4. **`in_progress`** — algún run `completed`, pero no todos.
+5. **`planned`** — ningún run ha salido de `planned`.
+
+La función se define sobre el vocabulario cerrado de §11.a: un run con un token
+fuera de él es entrada malformada (la rechaza el validador de la capa 3), no un
+caso adicional de esta tabla.
+
+Dos notas sobre el orden y las cláusulas:
+
+- Las ramas 2 y 3 no pueden aplicar a la vez (un run `blocked` impide que "todos"
+  estén `completed`), así que su orden relativo no decide nada. La precedencia
+  portante es **`blocked` por encima de `in_progress`**: un objetivo con avance Y
+  un run bloqueado dice `blocked` — atención requerida — antes que `in_progress`.
+- La cláusula "y hay al menos uno" de la rama 3 es redundante con el dominio
+  (§12.b) y se escribe adrede: es la guarda que neutraliza la vacuidad si alguien
+  implementa la regla sin leer §12.b.
+
+### 12.b Objetivo con 0 runs: MALFORMADO
+
+**La derivación queda INDEFINIDA. No recibe token — ninguno.** El validador de la
+capa 3 lo rechaza como dato malformado.
+
+Por qué no se inventa un token para el caso: un objetivo sin runs no es un estado
+del trabajo, es un error de datos, e inventarle un token lo haría viajar,
+renderizarse y agregarse como si fuera trabajo. Inventar un token para un estado
+inválido es peor que declararlo inválido. Y por qué no se deja a la semántica
+ingenua: la rama 3 evaluada sobre lista vacía es verdadera por vacuidad —
+`[].every() === true` en JS — de modo que un objetivo recién creado y vacío
+derivaría `completed`: **declararía terminado lo que nunca existió**. La medición
+detectó exactamente este agujero, lo neutralizó con una guarda de longitud y lo
+reportó como decisión pendiente, no como medición (MEDICION:197-204). Ésta es la
+decisión: inválido, no derivable. Tampoco `planned`: `planned` afirma "hay plan y
+nadie lo ha empezado"; un objetivo vacío no afirma nada todavía.
+
+Los 8 objetivos de hoy tienen ≥1 run (MEDICION:197-198), así que el caso no existe
+en disco: la regla protege el futuro, no corrige el presente.
+
+### 12.c Especificada aquí, escrita en ninguna parte
+
+**La función es normativa — este contrato la fija — y su resultado NO se escribe en
+el snapshot.** Ninguna clave del árbol lo transporta (§10.b). El porqué queda
+escrito con todas sus letras, porque las dos alternativas son los dos modos de
+fallo que este contrato existe para matar:
+
+- **Almacenarlo** crea la segunda copia de la verdad. Un `status` de objetivo
+  persistido hay que regenerarlo en cada escritura del roadmap; el día que no se
+  regenere, el árbol dirá una cosa y el campo otra — la podredumbre de §2 (21.57
+  días medidos), reproducida dentro del propio archivo que este contrato creó para
+  matarla.
+- **No especificarla** deja la derivación al gusto de cada consumidor, y entonces
+  **dos consolas muestran dos verdades sobre el mismo archivo** — el fallo exacto
+  que este contrato existe para matar, en su versión de lectura. No es hipótesis:
+  la regla anterior de la cabina y la de esta capa difieren exactamente en O5
+  (`planned` contra `in_progress`, §12.d). Dos consumidores razonables, dos reglas
+  razonables, dos pantallas distintas — hoy, con los datos de hoy.
+
+Especificada y no almacenada: **una sola fuente (los `status` de run del árbol),
+una sola lectura (esta función).**
+
+### 12.d Prueba contra los datos reales
+
+Conteos por objetivo: los de la medición (MEDICION:158-167), reproducidos de
+primera mano el 2026-07-23. La columna "deriva" aplica la regla de ESTA capa — la
+medición probó la regla anterior; abajo, por qué se descartó.
+
+| # | `objective_id` | n runs | planned | active | completed | blocked | Deriva (§12.a) | Rama |
+|---|---|---:|---:|---:|---:|---:|---|---:|
+| 1 | `O0` | 17 | 7 | 1 | 9 | 0 | **`active`** | 1 |
+| 2 | `O2` | 6 | 6 | 0 | 0 | 0 | `planned` | 5 |
+| 3 | `O5` | 7 | 5 | 0 | 2 | 0 | **`in_progress`** | 4 |
+| 4 | `O1` | 19 | 19 | 0 | 0 | 0 | `planned` | 5 |
+| 5 | `O4` | 1 | 1 | 0 | 0 | 0 | `planned` | 5 |
+| 6 | `O3` | 7 | 7 | 0 | 0 | 0 | `planned` | 5 |
+| 7 | `O6` | 5 | 5 | 0 | 0 | 0 | `planned` | 5 |
+| 8 | `O7` | 3 | 3 | 0 | 0 | 0 | `planned` | 5 |
+
+Distribución derivada: **1 `active`, 1 `in_progress`, 6 `planned`, 0 `completed`,
+0 `blocked`.** Suma: 17+6+7+19+1+7+5+3 = 65 ✓ (MEDICION:155-156).
+
+- **O0 prueba la precedencia con datos.** Tiene a la vez 1 run `active` y 9
+  `completed` (MEDICION:160): la rama 1 gana sobre la 4 — `active`, no
+  `in_progress`. Contra la regla anterior la medición reportó que la precedencia no
+  se dejaba discriminar con estos datos (MEDICION:205-207); con `in_progress` en el
+  vocabulario, O0 sí la discrimina.
+- **O5 es la razón de ser de `in_progress`.** La regla anterior de la cabina —
+  `active`, luego `completed`-todos, luego `blocked`, luego `planned`; la que la
+  medición evaluó (MEDICION:147-153) — derivaba `planned` para O5 (MEDICION:162,
+  marca ⚠️ A): el mismo token que O1, O2, O3, O6 y O7, donde no se ha completado
+  nada. Colapsaba "29 % hecho" y "0 % hecho" al mismo símbolo — **no distinguía
+  "empezado" de "no empezado"** (MEDICION:174-180) — y por eso se descartó. La
+  señal de avance que la consola ya calcula en render (`v3PhaseRatio`,
+  `v3ObjectiveStats`; MEDICION:180-183, AUDIT:464-468) deja de perderse a nivel de
+  token.
+- **O4 no valida nada.** Con n=1 la regla es la identidad, sin agregación real
+  (MEDICION:184-188). Se anota para que nadie lo cuente como confirmación.
+
+### 12.e Ramas sin instancia en los datos de hoy
+
+- **Rama 3 (`completed`):** ningún objetivo tiene todos sus runs `completed`; el
+  más cercano, O0, está a 8 de distancia (MEDICION:192-194).
+- **Rama 2 (`blocked`):** con 0 runs `blocked` en disco, hoy es inalcanzable por
+  cualquier camino (MEDICION:195-196).
+
+Ambas se especifican **por completitud, no por evidencia**, y así quedan marcadas:
+SIN INSTANCIA EN LOS DATOS DE HOY. La marca deliberadamente NO es
+**[NO VERIFICADO]**: esa marca es para afirmaciones sobre el mundo que no se
+pudieron comprobar, y una rama de una definición no afirma nada sobre el disco —
+define qué token corresponde si el caso aparece.
+
+## 13. Fases: mismo criterio, misma función
+
+Una fase no almacena `status` ni contadores (§10.b). Si un consumidor necesita el
+status de una fase, aplica **la misma función de §12** sobre los runs de esa fase:
+mismo vocabulario de salida (§11.b), misma precedencia, mismo dominio — una fase
+con 0 runs es MALFORMADA exactamente como un objetivo con 0 runs (§12.b). Las 30
+fases de hoy tienen ≥1 run (recorrido propio 2026-07-23; mínimo observado: 1 run
+por fase).
+
+No hay una segunda función. La medición señaló que la regla original saltaba el
+nivel intermedio — tres niveles en los datos, dos en la regla (MEDICION:209-214).
+La respuesta de esta capa no es una regla por nivel sino UNA función aplicable a
+cualquier colección de runs: la de un objetivo (la unión sobre sus fases) o la de
+una fase. Dos funciones habrían sido dos maneras de divergir (§12.c).
+
+Las 3 claves de fase medidas quedan documentadas en §10.a: `phase_id`, `title`,
+`runs` — 30/30, sin excepciones (MEDICION:248-252).
+
+## 14. `closeout_result` NO se convierte en enum
+
+Tipo: **string**. Sin enum. **Opcional** — también para runs `completed`.
+
+Lo medido (MEDICION:294-299): 9 de 65 runs lo tienen; 8 son la constante
+`"completed_successfully"` (CANTU-ROADMAP:22, 38, 50, 170, 182, 192, 202, 459) y 1
+es prosa libre de párrafo completo (`RUN-JAME-MATHLIVE-INTEGRATION-READINESS-001`,
+CANTU-ROADMAP:486). La clave mezcla un código de resultado y una justificación
+narrativa en el mismo campo.
+
+**Por qué no se enumera — la razón de §3.b:** enumerar a partir de 8 valores
+observados (en rigor: UNA constante repetida ocho veces, más un párrafo) sería
+inventar un schema con evidencia parcial — la mecánica exacta con la que nació la
+v0.3. Y el enum nacería rompiendo datos reales: declararía ilegal la prosa que YA
+está en disco.
+
+**Por qué es opcional incluso en `completed`:** la medición encontró 11 runs
+`completed` y solo 9 con `closeout_result`; dos `completed` no lo tienen
+(`RUN-CANTU-ROADMAP-CONTENT-AUDIT-001` y `RUN-CANTU-ROADMAP-CLOSE-ACTIVE-RUN-001`,
+MEDICION:310-313). Declararlo requerido pondría rojos dos runs que ya existen.
+
+Hecho medido, no norma de esta capa: la implicación inversa sí se sostiene en
+disco — ningún run no-`completed` tiene `closeout_result` (MEDICION:314-315). Se
+registra como candidata a chequeo del validador (capa 3), no como requisito de
+forma.
+
+Candidato a estructurarse — separar `code` + `notes` — **el día que algo lo emita
+con esa forma**, no antes. Hoy ningún emisor lo escribe; estructurarlo sin emisor y
+sin ejemplo es §3.b.
+
+## 15. `progress`: opcional, documentado, NO congelado
+
+Opcional. Existe en **1 de 65 runs**
+(`RUN-JAME-PROJECT-CONSOLE-ROADMAP-V3-PROTOTYPE-001`, CANTU-ROADMAP:51 vía
+MEDICION:274-277): un array de 13 entradas, cada una con exactamente estas cinco
+claves (MEDICION:278-284):
+
+| Clave | Valores observados en las 13 entradas |
+|---|---|
+| `cycle` | `1, 2, 3, 4` |
+| `stage` | `execution`, `ai_review`, `human_qa`, `correction`, `closeout` |
+| `attempt` | `1, 2, 3, 4` |
+| `state` | `done` (13/13) |
+| `result` | `implemented`, `approved`, `changes_requested`, `passed`, `completed` |
+
+Esta tabla es **evidencia, no norma**. Un solo ejemplar es evidencia débil, y la
+propia medición lo dice: "cualquier contrato que lo asuma general estaría asumiendo
+un caso único" (MEDICION:288-290). **La forma interna de `progress` NO se congela
+en esta capa.** Lo único normativo aquí: la clave es opcional, ausente por defecto,
+y su ausencia no invalida el run (64/65 no la tienen).
+
+El único vocabulario de estado-por-etapa de todo el roadmap vive aquí, en un run.
+El detalle de run de la consola deriva su "Current stage" de este array (Anexo
+B.1) — para los otros 64 runs no hay de dónde derivar.
+
+## 16. `category` (D-029) y `batch` (D-030) — reservados, nacen vacíos
+
+Se reservan dos claves **OPCIONALES a nivel de run**: `category` y `batch`.
+Ausentes por defecto — reservarlas no escribe un byte en ningún repo. **NUNCA
+requeridas.** Un consumidor de este contrato que no las entienda las ignora; su
+ausencia no degrada nada y su presencia no obliga a nada.
+
+Qué función esperan: D-029 clasifica cada run por lo que pasa en su cierre —
+manual / semi-autónomo / autónomo — asignado por el humano al crear el run
+(`context/DECISIONES.md:246-267`); D-030 asigna cada run a un batch que el humano
+fija al encolar y que determina la rama del repo del proyecto
+(`context/DECISIONES.md:269-282`).
+
+**La medición devolvió AUSENCIA EXPLÍCITA (MEDICION:343-352):** el barrido léxico
+completo — claves y prosa del archivo entero — encontró UNA coincidencia (`stage`,
+dentro del `progress` de un único run), y las cuatro convenciones que podrían
+confundirse con lo buscado quedaron descartadas una por una (MEDICION:354-363):
+
+- el prefijo `RUN-JAME-*`/`RUN-CANTU-*` marca época de nombrado, no eje de cierre —
+  inferencia de la medición a partir de los runs de rename, **[NO VERIFICADO]**
+  como afirmación fuerte (la marca es suya y se conserva);
+- las fases agrupan por tema, no por destino de aprobación;
+- `depends_on` es un grafo de precedencia, no una partición;
+- `progress[].stage` registra lo que PASÓ, no lo que el humano ASIGNÓ al crear el
+  run, y vive en 1 de 65 runs.
+
+**No hay nada que reciclar y nada con qué chocar. Por eso nombrar hoy es gratis, y
+agregar después cuesta migración en tres repos:** el v3 o su semilla viven hoy en
+cantu-studio (el canónico más el tooling de edición, AUDIT:137-145), en aiw-console
+(el proyector emite un roadmap v3-compatible y la copia de entrega, AUDIT:671-675,
+AUDIT:617) y en aiw (la semilla Markdown se declara "futuro
+`.aiw/roadmap/roadmap.json` (v3)", AUDIT:646-650). Una clave introducida más tarde
+atraviesa los tres; una clave reservada hoy no toca ninguno.
+
+Sin enum y **sin forma fijada — ni siquiera el tipo**. Es el criterio de §14
+llevado a su caso límite: `closeout_result` fija "string" porque hay 9 ejemplares
+en disco que lo son; de `category` y `batch` hay CERO ejemplares, así que fijar hoy
+hasta el tipo sería inventar. Se reserva el nombre y la posición (clave opcional de
+run); tipo y forma los trae el primer emisor con su ejemplo. D-029 nombra tres
+categorías, pero congelarlas aquí como enum sería §3.b: schema sin emisor.
+
+## 17. `taxonomy_model` es función del modelo transportado
+
+**RESUELTO** (era el candidato que §3.b dejó a esta capa): `taxonomy_model`
+**declara el vocabulario del árbol que viene en `roadmap_tree` del mismo
+snapshot**. No es una constante del contrato: cambia si cambia el modelo
+transportado.
+
+La evidencia, y por qué lo que hay hoy en disco no aplica al v3:
+
+- Lo que hay hoy — idéntico en ambos snapshots, comparado como contenido
+  serializado completo, no solo por claves (MEDICION:58-71; volcados :24-56; Anexo
+  A.3 de la capa 1):
+
+      objective_classifications: [pending, parked, processed]
+      operational_statuses:      [active, blocked, idle]
+
+- Eso describe **`aiw_flat_objectives_v1`** — el modelo que ambos árboles
+  transportan (CONSOLE-SNAP:10, AIW-SNAP:10) — y NO el v3: ninguno de los seis
+  valores coincide con los `status` de run medidos, salvo la colisión léxica de
+  `active` y `blocked`, que ahí califican al proyecto y en v3 a un run
+  (MEDICION:82-89).
+- **Que sea idéntico en ambos snapshots no prueba estabilidad del campo.** Los dos
+  archivos son el mismo proyecto (`project_id: "aiw"` en ambos), emitidos por el
+  mismo emisor (`aiw-projector@0.1.0`) contra el mismo modelo, con 11 días de
+  diferencia (MEDICION:75-81). Dos emisiones así no pueden divergir en esto, se
+  midan cuando se midan: la identidad prueba "mismo proyector, mismo modelo", no
+  "constante del contrato". Ninguno de los dos es Cantu; qué declara el snapshot
+  v0.3 de Cantu queda **[NO VERIFICADO]** (MEDICION:90-94). La hipótesis de que el
+  bloque está horneado como constante en el emisor también quedó
+  **[NO VERIFICADO]** — la medición no leyó el emisor (MEDICION:78-81) — y no hace
+  falta resolverla para esta decisión.
+
+**Norma:** un snapshot que transporte el v3 (`roadmap_tree_v1`, §10.c) declara el
+vocabulario del v3 — los cuatro tokens de run y los cinco derivados de objetivo
+(§11), completos. Así el consumidor sabe qué vocabulario leyó sin adivinarlo del
+contenido, y la colisión léxica entre modelos (`active`/`blocked` con ejes
+distintos) deja de ser trampa: el vocabulario viaja declarado junto al árbol que
+califica.
+
+**Norma, no descripción.** "Función del modelo transportado" prescribe lo que el
+campo DEBE hacer bajo este contrato; no afirma que el emisor ya lo haga. La
+hipótesis contraria — el bloque horneado como constante en el proyector — quedó
+**[NO VERIFICADO]** arriba y es compatible con todo lo medido. Si resulta cierta,
+adecuar el emisor para que derive `taxonomy_model` del modelo que emite es
+**trabajo del tramo 2**, y queda anotado como tal. Mismo patrón que §1.b y §10:
+aquí se declara la norma; la implementación tiene su tramo.
+
+Lo que esta capa NO fija: las claves internas bajo las que un snapshot v3 declara
+esos dos vocabularios. Hoy ningún emisor pone el v3 dentro de `roadmap_tree` (el
+proyector emite el árbol plano en el snapshot y un roadmap v3-compatible como
+archivo aparte, AUDIT:671-675), así que fijar esos nombres sería schema sin emisor
+y sin ejemplo — §3.b. Se fija la FUNCIÓN del campo y el CONTENIDO exigible; la
+forma la trae el emisor del tramo 2.
+
+---
+
+## Anexo B — dos lecturas muertas, registradas — NO NORMATIVO
+
+**Este anexo registra; no corrige.** Nada aquí es requisito, y arreglar cualquiera
+de las dos cosas está explícitamente fuera del alcance de esta capa. Material del
+tramo 3, cuando D-026 exija el test-de-consumidor contra el lector real (§9).
+
+### B.1 `current_stage`: el lector espera un campo que el v3 nunca tuvo
+
+- **En los datos:** 0 ocurrencias de `current_stage` en CANTU-ROADMAP; las 9 claves
+  de run de §10.a son todas las que existen (MEDICION:305-309, :268-270;
+  reproducido de primera mano 2026-07-23).
+- **En el código, el nombre sigue vivo.** El validador exige la celda
+  `"Current stage"` en el detalle de run v3 y en el drawer (CANTU-VALID:1421,
+  :1166) — y a la vez PROHÍBE leer `run.current_stage` en la fila de queue, en la
+  fila de roadmap y en el propio detalle (CANTU-VALID:1387, :1408, :1426). La celda
+  se llena derivando de `progress` (`v3DeriveCurrent`, `v3ProgressTimeline`, anclas
+  requeridas en CANTU-VALID:1421) — y `progress` existe en 1 de 65 runs (§15): para
+  los otros 64, la celda deriva de nada. Además, renderer y validador leen
+  `current_stage` como campo de OTRAS fuentes — `current_focus` de
+  `project_status.json` (CANTU-PCJS:1101, :1586; CANTU-VALID:1928), que en Cantu sí
+  lo provee hoy (`projects/cantu-studio/.aiw/state/project_status.json:212`), y
+  `snapshot.current_status_summary.current_stage` (CANTU-VALID:1931), lectura que
+  contra la familia v1, donde `current_status_summary` es string (§3), no puede
+  devolver nada nunca.
+- **Precisión sobre la fuente:** la medición glosó la cita del audit como "(marcado
+  **P** = presunto)" (MEDICION:306-307); en la leyenda del audit **P** es **prohibido**
+  — falla si aparece (AUDIT:417-418). Es decir, CANTU-VALID:1387 no documenta una
+  lectura: documenta la prohibición de una. La sustancia del hallazgo queda en pie
+  con las citas directas de arriba.
+- **Por qué se registra:** es el espejo de la podredumbre que este contrato
+  persigue. En §2 un archivo afirmaba de más; aquí un lector espera de más. Es la
+  misma enfermedad — una punta del sistema hablando de datos que la otra punta no
+  sostiene — y se resuelve donde D-026 aplica (tramo 3), no aquí.
+
+### B.2 El contador `blocked` de la consola: siempre en cero, y no se "arregla"
+
+La consola calcula un stat "Blocked" contando runs con `status: "blocked"`
+(CANTU-PCJS:3175-3185 y :795, vía AUDIT:334). En disco ese conteo es 0/65 y siempre
+ha valido cero para este roadmap (MEDICION:117-121).
+
+**No es bug.** Es el vocabulario de §11.a declarado y sin uso — exactamente el
+estado declarado-y-vacío que §11.a defiende como honesto. Se deja registrado para
+que nadie lo "arregle" borrándolo: ni el contador de la consola ni el token del
+vocabulario. El día que exista un run `blocked`, ese contador es la primera
+superficie donde se verá.
+
+---
+
+## Decisiones de este contrato
+
+### Capa 1 — RATIFICADAS 2026-07-23
 
 Las tres quedan cerradas. Registradas en `context/DECISIONES.md` como D-039.
 
@@ -459,3 +1026,30 @@ Las tres quedan cerradas. Registradas en `context/DECISIONES.md` como D-039.
 | c | `.project/` reemplaza al nivel `views/` | §1.b | La carpeta entera es derivada, así que `views/` ya no distingue nada. Implementación: tramo 2. |
 
 Ninguna decisión de la capa 1 queda abierta.
+
+### Capa 2 — ADJUDICADAS 2026-07-23 — registro en `DECISIONES.md` PENDIENTE
+
+Adjudicadas por la cabina y redactadas en esta capa. El registro en
+`context/DECISIONES.md` va en encargo aparte, al cerrar la capa; hasta entonces,
+esta tabla es la lista autoritativa.
+
+| # | Decisión | Dónde | Razón en una línea |
+|---|---|---|---|
+| d | `roadmap_tree` canónico: árbol de tres niveles con las claves del v3 medido; ningún nivel almacena campos derivables | §10 | Un derivado almacenado es la versión a nivel de campo del archivo escrito a mano (§2). |
+| e | Vocabulario de run: `planned`·`active`·`blocked`·`completed`; `blocked` se queda pese a 0/65 | §11.a | Declarado y vacío es honesto; quitarlo obligaría a re-agregarlo. |
+| f | Vocabulario de objetivo: cinco tokens, con `in_progress` y sin reusar `active` | §11.b–c | Un run `active` corre AHORA; un objetivo empezado puede llevar meses sin que nada corra. |
+| g | La derivación es normativa, con precedencia fija, y su resultado nunca se almacena | §12 | Una sola fuente, una sola lectura: ni copia que se pudra ni consumidores derivando a su gusto. |
+| h | Objetivo o fase con 0 runs: MALFORMADO, sin token | §12.b, §13 | `[].every() === true` declararía terminado lo que nunca existió. |
+| i | `closeout_result`: string opcional, sin enum, incluso en runs `completed` | §14 | Enumerar 8 valores observados sería inventar schema (§3.b); requerirlo pondría rojos 2 runs existentes. |
+| j | `progress`: opcional; su forma interna se documenta y NO se congela | §15 | 1 de 65 es evidencia débil: sería norma desde un caso único. |
+| k | `category` y `batch` quedan reservados: opcionales, ausentes por defecto, nunca requeridos | §16 | Ausencia explícita medida: nada que reciclar ni con qué chocar; nombrar hoy es gratis, migrar después son tres repos. |
+| l | `taxonomy_model` declara el vocabulario del árbol transportado; no es constante del contrato | §17 | Lo de hoy describe `aiw_flat_objectives_v1`, no v3; idéntico entre snapshots solo prueba mismo proyector y mismo modelo. |
+| m | El roadmap bajo `.project/` se identifica `roadmap_tree_v1`; el `schema_version` del roadmap de `.aiw` queda INTACTO hasta el corte del tramo 7 | §10.c | El identificador nombra el contenido, no a JAME ni al emisor (§1); tocar el de `.aiw` pone rojo al validador (CANTU-VALID:963-964), contra D-036. |
+
+Ninguna decisión de la capa 2 queda abierta. Lo que la capa deja sin fijar —
+forma interna de `progress` (§15), estructura futura de `closeout_result` (§14),
+tipo y forma de `category`/`batch` (§16), claves de la declaración v3 en
+`taxonomy_model` (§17), clave portadora del identificador del modelo dentro de
+`roadmap_tree` en el snapshot (§10.c) — no está pendiente de deliberación: está
+deliberadamente diferido a emisor y ejemplo, con la regla de §3.b. Opaco no es
+"sin decidir".

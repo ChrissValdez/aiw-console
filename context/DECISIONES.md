@@ -1058,3 +1058,66 @@ estrena un artefacto. La enmienda al pasaje correspondiente va en `CONTRATO.md`
 en este mismo encargo; ninguna norma cambia, solo la afirmación de alcance.
 
 Criterio de borrado: N/A.
+
+## D-046 — 2026-07-24 — Redacción de O4; el tramo 1 entregado y el hueco de capa 2
+Registra la escritura de O4 en el roadmap propio de `aiw-console` y cierra el tramo 1.
+Evidencia completa en `context/aiw-console/records/REDACCION-O4.md` (y su insumo,
+`MEDICION-O4.md`). No se editó `CONTRATO.md` ni ningún record; no se ejecutó git en
+ninguna forma.
+
+**Ejecutado.** O4 "Consola global" redactado en
+`projects/aiw-console/roadmap/roadmap.json`: **17 runs** (8 `completed`, 9
+`planned`), **10 fases**, `queue_order` **13..29**, contiguos tras los 1..12 de O0.
+Los **12 runs de O0 quedaron intactos**: comparación campo a campo contra el
+respaldo pre-escritura, **0 diferencias**. Evidencia en `records/REDACCION-O4.md`.
+
+**Fases = tramos, y es INVENCIÓN declarada.** La fuente (`roadmap_AIW_temp.md`) no
+declara fases, y los nueve tramos vivían solo en el handoff efímero. Se adoptó como
+la mejor descomposición disponible; el propósito mismo de la redacción era
+precisamente sacar el plan de un archivo que se sobrescribe y darle estado
+duradero. No se presenta como si la fuente la prefigurara.
+
+**`O4.P9` transversal** aloja los tres ítems sin hogar en la secuencia de tramos,
+**ninguno descartado**: `Merge de 005` (`completed`, anterior al plan de tramos),
+`Context pack` (`planned`, parcialmente superado por [[D-038]] —el contexto de
+cabina ya se movió—, tensión anotada en el propio run), y `Digest` (`planned`,
+degradado por la propia fuente de prerequisito a optimización). §12.b del contrato
+exige ≥1 run por fase; P9 lo cumple con 3.
+
+**`objective_id` conserva el hueco (`O0`, `O4`)** —es identidad, no se renumeró; el
+hueco dice la verdad, O0 y O4 vienen de numeraciones distintas— y los `run_id`
+nuevos estrenan el prefijo `RUN-CONSOLE-` (§10.d Regla 1.a), no `RUN-AIW-` (ése es
+del kernel). Cierra el pendiente que [[D-044]] dejó abierto.
+
+**HUECO DE CAPA 2, descubierto por uso, mayor de lo previsto.** Tres declaraciones
+sin destino en `roadmap_tree_v1`:
+- **(a)** la declaración de **vocabulario de `status` a nivel de roadmap**
+  (`roadmap_AIW_temp.md:13`): el árbol no tiene clave de vocabulario a nivel de raíz
+  ni de objetivo; hoy vive en el contrato (§11.a), no en el dato.
+- **(b)** el matiz de que **los runs contra `aiw-console` sí serían delegables al
+  kernel** (`roadmap_AIW_temp.md:15-16`) — una **EXCEPCIÓN** a la regla de categoría
+  `manual`, que ni siquiera con `category` materializado tendría dónde alojarse a
+  nivel de roadmap.
+- **(c)** —la mayor— **un objetivo no puede declarar su propia definición de
+  terminado**: el criterio "consola estable" (`roadmap_AIW_temp.md:114-120`) tuvo
+  que alojarse en el `full_description` de un run ya `completed`
+  (`RUN-CONSOLE-AUDIT-PHASE0-001`), porque el objetivo bajo el modelo canónico solo
+  tiene `objective_id`, `title`, `phases` (§10.a) — no hay campo de prosa donde
+  poner el marco del objetivo.
+
+Raíz medida: `RUN-CANTU-ROADMAP-EDITOR-USABILITY-001` quitó `summary` y
+`full_description` de los objetivos **deliberadamente**, y el contrato respetó esa
+decisión. Ahora tiene costo documentado. **La enmienda se delibera aparte, con las
+dos evidencias enfrente; no se revierte por decreto.**
+
+**Pendiente: prioridad O0 vs O4 en la cola.** O0 conserva 1 run `active` y 2
+`planned` con `queue_order` bajo (q10..q12), así que preceden a todo O4 en la cola
+global. **NO se decide hoy**: el `queue_order` gobierna cuando el trabajo se ordena
+desde la cola, y hoy lo ordena la cabina. Debe resolverse **antes del tramo 5**,
+cuando la consola global pase a ser la fuente del orden.
+
+**EL TRAMO 1 QUEDA ENTREGADO.** Contrato en tres capas ([[D-039]], [[D-040]]),
+enmiendas ([[D-041]], [[D-043]], [[D-045]]), migración de O0 ([[D-042]], [[D-044]])
+y la redacción de O4 registrada aquí. Sigue el **tramo 2**.
+
+Criterio de borrado: N/A.

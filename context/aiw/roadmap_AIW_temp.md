@@ -97,6 +97,14 @@ respaldo remoto verificado.
 
 ## O4 — Consola global (migrará a su propio roadmap cuando nazca)
 
+> **Nota (2026-07-24) — puntero al canónico.** O4 fue redactado en
+> `projects/aiw-console/roadmap/roadmap.json` (`roadmap_tree_v1`), y **ése es el
+> canónico** para el plan y el estado. Esta versión Markdown queda como **registro
+> histórico y no se edita**: su retiro es trabajo del tramo 6, y hasta entonces
+> ambas conviven. Por construcción este Markdown está **desactualizado** —declara
+> `planned` trabajo que el canónico ya lleva `completed`—; **no se corrige aquí**,
+> justamente para no mantener dos copias. Contexto: `context/DECISIONES.md` D-046.
+
 - **Merge de 005 en aiw-console** — `completed`
   La honestidad de estados del proyector (ERROR/HUMAN_REVIEW → blocked,
   parked → Later, títulos desde `# Objective`). Verificado por tests ANTES de

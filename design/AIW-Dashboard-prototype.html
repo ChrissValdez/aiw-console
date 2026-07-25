@@ -1,0 +1,3068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIW Project Console v7.3</title>
+    <style>
+        /* ============================================================
+           DESIGN TOKENS
+           ============================================================ */
+        :root {
+            --bg-body: #f5f6f8;
+            --bg-panel: #ffffff;
+            --bg-subtle: #f9fafb;
+            --bg-inset: #f3f4f6;
+
+            --sidebar-bg: #0f1117;
+            --sidebar-hover: #1a1d2b;
+            --sidebar-border: #2a2d3a;
+            --sidebar-active: #252838;
+
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-tertiary: #9ca3af;
+            --text-inverse: #f3f4f6;
+
+            --border-default: #e2e4e9;
+            --border-strong: #d1d5db;
+            --border-subtle: #eef0f2;
+
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --accent-bg: #eff6ff;
+            --accent-border: #bfdbfe;
+
+            --green: #059669;
+            --green-bg: #ecfdf5;
+            --green-border: #a7f3d0;
+            --amber: #d97706;
+            --amber-bg: #fffbeb;
+            --amber-border: #fde68a;
+            --red: #dc2626;
+            --red-bg: #fef2f2;
+            --red-border: #fecaca;
+            --neutral: #6b7280;
+            --neutral-bg: #f3f4f6;
+            --neutral-border: #d1d5db;
+
+            --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: "SF Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --radius-xl: 12px;
+
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-drawer: -8px 0 24px rgba(0,0,0,0.12);
+            --shadow-card: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-card-hover: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+        }
+
+        /* ============================================================
+           RESET & BASE
+           ============================================================ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-body);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            font-size: 13px;
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); }
+        h2 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--text-primary); }
+        h3 { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+        p { color: var(--text-secondary); margin-bottom: 12px; line-height: 1.6; }
+        a { color: var(--accent); text-decoration: none; cursor: pointer; }
+        a:hover { text-decoration: underline; }
+        code { font-family: var(--font-mono); font-size: 0.88em; background: var(--bg-inset); padding: 1px 5px; border-radius: 3px; border: 1px solid var(--border-subtle); }
+        strong { font-weight: 600; }
+        ul, ol { padding-left: 18px; }
+        li { padding-bottom: 4px; }
+
+        /* ============================================================
+           LAYOUT SHELL
+           ============================================================ */
+        .sidebar {
+            width: 256px;
+            background: var(--sidebar-bg);
+            color: var(--text-inverse);
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--sidebar-border);
+            transition: width 0.2s ease;
+            overflow-x: hidden;
+            z-index: 20;
+            flex-shrink: 0;
+            height: 100vh;
+        }
+        .sidebar.collapsed { width: 56px; }
+
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-width: 0;
+            height: 100vh;
+        }
+
+        .view-container {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .view-container.active { display: flex; }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 32px;
+            background: var(--bg-body);
+            min-height: 0;
+        }
+
+        /* ============================================================
+           SIDEBAR
+           ============================================================ */
+        .brand {
+            height: 52px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--sidebar-border);
+            background: #080a10;
+            flex-shrink: 0;
+        }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            letter-spacing: -0.01em;
+        }
+        .brand-logo svg { color: #60a5fa; }
+
+        .collapse-btn {
+            background: transparent;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            transition: all 0.15s;
+        }
+        .collapse-btn:hover { background: var(--sidebar-hover); color: #fff; }
+
+        .nav-section { padding: 16px 0 8px; }
+        .nav-section + .nav-section { border-top: 1px solid rgba(255,255,255,0.04); }
+
+        .nav-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #555a6e;
+            font-weight: 700;
+            padding: 0 20px 10px;
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+            transition: opacity 0.2s;
+        }
+        .sidebar.collapsed .nav-label { opacity: 0; height: 0; padding: 0; overflow: hidden; }
+
+        .nav-item {
+            padding: 9px 16px 9px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            transition: background 0.15s;
+            border-left: 3px solid transparent;
+            position: relative;
+            margin: 1px 0;
+        }
+        .nav-item:hover { background: var(--sidebar-hover); }
+        .nav-item.active { background: var(--sidebar-active); border-left-color: var(--accent); }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 11px;
+            border-radius: var(--radius-sm);
+        }
+        .nav-text {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+        .nav-title { font-weight: 500; font-size: 13px; color: #e5e7eb; text-overflow: ellipsis; overflow: hidden; }
+        .nav-subtitle { font-size: 10px; color: #6b7280; }
+
+        .sidebar.collapsed .nav-text { display: none; }
+        .sidebar.collapsed .nav-item { padding: 11px 15px; justify-content: center; }
+
+        /* ============================================================
+           HEADER & TABS
+           ============================================================ */
+        .global-header {
+            background: var(--bg-panel);
+            border-bottom: 1px solid var(--border-default);
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+            flex-shrink: 0;
+        }
+
+        .project-header {
+            background: var(--bg-panel);
+            border-bottom: 1px solid var(--border-default);
+            height: 48px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+        }
+
+        .tabs { display: flex; gap: 0; height: 100%; align-items: stretch; }
+
+        .tab {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 13px;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: color 0.15s, border-color 0.15s;
+            position: relative;
+        }
+        .tab:hover { color: var(--text-primary); }
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            animation: contentIn 0.2s ease-out;
+        }
+        .tab-content.active { display: block; }
+
+        @keyframes contentIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================================
+           SEGMENTED CONTROLS
+           ============================================================ */
+        .segmented-control {
+            display: inline-flex;
+            background: var(--bg-inset);
+            padding: 3px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-default);
+            gap: 2px;
+        }
+        .segment {
+            padding: 6px 18px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+        .segment:hover { color: var(--text-primary); background: rgba(255,255,255,0.5); }
+        .segment.active {
+            background: #fff;
+            color: var(--text-primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            font-weight: 600;
+        }
+
+        .roadmap-subview { display: none; }
+        .roadmap-subview.active { display: block; animation: contentIn 0.15s ease-out; }
+
+        /* ============================================================
+           BADGES
+           ============================================================ */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 7px;
+            border-radius: var(--radius-sm);
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            line-height: 1.3;
+            border: 1px solid transparent;
+        }
+        .badge-blue { background: var(--accent-bg); color: var(--accent-hover); border-color: var(--accent-border); }
+        .badge-amber { background: var(--amber-bg); color: var(--amber); border-color: var(--amber-border); }
+        .badge-green { background: var(--green-bg); color: var(--green); border-color: var(--green-border); }
+        .badge-red { background: var(--red-bg); color: var(--red); border-color: var(--red-border); }
+        .badge-gray { background: var(--neutral-bg); color: var(--neutral); border-color: var(--neutral-border); }
+        .badge-outline { background: transparent; border-color: var(--border-strong); color: var(--text-tertiary); }
+
+        /* ============================================================
+           BUTTONS
+           ============================================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.15s;
+            white-space: nowrap;
+            font-family: var(--font-sans);
+        }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-secondary {
+            background: #fff;
+            border-color: var(--border-strong);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-secondary:hover:not(.btn-disabled) { background: var(--bg-subtle); border-color: #9ca3af; }
+        .btn-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+        .btn-sm { padding: 4px 10px; font-size: 11px; }
+
+        .select-sm {
+            padding: 5px 24px 5px 10px;
+            font-size: 11px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-strong);
+            background: #fff;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-family: var(--font-sans);
+            appearance: auto;
+        }
+
+        /* ============================================================
+           CARDS & PANELS
+           ============================================================ */
+        .card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .panel {
+            background: #fff;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .panel-header {
+            background: var(--bg-subtle);
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border-default);
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            margin-bottom: 12px;
+        }
+
+        .group-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .data-row {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            padding: 3px 0;
+        }
+        .data-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            width: 120px;
+            flex-shrink: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+        .data-value {
+            font-size: 13px;
+            color: var(--text-primary);
+            flex: 1;
+            line-height: 1.45;
+        }
+
+        /* ============================================================
+           PORTFOLIO
+           ============================================================ */
+        .portfolio-shell {
+            width: 100%;
+            max-width: 1480px;
+            margin: 0 auto;
+        }
+
+        .portfolio-board {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .portfolio-project {
+            position: relative;
+            display: grid;
+            /* Adjusted grid columns: smaller first column */
+            grid-template-columns: minmax(220px, 0.65fr) minmax(460px, 1.55fr) minmax(280px, 0.8fr);
+            min-height: 218px;
+            background: #fff;
+            border: 1px solid var(--border-default);
+            border-radius: 22px;
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        }
+        .portfolio-project:hover {
+            transform: translateY(-2px);
+            border-color: #c6ccd6;
+            box-shadow: var(--shadow-card-hover);
+        }
+        .portfolio-project::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--border-strong);
+        }
+        .portfolio-project.is-external::before { background: #64748b; }
+        .portfolio-project.is-aiw::before { background: var(--accent); }
+        .portfolio-project.is-monitored::before { background: #94a3b8; }
+        
+        /* New Active Run border state */
+        .portfolio-project.has-active-run::before { background: var(--green); }
+
+        .portfolio-main,
+        .portfolio-ops,
+        .portfolio-next {
+            min-width: 0;
+            padding: 22px 24px;
+        }
+
+        .portfolio-main {
+            padding-left: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centered content */
+            background: #ffffff;
+            border-right: 1px solid var(--border-subtle);
+        }
+        
+        .portfolio-project.is-external .portfolio-main,
+        .portfolio-project.is-monitored .portfolio-main {
+            background: #ffffff;
+        }
+
+        .portfolio-title-row {
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .portfolio-title {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .portfolio-ops {
+            border-right: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 13px;
+            background: #ffffff;
+        }
+        .portfolio-section-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-tertiary);
+            font-weight: 800;
+            margin-bottom: 9px;
+        }
+
+        .portfolio-snapshot-grid {
+            display: grid;
+            grid-template-columns: minmax(150px, 1.25fr) repeat(3, minmax(86px, 0.75fr));
+            gap: 10px;
+        }
+        .portfolio-stat {
+            min-width: 0;
+            padding: 12px 12px 11px;
+            border-radius: 15px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-subtle);
+        }
+        .portfolio-stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-tertiary);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+        
+        /* Active Run Green Styles */
+        .portfolio-stat.status-green {
+            background: var(--green-bg);
+            border-color: var(--green-border);
+        }
+        .portfolio-stat.status-green .portfolio-stat-label {
+            color: var(--green);
+        }
+        
+        .portfolio-stat-value {
+            color: var(--text-primary);
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1.42;
+            overflow-wrap: anywhere;
+        }
+        .portfolio-stat-value.attention { color: var(--amber); }
+        .portfolio-stat-value.muted { color: var(--text-secondary); font-weight: 500; }
+
+        .portfolio-roadmap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 12px 14px;
+            border-radius: 15px;
+            border: 1px solid var(--border-subtle);
+            background: #ffffff;
+        }
+        .portfolio-roadmap-value {
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.45;
+            text-align: right;
+        }
+
+        .portfolio-next {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #ffffff;
+        }
+        .portfolio-next-card {
+            flex: 1;
+            min-height: 88px;
+            padding: 15px 16px;
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-subtle);
+        }
+        
+        /* Active Run Card Green Styles */
+        .portfolio-next-card.status-green {
+            background: var(--green-bg);
+            border-color: var(--green-border);
+        }
+        .portfolio-next-card.status-green .portfolio-next-label {
+            color: var(--green);
+        }
+
+        .portfolio-next-label,
+        .portfolio-commit-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-tertiary);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .portfolio-next-text {
+            color: var(--text-primary);
+            font-size: 13.5px;
+            line-height: 1.58;
+            font-weight: 600;
+        }
+        .portfolio-commit {
+            padding: 0 2px;
+        }
+        .portfolio-commit-text {
+            color: var(--text-secondary);
+            font-size: 12.5px;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        .portfolio-action-row {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 2px;
+        }
+        .portfolio-action-row .btn {
+            min-width: 128px;
+        }
+
+        @media (max-width: 1300px) {
+            .portfolio-project {
+                grid-template-columns: minmax(220px, 0.7fr) minmax(440px, 1.3fr);
+            }
+            .portfolio-next {
+                grid-column: 1 / -1;
+                display: grid;
+                grid-template-columns: 1fr 1fr auto;
+                align-items: stretch;
+                border-top: 1px solid var(--border-subtle);
+            }
+            .portfolio-next-card {
+                min-height: auto;
+            }
+            .portfolio-action-row {
+                align-items: end;
+            }
+        }
+        @media (max-width: 900px) {
+            .portfolio-project {
+                grid-template-columns: 1fr;
+            }
+            .portfolio-main,
+            .portfolio-ops {
+                border-right: none;
+                border-bottom: 1px solid var(--border-subtle);
+            }
+            .portfolio-next {
+                grid-column: auto;
+                display: flex;
+                border-top: none;
+            }
+            .portfolio-snapshot-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (max-width: 620px) {
+            .portfolio-main,
+            .portfolio-ops,
+            .portfolio-next {
+                padding: 18px 18px 18px 22px;
+            }
+            .portfolio-title-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .portfolio-snapshot-grid {
+                grid-template-columns: 1fr;
+            }
+            .portfolio-roadmap {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .portfolio-roadmap-value {
+                text-align: left;
+            }
+            .portfolio-action-row .btn {
+                width: 100%;
+            }
+        }
+
+        /* ============================================================
+           TABLES
+           ============================================================ */
+        .table-wrap { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th {
+            padding: 10px 16px;
+            background: var(--bg-subtle);
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-default);
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+        }
+        td {
+            padding: 11px 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: middle;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr.clickable-row { cursor: pointer; transition: background 0.12s; }
+        tr.clickable-row:hover td { background: var(--accent-bg); }
+
+        /* ============================================================
+           RUN QUEUE LIST (HYBRID LAYOUT)
+           ============================================================ */
+        .queue-list { display: flex; flex-direction: column; gap: 2px; }
+
+        .queue-item {
+            display: grid;
+            grid-template-columns: 36px 1fr auto;
+            gap: 16px;
+            align-items: center;
+            padding: 14px 20px;
+            background: #fff;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .queue-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent-bg), var(--shadow-sm);
+        }
+
+        .queue-order {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--bg-inset);
+            border: 1px solid var(--border-default);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .queue-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+        .queue-title { font-size: 13px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .queue-meta { font-size: 11px; color: var(--text-tertiary); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+        .queue-meta .sep { color: var(--border-strong); }
+
+        .queue-statuses { display: flex; gap: 6px; align-items: center; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+
+        /* ============================================================
+           ROADMAP MAP (TREE)
+           ============================================================ */
+        .roadmap-tree { display: flex; flex-direction: column; gap: 20px; }
+
+        .objective-card {
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            background: #fff;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .objective-header {
+            background: linear-gradient(135deg, var(--bg-subtle) 0%, #f0f2f5 100%);
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-default);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .objective-header h3 { margin: 0; font-size: 14px; }
+
+        .phase-group { border-top: 1px solid var(--border-subtle); }
+        .phase-group:first-child { border-top: none; }
+
+        .phase-header {
+            padding: 12px 24px 12px 32px;
+            background: #fff;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .run-list {
+            padding: 12px 24px 16px 44px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .run-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 14px;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            background: var(--bg-subtle);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .run-row:hover { border-color: var(--accent); background: var(--accent-bg); }
+
+        .run-row-info { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+        .run-row-title { font-size: 12px; font-weight: 500; color: var(--text-primary); }
+        .run-row-badges { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+
+        .followup-nest {
+            margin-top: 4px;
+            margin-left: 20px;
+            padding-left: 14px;
+            border-left: 2px solid var(--border-strong);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .followup-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: background 0.12s;
+        }
+        .followup-row:hover { background: var(--bg-inset); color: var(--text-primary); }
+
+        /* ============================================================
+           HISTORY
+           ============================================================ */
+        .history-list { display: flex; flex-direction: column; gap: 0; }
+
+        .history-entry {
+            display: flex;
+            gap: 16px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .history-entry:last-child { border-bottom: none; }
+
+        .history-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border-strong);
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+        .history-dot.commit { background: var(--accent); }
+        .history-dot.event { background: var(--green); }
+        .history-dot.qa { background: var(--amber); }
+        .history-dot.decision { background: var(--accent); }
+        .history-dot.scan { background: var(--accent); }
+
+        .history-body { flex: 1; min-width: 0; }
+        .history-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+        .history-title { font-weight: 600; font-size: 13px; color: var(--text-primary); }
+        .history-summary { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.5; }
+        .history-meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .history-meta-item { font-size: 11px; color: var(--text-tertiary); }
+
+        /* ============================================================
+           DOCS 3-COLUMN
+           ============================================================ */
+        .docs-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr 240px;
+            gap: 0;
+            height: calc(100vh - 48px - 57px);
+            margin: -28px -32px;
+        }
+
+        .docs-nav {
+            background: var(--bg-panel);
+            border-right: 1px solid var(--border-default);
+            padding: 24px 0;
+            overflow-y: auto;
+        }
+        .docs-nav-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            letter-spacing: 0.05em;
+            padding: 0 20px 12px;
+        }
+        .docs-nav-item {
+            display: block;
+            padding: 7px 20px;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.12s;
+            border-left: 3px solid transparent;
+        }
+        .docs-nav-item:hover { background: var(--bg-subtle); color: var(--text-primary); }
+        .docs-nav-item.active {
+            background: var(--accent-bg);
+            color: var(--accent);
+            border-left-color: var(--accent);
+            font-weight: 600;
+        }
+
+        .docs-reader {
+            padding: 40px 48px;
+            overflow-y: auto;
+            background: var(--bg-panel);
+        }
+        .docs-reader h1 { font-size: 24px; margin-bottom: 20px; line-height: 1.3; font-weight: 800; border-bottom: 2px solid var(--accent); padding-bottom: 12px; display: inline-block;}
+        .docs-reader h2 { font-size: 17px; margin-top: 36px; margin-bottom: 12px; }
+        .docs-reader p { font-size: 13.5px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 14px;}
+        .docs-reader ul { margin-bottom: 16px; }
+        .docs-reader li { font-size: 13.5px; line-height: 1.7; color: var(--text-secondary); padding-bottom: 4px; }
+
+        .docs-meta {
+            background: var(--bg-subtle);
+            border-left: 1px solid var(--border-default);
+            padding: 24px 20px;
+            overflow-y: auto;
+        }
+        .docs-meta-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+        .docs-meta-field { margin-bottom: 12px; background: rgba(0,0,0,0.02); padding: 8px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); }
+        .docs-meta-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            letter-spacing: 0.04em;
+            margin-bottom: 4px;
+        }
+        .docs-meta-value { font-size: 12px; color: var(--text-primary); line-height: 1.5; }
+
+        /* ============================================================
+           GOVERNANCE
+           ============================================================ */
+        .gov-section { margin-bottom: 32px; }
+        .gov-section:last-child { margin-bottom: 0; }
+        .gov-section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        .gov-section-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        /* ============================================================
+           DRAWER
+           ============================================================ */
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 40;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            backdrop-filter: blur(2px);
+        }
+        .drawer-overlay.open { display: block; opacity: 1; }
+
+        .drawer {
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 560px;
+            background: #fff;
+            z-index: 50;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border-default);
+            box-shadow: var(--shadow-drawer);
+        }
+        .drawer.open { transform: translateX(0); }
+
+        .drawer-header {
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border-default);
+            background: var(--bg-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-shrink: 0;
+        }
+        .drawer-header-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+        .drawer-header-id { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); }
+        
+        .drawer-action-bar {
+            padding: 12px 28px;
+            border-bottom: 1px solid var(--border-default);
+            background: #fff;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .drawer-action-note {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .drawer-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+        .drawer-section {
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .drawer-section:last-child { border-bottom: none; }
+        .drawer-section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+        .status-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 10px 12px;
+            background: var(--bg-subtle);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+        }
+        .status-cell-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        /* ============================================================
+           CREATE / IMPORT
+           ============================================================ */
+        .form-group { margin-bottom: 16px; }
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 12px;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            background: var(--bg-subtle);
+            color: var(--text-tertiary);
+            font-family: var(--font-sans);
+            cursor: not-allowed;
+        }
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+        .form-checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .readonly-banner {
+            background: var(--amber-bg);
+            border: 1px solid var(--amber-border);
+            border-radius: var(--radius-md);
+            padding: 10px 16px;
+            font-size: 12px;
+            color: var(--amber);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ============================================================
+           UTILITY
+           ============================================================ */
+        .text-accent { color: var(--accent); }
+        .text-amber { color: var(--amber); }
+        .text-green { color: var(--green); }
+        .text-red { color: var(--red); }
+        .text-muted { color: var(--text-secondary); }
+        .text-tertiary { color: var(--text-tertiary); }
+        .font-mono { font-family: var(--font-mono); font-size: 0.88em; }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .text-xs { font-size: 11px; }
+        .text-sm { font-size: 12px; }
+
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .items-start { align-items: flex-start; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 8px; }
+        .gap-3 { gap: 12px; }
+        .gap-4 { gap: 16px; }
+        .gap-6 { gap: 24px; }
+        .w-full { width: 100%; }
+        .mt-1 { margin-top: 4px; }
+        .mt-2 { margin-top: 8px; }
+        .mt-4 { margin-top: 16px; }
+        .mb-2 { margin-bottom: 8px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+
+        svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* ============================================================
+           OVERVIEW GRID
+           ============================================================ */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .overview-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+        .overview-card-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--text-tertiary);
+            margin-bottom: 16px;
+        }
+        .overview-card-title.accent { color: var(--accent); }
+        .overview-card-title.amber { color: var(--amber); }
+
+        .overview-identity {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .overview-identity .data-row {
+            padding: 4px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .overview-identity .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .mini-label { font-size: 10px; text-transform: uppercase; color: var(--text-tertiary); font-weight: 600; letter-spacing: 0.03em; margin-bottom: 2px; }
+        .mini-value { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+        .mini-value.mono { font-family: var(--font-mono); font-size: 11.5px; }
+
+        /* Next Runs compact list */
+        .next-runs-list { display: flex; flex-direction: column; gap: 0; }
+        .next-run-item {
+            display: grid;
+            grid-template-columns: 24px 1fr auto;
+            gap: 12px;
+            align-items: start;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .next-run-item:last-child { border-bottom: none; }
+        .next-run-num {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            text-align: right;
+            padding-top: 2px;
+        }
+        .next-run-body { display: flex; flex-direction: column; gap: 3px; }
+        .next-run-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+        .next-run-context { font-size: 11px; color: var(--text-tertiary); }
+        .next-run-reason { font-size: 11px; color: var(--text-secondary); }
+
+        /* Attention items */
+        .attention-list { display: flex; flex-direction: column; gap: 8px; }
+        .attention-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-primary);
+            line-height: 1.45;
+        }
+        .attention-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--amber);
+            flex-shrink: 0;
+            margin-top: 5px;
+        }
+
+        /* Activity */
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-badge { flex-shrink: 0; }
+        .activity-body { flex: 1; min-width: 0; }
+        .activity-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+        .activity-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+        .activity-context { font-size: 11px; color: var(--text-tertiary); }
+
+        /* Admin */
+        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+         SIDEBAR
+         ============================================================ -->
+    <div class="sidebar" id="sidebar">
+        <div class="brand">
+            <div class="brand-logo">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <span>AIW Console</span>
+            </div>
+            <button class="collapse-btn" onclick="toggleSidebar()" title="Toggle Sidebar">
+                <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-label">Global</div>
+            <div class="nav-item active" data-target="view-portfolio" onclick="showView('view-portfolio')">
+                <div class="nav-icon" style="color:#60a5fa;"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg></div>
+                <div class="nav-text"><div class="nav-title">Project Portfolio</div></div>
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-label">Projects</div>
+            <div class="nav-item" data-target="view-aiw-core" onclick="showView('view-aiw-core')">
+                <div class="nav-icon" style="color:#60a5fa;">A</div>
+                <div class="nav-text">
+                    <div class="nav-title">AIW Core</div>
+                    <div class="nav-subtitle">Managed</div>
+                </div>
+            </div>
+            <div class="nav-item" data-target="view-jame-dual" onclick="showView('view-jame-dual')">
+                <div class="nav-icon" style="color:#9ca3af;">J</div>
+                <div class="nav-text">
+                    <div class="nav-title">JAME System Dual</div>
+                    <div class="nav-subtitle">Monitored</div>
+                </div>
+            </div>
+            <div class="nav-item" data-target="view-jame-parallel" onclick="showView('view-jame-parallel')">
+                <div class="nav-icon" style="color:#f59e0b;">P</div>
+                <div class="nav-text">
+                    <div class="nav-title">JAME Dual Parallel</div>
+                    <div class="nav-subtitle">External</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MAIN AREA
+         ============================================================ -->
+    <div class="main">
+
+        <!-- ========== VIEW: PORTFOLIO ========== -->
+        <div id="view-portfolio" class="view-container active">
+            <div class="global-header">
+                <h1>Project Portfolio</h1>
+                <div class="flex items-center gap-4">
+                    <span class="text-xs text-tertiary">Last scan: Just now</span>
+                    <button class="btn btn-secondary btn-disabled btn-sm">Scan Workspace</button>
+                </div>
+            </div>
+            <div class="content">
+                <div class="portfolio-shell">
+                    <div class="portfolio-board">
+
+                        <!-- JAME Parallel -->
+                        <section class="portfolio-project is-external">
+                            <div class="portfolio-main">
+                                <div class="portfolio-title-row">
+                                    <h2 class="portfolio-title">JAME System Dual Parallel</h2>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-ops">
+                                <div>
+                                    <div class="portfolio-section-label">Operational Snapshot</div>
+                                    <div class="portfolio-snapshot-grid">
+                                        <div class="portfolio-stat">
+                                            <div class="portfolio-stat-label">Active Run</div>
+                                            <div class="portfolio-stat-value">None</div>
+                                        </div>
+                                        <div class="portfolio-stat">
+                                            <div class="portfolio-stat-label">Queue</div>
+                                            <div class="portfolio-stat-value">4 queued</div>
+                                        </div>
+                                        <div class="portfolio-stat">
+                                            <div class="portfolio-stat-label">Blocked</div>
+                                            <div class="portfolio-stat-value attention">1 blocked</div>
+                                        </div>
+                                        <div class="portfolio-stat">
+                                            <div class="portfolio-stat-label">Human Review</div>
+                                            <div class="portfolio-stat-value attention">1 pending</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-roadmap">
+                                    <div class="portfolio-stat-label" style="margin-bottom:0;">Roadmap</div>
+                                    <div class="portfolio-roadmap-value">2 objectives &middot; 5 phases &middot; 15 pending runs</div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-next">
+                                <div class="portfolio-next-card">
+                                    <div class="portfolio-next-label">Next Run</div>
+                                    <div class="portfolio-next-text">Reconcile external edits before AIW-managed runs</div>
+                                </div>
+                                <div class="portfolio-commit">
+                                    <div class="portfolio-commit-label">Last Commit</div>
+                                    <div class="portfolio-commit-text">docs(human): seed structured project state sources</div>
+                                </div>
+                                <div class="portfolio-action-row">
+                                    <button class="btn btn-secondary" onclick="showView('view-jame-parallel')">Open Project</button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- AIW Core -->
+                        <section class="portfolio-project has-active-run">
+                            <div class="portfolio-main">
+                                <div class="portfolio-title-row">
+                                    <h2 class="portfolio-title">AIW Core</h2>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-ops">
+                                <div>
+                                    <div class="portfolio-section-label">Operational Snapshot</div>
+                                    <div class="portfolio-snapshot-grid">
+                                        <div class="portfolio-stat status-green">
+                                            <div class="portfolio-stat-label">Active Run</div>
+                                            <div class="portfolio-stat-value">1</div>
+                                        </div>
+                                        <div class="portfolio-stat">
+                                            <div class="portfolio-stat-label">Queue</div>
+                                            <div class="portfolio-stat-value">2 planned</div>
+                                        </div>
+                                        <div class="portfolio-stat">
+                                            <div class="portfolio-stat-label">Blocked</div>
+                                            <div class="portfolio-stat-value attention">1 quota</div>
+                                        </div>
+                                        <div class="portfolio-stat">
+                                            <div class="portfolio-stat-label">Human Review</div>
+                                            <div class="portfolio-stat-value">0 pending</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-roadmap">
+                                    <div class="portfolio-stat-label" style="margin-bottom:0;">Roadmap</div>
+                                    <div class="portfolio-roadmap-value">1 objective &middot; 2 active phases &middot; 2 pending runs</div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-next">
+                                <div class="portfolio-next-card status-green">
+                                    <div class="portfolio-next-label">Current Run</div>
+                                    <div class="portfolio-next-text">Resume R34R1R1R1 when Claude quota returns</div>
+                                </div>
+                                <div class="portfolio-commit">
+                                    <div class="portfolio-commit-label">Last Commit</div>
+                                    <div class="portfolio-commit-text">docs(ai-workflow): record paused handoff</div>
+                                </div>
+                                <div class="portfolio-action-row">
+                                    <button class="btn btn-primary" onclick="showView('view-aiw-core')">Open Project</button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- JAME Dual -->
+                        <section class="portfolio-project is-monitored">
+                            <div class="portfolio-main">
+                                <div class="portfolio-title-row">
+                                    <h2 class="portfolio-title">JAME System Dual</h2>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-ops">
+                                <div>
+                                    <div class="portfolio-section-label">Operational Snapshot</div>
+                                    <div class="portfolio-snapshot-grid">
+                                        <div class="portfolio-stat">
+                                            <div class="portfolio-stat-label">Active Run</div>
+                                            <div class="portfolio-stat-value">None</div>
+                                        </div>
+                                        <div class="portfolio-stat">
+                                            <div class="portfolio-stat-label">Queue</div>
+                                            <div class="portfolio-stat-value muted">Unknown</div>
+                                        </div>
+                                        <div class="portfolio-stat">
+                                            <div class="portfolio-stat-label">Blocked</div>
+                                            <div class="portfolio-stat-value muted">Unknown</div>
+                                        </div>
+                                        <div class="portfolio-stat">
+                                            <div class="portfolio-stat-label">Human Review</div>
+                                            <div class="portfolio-stat-value muted">Unknown</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-roadmap">
+                                    <div class="portfolio-stat-label" style="margin-bottom:0;">Roadmap</div>
+                                    <div class="portfolio-roadmap-value">1 objective &middot; 2 phases</div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-next">
+                                <div class="portfolio-next-card">
+                                    <div class="portfolio-next-label">Next Run</div>
+                                    <div class="portfolio-next-text">Refresh project console view and compare with parallel instance</div>
+                                </div>
+                                <div class="portfolio-commit">
+                                    <div class="portfolio-commit-label">Last Commit</div>
+                                    <div class="portfolio-commit-text">unknown / stale</div>
+                                </div>
+                                <div class="portfolio-action-row">
+                                    <button class="btn btn-secondary" onclick="showView('view-jame-dual')">Open Project</button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== STUBS ========== -->
+        <div id="view-aiw-core" class="view-container">
+            <div class="global-header"><h2>AIW Core</h2><button class="btn btn-secondary btn-sm" onclick="showView('view-portfolio')">← Portfolio</button></div>
+            <div class="content"><p>Project stub. Refer to JAME Dual Parallel for full UX.</p></div>
+        </div>
+        <div id="view-jame-dual" class="view-container">
+            <div class="global-header"><h2>JAME System Dual</h2><button class="btn btn-secondary btn-sm" onclick="showView('view-portfolio')">← Portfolio</button></div>
+            <div class="content"><p>Project stub. Refer to JAME Dual Parallel for full UX.</p></div>
+        </div>
+
+        <!-- ============================================================
+             VIEW: JAME DUAL PARALLEL (FULL UX)
+             ============================================================ -->
+        <div id="view-jame-parallel" class="view-container">
+
+            <!-- Project Header — minimal tabs only -->
+            <div class="project-header">
+                <div class="tabs">
+                    <div class="tab active" onclick="showTab('view-jame-parallel','overview',this)">Overview</div>
+                    <div class="tab" onclick="showTab('view-jame-parallel','roadmap',this)">Roadmap</div>
+                    <div class="tab" onclick="showTab('view-jame-parallel','history',this)">History</div>
+                    <div class="tab" onclick="showTab('view-jame-parallel','docs',this)">Docs</div>
+                    <div class="tab" onclick="showTab('view-jame-parallel','governance',this)">Governance</div>
+                    <div class="tab" onclick="showTab('view-jame-parallel','admin',this)">Admin</div>
+                </div>
+                <span class="badge badge-gray">READ-ONLY</span>
+            </div>
+
+            <div class="content">
+
+                <!-- ==========================================
+                     TAB: OVERVIEW
+                     ========================================== -->
+                <div id="view-jame-parallel-tab-overview" class="tab-content active">
+
+                    <!-- Row 1: Project Overview + Next Pending Runs -->
+                    <div class="overview-grid mb-6">
+
+                        <!-- Project Overview Card -->
+                        <div class="overview-card">
+                            <div class="overview-card-title">Project Overview</div>
+
+                            <div class="overview-identity">
+                                <div class="data-row"><div class="data-label">Project</div><div class="data-value font-bold">JAME System Dual Parallel</div></div>
+                                <div class="data-row"><div class="data-label">Mode</div><div class="data-value">External manual / Read-only</div></div>
+                                <div class="data-row"><div class="data-label">Source</div><div class="data-value mono">projects/JAME_System_Dual_parallel</div></div>
+                                <div class="data-row"><div class="data-label">Project ID</div><div class="data-value mono">jame_system_dual</div></div>
+                                <div class="data-row"><div class="data-label">Instance</div><div class="data-value mono">parallel</div></div>
+                                <div class="data-row"><div class="data-label">Branch</div><div class="data-value mono">jame-parallel-audit-001</div></div>
+                            </div>
+
+                            <div style="margin-top:20px;">
+                                <div class="group-label">Repo Status</div>
+                                <div style="font-size:13px; font-weight:500; color:var(--amber);">Dirty / external changes pending reconciliation</div>
+                            </div>
+
+                            <div style="margin-top:16px;">
+                                <div class="group-label">Roadmap Status</div>
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 20px;">
+                                    <div><span class="mini-label">Current objective</span><div class="mini-value">Project Console Foundation</div></div>
+                                    <div><span class="mini-label">Current phase</span><div class="mini-value">Data Contract</div></div>
+                                    <div><span class="mini-label">Current run</span><div class="mini-value text-tertiary">None</div></div>
+                                    <div><span class="mini-label">Run queue</span><div class="mini-value">4 queued · 1 blocked · 1 human review</div></div>
+                                </div>
+                                <div style="margin-top:6px;"><span class="mini-label">Roadmap</span><div class="mini-value">2 objectives · 5 phases · 15 pending runs</div></div>
+                            </div>
+
+                            <div style="margin-top:16px;">
+                                <div class="group-label">Review / Docs Status</div>
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 20px;">
+                                    <div><span class="mini-label">Human review</span><div class="mini-value text-amber">1 pending</div></div>
+                                    <div><span class="mini-label">AIW mode</span><div class="mini-value">External manual</div></div>
+                                    <div style="grid-column:span 2;"><span class="mini-label">Docs status</span><div class="mini-value text-amber">Project docs stale / refresh required</div></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:16px;">
+                                <div class="group-label">Last Commit</div>
+                                <div style="font-size:13px; font-weight:500; color:var(--accent);">docs(human): seed structured project state sources</div>
+                            </div>
+                        </div>
+
+                        <!-- Next Pending Runs + Needs Attention -->
+                        <div class="flex flex-col gap-6">
+                            <div class="overview-card" style="flex:1;">
+                                <div class="overview-card-title accent">Next Pending Runs</div>
+                                <div class="next-runs-list">
+                                    <div class="next-run-item">
+                                        <div class="next-run-num">1</div>
+                                        <div class="next-run-body">
+                                            <div class="next-run-title">Reconcile external changes into project state</div>
+                                            <div class="next-run-context">Console Foundation → Data Contract</div>
+                                            <div class="next-run-reason">Required before AIW-managed runs.</div>
+                                        </div>
+                                        <span class="badge badge-gray">QUEUED</span>
+                                    </div>
+                                    <div class="next-run-item">
+                                        <div class="next-run-num">2</div>
+                                        <div class="next-run-body">
+                                            <div class="next-run-title">Refresh project state views</div>
+                                            <div class="next-run-context">Console Foundation → Data Contract</div>
+                                            <div class="next-run-reason">Current project docs/state view is stale.</div>
+                                        </div>
+                                        <span class="badge badge-gray">PLANNED</span>
+                                    </div>
+                                    <div class="next-run-item">
+                                        <div class="next-run-num">3</div>
+                                        <div class="next-run-body">
+                                            <div class="next-run-title">Validate Project Console Contract</div>
+                                            <div class="next-run-context">Console Foundation → Data Contract</div>
+                                            <div class="next-run-reason">Required before durable dashboard implementation.</div>
+                                        </div>
+                                        <span class="badge badge-gray">PLANNED</span>
+                                    </div>
+                                    <div class="next-run-item">
+                                        <div class="next-run-num">4</div>
+                                        <div class="next-run-body">
+                                            <div class="next-run-title">Resume Web QA repair track</div>
+                                            <div class="next-run-context">Web Certification → Web QA Repair</div>
+                                        </div>
+                                        <div class="flex gap-2"><span class="badge badge-red">BLOCKED</span><span class="badge badge-amber">FOLLOWUPS</span></div>
+                                    </div>
+                                    <div class="next-run-item">
+                                        <div class="next-run-num">5</div>
+                                        <div class="next-run-body">
+                                            <div class="next-run-title">Decide AIW adoption</div>
+                                            <div class="next-run-context">Console Foundation → Governance</div>
+                                        </div>
+                                        <span class="badge badge-gray">PLANNED</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="overview-card" style="background:var(--amber-bg); border-color:var(--amber-border);">
+                                <div class="overview-card-title amber">Needs Attention</div>
+                                <div class="attention-list">
+                                    <div class="attention-item"><div class="attention-dot"></div>Repo has external changes pending reconciliation.</div>
+                                    <div class="attention-item"><div class="attention-dot"></div>Project docs/state views need refresh.</div>
+                                    <div class="attention-item"><div class="attention-dot"></div>1 human review pending.</div>
+                                    <div class="attention-item"><div class="attention-dot"></div>Web certification cannot be claimed yet.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Recent Meaningful Activity -->
+                    <div class="overview-card">
+                        <div class="overview-card-title">Recent Meaningful Activity</div>
+                        <div class="activity-item">
+                            <div class="activity-badge"><span class="badge badge-gray" style="min-width:56px; justify-content:center;">COMMIT</span></div>
+                            <div class="activity-body">
+                                <div class="activity-title">docs(human): seed structured project state sources</div>
+                                <div class="activity-desc">Creates initial project console state files and docs index for JAME.</div>
+                                <div class="activity-context">Console Foundation → Data Contract</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-badge"><span class="badge badge-gray" style="min-width:56px; justify-content:center;">COMMIT</span></div>
+                            <div class="activity-body">
+                                <div class="activity-title">fix(web): repair IconList badge clipping</div>
+                                <div class="activity-desc">Adjusts CSS margins for mobile views. Pending human review.</div>
+                                <div class="activity-context">Web Certification → Web QA Repair</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-badge"><span class="badge badge-green" style="min-width:56px; justify-content:center;">HUMAN_QA</span></div>
+                            <div class="activity-body">
+                                <div class="activity-title">qa(human): approve list/card visual check</div>
+                                <div class="activity-desc">Human QA approved visual behavior for list and card components.</div>
+                                <div class="activity-context">Web Certification → UX Polish</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-badge"><span class="badge badge-blue" style="min-width:56px; justify-content:center;">STATE_SCAN</span></div>
+                            <div class="activity-body">
+                                <div class="activity-title">audit(system): full manifest scan</div>
+                                <div class="activity-desc">Verified schema compliance for all project ledgers.</div>
+                                <div class="activity-context">General Maintenance</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     TAB: ROADMAP
+                     ========================================== -->
+                <div id="view-jame-parallel-tab-roadmap" class="tab-content">
+
+                    <!-- Segmented Control Row -->
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="segmented-control">
+                            <div class="segment active" onclick="showRoadmapSubview('roadmap-sub-queue',this)">Run Queue</div>
+                            <div class="segment" onclick="showRoadmapSubview('roadmap-sub-map',this)">Roadmap Map</div>
+                            <div class="segment" onclick="showRoadmapSubview('roadmap-sub-create',this)">Create / Import</div>
+                        </div>
+                    </div>
+
+                    <!-- SUBVIEW: Run Queue -->
+                    <div id="roadmap-sub-queue" class="roadmap-subview active">
+
+                        <!-- Filter bar -->
+                        <div class="flex items-center gap-4 mb-4" style="background:var(--bg-subtle); padding:10px 16px; border-radius:var(--radius-md); border:1px solid var(--border-default);">
+                            <div class="flex items-center gap-2">
+                                <span style="font-size:10px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.05em;">Filter</span>
+                                <select class="select-sm"><option>Current</option><option>Active</option><option>Pending</option><option>Blocked</option><option>Completed</option><option>All</option></select>
+                            </div>
+                            <div style="width:1px; height:20px; background:var(--border-default);"></div>
+                            <div class="flex items-center gap-2">
+                                <span style="font-size:10px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.05em;">Sort</span>
+                                <select class="select-sm"><option>Queue order</option><option>Objective</option><option>Phase</option><option>Status</option></select>
+                            </div>
+                            <div style="width:1px; height:20px; background:var(--border-default);"></div>
+                            <div class="flex items-center gap-2">
+                                <span style="font-size:10px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.05em;">View</span>
+                                <select class="select-sm"><option>Compact</option><option>Detailed</option></select>
+                            </div>
+                        </div>
+
+                        <!-- Queue Items -->
+                        <div class="queue-list">
+                            <div class="queue-item" onclick="openRunDrawer('reconcile')">
+                                <div class="queue-order">1</div>
+                                <div class="queue-info">
+                                    <div class="queue-title">Reconcile external changes into project state</div>
+                                    <div class="queue-meta">
+                                        <span>Console Foundation</span><span class="sep">·</span><span>Data Contract</span>
+                                    </div>
+                                </div>
+                                <div class="queue-statuses">
+                                    <span class="badge badge-gray">QUEUED</span>
+                                    <span class="badge badge-outline">AI: N/R</span>
+                                    <span class="badge badge-outline">HUM: N/R</span>
+                                </div>
+                            </div>
+
+                            <div class="queue-item" onclick="openRunDrawer('validate')">
+                                <div class="queue-order">2</div>
+                                <div class="queue-info">
+                                    <div class="queue-title">Validate Project Console Contract</div>
+                                    <div class="queue-meta">
+                                        <span>Console Foundation</span><span class="sep">·</span><span>Data Contract</span>
+                                    </div>
+                                </div>
+                                <div class="queue-statuses">
+                                    <span class="badge badge-gray">PLANNED</span>
+                                    <span class="badge badge-amber">AI: PEND</span>
+                                    <span class="badge badge-outline">HUM: N/R</span>
+                                </div>
+                            </div>
+
+                            <div class="queue-item" onclick="openRunDrawer('repair')" style="border-color:var(--red-border);">
+                                <div class="queue-order" style="background:var(--red-bg); border-color:var(--red-border); color:var(--red);">3</div>
+                                <div class="queue-info">
+                                    <div class="queue-title">Repair IconList badge clipping</div>
+                                    <div class="queue-meta">
+                                        <span>Web Certification</span><span class="sep">·</span><span>Web QA Repair</span><span class="sep">·</span><span class="text-amber font-semibold">3 follow-ups</span>
+                                    </div>
+                                </div>
+                                <div class="queue-statuses">
+                                    <span class="badge badge-red">BLOCKED</span>
+                                    <span class="badge badge-green">AI: OK</span>
+                                    <span class="badge badge-amber">HUM: PEND</span>
+                                </div>
+                            </div>
+
+                            <div class="queue-item" onclick="openRunDrawer('refresh')">
+                                <div class="queue-order">4</div>
+                                <div class="queue-info">
+                                    <div class="queue-title">Refresh project state views</div>
+                                    <div class="queue-meta">
+                                        <span>Console Foundation</span><span class="sep">·</span><span>Data Contract</span>
+                                    </div>
+                                </div>
+                                <div class="queue-statuses">
+                                    <span class="badge badge-gray">PLANNED</span>
+                                    <span class="badge badge-outline">AI: N/R</span>
+                                    <span class="badge badge-outline">HUM: N/R</span>
+                                </div>
+                            </div>
+
+                            <div class="queue-item" onclick="openRunDrawer('decide')">
+                                <div class="queue-order">5</div>
+                                <div class="queue-info">
+                                    <div class="queue-title">Decide AIW adoption</div>
+                                    <div class="queue-meta">
+                                        <span>Console Foundation</span><span class="sep">·</span><span>Governance</span>
+                                    </div>
+                                </div>
+                                <div class="queue-statuses">
+                                    <span class="badge badge-gray">PLANNED</span>
+                                    <span class="badge badge-outline">AI: N/R</span>
+                                    <span class="badge badge-amber">HUM: REQ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUBVIEW: Roadmap Map -->
+                    <div id="roadmap-sub-map" class="roadmap-subview">
+                        <div class="roadmap-tree">
+
+                            <!-- Objective 1 -->
+                            <div class="objective-card">
+                                <div class="objective-header">
+                                    <div>
+                                        <h3>Project Console Foundation</h3>
+                                        <div class="text-xs text-tertiary mt-1">3 phases · 10 runs · 4 pending</div>
+                                    </div>
+                                    <span class="badge badge-blue">IN PROGRESS</span>
+                                </div>
+
+                                <div class="phase-group">
+                                    <div class="phase-header">
+                                        <svg viewBox="0 0 24 24" style="width:14px;height:14px;color:var(--accent);"><path d="M9 18l6-6-6-6"/></svg>
+                                        Data Contract
+                                        <span class="text-xs text-tertiary font-medium" style="margin-left:auto;">4 runs · 3 pending</span>
+                                    </div>
+                                    <div class="run-list">
+                                        <div class="run-row" onclick="openRunDrawer('reconcile')">
+                                            <div class="run-row-info">
+                                                <span class="text-xs text-tertiary font-bold">#1</span>
+                                                <span class="run-row-title">Reconcile external changes into project state</span>
+                                            </div>
+                                            <div class="run-row-badges">
+                                                <span class="badge badge-gray">QUEUED</span>
+                                            </div>
+                                        </div>
+                                        <div class="run-row" onclick="openRunDrawer('refresh')">
+                                            <div class="run-row-info">
+                                                <span class="text-xs text-tertiary font-bold">#4</span>
+                                                <span class="run-row-title">Refresh project state views</span>
+                                            </div>
+                                            <div class="run-row-badges">
+                                                <span class="badge badge-gray">PLANNED</span>
+                                            </div>
+                                        </div>
+                                        <div class="run-row" onclick="openRunDrawer('validate')">
+                                            <div class="run-row-info">
+                                                <span class="text-xs text-tertiary font-bold">#2</span>
+                                                <span class="run-row-title">Validate Project Console Contract</span>
+                                            </div>
+                                            <div class="run-row-badges">
+                                                <span class="badge badge-gray">PLANNED</span>
+                                                <span class="badge badge-amber">AI PEND</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="phase-group">
+                                    <div class="phase-header">
+                                        <svg viewBox="0 0 24 24" style="width:14px;height:14px;color:var(--text-tertiary);"><path d="M9 18l6-6-6-6"/></svg>
+                                        Governance
+                                        <span class="text-xs text-tertiary font-medium" style="margin-left:auto;">1 run · 1 pending</span>
+                                    </div>
+                                    <div class="run-list">
+                                        <div class="run-row" onclick="openRunDrawer('decide')">
+                                            <div class="run-row-info">
+                                                <span class="text-xs text-tertiary font-bold">#5</span>
+                                                <span class="run-row-title">Decide AIW adoption</span>
+                                            </div>
+                                            <div class="run-row-badges">
+                                                <span class="badge badge-gray">PLANNED</span>
+                                                <span class="badge badge-amber">HUM REQ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="phase-group">
+                                    <div class="phase-header">
+                                        <svg viewBox="0 0 24 24" style="width:14px;height:14px;color:var(--text-tertiary);"><path d="M9 18l6-6-6-6"/></svg>
+                                        Durable Dashboard
+                                        <span class="text-xs text-tertiary font-medium" style="margin-left:auto;">5 runs · planned</span>
+                                    </div>
+                                    <div class="run-list">
+                                        <div class="run-row" style="opacity:0.6; cursor:default;">
+                                            <div class="run-row-info">
+                                                <span class="run-row-title text-muted">5 runs planned — blocked by Data Contract completion</span>
+                                            </div>
+                                            <div class="run-row-badges">
+                                                <span class="badge badge-outline">FUTURE</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Objective 2 -->
+                            <div class="objective-card">
+                                <div class="objective-header">
+                                    <div>
+                                        <h3>Web Certification</h3>
+                                        <div class="text-xs text-tertiary mt-1">2 phases · 5 runs · 1 blocked</div>
+                                    </div>
+                                    <span class="badge badge-amber">BLOCKED</span>
+                                </div>
+
+                                <div class="phase-group">
+                                    <div class="phase-header">
+                                        <svg viewBox="0 0 24 24" style="width:14px;height:14px;color:var(--amber);"><path d="M9 18l6-6-6-6"/></svg>
+                                        Web QA Repair
+                                        <span class="text-xs text-tertiary font-medium" style="margin-left:auto;">2 runs · 1 blocked</span>
+                                    </div>
+                                    <div class="run-list">
+                                        <div class="run-row" onclick="openRunDrawer('repair')" style="border-color:var(--red-border);">
+                                            <div class="run-row-info">
+                                                <span class="text-xs text-tertiary font-bold">#3</span>
+                                                <span class="run-row-title">Repair IconList badge clipping</span>
+                                            </div>
+                                            <div class="run-row-badges">
+                                                <span class="badge badge-red">BLOCKED</span>
+                                                <span class="badge badge-amber">FOLLOWUPS</span>
+                                            </div>
+                                        </div>
+                                        <!-- Nested follow-ups -->
+                                        <div class="followup-nest">
+                                            <div class="followup-row" onclick="openRunDrawer('followup1')">
+                                                <span>↳ Mobile viewport visual QA</span>
+                                                <span class="badge badge-gray">PLANNED</span>
+                                            </div>
+                                            <div class="followup-row" onclick="openRunDrawer('followup2')">
+                                                <span>↳ Re-run CSS repair validation</span>
+                                                <span class="badge badge-gray">PLANNED</span>
+                                            </div>
+                                            <div class="followup-row" onclick="openRunDrawer('followup3')">
+                                                <span>↳ Human review signoff</span>
+                                                <span class="badge badge-gray">PLANNED</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="phase-group">
+                                    <div class="phase-header">
+                                        <svg viewBox="0 0 24 24" style="width:14px;height:14px;color:var(--text-tertiary);"><path d="M9 18l6-6-6-6"/></svg>
+                                        UX Polish
+                                        <span class="text-xs text-tertiary font-medium" style="margin-left:auto;">3 runs · pending</span>
+                                    </div>
+                                    <div class="run-list">
+                                        <div class="run-row" style="opacity:0.6; cursor:default;">
+                                            <div class="run-row-info">
+                                                <span class="run-row-title text-muted">3 runs planned — blocked by Web QA Repair</span>
+                                            </div>
+                                            <div class="run-row-badges">
+                                                <span class="badge badge-outline">FUTURE</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUBVIEW: Create / Import -->
+                    <div id="roadmap-sub-create" class="roadmap-subview">
+
+                        <div class="readonly-banner mb-6">
+                            <svg viewBox="0 0 24 24" style="width:16px;height:16px;flex-shrink:0;"><path d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Editable in AIW-managed mode only. This project is currently in read-only / external manual mode.
+                        </div>
+
+                        <div class="overview-grid">
+                            <!-- Create Roadmap Item -->
+                            <div class="panel">
+                                <div class="panel-header">Create Roadmap Item</div>
+                                <div style="padding:20px;">
+                                    <div class="form-group">
+                                        <label class="form-label">Item Type</label>
+                                        <select class="form-select" disabled><option>Run</option><option>Objective</option><option>Phase</option></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Parent Objective</label>
+                                        <select class="form-select" disabled><option>Project Console Foundation</option><option>Web Certification</option></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Parent Phase</label>
+                                        <select class="form-select" disabled><option>Data Contract</option></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Run Title</label>
+                                        <input class="form-input" type="text" placeholder="Enter run title..." disabled>
+                                    </div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                                        <div class="form-group">
+                                            <label class="form-label">Queue Order</label>
+                                            <input class="form-input" type="number" placeholder="—" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Human Review Type</label>
+                                            <select class="form-select" disabled><option>None</option><option>Visual QA</option><option>Approval</option></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-checkbox-row"><input type="checkbox" disabled> Requires AI review</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-checkbox-row"><input type="checkbox" disabled> Requires human review</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Docs Update Policy</label>
+                                        <select class="form-select" disabled><option>Not Required</option><option>Required</option><option>Auto</option></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Dependencies</label>
+                                        <textarea class="form-textarea" style="min-height: 60px;" disabled placeholder="Add dependencies..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Guardrails</label>
+                                        <textarea class="form-textarea" disabled placeholder="Run-specific constraints..."></textarea>
+                                    </div>
+                                    <button class="btn btn-primary btn-disabled w-full">Create Roadmap Item</button>
+                                </div>
+                            </div>
+
+                            <!-- Bulk Roadmap JSON Import -->
+                            <div class="panel">
+                                <div class="panel-header">Bulk Roadmap JSON Import</div>
+                                <div style="padding:20px;">
+                                    <div class="form-group">
+                                        <label class="form-label">Paste JSON</label>
+                                        <textarea class="form-textarea" style="min-height:180px;" disabled>{
+  "objectives": [{
+    "title": "Web Certification",
+    "phases": [{
+      "title": "Web QA Repair",
+      "runs": [
+        {"title": "Fix badge overflow", "ai_review": true},
+        {"title": "Validate mobile layout", "human_review": "visual_qa"}
+      ]
+    }]
+  }]
+}</textarea>
+                                    </div>
+                                    <div class="flex gap-2 mb-4">
+                                        <button class="btn btn-secondary" style="flex:1;">Validate JSON</button>
+                                        <button class="btn btn-secondary" style="flex:1;">Preview Changes</button>
+                                    </div>
+
+                                    <div class="panel" style="border-color:var(--border-subtle);">
+                                        <div class="panel-header" style="font-size:12px; padding:10px 16px;">Preview</div>
+                                        <div style="padding:16px; font-size:12px; color:var(--text-secondary);">
+                                            <div>Will create:</div>
+                                            <ul style="margin-top:8px;">
+                                                <li><strong>1</strong> objective</li>
+                                                <li><strong>3</strong> phases</li>
+                                                <li><strong>30</strong> runs</li>
+                                                <li><strong>4</strong> dependencies</li>
+                                                <li><strong>2</strong> human review gates</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-primary btn-disabled w-full mt-4">Apply Import</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     TAB: HISTORY
+                     ========================================== -->
+                <div id="view-jame-parallel-tab-history" class="tab-content">
+
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h2>Project History</h2>
+                            <p style="font-size: 13px; margin-top: 4px; margin-bottom: 0;">History combines Git commits and verified project events. Project events must include a source file or evidence reference.</p>
+                        </div>
+                    </div>
+
+                    <!-- Filter bar -->
+                    <div class="flex gap-2 mb-4">
+                        <button class="btn btn-secondary btn-sm" style="background:var(--bg-subtle);">All</button>
+                        <button class="btn btn-secondary btn-sm">Commits</button>
+                        <button class="btn btn-secondary btn-sm">Human QA</button>
+                        <button class="btn btn-secondary btn-sm">AI Review</button>
+                        <button class="btn btn-secondary btn-sm">Project Events</button>
+                        <button class="btn btn-secondary btn-sm">State Scans</button>
+                        <button class="btn btn-secondary btn-sm">Decisions</button>
+                        <button class="btn btn-secondary btn-sm">Unverified</button>
+                    </div>
+
+                    <div class="panel">
+                        <div class="history-list" style="padding:0 24px;">
+
+                            <div class="history-entry">
+                                <div class="history-dot commit"></div>
+                                <div class="history-body">
+                                    <div class="history-head">
+                                        <span class="badge badge-gray" style="min-width:56px; justify-content:center;">COMMIT</span>
+                                        <span class="history-title">docs(human): seed structured project state sources</span>
+                                    </div>
+                                    <div class="history-summary">Creates initial project console state files and docs index for JAME.</div>
+                                    <div class="history-meta">
+                                        <span class="history-meta-item">Console Foundation → Data Contract</span>
+                                        <span style="color:var(--border-strong);">·</span>
+                                        <span class="history-meta-item">8 files changed · <a>View details</a></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="history-entry">
+                                <div class="history-dot commit"></div>
+                                <div class="history-body">
+                                    <div class="history-head">
+                                        <span class="badge badge-gray" style="min-width:56px; justify-content:center;">COMMIT</span>
+                                        <span class="history-title">fix(web): repair IconList badge clipping</span>
+                                    </div>
+                                    <div class="history-summary">Adjusts CSS margins for mobile views. Pending human review.</div>
+                                    <div class="history-meta">
+                                        <span class="history-meta-item">Web Certification → Web QA Repair</span>
+                                        <span style="color:var(--border-strong);">·</span>
+                                        <span class="history-meta-item">4 files changed · <a>View details</a></span>
+                                        <span style="color:var(--border-strong);">·</span>
+                                        <span class="history-meta-item">Run: <span class="font-mono">RUN-JAME-WEB-001</span></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="history-entry">
+                                <div class="history-dot event"></div>
+                                <div class="history-body">
+                                    <div class="history-head">
+                                        <span class="badge badge-green" style="min-width:56px; justify-content:center;">HUMAN_QA</span>
+                                        <span class="history-title">qa(human): approve list/card visual check</span>
+                                    </div>
+                                    <div class="history-summary">Human QA approved visual behavior for list and card components.</div>
+                                    <div class="history-meta">
+                                        <span class="history-meta-item">Web Certification → UX Polish</span>
+                                        <span style="color:var(--border-strong);">·</span>
+                                        <span class="history-meta-item">Source: <span class="font-mono">.aiw/ledgers/human_qa.jsonl</span></span>
+                                        <span style="color:var(--border-strong);">·</span>
+                                        <span class="history-meta-item">Run: <span class="font-mono">RUN-JAME-WEB-QA-001</span></span>
+                                    </div>
+                                    <div style="margin-top:8px; font-size:11px; color:var(--text-tertiary);">Evidence: Human QA note attached.</div>
+                                </div>
+                            </div>
+
+                            <div class="history-entry">
+                                <div class="history-dot scan"></div>
+                                <div class="history-body">
+                                    <div class="history-head">
+                                        <span class="badge badge-blue" style="min-width:56px; justify-content:center;">STATE_SCAN</span>
+                                        <span class="history-title">audit(system): full manifest scan</span>
+                                    </div>
+                                    <div class="history-summary">Verified schema compliance for all project ledgers.</div>
+                                    <div class="history-meta">
+                                        <span class="history-meta-item">General Maintenance</span>
+                                        <span style="color:var(--border-strong);">·</span>
+                                        <span class="history-meta-item">Source: <span class="font-mono">.aiw/state/events.jsonl</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="history-entry">
+                                <div class="history-dot decision"></div>
+                                <div class="history-body">
+                                    <div class="history-head">
+                                        <span class="badge badge-blue" style="min-width:56px; justify-content:center;">DECISION</span>
+                                        <span class="history-title">decision: defer Asset Dedup Layer</span>
+                                    </div>
+                                    <div class="history-summary">Decided to defer asset deduplication until core is stable post-certification.</div>
+                                    <div class="history-meta">
+                                        <span class="history-meta-item">Console Foundation → Governance</span>
+                                        <span style="color:var(--border-strong);">·</span>
+                                        <span class="history-meta-item">Source: <span class="font-mono">.aiw/guardrails/project_memory.jsonl</span></span>
+                                    </div>
+                                    <div style="margin-top:8px; font-size:11px; color:var(--text-tertiary);">Evidence: Project memory entry.</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    <!-- Unverified Section -->
+                    <div style="margin-top: 24px;">
+                        <div style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;" onclick="document.getElementById('unverified-history').classList.toggle('active')">
+                            <svg viewBox="0 0 24 24" style="width:16px;height:16px;color:var(--text-tertiary);"><path d="M9 18l6-6-6-6"/></svg>
+                            <h3 style="font-size: 13px; color: var(--text-secondary);">Unverified / Technical Activity</h3>
+                        </div>
+                        <div style="margin-left: 24px; margin-top: 4px; font-size: 11px; color: var(--text-tertiary);">Events without a source file or evidence reference are shown here and excluded from official history.</div>
+                        <div id="unverified-history" style="display: none; margin-top: 16px;" class="roadmap-subview">
+                            <div class="panel">
+                                <div class="history-list" style="padding:0 24px;">
+                                    <div class="history-entry">
+                                        <div class="history-dot qa"></div>
+                                        <div class="history-body">
+                                            <div class="history-head">
+                                                <span class="badge badge-amber" style="min-width:56px; justify-content:center;">UNVERIFIED</span>
+                                                <span class="history-title">report(ai): web component coverage map</span>
+                                            </div>
+                                            <div class="history-summary">Generated test coverage overlay for the mobile viewports.</div>
+                                            <div class="history-meta">
+                                                <span class="history-meta-item">Web Certification</span>
+                                                <span style="color:var(--border-strong);">·</span>
+                                                <span class="history-meta-item text-amber" style="font-weight:500;">⚠ No source file — not part of official history.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     TAB: DOCS
+                     ========================================== -->
+                <div id="view-jame-parallel-tab-docs" class="tab-content">
+                    <div class="docs-layout">
+
+                        <!-- Left Nav -->
+                        <div class="docs-nav">
+                            <div class="docs-nav-title">Documentation</div>
+                            <div class="docs-nav-item active" onclick="selectDoc(this)">Project Overview</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">Architecture</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">How to Run</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">How to Develop</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">Roadmap</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">Run Protocol</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">Review Policy</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">QA / Human Review</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">Certification Policy</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">Guardrails</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">Documentation Update Policy</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">Changelog</div>
+                            <div class="docs-nav-item" onclick="selectDoc(this)">Technical References</div>
+                        </div>
+
+                        <!-- Center: Reader -->
+                        <div class="docs-reader">
+                            <h1>Project Overview</h1>
+
+                            <p><strong>JAME System Dual</strong> is a dual-output educational content engine.</p>
+
+                            <p>It has two major outputs:</p>
+                            <ul>
+                                <li>Web lessons.</li>
+                                <li>Slide lessons.</li>
+                            </ul>
+
+                            <p>This project console tracks:</p>
+                            <ul>
+                                <li>roadmap state,</li>
+                                <li>run queue,</li>
+                                <li>documentation state,</li>
+                                <li>review policy,</li>
+                                <li>human QA state,</li>
+                                <li>AIW integration.</li>
+                            </ul>
+
+                            <h2>Architecture Summary</h2>
+                            <p>The "Parallel" instance isolates experimental changes to component boundaries before backporting to canonical state. Each component maintains contractual autonomy — changes do not cascade to the global renderer without an explicit architecture run.</p>
+
+                            <h2>Current Operating Model</h2>
+                            <p>This project operates in <strong>external manual</strong> mode. AIW reads but does not write to the repository. All commits originate from external tooling or human action. The project console provides a read-only view of the current state.</p>
+
+                            <h2>How AIW Interacts With This Repo</h2>
+                            <p>AIW reads from <code>.aiw/</code> directory structures seeded by human-driven commits. It cannot trigger runs, push commits, or modify state files. The roadmap and run queue are informational views derived from static JSONL sources.</p>
+
+                            <h2>What Not to Touch</h2>
+                            <p>Do not modify <code>JAME_Lessons</code> content without explicit approval. Schema and compiler changes require a dedicated architecture run — they must never be coupled with UI or styling tickets.</p>
+                        </div>
+
+                        <!-- Right: Meta -->
+                        <div class="docs-meta">
+                            <div class="docs-meta-title">Document Info</div>
+
+                            <div class="docs-meta-field">
+                                <div class="docs-meta-label">Path</div>
+                                <div class="docs-meta-value"><code style="font-size:10.5px;">docs/overview.md</code></div>
+                            </div>
+                            <div class="docs-meta-field">
+                                <div class="docs-meta-label">Audience</div>
+                                <div class="docs-meta-value">General / Onboarding</div>
+                            </div>
+                            <div class="docs-meta-field">
+                                <div class="docs-meta-label">Freshness</div>
+                                <div class="docs-meta-value text-green font-semibold">Up to date</div>
+                            </div>
+                            <div class="docs-meta-field">
+                                <div class="docs-meta-label">Related Objective</div>
+                                <div class="docs-meta-value">Project Console Foundation</div>
+                            </div>
+                            <div class="docs-meta-field">
+                                <div class="docs-meta-label">Related Phase</div>
+                                <div class="docs-meta-value">Data Contract</div>
+                            </div>
+                            <div class="docs-meta-field">
+                                <div class="docs-meta-label">Related Runs</div>
+                                <div class="docs-meta-value text-xs">Reconcile external changes, Validate Project Console Contract</div>
+                            </div>
+                            <div class="docs-meta-field">
+                                <div class="docs-meta-label">Last Update</div>
+                                <div class="docs-meta-value text-xs font-mono">docs(human): seed structured...</div>
+                            </div>
+                            <div class="docs-meta-field">
+                                <div class="docs-meta-label">Source</div>
+                                <div class="docs-meta-value">Git repository</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     TAB: GOVERNANCE
+                     ========================================== -->
+                <div id="view-jame-parallel-tab-governance" class="tab-content">
+
+                    <!-- 1. Review & Approval Policy -->
+                    <div class="gov-section">
+                        <div class="gov-section-title">1. Review & Approval Policy</div>
+                        <div class="gov-section-desc">
+                            A run can require different review levels. AI review approval is <strong>not</strong> human approval.
+                            Human review is required only when the run policy explicitly states so. Certification is separate from both review types.
+                        </div>
+                        <div class="panel">
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr><th>Dimension</th><th>Meaning</th><th>Possible States</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td class="font-semibold">Lifecycle Status</td><td>Current execution state of the run.</td><td><span class="badge badge-gray">PLANNED</span> <span class="badge badge-gray">QUEUED</span> <span class="badge badge-blue">ACTIVE</span> <span class="badge badge-green">COMPLETED</span> <span class="badge badge-red">BLOCKED</span></td></tr>
+                                        <tr><td class="font-semibold">AI Review</td><td>Automated checks passed. Not human approval.</td><td><span class="badge badge-outline">NOT_REQ</span> <span class="badge badge-amber">PENDING</span> <span class="badge badge-green">APPROVED</span> <span class="badge badge-red">FAILED</span></td></tr>
+                                        <tr><td class="font-semibold">Human Review</td><td>Visual/functional test by human. Required only if run policy says so.</td><td><span class="badge badge-outline">NOT_REQ</span> <span class="badge badge-amber">PENDING</span> <span class="badge badge-green">APPROVED</span> <span class="badge badge-red">REJECTED</span></td></tr>
+                                        <tr><td class="font-semibold">Delivery</td><td>Whether the run output has been committed / pushed.</td><td><span class="badge badge-outline">NOT_COMMITTED</span> <span class="badge badge-gray">PUSHED</span> <span class="badge badge-green">MERGED</span></td></tr>
+                                        <tr><td class="font-semibold">Resolution</td><td>Final outcome of the run.</td><td><span class="badge badge-outline">NONE</span> <span class="badge badge-green">DONE</span> <span class="badge badge-amber">FOLLOWUPS_PENDING</span> <span class="badge badge-red">ABANDONED</span></td></tr>
+                                        <tr><td class="font-semibold">Certification Impact</td><td>Whether this run affects project-level certification claims.</td><td><span class="badge badge-outline">NONE</span> <span class="badge badge-blue">CONTRIBUTES</span> <span class="badge badge-amber">BLOCKS</span></td></tr>
+                                        <tr><td class="font-semibold">Docs Update</td><td>Whether documentation refresh is required after this run.</td><td><span class="badge badge-outline">NOT_REQ</span> <span class="badge badge-amber">REQUIRED</span> <span class="badge badge-green">DONE</span></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Project Guardrails -->
+                    <div class="gov-section">
+                        <div class="gov-section-title">2. Project Guardrails</div>
+                        <div class="gov-section-desc">Constraints that apply to all runs across the entire project.</div>
+                        <div class="panel">
+                            <div class="table-wrap">
+                                <table>
+                                    <thead><tr><th>Rule</th><th>Enforcement</th><th>Applies To</th><th>Violation</th></tr></thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-semibold">Do not touch JAME_Lessons without explicit approval.</td>
+                                            <td><span class="badge badge-red">STRICT</span></td>
+                                            <td>All runs</td>
+                                            <td>Block + escalate to human</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-semibold">Do not change schema/compiler under simple UI tickets.</td>
+                                            <td><span class="badge badge-amber">WARN</span></td>
+                                            <td>UI / styling runs</td>
+                                            <td>Warn + require justification</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Run Guardrails -->
+                    <div class="gov-section">
+                        <div class="gov-section-title">3. Run Guardrails</div>
+                        <div class="gov-section-desc">
+                            Individual runs can add stricter constraints on top of project guardrails. These apply only to the specific run and its follow-ups.
+                        </div>
+                        <div class="panel" style="padding:20px;">
+                            <div style="background:var(--bg-subtle); padding:12px 16px; border-radius:var(--radius-md); border:1px solid var(--border-subtle); font-size:12px; color:var(--text-secondary);">
+                                <strong style="color:var(--text-primary);">Example:</strong> <em>"This run must not touch schema/compiler logic. Limit CSS repairs to mobile viewport media queries only."</em>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Project Memory -->
+                    <div class="gov-section">
+                        <div class="gov-section-title">4. Project Memory</div>
+                        <div class="gov-section-desc">
+                            Long-lived decisions that prevent regressions. These persist across runs and phases.
+                        </div>
+                        <div class="panel">
+                            <div class="table-wrap">
+                                <table>
+                                    <thead><tr><th>Decision</th><th>Status</th><th>Why It Matters</th><th>Source</th></tr></thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-semibold">Component autonomy remains unit of contract.</td>
+                                            <td><span class="badge badge-green">CURRENT</span></td>
+                                            <td>Do not merge component contracts into global renderer without explicit architecture run.</td>
+                                            <td class="font-mono text-xs text-tertiary">.aiw/guardrails/</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-semibold">Asset Dedup Layer</td>
+                                            <td><span class="badge badge-gray">DEFERRED</span></td>
+                                            <td>Adds complexity before core is stable. Revisit after certification.</td>
+                                            <td class="font-mono text-xs text-tertiary">.aiw/guardrails/</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Claims Not Allowed Yet -->
+                    <div class="gov-section">
+                        <div class="gov-section-title">5. Claims Not Allowed Yet</div>
+                        <div class="gov-section-desc">
+                            Claims the project must <strong>not</strong> make until explicit evidence exists. Making these claims prematurely violates project integrity.
+                        </div>
+                        <div class="panel" style="padding:20px;">
+                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                <div style="display:flex; align-items:center; gap:10px; font-size:13px; font-weight:500; color:var(--text-primary);">
+                                    <span style="color:var(--red);">✕</span> Web certified
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px; font-size:13px; font-weight:500; color:var(--text-primary);">
+                                    <span style="color:var(--red);">✕</span> Slide certified
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px; font-size:13px; font-weight:500; color:var(--text-primary);">
+                                    <span style="color:var(--red);">✕</span> Generator-safe globally
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px; font-size:13px; font-weight:500; color:var(--text-primary);">
+                                    <span style="color:var(--red);">✕</span> READY_FOR_HUMAN_CERTIFICATION
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px; font-size:13px; font-weight:500; color:var(--text-primary);">
+                                    <span style="color:var(--red);">✕</span> MathLive globally certified
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     TAB: ADMIN
+                     ========================================== -->
+                <div id="view-jame-parallel-tab-admin" class="tab-content">
+
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:24px; background:var(--amber-bg); border:1px solid var(--amber-border); border-radius:var(--radius-md); padding:10px 16px;">
+                        <svg viewBox="0 0 24 24" style="width:16px;height:16px;color:var(--amber);flex-shrink:0;"><path d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span style="font-size:12px; font-weight:600; color:var(--amber);">Technical audit view — not for daily workflow.</span>
+                    </div>
+
+                    <div class="admin-grid">
+
+                        <!-- State Sources -->
+                        <div class="panel">
+                            <div class="panel-header">1. State Sources</div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead><tr><th>Path</th><th>Type</th><th>Status</th></tr></thead>
+                                    <tbody>
+                                        <tr><td class="font-mono text-xs">.aiw/project.json</td><td>Manifest</td><td><span class="text-green font-semibold">OK</span></td></tr>
+                                        <tr><td class="font-mono text-xs">.aiw/state/events.jsonl</td><td>State</td><td><span class="text-green font-semibold">OK</span></td></tr>
+                                        <tr><td class="font-mono text-xs">.aiw/roadmap/work_items.jsonl</td><td>Roadmap</td><td><span class="text-green font-semibold">OK</span></td></tr>
+                                        <tr><td class="font-mono text-xs">.aiw/ledgers/change_ledger.jsonl</td><td>Ledger</td><td><span class="text-amber font-semibold">Stale</span></td></tr>
+                                        <tr><td class="font-mono text-xs">.aiw/docs/docs_index.json</td><td>Docs Index</td><td><span class="text-amber font-semibold">Stale</span></td></tr>
+                                        <tr><td class="font-mono text-xs">.aiw/views/project_console.json</td><td>Derived View</td><td><span class="text-amber font-semibold">Stale</span></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Repo Structure -->
+                        <div class="panel">
+                            <div class="panel-header">2. Repo Structure</div>
+                            <div style="padding:20px;">
+                                <pre style="font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); line-height:1.7; background:var(--bg-subtle); padding:16px; border-radius:var(--radius-md); border:1px solid var(--border-subtle); overflow-x:auto;">JAME_System_Dual_parallel/
+├── .aiw/
+│   ├── project.json
+│   ├── state/
+│   ├── roadmap/
+│   ├── ledgers/
+│   ├── guardrails/
+│   ├── docs/
+│   └── views/
+└── docs/
+    └── project-console/</pre>
+                            </div>
+                        </div>
+
+                        <!-- Manifest -->
+                        <div class="panel">
+                            <div class="panel-header">3. Manifest</div>
+                            <div style="padding:20px; display:flex; flex-direction:column; gap:8px;">
+                                <div class="data-row"><div class="data-label" style="width:80px;">ID</div><div class="data-value font-mono text-sm">jame_system_dual</div></div>
+                                <div class="data-row"><div class="data-label" style="width:80px;">Instance</div><div class="data-value font-mono text-sm">parallel</div></div>
+                                <div class="data-row"><div class="data-label" style="width:80px;">Mode</div><div class="data-value text-sm">external_manual</div></div>
+                                <div class="data-row"><div class="data-label" style="width:80px;">Branch</div><div class="data-value font-mono text-sm">audit-001</div></div>
+                                <div class="data-row"><div class="data-label" style="width:80px;">Schema</div><div class="data-value font-mono text-sm">v3.0</div></div>
+                            </div>
+                        </div>
+
+                        <!-- Validation -->
+                        <div class="panel">
+                            <div class="panel-header">4. Validation</div>
+                            <div style="padding:20px; display:flex; flex-direction:column; gap:10px;">
+                                <div style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; color:var(--green);">
+                                    <span>✓</span> Manifest valid
+                                </div>
+                                <div style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; color:var(--green);">
+                                    <span>✓</span> Run keys unique
+                                </div>
+                                <div style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; color:var(--green);">
+                                    <span>✓</span> Queue sorted
+                                </div>
+                                <div style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; color:var(--amber);">
+                                    <span>⚠</span> View index out of date with ledgers
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         DRAWER OVERLAY
+         ============================================================ -->
+    <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+    <div class="drawer" id="run-drawer">
+        <div class="drawer-header">
+            <div>
+                <div class="drawer-header-title" id="drawer-title">Repair IconList badge clipping</div>
+                <div class="drawer-header-id" id="drawer-id">RUN-JAME-WEB-001</div>
+                <div id="drawer-context-badge" style="margin-top:8px;">
+                    <span class="badge badge-red">BLOCKED</span>
+                    <span style="font-size:11px; color:var(--text-secondary); margin-left:4px;">Parent run · 3 follow-ups pending</span>
+                </div>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="closeDrawer()" style="flex-shrink:0;">
+                <svg viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                Close
+            </button>
+        </div>
+        
+        <!-- ACTION BAR REMOVED -->
+
+        <div class="drawer-body" id="drawer-body-content">
+            <!-- Dynamic content goes here -->
+        </div>
+    </div>
+
+    <!-- ============================================================
+         JAVASCRIPT
+         ============================================================ -->
+    <script>
+        // Sidebar toggle
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
+
+        // View switching (Portfolio vs Project)
+        function showView(viewId) {
+            document.querySelectorAll('.view-container').forEach(v => v.classList.remove('active'));
+            const target = document.getElementById(viewId);
+            if (!target) return;
+            target.classList.add('active');
+
+            document.querySelectorAll('.sidebar .nav-item').forEach(n => n.classList.remove('active'));
+            const nav = document.querySelector(`.sidebar .nav-item[data-target="${viewId}"]`);
+            if (nav) nav.classList.add('active');
+
+            const content = target.querySelector('.content');
+            if (content) content.scrollTop = 0;
+        }
+
+        // Tab switching within a project view
+        function showTab(viewId, tabName, el) {
+            const view = document.getElementById(viewId);
+            if (!view) return;
+
+            view.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            const tab = view.querySelector(`#${viewId}-tab-${tabName}`);
+            if (tab) tab.classList.add('active');
+
+            view.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            if (el) el.classList.add('active');
+
+            const content = view.querySelector('.content');
+            if (content) content.scrollTop = 0;
+        }
+
+        // Roadmap subview switching
+        function showRoadmapSubview(subviewId, el) {
+            document.querySelectorAll('.roadmap-subview').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(subviewId);
+            if (target) target.classList.add('active');
+
+            document.querySelectorAll('.segmented-control .segment').forEach(s => s.classList.remove('active'));
+            if (el) el.classList.add('active');
+        }
+
+        // Run detail data
+        const runData = {
+            repair: {
+                title: 'Repair IconList badge clipping',
+                id: 'RUN-JAME-WEB-001',
+                context: '<span class="badge badge-red">BLOCKED</span> <span style="font-size:11px; color:var(--text-secondary); margin-left:4px;">Parent run · 3 follow-ups pending</span>',
+                objective: 'Web Certification',
+                phase: 'Web QA Repair',
+                order: '#3',
+                lifecycle: '<span class="badge badge-red">BLOCKED</span>',
+                ai: '<span class="badge badge-green">APPROVED</span>',
+                human: '<span class="badge badge-amber">PENDING</span>',
+                delivery: '<span class="badge badge-gray">PUSHED</span>',
+                resolution: '<span class="badge badge-amber">FOLLOWUPS</span>',
+                docs: '<span class="badge badge-outline">NOT_REQ</span>',
+                summary: 'Adjust CSS for mobile views to prevent badges from overflowing their container.',
+                blocker: 'CSS fix breaks layout on tablet view. Follow-ups required before resolution.',
+                nextAction: 'Complete follow-up runs.',
+                followups: ['Mobile viewport visual QA', 'Re-run CSS repair validation', 'Human review signoff'],
+                evidence: 'fix(web): repair IconList badge clipping',
+                files: '4 files changed',
+                guardrailProject: 'Do not touch JAME_Lessons. No schema changes under UI tickets.',
+                guardrailRun: 'Limit CSS repairs to mobile viewport media queries. Do not modify global layout engine.',
+                canEdit: true,
+                canDeleteDraft: false,
+                hasEvidence: true,
+                hasReviewHistory: true,
+                deleteReason: 'This run has commits/review history and cannot be deleted.',
+                recommendedLifecycleAction: 'Supersede or archive after follow-ups are resolved.',
+                parentRun: null,
+                siblingFollowups: []
+            },
+            reconcile: {
+                title: 'Reconcile external changes into project state',
+                id: 'RUN-JAME-DC-001',
+                context: '<span class="badge badge-gray">QUEUED</span>',
+                objective: 'Console Foundation',
+                phase: 'Data Contract',
+                order: '#1',
+                lifecycle: '<span class="badge badge-gray">QUEUED</span>',
+                ai: '<span class="badge badge-outline">NOT_REQ</span>',
+                human: '<span class="badge badge-outline">NOT_REQ</span>',
+                delivery: '<span class="badge badge-outline">NOT_COMMITTED</span>',
+                resolution: '<span class="badge badge-outline">NONE</span>',
+                docs: '<span class="badge badge-outline">NOT_REQ</span>',
+                summary: 'Import and reconcile external changes committed outside AIW into the canonical project state.',
+                blocker: null,
+                nextAction: 'Begin reconciliation when ready.',
+                followups: [],
+                evidence: null,
+                files: null,
+                guardrailProject: 'Do not touch JAME_Lessons. No schema changes under UI tickets.',
+                guardrailRun: null,
+                canEdit: true,
+                canDeleteDraft: true,
+                hasEvidence: false,
+                hasReviewHistory: false,
+                deleteReason: 'This run has no evidence yet and could be deleted in editable mode.',
+                recommendedLifecycleAction: 'Edit or delete draft in AIW-managed mode.',
+                parentRun: null,
+                siblingFollowups: []
+            },
+            validate: {
+                title: 'Validate Project Console Contract',
+                id: 'RUN-JAME-DC-002',
+                context: '<span class="badge badge-gray">PLANNED</span>',
+                objective: 'Console Foundation',
+                phase: 'Data Contract',
+                order: '#2',
+                lifecycle: '<span class="badge badge-gray">PLANNED</span>',
+                ai: '<span class="badge badge-amber">PENDING</span>',
+                human: '<span class="badge badge-outline">NOT_REQ</span>',
+                delivery: '<span class="badge badge-outline">NOT_COMMITTED</span>',
+                resolution: '<span class="badge badge-outline">NONE</span>',
+                docs: '<span class="badge badge-amber">REQUIRED</span>',
+                summary: 'Validate that the project console data contract meets schema requirements before durable dashboard implementation.',
+                blocker: null,
+                nextAction: 'Complete after reconciliation.',
+                followups: [],
+                evidence: null,
+                files: null,
+                guardrailProject: 'Do not touch JAME_Lessons. No schema changes under UI tickets.',
+                guardrailRun: null,
+                canEdit: true,
+                canDeleteDraft: true,
+                hasEvidence: false,
+                hasReviewHistory: false,
+                deleteReason: 'This run has no evidence yet and could be deleted in editable mode.',
+                recommendedLifecycleAction: 'Edit or delete draft in AIW-managed mode.',
+                parentRun: null,
+                siblingFollowups: []
+            },
+            refresh: {
+                title: 'Refresh project state views',
+                id: 'RUN-JAME-DC-003',
+                context: '<span class="badge badge-gray">PLANNED</span>',
+                objective: 'Console Foundation',
+                phase: 'Data Contract',
+                order: '#4',
+                lifecycle: '<span class="badge badge-gray">PLANNED</span>',
+                ai: '<span class="badge badge-outline">NOT_REQ</span>',
+                human: '<span class="badge badge-outline">NOT_REQ</span>',
+                delivery: '<span class="badge badge-outline">NOT_COMMITTED</span>',
+                resolution: '<span class="badge badge-outline">NONE</span>',
+                docs: '<span class="badge badge-amber">REQUIRED</span>',
+                summary: 'Regenerate derived views and docs index from current state files.',
+                blocker: null,
+                nextAction: 'Begin after state reconciliation.',
+                followups: [],
+                evidence: null,
+                files: null,
+                guardrailProject: 'Do not touch JAME_Lessons. No schema changes under UI tickets.',
+                guardrailRun: null,
+                canEdit: true,
+                canDeleteDraft: true,
+                hasEvidence: false,
+                hasReviewHistory: false,
+                deleteReason: 'This run has no evidence yet and could be deleted in editable mode.',
+                recommendedLifecycleAction: 'Edit or delete draft in AIW-managed mode.',
+                parentRun: null,
+                siblingFollowups: []
+            },
+            decide: {
+                title: 'Decide AIW adoption',
+                id: 'RUN-JAME-GOV-001',
+                context: '<span class="badge badge-gray">PLANNED</span> <span style="font-size:11px; color:var(--text-secondary); margin-left:4px;">Requires human review</span>',
+                objective: 'Console Foundation',
+                phase: 'Governance',
+                order: '#5',
+                lifecycle: '<span class="badge badge-gray">PLANNED</span>',
+                ai: '<span class="badge badge-outline">NOT_REQ</span>',
+                human: '<span class="badge badge-amber">REQUIRED</span>',
+                delivery: '<span class="badge badge-outline">NOT_COMMITTED</span>',
+                resolution: '<span class="badge badge-outline">NONE</span>',
+                docs: '<span class="badge badge-amber">REQUIRED</span>',
+                summary: 'Decide whether to transition this project from external manual mode to AIW-managed mode.',
+                blocker: null,
+                nextAction: 'Schedule human review session.',
+                followups: [],
+                evidence: null,
+                files: null,
+                guardrailProject: 'Do not touch JAME_Lessons. No schema changes under UI tickets.',
+                guardrailRun: 'Decision must be documented in project memory with rationale.',
+                canEdit: true,
+                canDeleteDraft: true,
+                hasEvidence: false,
+                hasReviewHistory: false,
+                deleteReason: 'This run has no evidence yet and could be deleted in editable mode.',
+                recommendedLifecycleAction: 'Edit or delete draft in AIW-managed mode.',
+                parentRun: null,
+                siblingFollowups: []
+            },
+            followup1: {
+                title: 'Mobile viewport visual QA',
+                id: 'RUN-JAME-WEB-001-F1',
+                context: '<span class="badge badge-gray">PLANNED</span> <span style="font-size:11px; color:var(--text-secondary); margin-left:4px;">Follow-up</span>',
+                objective: 'Web Certification',
+                phase: 'Web QA Repair',
+                order: '—',
+                lifecycle: '<span class="badge badge-gray">PLANNED</span>',
+                ai: '<span class="badge badge-outline">NOT_REQ</span>',
+                human: '<span class="badge badge-amber">REQUIRED</span>',
+                delivery: '<span class="badge badge-outline">NOT_COMMITTED</span>',
+                resolution: '<span class="badge badge-outline">NONE</span>',
+                docs: '<span class="badge badge-outline">NOT_REQ</span>',
+                summary: 'Perform visual QA on mobile viewport after CSS repair. This follow-up blocks resolution of the parent run.',
+                blocker: null,
+                nextAction: 'Awaiting parent run completion.',
+                followups: [],
+                evidence: null,
+                files: null,
+                guardrailProject: 'Do not touch JAME_Lessons.',
+                guardrailRun: 'Visual QA only — do not make code changes.',
+                canEdit: true,
+                canDeleteDraft: true,
+                hasEvidence: false,
+                hasReviewHistory: false,
+                deleteReason: 'This follow-up has no evidence yet and could be deleted in editable mode, but parent resolution would be updated.',
+                recommendedLifecycleAction: 'Edit/delete only if parent follow-up plan changes.',
+                parentRun: 'Repair IconList badge clipping',
+                siblingFollowups: ['Re-run CSS repair validation', 'Human review signoff']
+            },
+            followup2: {
+                title: 'Re-run CSS repair validation',
+                id: 'RUN-JAME-WEB-001-F2',
+                context: '<span class="badge badge-gray">PLANNED</span> <span style="font-size:11px; color:var(--text-secondary); margin-left:4px;">Follow-up</span>',
+                objective: 'Web Certification',
+                phase: 'Web QA Repair',
+                order: '—',
+                lifecycle: '<span class="badge badge-gray">PLANNED</span>',
+                ai: '<span class="badge badge-amber">PENDING</span>',
+                human: '<span class="badge badge-outline">NOT_REQ</span>',
+                delivery: '<span class="badge badge-outline">NOT_COMMITTED</span>',
+                resolution: '<span class="badge badge-outline">NONE</span>',
+                docs: '<span class="badge badge-outline">NOT_REQ</span>',
+                summary: 'Re-validate that the CSS repair holds after mobile viewport changes.',
+                blocker: null,
+                nextAction: 'Awaiting mobile QA completion.',
+                followups: [],
+                evidence: null,
+                files: null,
+                guardrailProject: 'Do not touch JAME_Lessons.',
+                guardrailRun: null,
+                canEdit: true,
+                canDeleteDraft: true,
+                hasEvidence: false,
+                hasReviewHistory: false,
+                deleteReason: 'This follow-up has no evidence yet and could be deleted in editable mode, but parent resolution would be updated.',
+                recommendedLifecycleAction: 'Edit/delete only if parent follow-up plan changes.',
+                parentRun: 'Repair IconList badge clipping',
+                siblingFollowups: ['Mobile viewport visual QA', 'Human review signoff']
+            },
+            followup3: {
+                title: 'Human review signoff',
+                id: 'RUN-JAME-WEB-001-F3',
+                context: '<span class="badge badge-gray">PLANNED</span> <span style="font-size:11px; color:var(--text-secondary); margin-left:4px;">Follow-up</span>',
+                objective: 'Web Certification',
+                phase: 'Web QA Repair',
+                order: '—',
+                lifecycle: '<span class="badge badge-gray">PLANNED</span>',
+                ai: '<span class="badge badge-outline">NOT_REQ</span>',
+                human: '<span class="badge badge-amber">REQUIRED</span>',
+                delivery: '<span class="badge badge-outline">NOT_COMMITTED</span>',
+                resolution: '<span class="badge badge-outline">NONE</span>',
+                docs: '<span class="badge badge-outline">NOT_REQ</span>',
+                summary: 'Final human signoff on the badge clipping repair and all follow-up verifications.',
+                blocker: null,
+                nextAction: 'Awaiting CSS validation completion.',
+                followups: [],
+                evidence: null,
+                files: null,
+                guardrailProject: 'Do not touch JAME_Lessons.',
+                guardrailRun: null,
+                canEdit: true,
+                canDeleteDraft: true,
+                hasEvidence: false,
+                hasReviewHistory: false,
+                deleteReason: 'This follow-up has no evidence yet and could be deleted in editable mode, but parent resolution would be updated.',
+                recommendedLifecycleAction: 'Edit/delete only if parent follow-up plan changes.',
+                parentRun: 'Repair IconList badge clipping',
+                siblingFollowups: ['Mobile viewport visual QA', 'Re-run CSS repair validation']
+            }
+        };
+
+        function openRunDrawer(runKey) {
+            const d = runData[runKey] || runData.repair;
+
+            document.getElementById('drawer-title').textContent = d.title;
+            document.getElementById('drawer-id').textContent = d.id;
+            document.getElementById('drawer-context-badge').innerHTML = d.context;
+            
+            const editReason = 'Read-only project. Editing available only in AIW-managed mode.';
+            const deleteBtnStyle = d.canDeleteDraft ? 'border-color:var(--red-border); color:var(--red);' : '';
+            
+            const body = document.getElementById('drawer-body-content');
+            body.innerHTML = `
+                <div class="drawer-section" style="background:var(--bg-subtle); padding-bottom: 24px;">
+                    <div class="drawer-section-title">Run Actions</div>
+                    <div style="display:flex; flex-direction:column; gap:16px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:600; color:var(--text-tertiary); margin-bottom:8px; text-transform:uppercase;">Primary actions</div>
+                            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                                <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:140px;">
+                                    <button class="btn btn-secondary btn-sm btn-disabled w-full">Edit Run</button>
+                                    <div style="font-size:10.5px; color:var(--text-tertiary); line-height:1.4;">${editReason}</div>
+                                </div>
+                                <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:140px;">
+                                    <button class="btn btn-secondary btn-sm btn-disabled w-full">Duplicate</button>
+                                    <div style="font-size:10.5px; color:var(--text-tertiary); line-height:1.4;">Read-only project.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="height:1px; background:var(--border-default);"></div>
+                        <div>
+                            <div style="font-size:11px; font-weight:600; color:var(--text-tertiary); margin-bottom:8px; text-transform:uppercase;">Lifecycle actions</div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                                <div style="display:flex; flex-direction:column; gap:4px;">
+                                    <button class="btn btn-secondary btn-sm btn-disabled w-full">Supersede</button>
+                                </div>
+                                <div style="display:flex; flex-direction:column; gap:4px;">
+                                    <button class="btn btn-secondary btn-sm btn-disabled w-full">Archive</button>
+                                </div>
+                                <div style="display:flex; flex-direction:column; gap:4px;">
+                                    <button class="btn btn-secondary btn-sm btn-disabled w-full">Cancel</button>
+                                </div>
+                                <div style="display:flex; flex-direction:column; gap:4px;">
+                                    <button class="btn btn-secondary btn-sm btn-disabled w-full" style="${deleteBtnStyle}">Delete Draft</button>
+                                </div>
+                            </div>
+                            <div style="font-size:10.5px; color:var(--text-tertiary); line-height:1.4; margin-top:8px;"><strong>Delete Draft:</strong> ${d.deleteReason}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Action Eligibility</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 20px;">
+                        <div class="data-row" style="padding:0;"><div class="data-label" style="width:110px;">Project mode</div><div class="data-value">Read-only</div></div>
+                        <div class="data-row" style="padding:0;"><div class="data-label" style="width:110px;">Run editability</div><div class="data-value">Disabled</div></div>
+                        <div class="data-row" style="padding:0; grid-column:span 2;"><div class="data-label" style="width:110px;">Evidence status</div><div class="data-value">${d.hasEvidence ? 'Has commits/source files' : 'None'}</div></div>
+                        <div class="data-row" style="padding:0; grid-column:span 2;"><div class="data-label" style="width:110px;">Review history</div><div class="data-value">${d.hasReviewHistory ? 'Has review records' : 'None'}</div></div>
+                        <div class="data-row" style="padding:0; grid-column:span 2; align-items:start;"><div class="data-label" style="width:110px; margin-top:2px;">Delete eligibility</div><div class="data-value">${d.canDeleteDraft ? '<span style="color:var(--green); font-weight:500;">Eligible draft</span>' : '<span style="color:var(--red); font-weight:500;">Not eligible: has evidence/history</span>'}</div></div>
+                        <div class="data-row" style="padding:0; grid-column:span 2; align-items:start;"><div class="data-label" style="width:110px; margin-top:2px;">Recommended</div><div class="data-value" style="color:var(--accent); font-weight:500;">${d.recommendedLifecycleAction}</div></div>
+                    </div>
+                </div>
+
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Run Context</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 20px;">
+                        <div><span class="mini-label">Objective</span><div class="mini-value">${d.objective}</div></div>
+                        <div><span class="mini-label">Phase</span><div class="mini-value">${d.phase}</div></div>
+                        <div><span class="mini-label">Queue Order</span><div class="mini-value">${d.order}</div></div>
+                        <div><span class="mini-label">Source</span><div class="mini-value">Run Queue</div></div>
+                    </div>
+                </div>
+
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Status</div>
+                    <div class="status-grid">
+                        <div class="status-cell"><div class="status-cell-label">Lifecycle</div>${d.lifecycle}</div>
+                        <div class="status-cell"><div class="status-cell-label">AI Review</div>${d.ai}</div>
+                        <div class="status-cell"><div class="status-cell-label">Human Review</div>${d.human}</div>
+                        <div class="status-cell"><div class="status-cell-label">Delivery</div>${d.delivery}</div>
+                        <div class="status-cell"><div class="status-cell-label">Resolution</div>${d.resolution}</div>
+                        <div class="status-cell"><div class="status-cell-label">Docs Update</div>${d.docs}</div>
+                    </div>
+                </div>
+
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Summary</div>
+                    <p style="font-size:13px; margin-bottom:10px; color:var(--text-primary);">${d.summary}</p>
+                    ${d.blocker ? `<div style="background:var(--amber-bg); border:1px solid var(--amber-border); border-radius:var(--radius-md); padding:10px 14px; font-size:12px; color:var(--amber); margin-bottom:10px;"><strong>Blocker:</strong> ${d.blocker}</div>` : ''}
+                    <div style="font-size:12px; font-weight:600; color:var(--accent);">Next action: ${d.nextAction}</div>
+                </div>
+                
+                ${d.parentRun ? `
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Parent Run</div>
+                    <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:var(--bg-subtle); border:1px solid var(--border-default); border-radius:var(--radius-md);">
+                        <span style="font-size:12px; font-weight:500;">${d.parentRun}</span>
+                        <span class="badge badge-red">BLOCKED</span>
+                    </div>
+                </div>
+                ` : ''}
+
+                ${d.followups.length > 0 ? `
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Follow-ups (${d.followups.length})</div>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        ${d.followups.map(f => `
+                            <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:var(--bg-subtle); border:1px solid var(--border-default); border-radius:var(--radius-md); cursor:pointer; transition:border-color 0.15s;" onmouseenter="this.style.borderColor='var(--accent)'" onmouseleave="this.style.borderColor='var(--border-default)'">
+                                <span style="font-size:12px; font-weight:500;">${f}</span>
+                                <span class="badge badge-gray">PLANNED</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>` : ''}
+                
+                ${d.siblingFollowups && d.siblingFollowups.length > 0 ? `
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Sibling Follow-ups (${d.siblingFollowups.length})</div>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        ${d.siblingFollowups.map(f => `
+                            <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:var(--bg-subtle); border:1px solid var(--border-default); border-radius:var(--radius-md);">
+                                <span style="font-size:12px; font-weight:500;">${f}</span>
+                                <span class="badge badge-gray">PLANNED</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>` : ''}
+
+                ${d.evidence ? `
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Evidence</div>
+                    <div style="font-size:12px; color:var(--text-secondary); margin-bottom:8px;"><strong>Commits:</strong></div>
+                    <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); padding:8px 12px; background:var(--bg-subtle); border-radius:var(--radius-sm); border:1px solid var(--border-subtle);">${d.evidence}</div>
+                    ${d.files ? `<div style="margin-top:10px;"><a style="font-size:12px; font-weight:500;">${d.files} · View details</a></div>` : ''}
+                </div>` : ''}
+
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Guardrails</div>
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div>
+                            <div style="font-size:11px; font-weight:600; color:var(--text-tertiary); margin-bottom:4px;">PROJECT-LEVEL</div>
+                            <div style="font-size:12px; color:var(--text-secondary);">${d.guardrailProject}</div>
+                        </div>
+                        ${d.guardrailRun ? `
+                        <div>
+                            <div style="font-size:11px; font-weight:600; color:var(--text-tertiary); margin-bottom:4px;">RUN-LEVEL</div>
+                            <div style="font-size:12px; color:var(--text-secondary);">${d.guardrailRun}</div>
+                        </div>` : ''}
+                    </div>
+                </div>
+                
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Edit / Lifecycle Actions (Policy)</div>
+                    <div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:12px; font-size:11.5px; color:var(--text-secondary); line-height: 1.5;">
+                        <strong style="color:var(--text-primary);">Deletion Policy:</strong><br>
+                        • Draft/planned runs con no evidence can be deleted.<br>
+                        • Executed or reviewed runs are preserved and can only be cancelled, superseded, or archived.<br>
+                        • Completed history is never deleted.
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('drawer-overlay').classList.add('open');
+            document.getElementById('run-drawer').classList.add('open');
+        }
+
+        function closeDrawer() {
+            document.getElementById('drawer-overlay').classList.remove('open');
+            document.getElementById('run-drawer').classList.remove('open');
+        }
+
+        // Docs nav selection (visual only)
+        function selectDoc(el) {
+            document.querySelectorAll('.docs-nav-item').forEach(n => n.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Close drawer on Escape
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeDrawer();
+        });
+    </script>
+</body>
+</html>

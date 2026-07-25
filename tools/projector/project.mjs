@@ -50,7 +50,7 @@ import {
   statSync,
   writeFileSync
 } from "node:fs";
-import { basename, dirname, join, relative, resolve, sep } from "node:path";
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const SCHEMA_VERSION = 1;
@@ -64,7 +64,12 @@ export const SCHEMA_VERSION = 1;
 // instead of one hardcoded path set, and the mode is claimed by the tree's SHAPE instead of by
 // a model string this emitter recognises. An emitter that can read a second project's layout is
 // not the same emitter that could read only one, so the version moves (§6).
-export const PROJECTOR_VERSION = "0.5.0";
+// 0.6.0 (O4.P5) adds the docs index to the layout bundle and, with it, TRANSPORT: a project that
+// curated its own index has that index republished instead of overwritten by a scan of its
+// corpus. An emitter that republishes a curated selection is not the emitter that could only
+// scan, so the version moves again — and it moves for every file, because `generated_from`
+// identifies the emitter, not the artifact.
+export const PROJECTOR_VERSION = "0.6.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 // Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
@@ -594,20 +599,26 @@ export const PROJECT_NO_CLAIMS_RELATIVE_PATH = join(PROJECT_DIR, "no_claims.json
 // The bundle is resolved AS A UNIT: whichever layout supplies the roadmap tree also supplies the
 // governance sources. Probing each input independently would let a root be read half in one
 // layout and half in another — the emitter would then be reporting a project that does not exist.
+//
+// `docs_index` (O4.P5) joined the bundle by that same rule: it is WHERE a project keeps a docs
+// index it curated itself. Its PRESENCE at that path — never a project's name — is what decides
+// whether the Docs index is TRANSPORTED or scanned off the corpus (`buildDocsIndex`).
 export const ROOT_LAYOUTS = [
   {
     layout: "repo_root",
     roadmap: join("roadmap", "roadmap.json"),
     guardrails: join("governance", "guardrails.json"),
     no_claims: join("governance", "no_claims.json"),
-    contract_ref: join("governance", "contract.json")
+    contract_ref: join("governance", "contract.json"),
+    docs_index: join("docs", "docs_index.json")
   },
   {
     layout: "project_local_aiw",
     roadmap: join(".aiw", "roadmap", "roadmap.json"),
     guardrails: join(".aiw", "guardrails", "project_guardrails.json"),
     no_claims: join(".aiw", "guardrails", "no_claims.json"),
-    contract_ref: join(".aiw", "guardrails", "contract.json")
+    contract_ref: join(".aiw", "guardrails", "contract.json"),
+    docs_index: join(".aiw", "docs", "docs_index.json")
   }
 ];
 
@@ -1018,12 +1029,169 @@ function listMarkdownFiles(root, dir = resolve(root), found = []) {
   return found;
 }
 
-// Build the docs index the Docs tab reads: `docs[]` with the navigation fields the renderer
-// consumes (title, path, nav_tier, default_visible, ia_bucket) plus the file's own mtime as
-// its freshness. Every field is derived from the corpus on disk; nothing is curated by hand,
-// so a document added tomorrow indexes itself. Fields the emitter cannot honestly derive
-// (audience, canonicality, review status, …) are OMITTED, never invented.
+// THE DOCS INDEX: TRANSPORTED when the project curated one, SCANNED when it did not (O4.P5).
+//
+// The first version of this function only scanned. That was right for the project it was written
+// for, which had no index at all — the index was built from nothing, so deriving it from the
+// corpus was the only honest option, and §2 (a hand-kept list rots) made it the preferred one.
+// Applied to a project that DOES keep a curated index, the same scan silently replaced a
+// deliberate selection with a dump of every `.md` in the repo: the same project rendered ~38
+// documents in its own console and 342 here. A projection that disagrees with the project it
+// projects is not a projection.
+//
+// So the rule is the one the roadmap and the governance sources already follow — CANONICAL
+// OUTSIDE, DERIVED INSIDE. If the layout's `docs_index` path holds a conforming index, this
+// emitter REPUBLISHES it under the contract envelope, preserving its SELECTION and its ORDER.
+// The scan stays as the BACKUP, for a root with no curated index to transport.
+//
+// The decision is made by PRESENCE at the layout path. No project name is consulted, here or
+// anywhere below: a root that grows a curated index starts being transported on its next run,
+// and one that loses it falls back to the scan, with no edit to this file.
 export function buildDocsIndex(root, opts = {}) {
+  const curated = readCuratedDocsIndex(root);
+  return curated ? transportDocsIndex(root, curated, opts) : scanDocsIndex(root, opts);
+}
+
+// The curated index of this root, or null. Conformance is the same bar `buildTransportedList`
+// applies to guardrails: it must parse and it must carry the array this emitter would republish.
+// A file that is present but malformed transports nothing — it falls through to the scan, which
+// is a real index built from real files, rather than an empty Docs tab.
+function readCuratedDocsIndex(root) {
+  const layout = detectRootLayout(root);
+  const relativePath = layout?.paths.docs_index;
+  if (!relativePath) return null;
+  const index = safeReadJson(resolve(root, relativePath));
+  if (!index || !Array.isArray(index.docs)) return null;
+  return { path: relativePath, index };
+}
+
+// Republish a curated index under the contract envelope.
+//
+// SELECTION and ORDER are the curation's, untouched: this function filters nothing and sorts
+// nothing. Each entry travels VERBATIM — including the fields this emitter could never derive
+// (audience, canonicality, related_*, notes, …), which are the project's own statements about its
+// own documents and are republished, not authored, exactly as the roadmap tree is. What is added
+// is only what is MISSING among the fields the reader consumes, each by the same rule the scan
+// uses, so a partially-filled curated entry still renders instead of degrading the tab.
+function transportDocsIndex(root, curated, opts) {
+  const docs = [];
+  const unresolved = [];
+
+  for (const entry of curated.index.docs) {
+    const path = typeof entry?.path === "string" ? entry.path.trim() : "";
+    // A curated entry with no usable path cannot be transported at all: there is nothing to
+    // point at. Counted below with the paths that do not resolve, never silently dropped.
+    if (!path) {
+      unresolved.push({ path: null, reason: "no path" });
+      continue;
+    }
+    const absolute = resolve(root, path);
+    // The path must land INSIDE the root, and the file must exist. A curated index that names a
+    // document which is not on disk is a stale curation, and §7 forbids emitting a pointer that
+    // does not resolve — so the entry is OMITTED from `docs[]` and DECLARED in `docs_source`
+    // below (§20: an announced absence, never a silent one). The file is never invented.
+    const inside = relative(resolve(root), absolute);
+    if (inside.startsWith("..") || isAbsolute(inside)) {
+      unresolved.push({ path, reason: "outside the project root" });
+      continue;
+    }
+    if (!existsSync(absolute)) {
+      unresolved.push({ path, reason: "no such file" });
+      continue;
+    }
+
+    const transported = { ...entry, path: repoRelative(root, absolute) };
+
+    // title — the curation's, else the same derivation the scan uses.
+    if (typeof transported.title !== "string" || !transported.title.trim()) {
+      transported.title = titleFromMarkdown(safeReadText(absolute), basename(path));
+    }
+    // nav_tier / default_visible — the curation's, else derived from where the document lives.
+    if (!DOCS_NAV_TIERS.includes(transported.nav_tier)) {
+      transported.nav_tier = docNavTier(transported.path);
+    }
+    if (typeof transported.default_visible !== "boolean") {
+      transported.default_visible = transported.nav_tier === "primary";
+    }
+    // ia_bucket — the curation's GROUPING wins, and the folder is only the backup. The reader
+    // falls back through category / related_area / source_role before giving up, so a folder
+    // bucket is written only when the entry offers no grouping of its own at all: filling it
+    // sooner would overwrite curated grouping with a directory name.
+    if (!hasGroupingSignal(transported)) {
+      const directory = dirname(transported.path);
+      transported.ia_bucket = directory === "." ? "root" : directory;
+    }
+    // freshness — the curation's own value travels verbatim, whatever KIND of value it is: it is
+    // the project's statement about its document, and overwriting it with an mtime would be this
+    // emitter telling the project how current its own documents are. When an entry carries none,
+    // the file's mtime fills it, which is a measurement. Either way the disk mtime is not lost:
+    // `sources` below records it for every transported document (§6).
+    if (typeof transported.freshness !== "string" || !transported.freshness.trim()) {
+      const source = sourceRecord(root, transported.path);
+      if (source) transported.freshness = source.mtime;
+      else delete transported.freshness;
+    }
+
+    docs.push(transported);
+  }
+
+  return {
+    // The curated index is a source of this file (it decides the selection), and so is every
+    // document it names (its mtime is that document's freshness on disk). Both travel, so a
+    // change to either is detectable — which is the whole job of `sources` (§6).
+    ...projectFileEnvelope(root, opts, [curated.path, ...docs.map((doc) => doc.path)]),
+    // How this file was built, declared in the file, same doctrine as `nav_tier_model` and
+    // `taxonomy_model`: a reader never has to know this emitter's conventions in advance. It is
+    // emitted only on this path — the scanned file already declares its own construction through
+    // `nav_tier_model.derived_by`, and adding a key there would rewrite a file that has not
+    // changed.
+    docs_source: {
+      mode: "transported",
+      curated_index: curated.path.split(sep).join("/"),
+      curated_entries: curated.index.docs.length,
+      transported: docs.length,
+      selection: "curated: the index's own selection and order, preserved verbatim",
+      // Only the reader-facing fields are listed: they are the ones this emitter may fill in.
+      // Everything else in an entry is the curation's and is copied untouched.
+      field_rules: {
+        title: "curated `title`; else the document's first Markdown H1; else its filename",
+        nav_tier: "curated `nav_tier`; else derived from the repo path prefix (`nav_tier_model`)",
+        default_visible: "curated `default_visible`; else nav_tier === 'primary'",
+        ia_bucket: "curated grouping (ia_bucket, category, related_area or source_role); else the document's directory",
+        freshness: "curated `freshness`, verbatim; else the document's mtime on disk"
+      },
+      unresolved_policy:
+        "A curated entry whose path does not resolve on disk is OMITTED from docs[] and listed " +
+        "in `unresolved`: a pointer that does not resolve is never emitted (§7), and the absence " +
+        "is declared rather than left silent (§20). No document is invented to fill it.",
+      unresolved
+    },
+    // The curation's own model declaration travels with it when it has one. It describes the rule
+    // THIS index was built with, which is the curation's rule and not this emitter's; publishing
+    // this emitter's rule over a selection it did not make would be a false statement about how
+    // the file came to be.
+    ...(curated.index.nav_tier_model ? { nav_tier_model: curated.index.nav_tier_model } : {}),
+    docs
+  };
+}
+
+// True when the entry carries any grouping the reader can use before falling back to a folder.
+// The chain is the reader's own (`ia_bucket` -> `category` -> `related_area` -> `source_role`).
+function hasGroupingSignal(entry) {
+  return ["ia_bucket", "category", "related_area", "source_role"].some(
+    (key) => typeof entry[key] === "string" && entry[key].trim() !== ""
+  );
+}
+
+// THE BACKUP. Build the docs index by scanning the corpus: `docs[]` with the navigation fields
+// the renderer consumes (title, path, nav_tier, default_visible, ia_bucket) plus the file's own
+// mtime as its freshness. Every field is derived from the corpus on disk; nothing is curated by
+// hand, so a document added tomorrow indexes itself. Fields the emitter cannot honestly derive
+// (audience, canonicality, review status, …) are OMITTED, never invented.
+//
+// This is what a root with no curated index gets, and it is unchanged from the version that had
+// no alternative — byte for byte, for the same corpus and clock.
+function scanDocsIndex(root, opts = {}) {
   const files = listMarkdownFiles(root);
   const docs = files
     .map((absolute) => {

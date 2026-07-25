@@ -265,24 +265,69 @@ test("cantu-studio: every run-status token in the real tree is declared by the e
   }
 });
 
-test("cantu-studio: the docs index lists ONLY Markdown of its own repo, and every path resolves", { skip: !CANTU_PRESENT }, () => {
+// REPLACES the O4.P4 test "the docs index lists ONLY Markdown of its own repo". That test asserted
+// the SCAN — `.md` only, sorted by path, no field this emitter cannot derive — which was the right
+// assertion while the scan was the only behaviour. O4.P5 inverts it ON PURPOSE for a project that
+// curated its own index: the curation's selection travels, and it selects non-Markdown files, keeps
+// its own order, and carries fields no emitter could derive. Leaving the old test would have been
+// leaving a lock on the door this phase opened. What it defended that is still true — every path
+// resolves, no path escapes the repo, no foreign governance context leaks in — is asserted below,
+// and what it defended about the SCAN is asserted on the root that still scans, in the test after.
+test("cantu-studio: the docs index TRANSPORTS its curated index — same selection, same order", { skip: !CANTU_PRESENT }, () => {
+  const curated = JSON.parse(readFileSync(join(CANTU, ".aiw", "docs", "docs_index.json"), "utf8"));
   const index = buildDocsIndex(CANTU, { now: FIXED_NOW });
+
+  // The decision was made by the layout's path, and the emitted file says so.
+  assert.equal(index.docs_source.mode, "transported");
+  assert.equal(index.docs_source.curated_index, ".aiw/docs/docs_index.json");
+
+  // The count is the curation's, not the corpus's. This is the whole point of the phase: the
+  // scan finds every .md in the repo, which is several times the number the project curated.
+  assert.equal(index.docs.length, curated.docs.length);
+  assert.deepEqual(index.docs.map((d) => d.path), curated.docs.map((d) => d.path));
+  assert.deepEqual(index.docs.map((d) => d.title), curated.docs.map((d) => d.title));
+  assert.deepEqual(index.docs.map((d) => d.ia_bucket), curated.docs.map((d) => d.ia_bucket));
+  assert.deepEqual(index.docs.map((d) => d.nav_tier), curated.docs.map((d) => d.nav_tier));
+  // Freshness is the curation's own value, whatever kind of value it is — not an mtime written
+  // over it. The mtimes are still recorded, in `sources`.
+  assert.deepEqual(index.docs.map((d) => d.freshness), curated.docs.map((d) => d.freshness));
+
+  for (const doc of index.docs) {
+    // The inherited constraint of Cantu's own validator: every doc.path must exist on disk. Under
+    // transport this is enforced by the emitter too — an entry that does not resolve is omitted.
+    assert.ok(existsSync(join(CANTU, doc.path)), `indexed doc does not exist: ${doc.path}`);
+    assert.ok(!doc.path.startsWith("../") && !doc.path.includes(":"), `doc escapes the repo: ${doc.path}`);
+    // The centralized governance context of the OTHER repo is still not duplicated here.
+    assert.ok(!doc.path.startsWith("context/"), `foreign governance context leaked in: ${doc.path}`);
+  }
+  // Every source cited resolves: the curated index itself, then one per transported document.
+  assert.equal(index.sources.length, index.docs.length + 1);
+  for (const source of index.sources) assert.ok(existsSync(join(CANTU, source.path)));
+  // Nothing was dropped in silence: what did not travel is counted and named.
+  assert.equal(index.docs_source.curated_entries - index.docs_source.transported, index.docs_source.unresolved.length);
+});
+
+test("aiw-console: with no curated index to transport, the docs index is still SCANNED", () => {
+  const index = buildDocsIndex(REPO_ROOT, { now: FIXED_NOW });
+  // The backup path, unchanged: no transport block, and the file declares the path rule it was
+  // built with instead of a curation's model.
+  assert.equal("docs_source" in index, false);
+  assert.ok(index.nav_tier_model.rules.length > 0);
+  assert.equal(index.nav_tier_model.derived_by, "repo_path_prefix");
+  assert.equal(detectRootLayout(REPO_ROOT).paths.docs_index, join("docs", "docs_index.json"));
+  assert.equal(existsSync(join(REPO_ROOT, "docs", "docs_index.json")), false, "this root now has a curated index; the scan assertions below no longer describe it");
+
   assert.ok(index.docs.length > 0);
   for (const doc of index.docs) {
-    // The inherited constraint of Cantu's own validator: every doc.path must exist on disk.
-    assert.ok(existsSync(join(CANTU, doc.path)), `indexed doc does not exist: ${doc.path}`);
+    assert.ok(existsSync(join(REPO_ROOT, doc.path)), `indexed doc does not exist: ${doc.path}`);
     assert.ok(doc.path.toLowerCase().endsWith(".md"));
-    assert.ok(!doc.path.startsWith("../") && !doc.path.includes(":"), `doc escapes the repo: ${doc.path}`);
-    // Decision 2 of this phase: the centralized governance context of the OTHER repo is not
-    // duplicated here. Nothing under context/ can appear, because Cantu has no such tree.
-    assert.ok(!doc.path.startsWith("context/"), `foreign governance context leaked in: ${doc.path}`);
-    // Fields the emitter cannot honestly derive stay omitted, never invented (§20).
+    // Fields the emitter cannot honestly derive stay omitted, never invented (§20). This is the
+    // doctrine the replaced cantu test defended; it belongs to the SCAN, so it is asserted here.
     assert.equal("operator_review_status" in doc, false);
     assert.equal("canonicality" in doc, false);
   }
   // The order is stable and the tiers come from the declared rule, not from a curated list.
   assert.deepEqual(index.docs.map((d) => d.path), [...index.docs.map((d) => d.path)].sort());
-  assert.ok(index.nav_tier_model.rules.length > 0);
 });
 
 test("cantu-studio: the emitted contract folder is on disk, complete, and parses", { skip: !CANTU_PRESENT }, () => {

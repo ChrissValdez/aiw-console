@@ -1,8 +1,10 @@
-# Project Console (transplanted, read-only)
+# Project Console (transplanted, read-only, multi-project)
 
-The Project Console of `cantu-studio`, transplanted onto this project's own sources. It is the
-**real** console — the same `index.html`, the same `project-console.css`, the same renderer — not a
-rewrite and not a console "inspired by" it.
+The Project Console of `cantu-studio`, transplanted onto this project's own sources (O4.P11), now
+wrapped by a **multi-project shell** (O4.P3): a persistent sidebar lists every registered project,
+a Portfolio board summarises them, and selecting one hands it to the transplanted renderer — the
+same `index.html` surface, the same `project-console.css`, the same renderer — not a rewrite and
+not a console "inspired by" it.
 
 ## Run it
 
@@ -11,14 +13,49 @@ node project-console/serve.mjs
 ```
 
 Then open <http://127.0.0.1:8788/project-console/index.html>. `PC_PORT` overrides the port.
+`PC_REGISTRY` (path relative to the repo root, or absolute) points the server at an alternative
+project registry — the test fixtures under `tests/fixtures/multi/` use this; the real registry is
+never edited for QA.
 
-The server serves the repository root read-only: **GET and HEAD only, every other method answers
-405**. It runs no Git command, rebuilds nothing, and has no edit endpoint. Nothing in this folder
-can write to disk.
+The server serves the repository root read-only, plus one **virtual namespace**
+`/projects/<key>/**` that maps onto the roots listed in the registry — that is how sibling
+repositories' `.project/` folders and doc bodies are read. **GET and HEAD only, every other method
+answers 405**, on every route. It runs no Git command, rebuilds nothing, has no edit endpoint, and
+never serves any `.git/`. Nothing in this folder can write to disk; registered roots are read,
+never written.
+
+## The project registry
+
+`project-console/projects.json` is the operator-maintained list of projects this console
+aggregates — the only place project identity lives outside the data:
+
+```json
+{
+  "registry_model": "project_registry_v1",
+  "title": "AIW Console",
+  "projects": [
+    { "key": "aiw-console", "root": ".." },
+    { "key": "cantu-studio", "root": "../../cantu-studio" }
+  ]
+}
+```
+
+`key` is the URL segment under `/projects/`; `root` is the project's repo root, **relative to this
+folder** (sibling repos need no absolute paths). The console reads `<root>/.project/` per the
+contract. A project whose `.project/` is missing or unreadable still appears in the menu, marked
+with its state — it never breaks the shell or the other projects.
 
 ## What it reads
 
-Everything comes from `.project/`, the contract folder emitted by `tools/projector/project.mjs`
+At boot the shell fetches the registry plus **one `snapshot.json` per project** (the required
+artifact) to name and mark every menu entry and fill the Portfolio board. The heavy sources of a
+project (roadmap, docs index and bodies, git history, governance) load when it becomes the active
+project. Objective/phase status on the Portfolio board is derived by **executing the
+`taxonomy_model` derivation table each snapshot carries** (O4.P2 envelope decision) — no status
+vocabulary is baked into the shell, and a project with a different vocabulary renders without code
+changes.
+
+Everything per-project comes from that project's `.project/`, the contract folder
 (`context/aiw-console/CONTRATO.md`). Nothing is read from `.aiw/`, which is the delivery area of
 the AIW projection and not this project's own state.
 
@@ -31,10 +68,12 @@ the AIW projection and not this project's own state.
 | `.project/git_history.json` | optional, emitted | History (commits and branches of this repo) |
 | 9 further optional routes | **not emitted** | nothing live; listed as failures in Console Diagnostics |
 
-Missing optional sources degrade fail-soft: the affected surface shows its empty state, the
-aggregate banner appears, and every missing file is named one by one in
-**Status → Console Diagnostics → State Sources**. Nothing is stubbed, simulated or invented to
-make a panel look full.
+Missing optional sources degrade fail-soft, and since O4.P3 the absence is announced **in the
+affected view, naming the file** (CONTRATO §20): History, Overview/Roadmap/Run Queue, Docs and
+each Governance table state which `.project/` file could not be loaded. The aggregate banner
+remains as a summary — it reserves its own height and pushes content down instead of overlapping
+it — and every missing file is also listed in **Status → Console Diagnostics → State Sources**.
+Nothing is stubbed, simulated or invented to make a panel look full.
 
 Document bodies in the Docs tab are the repository's real Markdown files, fetched repo-locally and
 rendered by the same conservative escape-first renderer as the source console. No network fetch.

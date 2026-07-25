@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "project_id": "hilo_verde",
+  "generated_at": "2026-07-24T12:00:00.000Z",
+  "generated_from": "hand-authored-test-fixture (NOT emitted; tests only)",
+  "sources": [
+    { "path": "README.md", "mtime": "2026-07-24T11:00:00.000Z" },
+    { "path": "docs/trama.md", "mtime": "2026-07-24T11:30:00.000Z" }
+  ],
+  "docs": [
+    {
+      "title": "Nota del telar",
+      "path": "README.md",
+      "nav_tier": "primary",
+      "default_visible": true,
+      "ia_bucket": "root",
+      "freshness": "2026-07-20"
+    },
+    {
+      "title": "La trama, explicada",
+      "path": "docs/trama.md",
+      "nav_tier": "primary",
+      "default_visible": true,
+      "ia_bucket": "docs",
+      "freshness": "2026-07-21"
+    }
+  ]
+}

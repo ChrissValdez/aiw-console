@@ -1,38 +1,44 @@
-// CONTRATO §1 / §1.a — the base of the contract folder lives as ONE constant, and every route
-// below is derived from it. The console is served from the repository root, so both bases are
-// relative to this file's page (<repo>/project-console/index.html): one level up is the repo.
-const REPO_BASE = "../";
-const PROJECT_BASE = `${REPO_BASE}.project/`;
+// CONTRATO §1 / §1.a — the base of the contract folder lives as ONE value, and every route
+// below is derived from it. Under the multi-project shell (O4.P3) that one value is no longer
+// a constant: it is the virtual base of the ACTIVE project (/projects/<key>/, resolved by the
+// server from the project registry). The shell calls setActiveProjectBase() before any load;
+// nothing else in this file may compose a data route from anything but REPO_BASE.
+let REPO_BASE = "";
+let PROJECT_BASE = "";
+let PATHS = null;
 
-const PATHS = {
-  // Capa 1, the ONE required artifact (§1): the project's own description of itself.
-  snapshot: `${PROJECT_BASE}snapshot.json`,
-  // Optional and emitted today (§18.b, §19).
-  roadmapV3: `${PROJECT_BASE}roadmap.json`,
-  docsIndex: `${PROJECT_BASE}docs_index.json`,
-  guardrails: `${PROJECT_BASE}guardrails.json`,
-  noClaims: `${PROJECT_BASE}no_claims.json`,
-  // Optional and NOT emitted today. They keep the routes the emitter declared for them so a
-  // future emitter has nowhere new to invent: each one degrades fail-soft, and no file is
-  // stubbed or simulated to hide its absence (§20 — an invented file lies; an absent one does not).
-  project: `${PROJECT_BASE}project.json`,
-  projectStatus: `${PROJECT_BASE}state/project_status.json`,
-  componentStatus: `${PROJECT_BASE}state/component_status.json`,
-  events: `${PROJECT_BASE}state/events.jsonl`,
-  changeLedger: `${PROJECT_BASE}ledgers/change_ledger.jsonl`,
-  gitProvenance: `${PROJECT_BASE}ledgers/git_provenance.jsonl`,
-  humanQa: `${PROJECT_BASE}ledgers/human_qa.jsonl`,
-  aiReviews: `${PROJECT_BASE}ledgers/ai_reviews.jsonl`,
-  memory: `${PROJECT_BASE}guardrails/project_memory.jsonl`,
-  // Derived read-only Git commit history view (§19). Its emitter still writes the old delivery
-  // area, so this route resolves to nothing today and History shows its empty state.
-  gitHistory: `${PROJECT_BASE}git_history.json`,
-  // READ-ONLY CONSOLE: no write endpoint travels with this port. Both write routes are declared
-  // absent rather than deleted, so the two call sites keep their shape and answer honestly
-  // instead of pointing at an endpoint that does not exist.
-  historySync: null,
-  roadmapEdit: null
-};
+function setActiveProjectBase(repoBase) {
+  REPO_BASE = repoBase;
+  PROJECT_BASE = `${REPO_BASE}.project/`;
+  PATHS = {
+    // Capa 1, the ONE required artifact (§1): the project's own description of itself.
+    snapshot: `${PROJECT_BASE}snapshot.json`,
+    // Optional and emitted today (§18.b, §19).
+    roadmapV3: `${PROJECT_BASE}roadmap.json`,
+    docsIndex: `${PROJECT_BASE}docs_index.json`,
+    guardrails: `${PROJECT_BASE}guardrails.json`,
+    noClaims: `${PROJECT_BASE}no_claims.json`,
+    // Optional and NOT emitted today. They keep the routes the emitter declared for them so a
+    // future emitter has nowhere new to invent: each one degrades fail-soft, and no file is
+    // stubbed or simulated to hide its absence (§20 — an invented file lies; an absent one does not).
+    project: `${PROJECT_BASE}project.json`,
+    projectStatus: `${PROJECT_BASE}state/project_status.json`,
+    componentStatus: `${PROJECT_BASE}state/component_status.json`,
+    events: `${PROJECT_BASE}state/events.jsonl`,
+    changeLedger: `${PROJECT_BASE}ledgers/change_ledger.jsonl`,
+    gitProvenance: `${PROJECT_BASE}ledgers/git_provenance.jsonl`,
+    humanQa: `${PROJECT_BASE}ledgers/human_qa.jsonl`,
+    aiReviews: `${PROJECT_BASE}ledgers/ai_reviews.jsonl`,
+    memory: `${PROJECT_BASE}guardrails/project_memory.jsonl`,
+    // Derived read-only Git commit history view (§19).
+    gitHistory: `${PROJECT_BASE}git_history.json`,
+    // READ-ONLY CONSOLE: no write endpoint travels with this port. Both write routes are declared
+    // absent rather than deleted, so the two call sites keep their shape and answer honestly
+    // instead of pointing at an endpoint that does not exist.
+    historySync: null,
+    roadmapEdit: null
+  };
+}
 
 // The console's own files and the one command that serves them, named ONCE. Every surface that
 // has to tell the operator how to start the console reads these, so there is no second place
@@ -2213,7 +2219,12 @@ function renderDocs(data) {
   const nav = byId("docs-nav-list");
   if (!nav) return;
   if (!docs.length) {
-    nav.innerHTML = '<div class="docs-nav-title">Documentation</div>' + emptyState("No docs index could be loaded.");
+    // §20 — announce the absence IN THIS VIEW, naming the file. An index that failed to load
+    // and an index that lists no documents are different truths; say the right one.
+    const absence = data.docsIndex == null
+      ? `<strong>Docs index unavailable.</strong><span>${escapeHtml(displaySourcePath(PATHS.docsIndex))} could not be loaded. The rest of the Project Console is unaffected.</span>`
+      : `<strong>No documents indexed.</strong><span>${escapeHtml(displaySourcePath(PATHS.docsIndex))} loaded but lists no documents.</span>`;
+    nav.innerHTML = `<div class="docs-nav-title">Documentation</div><div class="readonly-banner docs-absence">${absence}</div>`;
     byId("docs-reader").innerHTML = "";
     return;
   }
@@ -2736,17 +2747,34 @@ function renderGovernance(data) {
     </div>
   `;
 
-  byId("project-guardrails").innerHTML = tableFromRows(["Rule", "Status", "Source"], (data.guardrails?.guardrails || []).map((item) => [
-    item.rule || item.title || item.id,
-    badge(item.status || "ACTIVE", toneForStatus(item.status)),
-    (item.source_refs || []).join("; ")
-  ]));
+  // §20 — each Governance table announces ITS missing file in ITS section. A file that loaded
+  // with an empty list keeps the plain empty state: that is content, not absence.
+  byId("project-guardrails").innerHTML = data.guardrails == null
+    ? sourceAbsenceBanner(PATHS.guardrails, "Project guardrails unavailable.")
+    : tableFromRows(["Rule", "Status", "Source"], (data.guardrails?.guardrails || []).map((item) => [
+      item.rule || item.title || item.id,
+      badge(item.status || "ACTIVE", toneForStatus(item.status)),
+      (item.source_refs || []).join("; ")
+    ]));
 
-  byId("no-claims").innerHTML = tableFromRows(["Restriction", "Status", "Allowed only if"], (data.noClaims?.claims || []).map((claim) => [
-    claim.claim,
-    badge(claim.status || "DISALLOWED", "red"),
-    claim.allowed_only_if || ""
-  ]));
+  byId("no-claims").innerHTML = data.noClaims == null
+    ? sourceAbsenceBanner(PATHS.noClaims, "Claims table unavailable.")
+    : tableFromRows(["Restriction", "Status", "Allowed only if"], (data.noClaims?.claims || []).map((claim) => [
+      claim.claim,
+      badge(claim.status || "DISALLOWED", "red"),
+      claim.allowed_only_if || ""
+    ]));
+}
+
+// §20 — shared absence line for a per-surface announcement: the headline says what the surface
+// lost, the body names the exact file that could not be loaded.
+function sourceAbsenceBanner(path, headline) {
+  return `
+    <div class="readonly-banner">
+      <strong>${escapeHtml(headline)}</strong>
+      <span>${escapeHtml(displaySourcePath(path))} could not be loaded. The rest of the Project Console is unaffected.</span>
+    </div>
+  `;
 }
 
 function renderComponentStatus(components) {
@@ -2790,10 +2818,12 @@ function tableFromRows(headers, rows) {
 }
 
 function displaySourcePath(value) {
-  // Display-only: strip leading ./ and ../ relative-traversal segments from the shown label so a
-  // fetched path like ../.project/snapshot.json reads as .project/snapshot.json. Does NOT change the
-  // real fetch/resolve URL: loadedSources/failedSources keep the actual paths used to load data.
-  return text(value, "").replace(/^(?:\.{1,2}\/)+/, "");
+  // Display-only: strip leading ./ and ../ relative-traversal segments and a leading slash from
+  // the shown label, so a fetched path like /projects/<key>/.project/snapshot.json reads as
+  // projects/<key>/.project/snapshot.json — it still names BOTH the project and the file, which
+  // is what §20 needs in a multi-project shell. Does NOT change the real fetch/resolve URL:
+  // loadedSources/failedSources keep the actual paths used to load data.
+  return text(value, "").replace(/^(?:\.{1,2}\/)+/, "").replace(/^\//, "");
 }
 
 function renderSources(data) {
@@ -2854,6 +2884,16 @@ function v3Unavailable(containerId, message) {
       <span>The rest of the Project Console is unaffected.</span>
     </div>
   `;
+}
+
+// §20 — the absence announcement for the roadmap-fed surfaces, NAMING THE FILE. Distinguishes
+// "the file could not be loaded" from "it loaded but does not carry objectives[]", because the
+// second is not an absence and should not be reported as one.
+function roadmapAbsenceMessage(data) {
+  if (!data || data.roadmapV3 == null) {
+    return `${displaySourcePath(PATHS.roadmapV3)} could not be loaded.`;
+  }
+  return `${displaySourcePath(PATHS.roadmapV3)} carries no objectives[]; there is nothing to derive.`;
 }
 
 function v3Model(data) {
@@ -3254,7 +3294,7 @@ function renderRoadmapV3(data) {
   if (!container) return;
   const model = v3Model(data);
   if (!model) {
-    v3Unavailable("roadmap-v3-tree", "roadmap.json unavailable or invalid");
+    v3Unavailable("roadmap-v3-tree", roadmapAbsenceMessage(data));
     return;
   }
   roadmapV3ModelCache = model;
@@ -3319,7 +3359,7 @@ function renderOverviewV3(data) {
   if (!currentWorkRoot || !nextActionRoot || !snapshotRoot) return;
   const model = v3Model(data);
   if (!model) {
-    v3Unavailable("project-overview", "roadmap.json unavailable or invalid");
+    v3Unavailable("project-overview", roadmapAbsenceMessage(data));
     nextActionRoot.innerHTML = "";
     snapshotRoot.innerHTML = "";
     return;
@@ -3720,7 +3760,7 @@ function renderRunQueueV3(data) {
   if (!container) return;
   const model = v3Model(data);
   if (!model) {
-    v3Unavailable("run-queue-v3", "roadmap.json unavailable or invalid");
+    v3Unavailable("run-queue-v3", roadmapAbsenceMessage(data));
     return;
   }
   roadmapV3ModelCache = model;
@@ -4136,6 +4176,126 @@ function showOptionalSourceNotice() {
   notice.hidden = false;
   notice.className = "readonly-banner";
   notice.innerHTML = "<strong>Rendered from the primary snapshot.</strong><span>Some optional local state files could not be loaded. Open the Console Diagnostics panel in the Status tab for details.</span>";
+}
+
+function hideLoadNotice() {
+  const notice = byId("load-notice");
+  if (!notice) return;
+  notice.hidden = true;
+  notice.innerHTML = "";
+}
+
+// ==========================================================================
+// Multi-project shell hooks (O4.P3). The shell (project-shell.js) drives this renderer
+// through exactly three functions: setActiveProjectBase (top of file), and the two below.
+// ==========================================================================
+
+// Every container the renderer paints per project. Used to blank the project surface when the
+// ACTIVE project's required snapshot cannot be loaded: each surface states the absence rather
+// than keeping the previous project's pixels (§20 — and zero cross-project state).
+const PROJECT_SURFACE_IDS = [
+  "project-overview", "next-pending-runs", "overview-activity",
+  "run-queue-v3", "roadmap-v3-tree",
+  "history-list",
+  "docs-nav-list", "docs-reader",
+  "review-policy", "project-guardrails", "no-claims",
+  "state-sources", "repo-structure", "console-source-files"
+];
+
+// Reset EVERYTHING that belongs to the previously active project: data, caches, selections,
+// timers, open drawers, and the chrome defaults (active tab, subview, status section). After
+// this runs, nothing the next render paints can come from the previous project. The switch
+// test exercises this seam; keep every per-project `let` of this file listed here.
+function resetProjectScopedState() {
+  appData = null;
+  loadedSources.length = 0;
+  failedSources.length = 0;
+  roadmapV3ModelCache = null;
+  v3DetailStack = [];
+  v3DetailOrigin = "";
+  v3EditMode = false;
+  v3EndpointReachable = null;
+  v3EditPending = null;
+  v3EditModalTarget = null;
+  v3EditModalDirty = false;
+  v3EditRemoveChoice = null;
+  docBodyCache.clear();
+  docsActivePath = null;
+  docsAllEntries = [];
+  docsVisibilityMode = "all";
+  historySelectedBranch = null;
+  historyVersionMarker = null;
+  stopHistoryAutoRefresh();
+  historyRefreshing = false;
+  historyManualSyncing = false;
+  historySyncState = { kind: "idle", text: "" };
+  closeDrawer();
+  v3CloseEditModal(true);
+  // The drawer and modal hide on close but keep their last innerHTML; blank them so not even
+  // hidden markup of the previous project survives the switch.
+  const drawerBody = byId("drawer-body");
+  if (drawerBody) drawerBody.innerHTML = "";
+  const drawerTitle = byId("drawer-title");
+  if (drawerTitle) drawerTitle.textContent = "Run Details";
+  const drawerId = byId("drawer-id");
+  if (drawerId) drawerId.textContent = "";
+  const editModalBody = byId("edit-modal-body");
+  if (editModalBody) editModalBody.innerHTML = "";
+  hideLoadNotice();
+  resetChromeToDefaults();
+  document.title = "Project Console";
+}
+
+// Chrome back to its opening defaults: Overview tab, Run Queue subview, Governance section,
+// scroll at top. Same class toggling the click handlers perform; display-only.
+function resetChromeToDefaults() {
+  document.querySelectorAll("[data-tab]").forEach((item) => item.classList.toggle("active", item.dataset.tab === "overview"));
+  document.querySelectorAll(".tab-content").forEach((panel) => panel.classList.toggle("active", panel.id === "tab-overview"));
+  document.querySelectorAll("[data-subview]").forEach((item) => item.classList.toggle("active", item.dataset.subview === "v3queue"));
+  document.querySelectorAll(".roadmap-subview").forEach((panel) => panel.classList.toggle("active", panel.id === "roadmap-sub-v3queue"));
+  const jumpLinks = Array.from(document.querySelectorAll(".status-jump-link"));
+  jumpLinks.forEach((link, index) => link.classList.toggle("active", index === 0));
+  document.querySelectorAll(".status-section").forEach((section) => section.classList.toggle("active", section.id === "status-governance"));
+  const content = document.querySelector("#view-project .content") || document.querySelector(".content");
+  if (content) content.scrollTop = 0;
+}
+
+// Load and render the ACTIVE project (the base set by setActiveProjectBase). Returns what
+// happened so the shell can mark the project's menu entry truthfully. On failure every
+// project surface announces the absent snapshot BY FILE (§20) — the previous project's
+// pixels are already gone via resetProjectScopedState.
+async function loadActiveProject() {
+  try {
+    appData = await loadData();
+    renderAll(appData);
+    // Seed the History version marker from the initial load so the first active-tab poll
+    // only re-renders when the snapshot actually changes.
+    historyVersionMarker = historySnapshotMarker(appData.gitHistory);
+    showOptionalSourceNotice();
+    return { ok: true, snapshot: appData.snapshot };
+  } catch (error) {
+    showProjectUnavailable(error);
+    const invalid = /invalid json|unexpected token|json/i.test(text(error && error.message, ""));
+    return { ok: false, reason: invalid ? "invalid" : "missing", error: text(error && error.message, "") };
+  }
+}
+
+function showProjectUnavailable(error) {
+  const notice = byId("load-notice");
+  if (notice) {
+    notice.hidden = false;
+    notice.className = "readonly-banner";
+    notice.innerHTML = `
+      <strong>This project cannot be rendered.</strong>
+      <span>${escapeHtml(displaySourcePath(PATHS.snapshot))} could not be loaded: ${escapeHtml(text(error && error.message, "unknown error"))}.</span>
+      <span>The other registered projects are unaffected.</span>
+    `;
+  }
+  const message = `${displaySourcePath(PATHS.snapshot)} could not be loaded, so this view has nothing to render.`;
+  PROJECT_SURFACE_IDS.forEach((id) => {
+    const container = byId(id);
+    if (container) container.innerHTML = emptyState(message);
+  });
 }
 
 // Status sub-nav: the two
@@ -5425,24 +5585,16 @@ async function loadData() {
   };
 }
 
-async function init() {
+// Chrome wiring only. Under the multi-project shell (O4.P3) no project loads at boot from
+// here: the shell reads the registry, decides the active project, and drives this renderer
+// through setActiveProjectBase / resetProjectScopedState / loadActiveProject.
+function initConsoleChrome() {
   setupTabs();
   setupStatusSubnav();
   setupRoadmapEditMode();
   setOverviewCardTitles();
-  try {
-    appData = await loadData();
-    renderAll(appData);
-    // Seed the History version marker from the initial load so the first active-tab poll
-    // only re-renders when the snapshot actually changes.
-    historyVersionMarker = historySnapshotMarker(appData.gitHistory);
-    showOptionalSourceNotice();
-  } catch (error) {
-    showFetchFallback(error);
-    byId("project-overview").innerHTML = emptyState("Primary snapshot could not be loaded.");
-    byId("next-pending-runs").innerHTML = emptyState("No queue data is available without the snapshot.");
-    byId("overview-activity").innerHTML = emptyState("Overview restrictions are unavailable without the snapshot.");
-  }
 }
 
-init();
+if (typeof document !== "undefined" && document.getElementById("tab-overview")) {
+  initConsoleChrome();
+}

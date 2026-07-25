@@ -1,0 +1,10 @@
+{
+  "registry_model": "project_registry_v1",
+  "title": "Consola de prueba (fixtures)",
+  "projects": [
+    { "key": "aiw-console", "root": "../../.." },
+    { "key": "hilo-verde", "root": "./hilo-verde" },
+    { "key": "roto", "root": "./roto" },
+    { "key": "vacio", "root": "./vacio" }
+  ]
+}

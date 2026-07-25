@@ -5622,3 +5622,474 @@ details[open] > summary > .v3-caret {
   border-radius: 6px;
   background: var(--bg-inset);
 }
+
+/* ==========================================================================
+   MULTI-PROJECT SHELL (O4.P3) — NEW chrome only.
+   Composition and components follow design/AIW-Dashboard-prototype.html (persistent dark
+   sidebar with brand + per-project nav items, global header, portfolio board of three-zone
+   project cards). Surface colours come from this console's existing dark tokens: the shell
+   wraps views that are already dark, and a per-view theme flip would be a clash — where the
+   prototype and the transplanted renderer collide, the renderer wins for what exists and the
+   prototype wins for what is added (this section is the added part). Nothing in this section
+   restyles the per-project views.
+   ========================================================================== */
+
+.app-shell {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 256px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  height: 100vh;
+  z-index: 20;
+  /* Prototype sidebar palette (its sidebar is dark in the light prototype too). */
+  background: #14151d;
+  color: var(--text-primary);
+  border-right: 1px solid var(--border-default);
+  transition: width 0.2s ease;
+}
+
+.sidebar.collapsed { width: 56px; }
+
+.brand {
+  height: 52px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-default);
+  background: #101118;
+  flex-shrink: 0;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+}
+
+.brand-logo svg { color: var(--accent); flex-shrink: 0; }
+
+.collapse-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s, color 0.15s;
+}
+
+.collapse-btn:hover { background: var(--bg-inset); color: var(--text-strong); }
+
+.nav-section { padding: 16px 0 8px; }
+.nav-section + .nav-section { border-top: 1px solid var(--border-subtle); }
+
+.nav-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: 700;
+  padding: 0 20px 10px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.sidebar.collapsed .nav-label { opacity: 0; height: 0; padding: 0; overflow: hidden; }
+
+.nav-item {
+  padding: 9px 16px 9px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  transition: background 0.15s;
+  border-left: 3px solid transparent;
+  position: relative;
+  margin: 1px 0;
+}
+
+.nav-item:hover { background: var(--bg-inset); }
+.nav-item.active { background: var(--bg-panel); border-left-color: var(--accent); }
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+}
+
+.nav-item-degraded .nav-icon { color: var(--amber); }
+
+.nav-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.nav-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.nav-subtitle { font-size: 11px; color: var(--text-tertiary); }
+
+.nav-empty {
+  padding: 6px 20px 10px;
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.sidebar.collapsed .nav-text { display: none; }
+.sidebar.collapsed .nav-item { padding: 11px 15px; justify-content: center; }
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  height: 100vh;
+}
+
+.view-container {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.view-container.active { display: flex; }
+
+/* The transplanted console fills the project view exactly. */
+.view-container .project-console { height: 100%; }
+
+.global-header {
+  background: var(--bg-nav);
+  border-bottom: 1px solid var(--border-default);
+  box-shadow: var(--shadow-nav);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 54px;
+  flex-shrink: 0;
+}
+
+.global-header h1 { font-size: 20px; }
+
+/* ------------------------- Portfolio board ------------------------- */
+
+.portfolio-shell {
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
+.portfolio-board {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.portfolio-project {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(200px, 0.65fr) minmax(380px, 1.55fr) minmax(260px, 0.8fr);
+  min-height: 180px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.portfolio-project:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.portfolio-project::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent-solid);
+}
+
+.portfolio-project-degraded::before { background: var(--amber); }
+
+.portfolio-main,
+.portfolio-ops,
+.portfolio-next {
+  min-width: 0;
+  padding: 20px 22px;
+}
+
+.portfolio-main {
+  padding-left: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  border-right: 1px solid var(--border-subtle);
+}
+
+.portfolio-title-row { display: flex; align-items: flex-start; }
+
+.portfolio-title {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: 19px;
+  font-weight: var(--weight-heavy);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.portfolio-id {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.portfolio-status-chip { align-self: flex-start; }
+
+.portfolio-ops {
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.portfolio-section-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-tertiary);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.portfolio-snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 10px;
+}
+
+.portfolio-stat {
+  min-width: 0;
+  padding: 10px 12px 9px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-subtle);
+}
+
+.portfolio-stat-label {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 5px;
+  overflow-wrap: anywhere;
+}
+
+.portfolio-stat-value {
+  color: var(--text-strong);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.portfolio-roadmap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 14px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-subtle);
+}
+
+.portfolio-roadmap .portfolio-stat-label { margin-bottom: 0; }
+
+.portfolio-roadmap-value {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.portfolio-objectives { display: flex; flex-direction: column; }
+
+.portfolio-objective-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 2px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.portfolio-objective-row:last-child { border-bottom: none; }
+
+.portfolio-objective-title {
+  font-size: 13px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.portfolio-objective-status-none { color: var(--text-faint); }
+
+.portfolio-next {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+
+.portfolio-next-card {
+  padding: 13px 15px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-subtle);
+}
+
+.portfolio-next-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-tertiary);
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.portfolio-next-text {
+  color: var(--text-primary);
+  font-size: 13.5px;
+  line-height: 1.55;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.portfolio-action-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 2px;
+}
+
+.portfolio-action-row .btn { min-width: 128px; }
+
+.portfolio-absence-text {
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.shell-notice { margin-bottom: 16px; }
+
+@media (max-width: 1300px) {
+  .portfolio-project { grid-template-columns: minmax(200px, 0.7fr) minmax(340px, 1.3fr); }
+  .portfolio-next {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--border-subtle);
+  }
+}
+
+@media (max-width: 900px) {
+  .portfolio-project { grid-template-columns: 1fr; }
+  .portfolio-main,
+  .portfolio-ops {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .portfolio-next { grid-column: auto; border-top: none; }
+}
+
+/* ==========================================================================
+   Optional-source banner layout fix (operator-reported defect, Docs tab).
+   The docs pane used height: calc(100vh - 48px) plus negative top margin, which ignored the
+   banner sitting above it: the fixed-height pane pulled itself up over the banner and
+   overflowed below the viewport. The content column is now a flex column — the banner is a
+   normal flex item that RESERVES its height and pushes everything down — and the docs pane
+   flexes to exactly the remaining height instead of assuming the viewport math. The banner is
+   not suppressed: §20 requires it (it tells the truth about absent optional sources).
+   ========================================================================== */
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* While Docs is the active tab the content column drops its own padding and the pane flexes
+   to exactly the remaining height — no negative margins, no viewport arithmetic. The banner,
+   when visible, keeps its inset look via its own margins and simply pushes the pane down. */
+.content:has(> #tab-docs.active) { padding: 0; }
+
+.content:has(> #tab-docs.active) > #load-notice { margin: 28px 32px 16px; }
+
+#tab-docs.active {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+}
+
+.docs-layout {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  margin: 0;
+}
+
+.docs-absence { margin: 12px 16px; }
+
+/* Narrow screens keep the pre-existing stacked Docs behaviour (the 1040px block above):
+   the pane stops flexing and scrolls with the page, inset by the content padding as before. */
+@media (max-width: 1040px) {
+  .content:has(> #tab-docs.active) { padding: 28px 32px; }
+  .content:has(> #tab-docs.active) > #load-notice { margin: 0 auto 16px; }
+  #tab-docs.active {
+    display: block;
+    flex: none;
+  }
+}

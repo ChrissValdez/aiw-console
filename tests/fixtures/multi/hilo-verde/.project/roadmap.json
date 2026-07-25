@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "project_id": "hilo_verde",
+  "generated_at": "2026-07-24T12:00:00.000Z",
+  "generated_from": "hand-authored-test-fixture (this file is NOT emitted by any projector; it exists only under tests/ to prove the shell can read a second project)",
+  "sources": [
+    {
+      "path": "roadmap/roadmap.json",
+      "mtime": "2026-07-24T11:59:00.000Z"
+    }
+  ],
+  "model": "test_tree_v1",
+  "roadmap_id": "telar",
+  "title": "Telar de Hilo Verde",
+  "objectives": [
+    {
+      "objective_id": "O-TEJIDO",
+      "title": "Tejido base",
+      "phases": [
+        {
+          "phase_id": "F-URDIMBRE",
+          "title": "Urdimbre",
+          "runs": [
+            {
+              "run_id": "RUN-HILO-URDIMBRE-001",
+              "queue_order": 1,
+              "title": "Montar la urdimbre",
+              "summary": "Tensar los hilos verticales del telar de prueba.",
+              "status": "hecho",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-HILO-URDIMBRE-002",
+              "queue_order": 2,
+              "title": "Anudar los lizos",
+              "summary": "Atar cada hilo a su lizo para poder abrir la calada.",
+              "status": "haciendo",
+              "depends_on": [
+                "RUN-HILO-URDIMBRE-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "F-TRAMA",
+          "title": "Trama",
+          "runs": [
+            {
+              "run_id": "RUN-HILO-TRAMA-001",
+              "queue_order": 3,
+              "title": "Pasar la primera trama",
+              "summary": "Primer recorrido de la lanzadera entre los hilos.",
+              "status": "hecho",
+              "depends_on": [
+                "RUN-HILO-URDIMBRE-001"
+              ]
+            },
+            {
+              "run_id": "RUN-HILO-TRAMA-002",
+              "queue_order": 4,
+              "title": "Ajustar la densidad",
+              "summary": "Golpear con el peine hasta la densidad acordada.",
+              "status": "por_hacer",
+              "depends_on": [
+                "RUN-HILO-TRAMA-001"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "objective_id": "O-REMATE",
+      "title": "Remate",
+      "phases": [
+        {
+          "phase_id": "F-CIERRE",
+          "title": "Cierre",
+          "runs": [
+            {
+              "run_id": "RUN-HILO-CIERRE-001",
+              "queue_order": 5,
+              "title": "Rematar los flecos",
+              "summary": "Anudar los extremos para que el tejido no se deshaga.",
+              "status": "hecho",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-HILO-CIERRE-002",
+              "queue_order": 6,
+              "title": "Cortar del telar",
+              "summary": "Separar la pieza terminada del bastidor.",
+              "status": "hecho",
+              "depends_on": [
+                "RUN-HILO-CIERRE-001"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

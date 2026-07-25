@@ -1,0 +1,3 @@
+Fixture "vacio": un root de proyecto registrado que NO tiene carpeta .project/.
+Prueba la degradacion del shell ante un proyecto que aun no emite (el caso real de
+cantu-studio y aiw hoy): debe aparecer en el menu marcado con su estado, sin romper nada.

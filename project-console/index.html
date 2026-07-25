@@ -8,18 +8,60 @@
     <link rel="stylesheet" href="assets/project-console.css">
   </head>
   <body>
-    <div class="project-console">
-      <div class="project-header">
-        <div class="tabs">
-          <button class="tab active" type="button" data-tab="overview">Overview</button>
-          <button class="tab" type="button" data-tab="roadmap">Roadmap</button>
-          <button class="tab" type="button" data-tab="history">History</button>
-          <button class="tab" type="button" data-tab="docs">Docs</button>
-          <button class="tab tab-muted" type="button" data-tab="status">Status</button>
+    <!-- MULTI-PROJECT SHELL (O4.P3). The sidebar and the Portfolio view are NEW chrome, styled
+         after design/AIW-Dashboard-prototype.html. The per-project console inside #view-project
+         is the O4.P11 transplant, untouched in structure: the shell only decides WHICH project
+         it renders. No project name lives in this file: the sidebar list, the brand title and
+         every label come from the registry (projects.json) and from each project's own data. -->
+    <div class="app-shell">
+      <aside class="sidebar" id="shell-sidebar">
+        <div class="brand">
+          <div class="brand-logo">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <span id="shell-brand-title">Project Console</span>
+          </div>
+          <button class="collapse-btn" id="shell-collapse" type="button" title="Toggle sidebar">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
         </div>
-      </div>
+        <div class="nav-section">
+          <div class="nav-label">Global</div>
+          <div class="nav-item active" id="shell-nav-portfolio" role="button" tabindex="0">
+            <div class="nav-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg></div>
+            <div class="nav-text"><div class="nav-title">Project Portfolio</div></div>
+          </div>
+        </div>
+        <div class="nav-section">
+          <div class="nav-label">Projects</div>
+          <div id="shell-project-list"></div>
+        </div>
+      </aside>
 
-      <main class="content">
+      <div class="main">
+        <div id="view-portfolio" class="view-container active">
+          <div class="global-header">
+            <h1 id="shell-portfolio-title">Project Portfolio</h1>
+          </div>
+          <div class="content">
+            <div class="portfolio-shell">
+              <div class="portfolio-board" id="shell-portfolio-board"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="view-project" class="view-container">
+          <div class="project-console">
+            <div class="project-header">
+              <div class="tabs">
+                <button class="tab active" type="button" data-tab="overview">Overview</button>
+                <button class="tab" type="button" data-tab="roadmap">Roadmap</button>
+                <button class="tab" type="button" data-tab="history">History</button>
+                <button class="tab" type="button" data-tab="docs">Docs</button>
+                <button class="tab tab-muted" type="button" data-tab="status">Status</button>
+              </div>
+            </div>
+
+            <main class="content">
         <noscript>
           <div class="readonly-banner">JavaScript is required to render this read-only view from local Contract Lite state.</div>
         </noscript>
@@ -160,7 +202,10 @@
           </section>
         </section>
 
-      </main>
+            </main>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="drawer-overlay" class="drawer-overlay"></div>
@@ -188,5 +233,8 @@
     </aside>
 
     <script src="assets/project-console.js" defer></script>
+    <!-- The shell module runs after the deferred renderer script, so the renderer's globals
+         (setActiveProjectBase / resetProjectScopedState / loadActiveProject) exist when it boots. -->
+    <script type="module" src="assets/project-shell.js"></script>
   </body>
 </html>

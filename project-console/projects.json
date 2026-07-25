@@ -1,0 +1,9 @@
+{
+  "registry_model": "project_registry_v1",
+  "title": "AIW Console",
+  "projects": [
+    { "key": "aiw-console", "root": ".." },
+    { "key": "cantu-studio", "root": "../../cantu-studio" },
+    { "key": "aiw", "root": "../../../aiw" }
+  ]
+}

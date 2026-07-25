@@ -1,33 +1,53 @@
-// Project Console — local READ-ONLY static server.
+// Project Console — local READ-ONLY static server for N projects.
 //
-// Serves the repository root over HTTP so project-console/index.html can fetch ../.project/*
-// and the Docs reader can fetch repository-local Markdown bodies. That is all it does.
+// Serves two namespaces, both read-only:
+//
+//   1. The repository root over HTTP, so project-console/index.html and its assets load.
+//      Unchanged from the single-project server.
+//   2. A VIRTUAL namespace /projects/<key>/** that maps onto the roots listed in the
+//      project registry (project-console/projects.json). This is how the multi-project
+//      shell reads the `.project/` folder and the doc bodies of every registered project,
+//      including sibling repositories that live OUTSIDE this repository root. The registry
+//      is the only door out of the repo: a root that is not registered is not reachable,
+//      and a registered root is readable only inside itself (no traversal, never .git).
+//
+// The registry is DATA, not code: no project name or path lives in this file. The env var
+// PC_REGISTRY (path relative to the repo root, or absolute) points the server at an
+// alternative registry file — used by the test suite and by operator QA to serve the
+// synthetic fixture projects under tests/fixtures/multi/ without touching the real registry.
 //
 // It follows the static-server pattern of the console this port comes from, minus everything
 // that could write: no roadmap edit endpoint, no history sync endpoint, no snapshot rebuild, no
-// Git command, no watcher, no scheduler. The console is a reader; this server is a reader.
+// Git command, no watcher. The console is a reader; this server is a reader.
 //
 // Boundaries:
 //   - Node built-ins only. No dependencies, no package install.
 //   - Writes NOTHING, anywhere. There is no code path in this file that opens a file for writing.
 //   - Answers GET and HEAD. Every other method gets 405, including on paths that do not exist:
 //     a write attempt is refused as a method, not answered as a missing page.
-//   - Never serves .git/, and never serves anything outside the repository root.
+//   - Never serves any .git/ directory — in this repo or in any registered project root.
+//   - Outside the virtual namespace, never serves anything outside the repository root.
 //
 // Start (one command, one port):
 //   node project-console/serve.mjs
-//   (optional PC_PORT env var to override the default port)
+//   (optional PC_PORT env var to override the default port;
+//    optional PC_REGISTRY env var to serve an alternative project registry)
 
 import http from "node:http";
 import { readFile } from "node:fs/promises";
-import { extname, join, normalize, resolve, sep, dirname } from "node:path";
+import { extname, join, normalize, resolve, sep, dirname, isAbsolute } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
-const GIT_DIR = join(REPO_ROOT, ".git");
 // The console's entry point, and the only default this server has an opinion about.
 const ENTRY = "/project-console/index.html";
+// The registry the shell fetches. The URL is fixed; the FILE it serves can be overridden
+// with PC_REGISTRY so tests and fixture QA never edit the real registry.
+const REGISTRY_URL_PATH = "/project-console/projects.json";
+const REGISTRY_DEFAULT_PATH = join(HERE, "projects.json");
+// URL prefix of the virtual per-project namespace.
+const PROJECTS_URL_PREFIX = "/projects/";
 const PORT = Number(process.env.PC_PORT) || 8788;
 const HOST = "127.0.0.1";
 
@@ -50,12 +70,75 @@ function logLine(message) {
   console.log(`[project-console] ${message}`);
 }
 
-function isPathSafe(absPath) {
-  const root = REPO_ROOT.endsWith(sep) ? REPO_ROOT : REPO_ROOT + sep;
-  if (absPath !== REPO_ROOT && !absPath.startsWith(root)) return false;
-  // Never serve the .git directory.
-  if (absPath === GIT_DIR || absPath.startsWith(GIT_DIR + sep)) return false;
-  return true;
+// Read fresh on every use so an operator can edit the registry without restarting the
+// server. It is one small file; the cost is a read per /projects/ request.
+function activeRegistryPath() {
+  const override = process.env.PC_REGISTRY;
+  if (!override) return REGISTRY_DEFAULT_PATH;
+  return isAbsolute(override) ? override : resolve(REPO_ROOT, override);
+}
+
+// Registry keys are URL path segments; anything outside this charset is refused so a key
+// can never smuggle a separator or a traversal into the path join below.
+const REGISTRY_KEY_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
+
+// Parse the registry into key -> absolute project root. Fail-soft: an unreadable or invalid
+// registry yields no entries (the virtual namespace answers 404), never a crash. Entries with
+// a bad key or a non-string root are skipped; project ROOTS may live outside this repository
+// — that is the point of the registry — but each one is served strictly inside itself.
+async function readRegistry() {
+  const path = activeRegistryPath();
+  let raw;
+  try {
+    raw = await readFile(path, "utf8");
+  } catch {
+    return { path, entries: new Map(), error: "unreadable" };
+  }
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return { path, entries: new Map(), error: "invalid_json" };
+  }
+  const listed = Array.isArray(parsed?.projects) ? parsed.projects : null;
+  if (!listed) return { path, entries: new Map(), error: "no_projects_array" };
+  const registryDir = dirname(path);
+  const entries = new Map();
+  for (const item of listed) {
+    const key = typeof item?.key === "string" ? item.key : "";
+    const root = typeof item?.root === "string" ? item.root : "";
+    if (!REGISTRY_KEY_PATTERN.test(key) || !root || entries.has(key)) continue;
+    entries.set(key, resolve(registryDir, root));
+  }
+  return { path, entries, error: null };
+}
+
+// True when absPath is root itself or inside it.
+function isInsideRoot(absPath, root) {
+  const base = root.endsWith(sep) ? root : root + sep;
+  return absPath === root || absPath.startsWith(base);
+}
+
+// Never serve any .git directory, in any namespace. Checked on the URL segments before any
+// filesystem resolution, so an encoded traversal cannot dodge it.
+function pathNamesGitDir(urlPath) {
+  return urlPath.split("/").some((segment) => segment.toLowerCase() === ".git");
+}
+
+// Resolve a /projects/<key>/<relative...> URL to { absPath } | { status } using the registry.
+async function resolveVirtualPath(urlPath) {
+  const rest = urlPath.slice(PROJECTS_URL_PREFIX.length);
+  const slash = rest.indexOf("/");
+  if (slash <= 0) return { status: 404 };
+  const key = rest.slice(0, slash);
+  const relative = rest.slice(slash + 1);
+  if (!relative) return { status: 404 };
+  const registry = await readRegistry();
+  const root = registry.entries.get(key);
+  if (!root) return { status: 404 };
+  const absPath = normalize(join(root, relative));
+  if (!isInsideRoot(absPath, root)) return { status: 403 };
+  return { absPath };
 }
 
 const server = http.createServer(async (req, res) => {
@@ -78,13 +161,39 @@ const server = http.createServer(async (req, res) => {
     res.end("bad request");
     return;
   }
-  const rel = urlPath === "/" ? ENTRY : urlPath;
-  const absPath = normalize(join(REPO_ROOT, rel));
-  if (!isPathSafe(absPath)) {
+  if (urlPath.includes("\0")) {
+    res.writeHead(400);
+    res.end("bad request");
+    return;
+  }
+  if (pathNamesGitDir(urlPath)) {
     res.writeHead(403);
     res.end("forbidden");
     return;
   }
+
+  let absPath;
+  if (urlPath === REGISTRY_URL_PATH) {
+    // The registry URL is fixed for the client; the file behind it honours PC_REGISTRY.
+    absPath = activeRegistryPath();
+  } else if (urlPath.startsWith(PROJECTS_URL_PREFIX)) {
+    const resolved = await resolveVirtualPath(urlPath);
+    if (!resolved.absPath) {
+      res.writeHead(resolved.status);
+      res.end(resolved.status === 403 ? "forbidden" : "not found");
+      return;
+    }
+    absPath = resolved.absPath;
+  } else {
+    const rel = urlPath === "/" ? ENTRY : urlPath;
+    absPath = normalize(join(REPO_ROOT, rel));
+    if (!isInsideRoot(absPath, REPO_ROOT)) {
+      res.writeHead(403);
+      res.end("forbidden");
+      return;
+    }
+  }
+
   try {
     const data = await readFile(absPath);
     res.writeHead(200, {
@@ -115,8 +224,21 @@ const RUN_DIRECTLY = process.argv[1]
 if (RUN_DIRECTLY) {
   server.listen(PORT, HOST, () => {
     logLine(`serving ${REPO_ROOT} read-only (GET/HEAD only; every write answers 405)`);
+    logLine(`registry: ${activeRegistryPath()}`);
     logLine(`open  http://${HOST}:${PORT}${ENTRY}`);
   });
 }
 
-export { server, PORT, HOST, ENTRY, REPO_ROOT };
+export {
+  server,
+  PORT,
+  HOST,
+  ENTRY,
+  REPO_ROOT,
+  REGISTRY_URL_PATH,
+  PROJECTS_URL_PREFIX,
+  activeRegistryPath,
+  readRegistry,
+  resolveVirtualPath,
+  pathNamesGitDir
+};

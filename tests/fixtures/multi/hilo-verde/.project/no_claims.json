@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "project_id": "hilo_verde",
+  "generated_at": "2026-07-24T12:00:00.000Z",
+  "generated_from": "hand-authored-test-fixture (NOT emitted; tests only)",
+  "sources": [
+    { "path": "README.md", "mtime": "2026-07-24T11:00:00.000Z" }
+  ],
+  "claims": [
+    {
+      "claim": "hilo-verde es un proyecto real",
+      "status": "DISALLOWED",
+      "allowed_only_if": "Nunca: es un fixture sintetico que vive bajo tests/ y solo existe para probar la capacidad multiproyecto del shell.",
+      "current_reason": "Proyecto sintetico de prueba."
+    }
+  ]
+}

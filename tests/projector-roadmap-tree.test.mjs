@@ -112,10 +112,29 @@ test("a roadmap_tree_v1 root detects as roadmap_tree; an AIW root still detects 
   }
 });
 
-test("a roadmap of another model does not claim this mode", () => {
-  const root = makeTreeRoot({ ...TREE, schema_version: "jame.roadmap_v3.v0.2-progress" });
+// SUPERSEDED BY O4.P4. This test used to assert that a roadmap declaring another model name did
+// NOT claim this mode. That was the string gate, and O4.P4 replaced it with a shape gate for the
+// reason of §10.c: the only trees a name gate can ever admit are trees named by whoever chose the
+// name, which is baked identity one level up. What the mode must still refuse is a roadmap of
+// another SHAPE — that is what is asserted here now, and the model-name case is asserted the
+// other way round (a foreign name is admitted, and carried) in tests/projector-cantu.test.mjs.
+test("a roadmap of another SHAPE does not claim this mode, whatever it declares", () => {
+  const flat = { schema_version: ROADMAP_TREE_MODEL, objectives: [{ title: "No ids here", phases: [{ title: "P", runs: [] }] }] };
+  const root = makeTreeRoot(flat);
   try {
     assert.equal(detectRootMode(root), "aiw_objectives");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("a conforming tree that names its own model is admitted, and the name travels", () => {
+  const root = makeTreeRoot({ ...TREE, schema_version: "some.vendor.roadmap.v0.2" });
+  try {
+    assert.equal(detectRootMode(root), "roadmap_tree");
+    const snapshot = buildRoadmapTreeSnapshot(root, { now: FIXED_NOW });
+    assert.equal(snapshot.roadmap_tree.model, "some.vendor.roadmap.v0.2");
+    assert.equal(snapshot.taxonomy_model.model, "some.vendor.roadmap.v0.2");
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-25T03:07:00.370Z",
-  "generated_from": "aiw-projector@0.4.0",
+  "generated_at": "2026-07-25T10:22:07.015Z",
+  "generated_from": "aiw-projector@0.5.0",
   "sources": [
     {
       "path": "README.md",
@@ -35,6 +35,10 @@
     {
       "path": "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md",
       "mtime": "2026-07-25T02:11:41.477Z"
+    },
+    {
+      "path": "context/aiw-console/records/EMISOR-CANTU-CARPETA-PROPIA-O4-P4.md",
+      "mtime": "2026-07-25T10:21:59.828Z"
     },
     {
       "path": "context/aiw-console/records/EMISOR-CARPETA-PROPIA-O4-P2.md",
@@ -81,6 +85,10 @@
       "mtime": "2026-07-25T02:11:41.491Z"
     },
     {
+      "path": "context/aiw-console/records/SHELL-MULTIPROYECTO-O4-P3.md",
+      "mtime": "2026-07-25T08:39:35.715Z"
+    },
+    {
       "path": "context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md",
       "mtime": "2026-07-25T02:11:41.493Z"
     },
@@ -114,7 +122,7 @@
     },
     {
       "path": "project-console/README.md",
-      "mtime": "2026-07-25T03:00:06.783Z"
+      "mtime": "2026-07-25T08:36:48.443Z"
     }
   ],
   "nav_tier_model": {
@@ -226,6 +234,14 @@
       "freshness": "2026-07-25T02:11:41.477Z"
     },
     {
+      "title": "EMISOR — `cantu-studio` emite su carpeta propia (`O4.P4`)",
+      "path": "context/aiw-console/records/EMISOR-CANTU-CARPETA-PROPIA-O4-P4.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-25T10:21:59.828Z"
+    },
+    {
       "title": "EMISOR — `aiw-console` emite su propia carpeta (`O4.P2`)",
       "path": "context/aiw-console/records/EMISOR-CARPETA-PROPIA-O4-P2.md",
       "nav_tier": "evidence",
@@ -314,6 +330,14 @@
       "freshness": "2026-07-25T02:11:41.491Z"
     },
     {
+      "title": "SHELL MULTIPROYECTO — la consola agrega N proyectos con menú lateral (`O4.P3`)",
+      "path": "context/aiw-console/records/SHELL-MULTIPROYECTO-O4-P3.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-25T08:39:35.715Z"
+    },
+    {
       "title": "VEREDICTO — `roadmap_tree_v1` como formato consumible",
       "path": "context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md",
       "nav_tier": "evidence",
@@ -378,12 +402,12 @@
       "freshness": "2026-07-23T01:24:40.659Z"
     },
     {
-      "title": "Project Console (transplanted, read-only)",
+      "title": "Project Console (transplanted, read-only, multi-project)",
       "path": "project-console/README.md",
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "project-console",
-      "freshness": "2026-07-25T03:00:06.783Z"
+      "freshness": "2026-07-25T08:36:48.443Z"
     }
   ]
 }

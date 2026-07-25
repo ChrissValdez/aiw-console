@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-25T03:07:00.370Z",
-  "generated_from": "aiw-projector@0.4.0",
+  "generated_at": "2026-07-25T10:22:07.015Z",
+  "generated_from": "aiw-projector@0.5.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-25T03:02:57.432Z"
+      "mtime": "2026-07-25T09:53:40.571Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,13 +14,43 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "c53403613ef47a61102f65735793c41aceebf32e",
+  "head": "35695549a3bcae9513f96ae172961313aaa0e43b",
   "current_branch": "main",
   "branches": [
     "main"
   ],
-  "commit_total": 35,
+  "commit_total": 38,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "3569554",
+      "full_sha": "35695549a3bcae9513f96ae172961313aaa0e43b",
+      "date": "2026-07-25T03:53:40-06:00",
+      "parents": "b0333db",
+      "subject": "shell: consola multiproyecto con menu lateral y portfolio (O4.P3)",
+      "body": "- Registro projects.json (project_registry_v1) y namespace virtual /projects/<key>/**\n\n- Vocabulario por proyecto desde taxonomy_model del snapshot activo\n\n- Anuncio de ausencia por superficie (§20) y fix de layout del banner\n\n- Suite 85/85; record SHELL-MULTIPROYECTO-O4-P3",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b0333db",
+      "full_sha": "b0333db7c26b3a7bd35cd9381b5890c19041e891",
+      "date": "2026-07-25T01:56:35-06:00",
+      "parents": "be80fee",
+      "subject": "design: prototipo visual del dashboard multiproyecto, insumo de O4.P3",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "be80fee",
+      "full_sha": "be80fee760e469a18f30183f7f37ad801509034f",
+      "date": "2026-07-24T23:11:48-06:00",
+      "parents": "c534036",
+      "subject": "port: acabado visual de Docs y emisor de git_history",
+      "body": "- Docs: retirados toggle de retention, tags de retention y de tier; codigo muerto borrado\n\n- Edit roadmap oculto de forma reversible\n\n- git_history_v1 emitido a .project/; History pinta; Diagnostics 10->9 Failed\n\n- Suite 49/49; record ACABADO-DOCS-Y-EMISOR-GIT-HISTORY",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "c534036",

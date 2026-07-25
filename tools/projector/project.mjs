@@ -10,9 +10,13 @@
 //      conforming to docs/snapshot-schema-v1.md (schema_version 1) — the canonical path
 //      the frozen console UI fetches — plus the optional Roadmap view.
 //
-//   2. `roadmap_tree` (added by O4.P2, RUN-CONSOLE-EMISOR-CARPETA-PROPIA-001). A project
-//      root whose own plan lives in `roadmap/roadmap.json` as a `roadmap_tree_v1` tree
+//   2. `roadmap_tree` (added by O4.P2, RUN-CONSOLE-EMISOR-CARPETA-PROPIA-001; generalized to
+//      N projects by O4.P4). A project root whose own plan is an objective→phase→run tree
 //      (context/aiw-console/CONTRATO.md capa 2) — no objectives/, no logs/, no config.json.
+//      WHERE that tree lives is a LAYOUT (`ROOT_LAYOUTS`), and WHICH model it declares is the
+//      tree's own business: the mode is claimed by the tree's SHAPE, and the declared model
+//      identifier is carried through verbatim. Neither a path nor a model string names a
+//      project, so a second project needed no entry of its own here.
 //      It emits the contract folder of CONTRATO §1/§1.b:
 //        <project-root>/.project/snapshot.json      (REQUIRED, capa 1)
 //        <project-root>/.project/roadmap.json       (optional, §19; added by O4.P11)
@@ -56,7 +60,11 @@ export const SCHEMA_VERSION = 1;
 // emitter that wrote four, and two different behaviours must not answer to one version.
 // 0.4.0 adds the other optional of §19, `.project/git_history.json` — and with it the first
 // input this emitter reads that is not a file: the root's own Git repository.
-export const PROJECTOR_VERSION = "0.4.0";
+// 0.5.0 (O4.P4) makes root mode 2 serve N projects: the inputs are resolved through a LAYOUT
+// instead of one hardcoded path set, and the mode is claimed by the tree's SHAPE instead of by
+// a model string this emitter recognises. An emitter that can read a second project's layout is
+// not the same emitter that could read only one, so the version moves (§6).
+export const PROJECTOR_VERSION = "0.5.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 // Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
@@ -571,14 +579,48 @@ export const PROJECT_DOCS_INDEX_RELATIVE_PATH = join(PROJECT_DIR, "docs_index.js
 export const PROJECT_GUARDRAILS_RELATIVE_PATH = join(PROJECT_DIR, "guardrails.json");
 export const PROJECT_NO_CLAIMS_RELATIVE_PATH = join(PROJECT_DIR, "no_claims.json");
 
-// Inputs of this mode, all inside the project root, all read-only.
-export const ROADMAP_TREE_SOURCE_PATH = join("roadmap", "roadmap.json");
-const PACKAGE_SOURCE_PATH = "package.json";
-const GUARDRAILS_SOURCE_PATH = join("governance", "guardrails.json");
-const NO_CLAIMS_SOURCE_PATH = join("governance", "no_claims.json");
-const CONTRACT_REF_SOURCE_PATH = join("governance", "contract.json");
+// ROOT LAYOUTS (O4.P4) — WHERE this mode's inputs live inside a project root.
+//
+// The first emitter of this mode had ONE hardcoded path set, which was the path set of the one
+// project it emitted. A second project keeps its plan and its governance somewhere else, so the
+// path set had to stop being a constant. It became a LIST OF LAYOUTS: each entry is a complete,
+// self-consistent bundle of relative paths, and a root is matched against them IN ORDER.
+//
+// A layout is a SHAPE OF ROOT, not a project. No entry below contains a project name, a project
+// id, or an absolute path — `repo_root` describes "the plan sits at the top of the repo" and
+// `project_local_aiw` describes "the plan sits in the project-local AIW area". Any root with
+// either shape is served, and a third shape is a fourth line here, not a branch anywhere.
+//
+// The bundle is resolved AS A UNIT: whichever layout supplies the roadmap tree also supplies the
+// governance sources. Probing each input independently would let a root be read half in one
+// layout and half in another — the emitter would then be reporting a project that does not exist.
+export const ROOT_LAYOUTS = [
+  {
+    layout: "repo_root",
+    roadmap: join("roadmap", "roadmap.json"),
+    guardrails: join("governance", "guardrails.json"),
+    no_claims: join("governance", "no_claims.json"),
+    contract_ref: join("governance", "contract.json")
+  },
+  {
+    layout: "project_local_aiw",
+    roadmap: join(".aiw", "roadmap", "roadmap.json"),
+    guardrails: join(".aiw", "guardrails", "project_guardrails.json"),
+    no_claims: join(".aiw", "guardrails", "no_claims.json"),
+    contract_ref: join(".aiw", "guardrails", "contract.json")
+  }
+];
 
-// CONTRATO §10.c — the tree identifies its own model. This emitter reads exactly this one.
+// Kept as an export because it is the DEFAULT layout's roadmap path and callers/tests name it.
+// Code inside this file must use the layout-resolved path, never this constant.
+export const ROADMAP_TREE_SOURCE_PATH = ROOT_LAYOUTS[0].roadmap;
+// Layout-independent: identity is a property of the repo, not of where its plan lives.
+const PACKAGE_SOURCE_PATH = "package.json";
+
+// CONTRATO §10.c — the tree identifies its own model. This is the identifier of the model THIS
+// CONTRACT specifies; it is what a tree that declares nothing is credited with, and the name the
+// shape gate below checks conformance against. It is NOT a gate: a conforming tree that calls
+// itself something else keeps its own name (`declaredRoadmapModel`).
 export const ROADMAP_TREE_MODEL = "roadmap_tree_v1";
 
 // CONTRATO §11.a — run status: STORED, four tokens, closed vocabulary.
@@ -655,22 +697,72 @@ function sourceRecord(root, relativePath) {
   }
 }
 
-// Read <root>/roadmap/roadmap.json and accept it only when it declares the model this emitter
-// knows how to read. Anything else — absent, unparseable, another model — returns null, which
-// is how `detectRootMode` decides this is not a roadmap_tree root.
-export function readRoadmapTree(root) {
-  const tree = safeReadJson(resolve(root, ROADMAP_TREE_SOURCE_PATH));
-  if (!tree || tree.schema_version !== ROADMAP_TREE_MODEL || !Array.isArray(tree.objectives)) {
-    return null;
-  }
-  return tree;
+// THE SHAPE GATE (O4.P4). A tree claims this mode by CONFORMING to capa 2, not by declaring a
+// string this emitter recognises.
+//
+// The first emitter gated on `schema_version === "roadmap_tree_v1"`. That gate is exactly the
+// baked identity §10.c warns about, one level up: the only trees that could ever pass it were
+// trees written by whoever chose that name. A second project's tree is the same three levels
+// with the same keys under a name of its own, and it was refused for its name alone.
+//
+// What is checked is what this emitter actually CONSUMES: three levels, each level identified
+// (`objective_id` / `phase_id` / `run_id`) and each run carrying a `status`. Those are the exact
+// fields `flattenRoadmapTree`, the derivations and `currentStatusSummary` read, so a tree that
+// passes can be emitted in full and a tree that fails could only have been emitted with holes.
+//
+// The identification fields are load-bearing beyond documentation: mode 1's OWN emitted roadmap
+// view (`buildRoadmap`) is also objectives→phases→runs, but its levels carry `title` and no ids.
+// Requiring the ids is what keeps a projected AIW root — which gains `.aiw/roadmap/roadmap.json`
+// at startup projection — in mode 1 instead of flipping it into mode 2 on the next run.
+export function hasRoadmapTreeShape(tree) {
+  if (!tree || typeof tree !== "object" || !Array.isArray(tree.objectives)) return false;
+  const named = (value) => typeof value === "string" && value.length > 0;
+  return tree.objectives.every(
+    (objective) =>
+      objective && typeof objective === "object" &&
+      named(objective.objective_id) &&
+      Array.isArray(objective.phases) &&
+      objective.phases.every(
+        (phase) =>
+          phase && typeof phase === "object" &&
+          named(phase.phase_id) &&
+          Array.isArray(phase.runs) &&
+          phase.runs.every((run) => run && typeof run === "object" && named(run.run_id) && named(run.status))
+      )
+  );
 }
 
-// Which root mode a project root is in, decided ONLY by what the root contains. A root with a
-// `roadmap_tree_v1` roadmap is mode 2; everything else keeps the original mode 1 behaviour,
-// including every AIW root in existence (they have objectives/, not roadmap/roadmap.json).
+// CONTRATO §10.c — the model identifier the tree declares for ITSELF, carried verbatim into
+// everything emitted from it. A conforming tree that declares no model at all is credited with
+// this contract's own identifier: the shape was verified, so naming it is a measurement, not an
+// invention. What is never done is RELABELLING a tree that named itself.
+export function declaredRoadmapModel(tree) {
+  return typeof tree?.schema_version === "string" && tree.schema_version
+    ? tree.schema_version
+    : ROADMAP_TREE_MODEL;
+}
+
+// Match a root against the layouts, in order, and return the FIRST whose roadmap file both parses
+// and conforms. Returns { layout, paths, tree } or null. This — and nothing else — is what decides
+// that a root is a roadmap_tree root, so "the shape of the root picks the mode" stays literally true.
+export function detectRootLayout(root) {
+  for (const paths of ROOT_LAYOUTS) {
+    const tree = safeReadJson(resolve(root, paths.roadmap));
+    if (hasRoadmapTreeShape(tree)) return { layout: paths.layout, paths, tree };
+  }
+  return null;
+}
+
+// The tree of whichever layout claimed the root, or null when no layout did.
+export function readRoadmapTree(root) {
+  return detectRootLayout(root)?.tree || null;
+}
+
+// Which root mode a project root is in, decided ONLY by what the root contains. A root that
+// publishes a conforming objective→phase→run tree in any known layout is mode 2; everything else
+// keeps the original mode 1 behaviour, including every AIW root in existence.
 export function detectRootMode(root) {
-  return readRoadmapTree(root) ? "roadmap_tree" : "aiw_objectives";
+  return detectRootLayout(root) ? "roadmap_tree" : "aiw_objectives";
 }
 
 // Flatten the three levels into runs, each carrying the ids of the objective and phase it came
@@ -718,17 +810,21 @@ export function deriveProjectOperationalStatus(runStatuses) {
 // AND the derivation rule for the tokens that are not stored. Both are read off the same
 // constants the emitter itself executes, so the declaration is derived, never a parallel literal
 // (the defect §17 measured in mode 1, `PROJ:38,40` → `:463-466`).
-function buildTaxonomyModel(root) {
+function buildTaxonomyModel(root, layout) {
   // Pointer to the normative document, when the PROJECT declares where its own contract lives
-  // (governance/contract.json). No document path is baked in here: a project that declares
+  // (the layout's `contract_ref`). No document path is baked in here: a project that declares
   // nothing simply gets no pointer, and a declared path that does not resolve is omitted (§7).
-  const declared = safeReadJson(resolve(root, CONTRACT_REF_SOURCE_PATH));
+  const declared = safeReadJson(resolve(root, layout.paths.contract_ref));
   const specifiedBy =
     declared && typeof declared.specified_by === "string"
       ? sourceRecord(root, declared.specified_by)
       : null;
   return {
-    model: ROADMAP_TREE_MODEL,
+    // The vocabulary declared here is the vocabulary of THIS tree, so it is named with THIS
+    // tree's own model identifier — not with the identifier of the contract that specifies the
+    // shape. Two projects with different model names get two different declarations, which is
+    // what lets one reader execute both without knowing either emitter.
+    model: declaredRoadmapModel(layout.tree),
     // One entry per axis. `axis` names WHAT the tokens qualify, so two axes sharing a token
     // (`active` on a run vs on the project) can never be read as one vocabulary.
     vocabularies: {
@@ -802,7 +898,7 @@ function projectFileEnvelope(root, opts, sourcePaths) {
 // copies of the tree cannot drift apart — the same discipline `COLLECTION_STATUS_RULES` gets.
 function roadmapTreeBlock(tree) {
   return {
-    model: ROADMAP_TREE_MODEL,
+    model: declaredRoadmapModel(tree),
     ...(tree.roadmap_id ? { roadmap_id: tree.roadmap_id } : {}),
     ...(tree.title ? { title: tree.title } : {}),
     objectives: tree.objectives
@@ -814,20 +910,24 @@ function roadmapTreeBlock(tree) {
 // tree block is the one above, byte for byte. Returns null when the root is not a
 // `roadmap_tree` root, in which case §18/§20 apply — the file is simply not emitted.
 export function buildProjectRoadmap(root, opts = {}) {
-  const tree = readRoadmapTree(root);
-  if (!tree) return null;
+  const layout = detectRootLayout(root);
+  if (!layout) return null;
   return {
-    ...projectFileEnvelope(root, opts, [ROADMAP_TREE_SOURCE_PATH]),
-    ...roadmapTreeBlock(tree)
+    ...projectFileEnvelope(root, opts, [layout.paths.roadmap]),
+    ...roadmapTreeBlock(layout.tree)
   };
 }
 
-// Build the REQUIRED snapshot (CONTRATO capa 1) from a `roadmap_tree_v1` root. Pure read.
+// Build the REQUIRED snapshot (CONTRATO capa 1) from a roadmap-tree root. Pure read.
 export function buildRoadmapTreeSnapshot(root, opts = {}) {
-  const tree = readRoadmapTree(root);
-  if (!tree) {
-    throw new Error(`Not a ${ROADMAP_TREE_MODEL} root: ${resolve(root, ROADMAP_TREE_SOURCE_PATH)}`);
+  const layout = detectRootLayout(root);
+  if (!layout) {
+    throw new Error(
+      `No ${ROADMAP_TREE_MODEL}-shaped roadmap under ${resolve(root)} ` +
+      `(layouts tried: ${ROOT_LAYOUTS.map((entry) => entry.roadmap).join(", ")})`
+    );
   }
+  const tree = layout.tree;
 
   const flat = flattenRoadmapTree(tree);
   const runStatuses = flat.map(({ run }) => run.status);
@@ -852,12 +952,12 @@ export function buildRoadmapTreeSnapshot(root, opts = {}) {
     currentStatusSummary = "No runs in the roadmap.";
   }
 
-  const noClaims = safeReadJson(resolve(root, NO_CLAIMS_SOURCE_PATH));
+  const noClaims = safeReadJson(resolve(root, layout.paths.no_claims));
   const noClaimsCount = noClaims && Array.isArray(noClaims.claims) ? noClaims.claims.length : null;
   const noClaimsSource = sourceRecord(root, PROJECT_NO_CLAIMS_RELATIVE_PATH);
 
   return {
-    ...projectFileEnvelope(root, opts, [ROADMAP_TREE_SOURCE_PATH, PACKAGE_SOURCE_PATH]),
+    ...projectFileEnvelope(root, opts, [layout.paths.roadmap, PACKAGE_SOURCE_PATH]),
     operational_status: deriveProjectOperationalStatus(runStatuses),
     project_summary:
       `${tree.title || tree.roadmap_id || "Roadmap"}: ${objectiveCount} objectives, ` +
@@ -885,7 +985,7 @@ export function buildRoadmapTreeSnapshot(root, opts = {}) {
     // Still opaque, and honestly so: the capa-3 validator does not exist, so nothing real
     // fills this. §3.b — no schema without emitter and example.
     validation_summary: {},
-    taxonomy_model: buildTaxonomyModel(root)
+    taxonomy_model: buildTaxonomyModel(root, layout)
   };
 }
 
@@ -967,6 +1067,7 @@ export function buildDocsIndex(root, opts = {}) {
 // or malformed source yields null and the file is simply not emitted — §18/§20: better an
 // announced absence than an invented table.
 function buildTransportedList(root, sourcePath, key, opts) {
+  if (!sourcePath) return null;
   const source = safeReadJson(resolve(root, sourcePath));
   if (!source || !Array.isArray(source[key])) return null;
   return {
@@ -975,12 +1076,14 @@ function buildTransportedList(root, sourcePath, key, opts) {
   };
 }
 
+// The governance sources come from the SAME layout that supplied the roadmap: a root whose plan
+// this emitter cannot read is a root whose governance it has no business republishing either.
 export function buildGuardrails(root, opts = {}) {
-  return buildTransportedList(root, GUARDRAILS_SOURCE_PATH, "guardrails", opts);
+  return buildTransportedList(root, detectRootLayout(root)?.paths.guardrails, "guardrails", opts);
 }
 
 export function buildNoClaims(root, opts = {}) {
-  return buildTransportedList(root, NO_CLAIMS_SOURCE_PATH, "claims", opts);
+  return buildTransportedList(root, detectRootLayout(root)?.paths.no_claims, "claims", opts);
 }
 
 // ---------------------------------------------------------------------------
@@ -1066,8 +1169,7 @@ function isOwnGitRoot(bin, root) {
 // Every run_id declared by the project's OWN roadmap tree. This is the whole vocabulary against
 // which a commit's run association is verified — it comes from the project's data, so no run-id
 // prefix, project name, or ticket convention is baked into this file.
-function roadmapRunIds(root) {
-  const tree = readRoadmapTree(root);
+function roadmapRunIds(tree) {
   if (!tree) return new Set();
   return new Set(flattenRoadmapTree(tree).map(({ run }) => run.run_id).filter(Boolean));
 }
@@ -1156,7 +1258,8 @@ export function buildGitHistory(root, opts = {}) {
   // which already filters its own (`historyVisibleBranches`). An emitter that drops data is lying.
   branches.sort((a, b) => (a === "main" ? -1 : b === "main" ? 1 : a < b ? -1 : a > b ? 1 : 0));
 
-  const runIds = roadmapRunIds(root);
+  const layout = detectRootLayout(root);
+  const runIds = roadmapRunIds(layout?.tree);
   const commits = [];
   try {
     for (const branch of branches) {
@@ -1175,7 +1278,7 @@ export function buildGitHistory(root, opts = {}) {
     // commits this is) and the roadmap tree (read only to verify run associations). Repository
     // freshness is carried better by `head` than by any mtime — a sha changes exactly when the
     // history does — so §6 is served by both together.
-    ...projectFileEnvelope(root, opts, [".git", ROADMAP_TREE_SOURCE_PATH]),
+    ...projectFileEnvelope(root, opts, [".git", ...(layout ? [layout.paths.roadmap] : [])]),
     model: GIT_HISTORY_MODEL,
     head,
     // Omitted on a detached HEAD rather than emitted empty: the reader then picks its own default
@@ -1210,6 +1313,7 @@ export function resolveProjectFilePath(root, relativePath) {
 // Returns { ok, mode, project_id, files: [{ artifact, path, bytes, ... }] }.
 export function writeProjectFolder(root, opts = {}) {
   const now = opts.now || new Date().toISOString();
+  const layout = detectRootLayout(root);
   const written = [];
 
   const write = (artifact, relativePath, data, summary) => {
@@ -1259,7 +1363,16 @@ export function writeProjectFolder(root, opts = {}) {
     runs: flat.length
   });
 
-  return { ok: true, mode: "roadmap_tree", project_id: snapshot.project_id, files: written };
+  return {
+    ok: true,
+    mode: "roadmap_tree",
+    // Which layout claimed this root, and which model its tree declares. Both are measurements of
+    // the root, reported so an operator never has to guess how their project was read.
+    layout: layout?.layout || null,
+    roadmap_model: snapshot.roadmap_tree.model,
+    project_id: snapshot.project_id,
+    files: written
+  };
 }
 
 // CLI entry: `node tools/projector/project.mjs [project-root]` (defaults to cwd). The root's own
@@ -1270,7 +1383,10 @@ if (invokedDirectly) {
   try {
     if (detectRootMode(root) === "roadmap_tree") {
       const result = writeProjectFolder(root);
-      console.log(`[projector] mode=roadmap_tree project=${result.project_id}`);
+      console.log(
+        `[projector] mode=roadmap_tree layout=${result.layout} ` +
+        `model=${result.roadmap_model} project=${result.project_id}`
+      );
       for (const file of result.files) {
         const detail = file.artifact === "snapshot"
           ? `objectives=${file.objectives}; runs=${file.runs}`

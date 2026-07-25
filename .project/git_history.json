@@ -1,0 +1,375 @@
+{
+  "schema_version": 1,
+  "project_id": "aiw_console",
+  "generated_at": "2026-07-25T03:07:00.370Z",
+  "generated_from": "aiw-projector@0.4.0",
+  "sources": [
+    {
+      "path": ".git",
+      "mtime": "2026-07-25T03:02:57.432Z"
+    },
+    {
+      "path": "roadmap/roadmap.json",
+      "mtime": "2026-07-25T02:11:41.520Z"
+    }
+  ],
+  "model": "git_history_v1",
+  "head": "c53403613ef47a61102f65735793c41aceebf32e",
+  "current_branch": "main",
+  "branches": [
+    "main"
+  ],
+  "commit_total": 35,
+  "commits": [
+    {
+      "branch": "main",
+      "sha": "c534036",
+      "full_sha": "c53403613ef47a61102f65735793c41aceebf32e",
+      "date": "2026-07-24T16:55:16-06:00",
+      "parents": "e50a3a3",
+      "subject": "O4: reorden D-048, emisor .project/ (P2) y port identico de la consola (P11)",
+      "body": "- D-048: reorden de O4 (emisor -> port -> multiconsola); prototipo P10 retirado\n\n- P2: modo de root roadmap_tree en el proyector; emite .project/ (snapshot + docs_index + guardrails + no_claims)\n\n- P11: consola trasplantada de Cantu leyendo fuentes propias; addendum .project/roadmap.json\n\n- Records: MEDICION-FUENTES-CONSOLA, EMISOR-CARPETA-PROPIA-O4-P2, port; handoff actualizado",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e50a3a3",
+      "full_sha": "e50a3a3feee6c3e1544f2de7c027d5ed967e35fe",
+      "date": "2026-07-24T06:11:35-06:00",
+      "parents": "9115165",
+      "subject": "roadmap: reorden de O4, prototipo primero y UI/UX antes del corte; handoff",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "9115165",
+      "full_sha": "91151659167409cd4bd0a0e2d246e254631bb301",
+      "date": "2026-07-24T05:21:30-06:00",
+      "parents": "a981e30",
+      "subject": "docs: D-046 cierre del tramo 1; puntero en la fuente superada; handoff reescrito",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "a981e30",
+      "full_sha": "a981e301109f59b08a1c61d3d4d88c5f92d25fd6",
+      "date": "2026-07-24T05:10:07-06:00",
+      "parents": "98c8974",
+      "subject": "roadmap: redactar O4 en el roadmap propio; 17 runs en 10 fases",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "98c8974",
+      "full_sha": "98c89742f63138b25bdabe197b91220a03e4f7fb",
+      "date": "2026-07-24T03:31:00-06:00",
+      "parents": "636bed3",
+      "subject": "record: medicion de O4 en el roadmap de AIW, insumo de su redaccion",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "636bed3",
+      "full_sha": "636bed32e14d234c54744ce9b1f129c590371663",
+      "date": "2026-07-24T03:13:11-06:00",
+      "parents": "fabf573",
+      "subject": "record: medicion del validador en rojo tras la extraccion de O0",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fabf573",
+      "full_sha": "fabf5731088eaea5ea520de6300fcee029e89237",
+      "date": "2026-07-24T03:11:38-06:00",
+      "parents": "93307d4",
+      "subject": "docs: D-045 el validador de Cantu y el consumidor que si existia",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "93307d4",
+      "full_sha": "93307d43ba3d3d66f5b47c86233f9b588a314165",
+      "date": "2026-07-24T02:35:24-06:00",
+      "parents": "e82bfb2",
+      "subject": "roadmap: estrenar roadmap propio con los 12 runs de O0; record de migracion",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e82bfb2",
+      "full_sha": "e82bfb22d53c04685d5ae53fd626fd9d4c2d07ae",
+      "date": "2026-07-24T02:13:13-06:00",
+      "parents": "84d48b2",
+      "subject": "docs: pasada de coherencia del contrato; indice y criterio de mantenimiento",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "84d48b2",
+      "full_sha": "84d48b2827639fd427f1a4e16ecf43e9a5845f1a",
+      "date": "2026-07-23T21:00:29-06:00",
+      "parents": "4e15d80",
+      "subject": "docs: D-043 forma y estabilidad de run_id; hallazgos del emisor",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4e15d80",
+      "full_sha": "4e15d801b022a666a2de35243257031c04d03282",
+      "date": "2026-07-23T20:48:08-06:00",
+      "parents": "79bcbf6",
+      "subject": "docs: D-042 re-archivo del bloque de rename; record de medicion del proyector",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "79bcbf6",
+      "full_sha": "79bcbf63c2379437b8af154a5b7fcea61ba5b19e",
+      "date": "2026-07-23T20:24:47-06:00",
+      "parents": "6e83bc7",
+      "subject": "record: re-archivo del bloque de rename, O0 pasa de 17 a 12 runs",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6e83bc7",
+      "full_sha": "6e83bc79f7c0298e2efd6cb1f38e3972327ae94a",
+      "date": "2026-07-23T19:27:24-06:00",
+      "parents": "e9808e0",
+      "subject": "docs: D-041 depends_on externo y enmienda a D-034 sobre el alcance de O0",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e9808e0",
+      "full_sha": "e9808e02afe24e3c0e803a87cdd242f7831c5a79",
+      "date": "2026-07-23T19:08:39-06:00",
+      "parents": "c2f8198",
+      "subject": "record: medicion del grafo de dependencias de O0, insumo del alcance de migracion",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c2f8198",
+      "full_sha": "c2f8198591fc419191428e8856075c355dbebe6c",
+      "date": "2026-07-23T18:57:46-06:00",
+      "parents": "d8f7361",
+      "subject": "docs: D-040 contrato capa 3, archivos opcionales y degradacion declarada",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d8f7361",
+      "full_sha": "d8f73611f3f46a307535f73d6c746451b960f883",
+      "date": "2026-07-23T18:45:30-06:00",
+      "parents": "2dd9741",
+      "subject": "docs: contrato capa 2, el roadmap; schema_version propio y taxonomy_model resuelto",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2dd9741",
+      "full_sha": "2dd97414e74db169bac77d985783f53b5d7ebde5",
+      "date": "2026-07-23T17:42:52-06:00",
+      "parents": "21b96a9",
+      "subject": "record: medicion del roadmap v3 y taxonomy_model, insumo capa 2",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "21b96a9",
+      "full_sha": "21b96a9294c00d045e8ab966176bf176e649c8cc",
+      "date": "2026-07-23T17:31:34-06:00",
+      "parents": "616c80e",
+      "subject": "docs: D-039 contrato capa 1; .project como nombre de carpeta; frescura con sources",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "616c80e",
+      "full_sha": "616c80ed06b63c433c81f0b3f982f9ee8ea25f87",
+      "date": "2026-07-23T14:08:19-06:00",
+      "parents": "d9c97ce",
+      "subject": "docs: D-038 taxonomia de contexto; handoffs por hilo; DECISIONES al sistema",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d9c97ce",
+      "full_sha": "d9c97ce14239bba2d1aa606ddc0feca7009347a0",
+      "date": "2026-07-23T13:40:10-06:00",
+      "parents": "fbbae21",
+      "subject": "docs: D-037 mudanza de contexto de cabina; recibir DELEGACION.md",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fbbae21",
+      "full_sha": "fbbae214e2ca02e7ae4cb3477747a865ca3276c9",
+      "date": "2026-07-23T13:14:53-06:00",
+      "parents": "a229785",
+      "subject": "chore(context): adoptar CANTU_STUDIO_CONTEXT.md huerfano como canonico",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "a229785",
+      "full_sha": "a229785b24ae598c8db840926d9ba3fa8336272e",
+      "date": "2026-07-23T13:00:24-06:00",
+      "parents": "29c9478",
+      "subject": "chore(context): recibir contexto canonico de aiw; README + reporte de migracion",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "29c9478",
+      "full_sha": "29c9478e86b7aef84a80ada31e7db9e396e5b981",
+      "date": "2026-07-22T15:23:17-06:00",
+      "parents": "92ff2e1 2d501a3",
+      "subject": "merge aiw/005-roadmap-contract-fix: honest projector states (ERROR/HUMAN_REVIEW->blocked, parked->Later)",
+      "body": "",
+      "is_merge": true
+    },
+    {
+      "branch": "main",
+      "sha": "2d501a3",
+      "full_sha": "2d501a3482a6f07545e57e0870b50df471ce40e6",
+      "date": "2026-07-18T20:10:11-06:00",
+      "parents": "92ff2e1",
+      "subject": "aiw r1: 005-roadmap-contract-fix",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "92ff2e1",
+      "full_sha": "92ff2e18fe2ff4d9736076a349a37baa92fe4db8",
+      "date": "2026-07-18T20:01:27-06:00",
+      "parents": "9429908 586fa60",
+      "subject": "merge aiw/006-roadmap-delivery-path: deliver roadmap view at .aiw/roadmap/ for the frozen UI",
+      "body": "",
+      "is_merge": true
+    },
+    {
+      "branch": "main",
+      "sha": "586fa60",
+      "full_sha": "586fa6086148a9ca3860f35871c5be0ef599091e",
+      "date": "2026-07-18T19:45:31-06:00",
+      "parents": "9429908",
+      "subject": "aiw r1: 006-roadmap-delivery-path",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "9429908",
+      "full_sha": "94299080b9ef77622d101e3290b51d129478f8b0",
+      "date": "2026-07-18T19:34:11-06:00",
+      "parents": "f061ea2 ddff047",
+      "subject": "merge aiw/004-snapshot-enrichment: snapshot schema v1 + projector enrichment",
+      "body": "",
+      "is_merge": true
+    },
+    {
+      "branch": "main",
+      "sha": "ddff047",
+      "full_sha": "ddff047c76b7dd2c663d676429f8f41020e5d237",
+      "date": "2026-07-11T01:39:51-06:00",
+      "parents": "bd802bd",
+      "subject": "aiw r1: 004-snapshot-enrichment",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f061ea2",
+      "full_sha": "f061ea28f13b948a7f3ad7a314801d72daa18198",
+      "date": "2026-07-11T01:30:26-06:00",
+      "parents": "bd802bd",
+      "subject": "aiw r1: 003b-startup-projection-all-views",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "bd802bd",
+      "full_sha": "bd802bda08894f81d4240aec94d615ab3140e5ef",
+      "date": "2026-07-11T00:58:50-06:00",
+      "parents": "9e49b40 cabf198",
+      "subject": "Merge branch 'aiw/003-roadmap-emitter': roadmap.json emitter",
+      "body": "Reconciled with 002's canonical-path move (.aiw/views/ wins on paths):\n- SNAPSHOT_RELATIVE_PATH stays .aiw/views/project_console.snapshot.json;\n  kept 003's ROADMAP_RELATIVE_PATH = .aiw/views/roadmap.json.\n- writeSnapshot: took 003's body (writeJsonAtomic + roadmap emission);\n  resolveSnapshotPath now routes through 003's generic resolveInsideAiw.\n- Schema doc keeps both sibling sections: \"5. Canonical location & flow\"\n  (002) and \"6. views/roadmap.json - Roadmap v3 view\" (003, renumbered\n  from 5); the section-3 roadmap cross-reference now points at 6.\n- startup-projection test: fixture objective total 4 -> 7 to track the\n  three fixture objectives 003 added to sample-project.\n\nAll 21 tests green (node --test).",
+      "is_merge": true
+    },
+    {
+      "branch": "main",
+      "sha": "cabf198",
+      "full_sha": "cabf19810b0a59c30f28e443bb294c68a9f2947a",
+      "date": "2026-07-11T00:45:02-06:00",
+      "parents": "5576472",
+      "subject": "aiw r1: 003-roadmap-emitter",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "9e49b40",
+      "full_sha": "9e49b402dc5000fccfb33ed0af47f3534a7eb928",
+      "date": "2026-07-11T00:34:39-06:00",
+      "parents": "5576472",
+      "subject": "aiw r1: 002-canonical-path-and-autoproject",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "5576472",
+      "full_sha": "5576472c667dbaf02626fb71dffd9441d34b5857",
+      "date": "2026-07-11T00:03:33-06:00",
+      "parents": "12d10db",
+      "subject": "chore: ignore generated .aiw snapshots",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "12d10db",
+      "full_sha": "12d10dbb5a12708aff31f43425b1ff5c4ef4cbe1",
+      "date": "2026-07-10T21:21:30-06:00",
+      "parents": "4f3ab11",
+      "subject": "aiw r1: 001-console-projector",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4f3ab11",
+      "full_sha": "4f3ab1158a13bf0bc36ab84719d73f25491041e1",
+      "date": "2026-07-10T19:51:16-06:00",
+      "parents": "",
+      "subject": "aiw-console: verbatim fork of JAME project console + smoke test + schema draft",
+      "body": "",
+      "is_merge": false
+    }
+  ]
+}

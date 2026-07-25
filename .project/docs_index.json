@@ -1,116 +1,120 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-24T22:53:20.033Z",
-  "generated_from": "aiw-projector@0.3.0",
+  "generated_at": "2026-07-25T03:07:00.370Z",
+  "generated_from": "aiw-projector@0.4.0",
   "sources": [
     {
       "path": "README.md",
-      "mtime": "2026-07-11T01:49:30.808Z"
+      "mtime": "2026-07-23T01:24:40.644Z"
     },
     {
       "path": "console/README.md",
-      "mtime": "2026-07-24T20:23:55.779Z"
+      "mtime": "2026-07-25T02:11:41.459Z"
     },
     {
       "path": "context/DECISIONES.md",
-      "mtime": "2026-07-24T21:30:55.607Z"
+      "mtime": "2026-07-25T02:11:41.468Z"
     },
     {
       "path": "context/MIGRATION-REPORT.md",
-      "mtime": "2026-07-23T18:57:22.111Z"
+      "mtime": "2026-07-25T02:11:41.469Z"
     },
     {
       "path": "context/README.md",
-      "mtime": "2026-07-23T20:07:33.158Z"
+      "mtime": "2026-07-25T02:11:41.470Z"
     },
     {
       "path": "context/aiw-console/CONTRATO.md",
-      "mtime": "2026-07-24T09:09:41.568Z"
+      "mtime": "2026-07-25T02:11:41.474Z"
+    },
+    {
+      "path": "context/aiw-console/records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md",
+      "mtime": "2026-07-25T03:06:54.602Z"
     },
     {
       "path": "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md",
-      "mtime": "2026-07-23T18:54:06.458Z"
+      "mtime": "2026-07-25T02:11:41.477Z"
     },
     {
       "path": "context/aiw-console/records/EMISOR-CARPETA-PROPIA-O4-P2.md",
-      "mtime": "2026-07-24T21:59:32.161Z"
+      "mtime": "2026-07-25T02:11:41.478Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-FUENTES-CONSOLA.md",
-      "mtime": "2026-07-24T21:05:04.251Z"
+      "mtime": "2026-07-25T02:11:41.479Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-GRAFO-O0.md",
-      "mtime": "2026-07-24T01:02:40.276Z"
+      "mtime": "2026-07-25T02:11:41.481Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-O4.md",
-      "mtime": "2026-07-24T09:21:31.012Z"
+      "mtime": "2026-07-25T02:11:41.482Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-PROYECTOR.md",
-      "mtime": "2026-07-24T02:29:28.400Z"
+      "mtime": "2026-07-25T02:11:41.483Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-ROADMAP-V3.md",
-      "mtime": "2026-07-23T23:36:52.332Z"
+      "mtime": "2026-07-25T02:11:41.484Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-VALIDADOR-ROJO.md",
-      "mtime": "2026-07-24T08:46:34.694Z"
+      "mtime": "2026-07-25T02:11:41.486Z"
     },
     {
       "path": "context/aiw-console/records/MIGRACION-O0.md",
-      "mtime": "2026-07-24T08:26:08.077Z"
+      "mtime": "2026-07-25T02:11:41.487Z"
     },
     {
       "path": "context/aiw-console/records/PORT-IDENTICO-CONSOLA-O4-P11.md",
-      "mtime": "2026-07-24T22:53:12.213Z"
+      "mtime": "2026-07-25T02:11:41.488Z"
     },
     {
       "path": "context/aiw-console/records/REARCHIVO-BLOQUE-RENAME.md",
-      "mtime": "2026-07-24T01:38:32.780Z"
+      "mtime": "2026-07-25T02:11:41.489Z"
     },
     {
       "path": "context/aiw-console/records/REDACCION-O4.md",
-      "mtime": "2026-07-24T10:28:41.017Z"
+      "mtime": "2026-07-25T02:11:41.491Z"
     },
     {
       "path": "context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md",
-      "mtime": "2026-07-24T20:26:13.701Z"
+      "mtime": "2026-07-25T02:11:41.493Z"
     },
     {
       "path": "context/aiw/AIW_CONTEXT.md",
-      "mtime": "2026-07-23T18:54:06.429Z"
+      "mtime": "2026-07-25T02:11:41.494Z"
     },
     {
       "path": "context/aiw/DELEGACION.md",
-      "mtime": "2026-07-11T01:43:21.346Z"
+      "mtime": "2026-07-25T02:11:41.495Z"
     },
     {
       "path": "context/aiw/ESTADO.md",
-      "mtime": "2026-07-23T18:54:06.415Z"
+      "mtime": "2026-07-25T02:11:41.496Z"
     },
     {
       "path": "context/aiw/roadmap_AIW_temp.md",
-      "mtime": "2026-07-24T11:16:21.824Z"
+      "mtime": "2026-07-25T02:11:41.498Z"
     },
     {
       "path": "context/cantu-studio/CANTU_STUDIO_CONTEXT.md",
-      "mtime": "2026-07-23T19:14:49.781Z"
+      "mtime": "2026-07-25T02:11:41.499Z"
     },
     {
       "path": "context/handoffs/aiw-console.md",
-      "mtime": "2026-07-24T21:32:04.415Z"
+      "mtime": "2026-07-25T02:11:41.501Z"
     },
     {
       "path": "docs/snapshot-schema-v1.md",
-      "mtime": "2026-07-22T21:23:17.032Z"
+      "mtime": "2026-07-23T01:24:40.659Z"
     },
     {
       "path": "project-console/README.md",
-      "mtime": "2026-07-24T22:50:21.171Z"
+      "mtime": "2026-07-25T03:00:06.783Z"
     }
   ],
   "nav_tier_model": {
@@ -163,7 +167,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "root",
-      "freshness": "2026-07-11T01:49:30.808Z"
+      "freshness": "2026-07-23T01:24:40.644Z"
     },
     {
       "title": "Prototipo de la consola global",
@@ -171,7 +175,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "console",
-      "freshness": "2026-07-24T20:23:55.779Z"
+      "freshness": "2026-07-25T02:11:41.459Z"
     },
     {
       "title": "DECISIONES.md — log append-only. Nunca reescribir; solo agregar.",
@@ -179,7 +183,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-07-24T21:30:55.607Z"
+      "freshness": "2026-07-25T02:11:41.468Z"
     },
     {
       "title": "MIGRATION-REPORT — Centralización del contexto de gobernanza en aiw-console",
@@ -187,7 +191,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-07-23T18:57:22.111Z"
+      "freshness": "2026-07-25T02:11:41.469Z"
     },
     {
       "title": "context/ — Contexto de gobernanza de la cabina",
@@ -195,7 +199,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-07-23T20:07:33.158Z"
+      "freshness": "2026-07-25T02:11:41.470Z"
     },
     {
       "title": "CONTRATO DE LA CARPETA — Capa 1: el archivo requerido",
@@ -203,7 +207,15 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw-console",
-      "freshness": "2026-07-24T09:09:41.568Z"
+      "freshness": "2026-07-25T02:11:41.474Z"
+    },
+    {
+      "title": "ACABADO VISUAL de Docs y EMISOR de `git_history` — cierre del port de la consola",
+      "path": "context/aiw-console/records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-25T03:06:54.602Z"
     },
     {
       "title": "AUDIT-CONSOLE-O4-PHASE0 — Mapa de estado real",
@@ -211,7 +223,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-23T18:54:06.458Z"
+      "freshness": "2026-07-25T02:11:41.477Z"
     },
     {
       "title": "EMISOR — `aiw-console` emite su propia carpeta (`O4.P2`)",
@@ -219,7 +231,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T21:59:32.161Z"
+      "freshness": "2026-07-25T02:11:41.478Z"
     },
     {
       "title": "MEDICION-FUENTES-CONSOLA — Qué datos tiene HOY aiw-console para una consola idéntica a la de Cantu",
@@ -227,7 +239,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T21:05:04.251Z"
+      "freshness": "2026-07-25T02:11:41.479Z"
     },
     {
       "title": "MEDICIÓN — Grafo de dependencias alrededor de O0 (alcance de la migración de D-034)",
@@ -235,7 +247,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T01:02:40.276Z"
+      "freshness": "2026-07-25T02:11:41.481Z"
     },
     {
       "title": "MEDICIÓN O4 — el objetivo \"Consola global\" en el roadmap de AIW",
@@ -243,7 +255,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T09:21:31.012Z"
+      "freshness": "2026-07-25T02:11:41.482Z"
     },
     {
       "title": "MEDICIÓN DEL EMISOR — el proyector de AIW",
@@ -251,7 +263,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T02:29:28.400Z"
+      "freshness": "2026-07-25T02:11:41.483Z"
     },
     {
       "title": "MEDICIÓN — Roadmap v3 de Cantu y `taxonomy_model`",
@@ -259,7 +271,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-23T23:36:52.332Z"
+      "freshness": "2026-07-25T02:11:41.484Z"
     },
     {
       "title": "MEDICIÓN — validador de Cantu en rojo tras la extracción de O0",
@@ -267,7 +279,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T08:46:34.694Z"
+      "freshness": "2026-07-25T02:11:41.486Z"
     },
     {
       "title": "MIGRACIÓN O0 — extracción del roadmap de Cantu a aiw-console",
@@ -275,7 +287,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T08:26:08.077Z"
+      "freshness": "2026-07-25T02:11:41.487Z"
     },
     {
       "title": "PORT IDÉNTICO — la consola viva de Cantu, trasplantada sobre las fuentes de `aiw-console` (`O4.P11`)",
@@ -283,7 +295,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T22:53:12.213Z"
+      "freshness": "2026-07-25T02:11:41.488Z"
     },
     {
       "title": "RE-ARCHIVO — El bloque de rename sale de O0 y entra en O2",
@@ -291,7 +303,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T01:38:32.780Z"
+      "freshness": "2026-07-25T02:11:41.489Z"
     },
     {
       "title": "REDACCIÓN O4 — conversión de \"Consola global\" a `roadmap_tree_v1`",
@@ -299,7 +311,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T10:28:41.017Z"
+      "freshness": "2026-07-25T02:11:41.491Z"
     },
     {
       "title": "VEREDICTO — `roadmap_tree_v1` como formato consumible",
@@ -307,7 +319,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T20:26:13.701Z"
+      "freshness": "2026-07-25T02:11:41.493Z"
     },
     {
       "title": "AIW — Orchestration Context",
@@ -315,7 +327,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw",
-      "freshness": "2026-07-23T18:54:06.429Z"
+      "freshness": "2026-07-25T02:11:41.494Z"
     },
     {
       "title": "DELEGACION.md — Rúbrica de ruteo de trabajo (v1)",
@@ -323,7 +335,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw",
-      "freshness": "2026-07-11T01:43:21.346Z"
+      "freshness": "2026-07-25T02:11:41.495Z"
     },
     {
       "title": "ESTADO.md — actualizar al cierre de cada sesión",
@@ -331,7 +343,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw",
-      "freshness": "2026-07-23T18:54:06.415Z"
+      "freshness": "2026-07-25T02:11:41.496Z"
     },
     {
       "title": "AIW — Roadmap (temporal)",
@@ -339,7 +351,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw",
-      "freshness": "2026-07-24T11:16:21.824Z"
+      "freshness": "2026-07-25T02:11:41.498Z"
     },
     {
       "title": "Cantu Studio - Orchestration Context",
@@ -347,7 +359,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/cantu-studio",
-      "freshness": "2026-07-23T19:14:49.781Z"
+      "freshness": "2026-07-25T02:11:41.499Z"
     },
     {
       "title": "HANDOFF — hilo `aiw-console` (la consola)",
@@ -355,7 +367,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-07-24T21:32:04.415Z"
+      "freshness": "2026-07-25T02:11:41.501Z"
     },
     {
       "title": "Snapshot schema v1 — `project_console.snapshot.json`",
@@ -363,7 +375,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "docs",
-      "freshness": "2026-07-22T21:23:17.032Z"
+      "freshness": "2026-07-23T01:24:40.659Z"
     },
     {
       "title": "Project Console (transplanted, read-only)",
@@ -371,7 +383,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "project-console",
-      "freshness": "2026-07-24T22:50:21.171Z"
+      "freshness": "2026-07-25T03:00:06.783Z"
     }
   ]
 }

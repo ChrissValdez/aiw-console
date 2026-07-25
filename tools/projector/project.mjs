@@ -16,6 +16,7 @@
 //      It emits the contract folder of CONTRATO §1/§1.b:
 //        <project-root>/.project/snapshot.json      (REQUIRED, capa 1)
 //        <project-root>/.project/roadmap.json       (optional, §19; added by O4.P11)
+//        <project-root>/.project/git_history.json   (optional, §19; added after O4.P11)
 //        <project-root>/.project/docs_index.json    (optional, §18.b)
 //        <project-root>/.project/guardrails.json    (optional, §18.b)
 //        <project-root>/.project/no_claims.json     (optional, §18.b)
@@ -26,13 +27,16 @@
 // Boundaries (see objective 001):
 //   - Node built-ins only. No dependencies.
 //   - Reads ONLY inside the given project root (mode 1: objectives/, logs/, config.json;
-//     mode 2: roadmap/, governance/, package.json and the repo's Markdown corpus).
+//     mode 2: roadmap/, governance/, package.json, the repo's Markdown corpus, and — for the
+//     git-history artifact only — the root's own Git repository, through READ-ONLY commands).
 //   - Writes ONLY under <project-root>/.aiw/ (mode 1) or <project-root>/.project/ (mode 2),
 //     atomically (temp + rename), each destination behind its own path guard.
 //   - Fail-soft: a missing input yields an empty group or an omitted key, never an error.
-//   - Git history is optional §3 enrichment produced by build-git-history-snapshot.mjs,
-//     not this file; neither mode depends on Git being present.
+//   - No Git command that writes, ever: only for-each-ref / rev-parse / branch / log. Neither
+//     mode DEPENDS on Git — with Git absent, or the root not being its own repository, mode 2
+//     simply omits git_history.json (§18/§20: an announced absence, never an invented file).
 
+import { execFileSync } from "node:child_process";
 import {
   existsSync,
   mkdirSync,
@@ -47,10 +51,12 @@ import { fileURLToPath } from "node:url";
 
 export const SCHEMA_VERSION = 1;
 // CONTRATO §6 — `generated_from` names tool AND version, so the version moves whenever the
-// emitter's behaviour moves. 0.2.0 added root mode 2 (O4.P2); 0.3.0 adds the optional
+// emitter's behaviour moves. 0.2.0 added root mode 2 (O4.P2); 0.3.0 added the optional
 // `.project/roadmap.json` of §19 (O4.P11): an emitter that writes five files is not the same
 // emitter that wrote four, and two different behaviours must not answer to one version.
-export const PROJECTOR_VERSION = "0.3.0";
+// 0.4.0 adds the other optional of §19, `.project/git_history.json` — and with it the first
+// input this emitter reads that is not a file: the root's own Git repository.
+export const PROJECTOR_VERSION = "0.4.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 // Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
@@ -560,6 +566,7 @@ export function writeSnapshot(root, opts = {}) {
 export const PROJECT_DIR = ".project";
 export const PROJECT_SNAPSHOT_RELATIVE_PATH = join(PROJECT_DIR, "snapshot.json");
 export const PROJECT_ROADMAP_RELATIVE_PATH = join(PROJECT_DIR, "roadmap.json");
+export const PROJECT_GIT_HISTORY_RELATIVE_PATH = join(PROJECT_DIR, "git_history.json");
 export const PROJECT_DOCS_INDEX_RELATIVE_PATH = join(PROJECT_DIR, "docs_index.json");
 export const PROJECT_GUARDRAILS_RELATIVE_PATH = join(PROJECT_DIR, "guardrails.json");
 export const PROJECT_NO_CLAIMS_RELATIVE_PATH = join(PROJECT_DIR, "no_claims.json");
@@ -976,6 +983,210 @@ export function buildNoClaims(root, opts = {}) {
   return buildTransportedList(root, NO_CLAIMS_SOURCE_PATH, "claims", opts);
 }
 
+// ---------------------------------------------------------------------------
+// CONTRATO §19 — `.project/git_history.json`, OPTIONAL: the commit and branch history of the
+// project's own repository, in the shape the console's History tab reads (`renderCommitHistory`).
+//
+// The identifier is `git_history_v1`. The artifact the old builder wrote carried a vendor prefix
+// naming the project that first emitted it, plus a `snapshot` level; §19 flagged both and left the
+// rename to this emitter. Three cuts, each one already adjudicated elsewhere:
+//   - the vendor prefix goes for the reason of §1/§10.c: an identifier names its CONTENT, not
+//     whoever emitted it first. Same cut §10.c already made on the roadmap's identifier.
+//   - the `snapshot` level goes for the reason of §19 and §1.b: under `.project/` EVERYTHING is
+//     derived and regenerable, so saying "snapshot" is as redundant as saying `views/`.
+//   - the version restarts at `v1` (§4/§10.c): it counts the lineage of THIS contract, not the
+//     internal history of the name being abandoned.
+// So the name is the artifact's own name plus this contract's version, and nothing else.
+// The key it travels under is `model`, the same key `.project/roadmap.json` uses for the same
+// question ("what model is the payload of this file?"), so the envelope's integer
+// `schema_version` keeps meaning only what §4 says it means.
+//
+// The renderer's gate is on SHAPE, not on this string (project-console.js, `renderCommitHistory`),
+// so no consumer had to be touched for the rename — which is exactly why the rename was cheap.
+// ---------------------------------------------------------------------------
+export const GIT_HISTORY_MODEL = "git_history_v1";
+
+// Field/record separators for `git log --pretty`: control characters that cannot occur inside a
+// commit subject or body, so no message can forge a record boundary.
+const GIT_US = String.fromCharCode(31); // unit separator (0x1F), between fields
+const GIT_RS = String.fromCharCode(30); // record separator (0x1E), between commits
+// %h %H %ad %p %s %b — abbreviated sha, full sha, author DATE, parents, subject, body. The author's
+// NAME is deliberately not requested: no surface of the consumer displays it, and a derived,
+// republished artifact should not carry a person's name it has no use for. `parents` is requested
+// although the consumer does not read it either — it is the input `is_merge` is derived from, and
+// this emitter declares the input of every derivation it performs.
+const GIT_LOG_FORMAT = ["%h", "%H", "%ad", "%p", "%s", "%b"].join(GIT_US) + GIT_RS;
+
+// Resolve a git binary: PATH first, then the usual Windows install locations. Returns null when
+// Git cannot be found or run at all — the first of the two fail-soft exits of this section.
+let cachedGitBin;
+export function resolveGitBin() {
+  if (cachedGitBin !== undefined) return cachedGitBin;
+  const candidates = [
+    "git",
+    "C:\\Program Files\\Git\\cmd\\git.exe",
+    "C:\\Program Files (x86)\\Git\\cmd\\git.exe"
+  ];
+  for (const bin of candidates) {
+    try {
+      execFileSync(bin, ["--version"], { stdio: "ignore" });
+      cachedGitBin = bin;
+      return bin;
+    } catch {
+      // try the next candidate
+    }
+  }
+  cachedGitBin = null;
+  return null;
+}
+
+// Every Git call this file makes goes through here. READ-ONLY by construction: the caller passes
+// a subcommand and `-C <root>` is prepended, so no command can act on another repository, and the
+// four subcommands used (for-each-ref, rev-parse, branch --show-current, log) mutate nothing.
+function gitRead(bin, root, args) {
+  return execFileSync(bin, ["-C", resolve(root), ...args], {
+    encoding: "utf8",
+    maxBuffer: 128 * 1024 * 1024
+  });
+}
+
+// True only when `root` is the top of its own Git work tree. A project root that merely SITS
+// inside some larger repository gets no history: publishing the parent's commits under this
+// project's `.project/` would attribute another project's work to this one, and §20 prefers an
+// announced absence to a confident overstatement.
+function isOwnGitRoot(bin, root) {
+  try {
+    const top = gitRead(bin, root, ["rev-parse", "--show-toplevel"]).trim();
+    return !!top && resolve(top) === resolve(root);
+  } catch {
+    return false;
+  }
+}
+
+// Every run_id declared by the project's OWN roadmap tree. This is the whole vocabulary against
+// which a commit's run association is verified — it comes from the project's data, so no run-id
+// prefix, project name, or ticket convention is baked into this file.
+function roadmapRunIds(root) {
+  const tree = readRoadmapTree(root);
+  if (!tree) return new Set();
+  return new Set(flattenRoadmapTree(tree).map(({ run }) => run.run_id).filter(Boolean));
+}
+
+// Characters that, sitting immediately beside a match, mean the run id is glued into a longer
+// word and was not really named ("RUN-A-001-B" does not name "RUN-A-001"). Trailing sentence
+// punctuation is NOT in the class, so an id at the end of a sentence still counts. The class does
+// not encode the FORM of a run id (CONTRATO §10.d Regla 1.a) — only what would make a match part
+// of something else — so an emitter reading a project with other id shapes needs no change here.
+const RUN_ID_BOUNDARY = /[A-Za-z0-9_-]/;
+
+// Explicit-only association. Each run id the project's own roadmap declares is looked for in the
+// message, as a standalone token; an association is emitted only when the message names EXACTLY
+// ONE distinct known run. Never inferred from order, touched paths, dates or wording, and never
+// emitted for a run the roadmap does not declare — an unverifiable association is an invented
+// claim, so the key is OMITTED instead.
+export function deriveCommitRunId(subject, body, runIds) {
+  if (!runIds.size) return null;
+  const text = `${subject || ""}\n${body || ""}`;
+  const named = new Set();
+  for (const runId of runIds) {
+    if (!runId) continue;
+    for (let at = text.indexOf(runId); at !== -1; at = text.indexOf(runId, at + 1)) {
+      const before = at > 0 ? text[at - 1] : "";
+      const after = text[at + runId.length] || "";
+      if (RUN_ID_BOUNDARY.test(before) || RUN_ID_BOUNDARY.test(after)) continue;
+      named.add(runId);
+      break;
+    }
+  }
+  return named.size === 1 ? [...named][0] : null;
+}
+
+function parseGitLog(raw, branch, runIds) {
+  const commits = [];
+  for (const record of String(raw).split(GIT_RS)) {
+    if (!record.trim()) continue;
+    const fields = record.replace(/^\n/, "").split(GIT_US);
+    if (fields.length < 5) continue;
+    const parents = (fields[3] || "").trim();
+    const subject = fields[4] || "";
+    const body = fields.length > 5 ? (fields[5] || "").trim() : "";
+    const runId = deriveCommitRunId(subject, body, runIds);
+    commits.push({
+      branch,
+      sha: (fields[0] || "").trim(),
+      full_sha: (fields[1] || "").trim(),
+      date: fields[2] || "",
+      parents,
+      subject,
+      body,
+      is_merge: parents.split(/\s+/).filter(Boolean).length > 1,
+      // OMITTED, not null, when no single roadmap run is named (§7's discipline applied to a field).
+      ...(runId ? { run_id: runId } : {})
+    });
+  }
+  return commits;
+}
+
+// Build the git-history artifact from the root's own repository. Pure read. Returns null — and the
+// file is then simply not written — when Git is unavailable, when the root is not its own repo, when
+// the repo has no local branches, or when any read fails. Nothing partial and nothing invented.
+export function buildGitHistory(root, opts = {}) {
+  const bin = resolveGitBin();
+  if (!bin) return null;
+  if (!isOwnGitRoot(bin, root)) return null;
+
+  let branches;
+  let currentBranch;
+  let head;
+  try {
+    branches = gitRead(bin, root, ["for-each-ref", "--format=%(refname:short)", "refs/heads"])
+      .split(/\r?\n/)
+      .map((name) => name.trim())
+      .filter(Boolean);
+    if (!branches.length) return null; // an initialized repo with no commits yet
+    currentBranch = gitRead(bin, root, ["branch", "--show-current"]).trim();
+    head = gitRead(bin, root, ["rev-parse", "HEAD"]).trim();
+  } catch {
+    return null;
+  }
+
+  // `main` first (the reader tints it as the trunk), then code-unit order — the same determinism
+  // rule `listMarkdownFiles` follows, so the emitted order never depends on the machine's locale.
+  // EVERY local branch is emitted: hiding a branch is a display policy and belongs to the reader,
+  // which already filters its own (`historyVisibleBranches`). An emitter that drops data is lying.
+  branches.sort((a, b) => (a === "main" ? -1 : b === "main" ? 1 : a < b ? -1 : a > b ? 1 : 0));
+
+  const runIds = roadmapRunIds(root);
+  const commits = [];
+  try {
+    for (const branch of branches) {
+      commits.push(...parseGitLog(
+        gitRead(bin, root, ["log", branch, "--date=iso-strict", `--pretty=format:${GIT_LOG_FORMAT}`]),
+        branch,
+        runIds
+      ));
+    }
+  } catch {
+    return null;
+  }
+
+  return {
+    // `sources` names the two inputs that are FILES on disk: the repository itself (`.git`, whose
+    // commits this is) and the roadmap tree (read only to verify run associations). Repository
+    // freshness is carried better by `head` than by any mtime — a sha changes exactly when the
+    // history does — so §6 is served by both together.
+    ...projectFileEnvelope(root, opts, [".git", ROADMAP_TREE_SOURCE_PATH]),
+    model: GIT_HISTORY_MODEL,
+    head,
+    // Omitted on a detached HEAD rather than emitted empty: the reader then picks its own default
+    // branch (`historyDefaultBranch`) instead of being handed a branch name that is not current.
+    ...(currentBranch ? { current_branch: currentBranch } : {}),
+    branches,
+    commit_total: commits.length,
+    commits
+  };
+}
+
 // Resolve <root>/<relativePath> and prove it lives inside <root>/.project/. The mirror of
 // `resolveInsideAiw`, guarding the other destination; neither can write where the other writes.
 function resolveInsideProject(root, relativePath) {
@@ -1032,6 +1243,13 @@ export function writeProjectFolder(root, opts = {}) {
   const roadmap = buildProjectRoadmap(root, { now });
   write("roadmap", PROJECT_ROADMAP_RELATIVE_PATH, roadmap, {
     entries: roadmap ? roadmap.objectives.length : 0
+  });
+
+  // §19's other optional. `buildGitHistory` returns null when there is no repository to read, and
+  // `write` skips a null artifact, so a Git-less root emits the same five files it always did.
+  const gitHistory = buildGitHistory(root, { now });
+  write("git_history", PROJECT_GIT_HISTORY_RELATIVE_PATH, gitHistory, {
+    entries: gitHistory ? gitHistory.commit_total : 0
   });
 
   const snapshot = buildRoadmapTreeSnapshot(root, { now });

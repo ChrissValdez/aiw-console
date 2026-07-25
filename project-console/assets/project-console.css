@@ -1762,9 +1762,10 @@ textarea:disabled {
   color: var(--accent);
 }
 
-/* Item layout: title on the left, an optional tier tag on the right (shown only in All
-   registered mode for non-primary docs so advanced/evidence/history/proposal docs do not
-   visually compete with the primary KB). Long titles stay readable via overflow-wrap. */
+/* Item layout: the document title, and nothing else. The trailing tag slot the source console
+   used (retention_class badge + nav-tier badge) is retired — see the RETIRED HERE note in
+   project-console.js. The flex row is kept: it is what the layout is built on, and the new-era
+   badge rule below still needs it. Long titles stay readable via overflow-wrap. */
 .docs-nav-item {
   display: flex;
   align-items: center;
@@ -1783,82 +1784,18 @@ textarea:disabled {
   flex: 0 0 auto;
 }
 
-.docs-tier-tag {
-  flex: 0 0 auto;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  padding: 1px 6px;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
+/* The .docs-tier-* badge rules (tier tag) and the .docs-ret-* badge rules (retention_class tag)
+   were deleted after confirming zero remaining references in project-console.js and index.html:
+   both badges were retired from the Docs navigation, the retention one because this project has
+   no retention_class data behind it at all. Same authorized-cleanup pattern as the
+   .docs-nav-diagnostics* note below. */
 
-.docs-tier-secondary {
-  background: var(--accent-bg);
-  color: var(--accent);
-}
-
-.docs-tier-advanced,
-.docs-tier-proposal {
-  background: var(--amber-bg);
-  color: var(--amber);
-}
-
-.docs-tier-evidence,
-.docs-tier-history {
-  background: var(--bg-subtle);
-  color: var(--text-tertiary);
-}
-
-/* Retention-class badges and group counts
-   (an earlier run): display-only projection
-   of the additive docs_index retention_class metadata. The UI assigns no class. */
+/* Per-group document count in the docs nav group header. Still rendered by the new-era Blueprint
+   tree and by the COMPONENTS Web/Slides subgroups, so the rule stays. */
 .docs-nav-group-count {
   flex: 0 0 auto;
   color: var(--text-tertiary);
   font-weight: 600;
-}
-
-.docs-ret-tag {
-  flex: 0 0 auto;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  padding: 1px 6px;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.docs-ret-canonical {
-  background: var(--green-bg);
-  color: var(--green);
-}
-
-.docs-ret-reference {
-  background: var(--accent-bg);
-  color: var(--accent);
-}
-
-.docs-ret-evidence,
-.docs-ret-historical_run_record {
-  background: var(--bg-subtle);
-  color: var(--text-tertiary);
-}
-
-.docs-ret-proposal,
-.docs-ret-superseded,
-.docs-ret-duplicate_candidate,
-.docs-ret-orphaned_candidate {
-  background: var(--amber-bg);
-  color: var(--amber);
-}
-
-.docs-ret-unclassified {
-  background: var(--bg-subtle);
-  color: var(--text-tertiary);
-  opacity: 0.75;
 }
 
 /* The inert .docs-nav-diagnostics* rules that styled the removed Docs-nav diagnostics entry

@@ -28,7 +28,7 @@ the AIW projection and not this project's own state.
 | `.project/roadmap.json` | optional, emitted | Overview, Roadmap, Run Queue |
 | `.project/docs_index.json` | optional, emitted | Docs navigation |
 | `.project/guardrails.json` · `.project/no_claims.json` | optional, emitted | Status → Governance State |
-| `.project/git_history.json` | optional, **not emitted yet** | History (shows its empty state) |
+| `.project/git_history.json` | optional, emitted | History (commits and branches of this repo) |
 | 9 further optional routes | **not emitted** | nothing live; listed as failures in Console Diagnostics |
 
 Missing optional sources degrade fail-soft: the affected surface shows its empty state, the
@@ -39,13 +39,20 @@ make a panel look full.
 Document bodies in the Docs tab are the repository's real Markdown files, fetched repo-locally and
 rendered by the same conservative escape-first renderer as the source console. No network fetch.
 
-## Two deliberate differences from the source console
+## Three deliberate differences from the source console
 
 1. **Docs opens in `all`, not `newera`.** The `newera` mode filters by `operator_review_status`,
    a field this project's emitter does not emit because it means "a run recorded an operator
    review" and no run recorded one. The field stays absent; the opening mode moves instead.
 2. **No write path.** The roadmap edit endpoint and its tooling did not travel. The *Edit roadmap*
-   button is still in the toolbar (it is part of the layout) and says so when pressed.
+   button is therefore `hidden` — its handler, its endpoint probe and its honest refusal all stay
+   in code, so restoring it the day a write path exists is one attribute away.
+3. **Two retired Docs controls.** The grouping toggle (*By category* / *By retention class*), its
+   note, the per-document `retention_class` badge and the per-row nav-tier badge are gone. The
+   first three read a field of the source project's own retention policy, which this project's
+   `docs_index` does not carry — a control with no data behind it. They were invisible in the
+   source console only because they render outside `newera`, its opening mode; difference 1
+   uncovered them. Docs is a list of clean titles grouped by the data's own `ia_bucket`.
 
 Everything else — layout, styles, tabs, subviews, drawers, empty states, wording — is the source
 console's, unchanged. The identity that was baked into it (run ids, project names, doc-path maps,

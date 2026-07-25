@@ -1987,14 +1987,10 @@ let docsActivePath = null;
 let docsVisibilityMode = "all"; // "all" (default here) | "primary" (curated KB) | "newera"
 let docsAllEntries = [];
 const DOCS_NAV_TIERS = ["primary", "secondary", "advanced", "evidence", "history", "proposal"];
-const DOCS_NAV_TIER_META = {
-  primary: { label: "Primary", tone: "green" },
-  secondary: { label: "Secondary", tone: "blue" },
-  advanced: { label: "Advanced", tone: "amber" },
-  evidence: { label: "Evidence", tone: "gray" },
-  history: { label: "History", tone: "gray" },
-  proposal: { label: "Proposal", tone: "amber" }
-};
+// DOCS_NAV_TIER_META (the tier -> label/tone table) and `docNavTierMeta` were removed together
+// with the per-row tier tag they existed to paint (see the note above `renderNavItem`). The tier
+// itself is NOT gone: `deriveDocNavTier` still classifies every entry and `isDefaultVisibleDoc`
+// still reads it, so the Primary KB mode keeps working. Only the badge is retired.
 
 // Display order and labels for the Docs navigation groups. The source console listed its own
 // project's fourteen IA buckets here, with hand-written labels for each (one of them the other
@@ -2013,71 +2009,30 @@ const DOCS_GROUP_LABELS = {
 // they only ever meant something for that project's data. Group keys now come from the data as-is.
 const DOCS_GROUP_ALIASES = {};
 
-// Retention-class grouping:
-// display-only grouping of docs_index entries by the additive retention_class metadata some
-// entries already carry (D2 policy classes; D3 assigns them in batches). The console only READS
-// retention_class: it never assigns, infers, or edits a class, and entries without one render
-// under a neutral "unclassified" group/badge. Group-by mode is local UI state only, never
-// persisted; switching it classifies nothing and certifies nothing.
-let docsGroupMode = "category"; // "category" (existing tree) | "retention" (by retention_class)
-const DOCS_RETENTION_UNCLASSIFIED = "unclassified";
-const DOCS_RETENTION_ORDER = [
-  "canonical",
-  "reference",
-  "evidence",
-  "historical_run_record",
-  "proposal",
-  "superseded",
-  "duplicate_candidate",
-  "orphaned_candidate"
-];
-
-function docRetentionClass(doc) {
-  // Reads the additive retention_class value an entry already carries; returns null when the
-  // entry has not been classified yet. Read-only: the UI never invents or assigns a class.
-  const value = text(doc?.retention_class, "").trim().toLowerCase();
-  return value || null;
-}
-
-function docRetentionTone(retention) {
-  if (retention === "canonical") return "green";
-  if (retention === "reference") return "blue";
-  if (retention === "proposal" || retention === "superseded" || retention === "duplicate_candidate" || retention === "orphaned_candidate") return "amber";
-  return "gray";
-}
-
-function docRetentionTag(doc) {
-  // Per-row retention_class badge for the Docs navigation. Unclassified entries get a neutral
-  // tag; nothing here assigns or implies a classification decision.
-  const retention = docRetentionClass(doc);
-  const tagClass = retention ? `docs-ret-${retention}` : "docs-ret-unclassified";
-  const title = retention
-    ? `retention_class: ${retention} (read from docs_index; display only)`
-    : "No retention_class assigned yet (display only; the UI assigns no class)";
-  return `<span class="docs-ret-tag ${escapeHtml(tagClass)}" title="${escapeHtml(title)}">${escapeHtml(retention || DOCS_RETENTION_UNCLASSIFIED)}</span>`;
-}
-
-function buildDocsRetentionTree(entries) {
-  // Groups { doc, index } pairs into ordered retention_class sections for the Docs navigation.
-  // Known classes follow DOCS_RETENTION_ORDER, unknown future classes sort alphabetically after
-  // them, and unclassified entries always group last. Empty groups never render (consistent
-  // with buildDocsNavTree). Display-only: grouping changes no docs_index data.
-  const groupsByKey = new Map();
-  entries.forEach(({ doc, index }) => {
-    const key = docRetentionClass(doc) || DOCS_RETENTION_UNCLASSIFIED;
-    if (!groupsByKey.has(key)) {
-      groupsByKey.set(key, { key, label: key, docs: [] });
-    }
-    groupsByKey.get(key).docs.push({ doc, index });
-  });
-  const known = DOCS_RETENTION_ORDER.filter((key) => groupsByKey.has(key)).map((key) => groupsByKey.get(key));
-  const unknown = [...groupsByKey.keys()]
-    .filter((key) => !DOCS_RETENTION_ORDER.includes(key) && key !== DOCS_RETENTION_UNCLASSIFIED)
-    .sort((left, right) => left.localeCompare(right))
-    .map((key) => groupsByKey.get(key));
-  const tail = groupsByKey.has(DOCS_RETENTION_UNCLASSIFIED) ? [groupsByKey.get(DOCS_RETENTION_UNCLASSIFIED)] : [];
-  return [...known, ...unknown, ...tail];
-}
+// RETENTION-CLASS GROUPING — RETIRED HERE (not disabled: removed).
+//
+// The source console offered a second Docs grouping ("By category" / "By retention class") plus a
+// per-row retention_class badge. Both were invisible there, because they only render outside the
+// "newera" mode and "newera" is that console's opening mode. This port opens on "all" (see the
+// DELIBERATE DIVERGENCE note above), which uncovered them.
+//
+// They are removed rather than re-hidden because `retention_class` is metadata of the ORIGIN
+// project's own retention policy (its D2/D3 classes). This project's docs_index does not carry the
+// field and its emitter derives nothing that could fill it, so the toggle grouped 100% of the
+// corpus under a single "unclassified" heading and every row wore an UNCLASSIFIED badge: a control
+// with no data source behind it, and a badge that says only "this project has no such policy".
+//
+// Same criterion by which the port emptied the baked tables (DOCS_NEW_ERA_CATEGORY_BY_PATH,
+// DOCS_GROUP_ORDER): an identity that could only ever be true for one project does not travel. It
+// is not an amputation of function — there is no function to amputate without the data.
+//
+// Removed with it (zero remaining references, checked before deleting): `docsGroupMode`,
+// `DOCS_RETENTION_UNCLASSIFIED`, `DOCS_RETENTION_ORDER`, `docRetentionClass`, `docRetentionTone`,
+// `docRetentionTag`, `buildDocsRetentionTree`, `setDocsGroupMode`, and the `.docs-ret-*` CSS rules.
+// KEPT, because they are still referenced: `.docs-mode-toggle` / `.docs-mode-btn*` — the retired
+// New era / Primary KB / All registered control still has its live listener below
+// (`.docs-mode-btn[data-docs-mode]`), so its styles are not orphaned.
+// Nothing was written to docs_index, and no document field was invented to replace what was retired.
 
 function deriveDocGroup(doc) {
   // Fallback order: ia_bucket -> category -> related_area -> source_role -> uncategorized.
@@ -2120,10 +2075,6 @@ function isDefaultVisibleDoc(doc) {
   if (doc?.default_visible === true) return true;
   if (doc?.default_visible === false) return false;
   return deriveDocNavTier(doc) === "primary";
-}
-
-function docNavTierMeta(tier) {
-  return DOCS_NAV_TIER_META[tier] || { label: friendlyLabel(tier), tone: "gray" };
 }
 
 function docsEntriesForMode() {
@@ -2306,9 +2257,9 @@ function renderDocsNav() {
   // only a short one-line count instead of the former explanatory paragraph. Mode toggles and Collapse
   // all are kept elsewhere; the new-era workspace explainer note is removed.
   // Display only: the one-line document count is no
-  // longer rendered (its docs-nav-summary div was removed). summary / retentionSummary stay computed but
+  // longer rendered (its docs-nav-summary div was removed). `summary` stays computed but
   // intentionally unused so the existing count variables remain live and no cascading refactor is needed;
-  // they assign no document status and certify nothing.
+  // it assigns no document status and certifies nothing.
   const summary = isNewEra
     ? `<strong>${escapeHtml(newEraCount)}</strong> document${newEraCount === 1 ? "" : "s"}`
     : (docsVisibilityMode === "all"
@@ -2319,33 +2270,20 @@ function renderDocsNav() {
     : (!isNewEra && docsVisibilityMode === "primary"
       ? `<div class="docs-nav-mode-note">Advanced, evidence, history and proposal documents stay available under All registered.</div>`
       : "");
-  // Retention grouping is an additive, display-only alternative to the category tree: the same
-  // filtered entries, sectioned by the retention_class each entry already carries. Group headers
-  // in retention mode carry per-class counts; empty groups never render in either mode. It does not
-  // apply to the new-era view, which is always grouped by Blueprint category.
-  const classifiedCount = docsAllEntries.filter((doc) => docRetentionClass(doc) != null).length;
-  const retentionSummary = (!isNewEra && docsGroupMode === "retention")
-    ? ` <strong>${escapeHtml(classifiedCount)}</strong> of <strong>${escapeHtml(totalCount)}</strong> registered carry a retention_class.`
-    : "";
-  const groupNote = (!isNewEra && docsGroupMode === "retention")
-    ? `<div class="docs-nav-mode-note">Grouped by retention_class read from docs_index (display only). Grouping assigns no class, changes no data, and certifies nothing.</div>`
-    : "";
-  const tree = isNewEra
-    ? buildDocsNewEraTree(entries)
-    : (docsGroupMode === "retention" ? buildDocsRetentionTree(entries) : buildDocsNavTree(entries));
+  // The tree is the category tree derived from each entry's own ia_bucket (buildDocsNavTree); the
+  // new-era view keeps its Blueprint grouping. The retention_class alternative that sat here was
+  // retired — see the RETIRED HERE note above `deriveDocGroup`.
+  const tree = isNewEra ? buildDocsNewEraTree(entries) : buildDocsNavTree(entries);
   const renderNavItem = ({ doc, index }) => {
+    // CLEAN TITLES, in every mode. The row carried two trailing badges in the source console — the
+    // retention_class tag (retired above: no data source in this project) and the nav-tier tag. The
+    // tier tag goes with it: it is a NAVIGATION VISIBILITY hint, and it only ever rendered in the
+    // mode this port opens on, so here it decorated every non-primary row (18 of 28 at the time of
+    // writing) with a word about the tier the group headings already express. The tier is still
+    // derived and still drives the Primary KB mode; it just stopped being painted on every row.
     const active = text(doc.path, "") === docsActivePath ? "active" : "";
     const label = `<span class="docs-nav-item-label">${escapeHtml(doc.title || doc.path)}</span>`;
-    if (isNewEra) {
-      // Review-status badge removed upstream (display
-      // only): the new-era Docs list shows the plain document title. operator_review_status stays intact in
-      // docs_index (read-only, never written here); only its badge display is dropped from the list.
-      return `<button class="docs-nav-item ${active}" type="button" data-doc-index="${index}">${label}</button>`;
-    }
-    const tier = deriveDocNavTier(doc);
-    const tierMeta = docNavTierMeta(tier);
-    const showTag = docsVisibilityMode === "all" && tier !== "primary";
-    return `<button class="docs-nav-item ${active}" type="button" data-doc-index="${index}">${label}${docRetentionTag(doc)}${showTag ? `<span class="docs-tier-tag docs-tier-${escapeHtml(tier)}" title="${escapeHtml(tierMeta.label)} document (available, not primary)">${escapeHtml(tierMeta.label)}</span>` : ""}</button>`;
+    return `<button class="docs-nav-item ${active}" type="button" data-doc-index="${index}">${label}</button>`;
   };
   // COMPONENTS carries Web/Slides subgroups (buildComponentSubgroups): render each as a nested group so
   // the parent shows child sections, with Slides shown even when empty. Every other group stays flat.
@@ -2367,7 +2305,7 @@ function renderDocsNav() {
       <details class="docs-nav-group" open>
         <summary class="docs-nav-group-header">
           <span class="docs-nav-group-label">${escapeHtml(group.label)}</span>
-          ${(isNewEra || docsGroupMode === "retention") ? `<span class="docs-nav-group-count">(${escapeHtml(group.docs.length)})</span>` : ""}
+          ${isNewEra ? `<span class="docs-nav-group-count">(${escapeHtml(group.docs.length)})</span>` : ""}
         </summary>
         ${renderNavGroupBody(group)}
       </details>
@@ -2385,24 +2323,16 @@ function renderDocsNav() {
         <div class="docs-nav-title" style="padding:0;">Documentation</div>
         ${tree.length ? `<button type="button" class="docs-nav-collapse-toggle">Collapse all</button>` : ""}
       </div>
-      ${isNewEra ? "" : `<div class="docs-mode-toggle" role="group" aria-label="Documentation grouping">
-        <button type="button" class="docs-mode-btn ${docsGroupMode === "category" ? "active" : ""}" data-docs-group-mode="category">By category</button>
-        <button type="button" class="docs-mode-btn ${docsGroupMode === "retention" ? "active" : ""}" data-docs-group-mode="retention">By retention class</button>
-      </div>`}
       ${modeNote}
-      ${groupNote}
     </div>
     <div id="docs-nav-tree" class="docs-nav-tree">${treeHtml}</div>
   `;
   nav.querySelectorAll(".docs-mode-btn[data-docs-mode]").forEach((button) => {
     button.addEventListener("click", () => setDocsVisibilityMode(button.dataset.docsMode));
   });
-  nav.querySelectorAll(".docs-mode-btn[data-docs-group-mode]").forEach((button) => {
-    button.addEventListener("click", () => setDocsGroupMode(button.dataset.docsGroupMode));
-  });
-  // Collapse/Expand all acts only on the category/retention groups currently rendered inside
+  // Collapse/Expand all acts only on the category groups currently rendered inside
   // the docs nav tree. Local session-only UI state: nothing is persisted, so a nav re-render
-  // (visibility/grouping switch) restores the default open state. The label tracks the tree:
+  // (visibility switch) restores the default open state. The label tracks the tree:
   // it reads Expand all only while every group is closed.
   const collapseToggle = nav.querySelector(".docs-nav-collapse-toggle");
   if (collapseToggle) {
@@ -2443,16 +2373,6 @@ function setDocsVisibilityMode(mode) {
     if (docsVisibilityMode === "newera") return;
     docsVisibilityMode = "newera";
   }
-  renderDocsNav();
-}
-
-function setDocsGroupMode(mode) {
-  // Toggle between the existing category tree and the retention_class grouping. Only the
-  // navigation is re-rendered; the active document and its rendered body are preserved. Local
-  // UI state only - never persisted, never written back to docs_index.
-  const next = mode === "retention" ? "retention" : "category";
-  if (next === docsGroupMode) return;
-  docsGroupMode = next;
   renderDocsNav();
 }
 

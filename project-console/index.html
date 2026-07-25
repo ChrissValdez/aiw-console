@@ -54,7 +54,15 @@
             </div>
             <div class="roadmap-edit-controls">
               <span id="roadmap-edit-hint" class="roadmap-edit-hint" role="status" aria-live="polite"></span>
-              <button class="btn btn-secondary btn-sm" id="roadmap-edit-toggle" type="button" data-roadmap-edit-toggle aria-pressed="false">Edit roadmap</button>
+              <!-- HIDDEN, not deleted. This console ships no write path (PATHS.roadmapEdit === null),
+                   so the button's only possible outcome is the honest refusal v3ToggleEditMode()
+                   prints: a control whose entire function is to explain why it does not work is
+                   clutter in a toolbar. The element, its id, its handler (setupRoadmapEditMode),
+                   the endpoint probe (v3ProbeEndpoint) and the refusal copy all STAY in code, so
+                   the day a write path exists this is restored by deleting one attribute. The
+                   `hidden` attribute is honoured by the `[hidden] { display: none !important }`
+                   rule in project-console.css, which outranks `.btn { display: inline-flex }`. -->
+              <button class="btn btn-secondary btn-sm" id="roadmap-edit-toggle" type="button" data-roadmap-edit-toggle aria-pressed="false" hidden>Edit roadmap</button>
             </div>
           </div>
 

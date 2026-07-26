@@ -46,7 +46,7 @@ function joinedDump(harness) {
   return Array.from(harness.dump().values()).join("\n----\n");
 }
 
-test("the renderer paints aiw-console through the shell hooks exactly as measured (2 objectives, 31 runs)", async () => {
+test("the renderer paints aiw-console through the shell hooks exactly as measured (2 objectives, 35 runs)", async () => {
   const harness = makeHarness();
   const result = await select(harness, "aiw-console");
   assert.equal(result.ok, true);
@@ -55,7 +55,7 @@ test("the renderer paints aiw-console through the shell hooks exactly as measure
   assert.match(tree, /Project Console/);
   assert.match(tree, /Consola global/);
   const consoleFiles = harness.element("console-source-files").innerHTML;
-  assert.match(consoleFiles, /2 objectives \/ 15 phases \/ 31 runs/);
+  assert.match(consoleFiles, /2 objectives \/ 16 phases \/ 35 runs/);
   const docsNav = harness.element("docs-nav-list").innerHTML;
   assert.match(docsNav, /docs-nav-item/);
   const history = harness.element("history-list").innerHTML;

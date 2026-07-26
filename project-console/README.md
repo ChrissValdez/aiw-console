@@ -1,4 +1,4 @@
-# Project Console (transplanted, read-only, multi-project)
+# Project Console (transplanted, multi-project; read-only plus two write routes)
 
 The Project Console of `cantu-studio`, transplanted onto this project's own sources (O4.P11), now
 wrapped by a **multi-project shell** (O4.P3): a persistent sidebar lists every registered project,
@@ -19,10 +19,22 @@ never edited for QA.
 
 The server serves the repository root read-only, plus one **virtual namespace**
 `/projects/<key>/**` that maps onto the roots listed in the registry — that is how sibling
-repositories' `.project/` folders and doc bodies are read. **GET and HEAD only, every other method
-answers 405**, on every route. It runs no Git command, rebuilds nothing, has no edit endpoint, and
-never serves any `.git/`. Nothing in this folder can write to disk; registered roots are read,
-never written.
+repositories' `.project/` folders and doc bodies are read. Since O4.P12 (D-050) it also exposes
+**exactly two write routes per registered project**, and nothing else accepts a write:
+
+- `POST /projects/<key>/__project-console/roadmap/edit` — bounded roadmap edits with the
+  dry-run→confirm contract (`apply:false` previews and writes nothing; `apply:true` requires the
+  dry-run baseline as compare-and-swap). The write goes to the project's **canonical** roadmap —
+  the file its root layout declares, never the derived `.project/` — atomically (temp+rename,
+  tmpdir backup, rollback if the written file fails re-check), and a successful confirm re-emits
+  that project's `.project/` folder so the console's next read matches what was written.
+- `POST /projects/<key>/__project-console/history/sync` — re-emits `.project/git_history.json`
+  from the project's own repository (read-only Git), so the History tab refreshes live.
+
+Every other method on every other route still answers **405**; escaping a registered root answers
+403; `.git` is never served or written. Both write routes refuse, with a named reason, a project
+the registry does not list or whose root no layout claims, and every write destination is verified
+inside the registered root after path resolution.
 
 ## The project registry
 
@@ -83,9 +95,11 @@ rendered by the same conservative escape-first renderer as the source console. N
 1. **Docs opens in `all`, not `newera`.** The `newera` mode filters by `operator_review_status`,
    a field this project's emitter does not emit because it means "a run recorded an operator
    review" and no run recorded one. The field stays absent; the opening mode moves instead.
-2. **No write path.** The roadmap edit endpoint and its tooling did not travel. The *Edit roadmap*
-   button is therefore `hidden` — its handler, its endpoint probe and its honest refusal all stay
-   in code, so restoring it the day a write path exists is one attribute away.
+2. **The write path travelled in O4.P12** (this list recorded its absence while it lasted). The
+   roadmap engine was transplanted to `tools/roadmap/`, the server gained the two routes above,
+   and the *Edit roadmap* button is visible again — exactly the one-attribute restoration O4.P11
+   left prepared. Edit mode still probes the endpoint per project and refuses honestly where no
+   layout claims a roadmap (today: `aiw`, until O4.P6).
 3. **Two retired Docs controls.** The grouping toggle (*By category* / *By retention class*), its
    note, the per-document `retention_class` badge and the per-row nav-tier badge are gone. The
    first three read a field of the source project's own retention policy, which this project's

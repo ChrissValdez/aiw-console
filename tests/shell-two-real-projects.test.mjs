@@ -148,7 +148,7 @@ test("aiw-console still renders exactly as measured, with the second project reg
   assert.equal(result.ok, true);
   assert.equal(result.snapshot.project_id, "aiw_console");
   assert.match(harness.element("roadmap-v3-tree").innerHTML, /Consola global/);
-  assert.match(harness.element("console-source-files").innerHTML, /2 objectives \/ 15 phases \/ 31 runs/);
+  assert.match(harness.element("console-source-files").innerHTML, /2 objectives \/ 16 phases \/ 35 runs/);
   assert.equal(harness.sandbox.document.title, "AIW Console Roadmap — Project Console");
 });
 
@@ -213,9 +213,9 @@ test("counts, open document, docs mode and vocabulary all reset across a switch 
   assert.ok(!readerAfter.includes(openedDoc.path), `the document open in aiw-console (${openedDoc.path}) is still open`);
   assert.ok(!readerAfter.includes(openedDoc.title), `the title of the aiw-console document survived the switch`);
 
-  // Counts: the diagnostics line reports cantu-studio's tree, not the 2/15/31 of aiw-console.
+  // Counts: the diagnostics line reports cantu-studio's tree, not the 2/16/35 of aiw-console.
   const counts = harness.element("console-source-files").innerHTML;
-  assert.doesNotMatch(counts, /2 objectives \/ 15 phases \/ 31 runs/);
+  assert.doesNotMatch(counts, /2 objectives \/ 16 phases \/ 35 runs/);
   assert.match(counts, /7 objectives \/ 28 phases \/ 53 runs/);
 
   // Vocabulary: the two trees genuinely use different tokens, and only cantu-studio's paint now.

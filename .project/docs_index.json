@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-25T12:30:51.750Z",
-  "generated_from": "aiw-projector@0.6.0",
+  "generated_at": "2026-07-26T05:04:11.640Z",
+  "generated_from": "aiw-projector@0.7.0",
   "sources": [
     {
       "path": "README.md",
@@ -14,7 +14,7 @@
     },
     {
       "path": "context/DECISIONES.md",
-      "mtime": "2026-07-24T21:30:55.607Z"
+      "mtime": "2026-07-26T04:28:48.958Z"
     },
     {
       "path": "context/MIGRATION-REPORT.md",
@@ -26,7 +26,7 @@
     },
     {
       "path": "context/aiw-console/CONTRATO.md",
-      "mtime": "2026-07-24T09:09:41.568Z"
+      "mtime": "2026-07-26T04:30:13.933Z"
     },
     {
       "path": "context/aiw-console/records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md",
@@ -37,7 +37,7 @@
       "mtime": "2026-07-23T18:54:06.458Z"
     },
     {
-      "path": "context/aiw-console/records/DOCS-INDICE-CURADO-TRANSPORTADO-O4-P5.md",
+      "path": "context/aiw-console/records/DOCS-INDICE-CURADO-TRANSPORTADO.md",
       "mtime": "2026-07-25T12:30:48.201Z"
     },
     {
@@ -118,7 +118,7 @@
     },
     {
       "path": "context/handoffs/aiw-console.md",
-      "mtime": "2026-07-24T21:32:04.415Z"
+      "mtime": "2026-07-26T04:31:33.742Z"
     },
     {
       "path": "docs/snapshot-schema-v1.md",
@@ -127,6 +127,10 @@
     {
       "path": "project-console/README.md",
       "mtime": "2026-07-25T12:09:10.312Z"
+    },
+    {
+      "path": "start-console.README.md",
+      "mtime": "2026-07-26T03:24:18.564Z"
     }
   ],
   "nav_tier_model": {
@@ -195,7 +199,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-07-24T21:30:55.607Z"
+      "freshness": "2026-07-26T04:28:48.958Z"
     },
     {
       "title": "MIGRATION-REPORT — Centralización del contexto de gobernanza en aiw-console",
@@ -219,7 +223,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw-console",
-      "freshness": "2026-07-24T09:09:41.568Z"
+      "freshness": "2026-07-26T04:30:13.933Z"
     },
     {
       "title": "ACABADO VISUAL de Docs y EMISOR de `git_history` — cierre del port de la consola",
@@ -239,7 +243,7 @@
     },
     {
       "title": "DOCS — el índice curado se TRANSPORTA, el escaneo queda de respaldo (`O4.P5`)",
-      "path": "context/aiw-console/records/DOCS-INDICE-CURADO-TRANSPORTADO-O4-P5.md",
+      "path": "context/aiw-console/records/DOCS-INDICE-CURADO-TRANSPORTADO.md",
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
@@ -403,7 +407,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-07-24T21:32:04.415Z"
+      "freshness": "2026-07-26T04:31:33.742Z"
     },
     {
       "title": "Snapshot schema v1 — `project_console.snapshot.json`",
@@ -420,6 +424,14 @@
       "default_visible": false,
       "ia_bucket": "project-console",
       "freshness": "2026-07-25T12:09:10.312Z"
+    },
+    {
+      "title": "start-console (.cmd / .ps1)",
+      "path": "start-console.README.md",
+      "nav_tier": "primary",
+      "default_visible": true,
+      "ia_bucket": "root",
+      "freshness": "2026-07-26T03:24:18.564Z"
     }
   ]
 }

@@ -1,20 +1,20 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-25T12:30:51.750Z",
-  "generated_from": "aiw-projector@0.6.0",
+  "generated_at": "2026-07-26T05:12:38.471Z",
+  "generated_from": "aiw-projector@0.7.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-25T12:26:32.031Z"
+      "mtime": "2026-07-26T04:35:31.182Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-24T21:29:32.928Z"
+      "mtime": "2026-07-26T05:04:11.635Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "ef610153e9013b0ec54159a86102270676c5e490",
+  "head": "8760f1af6383eb59128ab4d81d5d05e985d6140b",
   "current_branch": "main",
   "branches": [
     "main",
@@ -24,8 +24,38 @@
     "aiw/003b-startup-projection-all-views",
     "aiw/005-roadmap-contract-fix"
   ],
-  "commit_total": 68,
+  "commit_total": 71,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "8760f1a",
+      "full_sha": "8760f1af6383eb59128ab4d81d5d05e985d6140b",
+      "date": "2026-07-25T22:35:31-06:00",
+      "parents": "f6a2ec9",
+      "subject": "cierre: roadmap al dia, D-049 y D-050, contrato §19 y handoff",
+      "body": "- 4 runs entregados cerrados con evidencia; 3 runs nuevos para trabajo huerfano\n\n- D-049 envelope transporta vocabulario; D-050 la edicion deja de estar diferida\n\n- CONTRATO §19: de 2 a 5 opcionales con degradacion declarada\n\n- Fase nueva O4.P12 escritura; handoff reescrito; O0 byte-identico",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f6a2ec9",
+      "full_sha": "f6a2ec908eb3725e482d1467fa9f063188be4911",
+      "date": "2026-07-25T21:48:31-06:00",
+      "parents": "b44dbaa",
+      "subject": "dev: lanzador start-console en la raiz del repo",
+      "body": "- Raiz derivada de la ubicacion del lanzador y verificada; cero rutas absolutas\n\n- Libera el puerto 8788 si lo ocupa node; se niega si lo ocupa otro proceso\n\n- Abre el navegador en la URL correcta; soporta PC_PORT\n\n- Verificado en ejecucion real, incluidos los caminos de fallo",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b44dbaa",
+      "full_sha": "b44dbaa1776cedb1960766fdd8a8eb8da467ceea",
+      "date": "2026-07-25T17:07:59-06:00",
+      "parents": "ef61015",
+      "subject": "emisor: transportar el indice de docs curado en vez de escanear",
+      "body": "- Transporte si el layout trae indice curado; escaneo como respaldo\n\n- Cantu: 354 escaneados -> 140 curados, transporte sin perdida\n\n- aiw-console sigue escaneando (sin indice curado), byte-identico salvo frescura\n\n- Suite 119/119; record DOCS-INDICE-CURADO-TRANSPORTADO",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "ef61015",

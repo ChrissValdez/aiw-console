@@ -32,11 +32,13 @@ function setActiveProjectBase(repoBase) {
     memory: `${PROJECT_BASE}guardrails/project_memory.jsonl`,
     // Derived read-only Git commit history view (§19).
     gitHistory: `${PROJECT_BASE}git_history.json`,
-    // READ-ONLY CONSOLE: no write endpoint travels with this port. Both write routes are declared
-    // absent rather than deleted, so the two call sites keep their shape and answer honestly
-    // instead of pointing at an endpoint that does not exist.
-    historySync: null,
-    roadmapEdit: null
+    // THE TWO WRITE ROUTES (O4.P12, reverting the O4.P11 deferral by D-050). Composed from
+    // REPO_BASE like every other route, so they always address the ACTIVE project: the server
+    // maps them onto that project's registered root, resolves its canonical roadmap through
+    // the root layout, and re-emits `.project/` after a confirmed write. Dry-run→confirm and
+    // the availability probe (v3ProbeEndpoint) are unchanged from the source console.
+    historySync: `${REPO_BASE}__project-console/history/sync`,
+    roadmapEdit: `${REPO_BASE}__project-console/roadmap/edit`
   };
 }
 
@@ -3710,10 +3712,11 @@ function updateHistorySyncUi() {
 // success when the server (or its read-only Git build) reports failure.
 async function manualSyncHistory() {
   if (historyManualSyncing) return;
-  // READ-ONLY CONSOLE: no sync endpoint travels with this port, so the button says so instead
-  // of blaming an unreachable server. The history snapshot is rebuilt by its own emitter.
-  if (!PATHS.historySync) {
-    historySyncState = { kind: "failed", text: "Sync unavailable — this console is read-only and ships no sync endpoint." };
+  // The route is composed per active project (O4.P12). The null guard only covers a sync
+  // fired before any project base was set; the endpoint itself refuses, with a named reason,
+  // a project the emitter does not serve.
+  if (!PATHS || !PATHS.historySync) {
+    historySyncState = { kind: "failed", text: "Sync unavailable — no active project selected." };
     updateHistorySyncUi();
     return;
   }
@@ -4231,6 +4234,16 @@ function resetProjectScopedState() {
   historySyncState = { kind: "idle", text: "" };
   closeDrawer();
   v3CloseEditModal(true);
+  // Edit mode is per-project state; the flag above resets, and the TOGGLE's visual must follow
+  // (O4.P12 — before the write path existed the toggle could never read "Editing on", so this
+  // state was unreachable). A pressed toggle carried across a switch would claim edit mode is
+  // on for a project whose endpoint was never probed.
+  const editToggle = byId("roadmap-edit-toggle");
+  if (editToggle) {
+    editToggle.setAttribute("aria-pressed", "false");
+    editToggle.textContent = "Edit roadmap";
+  }
+  v3SetEditHint("");
   // The drawer and modal hide on close but keep their last innerHTML; blank them so not even
   // hidden markup of the previous project survives the switch.
   const drawerBody = byId("drawer-body");
@@ -4343,12 +4356,13 @@ function v3RoadmapOriginActive() {
 }
 
 async function v3ProbeEndpoint() {
-  // READ-ONLY CONSOLE: this port ships no write endpoint at all (the roadmap edit path and the
-  // tooling behind it stayed in the source project), so the probe answers no without a request.
-  // Edit mode can therefore never turn on, and everything below it stays unreachable.
-  if (!PATHS.roadmapEdit) return false;
-  // A GET to the write endpoint returns our 405 { reason:"method_not_allowed" } when the
-  // local Project Console server is present; a plain static host 404s it and file:// throws.
+  // The route is composed per active project (O4.P12); the null guard only covers a probe
+  // fired before any project base was set.
+  if (!PATHS || !PATHS.roadmapEdit) return false;
+  // A GET to the write endpoint returns the server's 405 { reason:"method_not_allowed" }
+  // exactly when the ACTIVE project is editable (registered, and a root layout claims its
+  // roadmap). A plain static host 404s it, file:// throws, and the server itself 404s a
+  // project it cannot edit — all of which honestly keep edit mode off.
   try {
     const response = await fetch(PATHS.roadmapEdit, { method: "GET", cache: "no-store", headers: { Accept: "application/json" } });
     if (response.status !== 405) return false;
@@ -4380,7 +4394,7 @@ async function v3ToggleEditMode() {
   v3EndpointReachable = reachable;
   if (toggle) toggle.disabled = false;
   if (!reachable) {
-    v3SetEditHint("This console is read-only: it ships no roadmap write path, so edit mode stays off. The roadmap is edited at its canonical source.");
+    v3SetEditHint("Edit mode is unavailable: the local console server is not reachable, or the active project has no editable roadmap (no root layout claims one).");
     return;
   }
   v3EditMode = true;
@@ -5450,8 +5464,8 @@ function v3EditRenderRollback(json) {
 function v3EditRenderUnreachable() {
   v3EndpointReachable = false;
   v3EditSetPanel(`
-    <div class="v3-edit-preview-title is-refused">There is no roadmap write path.</div>
-    <div class="v3-edit-note">This console is read-only and ships no edit endpoint. Nothing was written.</div>
+    <div class="v3-edit-preview-title is-refused">The roadmap write endpoint is not reachable.</div>
+    <div class="v3-edit-note">The local console server did not answer. Nothing was written.</div>
     <div class="v3-edit-confirm-row"><button class="btn btn-secondary btn-sm" type="button" data-v3edit-cancel>Close</button></div>
   `);
 }

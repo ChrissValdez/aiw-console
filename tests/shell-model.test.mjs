@@ -126,12 +126,12 @@ test("snapshotSummary counts by the snapshot's OWN run.status tokens, in declare
   assert.equal(summary.operationalStatus, "en_marcha");
 });
 
-test("snapshotSummary on the real snapshot matches the measured 2/15/31", () => {
+test("snapshotSummary on the real snapshot matches the measured 2/16/35", () => {
   const summary = snapshotSummary(realSnapshot);
   assert.equal(summary.projectId, "aiw_console");
-  assert.deepEqual(summary.counts, { objectives: 2, phases: 15, runs: 31 });
+  assert.deepEqual(summary.counts, { objectives: 2, phases: 16, runs: 35 });
   const byToken = Object.fromEntries(summary.runStatusCounts.map(({ token, count }) => [token, count]));
-  assert.equal(byToken.completed, 18);
+  assert.equal(byToken.completed, 25);
   assert.equal(byToken.active, 1);
 });
 

@@ -69,7 +69,11 @@ export const SCHEMA_VERSION = 1;
 // corpus. An emitter that republishes a curated selection is not the emitter that could only
 // scan, so the version moves again — and it moves for every file, because `generated_from`
 // identifies the emitter, not the artifact.
-export const PROJECTOR_VERSION = "0.6.0";
+// 0.7.0 (O4.P12) adds ON-DEMAND single-artifact emission: `writeGitHistoryFile` re-emits
+// `.project/git_history.json` alone, so the console's History sync can refresh commits without
+// re-emitting the whole folder. An emitter that can be invoked per-artifact is not the emitter
+// that could only emit the folder, so the version moves (§6).
+export const PROJECTOR_VERSION = "0.7.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 // Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
@@ -1540,6 +1544,33 @@ export function writeProjectFolder(root, opts = {}) {
     roadmap_model: snapshot.roadmap_tree.model,
     project_id: snapshot.project_id,
     files: written
+  };
+}
+
+// Re-emit ONLY `.project/git_history.json` for a `roadmap_tree` root (O4.P12 — the console's
+// History sync). Same builder, same guard, same atomic write as the full folder emission; the
+// only difference is that the other five artifacts are not rebuilt. Refuses (null) a root no
+// layout claims: single-artifact emission is a refresh for projects this emitter already
+// serves, never the first write into a root whose emission phase has not run.
+// Returns { ok, path, relative_path, bytes, head, current_branch, branches, commit_total,
+// generated_at } or null (no layout / Git unavailable / not its own repository).
+export function writeGitHistoryFile(root, opts = {}) {
+  if (!detectRootLayout(root)) return null;
+  const now = opts.now || new Date().toISOString();
+  const gitHistory = buildGitHistory(root, { now });
+  if (!gitHistory) return null;
+  const { outPath } = resolveInsideProject(root, PROJECT_GIT_HISTORY_RELATIVE_PATH);
+  writeJsonAtomic(outPath, gitHistory);
+  return {
+    ok: true,
+    path: outPath,
+    relative_path: repoRelative(root, outPath),
+    bytes: statSync(outPath).size,
+    head: gitHistory.head,
+    current_branch: gitHistory.current_branch || null,
+    branches: gitHistory.branches.length,
+    commit_total: gitHistory.commit_total,
+    generated_at: gitHistory.generated_at
   };
 }
 

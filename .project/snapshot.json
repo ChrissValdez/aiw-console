@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-25T12:30:51.750Z",
-  "generated_from": "aiw-projector@0.6.0",
+  "generated_at": "2026-07-26T05:04:11.640Z",
+  "generated_from": "aiw-projector@0.7.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-24T21:29:32.928Z"
+      "mtime": "2026-07-26T05:04:11.635Z"
     },
     {
       "path": "package.json",
@@ -14,7 +14,7 @@
     }
   ],
   "operational_status": "active",
-  "project_summary": "AIW Console Roadmap: 2 objectives, 15 phases, 31 runs.",
+  "project_summary": "AIW Console Roadmap: 2 objectives, 16 phases, 35 runs.",
   "current_status_summary": "Active run: RUN-CANTU-PROJECT-CONSOLE-LATENT-DEFECTS-001 (O0/O0.P3, queue 10).",
   "roadmap_tree": {
     "model": "roadmap_tree_v1",
@@ -354,9 +354,10 @@
                 "queue_order": 20,
                 "title": "aiw-console emite su propia carpeta .project/",
                 "summary": "El proyector pasa a emitir la carpeta .project/ de aiw-console según el contrato (schemas, nombres, frescura).",
-                "full_description": "aiw-console emite su propia carpeta .project/ vía el proyector (tools/projector/project.mjs), materializando el contrato: familia v1, .project/ reemplaza a views/ (contrato §1.b), generated_at requerida y la clave nueva sources con mtime para hacer detectable la podredumbre (contrato §6). El obstáculo de ruta sigue siendo único y localizado: resolveInsideAiw (tools/projector/project.mjs:475-483) LANZA si el destino sale de .aiw/ (D-043). ALCANCE REDEFINIDO POR D-048, con la medición de fuentes enfrente (records/MEDICION-FUENTES-CONSOLA.md). MÍNIMO FUNCIONAL — lo que hace falta para que la consola idéntica encienda con sus cinco pestañas, medido renderer en mano: (1) views/project_console.snapshot.json, la COMPUERTA requerida sin la cual la consola entera cae a fallback; (2) el roadmap propio, que alimenta Overview + Roadmap + Cola; (3) views/git_history.snapshot.json, que ya se emite solo. Esas tres tienen origen y emisor hoy. Más las TRES fuentes que hoy no existen y sí pintan píxeles vivos: docs/docs_index.json (la pestaña Docs entera), guardrails/project_guardrails.json y guardrails/no_claims.json (las dos tablas de datos de Governance State). Ése es el mínimo: el snapshot como compuerta, las tres emitibles, y las tres a crear. DIFERIDAS — las otras NUEVE de las doce sin emisor no compran ningún píxel vivo: project.json, state/project_status.json, state/component_status.json, state/events.jsonl, ledgers/change_ledger.jsonl, ledgers/git_provenance.jsonl, ledgers/human_qa.jsonl, ledgers/ai_reviews.jsonl y guardrails/project_memory.jsonl. Solo silencian el banner agregado de fuentes opcionales y llenan dos conteos de Console Diagnostics (component_status y git_provenance); las demás alimentan únicamente código dormido, y project_memory.jsonl no tiene ni un consumidor en el renderer. Se DIFIEREN a una fase de PARIDAD COSMÉTICA posterior y OPCIONAL que D-048 NO abre: se abrirá solo si el operador la pide, y cada fuente entra por la puerta normal del contrato (§18.b) el día que tenga emisor. Son deuda de paridad-con-Cantu, no de consola funcional. DOS TRABAJOS NUEVOS QUE LA MEDICIÓN DESTAPÓ y que este run no contemplaba: (a) EL PROYECTOR NO PUEDE PROYECTAR AIW-CONSOLE HOY — lee el layout objectives/{pending,parked,processed}/*.md, logs/<id>/summary.md y config.json de un project root, y aiw-console NO TIENE ninguno de los tres; hay que enseñarle a proyectar aiw-console tomando su propio roadmap/roadmap.json (roadmap_tree_v1) como RAÍZ del árbol y package.json como identidad mínima. Recordatorio cuyo costo ya se pagó una vez: el .aiw/ de aiw-console NO es estado propio, es el área de entrega de la proyección de AIW (D-044), así que el origen no se lee de ahí. (b) HAY QUE CREAR docs_index.json DESDE CERO — no existe en ninguna ruta del repo (glob de todo el repo = 0 hits), pero el corpus SÍ existe: 23 .md reales. Es el único caso 'cuerpos sin índice', y crear el índice ES crear la fuente: forma con docs[] y, por entrada, title/path/nav_tier/default_visible/audience/freshness; curaduría de qué se muestra por defecto; y paths que existan en disco, que es lo que el validador exige. Pendiente heredado que se mueve con este run: el rename de jame.git_history_snapshot.v1 (contrato §19) arrastra el gate de render que compara ese literal — emisor y consola nueva se mueven juntos en esa cadena; y la asociación commit↔run degrada por el regex RUN-JAME- (audit E.1). UN run hasta que el tramo se planee en detalle.",
-                "status": "planned",
-                "depends_on": []
+                "full_description": "aiw-console emite su propia carpeta .project/ vía el proyector (tools/projector/project.mjs), materializando el contrato: familia v1, .project/ reemplaza a views/ (contrato §1.b), generated_at requerida y la clave nueva sources con mtime para hacer detectable la podredumbre (contrato §6). El obstáculo de ruta sigue siendo único y localizado: resolveInsideAiw (tools/projector/project.mjs:475-483) LANZA si el destino sale de .aiw/ (D-043). ALCANCE REDEFINIDO POR D-048, con la medición de fuentes enfrente (records/MEDICION-FUENTES-CONSOLA.md). MÍNIMO FUNCIONAL — lo que hace falta para que la consola idéntica encienda con sus cinco pestañas, medido renderer en mano: (1) views/project_console.snapshot.json, la COMPUERTA requerida sin la cual la consola entera cae a fallback; (2) el roadmap propio, que alimenta Overview + Roadmap + Cola; (3) views/git_history.snapshot.json, que ya se emite solo. Esas tres tienen origen y emisor hoy. Más las TRES fuentes que hoy no existen y sí pintan píxeles vivos: docs/docs_index.json (la pestaña Docs entera), guardrails/project_guardrails.json y guardrails/no_claims.json (las dos tablas de datos de Governance State). Ése es el mínimo: el snapshot como compuerta, las tres emitibles, y las tres a crear. DIFERIDAS — las otras NUEVE de las doce sin emisor no compran ningún píxel vivo: project.json, state/project_status.json, state/component_status.json, state/events.jsonl, ledgers/change_ledger.jsonl, ledgers/git_provenance.jsonl, ledgers/human_qa.jsonl, ledgers/ai_reviews.jsonl y guardrails/project_memory.jsonl. Solo silencian el banner agregado de fuentes opcionales y llenan dos conteos de Console Diagnostics (component_status y git_provenance); las demás alimentan únicamente código dormido, y project_memory.jsonl no tiene ni un consumidor en el renderer. Se DIFIEREN a una fase de PARIDAD COSMÉTICA posterior y OPCIONAL que D-048 NO abre: se abrirá solo si el operador la pide, y cada fuente entra por la puerta normal del contrato (§18.b) el día que tenga emisor. Son deuda de paridad-con-Cantu, no de consola funcional. DOS TRABAJOS NUEVOS QUE LA MEDICIÓN DESTAPÓ y que este run no contemplaba: (a) EL PROYECTOR NO PUEDE PROYECTAR AIW-CONSOLE HOY — lee el layout objectives/{pending,parked,processed}/*.md, logs/<id>/summary.md y config.json de un project root, y aiw-console NO TIENE ninguno de los tres; hay que enseñarle a proyectar aiw-console tomando su propio roadmap/roadmap.json (roadmap_tree_v1) como RAÍZ del árbol y package.json como identidad mínima. Recordatorio cuyo costo ya se pagó una vez: el .aiw/ de aiw-console NO es estado propio, es el área de entrega de la proyección de AIW (D-044), así que el origen no se lee de ahí. (b) HAY QUE CREAR docs_index.json DESDE CERO — no existe en ninguna ruta del repo (glob de todo el repo = 0 hits), pero el corpus SÍ existe: 23 .md reales. Es el único caso 'cuerpos sin índice', y crear el índice ES crear la fuente: forma con docs[] y, por entrada, title/path/nav_tier/default_visible/audience/freshness; curaduría de qué se muestra por defecto; y paths que existan en disco, que es lo que el validador exige. Pendiente heredado que se mueve con este run: el rename de jame.git_history_snapshot.v1 (contrato §19) arrastra el gate de render que compara ese literal — emisor y consola nueva se mueven juntos en esa cadena; y la asociación commit↔run degrada por el regex RUN-JAME- (audit E.1). UN run hasta que el tramo se planee en detalle. ENTREGADO Y CERRADO (cierre de registro, 2026-07-25). Evidencia: `context/aiw-console/records/EMISOR-CARPETA-PROPIA-O4-P2.md`, y en disco el modo de root `roadmap_tree` en `tools/projector/project.mjs` —decidido por la FORMA del root, nunca por su nombre—, las fuentes declaradas `governance/{guardrails,no_claims,contract}.json` que nacieron aquí, y los archivos bajo `.project/`. La decisión que este run tomó y que nunca se registró —el envelope transporta el vocabulario por eje y la precedencia de derivación como tabla ejecutable; el RESULTADO no viaja— quedó escrita como D-049, seis piezas después de aplicarse en código.",
+                "status": "completed",
+                "depends_on": [],
+                "closeout_result": "completed_successfully"
               }
             ]
           },
@@ -369,11 +370,24 @@
                 "queue_order": 21,
                 "title": "Port idéntico de la consola de Cantu sobre las fuentes de aiw-console",
                 "summary": "Trasplantar la consola de Cantu tal cual (index.html + project-console.css + el renderer real) a aiw-console, con la capa de datos apuntada a sus fuentes propias y sin identidad JAME. Un solo proyecto: la multiconsola viene después.",
-                "full_description": "MIGRACIÓN IDÉNTICA, pedida por el operador y adjudicada en D-048: antes de la multiconsola se trasplanta la consola de Cantu a aiw-console tal cual, para un solo proyecto. No es un rediseño ni un prototipo — es un PORT, y el criterio de terminado es el parecido. QUÉ SE TRASPLANTA: las tres piezas reales de projects/cantu-studio/docs/project-console/ — index.html con sus CINCO pestañas (Overview; Roadmap con sus dos subviews, Run Queue y Roadmap; History; Docs; Status con Governance State y Console Diagnostics — no existen pestañas 'Cola' ni 'Governance' separadas), assets/project-console.css, y assets/project-console.js, EL RENDERER REAL, no una reescritura desde cero. A QUÉ SE APUNTA: la capa de datos deja de leer ../../.aiw/** —que en este repo es el área de entrega de la proyección de AIW, no estado propio (D-044)— y pasa a leer las fuentes que emite el run anterior. Mecánica ya medida: de las 15 rutas de la tabla PATHS solo el snapshot es required; las otras 14 van fail-soft, así que una pestaña sin fuente nace vacía en vez de romper la consola. Cuáles nacen vacías está medido de antemano (records/MEDICION-FUENTES-CONSOLA.md §F.3) y NO cuenta como defecto del port. QUÉ IDENTIDAD SE QUITA, en los puntos ya localizados por el audit (records/AUDIT-CONSOLE-O4-PHASE0.md, Bloque E): el regex RUN-JAME- del history-builder (E.1) y el regex de strip del renderer; las constantes de run horneadas y el mapa RUN_OPERATOR_OVERRIDES keyed por doce run_id de Cantu (E.2), que sencillamente no matchean nada aquí; las rutas .aiw/ horneadas (E.3); y la cadena de fallback de rama jame-parallel-audit-001 (E.4). Ojo con el par acoplado: el gate de render que exige el literal jame.git_history_snapshot.v1 se mueve junto con el rename del emisor, ni antes ni después. COMPUERTA (depends_on real): depende de RUN-CONSOLE-EMISOR-CARPETA-PROPIA-001 — sin fuentes propias emitidas no hay qué renderizar, y con el snapshot ausente la consola entera cae a fallback. FRONTERA: un solo proyecto a propósito. El menú lateral y la pantalla multiproyecto son el run SIGUIENTE, no éste. UN run hasta planear en detalle.",
-                "status": "planned",
+                "full_description": "MIGRACIÓN IDÉNTICA, pedida por el operador y adjudicada en D-048: antes de la multiconsola se trasplanta la consola de Cantu a aiw-console tal cual, para un solo proyecto. No es un rediseño ni un prototipo — es un PORT, y el criterio de terminado es el parecido. QUÉ SE TRASPLANTA: las tres piezas reales de projects/cantu-studio/docs/project-console/ — index.html con sus CINCO pestañas (Overview; Roadmap con sus dos subviews, Run Queue y Roadmap; History; Docs; Status con Governance State y Console Diagnostics — no existen pestañas 'Cola' ni 'Governance' separadas), assets/project-console.css, y assets/project-console.js, EL RENDERER REAL, no una reescritura desde cero. A QUÉ SE APUNTA: la capa de datos deja de leer ../../.aiw/** —que en este repo es el área de entrega de la proyección de AIW, no estado propio (D-044)— y pasa a leer las fuentes que emite el run anterior. Mecánica ya medida: de las 15 rutas de la tabla PATHS solo el snapshot es required; las otras 14 van fail-soft, así que una pestaña sin fuente nace vacía en vez de romper la consola. Cuáles nacen vacías está medido de antemano (records/MEDICION-FUENTES-CONSOLA.md §F.3) y NO cuenta como defecto del port. QUÉ IDENTIDAD SE QUITA, en los puntos ya localizados por el audit (records/AUDIT-CONSOLE-O4-PHASE0.md, Bloque E): el regex RUN-JAME- del history-builder (E.1) y el regex de strip del renderer; las constantes de run horneadas y el mapa RUN_OPERATOR_OVERRIDES keyed por doce run_id de Cantu (E.2), que sencillamente no matchean nada aquí; las rutas .aiw/ horneadas (E.3); y la cadena de fallback de rama jame-parallel-audit-001 (E.4). Ojo con el par acoplado: el gate de render que exige el literal jame.git_history_snapshot.v1 se mueve junto con el rename del emisor, ni antes ni después. COMPUERTA (depends_on real): depende de RUN-CONSOLE-EMISOR-CARPETA-PROPIA-001 — sin fuentes propias emitidas no hay qué renderizar, y con el snapshot ausente la consola entera cae a fallback. FRONTERA: un solo proyecto a propósito. El menú lateral y la pantalla multiproyecto son el run SIGUIENTE, no éste. UN run hasta planear en detalle. ENTREGADO Y CERRADO (cierre de registro, 2026-07-25). Evidencia: `context/aiw-console/records/PORT-IDENTICO-CONSOLA-O4-P11.md`, y en disco `project-console/` con `index.html`, `assets/project-console.{css,js}` y `serve.mjs`. Las tres piezas viajaron byte a byte desde `cantu-studio/docs/project-console/` y sobre la copia se operó: el CSS sin una regla cambiada, el HTML con una línea (el `<title>`). Su ACABADO —Docs y el emisor de `git_history`— es el run siguiente de esta misma fase, y hasta este cierre no tenía run.",
+                "status": "completed",
                 "depends_on": [
                   "RUN-CONSOLE-EMISOR-CARPETA-PROPIA-001"
-                ]
+                ],
+                "closeout_result": "completed_successfully"
+              },
+              {
+                "run_id": "RUN-CONSOLE-ACABADO-DOCS-GIT-HISTORY-001",
+                "queue_order": 22,
+                "title": "ACABADO de Docs y EMISOR de `.project/git_history.json`",
+                "summary": "Cierre visual del port sobre el QA del operador: cuatro controles muertos retirados de Docs, el botón Edit roadmap oculto, y el emisor propio de la historia git.",
+                "full_description": "Continuación de `O4.P11` (`RUN-CONSOLE-PORT-IDENTICO-001`) sobre el QA visual del operador, entregada antes de que el shell existiera. Run CREADO EN EL CIERRE DE REGISTRO del 2026-07-25: el trabajo estaba entregado y su record huérfano, y el criterio de este proyecto es que cada record tenga un run, porque un record sin run rompe la trazabilidad que se usa para saber qué pasó. ENTREGADO Y CERRADO — evidencia en `context/aiw-console/records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md`. Qué hizo, en tres piezas: (a) DOCS — se retiraron cuatro elementos del renderer trasplantado, todos invisibles en Cantu y todos muertos aquí (el toggle *By category* / *By retention class*, su nota explicativa, la etiqueta `retention_class` que decía `UNCLASSIFIED` en 27 de 27 filas, y la etiqueta de tier); (b) el botón *Edit roadmap* quedó `hidden`, NO BORRADO — el elemento con su `id`, el call site, el sondeo del endpoint, el texto de la negativa y el modal de edición entero se conservan intactos, así que restaurarlo el día que exista ruta de escritura es borrar un atributo (Bloque C); (c) EL EMISOR de `.project/git_history.json`, escrito en `tools/projector/project.mjs` y no en el history-builder viejo, que no se tocó — una carpeta, un emisor, una guarda; `PROJECTOR_VERSION` sube 0.3.0→0.4.0 porque un emisor que escribe seis archivos no es el que escribía cinco. La asociación run↔commit sale del roadmap del propio proyecto y ningún prefijo de `run_id` queda horneado; medido: 0 de 35 commits nombran un `run_id`, y la columna queda en blanco en vez de rellenarse. Test: `tests/git-history-emitted.test.mjs`. El botón que aquí se ocultó es exactamente el hueco que la fase de ESCRITURA (`O4.P12`) viene a llenar.",
+                "status": "completed",
+                "depends_on": [
+                  "RUN-CONSOLE-PORT-IDENTICO-001"
+                ],
+                "closeout_result": "completed_successfully"
               }
             ]
           },
@@ -383,14 +397,15 @@
             "runs": [
               {
                 "run_id": "RUN-CONSOLE-SHELL-MULTIPROYECTO-001",
-                "queue_order": 22,
+                "queue_order": 23,
                 "title": "Shell multi-proyecto leyendo solo aiw-console",
                 "summary": "Construir el shell de la consola global que lee la carpeta .project/ de aiw-console (un solo proyecto primero).",
-                "full_description": "La consola los lee: el shell multi-proyecto lee la carpeta .project/ de aiw-console (un proyecto primero). Aquí se activa el test-de-consumidor de D-026 contra el artefacto .project/snapshot.json (contrato §9, que exime al tramo 1 y dispara en el 3). Absorbe el bullet 'Pantalla multi-proyecto' (RM-AIW:152): proyectos previstos — Project Console, AIW, Cantu Studio (y los que vengan); AIW aparece como proyecto de runs manuales renderizado — el kernel nunca lo ejecuta. UN run hasta planear en detalle. COMPUERTA (depends_on real) REAPUNTADA POR D-048: depende de RUN-CONSOLE-PORT-IDENTICO-001 — la multiconsola se construye SOBRE la consola idéntica ya funcionando, no sobre un prototipo y no en paralelo. La compuerta prototipo→shell de D-047 se disuelve con el retiro del prototipo. Aquí es donde entran el menú lateral y la pantalla multiproyecto que el port dejó fuera a propósito. La compuerta requiere aprobación explícita del operador.",
-                "status": "planned",
+                "full_description": "La consola los lee: el shell multi-proyecto lee la carpeta .project/ de aiw-console (un proyecto primero). Aquí se activa el test-de-consumidor de D-026 contra el artefacto .project/snapshot.json (contrato §9, que exime al tramo 1 y dispara en el 3). Absorbe el bullet 'Pantalla multi-proyecto' (RM-AIW:152): proyectos previstos — Project Console, AIW, Cantu Studio (y los que vengan); AIW aparece como proyecto de runs manuales renderizado — el kernel nunca lo ejecuta. UN run hasta planear en detalle. COMPUERTA (depends_on real) REAPUNTADA POR D-048: depende de RUN-CONSOLE-PORT-IDENTICO-001 — la multiconsola se construye SOBRE la consola idéntica ya funcionando, no sobre un prototipo y no en paralelo. La compuerta prototipo→shell de D-047 se disuelve con el retiro del prototipo. Aquí es donde entran el menú lateral y la pantalla multiproyecto que el port dejó fuera a propósito. La compuerta requiere aprobación explícita del operador. ENTREGADO Y CERRADO (cierre de registro, 2026-07-25). Evidencia: `context/aiw-console/records/SHELL-MULTIPROYECTO-O4-P3.md`, y en disco `project-console/assets/project-shell.js` con el registro `project-console/projects.json` —los proyectos son DATO, no código: ni un nombre ni una ruta de proyecto vive en el server—, más los fixtures de `tests/fixtures/multi/` que demuestran la capacidad de N con un proyecto sintético. Aquí se cumplió §20 por superficie: cada ausencia se anuncia EN la vista afectada nombrando el archivo con su proyecto, y ausencia y vacío se dicen distinto.",
+                "status": "completed",
                 "depends_on": [
                   "RUN-CONSOLE-PORT-IDENTICO-001"
-                ]
+                ],
+                "closeout_result": "completed_successfully"
               }
             ]
           },
@@ -400,10 +415,38 @@
             "runs": [
               {
                 "run_id": "RUN-CONSOLE-CANTU-EMITE-CARPETA-001",
-                "queue_order": 23,
+                "queue_order": 24,
                 "title": "Cantu emite la carpeta .project/ nueva al lado de .aiw",
                 "summary": "El proyector emite también la carpeta .project/ de Cantu, aditiva, sin tocar .aiw.",
-                "full_description": "Cantu emite la carpeta .project/ nueva AL LADO de .aiw (aditiva, D-036): el proyector pasa a emitir también el snapshot de Cantu, con lo que la podredumbre de tres semanas se arregla como efecto lateral (contrato §2, corolario). Es la parte-Cantu de 'Los tres roadmaps al contrato' (RM-AIW:133): Cantu ya está en v3; su carpeta .project/ nace aquí. UN run hasta planear en detalle.",
+                "full_description": "Cantu emite la carpeta .project/ nueva AL LADO de .aiw (aditiva, D-036): el proyector pasa a emitir también el snapshot de Cantu, con lo que la podredumbre de tres semanas se arregla como efecto lateral (contrato §2, corolario). Es la parte-Cantu de 'Los tres roadmaps al contrato' (RM-AIW:133): Cantu ya está en v3; su carpeta .project/ nace aquí. UN run hasta planear en detalle. ENTREGADO Y CERRADO (cierre de registro, 2026-07-25). Evidencia: `context/aiw-console/records/EMISOR-CANTU-CARPETA-PROPIA-O4-P4.md`, y en disco los seis archivos de `cantu-studio/.project/`. NOTA DE TRAZABILIDAD, registrada porque un lector futuro tropezaría con ella: ese record se encabeza citando el run `RUN-CONSOLE-EMISOR-CANTU-CARPETA-PROPIA-001`, un `run_id` que NO EXISTE en este roadmap —su única ocurrencia en todo el workspace es esa línea del propio record—. El run de esta fase es y sigue siendo éste: los `run_id` son identidad opaca e inmutable (D-047) y no se renombran para hacerle sitio a una cita. El record no se editó: su contenido queda fuera del alcance de este cierre.",
+                "status": "completed",
+                "depends_on": [],
+                "closeout_result": "completed_successfully"
+              },
+              {
+                "run_id": "RUN-CONSOLE-DOCS-INDICE-CURADO-TRANSPORTADO-001",
+                "queue_order": 25,
+                "title": "El índice de docs curado se TRANSPORTA; el escaneo queda de respaldo",
+                "summary": "Ajuste sobre `O4.P4`: un proyecto que ya curó su índice de docs recibe ese índice republicado, no un volcado de todos sus `.md`.",
+                "full_description": "Ajuste sobre `O4.P4` (`RUN-CONSOLE-CANTU-EMITE-CARPETA-001`), entregado el mismo día. Run CREADO EN EL CIERRE DE REGISTRO del 2026-07-25 para amparar un record que estaba huérfano; adopta el `run_id` que el propio record ya declaraba en su encabezado, de modo que la cita del record pase a ser cierta sin editarlo. ENTREGADO Y CERRADO — evidencia en `context/aiw-console/records/DOCS-INDICE-CURADO-TRANSPORTADO.md`, RENOMBRADO en este mismo cierre: llevaba `-O4-P5` y reclamaba con eso una fase ajena (`O4.P5` es la paridad, QA de operador), cuando el trabajo fue un ajuste a `O4.P4`. El defecto que corrige: `O4.P4` emitió para Cantu un `docs_index` ESCANEANDO todos los `.md` de su repo. Era el único comportamiento que el emisor tenía, y para el proyecto que lo estrenó fue el correcto —este repo no tenía índice y el suyo se construyó desde cero en `O4.P2`—; aplicado a un proyecto que SÍ curó el suyo, el mismo escaneo reemplaza en silencio una curaduría por un volcado. La regla queda: si la ruta `docs_index` del layout trae un índice conforme, se TRANSPORTA con su selección y su orden verbatim; si no, se ESCANEA, y el escaneo sobrevive como respaldo. Lo decide la PRESENCIA del archivo en esa ruta, nunca el nombre del proyecto: un root que mañana crezca un índice curado empieza a transportarse en su siguiente emisión sin que se toque una línea de código. Test: `tests/projector-docs-transport.test.mjs`.",
+                "status": "completed",
+                "depends_on": [
+                  "RUN-CONSOLE-CANTU-EMITE-CARPETA-001"
+                ],
+                "closeout_result": "completed_successfully"
+              }
+            ]
+          },
+          {
+            "phase_id": "O4.P12",
+            "title": "Escritura — la consola edita el roadmap (dry-run→confirm) y sincroniza la historia",
+            "runs": [
+              {
+                "run_id": "RUN-CONSOLE-ESCRITURA-ROADMAP-HISTORY-001",
+                "queue_order": 26,
+                "title": "Las dos rutas de escritura que la consola global no tiene",
+                "summary": "Edición del roadmap desde la UI con flujo dry-run→confirm, y history sync. Fase abierta por D-050; este encargo la registra y la ubica, no la diseña.",
+                "full_description": "Fase NUEVA abierta por D-050, que revierte el diferimiento que D-034 había fijado: allí 'consola estable' se definió acotadamente como READ-ONLY, con la edición y la UX explícitamente después. La razón del cambio, registrada: la consola global NO PUEDE REEMPLAZAR a la de Cantu si no puede hacer lo que la de Cantu hace, y el corte (`O4.P7`) es irreversible. El operador lo pidió tras el QA visual, y el AUDIT Bloque F.3 ya había previsto exactamente esta pérdida. ALCANCE, fijado aquí y solo esto: las DOS rutas de escritura ausentes. (1) EDICIÓN DEL ROADMAP desde la UI con flujo dry-run (`apply:false`) → confirm (`apply:true`), que es el flujo ya medido en la consola de Cantu (AUDIT F.3: el endpoint `/__project-console/roadmap/edit` en su server, con `handleRoadmapEdit`, que 'writes nothing but the canonical roadmap.json'). (2) HISTORY SYNC, el endpoint que regenera la historia git, hoy ausente por construcción: `project-console/serve.mjs` lo declara en su encabezado —'no roadmap edit endpoint, no history sync endpoint, no snapshot rebuild, no Git command, no watcher'—. ESTE RUN NO DISEÑA NADA: el encargo que abrió la fase la registró y la ubicó; el diseño es trabajo suyo el día que se planee en detalle. UN run hasta entonces. DOS HECHOS MEDIDOS QUE TENDRÁ QUE RESOLVER, verificados en disco el 2026-07-25: (a) EL MOTOR DE EDICIÓN NO ESTÁ EN ESTE REPO — `roadmap-core.mjs`, `roadmap-plan.mjs` y `roadmap-edit.mjs` existen SOLO en `cantu-studio/tools/roadmap/`, y `aiw-console/tools/roadmap/` NO EXISTE; en Cantu el endpoint del server y el CLI comparten la MISMA orquestación `roadmap-plan.mjs` sobre `roadmap-core.mjs`, de modo que lo que falta aquí es el motor entero, no un endpoint encima de un motor presente. (b) LA RUTA DEL ROADMAP CANÓNICO DIFIERE POR PROYECTO — en aiw-console es `roadmap/roadmap.json`; en cantu-studio es `.aiw/roadmap/roadmap.json`. Un escritor multiproyecto no puede hornear una ruta: la resuelve por proyecto, como el emisor ya resuelve el layout por la FORMA del root. Y el corolario que ninguno de los dos deja negociar: `.project/` es DERIVADA (§1.b, §2, §18) y NO ES DESTINO DE ESCRITURA — se escribe el canónico y se re-emite; escribir en `.project/` sería editar la copia que se pudre, que es el modo de fallo contra el que el contrato entero existe. PUERTA YA PREPARADA, y es trabajo que no hay que rehacer: el botón *Edit roadmap* quedó `hidden` y no borrado, con el elemento, el call site, el sondeo del endpoint y el modal de edición enteros (`records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md`, Bloque C) — restaurarlo es borrar un atributo. UBICACIÓN: lo SIGUIENTE tras el cierre de registro del 2026-07-25, antes de `O4.P5` (paridad), `O4.P6` (AIW tercer proyecto) y `O4.P7` (corte). El orden lo cargan la posición en el array y `queue_order`, no el número: `phase_id` es identidad opaca y `O4.P12` es el siguiente id libre, no una posición (D-047).",
                 "status": "planned",
                 "depends_on": []
               }
@@ -415,7 +458,7 @@
             "runs": [
               {
                 "run_id": "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001",
-                "queue_order": 24,
+                "queue_order": 27,
                 "title": "Consola global renderiza Cantu (paridad, QA de operador)",
                 "summary": "Levantar la consola global sobre Cantu en read-only y alcanzar paridad con la consola local, con QA de operador.",
                 "full_description": "Absorbe el bullet 'Consola global en aiw-console' (RM-AIW:149-151): Base, la consola de Cantu (la más avanzada). Se levanta AL LADO de la local, apuntando a Cantu en read-only primero. La local no se toca hasta paridad. La consola global renderiza Cantu leyendo su carpeta .project/, y se alcanza paridad con la local con QA de operador. UN run hasta planear en detalle.",
@@ -430,7 +473,7 @@
             "runs": [
               {
                 "run_id": "RUN-CONSOLE-UI-UX-001",
-                "queue_order": 25,
+                "queue_order": 28,
                 "title": "UI/UX de la consola global",
                 "summary": "Edición y UX de la consola global, que la fuente difiere explícitamente a después de la paridad read-only.",
                 "full_description": "El tramo 8 no tiene bullet propio en la fuente: vive solo en prosa. Edición y UX vienen después (RM-AIW:119-120) del criterio read-only de consola estable, y ya pueden ir en paralelo; Features nuevas (batches, UI) solo en la global (RM-AIW:157). Que este tramo carezca de bullet numerado es parte del desfase declarado en el record. UN run hasta planear en detalle.",
@@ -445,7 +488,7 @@
             "runs": [
               {
                 "run_id": "RUN-CONSOLE-AIW-TERCER-PROYECTO-001",
-                "queue_order": 26,
+                "queue_order": 29,
                 "title": "AIW como tercer proyecto (roadmap Markdown → JSON v3)",
                 "summary": "AIW entra a la consola global como tercer proyecto: su roadmap pasa de Markdown temporal a JSON v3 y se emite su carpeta .project/.",
                 "full_description": "Parte-AIW de 'Los tres roadmaps al contrato' (RM-AIW:134): AIW pasa de markdown temporal (roadmap_AIW_temp.md) a JSON v3 y entra a la consola con su roadmap de verdad. AIW aparece como proyecto de runs manuales renderizado — el kernel nunca lo ejecuta. Distinción importante: esta redacción (O4) ya llevó O4 al roadmap de la CONSOLA porque O4 es el objetivo de la consola; el tramo 6 es la conversión del roadmap COMPLETO de AIW (O1, O2, O3, O5, O6) a su propio v3 y el retiro de O4 de RM-AIW, que es encargo aparte (§12 del encargo de redacción). UN run hasta planear en detalle.",
@@ -460,7 +503,7 @@
             "runs": [
               {
                 "run_id": "RUN-CONSOLE-CORTE-RETIRO-LOCAL-001",
-                "queue_order": 27,
+                "queue_order": 30,
                 "title": "Corte: retiro de la consola local de Cantu y borrado de .aiw",
                 "summary": "Cuando la global renderice y edite igual que la local, retirar la local como acto deliberado y registrado, y borrar .aiw.",
                 "full_description": "Bullet 'Paridad y corte' (RM-AIW:155-157): cuando la global renderice y edite igual que la local, la local se retira como acto deliberado y registrado. Features nuevas (batches, UI) solo en la global. El corte incluye el borrado de .aiw, que convivió aditivo hasta aquí (contrato §0, corte del tramo 7); el costo está medido: el día que .aiw se borre se ponen rojas 10 rutas del validador de Cantu (CANTU-VALID:153-166). depends_on cita la compuerta explícita de la fuente: la local no se toca hasta paridad (RM-AIW:151, :155-156). UN run hasta planear en detalle. COMPUERTA reforzada (depends_on real): además de la paridad (RUN-CONSOLE-PARIDAD-RENDER-CANTU-001), el corte depende ahora de la revisión UI/UX (RUN-CONSOLE-UI-UX-001) — el corte es IRREVERSIBLE y no procede sin la revisión de uso. Ambas compuertas requieren aprobación explícita del operador.",
@@ -478,7 +521,7 @@
             "runs": [
               {
                 "run_id": "RUN-CONSOLE-MERGE-005-001",
-                "queue_order": 28,
+                "queue_order": 31,
                 "title": "Merge de 005 en aiw-console",
                 "summary": "La honestidad de estados del proyector (ERROR/HUMAN_REVIEW → blocked, parked → Later, títulos desde # Objective); la consola de AIW enciende.",
                 "full_description": "La honestidad de estados del proyector (ERROR/HUMAN_REVIEW → blocked, parked → Later, títulos desde # Objective). Verificado por tests ANTES de mergear: rama de 005 con 31 tests verdes (5 archivos), re-verde en main tras merge --no-ff (29c9478), pusheado. Ajuste de acoplamiento de la mudanza: projects.config.json corregido ../aiw → ../../aiw (el kernel subió un nivel al mudarse). La consola de AIW ENCIENDE: el server (serve-project-console.mjs, puerto 8787) re-proyecta al arrancar (project=aiw, objectives=16), Overview/Roadmap/Cola vivas con datos reales, QA visual de operador OK. 006 ya estaba mergeado de antes. Pulidos MENORES pendientes (no bloquean): banner some optional local state files could not be loaded (benigno) y el diseño se ve algo desplazado (probable caché/estado). Anterior al plan de tramos: no pertenece a ninguno; por eso vive en la fase transversal. Su queue_order alto NO refleja cronología — queue_order sigue el orden de presentación de fase, y esta fase va al final del rango de O4.",
@@ -487,8 +530,20 @@
                 "closeout_result": "completed_successfully"
               },
               {
+                "run_id": "RUN-CONSOLE-LANZADOR-START-CONSOLE-001",
+                "queue_order": 32,
+                "title": "Lanzador `start-console` en la raíz del repo",
+                "summary": "Arranque de doble clic para la consola multiproyecto: verifica el checkout, libera el puerto, abre el navegador. Herramienta, no tramo de consola.",
+                "full_description": "Trabajo de HERRAMIENTA, no de tramo de consola: por eso vive en la fase transversal y no en la secuencia de tramos. Run CREADO EN EL CIERRE DE REGISTRO del 2026-07-25 — el trabajo estaba entregado sin run que lo amparara. ENTREGADO Y CERRADO. NO TIENE RECORD PROPIO, y no se le inventó uno: su documentación es `start-console.README.md`, y los archivos son `start-console.cmd` y `start-console.ps1` en la raíz del repo. Qué hace, según esa documentación: deriva la raíz del repo de la ubicación del propio lanzador y la VERIFICA exigiendo `project-console/serve.mjs` y `project-console/projects.json` —ninguna ruta absoluta, ningún nombre de máquina ni de usuario horneado, así que funciona en cualquier checkout y desde cualquier directorio—; detiene el proceso node que retenga el puerto y verifica que quedó libre, que es el fallo para el que existe (un server viejo reteniendo el puerto y sirviendo código anterior mientras se cree estar mirando el actual), y si quien lo retiene NO es node lo reporta y se niega a arrancar en vez de pelear por él; imprime la URL exacta y abre el navegador cuando el puerto responde. Puerto 8788 por defecto —el del propio server—, `PC_PORT` lo sustituye y el lanzador opera sobre ése: es el que libera, verifica, imprime y abre. Lo que arranca es de SOLO LECTURA: arrancar la consola no puede cambiar este repo ni ninguno de los que lee. `depends_on` declarado sobre el shell y no vacío porque `project-console/projects.json` —uno de los dos archivos que el lanzador exige para arrancar— nació en `O4.P3`.",
+                "status": "completed",
+                "depends_on": [
+                  "RUN-CONSOLE-SHELL-MULTIPROYECTO-001"
+                ],
+                "closeout_result": "completed_successfully"
+              },
+              {
                 "run_id": "RUN-CONSOLE-CONTEXT-PACK-001",
-                "queue_order": 29,
+                "queue_order": 33,
                 "title": "Context pack de la consola",
                 "summary": "Un pack que lleva REGLAS (no el plan): qué es la consola, el peligro del validador que asserta texto fuente, derivado vs canónico, la estructura de carpetas como regla.",
                 "full_description": "Lleva REGLAS, no el plan (el plan es estado y vive en el roadmap): qué es la consola, el peligro del validador que asserta texto fuente, qué es derivado vs canónico, la estructura de carpetas como regla. Tensión anotada: D-037/D-038 ya movieron el contexto de cabina a context/aiw-console/, con lo que este ítem queda PARCIALMENTE superado; decidir qué le queda vivo NO es de este encargo de redacción. Transversal: no mapea a un solo tramo.",
@@ -497,7 +552,7 @@
               },
               {
                 "run_id": "RUN-CONSOLE-DIGEST-CABINA-001",
-                "queue_order": 30,
+                "queue_order": 34,
                 "title": "Digest para la cabina",
                 "summary": "Una vista más del proyector: un archivo con el estado de los tres proyectos, fechado y con SHA, para detectar obsolescencia.",
                 "full_description": "Una vista más del proyector: UN archivo con el estado de los tres proyectos (HEAD+rama+sucio, conteos por estado, runs activos, siguiente paso, no-claims), fechado y con SHA para detectar obsolescencia. Chico, derivado, jamás editado a mano. La propia fuente lo degrada de prerequisito a optimización: con el sync del repo ya no es prerequisito, es optimización de contexto (RM-AIW:148). Degradado no es muerto. Transversal: no mapea a un solo tramo.",
@@ -512,7 +567,7 @@
             "runs": [
               {
                 "run_id": "RUN-CONSOLE-PROTOTIPO-CONSOLA-001",
-                "queue_order": 31,
+                "queue_order": 35,
                 "title": "Prototipo de la consola global",
                 "summary": "Prototipo de la consola global contra DATOS REALES: lee el roadmap propio de aiw-console (2 objetivos, 30 runs). Primer consumidor de roadmap_tree_v1 y primera compuerta de aprobación del operador.",
                 "full_description": "Prototipo de la consola global construido CONTRA DATOS REALES: lee projects/aiw-console/roadmap/roadmap.json, que ya existe con 2 objetivos (O0, O4) y 30 runs. NO maquetas ni datos inventados — ése es exactamente el patrón de la v0.3 escrita a mano que el contrato existe para matar (D-039). Es además el PRIMER CONSUMIDOR REAL de roadmap_tree_v1 (capa 2 del contrato, D-040), así que ejercita la doctrina test-de-consumidor (D-026) ANTES de que se construya el emisor: si el formato no aguanta, se sabe aquí y no tres fases más tarde. Fase nueva O4.P10, ubicada en TERCER lugar del objetivo (tras el contrato O4.P1, antes del emisor O4.P2), para dar resultado visible temprano. Es la PRIMERA COMPUERTA de aprobación del operador: RUN-CONSOLE-SHELL-MULTIPROYECTO-001 depende de este prototipo APROBADO y no se construye en paralelo. La compuerta requiere aprobación explícita del operador. UN run hasta planear en detalle. RETIRADO COMO ENTREGABLE DE FASE POR D-048 — el operador pidió una MIGRACIÓN IDÉNTICA de la consola de Cantu antes de la multiconsola, con lo que el orden que este run inauguraba (D-047: el prototipo primero) queda revertido. NO SE BORRA NADA: el prototipo console/ sigue en disco y su entregable de conocimiento se CONSERVA INTACTO en context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md, que ya cumplió su propósito — roadmap_tree_v1 es consumible y aguantó contra datos reales sin inventar; su límite es lo que delega al contrato (el vocabulario de status y la regla de derivación de objetivo/fase), insumo que hereda el emisor. La compuerta prototipo→shell que D-047 escribió se disuelve aquí: la multiconsola pasa a depender del port idéntico. Este run no se ejecutará más; su status completed dice que corrió y cerró (el código existe y el veredicto está escrito) y el closeout_result dice CÓMO cerró. No hay token 'descartado' en el vocabulario cerrado de run (CONTRATO §11.a: planned/active/blocked/completed), así que el retiro viaja en closeout_result, que es string libre (§14), y en esta nota. La fase queda al final del objetivo: es historia, no plan.",

@@ -1315,3 +1315,152 @@ propio), [[D-043]] (`resolveInsideAiw` y la forma de `run_id`), y los dos record
 medición citados arriba.
 
 Criterio de borrado: N/A.
+
+## D-049 — 2026-07-25 — El envelope transporta el vocabulario y la regla de derivación; el resultado no viaja
+Decisión **tomada en `O4.P2` y ya aplicada en código desde entonces**, nunca
+registrada aquí. Se escribe seis piezas después de aplicarse, en el cierre de
+registro que puso el papel al día: **no cambia nada en disco**, cierra un hueco de
+registro. Evidencia:
+`context/aiw-console/records/EMISOR-CARPETA-PROPIA-O4-P2.md` (Bloque B, donde se
+tomó) y `context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md` (la medición
+que la forzó).
+
+**El problema medido.** El VEREDICTO midió que `roadmap_tree_v1` **no es
+autodescriptivo**: el archivo trae `status: "active" | "completed" | "planned"`
+pero **no trae en ninguna parte la lista de tokens válidos**
+(`taxonomy_model in file: false`), y **la función que deriva el estado de un
+objetivo o de una fase tampoco viaja** — el consumidor la tuvo que traer del
+CONTRATO §12. Su conclusión desde el lado del lector: para un prototipo de un
+proyecto es tolerable; para un shell que leerá árboles de N emisores, no.
+
+**La decisión, en tres partes.**
+1. **El VOCABULARIO viaja, completo y POR EJE.** `taxonomy_model` declara los
+   cuatro vocabularios que el árbol pone en juego —`project.operational_status` y
+   `run.status` (almacenados), `objective.status` y `phase.status` (derivados)—,
+   cada uno con el eje que califica. El campo `axis` no es adorno: desarma la
+   trampa que §11.c midió, que `active` y `blocked` existen en dos ejes distintos
+   con significados distintos. Declarados por eje, un lector genérico ya no puede
+   confundirlos **y no necesita saber de antemano de qué proyecto viene el
+   archivo**.
+2. **La REGLA DE DERIVACIÓN viaja como TABLA EJECUTABLE, no como resultado.**
+   `taxonomy_model.derivations` transporta la precedencia de §12.a en forma de
+   datos: `active` (any) → `blocked` (any) → `completed` (all) → `in_progress`
+   (any) → `planned` (otherwise), con `empty_input: "malformed"`. Un lector que
+   evalúe esa tabla en orden obtiene el mismo token que el emisor, y la suite lo
+   prueba ejecutando la tabla **leída del archivo emitido** contra
+   `deriveCollectionStatus` en los cinco casos.
+3. **Lo que NO viaja: el RESULTADO.** Ningún objetivo y ninguna fase del árbol
+   emitido lleva `status` ni contadores. Verificado por test sobre cada nivel.
+
+**Por qué esto no contradice §12.c.** §12.c prohíbe **almacenar el resultado**, por
+dos razones nombradas: la copia que se pudre y los dos consumidores que derivan a
+su gusto. Esta decisión ataca las dos y no crea la primera — no se persiste ningún
+token derivado (no hay copia que pudrir) y se publica la regla para que dos
+consumidores no puedan divergir. **Declarar la FUNCIÓN es lo contrario de almacenar
+su SALIDA.**
+
+**Por qué declaración y comportamiento no pueden divergir.** La objeción legítima
+—"la regla ya vive en el CONTRATO; el envelope la duplica"— se resuelve por dónde
+vive la copia: la regla existe **UNA vez en el código**, el array
+`COLLECTION_STATUS_RULES`. `deriveCollectionStatus` lo **ejecuta**;
+`buildTaxonomyModel` lo **declara**. Son **el mismo array**, así que no pueden
+divergir dentro del emisor ni con un error de tipeo. Es exactamente el defecto que
+§17 midió en el modo 1 y que aquí no se reproduce: allá `OBJECTIVE_CLASSIFICATIONS`
+y `OPERATIONAL_STATUSES` son literales que el emisor declara pero no usa —tan
+desacoplados que `OPERATIONAL_STATUSES` declara un `blocked` que el cálculo real
+**no puede producir nunca**—. Queda **una junta que el emisor no puede cerrar
+solo**: entre el TEXTO del contrato y la TABLA del código. Es una junta humana
+(enmendar §12 obliga a tocar la tabla) y el emisor la hace visible en vez de
+taparla — `taxonomy_model.specified_by` apunta al documento normativo, ruta que
+**no está horneada**: la declara el proyecto en `governance/contract.json` y el
+puntero se emite solo si el archivo existe (§7).
+
+**Ya está ejercitada por dos consumidores reales, y ése era el punto.** El shell
+(`O4.P3`) lee el vocabulario y la regla **del propio archivo** y no conoce a ningún
+emisor por su nombre; Cantu (`O4.P4`) entró como **segundo emisor** y el shell lo
+renderizó sin aprenderse nada suyo. Sin esto, el shell tendría que hornear por
+proyecto qué significan sus tokens y cómo derivar el estado de un objetivo — la
+definición exacta de lo que el tramo entero existe para eliminar. La recomendación
+2 del VEREDICTO —"la derivación debe ser código compartido, una sola
+implementación"— sigue viva: el envelope garantiza que todos deriven **lo mismo**;
+compartir la implementación es lo que evita escribirla N veces.
+
+Referencias: [[D-048]] (que al retirar el prototipo ya anticipó que el snapshot
+debía cargar `taxonomy_model`), [[D-039]] y [[D-040]] (las capas del contrato que
+esto ejerce), CONTRATO §10.b, §11.c, §12.a/§12.c y §17.
+Criterio de borrado: la sustituye una decisión que cambie qué viaja en el envelope.
+
+## D-050 — 2026-07-25 — La edición deja de estar diferida: entra como fase nueva, antes de paridad y del corte
+**Revierte el diferimiento de la edición que fijó [[D-034]].** Aquella decisión
+acotó "consola estable" —deliberadamente, para no gold-platear— a: renderiza los
+tres proyectos, leyendo de sus propios repos, roadmap + docs + status,
+**READ-ONLY**, con "edición desde la consola, UX y features nuevas" explícitamente
+**después**. Lo que se revierte es **sólo eso**: el diferimiento de la EDICIÓN. El
+resto de D-034 —el orden consola-primero, la metodología de paralelismo, el reparto
+packs/consola— **sigue en pie**, y la UX (`O4.P8`) **no** se adelanta con esto.
+
+**Por qué, con su evidencia.** El operador, tras el **QA visual** de la consola
+portada, pide la edición como lo más importante: **la consola global no puede
+reemplazar a la de Cantu si no puede hacer lo que la de Cantu hace.** Y el corte
+(`O4.P7`) es **irreversible**. La pérdida estaba **prevista y medida desde el
+audit**: `AUDIT-CONSOLE-O4-PHASE0.md` **Bloque F.3** la nombró entera — lo que se
+perdería el día del corte, si la consola global se lleva la consola pero **no** el
+tooling de roadmap (que hoy sólo está en Cantu), es (a) el **endpoint** de escritura
+desde la UI y (b) la capacidad de editar el roadmap **desde el navegador** con el
+flujo dry-run→confirm. D-034 no ignoró esa pérdida: la difirió **antes** de que ese
+audit existiera.
+
+**Entra como FASE NUEVA: `O4.P12`**, "Escritura — la consola edita el roadmap
+(dry-run→confirm) y sincroniza la historia", con
+`RUN-CONSOLE-ESCRITURA-ROADMAP-HISTORY-001` (`planned`, prefijo `RUN-CONSOLE-` por
+§10.d Regla 1.a). `phase_id` **opaco**: `O4.P12` es el siguiente id libre, **no una
+posición** ([[D-047]]). **Alcance: las DOS rutas de escritura ausentes, y ninguna
+más** — (1) **edición del roadmap** desde la UI con flujo dry-run (`apply:false`) →
+confirm (`apply:true`), el flujo que la consola de Cantu ya tiene medido (endpoint
+`/__project-console/roadmap/edit`, `handleRoadmapEdit`, que "writes nothing but the
+canonical roadmap.json"); y (2) **history sync**, el endpoint que regenera la
+historia git, hoy ausente **por construcción** — `project-console/serve.mjs` lo
+declara en su propio encabezado: "no roadmap edit endpoint, no history sync
+endpoint, no snapshot rebuild, no Git command, no watcher".
+
+**Ubicación: lo SIGUIENTE.** Va después del cierre de registro y **antes de
+`O4.P5`** (paridad), **`O4.P6`** (AIW tercer proyecto) y **`O4.P7`** (corte). Razón
+de orden, no de gusto: pedirle paridad a una consola a la que le falta la mitad de
+lo que el original hace es medir contra una vara equivocada, y el corte no procede
+sin ella. El orden lo cargan **la posición en el array y `queue_order`**, no el
+número del `phase_id`. **No se añadió ninguna arista `depends_on` nueva hacia
+paridad, AIW ni corte:** la ubicación es orden, no compuerta, y este proyecto
+declara `depends_on` sólo donde hay compuerta real ([[D-046]]).
+
+**Esta decisión NO diseña la fase.** El encargo que la abre la **registra y la
+ubica**; el diseño es trabajo suyo el día que se planee en detalle. Lo que sí
+quedan fijados son **dos hechos medidos en disco el 2026-07-25** que la fase tendrá
+que resolver, anotados aquí para que no se re-descubran:
+- **(a) El motor de edición no está en este repo.** `roadmap-core.mjs`,
+  `roadmap-plan.mjs` y `roadmap-edit.mjs` existen **SÓLO** en
+  `cantu-studio/tools/roadmap/`; **`aiw-console/tools/roadmap/` NO EXISTE**. En
+  Cantu, endpoint y CLI comparten la **misma** orquestación `roadmap-plan.mjs`
+  sobre `roadmap-core.mjs` — de modo que lo que falta aquí es **el motor entero**,
+  no un endpoint encima de un motor presente.
+- **(b) La ruta del roadmap canónico difiere por proyecto.** En `aiw-console` es
+  `roadmap/roadmap.json`; en `cantu-studio` es `.aiw/roadmap/roadmap.json`. Un
+  escritor multiproyecto **no puede hornear una ruta**: la resuelve por proyecto,
+  como el emisor ya resuelve el layout por la FORMA del root. **Corolario que
+  ninguno de los dos deja negociar:** `.project/` es **DERIVADA** (§1.b, §2, §18) y
+  **NO es destino de escritura** — se escribe el canónico y se re-emite; escribir
+  en `.project/` sería editar la copia que se pudre, que es el modo de fallo contra
+  el que el contrato entero existe.
+
+**Puerta ya preparada, y es trabajo que no hay que rehacer.** El ACABADO del port
+dejó el botón *Edit roadmap* **`hidden`, no borrado**, conservando el elemento con
+su `id`, el call site, el sondeo del endpoint, el texto de la negativa y **el modal
+de edición entero**: restaurarlo el día que exista ruta de escritura **es borrar un
+atributo** (`records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md`, Bloque C).
+
+Referencias: [[D-034]] (lo que esto revierte, y lo que de ella sigue en pie),
+[[D-047]] (identidad opaca de `phase_id`; y la compuerta paridad+UI/UX → corte, que
+esto **no** toca), [[D-048]] (el orden vigente de O4 sobre el que esto inserta),
+[[D-049]] (la otra decisión escrita en el mismo cierre de registro),
+`records/AUDIT-CONSOLE-O4-PHASE0.md` Bloque F.3 (la pérdida prevista),
+`records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md` Bloque C (el botón oculto).
+Criterio de borrado: N/A (abre una fase; la sustituye una decisión futura).

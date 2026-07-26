@@ -1664,25 +1664,42 @@ Cuando un archivo gane emisor, entra así, y solo así:
 Los 12 de §18.a no están "pendientes de ruta": están fuera. Cada uno entra por
 esta puerta el día que tenga emisor, uno a uno.
 
-## 19. Los opcionales de hoy: dos archivos
+## 19. Los opcionales de hoy: cinco archivos
 
-Con la regla de §18, la capa 3 declara hoy exactamente DOS archivos opcionales —
-los dos con emisor que no son el snapshot requerido de la capa 1:
+Con la regla de §18, la capa 3 declara hoy exactamente CINCO archivos opcionales —
+los cinco con emisor que no son el snapshot requerido de la capa 1:
 
 | Ruta en `.project/` | Estatus | Contenido | Degradación declarada si falta |
 |---|---|---|---|
 | `.project/roadmap.json` | OPCIONAL | el árbol del roadmap, identificado `roadmap_tree_v1` (§10, §10.c) | Se pierden las vistas de detalle del roadmap (cola de runs, árbol por objetivo). Lo que el snapshot transporta en `roadmap_tree` sigue renderizándose. Se anuncia "roadmap no disponible", nombrando el archivo. (Degradación equivalente medida: AUDIT:292-293.) |
 | `.project/git_history.json` | OPCIONAL | la historia de commits y ramas que hoy emite el history-builder | Se pierde la historia (commits y asociación run↔commit). El resto del consumidor no se entera. Se anuncia "historia no disponible", nombrando el archivo. (Medido: AUDIT:297; el validador ya lo trata como condicional, `CANTU-VALID:1565-1566`.) |
+| `.project/docs_index.json` | OPCIONAL | el índice de documentos del proyecto: selección, título, `nav_tier`, `default_visible`, agrupación y frescura por documento. TRANSPORTADO si el proyecto curó el suyo; ESCANEADO si no (`records/DOCS-INDICE-CURADO-TRANSPORTADO.md`) | Se pierde **la pestaña Docs entera**: sin índice no hay navegación ni cuerpo que abrir — es la única fuente que la alimenta. Las otras cuatro vistas no se enteran. Se anuncia "Docs index unavailable" nombrando el archivo con su proyecto, y **distingue índice AUSENTE de índice VACÍO**. (Anuncio implementado y probado en `O4.P3`; SHELL D.1.) |
+| `.project/guardrails.json` | OPCIONAL | los guardrails declarados del proyecto — una de las dos tablas de datos de Governance State | Se pierde **la tabla de Guardrails** de Governance State. La otra tabla de esa misma vista (Claims) y el resto del consumidor siguen renderizando. Se anuncia con banner **en su propia sección**, nombrando el archivo; una tabla que CARGÓ vacía conserva su estado vacío de siempre, porque ausencia y vacío son verdades distintas (§20). |
+| `.project/no_claims.json` | OPCIONAL | los no-claims declarados del proyecto — la otra tabla de datos de Governance State | Se pierde **la tabla de Claims** de Governance State. Guardrails y el resto siguen. Mismo anuncio: banner en su propia sección, nombrando el archivo, y ausencia distinguida de vacío. |
 
-Los nombres, `roadmap.json` y `git_history.json`, nombran contenido (§1). El
+**Las tres últimas entraron sin declarar aquí su degradación, y esta edición lo
+cierra retroactivamente.** Las emitió `O4.P2`
+(`RUN-CONSOLE-EMISOR-CARPETA-PROPIA-001`) y el consumidor las anuncia por
+superficie desde `O4.P3` (`RUN-CONSOLE-SHELL-MULTIPROYECTO-001`), pero §18.b exige
+la declaración **al entrar** y ninguna de las tres la trajo: estuvieron emitidas y
+degradando correctamente mientras el contrato seguía diciendo que los opcionales
+eran dos. La degradación de arriba **no es nueva** —está medida contra lo que el
+shell ya hace, archivo por archivo—; lo nuevo es que por fin está escrita. El
+registro de la deuda: nombrarla aquí en vez de dejar que la tabla parezca completa.
+
+Los cinco nombres —`roadmap.json`, `git_history.json`, `docs_index.json`,
+`guardrails.json` y `no_claims.json`— nombran contenido (§1). El
 nivel `views/` y el sufijo `.snapshot` desaparecen porque en `.project/` TODO es
 derivado y regenerable: decir "snapshot" ahí es tan redundante como §1.b midió
 que era `views/` — la misma tijera que recortó `project_console.` del snapshot.
 
 **El conjunto requerido sigue siendo uno (§8): el snapshot.** Ninguno de estos
-dos lo acompaña en ese estatus; esta capa no promueve nada.
+cinco lo acompaña en ese estatus; **esta edición no promueve nada** — pasar de dos
+a cinco opcionales es declarar lo que ya se emite, no ampliar lo que puede ponerse
+rojo. Cada requerido nuevo es una forma nueva de ponerse rojo, y eso exige decisión
+registrada (§8).
 
-Dos notas de contorno:
+Tres notas de contorno:
 
 - `.project/roadmap.json` es DERIVADO, como todo en la carpeta. El canónico
   editable del roadmap vive donde el proyecto lo tenga — en Cantu,
@@ -1695,6 +1712,21 @@ Dos notas de contorno:
   roadmap antes de §10.c. Renombrarlo es trabajo del emisor (tramo 2); se anota
   aquí para que la asimetría no parezca descuido — mismo tratamiento que
   `aiw_flat_objectives_v1` en §10.c.
+
+- **`.project/git_history.json` es el ÚNICO artefacto emitido cuyo contenido
+  depende de la MÁQUINA que lo emite.** Todos los demás derivan de archivos
+  versionados del repo y dos checkouts del mismo commit los emiten idénticos; éste
+  deriva de `.git`, y **las ramas locales difieren entre checkouts**. Medido: **35
+  commits** en un clon fresco frente a **42** en la máquina con ramas de trabajo.
+  No es un defecto del emisor —emite todas las ramas locales a propósito, porque
+  esconder una rama es política de visualización y es del lector, y un emisor que
+  descarta dato miente—; es una propiedad de la fuente. **Se registra como HECHO;
+  su resolución queda ABIERTA y nombrada, no decidida aquí:** acotar la emisión a
+  `main` (reproducible entre máquinas, a costa de ocultar trabajo en curso al
+  lector que sí lo tiene) **o** aceptar la dependencia de máquina y declararla en
+  el propio artefacto. Quien la resuelva decide también si el artefacto debe
+  declarar de qué checkout salió. Hasta entonces, una diferencia de conteo entre
+  dos máquinas **no es podredumbre** (§6) ni un emisor roto: es esta propiedad.
 
 ## 20. La degradación es requisito SOBRE EL CONSUMIDOR
 
@@ -1821,6 +1853,12 @@ que es tramo 2 (§10.d, Regla 1.b), como ya lo eran §1.b, §10 y §17—.
 |---|---|---|---|
 | n | Un archivo sin emisor NO entra en `.project/`; se queda en `.aiw` hasta tener emisor (hoy: 12 de 15) | §18 | Archivos a mano en una carpeta declarada derivada reintroducen la clase de artefacto que se pudrió (§2), con bendición del contrato. |
 | o | Capa 3 hoy: `.project/roadmap.json` y `.project/git_history.json`, ambos OPCIONALES; el requerido sigue siendo uno | §19 | Solo 3 de 15 tienen emisor; promover a requerido exige decisión registrada (§8). |
+
+Esta tabla registra lo ADJUDICADO EN SU FECHA y no se reescribe. Una lectura al
+día de la fila `o`: el **2026-07-25** §19 pasó a declarar **cinco** opcionales
+—entraron `docs_index.json`, `guardrails.json` y `no_claims.json`, que ganaron
+emisor en `O4.P2`—; **el requerido sigue siendo uno**, que es lo que la fila
+adjudica y sigue vigente sin cambio.
 | p | La ausencia de un no-requerido nunca rompe; la degradación se anuncia POR ARCHIVO, en la superficie afectada | §20 | El banner agregado medido no dice qué falta (CANTU-PCJS:4320-4325); fallar ruidoso también al leer (§6). |
 | q | `closeout_result ⇒ completed` entra como advertencia del validador, nunca requisito duro | §21 | Regularidad de 9 ejemplares, no invariante; endurecer este par de campos ya probó poner rojos runs existentes (§14). |
 

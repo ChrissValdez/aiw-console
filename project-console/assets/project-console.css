@@ -79,9 +79,15 @@
      sideways scroll is not new (the 1200px cap produced it too, at 1264px); `100%` is what ends
      it, by making the ceiling the space actually available instead of a number. */
   --pc-content-max: 100%;
-  /* The small side inset, named once so the header band, the content column and the
-     optional-source banner cannot drift apart. */
-  --pc-content-pad: 20px;
+  /* The side inset, named once so the header band, the content column and the optional-source
+     banner cannot drift apart.
+
+     Measured twice. It was 32px (48px on wide viewports), which a later pass cut to 20px together
+     with the width cap — and 20px is too tight: with the cap gone the content runs to the pane
+     edge and the first character of every card sits almost on the border. 28px is the middle: it
+     restores a readable gutter and still gives back most of the width the 32/48 pair was costing,
+     which is what the cut was for. One value at every viewport, so nothing can drift. */
+  --pc-content-pad: 28px;
 }
 
 *,
@@ -1675,15 +1681,18 @@ textarea:disabled {
   padding-left: 34px;
 }
 
-/* COMPONENTS Web/Slides subgroups (an earlier run): nested groups
-   indent one step under their parent so the parent/child relationship reads clearly. Reuses the
-   existing 20 -> 34px indent step (subgroup header 34px, its items 48px); adds no color. Display-only. */
-.docs-nav-subgroup > .docs-nav-group-header {
-  padding-left: 34px;
+/* Nested Docs groups. The navigation tree now mirrors the repository's folder hierarchy, which has
+   no fixed depth, so the indent is COMPUTED from the nesting level the renderer sets on each group
+   (--docs-nav-depth) instead of being enumerated one rule per level. The step is the one that was
+   already here: a group header sits at 20px + 14px per level and its items 14px further in, which
+   reproduces the previous 20 -> 34px headers and 34 -> 48px items exactly at the first two levels.
+   Spacing only; adds no color. Display-only. */
+.docs-nav-group > .docs-nav-group-header {
+  padding-left: calc(20px + var(--docs-nav-depth, 0) * 14px);
 }
 
-.docs-nav-subgroup .docs-nav-group-items .docs-nav-item {
-  padding-left: 48px;
+.docs-nav-group > .docs-nav-group-items > .docs-nav-item {
+  padding-left: calc(34px + var(--docs-nav-depth, 0) * 14px);
 }
 
 /* Curated Docs visibility controls (an earlier run):

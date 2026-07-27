@@ -2059,22 +2059,83 @@ const DOCS_NAV_TIERS = ["primary", "secondary", "advanced", "evidence", "history
 // itself is NOT gone: `deriveDocNavTier` still classifies every entry and `isDefaultVisibleDoc`
 // still reads it, so the Primary KB mode keeps working. Only the badge is retired.
 
-// Display order and labels for the Docs navigation groups. The source console listed its own
-// project's fourteen IA buckets here, with hand-written labels for each (one of them the other
-// project's name). None of that travels: a group vocabulary is identity, and a console that knows
-// a project's buckets in advance cannot render a second project.
+// DOCS GROUPING — DERIVED FROM THE REPOSITORY'S OWN FOLDER HIERARCHY.
 //
-// The mechanism is untouched — the ordering rule already said "groups not listed here still render
-// (alphabetically, before Uncategorized)", so with an empty order list EVERY group takes that path
-// and the tree is built entirely from the `ia_bucket` each entry carries. A project that wants a
-// particular order expresses it in its own index, not in this file.
-const DOCS_GROUP_ORDER = [];
-const DOCS_GROUP_LABELS = {
-  uncategorized: "Uncategorized"
-};
-// Aliases that folded one project's legacy bucket spellings onto its canonical keys. Same reason:
-// they only ever meant something for that project's data. Group keys now come from the data as-is.
-const DOCS_GROUP_ALIASES = {};
+// What was here, and why it is gone. Grouping used to read each entry's own grouping fields
+// (`ia_bucket` -> `category` -> `related_area` -> `source_role` -> uncategorized), and a SECOND,
+// parallel grouping existed for the "newera" mode built on an explicit path -> category MAP. That
+// map was forty-odd exact routes of the project this console was ported from; a port cannot carry
+// another repository's routes, so it travelled empty — and with it empty, every reviewed document
+// of every project fell into one UNCATEGORIZED drawer. Two grouping mechanisms, one of them a
+// table of one project's paths, was the last baked identity left in this file.
+//
+// The replacement is the repository itself. WHERE a document lives is where its author already
+// classified it: the folder is visible without opening this console, it costs no per-project
+// configuration, it is the same statement for every project, and it cannot rot — move the file and
+// its group moves with it. This is the rule §2 already applies to nav tiers, applied to grouping.
+//
+// THE PATH ALWAYS WINS. A curated index may still carry `ia_bucket` / `category` / `related_area`
+// / `source_role`; the navigation ignores them. One rule for every project and for every
+// visibility mode, so what the tree will look like is predictable from the repo alone and no
+// reader has to know which project it is looking at. The cost is real and accepted: a project that
+// curated group NAMES sees its folder names instead. Nothing is written to any index — those
+// fields stay in the data untouched, they are simply not what the navigation is built from.
+//
+// Written here, in the CONSUMER, not in the emitter: grouping is a property of the VIEW. The
+// emitter republishes a project's curated index verbatim (CANONICAL OUTSIDE, DERIVED INSIDE), and
+// a project whose `.project/` was emitted by an older run must group the same way as one emitted
+// today — which is only true if the rule lives on the reading side.
+
+// The document's directory chain, as segments. A file at the repository root yields [].
+function docDirSegments(doc) {
+  const segments = text(doc?.path, "").trim().replace(/\\/g, "/").split("/")
+    .filter((segment) => segment && segment !== ".");
+  return segments.slice(0, -1);
+}
+
+// THE `archive/` RULE. A document that lives under a folder named `archive` is NOT rendered in
+// Docs — in any view, in any visibility mode. Generic and by path: it names no project and no
+// other folder, so any repository that archives by moving a file into `archive/` gets the same
+// behaviour with nothing to configure.
+//
+// Only DIRECTORY segments are tested, never the filename: a document called
+// `DOCS_RETENTION_ARCHIVE_POLICY.md` is a document ABOUT archiving, not an archived document.
+//
+// Decided HERE (consumer) rather than in the emitter, for two reasons. (1) The emitter transports
+// a curated index verbatim; dropping entries from `docs[]` would make the emitted file disagree
+// with the curation it claims to republish, and `unresolved` — the one declared reason an entry
+// may be omitted — means "the file is not on disk", which is a different and true statement. An
+// archived file resolves perfectly. (2) A `.project/` folder emitted before this rule existed
+// still hides its archive under this console, with no re-emission: the rule reaches every project
+// the console renders, not only the ones re-emitted after it.
+const DOCS_ARCHIVE_SEGMENT = "archive";
+
+function isArchivedDocPath(path) {
+  return docDirSegments({ path }).some((segment) => segment.toLowerCase() === DOCS_ARCHIVE_SEGMENT);
+}
+
+// The leading segments EVERY rendered document shares carry no information that can separate one
+// group from another — they are the same for all of them — so grouping starts at the first segment
+// where the paths actually DIFFER. No folder name is written down anywhere; the shared prefix is
+// measured from the set being rendered:
+//   every document under one documentation folder -> that folder is shared -> the groups are the
+//     folders inside it (`architecture`, `decisions`, `components/web`, ...)
+//   documents spread over several top-level folders and the repo root -> nothing is shared -> those
+//     top-level folders ARE the groups.
+// At least one segment is always left to group by, so a corpus of one document still names its
+// folder instead of collapsing into the no-folder bucket.
+function commonDirPrefixLength(chains) {
+  if (!chains.length) return 0;
+  const shortest = Math.min(...chains.map((chain) => chain.length));
+  let shared = 0;
+  while (shared < shortest && chains.every((chain) => chain[shared] === chains[0][shared])) shared += 1;
+  return Math.max(0, Math.min(shared, shortest - 1));
+}
+
+// Documents that sit directly at the level grouping starts from have no folder to be grouped by.
+// They render together, last, under this label — the analogue of the old Uncategorized tail, but
+// reached by a fact about the path rather than by absent metadata.
+const DOCS_ROOT_GROUP_LABEL = "Root";
 
 // RETENTION-CLASS GROUPING — RETIRED HERE (not disabled: removed).
 //
@@ -2089,9 +2150,10 @@ const DOCS_GROUP_ALIASES = {};
 // corpus under a single "unclassified" heading and every row wore an UNCLASSIFIED badge: a control
 // with no data source behind it, and a badge that says only "this project has no such policy".
 //
-// Same criterion by which the port emptied the baked tables (DOCS_NEW_ERA_CATEGORY_BY_PATH,
-// DOCS_GROUP_ORDER): an identity that could only ever be true for one project does not travel. It
-// is not an amputation of function — there is no function to amputate without the data.
+// Same criterion by which the port emptied the two baked grouping tables — the path -> category
+// map and the bucket order/label lists, both since REMOVED by the path rule above: an identity
+// that could only ever be true for one project does not travel. It is not an amputation of
+// function — there is no function to amputate without the data.
 //
 // Removed with it (zero remaining references, checked before deleting): `docsGroupMode`,
 // `DOCS_RETENTION_UNCLASSIFIED`, `DOCS_RETENTION_ORDER`, `docRetentionClass`, `docRetentionTone`,
@@ -2101,20 +2163,19 @@ const DOCS_GROUP_ALIASES = {};
 // (`.docs-mode-btn[data-docs-mode]`), so its styles are not orphaned.
 // Nothing was written to docs_index, and no document field was invented to replace what was retired.
 
-function deriveDocGroup(doc) {
-  // Fallback order: ia_bucket -> category -> related_area -> source_role -> uncategorized.
-  // Entries without the newer ia_bucket field still land in a stable group derived from the
-  // metadata they already carry, so incomplete grouping data degrades safely.
-  const candidates = [doc?.ia_bucket, doc?.category, doc?.related_area, doc?.source_role];
-  for (const candidate of candidates) {
-    const value = text(candidate, "").trim().toLowerCase();
-    if (value) return DOCS_GROUP_ALIASES[value] || value;
-  }
-  return "uncategorized";
+// The group chain of a document under the CURRENT rendered set: its folder chain with the shared
+// prefix removed. [] means "directly at the grouping root" (the Root group).
+function docGroupChain(doc, prefixLength) {
+  return docDirSegments(doc).slice(prefixLength);
 }
 
-function docGroupLabel(groupKey) {
-  return DOCS_GROUP_LABELS[groupKey] || friendlyLabel(groupKey);
+// The group path of a document as one readable label ("Components / Web"), for the reader's own
+// Category field. It calls the same two functions the navigation calls, over the same rendered
+// set, so the tree and the reader can never disagree about where a document belongs.
+function docGroupLabel(doc) {
+  const entries = docsEntriesForMode();
+  const chain = docGroupChain(doc, commonDirPrefixLength(entries.map(({ doc: entry }) => docDirSegments(entry))));
+  return chain.length ? chain.map(friendlyLabel).join(" / ") : DOCS_ROOT_GROUP_LABEL;
 }
 
 function deriveDocNavTier(doc) {
@@ -2144,135 +2205,67 @@ function isDefaultVisibleDoc(doc) {
   return deriveDocNavTier(doc) === "primary";
 }
 
+function docsRenderableEntries() {
+  // Every entry the Docs view may render, in registry order, each keeping its index into the FULL
+  // registry so navigation stays a filtered view of it and never a re-indexed copy. The `archive/`
+  // rule is applied HERE, once, above every visibility mode: an archived document is not "hidden
+  // in this view", it is not part of what Docs renders at all.
+  return docsAllEntries
+    .map((doc, index) => ({ doc, index }))
+    .filter(({ doc }) => !isArchivedDocPath(doc?.path));
+}
+
 function docsEntriesForMode() {
-  // Entries carry their index in the full docs_index array so navigation stays a filtered view
-  // of the same registry (never a re-indexed copy). "newera" shows only the docs a run marked
-  // with operator_review_status; "all" shows every registered doc; "primary" shows only the
-  // curated default-visible set. Which one a project OPENS on is derived from its own index
-  // (docsResolveOpeningMode).
-  const entries = docsAllEntries.map((doc, index) => ({ doc, index }));
+  // "newera" shows only the docs a run marked with operator_review_status; "all" shows every
+  // registered doc; "primary" shows only the curated default-visible set. Which one a project
+  // OPENS on is derived from its own index (docsResolveOpeningMode).
+  const entries = docsRenderableEntries();
   if (docsVisibilityMode === "newera") return entries.filter(({ doc }) => hasOperatorReviewStatus(doc));
   if (docsVisibilityMode === "all") return entries;
   return entries.filter(({ doc }) => isDefaultVisibleDoc(doc));
 }
 
 function buildDocsNavTree(entries) {
-  // Groups docs_index entries into the ordered category tree used by the Docs navigation.
-  // Accepts { doc, index } pairs (index into the full registry) so the tree can be built from a
-  // filtered subset while each item still resolves to its real docs_index entry. Entry order
-  // inside a group preserves docs_index order; group order follows DOCS_GROUP_ORDER, then unknown
-  // groups alphabetically, with Uncategorized always last. Empty groups never render.
-  const groupsByKey = new Map();
-  entries.forEach(({ doc, index }) => {
-    const key = deriveDocGroup(doc);
-    if (!groupsByKey.has(key)) {
-      groupsByKey.set(key, { key, label: docGroupLabel(key), docs: [] });
+  // Groups { doc, index } pairs into the nested category tree used by the Docs navigation, from
+  // each entry's own repo path and nothing else. A folder that contains subfolders produces a
+  // group WITH SUBGROUPS, to whatever depth the repository actually has; a folder that holds
+  // documents directly produces a flat group. Entry order inside a group preserves docs_index
+  // order — the project's own curation, when it curated one. Group order is alphabetical by label
+  // at every level, with the no-folder Root group last. Empty groups never render, because a group
+  // only exists if a rendered document is inside it.
+  const chains = entries.map(({ doc }) => docDirSegments(doc));
+  const prefixLength = commonDirPrefixLength(chains);
+  const makeNode = (key, label) => ({ key, label, docs: [], subgroups: [], byKey: new Map() });
+  const root = makeNode("", DOCS_ROOT_GROUP_LABEL);
+
+  entries.forEach((entry, position) => {
+    let node = root;
+    for (const segment of chains[position].slice(prefixLength)) {
+      if (!node.byKey.has(segment)) {
+        const child = makeNode(segment, friendlyLabel(segment));
+        node.byKey.set(segment, child);
+        node.subgroups.push(child);
+      }
+      node = node.byKey.get(segment);
     }
-    groupsByKey.get(key).docs.push({ doc, index });
+    node.docs.push(entry);
   });
-  const known = DOCS_GROUP_ORDER.filter((key) => groupsByKey.has(key)).map((key) => groupsByKey.get(key));
-  const unknown = [...groupsByKey.keys()]
-    .filter((key) => !DOCS_GROUP_ORDER.includes(key) && key !== "uncategorized")
-    .sort((left, right) => left.localeCompare(right))
-    .map((key) => groupsByKey.get(key));
-  const tail = groupsByKey.has("uncategorized") ? [groupsByKey.get("uncategorized")] : [];
-  return [...known, ...unknown, ...tail];
-}
 
-// New-era Docs grouping. The "newera" view shows only the documents a run marked with
-// operator_review_status, grouped into the categories below, in this order, with empty categories
-// omitted. The grouping deliberately does NOT use ia_bucket: it used a path -> category map, which
-// is where this renderer's baked identity lived (see below — that map travels empty). Any new-era
-// document without a category falls into UNCATEGORIZED (new), so nothing is hidden or dropped.
-//
-// In this project the view is EMPTY today, and honestly so: no run has recorded an
-// operator_review_status on any document, so there are no new-era documents to group. The console
-// opens on "primary" instead. Nothing here fabricates a review that did not happen.
-const DOCS_NEW_ERA_BLUEPRINT_ORDER = [
-  "START HERE",
-  "ARCHITECTURE",
-  "DECISIONS",
-  "REFERENCE",
-  "COMPONENTS",
-  "HOW-TO",
-  "OPERATIONS",
-  "GOVERNANCE",
-  "DOCS MANAGEMENT",
-  "AI CONTEXT",
-  "HISTORY & EVIDENCE"
-];
-const DOCS_NEW_ERA_UNCATEGORIZED = "UNCATEGORIZED (new)";
-// The doc -> category map that placed each new-era document in a Blueprint category was written
-// as forty-odd exact paths of the source project ("docs/START-HERE.md", "docs/components/web/…").
-// It is the clearest case of baked identity in this renderer: with any other repository's paths
-// every entry falls through, and keeping it would mean carrying a second project's documentation
-// map inside this one. It travels EMPTY. Unmapped new-era documents already had a defined
-// destination — UNCATEGORIZED (new) — so nothing is dropped and nothing is invented.
-const DOCS_NEW_ERA_CATEGORY_BY_PATH = {};
+  // `count` is the group's OWN documents plus every descendant's, so a parent's number is the
+  // number of documents reachable under it — what a reader counting the tree would arrive at.
+  const finish = (node) => {
+    delete node.byKey;
+    node.subgroups = node.subgroups.sort((left, right) => left.label.localeCompare(right.label)).map(finish);
+    node.count = node.docs.length + node.subgroups.reduce((total, sub) => total + sub.count, 0);
+    return node;
+  };
+  finish(root);
 
-function docNewEraCategory(doc) {
-  // Maps a new-era doc to its Blueprint category by exact docs_index path. Unmapped new-era docs
-  // return UNCATEGORIZED (new) so they always render. Read-only: assigns no docs_index data.
-  const path = text(doc?.path, "").trim();
-  return DOCS_NEW_ERA_CATEGORY_BY_PATH[path] || DOCS_NEW_ERA_UNCATEGORIZED;
-}
-
-// COMPONENTS Web/Slides subcategories. Within the
-// COMPONENTS new-era group the packets split into Web and Slides subgroups. Web holds the current Web
-// component packets (matched by their docs/components/web/ path); Slides renders ready-but-empty until
-// Slides packets exist. Display-only: it reads the same docs_index paths and assigns no data.
-const DOCS_NEW_ERA_COMPONENT_SUBGROUP_ORDER = ["Web", "Slides"];
-
-function docComponentSubgroup(doc) {
-  // Assigns a COMPONENTS doc to the Web or Slides subgroup by its docs_index path. Any COMPONENTS doc
-  // without a recognized slides path defaults to Web so nothing is ever dropped. Read-only.
-  const path = text(doc?.path, "").trim();
-  if (path.startsWith("docs/components/slides/")) return "Slides";
-  return "Web";
-}
-
-function buildComponentSubgroups(entries) {
-  // Splits the COMPONENTS group's { doc, index } entries into ordered Web/Slides subgroups. Both
-  // subgroups always exist so Slides renders ready-but-empty. Same { key, label, docs } shape as a
-  // top-level group, so the nav template renders each as a nested group. Display-only.
-  const byKey = new Map(
-    DOCS_NEW_ERA_COMPONENT_SUBGROUP_ORDER.map((key) => [key, { key, label: key, docs: [] }])
-  );
-  entries.forEach(({ doc, index }) => {
-    const key = docComponentSubgroup(doc);
-    if (!byKey.has(key)) byKey.set(key, { key, label: key, docs: [] });
-    byKey.get(key).docs.push({ doc, index });
-  });
-  return DOCS_NEW_ERA_COMPONENT_SUBGROUP_ORDER.map((key) => byKey.get(key));
-}
-
-function buildDocsNewEraTree(entries) {
-  // Groups new-era { doc, index } pairs into ordered Blueprint-category sections. Category order
-  // follows DOCS_NEW_ERA_BLUEPRINT_ORDER; any unknown category sorts alphabetically before the tail;
-  // UNCATEGORIZED (new) is always last; empty categories never render (matches buildDocsNavTree).
-  // Same { key, label, docs } group shape as buildDocsNavTree so the existing tree template renders
-  // it unchanged. Display-only.
-  const groupsByKey = new Map();
-  entries.forEach(({ doc, index }) => {
-    const key = docNewEraCategory(doc);
-    if (!groupsByKey.has(key)) {
-      groupsByKey.set(key, { key, label: key, docs: [] });
-    }
-    groupsByKey.get(key).docs.push({ doc, index });
-  });
-  const known = DOCS_NEW_ERA_BLUEPRINT_ORDER.filter((key) => groupsByKey.has(key)).map((key) => groupsByKey.get(key));
-  const unknown = [...groupsByKey.keys()]
-    .filter((key) => !DOCS_NEW_ERA_BLUEPRINT_ORDER.includes(key) && key !== DOCS_NEW_ERA_UNCATEGORIZED)
-    .sort((left, right) => left.localeCompare(right))
-    .map((key) => groupsByKey.get(key));
-  const tail = groupsByKey.has(DOCS_NEW_ERA_UNCATEGORIZED) ? [groupsByKey.get(DOCS_NEW_ERA_UNCATEGORIZED)] : [];
-  const ordered = [...known, ...unknown, ...tail];
-  // COMPONENTS renders as a parent with Web/Slides child groups; every other category stays flat.
-  const componentsGroup = ordered.find((group) => group.key === "COMPONENTS");
-  if (componentsGroup) {
-    componentsGroup.subgroups = buildComponentSubgroups(componentsGroup.docs);
-  }
-  return ordered;
+  // The root node is not a group: its subgroups ARE the top level. Documents sitting directly on
+  // it become the Root group, rendered last.
+  return root.docs.length
+    ? [...root.subgroups, { key: "", label: DOCS_ROOT_GROUP_LABEL, docs: root.docs, subgroups: [], count: root.docs.length }]
+    : root.subgroups;
 }
 
 function renderDocs(data) {
@@ -2291,12 +2284,15 @@ function renderDocs(data) {
     return;
   }
   docsResolveOpeningMode(docs);
-  // Curated default: open on the first default-visible (Primary KB) doc, not the first registered
-  // entry. renderDocsNav paints the tier controls and the filtered category/tree navigation.
+  // Curated default: open on the first document of the current view, not the first registered
+  // entry. renderDocsNav paints the filtered category/tree navigation.
   const visible = docsEntriesForMode();
-  const first = (visible[0] || { doc: docs[0] }).doc;
+  // The fallback, for a view that filters everything out, is the first RENDERABLE entry — never
+  // `docs[0]`, which may be archived. An archived document is not opened by a fallback either.
+  const first = (visible[0] || docsRenderableEntries()[0] || null)?.doc || null;
   // Select first so docsActivePath is set, then paint the nav so the opened doc highlights.
-  renderSelectedDoc(first);
+  if (first) renderSelectedDoc(first);
+  else byId("docs-reader").innerHTML = "";
   renderDocsNav();
 }
 
@@ -2309,7 +2305,11 @@ function renderDocs(data) {
 function docsResolveOpeningMode(docs) {
   if (docsOpeningModeResolved) return;
   docsOpeningModeResolved = true;
-  docsVisibilityMode = (docs || []).some(hasOperatorReviewStatus) ? "newera" : "all";
+  // Asked of the RENDERABLE registry only: an archived entry is not something any mode can show,
+  // so a project whose only reviewed documents are archived must not open on an empty "newera".
+  docsVisibilityMode = (docs || [])
+    .filter((doc) => !isArchivedDocPath(doc?.path))
+    .some(hasOperatorReviewStatus) ? "newera" : "all";
 }
 
 function hasOperatorReviewStatus(doc) {
@@ -2334,9 +2334,12 @@ function renderDocsNav() {
   if (!nav) return;
   const isNewEra = docsVisibilityMode === "newera";
   const entries = docsEntriesForMode();
-  const primaryCount = docsAllEntries.filter(isDefaultVisibleDoc).length;
-  const totalCount = docsAllEntries.length;
-  const newEraCount = docsAllEntries.filter(hasOperatorReviewStatus).length;
+  // Counted over the RENDERABLE registry, not the raw one: a count that includes documents no
+  // mode can reach is a number the operator cannot verify against the tree in front of them.
+  const renderable = docsRenderableEntries().map(({ doc }) => doc);
+  const primaryCount = renderable.filter(isDefaultVisibleDoc).length;
+  const totalCount = renderable.length;
+  const newEraCount = renderable.filter(hasOperatorReviewStatus).length;
   const activeDoc = docsAllEntries.find((doc) => text(doc.path, "") === docsActivePath) || null;
   const activeVisible = entries.some(({ doc }) => text(doc.path, "") === docsActivePath);
   // Declutter: the left panel keeps
@@ -2356,10 +2359,11 @@ function renderDocsNav() {
     : (!isNewEra && docsVisibilityMode === "primary"
       ? `<div class="docs-nav-mode-note">Advanced, evidence, history and proposal documents stay available under All registered.</div>`
       : "");
-  // The tree is the category tree derived from each entry's own ia_bucket (buildDocsNavTree); the
-  // new-era view keeps its Blueprint grouping. The retention_class alternative that sat here was
-  // retired — see the RETIRED HERE note above `deriveDocGroup`.
-  const tree = isNewEra ? buildDocsNewEraTree(entries) : buildDocsNavTree(entries);
+  // ONE TREE, EVERY MODE. The Blueprint tree that used to be built for "newera" only is gone with
+  // the path -> category map it was built from; the mode now decides WHICH documents are shown and
+  // the path decides where each one sits, so the shape of the navigation no longer depends on
+  // which mode a project happens to open on.
+  const tree = buildDocsNavTree(entries);
   const renderNavItem = ({ doc, index }) => {
     // CLEAN TITLES, in every mode. The row carried two trailing badges in the source console — the
     // retention_class tag (retired above: no data source in this project) and the nav-tier tag. The
@@ -2371,31 +2375,24 @@ function renderDocsNav() {
     const label = `<span class="docs-nav-item-label">${escapeHtml(doc.title || doc.path)}</span>`;
     return `<button class="docs-nav-item ${active}" type="button" data-doc-index="${index}">${label}</button>`;
   };
-  // COMPONENTS carries Web/Slides subgroups (buildComponentSubgroups): render each as a nested group so
-  // the parent shows child sections, with Slides shown even when empty. Every other group stays flat.
-  const renderNavGroupBody = (group) => group.subgroups
-    ? group.subgroups.map((sub) => `
-      <details class="docs-nav-group docs-nav-subgroup" open>
-        <summary class="docs-nav-group-header">
-          <span class="docs-nav-group-label">${escapeHtml(sub.label)}</span>
-          <span class="docs-nav-group-count">(${escapeHtml(sub.docs.length)})</span>
-        </summary>
-        <div class="docs-nav-group-items">
-          ${sub.docs.length ? sub.docs.map(renderNavItem).join("") : emptyState("No documents yet.")}
-        </div>
-      </details>
-    `).join("")
-    : `<div class="docs-nav-group-items">${group.docs.map(renderNavItem).join("")}</div>`;
-  const treeHtml = tree.length
-    ? tree.map((group) => `
-      <details class="docs-nav-group" open>
+  // A group renders its OWN documents first, then its subgroups — the reading order of the folder
+  // it mirrors. Recursive, because the repository's folder hierarchy has no fixed depth: the
+  // former Web/Slides special case was one hand-written level for one project's `components/`
+  // folder, and it is replaced by this, which reaches `context/aiw-console/records/` too.
+  // `--docs-nav-depth` carries the nesting level to the stylesheet, so indentation is computed
+  // rather than enumerated per level.
+  const renderNavGroup = (group, depth) => `
+      <details class="docs-nav-group${depth ? " docs-nav-subgroup" : ""}" style="--docs-nav-depth:${depth}" open>
         <summary class="docs-nav-group-header">
           <span class="docs-nav-group-label">${escapeHtml(group.label)}</span>
-          ${isNewEra ? `<span class="docs-nav-group-count">(${escapeHtml(group.docs.length)})</span>` : ""}
+          <span class="docs-nav-group-count">(${escapeHtml(group.count)})</span>
         </summary>
-        ${renderNavGroupBody(group)}
+        ${group.docs.length ? `<div class="docs-nav-group-items">${group.docs.map(renderNavItem).join("")}</div>` : ""}
+        ${group.subgroups.map((sub) => renderNavGroup(sub, depth + 1)).join("")}
       </details>
-    `).join("")
+    `;
+  const treeHtml = tree.length
+    ? tree.map((group) => renderNavGroup(group, 0)).join("")
     : emptyState("No documents match this view.");
   // Docs visibility toggle removed upstream (display only):
   // the Docs tab now always renders the new-era category-grouped view, so the former New era / Primary KB /
@@ -2724,7 +2721,7 @@ function renderDocMetadataDetails(doc) {
   // empty is omitted (no placeholder). Presentation only: every field stays intact in docs_index; this
   // reads the same entry, changes no data, and operator_review_status remains read-only (never written).
   const status = docStatusLabel(doc);
-  const category = docGroupLabel(deriveDocGroup(doc));
+  const category = docGroupLabel(doc);
   const lastUpdate = docLastUpdateDate(doc);
   const fields = [
     text(status, "").trim() ? metaField("Status", status) : "",

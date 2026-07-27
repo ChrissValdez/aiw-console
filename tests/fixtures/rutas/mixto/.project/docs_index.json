@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "project_id": "mixto",
+  "generated_at": "2026-07-27T12:00:00.000Z",
+  "generated_from": "hand-authored-test-fixture (NOT emitted by any projector; tests only)",
+  "sources": [
+    {
+      "path": "LEEME.md",
+      "mtime": "2026-07-27T11:00:00.000Z"
+    }
+  ],
+  "docs": [
+    {
+      "title": "Leeme",
+      "path": "LEEME.md",
+      "ia_bucket": "bucket-inventado"
+    },
+    {
+      "title": "Paso 1",
+      "path": "manual/instalacion/paso-1.md",
+      "ia_bucket": "bucket-inventado"
+    },
+    {
+      "title": "Paso 2",
+      "path": "manual/instalacion/paso-2.md",
+      "category": "Otra Cosa"
+    },
+    {
+      "title": "Uso diario",
+      "path": "manual/uso/diario.md",
+      "related_area": "area-ajena"
+    },
+    {
+      "title": "Retirado",
+      "path": "manual/archive/retirado.md",
+      "ia_bucket": "bucket-inventado"
+    },
+    {
+      "title": "Politica de archivado",
+      "path": "notas/ARCHIVE-POLITICA.md",
+      "source_role": "rol-ajeno"
+    },
+    {
+      "title": "Muy viejo",
+      "path": "notas/archive/2024/muy-viejo.md",
+      "category": "Otra Cosa"
+    },
+    {
+      "title": "Nota suelta",
+      "path": "notas/suelta.md"
+    }
+  ]
+}

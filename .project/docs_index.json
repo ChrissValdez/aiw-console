@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-27T19:20:57.799Z",
+  "generated_at": "2026-07-27T20:07:31.697Z",
   "generated_from": "aiw-projector@0.8.0",
   "sources": [
     {
@@ -35,6 +35,10 @@
     {
       "path": "context/aiw-console/records/ACABADO-PARIDAD-O4-P13.md",
       "mtime": "2026-07-27T19:20:53.975Z"
+    },
+    {
+      "path": "context/aiw-console/records/AGRUPACION-DOCS-POR-RUTA-Y-DOCS-DE-CANTU.md",
+      "mtime": "2026-07-27T20:07:25.994Z"
     },
     {
       "path": "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md",
@@ -248,6 +252,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-27T19:20:53.975Z"
+    },
+    {
+      "title": "AGRUPACIÓN DE DOCS POR RUTA — y la reorganización de `docs/` en `cantu-studio`",
+      "path": "context/aiw-console/records/AGRUPACION-DOCS-POR-RUTA-Y-DOCS-DE-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-27T20:07:25.994Z"
     },
     {
       "title": "AUDIT-CONSOLE-O4-PHASE0 — Mapa de estado real",

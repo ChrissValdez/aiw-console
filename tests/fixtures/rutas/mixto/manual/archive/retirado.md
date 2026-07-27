@@ -1,0 +1,3 @@
+# Retirado
+
+Cuerpo de fixture.

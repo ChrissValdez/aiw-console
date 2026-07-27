@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "project_id": "bajo_una_carpeta",
+  "generated_at": "2026-07-27T12:00:00.000Z",
+  "generated_from": "hand-authored-test-fixture (NOT emitted by any projector; tests only)",
+  "sources": [
+    {
+      "path": "LEEME.md",
+      "mtime": "2026-07-27T11:00:00.000Z"
+    }
+  ],
+  "docs": [
+    {
+      "title": "Guia A",
+      "path": "documentacion/guia/a.md"
+    },
+    {
+      "title": "Guia B",
+      "path": "documentacion/guia/b.md"
+    },
+    {
+      "title": "Referencia C",
+      "path": "documentacion/referencia/c.md"
+    },
+    {
+      "title": "Retirada D",
+      "path": "documentacion/archive/d.md"
+    }
+  ]
+}

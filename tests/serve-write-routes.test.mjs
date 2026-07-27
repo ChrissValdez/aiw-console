@@ -41,15 +41,15 @@ function fixtureTree(schemaName, runPrefix) {
     objectives: [
       {
         objective_id: runPrefix + "-O1",
-        title: "Objetivo",
+        title: "Objective",
         phases: [
           {
             phase_id: runPrefix + "-O1.P1",
-            title: "Fase",
+            title: "Phase",
             runs: [
-              { run_id: "RUN-" + runPrefix + "-UNO-001", queue_order: 1, title: "Uno", summary: "s", full_description: "f", status: "completed", depends_on: [] },
-              { run_id: "RUN-" + runPrefix + "-DOS-001", queue_order: 2, title: "Dos", summary: "s", full_description: "f", status: "planned", depends_on: ["RUN-" + runPrefix + "-UNO-001"] },
-              { run_id: "RUN-" + runPrefix + "-TRES-001", queue_order: 3, title: "Tres", summary: "s", full_description: "f", status: "planned", depends_on: [] }
+              { run_id: "RUN-" + runPrefix + "-ONE-001", queue_order: 1, title: "One", summary: "s", full_description: "f", status: "completed", depends_on: [] },
+              { run_id: "RUN-" + runPrefix + "-TWO-001", queue_order: 2, title: "Two", summary: "s", full_description: "f", status: "planned", depends_on: ["RUN-" + runPrefix + "-ONE-001"] },
+              { run_id: "RUN-" + runPrefix + "-THREE-001", queue_order: 3, title: "Three", summary: "s", full_description: "f", status: "planned", depends_on: [] }
             ]
           }
         ]
@@ -97,7 +97,7 @@ test.before(async () => {
   // alien: same structure, foreign schema identifier, CRLF endings.
   mkdirSync(join(workDir, "alien", "roadmap"), { recursive: true });
   alienRoadmapPath = join(workDir, "alien", "roadmap", "roadmap.json");
-  writeFileSync(alienRoadmapPath, serialize(fixtureTree("otro.proyecto.plan.v9", "ALIEN"), "\r\n"), "utf8");
+  writeFileSync(alienRoadmapPath, serialize(fixtureTree("other.project.plan.v9", "ALIEN"), "\r\n"), "utf8");
   // fuera: a registered root that is NOT a project — no layout claims it.
   outsideDir = join(workDir, "outside-target");
   mkdirSync(outsideDir, { recursive: true });
@@ -147,7 +147,7 @@ test("dry-run: previews the remap and baseline and writes NOTHING", async () => 
   const before = readFileSync(editableRoadmapPath, "utf8");
   const beforeMtime = statSync(editableRoadmapPath).mtimeMs;
   const dry = await jsonRequest("POST", "/projects/editable/__project-console/roadmap/edit", {
-    op: "move", apply: false, args: { run: "RUN-EDIT-TRES-001", toOrder: 1 }
+    op: "move", apply: false, args: { run: "RUN-EDIT-THREE-001", toOrder: 1 }
   });
   assert.equal(dry.status, 200);
   assert.equal(dry.payload.ok, true);
@@ -174,7 +174,7 @@ test("confirm: refuses a stale baseline (409) when the file changed after the dr
   assert.equal(dry.payload.ok, true);
   // The file moves underneath the preview (another writer).
   const tree = JSON.parse(readFileSync(editableRoadmapPath, "utf8"));
-  tree.title = "Movido por otro editor";
+  tree.title = "Moved by another editor";
   writeFileSync(editableRoadmapPath, serialize(tree, "\n"), "utf8");
   const moved = readFileSync(editableRoadmapPath, "utf8");
   const confirm = await jsonRequest("POST", "/projects/editable/__project-console/roadmap/edit", {
@@ -187,11 +187,11 @@ test("confirm: refuses a stale baseline (409) when the file changed after the dr
 
 test("dry-run→confirm happy path: writes the canonical (LF preserved) and re-emits .project/ coherently", async () => {
   const dry = await jsonRequest("POST", "/projects/editable/__project-console/roadmap/edit", {
-    op: "set-text", apply: false, args: { targetType: "run", targetId: "RUN-EDIT-DOS-001", title: "Dos editado por confirm" }
+    op: "set-text", apply: false, args: { targetType: "run", targetId: "RUN-EDIT-TWO-001", title: "Two edited by confirm" }
   });
   assert.equal(dry.payload.ok, true);
   const confirm = await jsonRequest("POST", "/projects/editable/__project-console/roadmap/edit", {
-    op: "set-text", apply: true, baseline: dry.payload.baseline, args: { targetType: "run", targetId: "RUN-EDIT-DOS-001", title: "Dos editado por confirm" }
+    op: "set-text", apply: true, baseline: dry.payload.baseline, args: { targetType: "run", targetId: "RUN-EDIT-TWO-001", title: "Two edited by confirm" }
   });
   assert.equal(confirm.status, 200);
   assert.equal(confirm.payload.ok, true);
@@ -201,37 +201,37 @@ test("dry-run→confirm happy path: writes the canonical (LF preserved) and re-e
   // The canonical changed, kept LF endings, and holds the new title.
   const raw = readFileSync(editableRoadmapPath, "utf8");
   assert.ok(!raw.includes("\r\n"), "an LF canonical must stay LF after a confirm");
-  assert.ok(raw.includes("Dos editado por confirm"));
+  assert.ok(raw.includes("Two edited by confirm"));
   // Coherence: the derived folder was re-emitted and now agrees with the canonical.
   assert.equal(confirm.payload.reemit.ok, true);
   const emittedRoadmap = JSON.parse(readFileSync(join(workDir, "editable", ".project", "roadmap.json"), "utf8"));
   const emittedTitles = JSON.stringify(emittedRoadmap.objectives);
-  assert.ok(emittedTitles.includes("Dos editado por confirm"), ".project/roadmap.json must reflect the confirmed edit");
+  assert.ok(emittedTitles.includes("Two edited by confirm"), ".project/roadmap.json must reflect the confirmed edit");
   const emittedSnapshot = JSON.parse(readFileSync(join(workDir, "editable", ".project", "snapshot.json"), "utf8"));
-  assert.ok(JSON.stringify(emittedSnapshot.roadmap_tree).includes("Dos editado por confirm"), "snapshot.json must reflect the confirmed edit");
+  assert.ok(JSON.stringify(emittedSnapshot.roadmap_tree).includes("Two edited by confirm"), "snapshot.json must reflect the confirmed edit");
 });
 
 test("shape not name over HTTP: the alien-schema project edits identically and its CRLF endings survive; its model name travels", async () => {
   const dry = await jsonRequest("POST", "/projects/alien/__project-console/roadmap/edit", {
-    op: "set-text", apply: false, args: { targetType: "objective", targetId: "ALIEN-O1", title: "Objetivo ajeno editado" }
+    op: "set-text", apply: false, args: { targetType: "objective", targetId: "ALIEN-O1", title: "Foreign objective edited" }
   });
   assert.equal(dry.payload.ok, true, JSON.stringify(dry.payload));
   const confirm = await jsonRequest("POST", "/projects/alien/__project-console/roadmap/edit", {
-    op: "set-text", apply: true, baseline: dry.payload.baseline, args: { targetType: "objective", targetId: "ALIEN-O1", title: "Objetivo ajeno editado" }
+    op: "set-text", apply: true, baseline: dry.payload.baseline, args: { targetType: "objective", targetId: "ALIEN-O1", title: "Foreign objective edited" }
   });
   assert.equal(confirm.payload.applied, true, JSON.stringify(confirm.payload));
   const raw = readFileSync(alienRoadmapPath, "utf8");
   assert.ok(raw.includes("\r\n"), "a CRLF canonical must stay CRLF after a confirm");
-  assert.ok(raw.includes("Objetivo ajeno editado"));
+  assert.ok(raw.includes("Foreign objective edited"));
   // §10.c: the emitted snapshot republishes the project's own model identifier, verbatim.
   const emittedSnapshot = JSON.parse(readFileSync(join(workDir, "alien", ".project", "snapshot.json"), "utf8"));
-  assert.equal(emittedSnapshot.taxonomy_model.model, "otro.proyecto.plan.v9");
+  assert.equal(emittedSnapshot.taxonomy_model.model, "other.project.plan.v9");
 });
 
 test("invariants over HTTP: an edit that would break precedence is refused (422) and the file does not change", async () => {
   const before = readFileSync(editableRoadmapPath, "utf8");
   const dry = await jsonRequest("POST", "/projects/editable/__project-console/roadmap/edit", {
-    op: "move", apply: false, args: { run: "RUN-EDIT-UNO-001", toOrder: 2 }
+    op: "move", apply: false, args: { run: "RUN-EDIT-ONE-001", toOrder: 2 }
   });
   assert.equal(dry.status, 422);
   assert.equal(dry.payload.ok, false);
@@ -264,8 +264,8 @@ test("boundary guard unit: a destination outside the root, in .git, or in the de
 
 test("external run ids are composed from the OTHER registered projects, as data", async () => {
   const ids = await externalRunIdsFor("editable");
-  assert.equal(ids.has("RUN-ALIEN-UNO-001"), true, "the sibling fixture's runs are known");
-  assert.equal(ids.has("RUN-EDIT-UNO-001"), false, "the active project's own runs are not 'external'");
+  assert.equal(ids.has("RUN-ALIEN-ONE-001"), true, "the sibling fixture's runs are known");
+  assert.equal(ids.has("RUN-EDIT-ONE-001"), false, "the active project's own runs are not 'external'");
 });
 
 // ---------------------------------------------------------------- history sync

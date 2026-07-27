@@ -1,6 +1,6 @@
 // Lanes and barriers (D-051): the schema addition, its invariants, its transport, and its
-// write path. Everything here runs against the checked-in carriles fixture
-// (tests/fixtures/carriles/, lane keys deliberately arbitrary) or against COPIES of it in a
+// write path. Everything here runs against the checked-in lanes fixture
+// (tests/fixtures/lanes/, lane keys deliberately arbitrary) or against COPIES of it in a
 // temp dir; the two real canonical roadmaps are opened READ-ONLY and asserted unchanged in
 // meaning (no lanes -> nothing new derives). The HTTP section boots the real serve.mjs on an
 // ephemeral port with a generated PC_REGISTRY, exactly like serve-write-routes.test.mjs.
@@ -23,7 +23,7 @@ import { server, HOST } from "../project-console/serve.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
-const FIXTURE_ROOT = join(HERE, "fixtures", "carriles", "project");
+const FIXTURE_ROOT = join(HERE, "fixtures", "lanes", "project");
 const FIXTURE_ROADMAP = join(FIXTURE_ROOT, "roadmap", "roadmap.json");
 const REAL_CANONICALS = [
   join(REPO_ROOT, "roadmap", "roadmap.json"),
@@ -48,7 +48,7 @@ function laneSequences(obj) {
 
 // ---------------------------------------------------------------- the fixture itself
 
-test("carriles fixture: invariants pass, roundtrip is byte-identical", () => {
+test("lanes fixture: invariants pass, roundtrip is byte-identical", () => {
   const raw = core.loadRaw(FIXTURE_ROADMAP);
   const obj = core.parseRoadmap(raw);
   assert.deepEqual(core.checkInvariants(obj, {}), []);
@@ -98,8 +98,8 @@ test("barriers are a rule, not edges: the fixture stores 5 depends_on edges whil
   const storedEdges = runs.reduce((total, run) => total + run.depends_on.length, 0);
   assert.equal(storedEdges, 5);
   // Derived barred sets, straight from the rule (later by queue_order, lane-restricted for
-  // lane scope). The global barrier at #5 bars the 7 later runs in every lane; the CRONICA
-  // lane barrier at #8 bars the 1 later CRONICA run.
+  // lane scope). The global barrier at #5 bars the 7 later runs in every lane; the CHRONICLE
+  // lane barrier at #8 bars the 1 later CHRONICLE run.
   const barriers = runs.filter((run) => run.barrier);
   assert.deepEqual(barriers.map((b) => [b.run_id, b.barrier]), [
     ["RUN-FIX-PROTO-GATE-001", "global"],
@@ -120,11 +120,11 @@ test("barriers are a rule, not edges: the fixture stores 5 depends_on edges whil
 
 test("lane resolution: absent lane resolves to the declared default; mixed roadmap resolves per run", () => {
   const obj = loadFixture();
-  assert.equal(core.defaultLaneId(obj), "FORJA");
+  assert.equal(core.defaultLaneId(obj), "FORGE");
   const byId = new Map(core.flattenRuns(obj).map((entry) => [entry.run.run_id, entry.run]));
-  assert.equal(core.resolveRunLane(obj, byId.get("RUN-FIX-BASE-001")), "FORJA"); // no lane key stored
-  assert.equal(core.resolveRunLane(obj, byId.get("RUN-FIX-DOC-COMP1-001")), "CRONICA");
-  assert.equal(core.resolveRunLane(obj, byId.get("RUN-FIX-OPS-DEPLOY-001")), "VELA");
+  assert.equal(core.resolveRunLane(obj, byId.get("RUN-FIX-BASE-001")), "FORGE"); // no lane key stored
+  assert.equal(core.resolveRunLane(obj, byId.get("RUN-FIX-DOC-COMP1-001")), "CHRONICLE");
+  assert.equal(core.resolveRunLane(obj, byId.get("RUN-FIX-OPS-DEPLOY-001")), "SAIL");
   // A roadmap with NO lanes resolves every run to null: one implicit lane.
   const laneless = core.parseRoadmap(core.loadRaw(REAL_CANONICALS[0]));
   for (const { run } of core.flattenRuns(laneless)) {
@@ -136,13 +136,13 @@ test("derived in-lane positions are stable when a NEW lane is declared", () => {
   const obj = loadFixture();
   const before = laneSequences(obj);
   const withExtra = core.parseRoadmap(core.loadRaw(FIXTURE_ROADMAP));
-  withExtra.lanes.push({ lane_id: "NUEVA", title: "Carril recién declarado" });
+  withExtra.lanes.push({ lane_id: "NEWLANE", title: "Newly declared lane" });
   assert.deepEqual(core.checkInvariants(withExtra, {}), []);
   const after = laneSequences(withExtra);
   for (const [laneId, sequence] of before) {
     assert.deepEqual(after.get(laneId), sequence, `lane ${laneId} sequence moved when an unrelated lane was added`);
   }
-  assert.equal(after.has("NUEVA"), false); // no runs on it yet -> no positions to have
+  assert.equal(after.has("NEWLANE"), false); // no runs on it yet -> no positions to have
 });
 
 // ---------------------------------------------------------------- invariants that must refuse
@@ -155,7 +155,7 @@ function withLanes(mutate) {
 
 test("lanes vocabulary form is enforced", () => {
   assert.match(withLanes((o) => { o.lanes = []; }).join("\n"), /root\.lanes must be a non-empty array/);
-  assert.match(withLanes((o) => { o.lanes[1].lane_id = "FORJA"; }).join("\n"), /duplicate lane_id FORJA/);
+  assert.match(withLanes((o) => { o.lanes[1].lane_id = "FORGE"; }).join("\n"), /duplicate lane_id FORGE/);
   assert.match(withLanes((o) => { delete o.lanes[0].default; }).join("\n"), /exactly one lane as default \(found 0\)/);
   assert.match(withLanes((o) => { o.lanes[1].default = true; }).join("\n"), /exactly one lane as default \(found 2\)/);
   assert.match(withLanes((o) => { o.lanes[1].default = false; }).join("\n"), /must omit default unless true/);
@@ -164,10 +164,10 @@ test("lanes vocabulary form is enforced", () => {
 });
 
 test("every lane used must be declared — in a lanes roadmap and in a lane-less one", () => {
-  const undeclared = withLanes((o) => { o.objectives[0].phases[0].runs[0].lane = "FANTASMA"; });
-  assert.match(undeclared.join("\n"), /uses lane FANTASMA, which root\.lanes does not declare \(declared: FORJA, CRONICA, VELA\)/);
-  const laneless = withLanes((o) => { delete o.lanes; o.objectives[0].phases[0].runs[0].lane = "FORJA"; });
-  assert.match(laneless.join("\n"), /uses lane FORJA.*declares no lanes/);
+  const undeclared = withLanes((o) => { o.objectives[0].phases[0].runs[0].lane = "PHANTOM"; });
+  assert.match(undeclared.join("\n"), /uses lane PHANTOM, which root\.lanes does not declare \(declared: FORGE, CHRONICLE, SAIL\)/);
+  const laneless = withLanes((o) => { delete o.lanes; o.objectives[0].phases[0].runs[0].lane = "FORGE"; });
+  assert.match(laneless.join("\n"), /uses lane FORGE.*declares no lanes/);
 });
 
 test("barrier scope is a closed vocabulary", () => {
@@ -198,12 +198,12 @@ test("on a file that passes precedence, the barrier guard can never fire (the th
 test("set-lane assigns a declared lane, serializes it in canonical key position, and clears back to default", () => {
   const obj = loadFixture();
   const target = "RUN-FIX-COMP3-001"; // stores no lane today
-  const assign = core.setLane(obj, { run: target, lane: "VELA" });
+  const assign = core.setLane(obj, { run: target, lane: "SAIL" });
   assert.deepEqual(assign.errors, []);
   assert.equal(assign.before, null);
-  assert.equal(assign.after, "VELA");
+  assert.equal(assign.after, "SAIL");
   const run = core.findRunEntry(obj, target).run;
-  assert.equal(run.lane, "VELA");
+  assert.equal(run.lane, "SAIL");
   // Canonical key order: lane lands after depends_on, before closeout fields.
   const keys = Object.keys(run);
   assert.ok(keys.indexOf("lane") > keys.indexOf("depends_on"));
@@ -218,10 +218,10 @@ test("set-lane assigns a declared lane, serializes it in canonical key position,
 
 test("set-lane refuses an undeclared lane, and refuses any lane when none are declared", () => {
   const obj = loadFixture();
-  const bad = core.setLane(obj, { run: "RUN-FIX-COMP3-001", lane: "FANTASMA" });
-  assert.match(bad.errors.join("\n"), /lane FANTASMA is not declared in root\.lanes \(declared: FORJA, CRONICA, VELA\)/);
+  const bad = core.setLane(obj, { run: "RUN-FIX-COMP3-001", lane: "PHANTOM" });
+  assert.match(bad.errors.join("\n"), /lane PHANTOM is not declared in root\.lanes \(declared: FORGE, CHRONICLE, SAIL\)/);
   const laneless = core.parseRoadmap(core.loadRaw(REAL_CANONICALS[0]));
-  const refused = core.setLane(laneless, { run: core.globalOrdered(laneless)[0].run_id, lane: "FORJA" });
+  const refused = core.setLane(laneless, { run: core.globalOrdered(laneless)[0].run_id, lane: "FORGE" });
   assert.match(refused.errors.join("\n"), /declares no lanes/);
 });
 
@@ -230,13 +230,13 @@ test("set-lane goes through planEdit end to end, alone and inside a batch, on a 
   try {
     const filePath = join(workDir, "roadmap.json");
     writeFileSync(filePath, core.loadRaw(FIXTURE_ROADMAP), "utf8");
-    const plan = planEdit({ filePath, op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: "VELA" } });
+    const plan = planEdit({ filePath, op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: "SAIL" } });
     assert.equal(plan.ok, true, (plan.errors || []).join("\n"));
     assert.deepEqual(plan.remap, []); // queue order untouched by construction
     const applied = applyPlan({ filePath, serialized: plan.serialized, validate: null });
     assert.equal(applied.written, true);
     const reread = core.parseRoadmap(core.loadRaw(filePath));
-    assert.equal(core.findRunEntry(reread, "RUN-FIX-COMP3-001").run.lane, "VELA");
+    assert.equal(core.findRunEntry(reread, "RUN-FIX-COMP3-001").run.lane, "SAIL");
     assert.deepEqual(core.checkInvariants(reread, {}), []);
     // Batchable: set-lane + set-text against the same file in one plan.
     const batch = planEdit({
@@ -244,7 +244,7 @@ test("set-lane goes through planEdit end to end, alone and inside a batch, on a 
       op: "batch",
       args: { ops: [
         { op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: null } },
-        { op: "set-text", args: { targetType: "run", targetId: "RUN-FIX-COMP3-001", title: "Componente 3 (batch)" } }
+        { op: "set-text", args: { targetType: "run", targetId: "RUN-FIX-COMP3-001", title: "Component 3 (batch)" } }
       ] }
     });
     assert.equal(batch.ok, true, (batch.errors || []).join("\n"));
@@ -259,7 +259,7 @@ test("dry-run refuses: assigning an undeclared lane never reaches disk", () => {
     const filePath = join(workDir, "roadmap.json");
     const original = core.loadRaw(FIXTURE_ROADMAP);
     writeFileSync(filePath, original, "utf8");
-    const plan = planEdit({ filePath, op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: "FANTASMA" } });
+    const plan = planEdit({ filePath, op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: "PHANTOM" } });
     assert.equal(plan.ok, false);
     assert.equal(plan.stage, "mutate");
     assert.match(plan.errors.join("\n"), /not declared in root\.lanes/);
@@ -306,7 +306,7 @@ test("no fixture lane key is baked into engine, projector, server, renderer or m
   ];
   for (const file of shipped) {
     const body = readFileSync(join(REPO_ROOT, file), "utf8");
-    for (const key of ["FORJA", "CRONICA", "VELA"]) {
+    for (const key of ["FORGE", "CHRONICLE", "SAIL"]) {
       assert.equal(body.includes(key), false, `${file} names fixture lane key ${key}`);
     }
   }
@@ -316,7 +316,7 @@ test("no fixture lane key is baked into engine, projector, server, renderer or m
 
 let httpWorkDir = "";
 let baseUrl = "";
-let carrilesRoadmapPath = "";
+let lanesRoadmapPath = "";
 
 async function jsonRequest(method, path, body) {
   const response = await fetch(baseUrl + path, {
@@ -332,26 +332,26 @@ async function jsonRequest(method, path, body) {
 
 test.before(async () => {
   httpWorkDir = mkdtempSync(join(tmpdir(), "roadmap-lanes-http-"));
-  // carriles: a COPY of the checked-in fixture project (the repo fixture is never written).
-  cpSync(join(HERE, "fixtures", "carriles", "project"), join(httpWorkDir, "carriles"), { recursive: true });
-  carrilesRoadmapPath = join(httpWorkDir, "carriles", "roadmap", "roadmap.json");
-  // roto: a lanes roadmap whose vocabulary breaks the new invariant (two defaults).
+  // lanes: a COPY of the checked-in fixture project (the repo fixture is never written).
+  cpSync(join(HERE, "fixtures", "lanes", "project"), join(httpWorkDir, "lanes"), { recursive: true });
+  lanesRoadmapPath = join(httpWorkDir, "lanes", "roadmap", "roadmap.json");
+  // broken: a lanes roadmap whose vocabulary breaks the new invariant (two defaults).
   const broken = loadFixture();
   broken.lanes[1].default = true;
-  mkdirSync(join(httpWorkDir, "roto", "roadmap"), { recursive: true });
-  writeFileSync(join(httpWorkDir, "roto", "roadmap", "roadmap.json"), core.serialize(broken, "\n"), "utf8");
-  // atascado: a barrier that bars a run it depends on (forward dep) — unsatisfiable.
+  mkdirSync(join(httpWorkDir, "broken", "roadmap"), { recursive: true });
+  writeFileSync(join(httpWorkDir, "broken", "roadmap", "roadmap.json"), core.serialize(broken, "\n"), "utf8");
+  // stuck: a barrier that bars a run it depends on (forward dep) — unsatisfiable.
   const stuck = loadFixture();
   stuck.objectives[0].phases[1].runs[0].depends_on = ["RUN-FIX-COMP3-001"];
-  mkdirSync(join(httpWorkDir, "atascado", "roadmap"), { recursive: true });
-  writeFileSync(join(httpWorkDir, "atascado", "roadmap", "roadmap.json"), core.serialize(stuck, "\n"), "utf8");
+  mkdirSync(join(httpWorkDir, "stuck", "roadmap"), { recursive: true });
+  writeFileSync(join(httpWorkDir, "stuck", "roadmap", "roadmap.json"), core.serialize(stuck, "\n"), "utf8");
   writeFileSync(join(httpWorkDir, "registry.json"), JSON.stringify({
     registry_model: "project_registry_v1",
     title: "Lanes fixtures",
     projects: [
-      { key: "carriles", root: "./carriles" },
-      { key: "roto", root: "./roto" },
-      { key: "atascado", root: "./atascado" }
+      { key: "lanes", root: "./lanes" },
+      { key: "broken", root: "./broken" },
+      { key: "stuck", root: "./stuck" }
     ]
   }, null, 2), "utf8");
   process.env.PC_REGISTRY = join(httpWorkDir, "registry.json");
@@ -366,63 +366,63 @@ test.after(async () => {
 });
 
 test("HTTP: a lanes-and-barriers roadmap is editable — dry-run, confirm, and byte-exact revert", async () => {
-  const before = readFileSync(carrilesRoadmapPath);
-  const probe = await jsonRequest("GET", "/projects/carriles/__project-console/roadmap/edit");
+  const before = readFileSync(lanesRoadmapPath);
+  const probe = await jsonRequest("GET", "/projects/lanes/__project-console/roadmap/edit");
   assert.equal(probe.status, 405);
   assert.equal(probe.payload.reason, "method_not_allowed");
 
-  const editArgs = { targetType: "run", targetId: "RUN-FIX-COMP3-001", title: "Componente 3 [QA-LANES]" };
-  const dry = await jsonRequest("POST", "/projects/carriles/__project-console/roadmap/edit", { op: "set-text", args: editArgs });
+  const editArgs = { targetType: "run", targetId: "RUN-FIX-COMP3-001", title: "Component 3 [QA-LANES]" };
+  const dry = await jsonRequest("POST", "/projects/lanes/__project-console/roadmap/edit", { op: "set-text", args: editArgs });
   assert.equal(dry.status, 200, JSON.stringify(dry.payload));
   assert.equal(dry.payload.applied, false);
-  const confirm = await jsonRequest("POST", "/projects/carriles/__project-console/roadmap/edit", { op: "set-text", args: editArgs, apply: true, baseline: dry.payload.baseline });
+  const confirm = await jsonRequest("POST", "/projects/lanes/__project-console/roadmap/edit", { op: "set-text", args: editArgs, apply: true, baseline: dry.payload.baseline });
   assert.equal(confirm.status, 200, JSON.stringify(confirm.payload));
   assert.equal(confirm.payload.applied, true);
   assert.equal(confirm.payload.reemit && confirm.payload.reemit.ok, true);
   // The re-emitted derived roadmap carries the lanes vocabulary.
-  const emitted = JSON.parse(readFileSync(join(httpWorkDir, "carriles", ".project", "roadmap.json"), "utf8"));
-  assert.deepEqual(emitted.lanes.map((lane) => lane.lane_id), ["FORJA", "CRONICA", "VELA"]);
+  const emitted = JSON.parse(readFileSync(join(httpWorkDir, "lanes", ".project", "roadmap.json"), "utf8"));
+  assert.deepEqual(emitted.lanes.map((lane) => lane.lane_id), ["FORGE", "CHRONICLE", "SAIL"]);
 
   // Revert through the same route; the canonical ends byte-identical to how it started.
-  const revertArgs = { targetType: "run", targetId: "RUN-FIX-COMP3-001", title: "Componente 3" };
-  const dry2 = await jsonRequest("POST", "/projects/carriles/__project-console/roadmap/edit", { op: "set-text", args: revertArgs });
+  const revertArgs = { targetType: "run", targetId: "RUN-FIX-COMP3-001", title: "Component 3" };
+  const dry2 = await jsonRequest("POST", "/projects/lanes/__project-console/roadmap/edit", { op: "set-text", args: revertArgs });
   assert.equal(dry2.status, 200);
-  const confirm2 = await jsonRequest("POST", "/projects/carriles/__project-console/roadmap/edit", { op: "set-text", args: revertArgs, apply: true, baseline: dry2.payload.baseline });
+  const confirm2 = await jsonRequest("POST", "/projects/lanes/__project-console/roadmap/edit", { op: "set-text", args: revertArgs, apply: true, baseline: dry2.payload.baseline });
   assert.equal(confirm2.status, 200);
-  assert.equal(md5(readFileSync(carrilesRoadmapPath)), md5(before));
+  assert.equal(md5(readFileSync(lanesRoadmapPath)), md5(before));
 });
 
 test("HTTP: set-lane assigns and clears a lane through dry-run→confirm, byte-exact after revert", async () => {
-  const before = readFileSync(carrilesRoadmapPath);
-  const dry = await jsonRequest("POST", "/projects/carriles/__project-console/roadmap/edit", { op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: "VELA" } });
+  const before = readFileSync(lanesRoadmapPath);
+  const dry = await jsonRequest("POST", "/projects/lanes/__project-console/roadmap/edit", { op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: "SAIL" } });
   assert.equal(dry.status, 200, JSON.stringify(dry.payload));
-  const confirm = await jsonRequest("POST", "/projects/carriles/__project-console/roadmap/edit", { op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: "VELA" }, apply: true, baseline: dry.payload.baseline });
+  const confirm = await jsonRequest("POST", "/projects/lanes/__project-console/roadmap/edit", { op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: "SAIL" }, apply: true, baseline: dry.payload.baseline });
   assert.equal(confirm.status, 200, JSON.stringify(confirm.payload));
-  const written = core.parseRoadmap(readFileSync(carrilesRoadmapPath, "utf8"));
-  assert.equal(core.findRunEntry(written, "RUN-FIX-COMP3-001").run.lane, "VELA");
-  const dry2 = await jsonRequest("POST", "/projects/carriles/__project-console/roadmap/edit", { op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: null } });
-  const confirm2 = await jsonRequest("POST", "/projects/carriles/__project-console/roadmap/edit", { op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: null }, apply: true, baseline: dry2.payload.baseline });
+  const written = core.parseRoadmap(readFileSync(lanesRoadmapPath, "utf8"));
+  assert.equal(core.findRunEntry(written, "RUN-FIX-COMP3-001").run.lane, "SAIL");
+  const dry2 = await jsonRequest("POST", "/projects/lanes/__project-console/roadmap/edit", { op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: null } });
+  const confirm2 = await jsonRequest("POST", "/projects/lanes/__project-console/roadmap/edit", { op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: null }, apply: true, baseline: dry2.payload.baseline });
   assert.equal(confirm2.status, 200);
-  assert.equal(md5(readFileSync(carrilesRoadmapPath)), md5(before));
+  assert.equal(md5(readFileSync(lanesRoadmapPath)), md5(before));
 });
 
 test("HTTP: an undeclared lane is refused in dry-run (422) and writes nothing", async () => {
-  const before = readFileSync(carrilesRoadmapPath);
-  const dry = await jsonRequest("POST", "/projects/carriles/__project-console/roadmap/edit", { op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: "FANTASMA" } });
+  const before = readFileSync(lanesRoadmapPath);
+  const dry = await jsonRequest("POST", "/projects/lanes/__project-console/roadmap/edit", { op: "set-lane", args: { run: "RUN-FIX-COMP3-001", lane: "PHANTOM" } });
   assert.equal(dry.status, 422);
   assert.match((dry.payload.errors || []).join("\n"), /not declared in root\.lanes/);
-  assert.equal(md5(readFileSync(carrilesRoadmapPath)), md5(before));
+  assert.equal(md5(readFileSync(lanesRoadmapPath)), md5(before));
 });
 
 test("HTTP: a roadmap whose lane vocabulary is malformed is refused in pre-flight, naming the rule", async () => {
-  const dry = await jsonRequest("POST", "/projects/roto/__project-console/roadmap/edit", { op: "set-text", args: { targetType: "run", targetId: "RUN-FIX-COMP3-001", title: "x" } });
+  const dry = await jsonRequest("POST", "/projects/broken/__project-console/roadmap/edit", { op: "set-text", args: { targetType: "run", targetId: "RUN-FIX-COMP3-001", title: "x" } });
   assert.equal(dry.status, 409);
   assert.equal(dry.payload.reason, "roadmap_not_editable");
   assert.match((dry.payload.errors || []).join("\n"), /exactly one lane as default \(found 2\)/);
 });
 
 test("HTTP: an unsatisfiable barrier is refused in pre-flight, naming the barrier and the barred run", async () => {
-  const dry = await jsonRequest("POST", "/projects/atascado/__project-console/roadmap/edit", { op: "set-text", args: { targetType: "run", targetId: "RUN-FIX-COMP3-001", title: "x" } });
+  const dry = await jsonRequest("POST", "/projects/stuck/__project-console/roadmap/edit", { op: "set-text", args: { targetType: "run", targetId: "RUN-FIX-COMP3-001", title: "x" } });
   assert.equal(dry.status, 409);
   assert.equal(dry.payload.reason, "roadmap_not_editable");
   const text = (dry.payload.errors || []).join("\n");

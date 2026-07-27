@@ -11,7 +11,7 @@ function setActiveProjectBase(repoBase) {
   REPO_BASE = repoBase;
   PROJECT_BASE = `${REPO_BASE}.project/`;
   PATHS = {
-    // Capa 1, the ONE required artifact (§1): the project's own description of itself.
+    // Layer 1, the ONE required artifact (§1): the project's own description of itself.
     snapshot: `${PROJECT_BASE}snapshot.json`,
     // Optional and emitted today (§18.b, §19).
     roadmapV3: `${PROJECT_BASE}roadmap.json`,
@@ -3066,6 +3066,31 @@ function v3LaneLabel(model, run) {
   return info ? info.laneLabel : null;
 }
 
+// [D-051 QA-A] The position a roadmap row SHOWS, and the one it carries beside it.
+//
+// With NO lane selected the primary position is the GLOBAL `queue_order` — the project's
+// order identity, exactly as before this correction. With a lane selected the queue IS
+// that lane's queue, so the primary position is the run's position INSIDE that lane
+// (1, 2, 3… contiguous): a global order read through a filter reads skipped (#8, #11,
+// #12) and that skipping is the disorder lanes exist to remove. The global order is not
+// lost — it travels with the row as a secondary tag (see v3RunRowTags).
+//
+// Both numbers are DERIVED by filtering the global order at read time, the same way the
+// lane labels are. NOTHING is stored: D-051's invariant (no lane position on disk, in the
+// canonical or in the emitted artifacts) is untouched.
+function v3RunPosition(model, run) {
+  if (!v3LaneFilterActive(model)) return { primary: run.queue_order, global: null };
+  const info = model.laneInfoByRunId.get(run.run_id);
+  return { primary: info ? info.lanePosition : run.queue_order, global: run.queue_order };
+}
+
+// The secondary carrier of the global order while a lane filter is on. Empty string with
+// no filter (the primary number IS the global order then, so a tag would repeat it).
+function v3GlobalOrderTag(position) {
+  if (position.global === null) return "";
+  return `<span class="v3-global-order-tag" title="Global queue order — the project-wide order identity, unchanged by the lane filter">#${escapeHtml(position.global)} global</span>`;
+}
+
 // Compact reference to a barrier for "waiting on" surfaces: its lane label when lanes
 // are declared, else its global #order. Scope is always named — a GLOBAL barrier must be
 // visible AS global (D-051: the sync point is legitimate but never comfortable).
@@ -3292,9 +3317,17 @@ function v3ProgressDisc(state, isCurrent) {
 // KEY + derived in-lane position, only for a project that DECLARES lanes) and the
 // barrier mark (whenever the run is one — scope always named, global visibly distinct
 // from lane). A lane-less, barrier-less roadmap gets an empty string: zero new markup.
+//
+// [D-051 QA-A] With a lane FILTER on, the lane label gives way to the global-order tag: the
+// row's primary number is already the in-lane position, the selector already names the
+// lane, and every visible row is on it — so a `<lane_id>-02` label beside a row numbered
+// 2 would repeat two thirds of itself. What the filter hides is the GLOBAL order, and
+// that is what the tag carries instead. One tag either way; no row grows.
 function v3RunRowTags(model, run) {
   const tags = [];
-  const laneLabel = v3LaneLabel(model, run);
+  const position = v3RunPosition(model, run);
+  const laneLabel = position.global === null ? v3LaneLabel(model, run) : null;
+  if (position.global !== null) tags.push(v3GlobalOrderTag(position));
   if (laneLabel) tags.push(`<span class="v3-lane-tag" title="${escapeHtml((model.laneById.get(model.laneOf(run)) || {}).title || model.laneOf(run))}">${escapeHtml(laneLabel)}</span>`);
   if (run.barrier === "global" || run.barrier === "lane") {
     tags.push(`<span class="v3-barrier-tag is-${escapeHtml(run.barrier)}" title="${run.barrier === "global" ? "Global barrier: bars every later run in every lane until completed" : "Lane barrier: bars later runs on its own lane until completed"}">Barrier · ${run.barrier === "global" ? "GLOBAL" : "lane"}</span>`);
@@ -3305,11 +3338,15 @@ function v3RunRowTags(model, run) {
 function v3RoadmapRunRow(run, model) {
   // RR-A: status disc + title line opening with the stable inline #N order + one
   // textual status badge; non-active rows recede via status classes (prototype).
+  // [D-051 QA-A] The #N is the position of the row IN WHAT IS ON SCREEN: the global
+  // queue_order unfiltered, the in-lane position with a lane selected. Same rule as the
+  // Run Queue — the two subviews never disagree about what a row's number means.
+  const position = v3RunPosition(model, run);
   return `
     <button class="v3-run-row is-${escapeHtml(run.status)}" type="button" data-v3-run="${escapeHtml(run.run_id)}">
       ${v3TerminalIcon(run.status)}
       <span class="v3-run-info">
-        <span class="v3-run-title"><span class="v3-run-order">#${run.queue_order}</span>${escapeHtml(run.title)}${v3RunRowTags(model, run)}</span>
+        <span class="v3-run-title"><span class="v3-run-order">#${escapeHtml(position.primary)}</span>${escapeHtml(run.title)}${v3RunRowTags(model, run)}</span>
         <span class="v3-run-summary">${escapeHtml(run.summary)}</span>
       </span>
       ${v3StatusBadge(run.status)}
@@ -3364,17 +3401,18 @@ function v3QueueRowCells(run, groupKey, runsById, model) {
   };
 }
 
-function v3QueueRowHtml(run, leadIcon, cells, chip, tileClass, rowClass, tags) {
+function v3QueueRowHtml(run, leadIcon, cells, chip, tileClass, rowClass, tags, position) {
   // Presentation-only template (QR-ACT/PLN/HIS-A): reads only the run order, title, and
   // summary; the lead marker, labeled cells, chip, tile tint, row modifier — and the
-  // [D-051] lane/barrier tags — are computed by the caller, so this template never
-  // reads status-bearing run fields. History rows lead with the disc and demote the
-  // #N order into the title line.
+  // [D-051] lane/barrier tags and the [D-051 QA-A] displayed position — are computed by the
+  // caller, so this template never reads status-bearing run fields. History rows lead
+  // with the disc and demote the #N order into the title line.
   const icon = leadIcon || "";
+  const shown = position ? position.primary : run.queue_order;
   const marker = icon
     ? `<span class="v3-run-marker">${icon}</span>`
-    : `<span class="v3-order-tile${tileClass || ""}">${run.queue_order}</span>`;
-  const titleLead = icon ? `<span class="v3-run-order">#${run.queue_order}</span>` : "";
+    : `<span class="v3-order-tile${tileClass || ""}">${escapeHtml(shown)}</span>`;
+  const titleLead = icon ? `<span class="v3-run-order">#${escapeHtml(shown)}</span>` : "";
   return `
     <button class="v3-queue-row${icon ? " v3-queue-row-terminal" : ""}${rowClass || ""}" type="button" data-v3-run="${escapeHtml(run.run_id)}">
       ${marker}
@@ -4075,7 +4113,7 @@ function renderRunQueueV3(data) {
           const leadIcon = isHistory ? v3TerminalIcon(run.status) : "";
           const tileClass = run.status === "active" ? " is-active" : "";
           const rowClass = semanticKey === "later" ? " is-later" : "";
-          return v3QueueRowHtml(run, leadIcon, parts.cells, parts.chip, tileClass, rowClass, v3RunRowTags(model, run));
+          return v3QueueRowHtml(run, leadIcon, parts.cells, parts.chip, tileClass, rowClass, v3RunRowTags(model, run), v3RunPosition(model, run));
         }).join("")
       : '<div class="v3-empty-note">Empty — no runs in this group right now.</div>';
     const countClass = runs.length === 0 ? " is-zero" : expanded ? " is-active" : "";

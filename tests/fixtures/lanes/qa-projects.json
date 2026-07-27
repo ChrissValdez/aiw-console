@@ -1,10 +1,10 @@
 {
   "registry_model": "project_registry_v1",
-  "title": "AIW Console (QA: reales + fixture de carriles)",
+  "title": "AIW Console (QA: real projects + lanes fixture)",
   "projects": [
     { "key": "aiw-console", "root": "../../.." },
     { "key": "cantu-studio", "root": "../../../../cantu-studio" },
     { "key": "aiw", "root": "../../../../../aiw" },
-    { "key": "carriles", "root": "./project" }
+    { "key": "lanes", "root": "./project" }
   ]
 }

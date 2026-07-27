@@ -1,0 +1,7 @@
+{
+  "registry_model": "project_registry_v1",
+  "title": "Lanes fixture registry",
+  "projects": [
+    { "key": "lanes", "root": "./project" }
+  ]
+}

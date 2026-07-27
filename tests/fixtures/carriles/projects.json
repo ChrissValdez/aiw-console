@@ -1,7 +1,0 @@
-{
-  "registry_model": "project_registry_v1",
-  "title": "Carriles fixture registry",
-  "projects": [
-    { "key": "carriles", "root": "./project" }
-  ]
-}

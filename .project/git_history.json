@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-27T21:53:02.133Z",
+  "generated_at": "2026-07-27T22:39:09.907Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-27T21:46:18.050Z"
+      "mtime": "2026-07-27T22:35:46.522Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,14 +14,24 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "6be03ba1c07507e4d3d883cc8ae33010f781e436",
+  "head": "65a3990c48653044562e2fb758daf4a5353d38bb",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 46,
+  "commit_total": 47,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "65a3990",
+      "full_sha": "65a3990c48653044562e2fb758daf4a5353d38bb",
+      "date": "2026-07-27T15:57:04-06:00",
+      "parents": "6be03ba",
+      "subject": "roadmap: carriles y barriers en el esquema, con vista minima (D-051)",
+      "body": "- Vocabulario de carriles declarado por el proyecto; posicion de carril derivada\n\n- Barrier de carril y global, derivado; invariantes nuevos y teorema de satisfacibilidad\n\n- Selector en la fila existente, etiquetas por clave, dependencias agrupadas\n\n- Cero regresion en los dos proyectos reales; suite 215/215; CONTRATO §10.e",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "6be03ba",

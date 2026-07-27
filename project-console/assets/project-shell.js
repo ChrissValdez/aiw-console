@@ -145,7 +145,11 @@ export function snapshotSummary(snapshot, options = {}) {
     : [];
   const counts = new Map(declaredTokens.map((token) => [token, 0]));
   allRuns.forEach((run) => {
-    const token = typeof run?.status === "string" && run.status ? run.status : "(sin status)";
+    // [UI language: English] Synthesised bucket for a run whose status token is missing. The console's
+    // own UI is English (the project's DATA is not translated: every real token below is
+    // the project's verbatim vocabulary, and this label is the only string this counter
+    // invents).
+    const token = typeof run?.status === "string" && run.status ? run.status : "(no status)";
     counts.set(token, (counts.get(token) || 0) + 1);
   });
   const runStatusCounts = Array.from(counts.entries()).map(([token, count]) => ({ token, count }));

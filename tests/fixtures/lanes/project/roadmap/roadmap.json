@@ -1,0 +1,192 @@
+{
+  "schema_version": "fixture.lanes.v1",
+  "roadmap_id": "FIXTURE-LANES",
+  "title": "Lanes and barriers — fixture",
+  "lanes": [
+    {
+      "lane_id": "FORGE",
+      "title": "Forge — building",
+      "default": true
+    },
+    {
+      "lane_id": "CHRONICLE",
+      "title": "Chronicle — documentation"
+    },
+    {
+      "lane_id": "SAIL",
+      "title": "Sail — operations"
+    }
+  ],
+  "objectives": [
+    {
+      "objective_id": "OF1",
+      "title": "Build the product",
+      "phases": [
+        {
+          "phase_id": "OF1.P1",
+          "title": "Foundations",
+          "runs": [
+            {
+              "run_id": "RUN-FIX-BASE-001",
+              "queue_order": 1,
+              "title": "System base",
+              "summary": "Common foundation everything else starts from.",
+              "full_description": "First run of the fixture. No lane: resolves to the project default (FORGE).",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-FIX-COMP1-001",
+              "queue_order": 2,
+              "title": "Component 1",
+              "summary": "First component built.",
+              "full_description": "No lane: project default. Its documentation lives on another lane and depends on this run.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-FIX-COMP2-001",
+              "queue_order": 4,
+              "title": "Component 2",
+              "summary": "Second component, under way.",
+              "full_description": "No lane: project default. Active right now.",
+              "status": "active",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "OF1.P2",
+          "title": "Prototype and continuation",
+          "runs": [
+            {
+              "run_id": "RUN-FIX-PROTO-GATE-001",
+              "queue_order": 5,
+              "title": "Integrated prototype",
+              "summary": "Sync point: nothing later starts until the prototype is validated.",
+              "full_description": "GLOBAL BARRIER with depends_on: its dependencies govern its own start; its barrier condition holds everything later, on every lane, while it is not completed.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-FIX-COMP2-001"
+              ],
+              "barrier": "global"
+            },
+            {
+              "run_id": "RUN-FIX-COMP3-001",
+              "queue_order": 6,
+              "title": "Component 3",
+              "summary": "Third component, after the prototype.",
+              "full_description": "No lane. No depends_on pointing at the barrier: the block is derived from the global rule, not written as an edge.",
+              "status": "planned",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-FIX-COMP4-001",
+              "queue_order": 11,
+              "title": "Component 4",
+              "summary": "Fourth component.",
+              "full_description": "Depends on component 3 and also sits behind the global barrier.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-FIX-COMP3-001"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "objective_id": "OC1",
+      "title": "Document what was built",
+      "phases": [
+        {
+          "phase_id": "OC1.P1",
+          "title": "Documentation per component",
+          "runs": [
+            {
+              "run_id": "RUN-FIX-DOC-COMP1-001",
+              "queue_order": 3,
+              "title": "Document component 1",
+              "summary": "Documenting component 1 goes behind building it.",
+              "full_description": "Lane CHRONICLE with a cross-lane dependency on FORGE: delay, not block - it does not stop components 2, 3 and 4 from being built.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-FIX-COMP1-001"
+              ],
+              "lane": "CHRONICLE"
+            },
+            {
+              "run_id": "RUN-FIX-DOC-COMP2-001",
+              "queue_order": 7,
+              "title": "Document component 2",
+              "summary": "Documentation for component 2.",
+              "full_description": "Lane CHRONICLE, behind the global barrier and with an unsatisfied cross-lane dependency: two distinct waits, both visible.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-FIX-COMP2-001"
+              ],
+              "lane": "CHRONICLE"
+            },
+            {
+              "run_id": "RUN-FIX-DOC-STYLE-001",
+              "queue_order": 8,
+              "title": "Documentation style guide",
+              "summary": "Settles the style before the rest of the documentation is written.",
+              "full_description": "LANE BARRIER on CHRONICLE: holds what comes later on its own lane and nobody else. The earlier global barrier holds it too.",
+              "status": "planned",
+              "depends_on": [],
+              "lane": "CHRONICLE",
+              "barrier": "lane"
+            },
+            {
+              "run_id": "RUN-FIX-DOC-GUIDE-001",
+              "queue_order": 10,
+              "title": "User guide",
+              "summary": "General guide written under the style guide.",
+              "full_description": "Lane CHRONICLE, behind TWO incomplete barriers: the global one (5) and its own lane's (8). The console names the earliest and counts the rest.",
+              "status": "planned",
+              "depends_on": [],
+              "lane": "CHRONICLE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "objective_id": "OV1",
+      "title": "Operate the deployment",
+      "phases": [
+        {
+          "phase_id": "OV1.P1",
+          "title": "Operations",
+          "runs": [
+            {
+              "run_id": "RUN-FIX-OPS-SETUP-001",
+              "queue_order": 9,
+              "title": "Prepare environment",
+              "summary": "Deployment infrastructure.",
+              "full_description": "Lane SAIL, behind the global barrier. The CHRONICLE lane barrier does not touch it: it belongs to another lane.",
+              "status": "planned",
+              "depends_on": [],
+              "lane": "SAIL"
+            },
+            {
+              "run_id": "RUN-FIX-OPS-DEPLOY-001",
+              "queue_order": 12,
+              "title": "Deploy",
+              "summary": "Final deployment.",
+              "full_description": "Lane SAIL, depends on preparing the environment and sits behind the global barrier.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-FIX-OPS-SETUP-001"
+              ],
+              "lane": "SAIL"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

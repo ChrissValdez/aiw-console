@@ -239,8 +239,11 @@ test("the numbering derives from queue_order alone: it is reproducible from the 
 
 // ------------------------------------------------------------------ no regression, in DOM
 
-test("the two REAL projects are untouched: no lane filter can apply, no lane or global tag appears", async () => {
-  for (const key of ["aiw-console", "cantu-studio"]) {
+// The no-regression pin, unchanged in every assertion, now naming the ONE real project that
+// is still lane-less. cantu-studio left this list when it migrated; its own DOM behaviour is
+// pinned positively in the two tests below, so nothing stopped being measured.
+test("the lane-less REAL project is untouched: no lane filter can apply, no lane or global tag appears", async () => {
+  for (const key of ["aiw-console"]) {
     const harness = makeHarness();
     const result = await select(harness, key);
     assert.equal(result.ok, true, `${key} must load`);
@@ -258,6 +261,65 @@ test("the two REAL projects are untouched: no lane filter can apply, no lane or 
     assert.equal(harness.element("run-queue-v3").innerHTML, queue, `${key} changed under a stale lane selection`);
     assert.equal(harness.element("roadmap-v3-tree").innerHTML, tree, `${key} changed under a stale lane selection`);
   }
+});
+
+// ------------------------------------------------- the first REAL project on lanes, in DOM
+
+test("cantu-studio renders its declared lanes: a selector with both, and a label on every row", async () => {
+  const harness = makeHarness();
+  const result = await select(harness, "cantu-studio");
+  assert.equal(result.ok, true);
+  const tree = JSON.parse(readFileSync(resolve(REPO_ROOT, "..", "cantu-studio", ".aiw", "roadmap", "roadmap.json"), "utf8"));
+  const laneIds = tree.lanes.map((lane) => lane.lane_id);
+  assert.equal(laneIds.length, 2);
+  // The selector exists and offers the declared vocabulary — read off the DOM, by value,
+  // never by a key this test knows in advance.
+  const slot = harness.element("roadmap-lane-slot").innerHTML;
+  assert.notEqual(slot, "", "a roadmap that declares lanes must render the selector");
+  const options = Array.from(slot.matchAll(/<option value="([^"]*)"/g)).map((match) => match[1]);
+  assert.deepEqual(options.slice().sort(), ["", ...laneIds].sort(), "the selector offers exactly the declared lanes plus All lanes");
+  // Every row carries its lane label, and every label names a declared lane.
+  const tags = laneTags(harness, "run-queue-v3");
+  assert.equal(tags.length, 53, "every row of the queue carries a lane label");
+  for (const tag of tags) {
+    assert.ok(laneIds.some((laneId) => tag.startsWith(`${laneId}-`)), `lane label ${tag} names no declared lane`);
+  }
+  // No barrier was applied to a real roadmap, so no barrier mark may be painted.
+  assert.equal(/v3-barrier-tag/.test(harness.element("run-queue-v3").innerHTML), false);
+});
+
+test("cantu-studio numbers locally per lane when filtered, and the counts match the canonical", async () => {
+  const harness = makeHarness();
+  await select(harness, "cantu-studio");
+  const tree = JSON.parse(readFileSync(resolve(REPO_ROOT, "..", "cantu-studio", ".aiw", "roadmap", "roadmap.json"), "utf8"));
+  const defaultLane = tree.lanes.find((lane) => lane.default === true).lane_id;
+  const runs = [];
+  for (const objective of tree.objectives) for (const phase of objective.phases) for (const run of phase.runs) runs.push(run);
+  runs.sort((a, b) => a.queue_order - b.queue_order);
+  const byLane = new Map();
+  for (const run of runs) {
+    const laneId = run.lane || defaultLane;
+    if (!byLane.has(laneId)) byLane.set(laneId, []);
+    byLane.get(laneId).push(run);
+  }
+  // The split the migration produced, asserted against the file rather than a literal.
+  assert.equal(runs.length, 53);
+  assert.equal(byLane.get(defaultLane).length, 48);
+  assert.equal(Array.from(byLane.values()).reduce((n, list) => n + list.length, 0), 53);
+  for (const [laneId, laneRuns] of byLane) {
+    setLane(harness, laneId);
+    const queue = queuePositions(harness).slice().sort((a, b) => a - b);
+    assert.deepEqual(queue, laneRuns.map((_run, index) => index + 1), `lane ${laneId}: rows must read 1..${laneRuns.length}`);
+    // The global order rides along as the secondary tag, one per row, and it is exactly the
+    // set of global queue_orders those runs hold in the canonical.
+    assert.deepEqual(
+      globalTags(harness, "run-queue-v3").slice().sort((a, b) => a - b),
+      laneRuns.map((run) => run.queue_order).sort((a, b) => a - b),
+      `lane ${laneId}: the global tags must be the canonical's own queue_orders`
+    );
+    assert.deepEqual(laneTags(harness, "run-queue-v3"), [], "the lane label steps aside while the filter is on");
+  }
+  setLane(harness, null);
 });
 
 test("the real counts and the global numbering are exactly what the canonicals say", async () => {

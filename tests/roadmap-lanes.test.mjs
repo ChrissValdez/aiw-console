@@ -55,25 +55,73 @@ test("lanes fixture: invariants pass, roundtrip is byte-identical", () => {
   assert.equal(core.serialize(obj, core.detectEol(raw)), raw);
 });
 
-test("both real canonicals still pass invariants read-only; neither declares lanes and no run carries lane or barrier", () => {
+// The real canonicals. D-051 shipped with NEITHER of them declaring lanes; the Cantu
+// migration made cantu-studio the FIRST real application of the model, so the pin splits
+// in two rather than being deleted: aiw-console keeps the untouched-project pin verbatim,
+// and cantu-studio gets a positive one. The shared half — invariants pass read-only and
+// the roundtrip is byte-identical — is asserted on BOTH, as before.
+function realExternalRunIds(path) {
+  // The one legal external edge of the Cantu canonical resolves against the other tree
+  // (CONTRATO §10.d), exactly as the server composes it.
+  const ids = new Set();
+  for (const other of REAL_CANONICALS) {
+    if (other === path) continue;
+    for (const { run } of core.flattenRuns(core.parseRoadmap(core.loadRaw(other)))) ids.add(run.run_id);
+  }
+  return ids;
+}
+
+test("both real canonicals pass invariants read-only and roundtrip byte-identical", () => {
   for (const path of REAL_CANONICALS) {
     const raw = core.loadRaw(path);
     const obj = core.parseRoadmap(raw);
-    // The one legal external edge of the Cantu canonical resolves against the other tree
-    // (CONTRATO §10.d), exactly as the server composes it.
-    const externalRunIds = new Set();
-    for (const other of REAL_CANONICALS) {
-      if (other === path) continue;
-      for (const { run } of core.flattenRuns(core.parseRoadmap(core.loadRaw(other)))) externalRunIds.add(run.run_id);
-    }
-    assert.deepEqual(core.checkInvariants(obj, { externalRunIds }), []);
+    assert.deepEqual(core.checkInvariants(obj, { externalRunIds: realExternalRunIds(path) }), []);
     assert.equal(core.serialize(obj, core.detectEol(raw)), raw, `roundtrip must stay byte-identical for ${path}`);
-    assert.equal("lanes" in obj, false);
-    for (const { run } of core.flattenRuns(obj)) {
-      assert.equal("lane" in run, false);
-      assert.equal("barrier" in run, false);
-    }
   }
+});
+
+test("aiw-console is still lane-less: it declares no lanes and no run carries lane or barrier", () => {
+  // The no-regression pin, kept exactly as D-051 wrote it, now scoped to the project that
+  // genuinely has not migrated. If aiw-console ever gains lanes it will be a decision, and
+  // this test is where it has to be registered.
+  const obj = core.parseRoadmap(core.loadRaw(REAL_CANONICALS[0]));
+  assert.equal("lanes" in obj, false);
+  for (const { run } of core.flattenRuns(obj)) {
+    assert.equal("lane" in run, false);
+    assert.equal("barrier" in run, false);
+  }
+});
+
+test("cantu-studio declares two lanes, resolves all 53 runs into them, and carries NO barrier", () => {
+  const obj = core.parseRoadmap(core.loadRaw(REAL_CANONICALS[1]));
+  const lanes = core.declaredLanes(obj);
+  assert.ok(lanes, "cantu-studio must declare a lane vocabulary");
+  assert.equal(lanes.length, 2);
+  // Exactly one default, and it is the lane the lane-less runs ride.
+  assert.equal(lanes.filter((lane) => lane.default === true).length, 1);
+  const defaultLane = core.defaultLaneId(obj);
+  const runs = core.flattenRuns(obj).map(({ run }) => run);
+  assert.equal(runs.length, 53);
+  // Every run resolves to a DECLARED lane — the "every run has a lane" property, read.
+  const declared = new Set(lanes.map((lane) => lane.lane_id));
+  const counts = new Map();
+  for (const run of runs) {
+    const laneId = core.resolveRunLane(obj, run);
+    assert.ok(declared.has(laneId), `run ${run.run_id} resolves to undeclared lane ${laneId}`);
+    counts.set(laneId, (counts.get(laneId) || 0) + 1);
+  }
+  // The split, pinned by SHAPE rather than by key: the default lane carries the bulk and
+  // the explicit keys are the minority — which is the whole reason that lane is the default.
+  const explicit = runs.filter((run) => "lane" in run);
+  assert.equal(explicit.length, 5);
+  assert.equal(counts.get(defaultLane), 48);
+  assert.equal(counts.get(defaultLane) + explicit.length, 53);
+  // Every explicit key names the SAME non-default lane (the migration assigned one lane).
+  const nonDefault = lanes.find((lane) => lane.lane_id !== defaultLane).lane_id;
+  for (const run of explicit) assert.equal(run.lane, nonDefault);
+  // NO barrier was applied by the migration: candidates were reported, not written. This
+  // is a HARD pin — a barrier appearing here means someone applied one without a decision.
+  for (const run of runs) assert.equal("barrier" in run, false, `run ${run.run_id} carries a barrier`);
 });
 
 test("no lane position is persisted anywhere: every run key is allowlisted and no derived key exists", () => {

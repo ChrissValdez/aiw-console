@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-27T22:39:09.907Z",
+  "generated_at": "2026-07-27T23:56:26.280Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-27T22:35:46.522Z"
+      "mtime": "2026-07-27T23:51:29.490Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,14 +14,24 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "65a3990c48653044562e2fb758daf4a5353d38bb",
+  "head": "5887f0a9c16a2c216e8af99ae82f34ae17b1c016",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 47,
+  "commit_total": 48,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "5887f0a",
+      "full_sha": "5887f0a9c16a2c216e8af99ae82f34ae17b1c016",
+      "date": "2026-07-27T16:42:28-06:00",
+      "parents": "65a3990",
+      "subject": "roadmap: carriles y barriers (D-051) + correcciones de QA e idioma",
+      "body": "- Vocabulario de carriles por proyecto; barrier de carril y global, derivados\n\n- Numeracion local al carril al filtrar; global disponible como chip\n\n- Regla de idioma: UI en ingles, contenido del proyecto como el proyecto lo declare\n\n- Suite 224/224; cero regresion en los dos proyectos reales",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "65a3990",

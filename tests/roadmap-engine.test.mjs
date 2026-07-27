@@ -260,12 +260,17 @@ test("atomicity: a passing re-check leaves the new bytes in place and reports th
   assert.equal(loadCurrent(filePath).baseline, computeBaseline(plan.serialized));
 });
 
-test("the op vocabulary is the transplanted one plus set-lane (D-051)", () => {
-  // The transplant's vocabulary, extended by exactly ONE op: set-lane, added by D-051
-  // (lanes and barriers). The pin stays a pin — any further drift from this list is a
-  // decision to register, not an accident to absorb.
+test("the op vocabulary is the transplanted one plus the three lane ops (D-051)", () => {
+  // The transplant's vocabulary, extended by exactly THREE ops, all from D-051's lane
+  // model: set-lane (which lane a run rides), set-barrier (whether a run bars later work,
+  // and in what scope) and declare-lanes (the root vocabulary itself). set-barrier and
+  // declare-lanes were REGISTERED here when the first real roadmap was migrated to lanes:
+  // until then a barrier could only be marked by hand-editing the canonical file, and a
+  // vocabulary could only be declared the same way — which is exactly what the rule that
+  // every edit goes through the engine forbids. The pin stays a pin: any further drift
+  // from this list is a decision to register, not an accident to absorb.
   assert.deepEqual(
     KNOWN_OPS,
-    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
+    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "declare-lanes", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
   );
 });

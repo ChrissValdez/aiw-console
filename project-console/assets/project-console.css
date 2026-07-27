@@ -5565,6 +5565,22 @@ details[open] > summary > .v3-caret {
   margin-left: auto;
 }
 .v3-edit-danger { }
+/* [D-051] The GLOBAL barrier gate inside the run editor's Barrier block. Hidden until
+   global is selected, so the ordinary path (no barrier / lane barrier) is unchanged and
+   the block does not grow. It reads as a consequence panel, not as another field: an
+   inset well, the same 2px emphasis the GLOBAL tag already uses elsewhere, and no colour
+   of its own — every value here is an existing token by reference. */
+.v3-edit-barrier-global {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-default);
+  border-left-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-subtle);
+}
+.v3-edit-barrier-global[hidden] { display: none; }
+.v3-edit-barrier-global .v3-edit-note { margin-top: 0; }
+.v3-edit-barrier-global .v3-edit-label { font-weight: 600; }
 
 .v3-edit-picker { position: relative; }
 .v3-edit-chips {

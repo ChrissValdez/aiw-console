@@ -5028,7 +5028,7 @@ function v3RenderRunEditor(run, context, model) {
         <div class="v3-edit-note">Only earlier runs (lower position) are eligible. The core refuses the rest.</div>
         ${v3RenderDepPicker("deps", "multi", depCandidates, currentDeps, model)}
       </div>
-${v3RenderLaneBlock(run, model)}
+${v3RenderLaneBlock(run, model)}${v3RenderBarrierBlock(run, model)}
       <div class="v3-edit-block" data-v3edit-op="set-status">
         <div class="v3-edit-block-title">Status</div>
         <label class="v3-edit-field"><span class="v3-edit-label">Status</span><select data-v3edit-status>${statusOptions}</select></label>
@@ -5077,6 +5077,55 @@ function v3RenderLaneBlock(run, model) {
         <div class="v3-edit-block-title">Lane</div>
         <div class="v3-edit-note">Lanes are declared by this roadmap (root.lanes). A run with no stored lane rides the project default; picking the default here stores nothing.</div>
         <label class="v3-edit-field"><span class="v3-edit-label">Lane</span><select data-v3edit-lane>${options}</select></label>
+      </div>
+`;
+}
+
+// [D-051] Barrier block of the run editor — the WRITE side of the barrier D-051 defined
+// and could only be reached, until now, by hand-editing the canonical file.
+//
+// It is rendered on EVERY roadmap, unlike the Lane block. A lane-less project can still
+// want a synchronisation point ("nothing starts until this closes"), and that is exactly
+// what a global barrier is. What the lane-less case cannot have is a LANE barrier: with no
+// lanes it would be stored as "lane" and behave as "global" — a lie in the file — so the
+// option is disabled and says why, mirroring the engine's own refusal rather than hiding
+// a rule the operator would only meet as an error.
+//
+// GLOBAL IS DELIBERATELY UNCOMFORTABLE (D-051: visible, not convenient). A global barrier
+// re-serialises the project — it is the exact inverse of the reason lanes exist — so it is
+// not something to reach by one careless click on a dropdown:
+//   1. it is LAST in the list, never preselected, and named in caps against "lane";
+//   2. picking it opens a danger panel that states, in runs of THIS roadmap, what it bars;
+//   3. an acknowledgement checkbox must be ticked, and until it is, the op is not
+//      collected into the batch at all (v3EditBuildPayload returns null) — the operator
+//      cannot preview it by accident, let alone write it.
+// The lane barrier gets none of that friction: it bars one lane, which is ordinary
+// planning. Clearing a barrier is likewise frictionless — undoing a block is never the
+// dangerous direction.
+function v3RenderBarrierBlock(run, model) {
+  const current = run.barrier === "lane" || run.barrier === "global" ? run.barrier : "";
+  const hasLanes = !!(model && model.lanes);
+  const laneId = model && model.laneOf ? model.laneOf(run) : null;
+  // Counts derived exactly like the model derives the barred set: LATER by global
+  // queue_order, restricted to this run's resolved lane for a lane barrier.
+  const later = model ? model.allRuns.filter((r) => r.queue_order > run.queue_order) : [];
+  const laterInLane = hasLanes ? later.filter((r) => model.laneOf(r) === laneId) : later;
+  const laneOpt = hasLanes
+    ? `<option value="lane"${current === "lane" ? " selected" : ""}>Lane barrier — bars the ${laterInLane.length} later run(s) on ${escapeHtml(String(laneId))}</option>`
+    : `<option value="lane" disabled>Lane barrier — unavailable: this roadmap declares no lanes</option>`;
+  return `
+      <div class="v3-edit-block" data-v3edit-op="set-barrier">
+        <div class="v3-edit-block-title">Barrier</div>
+        <div class="v3-edit-note">A barrier bars every LATER run in its scope from starting until this run completes. The bar is DERIVED from this one field: no dependency is written, and nothing changes for runs earlier in the queue.</div>
+        <label class="v3-edit-field"><span class="v3-edit-label">Barrier</span><select data-v3edit-barrier>
+          <option value=""${current ? "" : " selected"}>(no barrier)</option>
+          ${laneOpt}
+          <option value="global"${current === "global" ? " selected" : ""}>GLOBAL barrier — bars ALL ${later.length} later run(s), in every lane</option>
+        </select></label>
+        <div class="v3-edit-barrier-global v3-edit-danger" data-v3edit-barrier-global${current === "global" ? "" : " hidden"}>
+          <div class="v3-edit-note">A global barrier is a project-wide synchronisation point: it holds ${later.length} later run(s) across ${hasLanes ? `all ${model.lanes.length} lanes` : "the whole queue"} until this run completes. That is the opposite of what lanes are for${hasLanes ? " — every lane stops, not just this one" : ""}. Prefer a lane barrier unless the whole project really must stop here.</div>
+          <label class="v3-edit-field v3-edit-check"><input type="checkbox" data-v3edit-barrier-ack${current === "global" ? " checked" : ""}><span class="v3-edit-label">I mean this as a project-wide synchronisation point</span></label>
+        </div>
       </div>
 `;
 }
@@ -5412,6 +5461,19 @@ function v3ModalAttachHandlers() {
       const field = modal.querySelector("[data-v3edit-closeout-field]");
       if (field) field.hidden = !(statusSel.value === "completed" || statusSel.value === "blocked");
     }
+    // [D-051] The GLOBAL barrier gate. Selecting global OPENS the danger panel; leaving
+    // global closes it AND clears the acknowledgement, so arming is per-selection and can
+    // never be inherited from a choice the operator has since moved away from.
+    const barrierSel = event.target.closest("[data-v3edit-barrier]");
+    if (barrierSel) {
+      const panel = modal.querySelector("[data-v3edit-barrier-global]");
+      const isGlobal = barrierSel.value === "global";
+      if (panel) panel.hidden = !isGlobal;
+      if (!isGlobal) {
+        const ack = modal.querySelector("[data-v3edit-barrier-ack]");
+        if (ack) ack.checked = false;
+      }
+    }
     const anchorSel = event.target.closest("[data-v3edit-anchor-mode]");
     if (anchorSel) {
       const runWrap = modal.querySelector("[data-v3edit-anchor-run]");
@@ -5441,7 +5503,7 @@ function v3EditBeforeNode() {
   return null;
 }
 
-const V3_BATCHABLE_OPS = ["set-text", "set-deps", "set-status", "set-lane", "clear-progress", "move", "move-objective", "set-objective-archived"];
+const V3_BATCHABLE_OPS = ["set-text", "set-deps", "set-status", "set-lane", "set-barrier", "clear-progress", "move", "move-objective", "set-objective-archived"];
 
 // The core applies batch sub-ops IN ARRAY ORDER and aborts on the first that errors. One pair
 // has a hard ordering requirement: clear-progress MUST precede set-status. set-status refuses to
@@ -5516,6 +5578,14 @@ function v3BatchOpChanged(op, args, beforeNode) {
     const afterLane = args.lane != null ? String(args.lane) : "";
     return beforeLane !== afterLane;
   }
+  if (op === "set-barrier") {
+    // Stored scope vs chosen scope; "" stands for "no barrier" on both sides, so picking
+    // "(no barrier)" on a run that has none is correctly a no-op. An unacknowledged global
+    // never reaches here at all — v3EditBuildPayload returns null for it.
+    const beforeBarrier = beforeNode.barrier === "lane" || beforeNode.barrier === "global" ? beforeNode.barrier : "";
+    const afterBarrier = args.barrier != null ? String(args.barrier) : "";
+    return beforeBarrier !== afterBarrier;
+  }
   if (op === "clear-progress") {
     // v3EditBuildPayload returns null unless the box is ticked, so a payload reaching here
     // already means the operator asked for it. The remaining test is that there is really a
@@ -5536,12 +5606,32 @@ function v3BatchOpChanged(op, args, beforeNode) {
   return false;
 }
 
+// [D-051] Is the GLOBAL barrier acknowledged right now? Read straight off the modal, so
+// the gate has ONE definition serving both the payload builder (which withholds the op)
+// and the preview button (which explains why nothing happened).
+function v3BarrierGlobalAcknowledged() {
+  const modal = byId("edit-modal-body");
+  const ack = modal ? modal.querySelector("[data-v3edit-barrier-ack]") : null;
+  return !!(ack && ack.checked);
+}
+
+// A GLOBAL barrier is SELECTED but not acknowledged: the operator asked for something the
+// gate is deliberately withholding. Distinguishing this from "nothing changed" is the whole
+// point — silence would read as a broken button rather than as a gate.
+function v3BarrierGlobalPendingAck() {
+  const modal = byId("edit-modal-body");
+  const sel = modal ? modal.querySelector("[data-v3edit-barrier]") : null;
+  return !!(sel && sel.value === "global" && !v3BarrierGlobalAcknowledged());
+}
+
 async function v3EditPreviewAllChanges() {
   // One preview across every changed batchable block. If nothing differs, say so plainly and
   // post nothing. Otherwise route through the pinned v3EditPreview (apply: false) unchanged.
   const batch = v3EditBuildBatch();
   if (!batch.ops.length) {
-    v3EditSetPanel('<div class="v3-edit-preview-status">No changes to preview. Edit a field above, then preview all changes.</div>');
+    v3EditSetPanel(v3BarrierGlobalPendingAck()
+      ? '<div class="v3-edit-preview-status">A GLOBAL barrier is selected but not acknowledged, so it is not part of this preview. Tick the acknowledgement in the Barrier block to include it — or pick a lane barrier instead.</div>'
+      : '<div class="v3-edit-preview-status">No changes to preview. Edit a field above, then preview all changes.</div>');
     return;
   }
   await v3EditPreview("batch");
@@ -5620,6 +5710,19 @@ function v3EditBuildPayload(op) {
     if (!el) return null;
     // "" (the project-default option) travels as null: the engine's clearing gesture.
     return { op, args: { run: t.id, lane: el.value || null } };
+  }
+  if (op === "set-barrier") {
+    const el = q("[data-v3edit-barrier]");
+    if (!el) return null;
+    const scope = el.value || "";
+    // The GLOBAL gate, enforced where it cannot be walked around: an unacknowledged global
+    // produces NO payload, so it never enters the batch and cannot even be previewed. The
+    // clear-progress precedent — the checkbox is the op's existence condition, not a hint.
+    // Only "global" is gated: "lane" is ordinary planning and "" (clearing) is the safe
+    // direction, and neither is asked to justify itself.
+    if (scope === "global" && !v3BarrierGlobalAcknowledged()) return null;
+    // "" (the no-barrier option) travels as null: the engine's clearing gesture.
+    return { op, args: { run: t.id, barrier: scope || null } };
   }
   if (op === "clear-progress") {
     // An UNTICKED box produces no payload at all, so the op is simply absent from the batch
@@ -5741,7 +5844,7 @@ function v3EditDiffHtml(op, args, beforeNode) {
     return `<div class="v3-edit-diff v3-edit-diff-text">${inner}</div>`;
   }
   const rows = [];
-  if ((op === "set-deps" || op === "set-status" || op === "set-lane" || op === "move" || op === "clear-progress") && !beforeNode) return "";
+  if ((op === "set-deps" || op === "set-status" || op === "set-lane" || op === "set-barrier" || op === "move" || op === "clear-progress") && !beforeNode) return "";
   if (op === "clear-progress") {
     // Name the record being retired entry by entry. The whole reason this is a separate op is
     // that the loss should be READ before it is confirmed, not buried in a status change.
@@ -5755,6 +5858,22 @@ function v3EditDiffHtml(op, args, beforeNode) {
   } else if (op === "set-lane") {
     const beforeLane = typeof beforeNode.lane === "string" && beforeNode.lane ? beforeNode.lane : "(project default)";
     rows.push(v3EditDiffRow("Lane", beforeLane, args.lane != null && args.lane !== "" ? args.lane : "(project default)"));
+  } else if (op === "set-barrier") {
+    // Name the SCOPE and, for a scope that bars anything, the count it bars — read from the
+    // model exactly as the barred set is derived, so the preview and the rendered roadmap
+    // can never disagree about what this one field does.
+    const model = roadmapV3ModelCache;
+    const scopeText = (scope) => {
+      if (scope !== "lane" && scope !== "global") return "(no barrier)";
+      if (!model) return scope === "global" ? "GLOBAL" : "lane";
+      const later = model.allRuns.filter((r) => r.queue_order > beforeNode.queue_order);
+      const n = scope === "global" ? later.length : later.filter((r) => model.laneOf(r) === model.laneOf(beforeNode)).length;
+      return scope === "global"
+        ? `GLOBAL — bars all ${n} later run(s), in every lane`
+        : `lane — bars the ${n} later run(s) on ${model.laneOf(beforeNode)}`;
+    };
+    const beforeScope = beforeNode.barrier === "lane" || beforeNode.barrier === "global" ? beforeNode.barrier : "";
+    rows.push(v3EditDiffRow("Barrier", scopeText(beforeScope), scopeText(args.barrier != null ? args.barrier : "")));
   } else if (op === "set-status") {
     rows.push(v3EditDiffRow("Status", beforeNode.status, args.status));
     const beforeCo = "closeout_result" in beforeNode && beforeNode.closeout_result != null ? String(beforeNode.closeout_result) : "(none)";

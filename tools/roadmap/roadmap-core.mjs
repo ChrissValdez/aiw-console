@@ -33,6 +33,12 @@ import os from "node:os";
 // module knows no lane by name. Absent -> the project has ONE implicit lane and nothing
 // below changes behaviour.
 export const ROOT_ALLOWED_FIELDS = ["schema_version", "roadmap_id", "title", "objectives", "lanes"];
+// Canonical serialization order for the ROOT object's keys. Deliberately NOT the same
+// array as ROOT_ALLOWED_FIELDS: membership and layout are different questions, and
+// ROOT_ALLOWED_FIELDS appends `lanes` last because that is the order its error message
+// has always printed. On disk the vocabulary belongs with the other small root fields,
+// so `objectives` -- effectively the whole file -- stays the last key.
+export const CANONICAL_ROOT_KEY_ORDER = ["schema_version", "roadmap_id", "title", "lanes", "objectives"];
 // [D-051] A lane entry: stable key + human name, plus the single stored exception
 // `default: true` (the archived discipline: stored only as true, exactly one entry).
 export const LANE_ALLOWED_FIELDS = ["lane_id", "title", "default"];
@@ -190,6 +196,24 @@ export function normalizeRunKeyOrder(run) {
   }
   for (const key of Object.keys(run)) delete run[key];
   for (const key of Object.keys(ordered)) run[key] = ordered[key];
+}
+
+// [D-051] Same gesture at the ROOT, for the one root-level key the lane model adds.
+// A newly declared `lanes` would otherwise be appended after `objectives` -- valid
+// JSON, but it would push the file's one huge key into the middle and move the
+// declaration out of sight below thousands of lines. CANONICAL_ROOT_KEY_ORDER puts
+// the vocabulary with the other small root fields and keeps `objectives` last.
+// Purely presentational: no value is read, written or compared.
+export function normalizeRootKeyOrder(obj) {
+  const ordered = {};
+  for (const key of CANONICAL_ROOT_KEY_ORDER) {
+    if (key in obj) ordered[key] = obj[key];
+  }
+  for (const key of Object.keys(obj)) {
+    if (!(key in ordered)) ordered[key] = obj[key]; // preserve anything unexpected; allowlist will flag it
+  }
+  for (const key of Object.keys(obj)) delete obj[key];
+  for (const key of Object.keys(ordered)) obj[key] = ordered[key];
 }
 
 // ---------------------------------------------------------------------------
@@ -955,6 +979,223 @@ export function setLane(obj, opts) {
   normalizeRunKeyOrder(entry.run);
   const after = "lane" in entry.run ? entry.run.lane : null;
   return { errors, warnings, run, before, after };
+}
+
+// ---------------------------------------------------------------------------
+// [D-051] Barrier marking. set-barrier sets or clears the OPTIONAL `barrier` key of
+// ONE run and does nothing else: no queue_order, no depends_on, no status, no lane.
+// It is the WRITE side of the barrier D-051 defined and could only be reached by
+// hand-editing the canonical file until now.
+//
+// Same shape as set-lane on purpose, because they are the same kind of act -- one
+// optional key on one run, stored only when it says something:
+//   scope "lane" | "global" -> store it;  null/"" -> delete the key WHOLE.
+// A run with no barrier stores nothing, so "not a barrier" and "cleared" read back
+// identically (the archived/closeout/lane discipline).
+//
+// TWO refusals, and both are read off the model rather than invented:
+//
+//   G1 -- an UNKNOWN scope is refused by name. The vocabulary is BARRIER_SCOPES and
+//   nothing else; checkInvariants rejects the same value one stage later, so the
+//   mutation refuses what the guard would reject, naming the two legal values.
+//
+//   G2 -- a "lane"-scoped barrier on a roadmap that declares NO lanes is refused.
+//   Not because it is unsafe -- resolveRunLane returns null for every run, so the
+//   barrier degenerates to a global one and the file stays valid -- but because it
+//   would be a LIE stored in the file: a key that says "lane" on a project that has
+//   no lanes, silently behaving as "global". The operator who wants that behaviour
+//   has an honest way to ask for it, and it is spelled global.
+//
+// It does NOT re-check barrier satisfiability itself: checkInvariants owns that rule
+// (and its theorem) and runs on the mutated object one stage later, which is exactly
+// where a barrier that would bar its own dependency gets caught. Duplicating it here
+// would be the drift debt the core comments warn about.
+//
+// It changes no *_id, so it needs no identity sanction, and it is BATCHABLE alongside
+// set-lane / set-text / set-status: marking a run's lane and its barrier in the same
+// preview is one edit of one run, not two writes.
+// ---------------------------------------------------------------------------
+
+export function setBarrier(obj, opts) {
+  const errors = [];
+  const warnings = [];
+  const { run, barrier } = opts;
+
+  if (!run) errors.push("set-barrier requires --run");
+  const entry = run ? findRunEntry(obj, run) : null;
+  if (run && !entry) errors.push(`set-barrier: run ${run} not found`);
+
+  const clearing = barrier == null || barrier === "";
+  if (!clearing) {
+    if (typeof barrier !== "string" || !BARRIER_SCOPES.includes(barrier)) {
+      // G1 -- unknown scope, named against the only vocabulary there is.
+      errors.push(`set-barrier: --barrier must be one of ${BARRIER_SCOPES.join(", ")} (or empty to clear); got ${JSON.stringify(barrier)}`);
+    } else if (barrier === "lane" && !declaredLanes(obj)) {
+      // G2 -- a lane barrier on a lane-less roadmap would be stored as "lane" and
+      // behave as "global". Refuse the lie; global is available and says so.
+      errors.push(
+        "set-barrier: the roadmap declares no lanes, so a lane-scoped barrier would bar every later run " +
+        "exactly like a global one while the file claims otherwise; declare root.lanes first, or use global"
+      );
+    }
+  }
+  if (errors.length) return { errors, warnings };
+
+  const before = "barrier" in entry.run ? entry.run.barrier : null;
+  if (clearing) {
+    if (!("barrier" in entry.run)) {
+      warnings.push(`set-barrier: run ${run} carries no barrier; nothing to clear`);
+    }
+    delete entry.run.barrier;
+  } else {
+    entry.run.barrier = barrier;
+  }
+  normalizeRunKeyOrder(entry.run);
+  const after = "barrier" in entry.run ? entry.run.barrier : null;
+  return { errors, warnings, run, before, after };
+}
+
+// ---------------------------------------------------------------------------
+// [D-051] Lane vocabulary declaration. declare-lanes writes root.lanes -- the ONE
+// root-level field the lane model added -- and is the reason no roadmap had to be
+// hand-edited to acquire lanes.
+//
+// It replaces the vocabulary WHOLE rather than adding one lane at a time. The
+// declaration is a single object with a single-default invariant across its entries,
+// so an incremental "add-lane" would have to invent what happens to the default when
+// the first lane arrives and what happens to it when the last one leaves. Declaring
+// the set at once makes every intermediate state unrepresentable instead of merely
+// unlikely, and it is how the operator thinks of it: a project has A vocabulary.
+//
+// FOUR refusals:
+//
+//   G1 -- the shape checkInvariants demands: a non-empty array of {lane_id, title}
+//   with unique non-empty keys, `default` stored only as true, and EXACTLY ONE
+//   default. Refused here, by field, rather than surfaced as a post-check failure
+//   with no idea which entry was wrong.
+//
+//   G2 -- clearing (lanes null/[]) with any run still CARRYING a lane is refused,
+//   naming the runs. Otherwise the roadmap would be left using an undeclared
+//   vocabulary, which is precisely what checkInvariants forbids. Clear the runs
+//   first (set-lane with no lane), then the vocabulary.
+//
+//   G3 -- REDECLARING away a lane that runs still use is refused, naming lane and
+//   runs. Same rule as G2; separated so the message can say which lane vanished.
+//
+//   G4 -- a duplicate lane_id, which would make "the lane with key X" ambiguous.
+//
+// What it does NOT do: it never touches a run. Re-homing runs is set-lane's job, one
+// explicit act per run, so a vocabulary edit can never silently move work between
+// lanes. Changing WHICH lane is the default therefore re-homes every lane-less run in
+// one keystroke -- that is the documented mechanic of a stored default, and it is why
+// the default is a marked entry rather than a positional accident.
+//
+// It changes no *_id (lane_id is not in collectIds -- lanes are a vocabulary, not
+// nodes in the tree), so it needs no identity sanction. It is NOT batchable: it is a
+// root-level vocabulary change, and the batch set is deliberately per-run edits.
+// ---------------------------------------------------------------------------
+
+export function declareLanes(obj, opts) {
+  const errors = [];
+  const warnings = [];
+  const { lanes } = opts;
+
+  const clearing = lanes == null || (Array.isArray(lanes) && lanes.length === 0);
+
+  // Which lanes are in USE right now (stored explicitly on a run). Needed by G2/G3.
+  const usedBy = new Map();
+  for (const { run } of flattenRuns(obj)) {
+    if (typeof run.lane === "string" && run.lane) {
+      if (!usedBy.has(run.lane)) usedBy.set(run.lane, []);
+      usedBy.get(run.lane).push(run.run_id);
+    }
+  }
+
+  if (clearing) {
+    // G2 -- never leave the file using a vocabulary it does not declare.
+    if (usedBy.size) {
+      const detail = [...usedBy.entries()]
+        .map(([laneId, ids]) => `${laneId} (${ids.length}: ${ids.join(", ")})`)
+        .join("; ");
+      errors.push(
+        `declare-lanes: cannot clear root.lanes while ${usedBy.size} lane(s) are still stored on runs -- ${detail}; ` +
+        "clear those runs first (set-lane with no lane) so nothing is left pointing at an undeclared vocabulary"
+      );
+    }
+    if (errors.length) return { errors, warnings };
+    const before = declaredLanes(obj) ? declaredLanes(obj).map((l) => l.lane_id) : null;
+    if (!("lanes" in obj)) {
+      warnings.push("declare-lanes: the roadmap declares no lanes; nothing to clear");
+    }
+    delete obj.lanes;
+    return { errors, warnings, before, after: null, defaultLane: null };
+  }
+
+  // G1 -- the shape, checked entry by entry so the message names the offender.
+  if (!Array.isArray(lanes)) {
+    errors.push("declare-lanes: --lanes must be an array of {lane_id, title} objects (or empty to clear)");
+    return { errors, warnings };
+  }
+  const seen = new Set();
+  let defaults = 0;
+  lanes.forEach((lane, index) => {
+    const label = `declare-lanes: lane[${index}]`;
+    if (!lane || typeof lane !== "object" || Array.isArray(lane)) {
+      errors.push(`${label} is not an object`);
+      return;
+    }
+    for (const key of Object.keys(lane)) {
+      if (!LANE_ALLOWED_FIELDS.includes(key)) {
+        errors.push(`${label} carries unexpected field ${key}; only ${LANE_ALLOWED_FIELDS.join(", ")} are allowed`);
+      }
+    }
+    if (typeof lane.lane_id !== "string" || !lane.lane_id) {
+      errors.push(`${label} missing string lane_id`);
+    } else if (seen.has(lane.lane_id)) {
+      errors.push(`${label} duplicate lane_id ${lane.lane_id}`); // G4
+    } else {
+      seen.add(lane.lane_id);
+    }
+    if (typeof lane.title !== "string" || !lane.title) {
+      errors.push(`${label} missing string title`);
+    }
+    if ("default" in lane && lane.default !== true) {
+      errors.push(`${label} must omit default unless true; it is never stored as false or null`);
+    }
+    if (lane.default === true) defaults += 1;
+  });
+  if (!errors.length && defaults !== 1) {
+    errors.push(
+      `declare-lanes: exactly one lane must be marked default (found ${defaults}); ` +
+      "lane-less runs resolve to it, so it cannot be absent and cannot be ambiguous"
+    );
+  }
+  // G3 -- a redeclaration must not orphan a lane that runs still carry.
+  if (!errors.length) {
+    for (const [laneId, ids] of usedBy) {
+      if (!seen.has(laneId)) {
+        errors.push(
+          `declare-lanes: lane ${laneId} is still stored on ${ids.length} run(s) (${ids.join(", ")}) but the new ` +
+          "declaration does not include it; move those runs first (set-lane) so no run is left on an undeclared lane"
+        );
+      }
+    }
+  }
+  if (errors.length) return { errors, warnings };
+
+  const before = declaredLanes(obj) ? declaredLanes(obj).map((l) => l.lane_id) : null;
+  // Rebuild each entry through the allowed key order so the stored shape is the
+  // canonical one regardless of how the caller ordered the keys, and so `default`
+  // is stored ONLY as true (never false, never null).
+  obj.lanes = lanes.map((lane) => {
+    const out = { lane_id: lane.lane_id, title: lane.title };
+    if (lane.default === true) out.default = true;
+    return out;
+  });
+  // root.lanes sits directly after `title`, before `objectives`: vocabulary before
+  // the tree that uses it, and the tree stays the last (largest) key of the file.
+  normalizeRootKeyOrder(obj);
+  return { errors, warnings, before, after: obj.lanes.map((l) => l.lane_id), defaultLane: defaultLaneId(obj) };
 }
 
 // ---------------------------------------------------------------------------

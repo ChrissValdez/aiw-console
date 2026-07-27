@@ -26,7 +26,7 @@
 import { createHash } from "node:crypto";
 import * as core from "./roadmap-core.mjs";
 
-export const KNOWN_OPS = ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"];
+export const KNOWN_OPS = ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "declare-lanes", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"];
 
 // Content baseline for compare-and-swap. Hash of the exact bytes read (utf8), so any change
 // -- including a single CRLF or em-dash byte -- produces a different token.
@@ -99,6 +99,15 @@ function dispatch(op, obj, args, externalRunIds = null) {
       // [D-051] lane is a declared lane_id to assign, or null/"" to clear back to the
       // project default. The core refuses an undeclared key, naming the vocabulary.
       return core.setLane(obj, { run: args.run, lane: args.lane != null ? args.lane : null });
+    case "set-barrier":
+      // [D-051] barrier is "lane" | "global" to mark, or null/"" to clear the key. The
+      // core refuses an unknown scope, and refuses a lane barrier where no lane exists.
+      return core.setBarrier(obj, { run: args.run, barrier: args.barrier != null ? args.barrier : null });
+    case "declare-lanes":
+      // [D-051] The root lane vocabulary, replaced WHOLE (or cleared with null / []).
+      // The core refuses a malformed entry, a missing/ambiguous default, and any
+      // declaration that would orphan a lane runs still carry.
+      return core.declareLanes(obj, { lanes: args.lanes != null ? args.lanes : null });
     case "clear-progress":
       // --run is the WHOLE input. There is nothing to select or shape: the op removes the
       // progress key entirely, and it deliberately accepts no status argument -- closing the
@@ -154,7 +163,14 @@ function dispatch(op, obj, args, externalRunIds = null) {
       // an active run with no progress, which the validator fails, so a lone apply would be
       // written and rolled back. batch [clear-progress, set-status] keeps both ops explicit
       // and named while persisting no invalid intermediate state.
-      const batchable = ["set-text", "set-deps", "set-status", "set-lane", "clear-progress", "move", "move-objective", "set-objective-archived"];
+      // set-barrier joins the batchable set for the same reason set-lane is in it: one
+      // optional key on one run, no *_id surrendered, so checkIdentityPreserved needs no
+      // sanction. It also makes "this run is on lane X and is a barrier" a SINGLE preview
+      // and a single write, which is how the operator means it. declare-lanes is
+      // deliberately NOT batchable: it is a root-level vocabulary change, not a per-run
+      // edit, and pairing it with the set-lane calls that depend on it would hide which
+      // half of the pair a refusal came from.
+      const batchable = ["set-text", "set-deps", "set-status", "set-lane", "set-barrier", "clear-progress", "move", "move-objective", "set-objective-archived"];
       const warnings = [];
       for (let i = 0; i < ops.length; i++) {
         const sub = ops[i] || {};

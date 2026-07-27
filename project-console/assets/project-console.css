@@ -6089,7 +6089,12 @@ details[open] > summary > .v3-caret {
    when visible, keeps its inset look via its own margins and simply pushes the pane down. */
 .content:has(> #tab-docs.active) { padding: 0; }
 
-.content:has(> #tab-docs.active) > #load-notice { margin: 28px var(--pc-content-pad) 16px; }
+/* The one exception to the `width: 100%` rule below: in Docs mode the column drops its own
+   padding, so this banner carries the inset in its OWN horizontal margins. Those margins are
+   real lengths, not `auto`, so the item stretches on its own (nothing suppresses align-self)
+   and `width: 100%` would add the inset on top of a full-width box and push the column into
+   horizontal scroll. `auto` lets stretch do the arithmetic: column - margins. */
+.content:has(> #tab-docs.active) > #load-notice { margin: 28px var(--pc-content-pad) 16px; width: auto; }
 
 #tab-docs.active {
   display: flex;
@@ -6108,11 +6113,45 @@ details[open] > summary > .v3-caret {
 
 .docs-absence { margin: 12px 16px; }
 
+/* ==========================================================================
+   Sub-view width defect (operator-reported: the SECOND sub-view of a tab with internal
+   navigation rendered narrower than the first — Roadmap/"Roadmap" vs "Run Queue",
+   Status/"Console Diagnostics" vs "Governance State").
+
+   ROOT CAUSE — one cause, not two. Making the content column a flex column (the banner fix
+   above) turned every tab panel into a FLEX ITEM. The panels center themselves with
+   `margin: 0 auto` under `max-width: var(--pc-content-max)`, which as plain block layout
+   means "fill the column, and center if a max-width bites". On a flex item those are auto
+   CROSS-AXIS margins, and per CSS Flexbox 8.1 auto margins in the cross axis absorb the free
+   space and SUPPRESS the default `align-self: stretch`. The panel therefore falls back to
+   fit-content — so the column width tracked the intrinsic width of whichever sub-view happened
+   to be visible. Sub-views that fill (queues, governance sections) held the full width; the
+   intrinsically narrower ones (the objective tree, the diagnostics grid) shrank, and the auto
+   margins split the leftover into visible side gutters. Nothing was wrong with the sub-view
+   containers themselves: `.roadmap-subview` and `.status-section` are plain blocks and always
+   measured 100% of their parent — the parent is what moved.
+
+   FIX — give every child of the column a definite cross size, the same `width: 100%` +
+   `max-width` + `margin: 0 auto` idiom `.portfolio-shell` already uses. With a definite width
+   the auto margins have no free space to absorb, so the item spans the column; if
+   `--pc-content-max` is ever set below 100% again the same margins still center it. This is a
+   property of the column, so any sub-view of any tab — including tabs added later — inherits
+   the corrected behaviour without a rule of its own.
+
+   Width only: no color, type, hierarchy, component or structural change.
+   ========================================================================== */
+
+.content > * {
+  width: 100%;
+}
+
 /* Narrow screens keep the pre-existing stacked Docs behaviour (the 1040px block above):
    the pane stops flexing and scrolls with the page, inset by the content padding as before. */
 @media (max-width: 1040px) {
   .content:has(> #tab-docs.active) { padding: 28px var(--pc-content-pad); }
-  .content:has(> #tab-docs.active) > #load-notice { margin: 0 auto 16px; }
+  /* Padding is back on the column here, so the banner goes back to centering on auto margins —
+     and back to needing the definite width that keeps those margins from shrinking it. */
+  .content:has(> #tab-docs.active) > #load-notice { margin: 0 auto 16px; width: 100%; }
   #tab-docs.active {
     display: block;
     flex: none;

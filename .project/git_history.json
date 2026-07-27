@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-27T20:07:32.886Z",
+  "generated_at": "2026-07-27T20:29:53.713Z",
   "generated_from": "aiw-projector@0.8.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-27T20:04:15.537Z"
+      "mtime": "2026-07-27T20:21:02.207Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,14 +14,24 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "d1bb6e731d7436cd438d9cb91ea3dff00f505911",
+  "head": "d5f337b99607f0490bab05692ff3af4fe52e33d8",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 44,
+  "commit_total": 45,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "d5f337b",
+      "full_sha": "d5f337b99607f0490bab05692ff3af4fe52e33d8",
+      "date": "2026-07-27T14:21:02-06:00",
+      "parents": "d1bb6e7",
+      "subject": "docs: agrupacion por ruta con jerarquia, regla archive y padding",
+      "body": "- La ruta manda sobre los campos de agrupacion del indice curado\n\n- Nada bajo archive/ se renderiza; subgrupos anidados por subcarpeta\n\n- Padding 20 -> 28px; suite 192/192; record AGRUPACION-DOCS-POR-RUTA",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "d1bb6e7",

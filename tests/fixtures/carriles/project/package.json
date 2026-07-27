@@ -1,0 +1,5 @@
+{
+  "name": "fixture-carriles",
+  "private": true,
+  "description": "Synthetic roadmap_tree project declaring lanes and barriers (D-051). Lane keys are arbitrary on purpose: any code that recognises one of them by name is baked identity."
+}

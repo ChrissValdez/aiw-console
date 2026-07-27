@@ -132,6 +132,11 @@ let v3DetailStack = [];
 // Origin subview label ("Run Queue" / "Roadmap") recorded when a root detail opens; the
 // stack-root Back control returns there by closing the drawer. UI-only, never persisted.
 let v3DetailOrigin = "";
+// [D-051] Selected lane filter (a declared lane_id, or null for all lanes). UI-only,
+// never persisted, reset on project switch. Changing it re-renders BOTH Roadmap
+// subviews in place, so the active subview is preserved — the point of the selector is
+// comparing the same view across lanes.
+let v3SelectedLane = null;
 // Roadmap editing (Run B). Edit mode is OFF by default and only reachable from the Roadmap
 // tab; it never appears on Overview/History/Docs/Status. v3EditPending holds the operation
 // whose dry-run preview is on screen, awaiting an explicit confirm before any write.
@@ -2996,7 +3001,77 @@ function v3Model(data) {
       });
     });
   });
-  return { roadmap, runsById, contextByRunId, allRuns };
+  // [D-051] Lanes. The vocabulary comes from the TREE ITSELF (root.lanes, transported by
+  // the emitter): this renderer executes it and knows no lane by name. A tree that
+  // declares none has `lanes: null` and every lane surface below stays exactly as it was.
+  const lanes = Array.isArray(roadmap.lanes) && roadmap.lanes.length ? roadmap.lanes : null;
+  const defaultLane = lanes ? (lanes.find((lane) => lane && lane.default === true) || lanes[0]).lane_id : null;
+  const laneById = new Map((lanes || []).map((lane) => [lane.lane_id, lane]));
+  // A run's lane: its own stored key, else the project default ("every run has a lane"
+  // is satisfied at READ time). Null across the board when no lanes are declared, so
+  // "same lane" is vacuously true and a lane-scoped barrier degenerates to global.
+  const laneOf = (run) => (run && typeof run.lane === "string" && run.lane ? run.lane : defaultLane);
+  // Position INSIDE the lane is DERIVED by filtering the global queue_order — never
+  // stored anywhere (§12's discipline). Labels are lane KEY + position (D-051: the key
+  // is stable; a lane number is a position and shifts when lanes are added).
+  const laneInfoByRunId = new Map();
+  if (lanes) {
+    const counters = new Map();
+    allRuns.slice().sort((a, b) => a.queue_order - b.queue_order).forEach((run) => {
+      const laneId = laneOf(run);
+      const position = (counters.get(laneId) || 0) + 1;
+      counters.set(laneId, position);
+      laneInfoByRunId.set(run.run_id, {
+        laneId,
+        lanePosition: position,
+        laneLabel: `${laneId}-${String(position).padStart(2, "0")}`
+      });
+    });
+  }
+  // [D-051] Barriers. A run marked barrier bars, while it is not completed, every LATER
+  // run (by the global queue_order) in its scope: its own resolved lane ("lane") or all
+  // lanes ("global"). The barred set is DERIVED here at read time — the file stores the
+  // RULE (one field), never the expanded depends_on edges.
+  const barriers = allRuns
+    .filter((run) => run.barrier === "lane" || run.barrier === "global")
+    .sort((a, b) => a.queue_order - b.queue_order);
+  const barrierBlockersByRunId = new Map();
+  if (barriers.length) {
+    allRuns.forEach((run) => {
+      const blockers = barriers.filter((barrier) =>
+        barrier.status !== "completed" &&
+        barrier.run_id !== run.run_id &&
+        barrier.queue_order < run.queue_order &&
+        (barrier.barrier === "global" || laneOf(barrier) === laneOf(run)));
+      if (blockers.length) barrierBlockersByRunId.set(run.run_id, blockers);
+    });
+  }
+  return { roadmap, runsById, contextByRunId, allRuns, lanes, defaultLane, laneById, laneOf, laneInfoByRunId, barrierBlockersByRunId };
+}
+
+// [D-051] The incomplete barriers barring a run's START. Only a planned run can still be
+// barred (an active/terminal run already started or ended; its stored status stays the
+// truth on screen). Earliest-first: barriers clear in queue order, so the first entry is
+// the active frontier — the one the console NAMES.
+function v3BarrierBlockersFor(model, run) {
+  if (!model || !run || run.status !== "planned") return [];
+  return model.barrierBlockersByRunId.get(run.run_id) || [];
+}
+
+// Lane label of a run (`<lane_id>-03`), or null when the project declares no lanes — no
+// label surface exists at all for a lane-less project.
+function v3LaneLabel(model, run) {
+  if (!model || !model.lanes || !run) return null;
+  const info = model.laneInfoByRunId.get(run.run_id);
+  return info ? info.laneLabel : null;
+}
+
+// Compact reference to a barrier for "waiting on" surfaces: its lane label when lanes
+// are declared, else its global #order. Scope is always named — a GLOBAL barrier must be
+// visible AS global (D-051: the sync point is legitimate but never comfortable).
+function v3BarrierRef(model, barrier) {
+  const label = v3LaneLabel(model, barrier) || `#${barrier.queue_order}`;
+  return `${label} (${barrier.barrier === "global" ? "global barrier" : "lane barrier"})`;
 }
 
 function v3StatusBadge(status, solid) {
@@ -3038,7 +3113,7 @@ function v3DeriveCurrent(run) {
   return progress.find((entry) => entry && entry.state === "waiting") || null;
 }
 
-function v3QueueGroupKey(run, runsById) {
+function v3QueueGroupKey(run, runsById, model) {
   if (run.status === "active") {
     const current = v3DeriveCurrent(run);
     if (current && current.stage === "human_qa" && current.state === "waiting") {
@@ -3048,7 +3123,12 @@ function v3QueueGroupKey(run, runsById) {
   }
   if (run.status === "planned") {
     const ready = (run.depends_on || []).every((id) => runsById.get(id)?.status === "completed");
-    return ready ? "ready_next" : "later";
+    // [D-051] A barrier bars the start of every later planned run in its scope, without
+    // any written depends_on edge: satisfied dependencies alone no longer mean ready.
+    // Only callers that pass the model get barrier awareness; a barrier-less roadmap
+    // derives exactly what it always derived.
+    const barred = model ? v3BarrierBlockersFor(model, run).length > 0 : false;
+    return ready && !barred ? "ready_next" : "later";
   }
   return "history";
 }
@@ -3208,14 +3288,28 @@ function v3ProgressDisc(state, isCurrent) {
   return '<span class="v3-progress-disc is-waiting" aria-hidden="true"></span>';
 }
 
-function v3RoadmapRunRow(run) {
+// [D-051] Inline tags a run row carries when the roadmap opts in: the lane label (lane
+// KEY + derived in-lane position, only for a project that DECLARES lanes) and the
+// barrier mark (whenever the run is one — scope always named, global visibly distinct
+// from lane). A lane-less, barrier-less roadmap gets an empty string: zero new markup.
+function v3RunRowTags(model, run) {
+  const tags = [];
+  const laneLabel = v3LaneLabel(model, run);
+  if (laneLabel) tags.push(`<span class="v3-lane-tag" title="${escapeHtml((model.laneById.get(model.laneOf(run)) || {}).title || model.laneOf(run))}">${escapeHtml(laneLabel)}</span>`);
+  if (run.barrier === "global" || run.barrier === "lane") {
+    tags.push(`<span class="v3-barrier-tag is-${escapeHtml(run.barrier)}" title="${run.barrier === "global" ? "Global barrier: bars every later run in every lane until completed" : "Lane barrier: bars later runs on its own lane until completed"}">Barrier · ${run.barrier === "global" ? "GLOBAL" : "lane"}</span>`);
+  }
+  return tags.join("");
+}
+
+function v3RoadmapRunRow(run, model) {
   // RR-A: status disc + title line opening with the stable inline #N order + one
   // textual status badge; non-active rows recede via status classes (prototype).
   return `
     <button class="v3-run-row is-${escapeHtml(run.status)}" type="button" data-v3-run="${escapeHtml(run.run_id)}">
       ${v3TerminalIcon(run.status)}
       <span class="v3-run-info">
-        <span class="v3-run-title"><span class="v3-run-order">#${run.queue_order}</span>${escapeHtml(run.title)}</span>
+        <span class="v3-run-title"><span class="v3-run-order">#${run.queue_order}</span>${escapeHtml(run.title)}${v3RunRowTags(model, run)}</span>
         <span class="v3-run-summary">${escapeHtml(run.summary)}</span>
       </span>
       ${v3StatusBadge(run.status)}
@@ -3226,7 +3320,7 @@ function v3RoadmapRunRow(run) {
 // Status-bearing queue-row content (Stage / Waiting on / Dependencies / Closeout cells
 // and the status chip) is derived HERE and passed into the presentation-only row
 // template, following the same caller-computed pattern as the History lead icon.
-function v3QueueRowCells(run, groupKey, runsById) {
+function v3QueueRowCells(run, groupKey, runsById, model) {
   if (groupKey === "history") {
     const closeout = "closeout_result" in run ? v3ResultText(run.closeout_result) : "Blocked";
     const tone = run.status === "completed" ? " is-green" : "";
@@ -3252,21 +3346,30 @@ function v3QueueRowCells(run, groupKey, runsById) {
   }
   // Later: surface the blocking run(s) with the prototype's compact formats.
   const blocking = (run.depends_on || []).map((id) => runsById.get(id)).filter((dep) => dep && dep.status !== "completed");
+  // [D-051] A barrier barring this run is NAMED next to the blocking dependencies — the
+  // console says WHICH barrier is holding what, with its scope, never a bare "blocked".
+  // Earliest incomplete barrier first (the active frontier); the rest are counted.
+  const barrierBlockers = v3BarrierBlockersFor(model, run);
   let value = "Unresolved dependency";
   if (blocking.length === 1) value = `#${blocking[0].queue_order} ${blocking[0].title}`;
   else if (blocking.length === 2) value = `#${blocking[0].queue_order} · #${blocking[1].queue_order}`;
   else if (blocking.length > 2) value = `#${blocking[0].queue_order} +${blocking.length - 1} more`;
+  if (barrierBlockers.length) {
+    const barrierText = `Barrier ${v3BarrierRef(model, barrierBlockers[0])}${barrierBlockers.length > 1 ? ` +${barrierBlockers.length - 1} more` : ""}`;
+    value = blocking.length ? `${value} · ${barrierText}` : barrierText;
+  }
   return {
     cells: `<span class="v3-row-cell"><span class="v3-row-cell-label">Waiting on</span><span class="v3-row-cell-value is-link">${escapeHtml(value)}</span></span>`,
     chip: '<span class="v3-chip v3-chip-planned">Planned</span>'
   };
 }
 
-function v3QueueRowHtml(run, leadIcon, cells, chip, tileClass, rowClass) {
+function v3QueueRowHtml(run, leadIcon, cells, chip, tileClass, rowClass, tags) {
   // Presentation-only template (QR-ACT/PLN/HIS-A): reads only the run order, title, and
-  // summary; the lead marker, labeled cells, chip, tile tint, and row modifier are
-  // computed by the caller, so this template never reads status-bearing run fields.
-  // History rows lead with the disc and demote the #N order into the title line.
+  // summary; the lead marker, labeled cells, chip, tile tint, row modifier — and the
+  // [D-051] lane/barrier tags — are computed by the caller, so this template never
+  // reads status-bearing run fields. History rows lead with the disc and demote the
+  // #N order into the title line.
   const icon = leadIcon || "";
   const marker = icon
     ? `<span class="v3-run-marker">${icon}</span>`
@@ -3276,7 +3379,7 @@ function v3QueueRowHtml(run, leadIcon, cells, chip, tileClass, rowClass) {
     <button class="v3-queue-row${icon ? " v3-queue-row-terminal" : ""}${rowClass || ""}" type="button" data-v3-run="${escapeHtml(run.run_id)}">
       ${marker}
       <span class="v3-run-info">
-        <span class="v3-run-title">${titleLead}${escapeHtml(run.title)}</span>
+        <span class="v3-run-title">${titleLead}${escapeHtml(run.title)}${tags || ""}</span>
         <span class="v3-run-summary">${escapeHtml(run.summary)}</span>
       </span>
       ${cells || ""}
@@ -3286,8 +3389,11 @@ function v3QueueRowHtml(run, leadIcon, cells, chip, tileClass, rowClass) {
   `;
 }
 
-function v3PhaseBlock(phase) {
-  const runs = phase.runs || [];
+function v3PhaseBlock(phase, model, visibleRuns) {
+  // [D-051] `visibleRuns` is the lane-filtered subset the caller computed (all runs when
+  // no lane is selected). The ratio describes what is on screen, so it derives from the
+  // same subset.
+  const runs = visibleRuns || phase.runs || [];
   // PH-D band: caret + phase title + derived ratio. Phases open by default inside an
   // open objective (approved handoff) and keep their local expand state for the session.
   return `
@@ -3298,10 +3404,71 @@ function v3PhaseBlock(phase) {
         <span class="v3-phase-ratio">${escapeHtml(v3PhaseRatio(runs))}</span>
       </summary>
       <div class="v3-run-list">
-        ${runs.map((run) => v3RoadmapRunRow(run)).join("")}
+        ${runs.map((run) => v3RoadmapRunRow(run, model)).join("")}
       </div>
     </details>
   `;
+}
+
+// ---------------------------------------------------------------------------
+// [D-051] Lane selector — the minimal view. It lives INSIDE the existing subview
+// toolbar row (no new row), renders ONLY when the project declares MORE THAN ONE
+// lane (a one-lane project sees nothing new), and filters whichever Roadmap
+// subview is active without switching it. State is v3SelectedLane, reset per
+// project. The options are the DECLARED lanes, verbatim: no key is known here.
+// ---------------------------------------------------------------------------
+
+function v3LaneFilterActive(model) {
+  return !!(model && model.lanes && v3SelectedLane && model.laneById.has(v3SelectedLane));
+}
+
+function v3VisibleRuns(model, runs) {
+  if (!v3LaneFilterActive(model)) return runs;
+  return runs.filter((run) => model.laneOf(run) === v3SelectedLane);
+}
+
+function renderLaneSelector(model) {
+  const slot = byId("roadmap-lane-slot");
+  if (!slot) return;
+  if (!model || !model.lanes || model.lanes.length < 2) {
+    slot.innerHTML = "";
+    return;
+  }
+  // A selected lane that the (re)loaded tree no longer declares falls back to all lanes.
+  if (v3SelectedLane && !model.laneById.has(v3SelectedLane)) v3SelectedLane = null;
+  const counts = new Map();
+  model.allRuns.forEach((run) => {
+    const laneId = model.laneOf(run);
+    counts.set(laneId, (counts.get(laneId) || 0) + 1);
+  });
+  const options = [
+    `<option value=""${v3SelectedLane ? "" : " selected"}>All lanes (${model.allRuns.length})</option>`,
+    ...model.lanes.map((lane) => {
+      const isDefault = lane.lane_id === model.defaultLane;
+      return `<option value="${escapeHtml(lane.lane_id)}"${v3SelectedLane === lane.lane_id ? " selected" : ""}>${escapeHtml(lane.lane_id)} — ${escapeHtml(lane.title)}${isDefault ? " (default)" : ""} (${counts.get(lane.lane_id) || 0})</option>`;
+    })
+  ].join("");
+  slot.innerHTML = `
+    <label class="v3-lane-picker">
+      <span class="v3-lane-picker-label">Lane</span>
+      <select id="v3-lane-select" class="v3-lane-select" aria-label="Filter roadmap by lane">${options}</select>
+    </label>
+  `;
+  if (slot.dataset.laneWired !== "true") {
+    slot.dataset.laneWired = "true";
+    slot.addEventListener("change", (event) => {
+      const select = event.target.closest("#v3-lane-select");
+      if (!select) return;
+      v3SelectedLane = select.value || null;
+      // Re-render both Roadmap subviews in place; the active subview (and the whole
+      // chrome) stays exactly where it was — only the rows change.
+      if (appData) {
+        renderRunQueueV3(appData);
+        renderRoadmapV3(appData);
+        if (v3EditMode) v3DecorateTreeEditAffordances();
+      }
+    });
+  }
 }
 
 function v3ToggleQueueGroup(toggle) {
@@ -3383,13 +3550,26 @@ function renderRoadmapV3(data) {
     return;
   }
   roadmapV3ModelCache = model;
+  renderLaneSelector(model);
+  const filtering = v3LaneFilterActive(model);
   const objectiveCard = (objective) => {
     const phases = objective.phases || [];
     const objectiveRuns = [];
-    phases.forEach((phase) => (phase.runs || []).forEach((run) => objectiveRuns.push(run)));
+    // [D-051] The lane filter narrows what this card shows; stats and ratios derive from
+    // the same visible subset. Phases (and objectives, below) left with zero visible
+    // runs are omitted while the filter is on — a display filter, not a data claim.
+    const visiblePhases = [];
+    phases.forEach((phase) => {
+      const visible = v3VisibleRuns(model, phase.runs || []);
+      if (visible.length || !filtering) visiblePhases.push({ phase, visible });
+      visible.forEach((run) => objectiveRuns.push(run));
+    });
+    if (filtering && !objectiveRuns.length) return "";
     // Progressive disclosure: only the objective on the active decision path opens by
     // default; the footer disclosure keeps the identical "Phases" label open or closed.
     const hasActive = objectiveRuns.some((run) => run.status === "active");
+    const sorted = v3SortedPhases(visiblePhases.map((entry) => entry.phase));
+    const visibleByPhase = new Map(visiblePhases.map((entry) => [entry.phase, entry.visible]));
     return `
       <div class="v3-objective-card" data-v3edit-objective="${escapeHtml(objective.objective_id)}">
         <div class="v3-objective-title">${escapeHtml(objective.title)}</div>
@@ -3397,7 +3577,7 @@ function renderRoadmapV3(data) {
         <details class="v3-phases-details"${hasActive ? " open" : ""}>
           <summary class="v3-phases-toggle">Phases<span class="v3-caret">${v3Chevron(11)}</span></summary>
           <div class="v3-phase-list">
-            ${v3SortedPhases(phases).map((phase) => v3PhaseBlock(phase)).join("")}
+            ${sorted.map((phase) => v3PhaseBlock(phase, model, visibleByPhase.get(phase))).join("")}
           </div>
         </details>
       </div>
@@ -3406,10 +3586,14 @@ function renderRoadmapV3(data) {
   const allObjectives = model.roadmap.objectives || [];
   const liveObjectives = allObjectives.filter((objective) => objective.archived !== true);
   const archivedObjectives = allObjectives.filter((objective) => objective.archived === true);
-  const archiveHtml = archivedObjectives.length
-    ? `<div class="v3-archive-section"><button class="v3-archive-toggle" type="button" data-v3-archive-toggle aria-expanded="false" aria-controls="v3-archive-body"><span class="v3-caret">${v3Chevron(11)}</span><span class="v3-archive-title">Archive</span></button><div class="v3-archive-body" id="v3-archive-body" hidden>${archivedObjectives.map(objectiveCard).join("")}</div></div>`
+  const archivedCards = archivedObjectives.map(objectiveCard).join("");
+  const archiveHtml = archivedCards
+    ? `<div class="v3-archive-section"><button class="v3-archive-toggle" type="button" data-v3-archive-toggle aria-expanded="false" aria-controls="v3-archive-body"><span class="v3-caret">${v3Chevron(11)}</span><span class="v3-archive-title">Archive</span></button><div class="v3-archive-body" id="v3-archive-body" hidden>${archivedCards}</div></div>`
     : "";
-  container.innerHTML = liveObjectives.map(objectiveCard).join("") + archiveHtml;
+  const cards = liveObjectives.map(objectiveCard).join("") + archiveHtml;
+  container.innerHTML = cards || (filtering
+    ? `<div class="v3-empty-note">No runs on this lane yet.</div>`
+    : cards);
   v3AttachHandlers(container, { origin: "Roadmap" });
   v3AttachArchiveToggle(container);
 }
@@ -3417,9 +3601,15 @@ function renderRoadmapV3(data) {
 // Sub-tab counts per the approved handoff: Run Queue shows pending runs (total minus
 // History) and Roadmap shows the objective count. Counts are injected into the static
 // segment buttons at render time; the index.html markup itself stays unchanged.
-function v3UpdateSubtabCounts(model, historyCount) {
-  const pending = model.allRuns.length - historyCount;
-  [["v3queue", pending], ["v3roadmap", model.roadmap.objectives.length]].forEach(([subview, value]) => {
+// [D-051] Counts derive from the lane-filtered visible subset — with no lane selected
+// (every project today) that subset IS model.allRuns and nothing changes.
+function v3UpdateSubtabCounts(model, visibleRuns, historyCount) {
+  const pending = visibleRuns.length - historyCount;
+  const objectiveCount = v3LaneFilterActive(model)
+    ? (model.roadmap.objectives || []).filter((objective) =>
+        (objective.phases || []).some((phase) => (phase.runs || []).some((run) => model.laneOf(run) === v3SelectedLane))).length
+    : model.roadmap.objectives.length;
+  [["v3queue", pending], ["v3roadmap", objectiveCount]].forEach(([subview, value]) => {
     const segment = document.querySelector(`[data-subview="${subview}"]`);
     if (!segment) return;
     let count = segment.querySelector(".v3-subtab-count");
@@ -3454,8 +3644,12 @@ function renderOverviewV3(data) {
   const runs = model.allRuns.slice().sort((a, b) => a.queue_order - b.queue_order);
   const groupLabels = Object.fromEntries(ROADMAP_V3_QUEUE_GROUPS.map((group) => [group.key, group.label]));
   const active = runs.find((run) => run.status === "active") || runs[0];
-  const activeGroupLabel = active ? (groupLabels[v3QueueGroupKey(active, model.runsById)] || "Now") : "Now";
-  const ready = runs.filter((run) => run.status === "planned" && (run.depends_on || []).every((id) => model.runsById.get(id)?.status === "completed"));
+  const activeGroupLabel = active ? (groupLabels[v3QueueGroupKey(active, model.runsById, model)] || "Now") : "Now";
+  // [D-051] "Ready" here mirrors v3QueueGroupKey's ready_next: dependencies satisfied AND
+  // no incomplete barrier bars the run — Next up must never name a run a barrier holds.
+  const ready = runs.filter((run) => run.status === "planned" &&
+    (run.depends_on || []).every((id) => model.runsById.get(id)?.status === "completed") &&
+    !v3BarrierBlockersFor(model, run).length);
   const nextWork = ready[0] || null;
   const afterOrder = nextWork ? nextWork.queue_order : (active ? active.queue_order : 0);
   const upcoming = runs.filter((run) => run.status !== "completed" && run.queue_order > afterOrder).slice(0, 4);
@@ -3497,7 +3691,7 @@ function renderOverviewV3(data) {
 
   const groupCounts = { needs_human_decision: 0, now: 0, ready_next: 0, later: 0, history: 0 };
   runs.forEach((run) => {
-    groupCounts[v3QueueGroupKey(run, model.runsById)] += 1;
+    groupCounts[v3QueueGroupKey(run, model.runsById, model)] += 1;
   });
   const snapshotCells = [
     { label: "Needs Human Decision", n: groupCounts.needs_human_decision, cls: groupCounts.needs_human_decision ? "is-amber" : "is-muted" },
@@ -3850,13 +4044,18 @@ function renderRunQueueV3(data) {
     return;
   }
   roadmapV3ModelCache = model;
+  renderLaneSelector(model);
+  // [D-051] The lane filter narrows which runs the queue lists; grouping semantics are
+  // untouched. Sub-tab counts follow the same visible subset: the surface counts what
+  // it shows.
+  const visibleRuns = v3VisibleRuns(model, model.allRuns);
   const grouped = new Map(ROADMAP_V3_QUEUE_GROUPS.map((group) => [group.key, []]));
-  model.allRuns.forEach((run) => {
+  visibleRuns.forEach((run) => {
     // Group by the DISPLAY key (ready_next + later collapse into "upcoming"); the
     // per-run SEMANTIC key is recomputed at row render time for the cells and chip.
-    grouped.get(v3QueueDisplayGroup(v3QueueGroupKey(run, model.runsById))).push(run);
+    grouped.get(v3QueueDisplayGroup(v3QueueGroupKey(run, model.runsById, model))).push(run);
   });
-  v3UpdateSubtabCounts(model, grouped.get("history").length);
+  v3UpdateSubtabCounts(model, visibleRuns, grouped.get("history").length);
   const sections = ROADMAP_V3_QUEUE_GROUPS.map((group) => {
     const runs = grouped.get(group.key).slice().sort((a, b) => a.queue_order - b.queue_order);
     const defaultOpen = ROADMAP_V3_QUEUE_GROUP_DEFAULT_OPEN[group.key];
@@ -3868,15 +4067,15 @@ function renderRunQueueV3(data) {
           // Display grouping merged ready_next + later into "upcoming"; recover the
           // SEMANTIC key per run so v3QueueRowCells still emits the Ready vs Planned
           // branch and the .is-later row class still keys on the semantic "later".
-          const semanticKey = v3QueueGroupKey(run, model.runsById);
-          const parts = v3QueueRowCells(run, semanticKey, model.runsById);
+          const semanticKey = v3QueueGroupKey(run, model.runsById, model);
+          const parts = v3QueueRowCells(run, semanticKey, model.runsById, model);
           // History rows lead with the semantic terminal marker via v3TerminalIcon while
           // #N demotes into the title line; the active run's order tile carries the tint
           // and Later rows recede slightly (prototype QR variants).
           const leadIcon = isHistory ? v3TerminalIcon(run.status) : "";
           const tileClass = run.status === "active" ? " is-active" : "";
           const rowClass = semanticKey === "later" ? " is-later" : "";
-          return v3QueueRowHtml(run, leadIcon, parts.cells, parts.chip, tileClass, rowClass);
+          return v3QueueRowHtml(run, leadIcon, parts.cells, parts.chip, tileClass, rowClass, v3RunRowTags(model, run));
         }).join("")
       : '<div class="v3-empty-note">Empty — no runs in this group right now.</div>';
     const countClass = runs.length === 0 ? " is-zero" : expanded ? " is-active" : "";
@@ -3917,7 +4116,7 @@ function v3OpenRunDetail(runId, mode) {
   const previousRun = previousRunId ? model.runsById.get(previousRunId) : null;
   const backTarget = previousRun ? `Run #${previousRun.queue_order}` : (v3DetailOrigin || "Run Queue");
   const backControl = `<button class="v3-back" type="button" data-v3-back="true" aria-label="Back to ${escapeHtml(backTarget)}"><span class="v3-back-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 5 8 12 15 19"></polyline></svg></span><span class="v3-back-label">${escapeHtml(backTarget)}</span></button>`;
-  const dependencyRows = (run.depends_on || []).map((dependencyId) => {
+  const dependencyRow = (dependencyId) => {
     const dependency = model.runsById.get(dependencyId);
     if (!dependency) {
       return `<div class="v3-dependency-row"><span class="mono">${escapeHtml(dependencyId)}</span>${badge("unknown", "red")}</div>`;
@@ -3933,7 +4132,41 @@ function v3OpenRunDetail(runId, mode) {
         ${state}
       </button>
     `;
-  }).join("");
+  };
+  // [D-051] Dependencies grouped BY LANE when the project declares more than one:
+  // "waiting on my own lane" reads differently from "waiting on another lane" (the
+  // second is the deliberate cross-lane delay). The run's own lane leads; the rest
+  // follow in declared order; unknown ids keep a group of their own. A project without
+  // lanes (or with one) renders the flat list exactly as before — zero new markup.
+  let dependencyRows;
+  const groupDepsByLane = model.lanes && model.lanes.length > 1 && (run.depends_on || []).length;
+  if (groupDepsByLane) {
+    const ownLane = model.laneOf(run);
+    const groups = new Map();
+    (run.depends_on || []).forEach((dependencyId) => {
+      const dependency = model.runsById.get(dependencyId);
+      const laneId = dependency ? model.laneOf(dependency) : "__unresolved__";
+      if (!groups.has(laneId)) groups.set(laneId, []);
+      groups.get(laneId).push(dependencyId);
+    });
+    const orderedLaneIds = [ownLane, ...model.lanes.map((lane) => lane.lane_id).filter((id) => id !== ownLane), "__unresolved__"];
+    dependencyRows = orderedLaneIds
+      .filter((laneId) => groups.has(laneId))
+      .map((laneId) => {
+        const laneMeta = model.laneById.get(laneId);
+        const head = laneId === "__unresolved__"
+          ? "Unresolved ids"
+          : `${laneId} — ${laneMeta ? laneMeta.title : laneId}${laneId === ownLane ? " (this run's lane)" : ""}`;
+        return `
+          <div class="v3-dep-lane-group">
+            <div class="v3-dep-lane-head">${escapeHtml(head)}</div>
+            ${groups.get(laneId).map(dependencyRow).join("")}
+          </div>
+        `;
+      }).join("");
+  } else {
+    dependencyRows = (run.depends_on || []).map(dependencyRow).join("");
+  }
   const totalRuns = model.allRuns.length;
   const currentEntry = v3DeriveCurrent(run);
   const metadataCells = [v3DetailCell("Run order", `#${run.queue_order} <span class="is-faint">of ${totalRuns}</span>`, "is-order")];
@@ -3944,6 +4177,32 @@ function v3OpenRunDetail(runId, mode) {
     // read "Not started" (the closeout outcome stays visible in History rows and the
     // Progress note below).
     metadataCells.push(v3DetailCell("Current stage", run.status === "completed" ? "Closed" : "Not started"));
+  }
+  // [D-051] Lane and barrier metadata — only for a roadmap that opts in. The lane cell
+  // shows the derived label plus the lane's declared name; a barrier run declares its
+  // scope in words; a run a barrier is holding NAMES that barrier and its scope (never
+  // a bare "blocked").
+  const laneLabel = v3LaneLabel(model, run);
+  if (laneLabel) {
+    const laneMeta = model.laneById.get(model.laneOf(run));
+    metadataCells.push(v3DetailCell("Lane", `<span class="v3-lane-tag">${escapeHtml(laneLabel)}</span> ${escapeHtml(laneMeta ? laneMeta.title : model.laneOf(run))}`));
+  }
+  if (run.barrier === "global" || run.barrier === "lane") {
+    metadataCells.push(v3DetailCell(
+      "Barrier",
+      run.barrier === "global"
+        ? '<span class="v3-barrier-tag is-global">GLOBAL</span> bars every later run, in every lane, until this run completes'
+        : '<span class="v3-barrier-tag is-lane">lane</span> bars later runs on its own lane until this run completes'
+    ));
+  }
+  const heldBy = v3BarrierBlockersFor(model, run);
+  if (heldBy.length) {
+    const first = heldBy[0];
+    metadataCells.push(v3DetailCell(
+      "Held by barrier",
+      `<button class="v3-barrier-link" type="button" data-v3-run="${escapeHtml(first.run_id)}">${escapeHtml(v3BarrierRef(model, first))} — ${escapeHtml(first.title)}</button>${heldBy.length > 1 ? ` <span class="is-faint">+${heldBy.length - 1} more</span>` : ""}`,
+      "is-barrier-held"
+    ));
   }
   const drawerTitle = byId("drawer-title");
   const drawerId = byId("drawer-id");
@@ -4326,6 +4585,12 @@ function resetProjectScopedState() {
   roadmapV3ModelCache = null;
   v3DetailStack = [];
   v3DetailOrigin = "";
+  // [D-051] The lane filter is per-project state: a lane key selected in one project
+  // means nothing in the next (vocabularies are per-project). The selector markup is
+  // blanked too, so a project without lanes never inherits the previous project's control.
+  v3SelectedLane = null;
+  const laneSlot = byId("roadmap-lane-slot");
+  if (laneSlot) laneSlot.innerHTML = "";
   v3EditMode = false;
   v3EndpointReachable = null;
   v3EditPending = null;
@@ -4725,7 +4990,7 @@ function v3RenderRunEditor(run, context, model) {
         <div class="v3-edit-note">Only earlier runs (lower position) are eligible. The core refuses the rest.</div>
         ${v3RenderDepPicker("deps", "multi", depCandidates, currentDeps, model)}
       </div>
-
+${v3RenderLaneBlock(run, model)}
       <div class="v3-edit-block" data-v3edit-op="set-status">
         <div class="v3-edit-block-title">Status</div>
         <label class="v3-edit-field"><span class="v3-edit-label">Status</span><select data-v3edit-status>${statusOptions}</select></label>
@@ -4754,6 +5019,28 @@ ${clearProgressBlock}
       <div id="v3-edit-preview" class="v3-edit-preview" hidden></div>
     </div>
   `;
+}
+
+// [D-051] Lane assignment block of the run editor. Rendered ONLY when the roadmap
+// declares lanes: with none there is nothing to assign and the modal is unchanged. The
+// options are the DECLARED lanes, verbatim; "(project default)" clears the stored key
+// (a run on the default lane stores nothing — set-lane's clearing gesture).
+function v3RenderLaneBlock(run, model) {
+  if (!model || !model.lanes) return "";
+  const currentLane = typeof run.lane === "string" && run.lane ? run.lane : "";
+  const defaultMeta = model.laneById.get(model.defaultLane);
+  const options = [
+    `<option value=""${currentLane ? "" : " selected"}>(project default — ${escapeHtml(model.defaultLane)}${defaultMeta ? ` · ${escapeHtml(defaultMeta.title)}` : ""})</option>`,
+    ...model.lanes.map((lane) =>
+      `<option value="${escapeHtml(lane.lane_id)}"${currentLane === lane.lane_id ? " selected" : ""}>${escapeHtml(lane.lane_id)} — ${escapeHtml(lane.title)}</option>`)
+  ].join("");
+  return `
+      <div class="v3-edit-block" data-v3edit-op="set-lane">
+        <div class="v3-edit-block-title">Lane</div>
+        <div class="v3-edit-note">Lanes are declared by this roadmap (root.lanes). A run with no stored lane rides the project default; picking the default here stores nothing.</div>
+        <label class="v3-edit-field"><span class="v3-edit-label">Lane</span><select data-v3edit-lane>${options}</select></label>
+      </div>
+`;
 }
 
 function v3RenderTextEditor(kind, id, node) {
@@ -5116,7 +5403,7 @@ function v3EditBeforeNode() {
   return null;
 }
 
-const V3_BATCHABLE_OPS = ["set-text", "set-deps", "set-status", "clear-progress", "move", "move-objective", "set-objective-archived"];
+const V3_BATCHABLE_OPS = ["set-text", "set-deps", "set-status", "set-lane", "clear-progress", "move", "move-objective", "set-objective-archived"];
 
 // The core applies batch sub-ops IN ARRAY ORDER and aborts on the first that errors. One pair
 // has a hard ordering requirement: clear-progress MUST precede set-status. set-status refuses to
@@ -5183,6 +5470,13 @@ function v3BatchOpChanged(op, args, beforeNode) {
     const beforeCo = "closeout_result" in beforeNode && beforeNode.closeout_result != null ? String(beforeNode.closeout_result) : "";
     const afterCo = args.closeoutResult != null ? String(args.closeoutResult) : "";
     return beforeCo !== afterCo;
+  }
+  if (op === "set-lane") {
+    // Stored key vs chosen key; "" stands for "no stored lane" (the project default) on
+    // both sides, so picking the default over an absent lane is correctly a no-op.
+    const beforeLane = typeof beforeNode.lane === "string" && beforeNode.lane ? beforeNode.lane : "";
+    const afterLane = args.lane != null ? String(args.lane) : "";
+    return beforeLane !== afterLane;
   }
   if (op === "clear-progress") {
     // v3EditBuildPayload returns null unless the box is ticked, so a payload reaching here
@@ -5282,6 +5576,12 @@ function v3EditBuildPayload(op) {
     const args = { run: t.id, status };
     if (terminal && closeout) args.closeoutResult = closeout;
     return { op, args };
+  }
+  if (op === "set-lane") {
+    const el = q("[data-v3edit-lane]");
+    if (!el) return null;
+    // "" (the project-default option) travels as null: the engine's clearing gesture.
+    return { op, args: { run: t.id, lane: el.value || null } };
   }
   if (op === "clear-progress") {
     // An UNTICKED box produces no payload at all, so the op is simply absent from the batch
@@ -5403,7 +5703,7 @@ function v3EditDiffHtml(op, args, beforeNode) {
     return `<div class="v3-edit-diff v3-edit-diff-text">${inner}</div>`;
   }
   const rows = [];
-  if ((op === "set-deps" || op === "set-status" || op === "move" || op === "clear-progress") && !beforeNode) return "";
+  if ((op === "set-deps" || op === "set-status" || op === "set-lane" || op === "move" || op === "clear-progress") && !beforeNode) return "";
   if (op === "clear-progress") {
     // Name the record being retired entry by entry. The whole reason this is a separate op is
     // that the loss should be READ before it is confirmed, not buried in a status change.
@@ -5414,6 +5714,9 @@ function v3EditDiffHtml(op, args, beforeNode) {
   }
   if (op === "set-deps") {
     rows.push(v3EditDiffRow("depends_on", (beforeNode.depends_on || []).join(", ") || "(none)", (args.dependsOn || []).join(", ") || "(none)"));
+  } else if (op === "set-lane") {
+    const beforeLane = typeof beforeNode.lane === "string" && beforeNode.lane ? beforeNode.lane : "(project default)";
+    rows.push(v3EditDiffRow("Lane", beforeLane, args.lane != null && args.lane !== "" ? args.lane : "(project default)"));
   } else if (op === "set-status") {
     rows.push(v3EditDiffRow("Status", beforeNode.status, args.status));
     const beforeCo = "closeout_result" in beforeNode && beforeNode.closeout_result != null ? String(beforeNode.closeout_result) : "(none)";

@@ -81,7 +81,12 @@ export const SCHEMA_VERSION = 1;
 //   - the git-history artifact is SCOPED TO THE REPOSITORY'S DEFAULT BRANCH (detected, never
 //     named here), closing the machine dependency §19 registered as an open question. An
 //     emitter that emits one branch is not the emitter that emitted every local one.
-export const PROJECTOR_VERSION = "0.8.0";
+// 0.9.0 (D-051, lanes and barriers) TRANSPORTS the lane vocabulary: a tree that declares
+// root.lanes has that declaration carried VERBATIM into the emitted roadmap_tree block
+// (snapshot and .project/roadmap.json, the same function). The emitter interprets nothing —
+// the vocabulary is the project's data, and no lane key is known here by name. A tree that
+// declares no lanes emits exactly what 0.8.0 emitted, byte for byte save this version string.
+export const PROJECTOR_VERSION = "0.9.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 // Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
@@ -924,6 +929,12 @@ function roadmapTreeBlock(tree) {
     model: declaredRoadmapModel(tree),
     ...(tree.roadmap_id ? { roadmap_id: tree.roadmap_id } : {}),
     ...(tree.title ? { title: tree.title } : {}),
+    // [D-051] The lane vocabulary travels WITH the tree it qualifies, verbatim — declared
+    // by the project, executed by the consumer, interpreted by no emitter (the D-049
+    // discipline). One copy only: adding a second declaration elsewhere in the envelope
+    // would be two truths waiting to drift. Absent lanes emit nothing (§7's discipline:
+    // a key with no honest content is omitted, never invented).
+    ...(Array.isArray(tree.lanes) && tree.lanes.length ? { lanes: tree.lanes } : {}),
     objectives: tree.objectives
   };
 }

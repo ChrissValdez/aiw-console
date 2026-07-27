@@ -26,7 +26,7 @@
 import { createHash } from "node:crypto";
 import * as core from "./roadmap-core.mjs";
 
-export const KNOWN_OPS = ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"];
+export const KNOWN_OPS = ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"];
 
 // Content baseline for compare-and-swap. Hash of the exact bytes read (utf8), so any change
 // -- including a single CRLF or em-dash byte -- produces a different token.
@@ -95,6 +95,10 @@ function dispatch(op, obj, args, externalRunIds = null) {
         status: args.status,
         closeoutResult: args.closeoutResult,
       });
+    case "set-lane":
+      // [D-051] lane is a declared lane_id to assign, or null/"" to clear back to the
+      // project default. The core refuses an undeclared key, naming the vocabulary.
+      return core.setLane(obj, { run: args.run, lane: args.lane != null ? args.lane : null });
     case "clear-progress":
       // --run is the WHOLE input. There is nothing to select or shape: the op removes the
       // progress key entirely, and it deliberately accepts no status argument -- closing the
@@ -150,7 +154,7 @@ function dispatch(op, obj, args, externalRunIds = null) {
       // an active run with no progress, which the validator fails, so a lone apply would be
       // written and rolled back. batch [clear-progress, set-status] keeps both ops explicit
       // and named while persisting no invalid intermediate state.
-      const batchable = ["set-text", "set-deps", "set-status", "clear-progress", "move", "move-objective", "set-objective-archived"];
+      const batchable = ["set-text", "set-deps", "set-status", "set-lane", "clear-progress", "move", "move-objective", "set-objective-archived"];
       const warnings = [];
       for (let i = 0; i < ops.length; i++) {
         const sub = ops[i] || {};

@@ -94,6 +94,11 @@
               <button class="segment active" type="button" data-subview="v3queue">Run Queue</button>
               <button class="segment" type="button" data-subview="v3roadmap">Roadmap</button>
             </div>
+            <!-- [D-051] Lane selector slot: the SAME subview row (no new row — a whole line for
+                 this was measured as waste). The renderer fills it ONLY when the active project
+                 declares MORE THAN ONE lane; a one-lane project renders nothing here, and no
+                 lane name lives in this file. Switching lanes preserves the active subview. -->
+            <div class="roadmap-lane-slot" id="roadmap-lane-slot"></div>
             <div class="roadmap-edit-controls">
               <span id="roadmap-edit-hint" class="roadmap-edit-hint" role="status" aria-live="polite"></span>
               <!-- VISIBLE again (O4.P12): the write path exists — the server exposes a per-project

@@ -260,9 +260,12 @@ test("atomicity: a passing re-check leaves the new bytes in place and reports th
   assert.equal(loadCurrent(filePath).baseline, computeBaseline(plan.serialized));
 });
 
-test("the op vocabulary is the transplanted one, unchanged", () => {
+test("the op vocabulary is the transplanted one plus set-lane (D-051)", () => {
+  // The transplant's vocabulary, extended by exactly ONE op: set-lane, added by D-051
+  // (lanes and barriers). The pin stays a pin — any further drift from this list is a
+  // decision to register, not an accident to absorb.
   assert.deepEqual(
     KNOWN_OPS,
-    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
+    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
   );
 });

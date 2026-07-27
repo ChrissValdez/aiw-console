@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "project_id": "fixture_carriles",
+  "generated_at": "2026-07-27T21:42:25.915Z",
+  "generated_from": "aiw-projector@0.9.0",
+  "sources": [],
+  "nav_tier_model": {
+    "tiers": [
+      "primary",
+      "secondary",
+      "advanced",
+      "evidence",
+      "history",
+      "proposal"
+    ],
+    "derived_by": "repo_path_prefix",
+    "rules": [
+      {
+        "match": "^context/[^/]+/records/",
+        "tier": "evidence"
+      },
+      {
+        "match": "^context/handoffs/",
+        "tier": "secondary"
+      },
+      {
+        "match": "^console/",
+        "tier": "secondary"
+      },
+      {
+        "match": "^docs/",
+        "tier": "secondary"
+      },
+      {
+        "match": "^[^/]+$",
+        "tier": "primary"
+      },
+      {
+        "match": "^context/",
+        "tier": "primary"
+      },
+      {
+        "match": ".",
+        "tier": "secondary"
+      }
+    ],
+    "default_visible": "nav_tier === 'primary'",
+    "purpose": "Docs navigation visibility only. Assigns no authority, freshness or approval."
+  },
+  "docs": []
+}

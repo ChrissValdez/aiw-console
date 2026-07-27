@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-27T20:29:53.713Z",
-  "generated_from": "aiw-projector@0.8.0",
+  "generated_at": "2026-07-27T21:53:02.133Z",
+  "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-27T20:21:02.207Z"
+      "mtime": "2026-07-27T21:46:18.050Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,14 +14,24 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "d5f337b99607f0490bab05692ff3af4fe52e33d8",
+  "head": "6be03ba1c07507e4d3d883cc8ae33010f781e436",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 45,
+  "commit_total": 46,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "6be03ba",
+      "full_sha": "6be03ba1c07507e4d3d883cc8ae33010f781e436",
+      "date": "2026-07-27T14:44:52-06:00",
+      "parents": "d5f337b",
+      "subject": "layout: causa raiz del ancho de subvistas (margenes auto en flex)",
+      "body": "- Los margenes auto del eje transversal anulaban align-self stretch\n\n- Regla generica en la columna: cualquier subvista futura la hereda\n\n- Cero scroll horizontal en 34 combinaciones; suite 192/192",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "d5f337b",

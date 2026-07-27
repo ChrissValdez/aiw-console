@@ -5181,6 +5181,105 @@ details[open] > summary > .v3-caret {
 .roadmap-toolbar .segmented-control {
   border-bottom-color: transparent;
 }
+/* [D-051] Lane selector — lives INSIDE the existing subview toolbar row (no new row).
+   Rendered only when the active project declares >1 lane; empty otherwise, costing the
+   simple case nothing. Existing tokens only; the segmented control keeps the row's
+   remaining width and shrinks first, so the toolbar never wraps or scrolls at 1280. */
+.roadmap-lane-slot {
+  flex: none;
+  display: flex;
+  align-items: center;
+}
+.v3-lane-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 14px;
+  padding-bottom: 6px;
+}
+.v3-lane-picker-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+}
+.v3-lane-select {
+  font: inherit;
+  font-size: 12px;
+  color: var(--text-primary);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  padding: 3px 8px;
+  max-width: 250px;
+}
+/* [D-051] Lane label chip (`<lane_id>-03`): lane KEY + derived in-lane position. Appears
+   only in projects that declare lanes. Mono like every identity-bearing chip. */
+.v3-lane-tag {
+  display: inline-block;
+  margin-left: 7px;
+  padding: 0 5px;
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 16px;
+  color: var(--text-secondary);
+  background: var(--bg-inset);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+/* [D-051] Barrier mark. Scope is part of the mark: a GLOBAL barrier (the deliberate,
+   uncomfortable sync point) reads heavier than a lane one — weight and copy distinguish
+   them, no new colour token (the editing-UI discipline). */
+.v3-barrier-tag {
+  display: inline-block;
+  margin-left: 7px;
+  padding: 0 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 16px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.v3-barrier-tag.is-global {
+  color: var(--text-primary);
+  font-weight: 700;
+  border-width: 2px;
+  text-transform: none;
+}
+/* [D-051] Dependencies grouped by lane in the run detail (only when >1 lane declared). */
+.v3-dep-lane-group {
+  margin-bottom: 8px;
+}
+.v3-dep-lane-head {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  margin: 6px 0 3px;
+}
+/* [D-051] Named barrier reference in the run-detail cells: a real button (it opens the
+   barrier's own detail) styled as an inline link. */
+.v3-barrier-link {
+  font: inherit;
+  font-size: inherit;
+  color: var(--text-primary);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-align: left;
+}
 .v3-edit {
   border-top: 1px solid var(--border-default);
   margin-top: 8px;

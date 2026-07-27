@@ -1,0 +1,336 @@
+{
+  "schema_version": 1,
+  "project_id": "fixture_carriles",
+  "generated_at": "2026-07-27T21:42:25.915Z",
+  "generated_from": "aiw-projector@0.9.0",
+  "sources": [
+    {
+      "path": "roadmap/roadmap.json",
+      "mtime": "2026-07-27T21:29:34.482Z"
+    },
+    {
+      "path": "package.json",
+      "mtime": "2026-07-27T21:28:43.014Z"
+    }
+  ],
+  "emitted_artifacts": [
+    {
+      "artifact": "docs_index",
+      "path": ".project/docs_index.json"
+    },
+    {
+      "artifact": "roadmap",
+      "path": ".project/roadmap.json"
+    },
+    {
+      "artifact": "snapshot",
+      "path": ".project/snapshot.json"
+    }
+  ],
+  "operational_status": "active",
+  "project_summary": "Carriles y barriers — fixture: 3 objectives, 4 phases, 12 runs.",
+  "current_status_summary": "Active run: RUN-FIX-COMP2-001 (OF1/OF1.P1, queue 4).",
+  "roadmap_tree": {
+    "model": "fixture.carriles.v1",
+    "roadmap_id": "FIXTURE-CARRILES",
+    "title": "Carriles y barriers — fixture",
+    "lanes": [
+      {
+        "lane_id": "FORJA",
+        "title": "Forja — construcción",
+        "default": true
+      },
+      {
+        "lane_id": "CRONICA",
+        "title": "Crónica — documentación"
+      },
+      {
+        "lane_id": "VELA",
+        "title": "Vela — operación"
+      }
+    ],
+    "objectives": [
+      {
+        "objective_id": "OF1",
+        "title": "Construir el producto",
+        "phases": [
+          {
+            "phase_id": "OF1.P1",
+            "title": "Cimientos",
+            "runs": [
+              {
+                "run_id": "RUN-FIX-BASE-001",
+                "queue_order": 1,
+                "title": "Base del sistema",
+                "summary": "Cimiento comun del que parte todo lo demas.",
+                "full_description": "Primer run del fixture. Sin lane: resuelve al carril por defecto (FORJA).",
+                "status": "completed",
+                "depends_on": [],
+                "closeout_result": "completed_successfully"
+              },
+              {
+                "run_id": "RUN-FIX-COMP1-001",
+                "queue_order": 2,
+                "title": "Componente 1",
+                "summary": "Primer componente construido.",
+                "full_description": "Sin lane: carril por defecto. Su documentacion vive en otro carril y depende de este run.",
+                "status": "completed",
+                "depends_on": [],
+                "closeout_result": "completed_successfully"
+              },
+              {
+                "run_id": "RUN-FIX-COMP2-001",
+                "queue_order": 4,
+                "title": "Componente 2",
+                "summary": "Segundo componente, en curso.",
+                "full_description": "Sin lane: carril por defecto. Activo ahora mismo.",
+                "status": "active",
+                "depends_on": []
+              }
+            ]
+          },
+          {
+            "phase_id": "OF1.P2",
+            "title": "Prototipo y continuación",
+            "runs": [
+              {
+                "run_id": "RUN-FIX-PROTO-GATE-001",
+                "queue_order": 5,
+                "title": "Prototipo integrado",
+                "summary": "Punto de sincronizacion: nada posterior arranca hasta validar el prototipo.",
+                "full_description": "BARRIER GLOBAL con depends_on: sus dependencias regulan su propio arranque; su condicion de barrier detiene todo lo posterior en todos los carriles mientras no este completed.",
+                "status": "planned",
+                "depends_on": [
+                  "RUN-FIX-COMP2-001"
+                ],
+                "barrier": "global"
+              },
+              {
+                "run_id": "RUN-FIX-COMP3-001",
+                "queue_order": 6,
+                "title": "Componente 3",
+                "summary": "Tercer componente, tras el prototipo.",
+                "full_description": "Sin lane. Sin depends_on hacia el barrier: el bloqueo lo deriva la regla global, no una arista escrita.",
+                "status": "planned",
+                "depends_on": []
+              },
+              {
+                "run_id": "RUN-FIX-COMP4-001",
+                "queue_order": 11,
+                "title": "Componente 4",
+                "summary": "Cuarto componente.",
+                "full_description": "Depende del componente 3 y ademas queda tras el barrier global.",
+                "status": "planned",
+                "depends_on": [
+                  "RUN-FIX-COMP3-001"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "objective_id": "OC1",
+        "title": "Documentar lo construido",
+        "phases": [
+          {
+            "phase_id": "OC1.P1",
+            "title": "Documentación por componente",
+            "runs": [
+              {
+                "run_id": "RUN-FIX-DOC-COMP1-001",
+                "queue_order": 3,
+                "title": "Documentar componente 1",
+                "summary": "La documentacion del componente 1 va detras de construirlo.",
+                "full_description": "Lane CRONICA con dependencia cruzada al carril FORJA: retraso, no bloqueo — no impide construir los componentes 2, 3 y 4.",
+                "status": "planned",
+                "depends_on": [
+                  "RUN-FIX-COMP1-001"
+                ],
+                "lane": "CRONICA"
+              },
+              {
+                "run_id": "RUN-FIX-DOC-COMP2-001",
+                "queue_order": 7,
+                "title": "Documentar componente 2",
+                "summary": "Documentacion del componente 2.",
+                "full_description": "Lane CRONICA, tras el barrier global y con dependencia cruzada sin satisfacer: dos esperas distintas, ambas visibles.",
+                "status": "planned",
+                "depends_on": [
+                  "RUN-FIX-COMP2-001"
+                ],
+                "lane": "CRONICA"
+              },
+              {
+                "run_id": "RUN-FIX-DOC-STYLE-001",
+                "queue_order": 8,
+                "title": "Guía de estilo documental",
+                "summary": "Fija el estilo antes de escribir el resto de la documentacion.",
+                "full_description": "BARRIER DE CARRIL en CRONICA: detiene lo posterior de su propio carril y a nadie mas. El barrier global anterior tambien lo detiene a el.",
+                "status": "planned",
+                "depends_on": [],
+                "lane": "CRONICA",
+                "barrier": "lane"
+              },
+              {
+                "run_id": "RUN-FIX-DOC-GUIDE-001",
+                "queue_order": 10,
+                "title": "Guía de usuario",
+                "summary": "Guia general escrita bajo la guia de estilo.",
+                "full_description": "Lane CRONICA, detras de DOS barriers incompletos: el global (5) y el de su carril (8). La consola nombra el mas temprano y cuenta el resto.",
+                "status": "planned",
+                "depends_on": [],
+                "lane": "CRONICA"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "objective_id": "OV1",
+        "title": "Operar el despliegue",
+        "phases": [
+          {
+            "phase_id": "OV1.P1",
+            "title": "Operación",
+            "runs": [
+              {
+                "run_id": "RUN-FIX-OPS-SETUP-001",
+                "queue_order": 9,
+                "title": "Preparar entorno",
+                "summary": "Infraestructura del despliegue.",
+                "full_description": "Lane VELA, tras el barrier global. El barrier de carril de CRONICA no lo toca: es de otro carril.",
+                "status": "planned",
+                "depends_on": [],
+                "lane": "VELA"
+              },
+              {
+                "run_id": "RUN-FIX-OPS-DEPLOY-001",
+                "queue_order": 12,
+                "title": "Desplegar",
+                "summary": "Despliegue final.",
+                "full_description": "Lane VELA, depende de preparar el entorno y queda tras el barrier global.",
+                "status": "planned",
+                "depends_on": [
+                  "RUN-FIX-OPS-SETUP-001"
+                ],
+                "lane": "VELA"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "blockers": [],
+  "followups": [],
+  "no_claims_summary": {},
+  "validation_summary": {},
+  "taxonomy_model": {
+    "model": "fixture.carriles.v1",
+    "vocabularies": {
+      "project.operational_status": {
+        "axis": "project",
+        "stored": true,
+        "tokens": [
+          "active",
+          "blocked",
+          "idle"
+        ]
+      },
+      "run.status": {
+        "axis": "run",
+        "stored": true,
+        "tokens": [
+          "planned",
+          "active",
+          "blocked",
+          "completed"
+        ]
+      },
+      "objective.status": {
+        "axis": "objective",
+        "stored": false,
+        "derived_by": "collection_status_from_runs",
+        "tokens": [
+          "planned",
+          "in_progress",
+          "active",
+          "blocked",
+          "completed"
+        ]
+      },
+      "phase.status": {
+        "axis": "phase",
+        "stored": false,
+        "derived_by": "collection_status_from_runs",
+        "tokens": [
+          "planned",
+          "in_progress",
+          "active",
+          "blocked",
+          "completed"
+        ]
+      }
+    },
+    "derivations": {
+      "collection_status_from_runs": {
+        "applies_to": [
+          "objective",
+          "phase"
+        ],
+        "input": "run.status",
+        "precedence": [
+          {
+            "token": "active",
+            "quantifier": "any",
+            "run_status": "active"
+          },
+          {
+            "token": "blocked",
+            "quantifier": "any",
+            "run_status": "blocked"
+          },
+          {
+            "token": "completed",
+            "quantifier": "all",
+            "run_status": "completed"
+          },
+          {
+            "token": "in_progress",
+            "quantifier": "any",
+            "run_status": "completed"
+          },
+          {
+            "token": "planned",
+            "quantifier": "otherwise"
+          }
+        ],
+        "empty_input": "malformed"
+      },
+      "project_operational_status_from_runs": {
+        "applies_to": [
+          "project"
+        ],
+        "input": "run.status",
+        "precedence": [
+          {
+            "token": "active",
+            "quantifier": "any",
+            "run_status": "active"
+          },
+          {
+            "token": "blocked",
+            "quantifier": "any",
+            "run_status": "blocked"
+          },
+          {
+            "token": "idle",
+            "quantifier": "otherwise"
+          }
+        ],
+        "empty_input": "idle"
+      }
+    }
+  }
+}

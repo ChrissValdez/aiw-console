@@ -28,13 +28,26 @@ import os from "node:os";
 // Vocabulary (mirrors the validator's v3 allowlists; kept minimal per Q1)
 // ---------------------------------------------------------------------------
 
-export const ROOT_ALLOWED_FIELDS = ["schema_version", "roadmap_id", "title", "objectives"];
+// [D-051] `lanes` joined the root allowlist: the OPTIONAL per-project lane vocabulary
+// (work lines that advance in parallel). Declared by the project, never baked here: this
+// module knows no lane by name. Absent -> the project has ONE implicit lane and nothing
+// below changes behaviour.
+export const ROOT_ALLOWED_FIELDS = ["schema_version", "roadmap_id", "title", "objectives", "lanes"];
+// [D-051] A lane entry: stable key + human name, plus the single stored exception
+// `default: true` (the archived discipline: stored only as true, exactly one entry).
+export const LANE_ALLOWED_FIELDS = ["lane_id", "title", "default"];
 export const OBJECTIVE_REQUIRED_FIELDS = ["objective_id", "title", "phases"];
 export const OBJECTIVE_OPTIONAL_FIELDS = ["archived"];
 export const OBJECTIVE_ALLOWED_FIELDS = [...OBJECTIVE_REQUIRED_FIELDS, ...OBJECTIVE_OPTIONAL_FIELDS];
 export const PHASE_ALLOWED_FIELDS = ["phase_id", "title", "runs"];
 export const RUN_REQUIRED_FIELDS = ["run_id", "queue_order", "title", "summary", "full_description", "status", "depends_on"];
-export const RUN_OPTIONAL_FIELDS = ["closeout_result", "progress"];
+// [D-051] `lane` (a declared lane_id; absent -> the project's default lane, resolved at
+// READ time, never written back) and `barrier` ("lane" | "global": while this run is not
+// completed it bars every LATER run in its scope — later by global queue_order; the
+// blocked set is DERIVED at read, never stored, never expanded into depends_on edges).
+// They sit before the closeout fields: planning fields precede outcome fields.
+export const RUN_OPTIONAL_FIELDS = ["lane", "barrier", "closeout_result", "progress"];
+export const BARRIER_SCOPES = ["lane", "global"];
 // Canonical serialization order for a run object's keys.
 export const CANONICAL_RUN_KEY_ORDER = [...RUN_REQUIRED_FIELDS, ...RUN_OPTIONAL_FIELDS];
 export const RUN_ALLOWED_FIELDS = CANONICAL_RUN_KEY_ORDER;
@@ -136,6 +149,35 @@ export function queueOrderMap(obj) {
   return map;
 }
 
+// ---------------------------------------------------------------------------
+// [D-051] Lane resolution. The lane vocabulary is DATA declared by the roadmap
+// itself (root.lanes); these helpers only read it. A roadmap that declares no
+// lanes has one implicit lane: resolveRunLane returns null for every run, so
+// "same lane" is vacuously true and a lane-scoped barrier degenerates to a
+// global one — the simple case is the general case degenerated, not a branch.
+// ---------------------------------------------------------------------------
+
+export function declaredLanes(obj) {
+  return obj && Array.isArray(obj.lanes) && obj.lanes.length ? obj.lanes : null;
+}
+
+// The declared default lane's key, or null when no lanes are declared. The engine
+// guarantees exactly one entry carries `default: true` (checkInvariants); the
+// first-entry fallback keeps reads total on a file that predates that guarantee.
+export function defaultLaneId(obj) {
+  const lanes = declaredLanes(obj);
+  if (!lanes) return null;
+  const marked = lanes.find((lane) => lane && lane.default === true);
+  return (marked || lanes[0]).lane_id;
+}
+
+// A run's lane: its own `lane` when stored, else the project default. Resolved at
+// READ time — "every run has a lane" is satisfied by reading, not by writing.
+export function resolveRunLane(obj, run) {
+  if (run && typeof run.lane === "string" && run.lane) return run.lane;
+  return defaultLaneId(obj);
+}
+
 // Rebuild a run's keys in canonical order in place (so an added optional field
 // such as closeout_result lands before progress, matching the file style).
 export function normalizeRunKeyOrder(run) {
@@ -198,6 +240,49 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
     return errors;
   }
 
+  // [D-051] Lane vocabulary form. Absent is the normal case (one implicit lane).
+  // Present -> non-empty, allowlisted entries, unique non-empty keys, non-empty
+  // titles, `default` stored only as true, and EXACTLY ONE default (the lane that
+  // lane-less runs resolve to; making it positional would silently re-home every
+  // lane-less run whenever the declaration is reordered).
+  const laneIds = new Set();
+  if ("lanes" in obj) {
+    if (!Array.isArray(obj.lanes) || obj.lanes.length === 0) {
+      errors.push("root.lanes must be a non-empty array when present; a project with no lanes omits the key entirely");
+    } else {
+      let defaults = 0;
+      for (const lane of obj.lanes) {
+        const laneLabel = `lane ${lane && lane.lane_id ? lane.lane_id : "UNKNOWN"}`;
+        if (!lane || typeof lane !== "object" || Array.isArray(lane)) {
+          errors.push(`${laneLabel} is not an object`);
+          continue;
+        }
+        for (const key of Object.keys(lane)) {
+          if (!LANE_ALLOWED_FIELDS.includes(key)) {
+            errors.push(`${laneLabel} carries unexpected field ${key}; only ${LANE_ALLOWED_FIELDS.join(", ")} are allowed`);
+          }
+        }
+        if (typeof lane.lane_id !== "string" || !lane.lane_id) {
+          errors.push(`${laneLabel} missing string lane_id`);
+        } else if (laneIds.has(lane.lane_id)) {
+          errors.push(`duplicate lane_id ${lane.lane_id}`);
+        } else {
+          laneIds.add(lane.lane_id);
+        }
+        if (typeof lane.title !== "string" || !lane.title) {
+          errors.push(`${laneLabel} missing string title`);
+        }
+        if ("default" in lane && lane.default !== true) {
+          errors.push(`${laneLabel} must omit default unless true; it is never stored as false or null`);
+        }
+        if (lane.default === true) defaults += 1;
+      }
+      if (laneIds.size && defaults !== 1) {
+        errors.push(`root.lanes must mark exactly one lane as default (found ${defaults}); lane-less runs resolve to it`);
+      }
+    }
+  }
+
   const allRuns = [];
   for (const objective of obj.objectives) {
     const objectiveLabel = `objective ${objective && objective.objective_id ? objective.objective_id : "UNKNOWN"}`;
@@ -256,6 +341,20 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
           if (!RUN_ALLOWED_FIELDS.includes(key)) {
             errors.push(`${runLabel} carries unexpected field ${key}`);
           }
+        }
+        // [D-051] Every lane USED must be DECLARED (the D-049 discipline the status
+        // vocabulary already follows: the project declares, the consumer obeys). A
+        // lane on a run in a roadmap that declares no lanes is equally undeclared.
+        if ("lane" in run) {
+          if (typeof run.lane !== "string" || !run.lane) {
+            errors.push(`${runLabel} lane must be a non-empty string when present; a run on the default lane omits the key`);
+          } else if (!laneIds.has(run.lane)) {
+            errors.push(`${runLabel} uses lane ${run.lane}, which root.lanes does not declare${laneIds.size ? ` (declared: ${[...laneIds].join(", ")})` : " (the roadmap declares no lanes)"}`);
+          }
+        }
+        // [D-051] Barrier scope is a closed two-token vocabulary.
+        if ("barrier" in run && !BARRIER_SCOPES.includes(run.barrier)) {
+          errors.push(`${runLabel} barrier must be one of ${BARRIER_SCOPES.join(", ")}; found ${JSON.stringify(run.barrier)}`);
         }
         allRuns.push(run);
       }
@@ -335,6 +434,48 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
   for (const run of allRuns) {
     if (!state.get(run.run_id)) visit(run.run_id);
     if (cycleReported) break;
+  }
+
+  // [D-051] Barrier satisfiability: a barrier must never bar a run it needs. For each
+  // barrier B, the set it bars (runs LATER than B by global queue_order, restricted to
+  // B's resolved lane when scope is "lane") must be disjoint from B's transitive
+  // in-file dependency closure — otherwise B waits on work that must wait on B, and
+  // nothing behind it can ever start. THEOREM, recorded with this change: on a file
+  // that passes the strict-precedence rule above this can never fire (dependencies
+  // point strictly backward, barriers bar strictly forward), so barrier deadlock is
+  // impossible BY CONSTRUCTION. The check guards that construction directly: it fires
+  // alongside a precedence violation naming the deadlock it would cause, and it keeps
+  // the property held on its own terms if precedence is ever relaxed. External
+  // dependencies carry no order and are outside the closure, like the cycle walk.
+  for (const run of allRuns) {
+    if (!("barrier" in run) || !BARRIER_SCOPES.includes(run.barrier)) continue;
+    const barrierLane = resolveRunLane(obj, run);
+    const barred = new Set(
+      allRuns
+        .filter((other) =>
+          Number.isInteger(other.queue_order) && Number.isInteger(run.queue_order) &&
+          other.queue_order > run.queue_order &&
+          (run.barrier === "global" || resolveRunLane(obj, other) === barrierLane))
+        .map((other) => other.run_id)
+    );
+    if (!barred.size) continue;
+    const closure = new Set();
+    const frontier = [...((Array.isArray(run.depends_on) && run.depends_on) || [])];
+    while (frontier.length) {
+      const depId = frontier.pop();
+      if (closure.has(depId)) continue;
+      closure.add(depId);
+      const dep = runsById.get(depId);
+      for (const next of (dep && Array.isArray(dep.depends_on) && dep.depends_on) || []) frontier.push(next);
+    }
+    for (const barredId of barred) {
+      if (closure.has(barredId)) {
+        errors.push(
+          `barrier run ${run.run_id} (${run.barrier} scope) would create an unsatisfiable block: ` +
+          `it bars ${barredId}, which the barrier itself transitively depends on — nothing behind the barrier could ever start`
+        );
+      }
+    }
   }
 
   return errors;
@@ -764,6 +905,55 @@ export function setStatus(obj, opts) {
   }
   normalizeRunKeyOrder(entry.run);
   const after = { status: entry.run.status, closeout_result: entry.run.closeout_result };
+  return { errors, warnings, run, before, after };
+}
+
+// ---------------------------------------------------------------------------
+// [D-051] Lane assignment. set-lane sets or clears the OPTIONAL `lane` key of ONE
+// run and does nothing else: no queue_order, no depends_on, no status, no barrier.
+// Clearing deletes the key whole (a run on the default lane stores nothing — the
+// archived/closeout discipline), so "assign the default" and "clear" are the same
+// gesture read back the same way. Setting requires the key to be DECLARED in
+// root.lanes: the mutation refuses what checkInvariants would reject one stage
+// later, naming the declared vocabulary. It changes no *_id, so it needs no
+// identity sanction and is BATCHABLE alongside set-text / set-status / move.
+// ---------------------------------------------------------------------------
+
+export function setLane(obj, opts) {
+  const errors = [];
+  const warnings = [];
+  const { run, lane } = opts;
+
+  if (!run) errors.push("set-lane requires --run");
+  const entry = run ? findRunEntry(obj, run) : null;
+  if (run && !entry) errors.push(`set-lane: run ${run} not found`);
+
+  const clearing = lane == null || lane === "";
+  if (!clearing) {
+    if (typeof lane !== "string") {
+      errors.push("set-lane: --lane must be a lane_id string (or empty to clear)");
+    } else {
+      const lanes = declaredLanes(obj);
+      if (!lanes) {
+        errors.push(`set-lane: the roadmap declares no lanes, so no lane can be assigned; declare root.lanes first`);
+      } else if (!lanes.some((l) => l && l.lane_id === lane)) {
+        errors.push(`set-lane: lane ${lane} is not declared in root.lanes (declared: ${lanes.map((l) => l && l.lane_id).join(", ")})`);
+      }
+    }
+  }
+  if (errors.length) return { errors, warnings };
+
+  const before = "lane" in entry.run ? entry.run.lane : null;
+  if (clearing) {
+    if (!("lane" in entry.run)) {
+      warnings.push(`set-lane: run ${run} carries no lane (it is already on the project default); nothing to clear`);
+    }
+    delete entry.run.lane;
+  } else {
+    entry.run.lane = lane;
+  }
+  normalizeRunKeyOrder(entry.run);
+  const after = "lane" in entry.run ? entry.run.lane : null;
   return { errors, warnings, run, before, after };
 }
 

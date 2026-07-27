@@ -542,6 +542,10 @@ ESTABILIDAD de `run_id` (Reglas 1.a y 1.b; decisiones `u` y `v`) y anota el disp
 de la Regla 4. Tampoco toca ninguna decisión previa: añade, y cierra con regla la
 tensión que D-041 dejó anotada dentro de la propia §10.d.
 
+**Enmendada el 2026-07-27 por D-051**, que añade §10.e — carriles y barriers — y
+las decisiones `w`–`z` de la tabla final. Todo opcional y aditivo: ningún roadmap
+real se migró y los tres siguen válidos sin cambio.
+
 ## Nota de verificación (capa 2)
 
 Fuentes de evidencia, leídas completas antes de redactar:
@@ -656,7 +660,8 @@ snapshot (§17).
 ### 10.a Claves por nivel — las medidas, sin excepciones
 
 Raíz del árbol v3, tal como existe en su archivo (MEDICION:227-230):
-`schema_version`, `roadmap_id`, `title`, `objectives`.
+`schema_version`, `roadmap_id`, `title`, `objectives`. (D-051 añade la OPCIONAL
+`lanes` — §10.e; ausente en los tres roadmaps reales al enmendar.)
 
 **Objetivo — 3 claves, 8/8 (MEDICION:234-238):**
 
@@ -702,7 +707,10 @@ el audit: MEDICION:268-270):**
 | `progress` | 1/65 | array de objetos | OPCIONAL — §15 |
 
 Más las dos claves RESERVADAS de §16 (`category`, `batch`), que hoy no existen en
-ningún run y nacen ausentes.
+ningún run y nacen ausentes. Y las dos OPCIONALES de §10.e (`lane`, `barrier`),
+añadidas por D-051: también ausentes en los tres roadmaps reales al enmendar — la
+tabla de arriba conserva sus 9 claves medidas porque reproduce una medición
+fechada; el conjunto admitido vigente es 9 + estas 2.
 
 ### 10.b Objetivos y fases NO llevan `status` ni contadores
 
@@ -1154,6 +1162,137 @@ comparables entre sí, pero no traducibles a coste hasta que el contrato defina 
 arista cruzada" (MEDICION-GRAFO:247-255) — queda decidido aquí: **el coste de una
 arista cruzada es CERO en forma de dato** (no cambia el schema, no cambia el
 emisor) **y un requisito de declaración sobre el consumidor** (Regla 3).
+
+### 10.e Carriles y barriers — líneas de trabajo paralelas, puntos de sincronización
+
+**Añadido por D-051 (2026-07-27).** Hasta esta enmienda el roadmap solo podía
+expresar una fila india: trabajo que no compite —construir un componente y
+documentar el anterior— se escribía como si dependiera, y el orden de la cola
+sugería restricciones falsas. Esta subsección añade la noción de CARRIL (una línea
+de trabajo que avanza en paralelo a otras) y la de BARRIER (un run que, mientras no
+esté `completed`, detiene lo posterior a él). Todo es OPCIONAL y ADITIVO: **los
+tres roadmaps reales de hoy no declaran nada de esto y siguen siendo válidos y
+renderizándose exactamente igual** (verificado en DOM al enmendar; ninguno se
+migró).
+
+#### El vocabulario de carriles lo declara el PROYECTO
+
+Clave nueva OPCIONAL en la raíz del árbol: `lanes` — un array de carriles, cada
+uno `{lane_id, title, default?}`:
+
+| Campo | Qué es |
+|---|---|
+| `lane_id` | clave ESTABLE del carril, string no vacío, única en el array |
+| `title` | nombre legible |
+| `default` | excepción almacenada al estilo `archived`: solo `true`, EXACTAMENTE UNA entrada la lleva |
+
+Es el patrón de D-049 aplicado a un vocabulario nuevo: **el proyecto declara, el
+consumidor obedece, y ningún carril vive horneado en código** (verificado por
+test: las claves del fixture no aparecen en motor, emisor, server ni renderer). El
+vocabulario viaja en el envelope DENTRO de `roadmap_tree`, verbatim y UNA sola
+vez — no se duplica en `taxonomy_model`, porque dos declaraciones del mismo dato
+son dos verdades esperando divergir; a diferencia de los vocabularios de status
+(constantes del emisor, D-049), éste es dato del árbol y viaja con él.
+
+**El default es marca explícita, no posición.** "Primera entrada = default" haría
+que reordenar la declaración re-alojara en silencio todos los runs sin `lane` —
+la misma enfermedad de posición-como-significado que la etiqueta de abajo evita.
+
+**Ausente = un solo carril.** Un proyecto que no declara `lanes` tiene UN carril
+implícito: el caso simple es el general degenerado, no una excepción. `lanes: []`
+es MALFORMADO — quien no declara carriles omite la clave (la disciplina de
+`archived`).
+
+#### `lane` y `barrier`: dos claves OPCIONALES de run
+
+- **`lane`** — string, un `lane_id` DECLARADO. **Ausente resuelve al carril
+  default del proyecto, AL LEER**: "todo run tiene carril" se satisface leyendo,
+  no escribiendo, y los roadmaps existentes quedan válidos sin migrar un byte.
+  Asignar explícitamente el default es legal (redundante, no error).
+- **`barrier`** — `"lane"` | `"global"`. El run es un punto de sincronización:
+  mientras su `status` no sea `completed`, BLOQUEA el arranque de lo posterior a
+  él en su alcance. No existe un tercer alcance.
+
+Con esto el run admite **11 claves** (las 9 de §10.a más estas dos opcionales),
+en orden canónico de serialización tras `depends_on` y antes de los campos de
+cierre.
+
+#### `queue_order` sigue GLOBAL; la posición en el carril se DERIVA
+
+`queue_order` no se parte por carril: sigue único, denso y contiguo sobre el
+archivo entero (§10.a). **La posición dentro de un carril es el orden global
+filtrado por carril, calculada al leer y almacenada en NINGUNA parte** — la
+disciplina de §12 (el status de objetivo no se almacena, se calcula). Dos órdenes
+almacenados podrían divergir, que es la enfermedad que el bundle de rutas y esta
+capa existen para impedir.
+
+**Etiqueta de run: CLAVE de carril + posición derivada**, en la forma
+`<lane_id>-<NN>` (`DEV-12`, `DOC-05`). Por clave y no por número de carril:
+"carril 2" es una posición y se corre al añadir carriles; la clave es estable
+(probado: declarar un carril nuevo no mueve ninguna etiqueta existente). La
+etiqueta solo existe en proyectos que declaran carriles; un roadmap sin `lanes` no
+gana superficie nueva alguna.
+
+#### El barrier se DERIVA, no se materializa
+
+Un barrier es una REGLA de un solo campo, nunca aristas escritas. El caso que lo
+motivó: 45 runs que esperan a los primeros 5 serían 225 aristas `depends_on` a
+mano; aquí es UN campo en 5 runs (medido en el fixture: 5 aristas almacenadas
+donde la materialización exigiría 13). Qué bloquea, con precisión:
+
+- **`global`**: todo run con `queue_order` mayor, en todos los carriles.
+- **`lane`**: todo run posterior CUYO CARRIL RESUELTO es el del barrier. En un
+  proyecto sin carriles declarados, todo carril resuelve a null y el alcance
+  `lane` degenera en `global` — legal, sin caso especial.
+- "Bloqueado" aplica al ARRANQUE: solo runs `planned` quedan retenidos. Un run
+  `active` o terminal ya arrancó o cerró; su status almacenado sigue siendo la
+  verdad y no se re-etiqueta.
+- **Las dependencias normales NO cambian.** Un run de OTRO carril que dependa del
+  barrier (o de cualquier run tras él) espera por su arista `depends_on` de
+  siempre: RETRASO de ese run, no bloqueo de su carril. El barrier de carril no
+  añade nada entre carriles; eso es exactamente el principio del paralelismo.
+- **Dos barriers que retienen al mismo run**: ambos aplican; el consumidor NOMBRA
+  el más temprano incompleto (la frontera activa — los barriers de un mismo
+  alcance se despejan en orden porque el posterior está retenido por el anterior)
+  y cuenta el resto ("+N more").
+- **Barrier con `depends_on`**: legal y ordinario — sus aristas regulan SU
+  arranque; su condición de barrier regula lo que viene detrás. Ninguna regla
+  especial.
+- **Un barrier no cruza archivos.** Su alcance es su roadmap: `queue_order` es
+  por archivo y "posterior" no está definido entre proyectos. Las dependencias
+  externas de §10.d quedan como estaban.
+
+**El barrier GLOBAL debe ser VISIBLE, NO CÓMODO.** Es la operación inversa a
+tener carriles — un punto donde todo sincroniza — justificado (el caso del
+prototipo integrado) pero raro. El consumidor lo distingue del de carril en la
+propia marca, y todo run retenido dice POR CUÁL barrier y de qué alcance, nunca
+un "bloqueado" a secas (§20 aplicado a esta derivación).
+
+#### Invariantes (la lista blanca del motor creció con esto)
+
+El motor de edición admite las claves nuevas en su allowlist y verifica:
+
+1. **Forma del vocabulario**: `lanes` no vacío si presente; entradas
+   allowlisted; `lane_id` únicos; `default` solo `true` y exactamente uno.
+2. **Todo `lane` usado está declarado** — la disciplina que D-049 impuso al
+   status. Usar un carril en un roadmap sin `lanes` es igualmente MALFORMADO.
+3. **`barrier` ∈ {lane, global}**.
+4. **Satisfacibilidad**: un barrier no puede retener un run del que dependa
+   transitivamente. TEOREMA, registrado con la enmienda: bajo la precedencia
+   estricta de `depends_on` (§10.a) este caso es IMPOSIBLE por construcción — las
+   dependencias apuntan estrictamente hacia atrás y un barrier retiene
+   estrictamente hacia adelante — así que el deadlock de barriers no puede
+   escribirse. El chequeo guarda esa construcción directamente: dispara junto a
+   la violación de precedencia nombrando el deadlock que causaría, y sostiene la
+   propiedad por sí mismo si la precedencia se relajara algún día.
+
+Los invariantes previos (densidad de `queue_order`, aciclicidad, precedencia,
+colgantes) no se tocan: carriles y barriers no participan de ninguno.
+
+Evidencia y decisiones al detalle:
+`records/CARRILES-Y-BARRIERS-ROADMAP.md`; decisión registrada como D-051, con el
+impacto medido sobre el tooling local de cantu-studio (su allowlist propia
+rechaza estos campos; se midió y NO se tocó).
 
 ## 11. Dos vocabularios de `status`, uno por nivel
 
@@ -1857,11 +1996,16 @@ Adjudicadas por la cabina y redactadas en esta capa. Registradas en
 | t | La forma calificada `{project, run_id}` NO se adopta; queda como salida con condición de disparo escrita | §10.d | Un campo nuevo cuesta migración en tres repos (§16) y hoy no compra nada; adoptarla después es aditivo (mismo patrón que §6 dejó para el hash). |
 | u | La FORMA de un `run_id` es `RUN-<PROYECTO>-<SLUG>-<NNN>`, sólo para ids acuñados desde ahora; `<PROYECTO>` es PROCEDENCIA (quién lo creó), no propiedad ni `project_id`, y nadie ramifica sobre él | §10.d, Regla 1.a | Se adopta la convención con 65 ejemplares en disco en vez de inventar una: tiene emisor y evidencia — lo contrario del patrón de §3.b. Los runs migrados conservan su prefijo; el roadmap de la consola nace mixto, y eso es correcto. |
 | v | Un `run_id` NO cambia nunca (ni por `status`, ni al archivarse, ni al migrar); un emisor que lo derive de fuente mutable VIOLA el contrato | §10.d, Regla 1.b | Medido: el proyector lo deriva del nombre de archivo (`PROJ:192` → `:235,247,262`) y el kernel renombra al archivar (`aiw/queue.mjs:58`), así que muta al completarse. Es status codificado dentro de la identidad: §12.c en su forma más dañina. Tramo 2. |
+| w | El vocabulario de carriles lo declara el PROYECTO en `root.lanes` (opcional; clave estable + nombre + UN default explícito) y viaja en el envelope dentro de `roadmap_tree`, una sola vez | §10.e | El patrón D-049: el proyecto declara, el consumidor obedece, cero carriles horneados (grep en suite). El default posicional re-alojaría runs al reordenar la declaración. |
+| x | `lane` es OPCIONAL en el run y ausente resuelve al default AL LEER; `queue_order` sigue global y denso; la posición en el carril se DERIVA y no se almacena; la etiqueta es CLAVE + posición derivada | §10.e | Los roadmaps actuales quedan válidos sin migrar nada; dos órdenes almacenados podrían divergir (§12); "carril 2" es una posición y se corre — la clave no. |
+| y | BARRIER es una REGLA derivada de un campo (`barrier: lane\|global`), nunca aristas materializadas; retiene runs `planned` posteriores en su alcance; las dependencias normales no cambian entre carriles; el global es visible y distinguible; no cruza archivos | §10.e | 45 runs tras 5 serían 225 aristas a mano; la dependencia entre carriles es RETRASO, no bloqueo; el punto de sincronización global es legítimo pero nunca cómodo (§20). |
+| z | Invariantes nuevos: forma de `lanes`, todo `lane` usado declarado, `barrier` en vocabulario cerrado, y satisfacibilidad — con el TEOREMA registrado: bajo precedencia estricta el deadlock de barriers es imposible por construcción, y el chequeo guarda esa construcción | §10.e | El motor ya rechazaba por allowlist cualquier campo nuevo; crecer la lista exige decir qué admite y qué verifica. El teorema evita fingir que el chequeo caza casos que la precedencia ya hace inescribibles. |
 
 Las tres —`r`, `s`, `t`— son la enmienda **D-041** del 2026-07-23; `u` y `v` son la
-enmienda **D-043** del mismo día. Continúan la serie después de la `q` de la capa 3,
-en vez de insertarse tras la `m`, para no renumerar decisiones ya registradas: la
-tabla se lee por letra, no por orden de aparición.
+enmienda **D-043** del mismo día; `w`–`z` son la enmienda **D-051** del 2026-07-27.
+Continúan la serie después de la `q` de la capa 3, en vez de insertarse tras la
+`m`, para no renumerar decisiones ya registradas: la tabla se lee por letra, no por
+orden de aparición.
 
 Ninguna decisión de la capa 2 queda abierta. Lo que la capa deja sin fijar —
 forma interna de `progress` (§15), estructura futura de `closeout_result` (§14),

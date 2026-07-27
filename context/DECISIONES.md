@@ -1464,3 +1464,86 @@ esto **no** toca), [[D-048]] (el orden vigente de O4 sobre el que esto inserta),
 `records/AUDIT-CONSOLE-O4-PHASE0.md` Bloque F.3 (la pérdida prevista),
 `records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md` Bloque C (el botón oculto).
 Criterio de borrado: N/A (abre una fase; la sustituye una decisión futura).
+
+## D-051 — 2026-07-27 — Carriles y barriers en el roadmap: vocabulario por proyecto, posición derivada, barrier como regla
+**Cambio de contrato** (CONTRATO §10.e, decisiones `w`–`z` de la capa 2) que los
+tres proyectos heredan. Motivación medida por el operador: el roadmap solo podía
+expresar una fila india — trabajo que no compite (construir un componente,
+documentar el anterior) se escribía como si dependiera, y el orden de la cola
+sugería restricciones falsas. El principio: separar lo que no depende de
+funcionalidad para trabajarlo en paralelo; la dependencia entre carriles crea
+RETRASO de un run, no bloqueo de su carril.
+
+**Lo decidido, en cinco piezas.**
+1. **El vocabulario de carriles lo declara el PROYECTO** (`root.lanes`, opcional:
+   `{lane_id, title, default?}` con exactamente UN default explícito — no
+   posicional, porque reordenar la declaración no puede re-alojar runs). Mismo
+   patrón que [[D-049]]: el proyecto declara, el consumidor obedece, cero carriles
+   horneados (pin de suite: grep de las claves del fixture sobre motor, emisor,
+   server y renderer = 0). Viaja en el envelope DENTRO de `roadmap_tree`, verbatim
+   y una sola vez; no se duplica en `taxonomy_model` (dos copias divergen — y a
+   diferencia de los status, este vocabulario es dato del árbol, no constante del
+   emisor).
+2. **`lane` es opcional en el dato y ausente resuelve al default AL LEER**: los
+   tres roadmaps reales siguen válidos sin migrar un byte (verificado: md5
+   idénticos, DOM idéntico, cero superficies nuevas sin `lanes` declarado). Un
+   proyecto sin paralelismo tiene un carril implícito: el caso simple es el
+   general degenerado.
+3. **`queue_order` sigue global, denso y único; la posición del carril se DERIVA
+   filtrando y no se almacena en ninguna parte** (§12: lo derivable no se
+   persiste). Etiqueta por CLAVE + posición (`DEV-12`), estable al declarar
+   carriles nuevos (probado).
+4. **BARRIER se deriva de UN campo** (`barrier: "lane"|"global"`), nunca de
+   aristas materializadas (el caso motivador —45 runs tras 5— serían 225 aristas a
+   mano; el fixture prueba 5 almacenadas donde la materialización exigiría 13).
+   Retiene el ARRANQUE de runs `planned` posteriores por `queue_order` (global) o
+   por carril resuelto (`lane`); `active`/terminales conservan su verdad
+   almacenada; las `depends_on` normales no cambian; dos barriers → se nombra el
+   más temprano incompleto (la frontera activa) y se cuenta el resto; barrier con
+   `depends_on` es ordinario; ningún barrier cruza archivos. El GLOBAL es visible
+   y distinguible del de carril en toda superficie — sincronizar todo es legítimo
+   pero nunca cómodo. La consola NOMBRA el barrier que retiene ("Barrier
+   FORJA-04 (global barrier)"), jamás un "bloqueado" a secas (§20).
+5. **Invariantes nuevos en el motor** (la allowlist creció: `lanes` en raíz,
+   `lane`/`barrier` en run): forma del vocabulario, todo `lane` usado declarado,
+   `barrier` en vocabulario cerrado, y satisfacibilidad — con el TEOREMA
+   registrado: bajo la precedencia estricta de `depends_on`, un barrier
+   insatisfacible es IMPOSIBLE de escribir (las dependencias apuntan atrás, el
+   barrier retiene adelante); el chequeo guarda la construcción y dispara junto a
+   la violación de precedencia nombrando el deadlock (probado en dry-run por
+   HTTP). Op nueva `set-lane` (asignar/limpiar carril; batchable), expuesta en el
+   modal de edición SOLO cuando el proyecto declara carriles. Los barriers, por
+   ahora, se escriben editando el canónico a mano — dicho como pendiente, no
+   implícito.
+
+**Impacto medido sobre el tooling local de cantu-studio (NO se tocó).** Su motor
+(`cantu-studio/tools/roadmap/roadmap-core.mjs:27,36`) y su validador
+(`tools/project-console/validate-project-console-state.mjs:810-815`, rechazos en
+`:966-968` y `:1018-1021`) llevan allowlists propias SIN estos campos: ejecutados
+en memoria contra su canónico decorado con carriles devuelven "root carries
+unexpected field lanes" / "carries unexpected field lane|barrier" — un roadmap de
+Cantu con carriles deja de ser editable por su consola local y falla su
+validador. Contexto que abarata la decisión: su motor YA no puede editar su
+propio canónico hoy (la arista externa de §10.d, medida en O4.P12 y reproducida
+ahora), y el corte (`O4.P7`) retira ese tooling. La cabina decide al migrar
+Cantu: actualizar su tooling o aceptar que solo la consola global lo edite hasta
+el corte.
+
+**Verificación.** Suite 215/215 (23 tests nuevos); A/B en memoria contra el
+proyector pre-enmienda: modo 1 (aiw) y modo 2 (ambos roots reales) IDÉNTICOS
+salvo `generated_from` (0.8.0→0.9.0, movida por §6); DOM verificado a 1280 y 1920
+sin scroll horizontal y con el ancho de subvistas de la fase anterior intacto
+(962.4 / 1602.4 en ambas subvistas de ambos proyectos reales); canónicos
+byte-idénticos (md5) y `cantu-studio` con `git status --porcelain` vacío antes y
+después. Evidencia completa: `context/aiw-console/records/CARRILES-Y-BARRIERS-ROADMAP.md`.
+
+**Fuera de esta decisión:** BATCH (otro eje — supervisión, no paralelismo — con
+reglas sin definir; meter dos campos a la vez sobre la allowlist duplicaba el
+riesgo); migrar cualquier roadmap real (los carriles de cantu-studio los escribe
+el operador después, viéndolos aparecer); columnas lado a lado o cualquier diseño
+más allá del selector y las etiquetas (se decide con roadmaps reales enfrente).
+
+Referencias: [[D-049]] (el patrón de vocabulario declarado), [[D-050]] (el motor
+y la ruta de escritura que esto extiende), CONTRATO §10.a, §10.e, §12, §20.
+Criterio de borrado: la sustituye una decisión que cambie el modelo de carriles o
+adopte batch sobre estos campos.

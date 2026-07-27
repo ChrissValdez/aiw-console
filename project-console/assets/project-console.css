@@ -66,10 +66,22 @@
   --shadow-drawer: -18px 0 44px rgba(0, 0, 0, 0.45);
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.18);
   --shadow-card-hover: 0 2px 8px rgba(0, 0, 0, 0.28);
-  /* Centered content column width for the Overview and Roadmap surfaces. Raised on large
-     desktops by the min-width scale block at the end of this file so wide monitors use the
-     available space better instead of leaving rows feeling thin. */
-  --pc-content-max: 1200px;
+  /* Content column width (O4.P13 — width and spacing only, no colour, type or structure).
+     The transplanted value was a 1200px centred column, sized for a console that had NO
+     sidebar. Under this shell the sidebar already takes 256px off the viewport, so the cap
+     applied on top of it squeezed the content twice and left screen unused — most visibly on
+     Roadmap -> Roadmap, whose objective cards are the widest thing here. The cap is retired:
+     the content column takes the width the shell leaves it, inset by a small side padding.
+
+     `100%`, not `none`, and the difference is measured. The content column is a flex item of a
+     scrolling column, so with NO ceiling it stretches to the widest row's intrinsic width and
+     the pane scrolls sideways — at 1280 the Run Queue reached 1437px inside a 1018px pane. That
+     sideways scroll is not new (the 1200px cap produced it too, at 1264px); `100%` is what ends
+     it, by making the ceiling the space actually available instead of a number. */
+  --pc-content-max: 100%;
+  /* The small side inset, named once so the header band, the content column and the
+     optional-source banner cannot drift apart. */
+  --pc-content-pad: 20px;
 }
 
 *,
@@ -164,8 +176,9 @@ a:hover {
   border-bottom: 1px solid var(--border-default);
   background: var(--bg-nav);
   box-shadow: var(--shadow-nav);
-  /* Center the shell composition on wide monitors (prototype: inner row max-width 1200). */
-  padding: 0 max(32px, calc((100% - var(--pc-content-max)) / 2));
+  /* Same small inset as the content column below, so the tab band lines up with what it heads.
+     (Was a centring expression against the retired 1200px cap.) */
+  padding: 0 var(--pc-content-pad);
 }
 
 /* Header status badges were removed from the nav band by operator-directed Human QA
@@ -227,8 +240,9 @@ a:hover {
 
 /* Status screen chrome (an earlier run): display-only
    restyle of the Status tab introduced by an earlier run.
-   The content column centers on the shared --pc-content-max token like Overview/Roadmap/History,
-   and the toolbar reuses the console's second-level underline-tab idiom (.segmented-control /
+   The content column follows the shared --pc-content-max token like Overview/Roadmap/History
+   (now `100%`: it takes the width the shell leaves it — O4.P13), and the toolbar reuses the
+   console's second-level underline-tab idiom (.segmented-control /
    .segment) for the two jump links, with the pre-existing not-audited note kept visible as a
    quiet right-aligned caption. Existing tokens only; same static targets, renderers, and data. */
 #tab-status {
@@ -311,7 +325,7 @@ a:hover {
   flex: 1;
   overflow-y: auto;
   background: var(--bg-body);
-  padding: 28px 32px;
+  padding: 28px var(--pc-content-pad);
 }
 
 .tab-content {
@@ -1000,10 +1014,10 @@ textarea:disabled {
   color: var(--accent);
 }
 
-/* Center the Overview, Roadmap, and History content columns on the shared --pc-content-max
-   token (raised on large desktops by the min-width scale block at the end of this file), so
-   History aligns with the same content column and top-tab rhythm. Other tab layouts (Docs)
-   keep their existing widths. */
+/* The Overview, Roadmap and History content columns share the --pc-content-max token, so the
+   three keep the same width and top-tab rhythm whatever that token says. It says `100%` since
+   O4.P13 — the column takes the width the shell leaves it, and the one lever that changes that
+   is still the token. Other tab layouts (Docs) keep their existing widths. */
 #tab-roadmap,
 #tab-overview,
 #tab-history {
@@ -2294,7 +2308,8 @@ tr:last-child td {
 }
 
 /* Optional-source notice aligns to the shared content column like the tab panels
-   (an earlier run): width and horizontal margin only, no color. */
+   (an earlier run): width and horizontal margin only, no color. It follows the same token, so
+   it widened with the column in O4.P13 instead of staying pinned to a narrower band. */
 #load-notice {
   max-width: var(--pc-content-max);
   margin: 0 auto 16px;
@@ -4830,25 +4845,26 @@ details[open] > summary > .v3-caret {
 
    On monitors with >= 1600px CSS width the Overview and Roadmap v3 surfaces render
    markedly larger so 100% browser zoom on a large monitor approaches the browser's
-   150%-zoom feel. Amplified after operator retest (section 29): the centered content
-   column grows 1200 -> 1600 through the shared --pc-content-max token and the main v3
-   surfaces scale roughly 1.30-1.45x. Gated by min-width so normal laptop widths
-   (~1280-1536px) are unchanged. Dark system, Roadmap v3 structure/derivations, Run Queue
-   groups and counts, History auto-sync, drawer behavior, and responsive rules are all
-   preserved; base body font-size stays 16px. History commit typography is intentionally
-   left as-is (it only inherits the wider column and larger nav labels).
+   150%-zoom feel. The main v3 surfaces scale roughly 1.30-1.45x. Gated by min-width so
+   normal laptop widths (~1280-1536px) are unchanged. Dark system, Roadmap v3
+   structure/derivations, Run Queue groups and counts, History auto-sync, drawer behavior, and
+   responsive rules are all preserved; base body font-size stays 16px. History commit
+   typography is intentionally left as-is (it only inherits the larger nav labels).
+
+   O4.P13 removed this block's two WIDTH declarations and nothing else: it used to raise the
+   centred column 1200 -> 1600 and widen the content inset to 48px. Both belonged to the
+   capped-column model — with the cap retired (:root), re-capping at 1600 on exactly the wide
+   monitors this fix is for would have undone it, and a bigger inset spends the width it just
+   won. The typography and component scaling below is untouched.
    ========================================================================= */
 @media (min-width: 1600px) {
-  :root {
-    --pc-content-max: 1600px;
-  }
-
-  /* Shell: taller nav band, larger nav labels, content padding, sub-tab counts. */
+  /* Shell: taller nav band, larger nav labels, sub-tab counts. */
   .project-header {
     min-height: 64px;
   }
   .content {
-    padding: 38px 48px;
+    padding-top: 38px;
+    padding-bottom: 38px;
   }
   .tab {
     font-size: 19px;
@@ -6064,7 +6080,7 @@ details[open] > summary > .v3-caret {
    when visible, keeps its inset look via its own margins and simply pushes the pane down. */
 .content:has(> #tab-docs.active) { padding: 0; }
 
-.content:has(> #tab-docs.active) > #load-notice { margin: 28px 32px 16px; }
+.content:has(> #tab-docs.active) > #load-notice { margin: 28px var(--pc-content-pad) 16px; }
 
 #tab-docs.active {
   display: flex;
@@ -6086,7 +6102,7 @@ details[open] > summary > .v3-caret {
 /* Narrow screens keep the pre-existing stacked Docs behaviour (the 1040px block above):
    the pane stops flexing and scrolls with the page, inset by the content padding as before. */
 @media (max-width: 1040px) {
-  .content:has(> #tab-docs.active) { padding: 28px 32px; }
+  .content:has(> #tab-docs.active) { padding: 28px var(--pc-content-pad); }
   .content:has(> #tab-docs.active) > #load-notice { margin: 0 auto 16px; }
   #tab-docs.active {
     display: block;

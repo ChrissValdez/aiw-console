@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "project_id": "falta_uno",
+  "generated_at": "2026-07-27T12:00:00.000Z",
+  "generated_from": "hand-authored-test-fixture (NOT emitted by any projector; tests only)",
+  "sources": [
+    {
+      "path": "roadmap/roadmap.json",
+      "mtime": "2026-07-27T11:00:00.000Z"
+    }
+  ],
+  "emitted_artifacts": [
+    {
+      "artifact": "roadmap",
+      "path": ".project/roadmap.json"
+    },
+    {
+      "artifact": "docs_index",
+      "path": ".project/docs_index.json"
+    },
+    {
+      "artifact": "snapshot",
+      "path": ".project/snapshot.json"
+    }
+  ],
+  "operational_status": "active",
+  "project_summary": "falta_uno: 1 objectives, 1 phases, 2 runs.",
+  "current_status_summary": "Active run: RUN-FALTA_UNO-002.",
+  "roadmap_tree": {
+    "model": "fixture_tree_v1",
+    "roadmap_id": "falta_uno",
+    "title": "Fixture falta_uno",
+    "objectives": [
+      {
+        "objective_id": "O-1",
+        "title": "Objetivo unico",
+        "phases": [
+          {
+            "phase_id": "F-1",
+            "title": "Fase unica",
+            "runs": [
+              {
+                "run_id": "RUN-FALTA_UNO-001",
+                "queue_order": 1,
+                "title": "Primer run",
+                "summary": "Run de fixture.",
+                "status": "completed",
+                "depends_on": []
+              },
+              {
+                "run_id": "RUN-FALTA_UNO-002",
+                "queue_order": 2,
+                "title": "Segundo run",
+                "summary": "Run de fixture.",
+                "status": "active",
+                "depends_on": [
+                  "RUN-FALTA_UNO-001"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "blockers": [],
+  "followups": [],
+  "no_claims_summary": {},
+  "validation_summary": {},
+  "taxonomy_model": {
+    "model": "fixture_tree_v1",
+    "vocabularies": {
+      "project.operational_status": {
+        "axis": "project",
+        "stored": true,
+        "tokens": [
+          "active",
+          "blocked",
+          "idle"
+        ]
+      },
+      "run.status": {
+        "axis": "run",
+        "stored": true,
+        "tokens": [
+          "planned",
+          "active",
+          "blocked",
+          "completed"
+        ]
+      },
+      "objective.status": {
+        "axis": "objective",
+        "stored": false,
+        "derived_by": "collection_status_from_runs",
+        "tokens": [
+          "planned",
+          "in_progress",
+          "active",
+          "blocked",
+          "completed"
+        ]
+      },
+      "phase.status": {
+        "axis": "phase",
+        "stored": false,
+        "derived_by": "collection_status_from_runs",
+        "tokens": [
+          "planned",
+          "in_progress",
+          "active",
+          "blocked",
+          "completed"
+        ]
+      }
+    },
+    "derivations": {
+      "collection_status_from_runs": {
+        "applies_to": [
+          "objective",
+          "phase"
+        ],
+        "input": "run.status",
+        "precedence": [
+          {
+            "token": "active",
+            "quantifier": "any",
+            "run_status": "active"
+          },
+          {
+            "token": "blocked",
+            "quantifier": "any",
+            "run_status": "blocked"
+          },
+          {
+            "token": "completed",
+            "quantifier": "all",
+            "run_status": "completed"
+          },
+          {
+            "token": "in_progress",
+            "quantifier": "any",
+            "run_status": "completed"
+          },
+          {
+            "token": "planned",
+            "quantifier": "otherwise"
+          }
+        ],
+        "empty_input": "malformed"
+      },
+      "project_operational_status_from_runs": {
+        "applies_to": [
+          "project"
+        ],
+        "input": "run.status",
+        "precedence": [
+          {
+            "token": "active",
+            "quantifier": "any",
+            "run_status": "active"
+          },
+          {
+            "token": "blocked",
+            "quantifier": "any",
+            "run_status": "blocked"
+          },
+          {
+            "token": "idle",
+            "quantifier": "otherwise"
+          }
+        ],
+        "empty_input": "idle"
+      }
+    },
+    "specified_by": "README.md"
+  }
+}

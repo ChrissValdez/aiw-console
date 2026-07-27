@@ -54,7 +54,19 @@ const CONSOLE_SERVE_COMMAND = "node project-console/serve.mjs";
 const CONSOLE_ENTRY_URL = "http://127.0.0.1:8788/project-console/index.html";
 
 const loadedSources = [];
+// Each failure is `{ path, detail }`, not a joined string: the PATH has to stay separable so a
+// failure can be matched against what the project declared emitting (see `declaredArtifactPaths`).
 const failedSources = [];
+// WHAT THIS PROJECT DECLARES EMITTING (O4.P13) — the `emitted_artifacts` list its snapshot
+// transports, normalised to repo-relative routes. It is the reference §20's announcement is
+// about: a route that fails and IS declared is an absence and gets announced by name; a route
+// that fails and is NOT declared was never promised, so there is nothing to announce (§18 — a
+// file with no emitter is not missing, it does not exist here by design).
+//
+// Empty means the snapshot transported no declaration (an older emission). The console then
+// narrows nothing and every failure counts, which is the loud direction: an alarm that cannot
+// tell what was promised must assume everything was.
+let declaredArtifactPaths = [];
 let appData = null;
 
 // NO BAKED IDENTITY. The source console kept, right here, a parent run id and four
@@ -869,6 +881,38 @@ function chipList(items, emptyMessage = "No items recorded.") {
   `;
 }
 
+// Normalise a route to the form the emitter declares paths in: repo-relative, POSIX, no query,
+// no leading `./`, `../` or `/`. Display-only normalisation lives in displaySourcePath; this one
+// exists to COMPARE, so it is deliberately the same shape on both sides of the comparison.
+function normalizeRoutePath(value) {
+  return text(value, "").split("?")[0].replace(/^(?:\.{1,2}\/)+/, "").replace(/^\/+/, "");
+}
+
+// Read the project's own declaration off its snapshot. Accepts `{path}` records (what the
+// emitter writes) and bare strings, and ignores anything else: a malformed declaration must
+// degrade to "no declaration" — which is the loud direction — never to a thrown render.
+function readDeclaredArtifactPaths(snapshot) {
+  const declared = snapshot && snapshot.emitted_artifacts;
+  if (!Array.isArray(declared)) return [];
+  return declared
+    .map((entry) => normalizeRoutePath(typeof entry === "string" ? entry : entry && entry.path))
+    .filter(Boolean);
+}
+
+// Is this fetched route one the ACTIVE project declared emitting? The declaration is
+// repo-relative (`.project/roadmap.json`) and the fetched route is the shell's virtual one
+// (`/projects/<key>/.project/roadmap.json`), so the match is a suffix at a segment boundary —
+// never a name, a project key, or a fixed list of files typed into this file.
+function isDeclaredSource(path) {
+  if (!declaredArtifactPaths.length) return true;
+  const route = normalizeRoutePath(path);
+  return declaredArtifactPaths.some((declared) => route === declared || route.endsWith(`/${declared}`));
+}
+
+function recordSourceFailure(path, detail) {
+  failedSources.push({ path, detail });
+}
+
 async function fetchText(path, required = false) {
   try {
     const response = await fetch(path, { cache: "no-store" });
@@ -877,7 +921,7 @@ async function fetchText(path, required = false) {
     loadedSources.push(path);
     return content;
   } catch (error) {
-    failedSources.push(`${path}: ${error.message}`);
+    recordSourceFailure(path, error.message);
     if (required) throw error;
     return null;
   }
@@ -889,7 +933,7 @@ async function fetchJson(path, required = false) {
   try {
     return JSON.parse(content);
   } catch (error) {
-    failedSources.push(`${path}: invalid JSON: ${error.message}`);
+    recordSourceFailure(path, `invalid JSON: ${error.message}`);
     if (required) throw error;
     return null;
   }
@@ -905,7 +949,9 @@ async function fetchJsonl(path) {
     try {
       rows.push(JSON.parse(trimmed));
     } catch (error) {
-      failedSources.push(`${path}:${index + 1}: invalid JSONL: ${error.message}`);
+      // The line number rides in the DETAIL, not in the path: the path is what gets matched
+      // against the project's declaration, and `foo.jsonl:3` matches no declared route.
+      recordSourceFailure(path, `line ${index + 1}: invalid JSONL: ${error.message}`);
     }
   });
   return rows;
@@ -1981,18 +2027,31 @@ let docsActivePath = null;
 // display-only. Switching visibility mode assigns no document status and certifies, accepts,
 // reconciles, or Human-QA-passes nothing. All registered docs stay reachable.
 //
-// DELIBERATE DIVERGENCE from the source console, which opens on "newera". That mode filters by
-// operator_review_status, and this project's emitter does not emit that field — it means "a run
-// recorded an operator review", and no run recorded one. Writing it to make the view fill up would
-// put a false statement into the data, so the field stays absent and the OPENING MODE moves instead.
+// THE OPENING MODE IS DECIDED BY THE DATA (O4.P13), per project, at first paint of Docs:
+// if the active project's index carries `operator_review_status` on any entry, Docs opens on
+// "newera" — the curated view that field exists to drive; if no entry carries it, Docs opens on
+// "all". Presence of the FIELD, never a project name: the same shape as D-049 — the project
+// declares, the consumer obeys.
 //
-// "all", not "primary", and for a measured reason: the mode control (New era / Primary KB / All
-// registered) was retired from this UI upstream, so whichever mode ships is the ONLY one the
-// operator can reach. "primary" would leave 15 of the 25 indexed documents — every record under
-// context/**/records among them — with no way to open them, under a note that tells the reader to
-// switch to a control that is not there. "all" reaches the whole registry and still shows each
-// entry's tier tag, so the curation stays visible instead of becoming a wall.
-let docsVisibilityMode = "all"; // "all" (default here) | "primary" (curated KB) | "newera"
+// What this replaces, and why the replacement is not a revert: a global "all" default was chosen
+// here because THIS project's index has no `operator_review_status` and opening on "newera" left
+// its Docs tab empty. That reasoning was right about this project and wrong as a rule — applied
+// globally it also flattened the curation of a project that DOES carry the field (140 registered
+// documents where the operator had selected 38), turning a curated shelf into a firehose.
+//
+// What has NOT changed: nothing writes `operator_review_status`, anywhere. It means "a run
+// recorded an operator review", and no run recorded one in this project — inventing it to fill a
+// view would put a false statement into the data. The field stays absent here; the MODE moves.
+//
+// Reachability, measured: the mode control (New era / Primary KB / All registered) is not in
+// index.html — its listener is still wired, but no element carries `data-docs-mode`. So whichever
+// mode a project opens on is the only one its operator can reach, which is exactly why the
+// opening mode has to be derived from that project's own data instead of fixed here.
+let docsVisibilityMode = "all"; // "all" | "primary" (curated KB) | "newera" — see docsResolveOpeningMode
+// Whether the opening mode has been derived for the ACTIVE project yet. Derived once per project
+// load, so a later re-render (a roadmap edit, a History refresh) never overrides a mode the
+// operator switched to by hand. Reset with the rest of the per-project state.
+let docsOpeningModeResolved = false;
 let docsAllEntries = [];
 const DOCS_NAV_TIERS = ["primary", "secondary", "advanced", "evidence", "history", "proposal"];
 // DOCS_NAV_TIER_META (the tier -> label/tone table) and `docNavTierMeta` were removed together
@@ -2021,8 +2080,8 @@ const DOCS_GROUP_ALIASES = {};
 //
 // The source console offered a second Docs grouping ("By category" / "By retention class") plus a
 // per-row retention_class badge. Both were invisible there, because they only render outside the
-// "newera" mode and "newera" is that console's opening mode. This port opens on "all" (see the
-// DELIBERATE DIVERGENCE note above), which uncovered them.
+// "newera" mode and "newera" is that console's opening mode. This port opened them for the
+// projects whose index carries no operator_review_status (see the opening-mode note above).
 //
 // They are removed rather than re-hidden because `retention_class` is metadata of the ORIGIN
 // project's own retention policy (its D2/D3 classes). This project's docs_index does not carry the
@@ -2087,9 +2146,10 @@ function isDefaultVisibleDoc(doc) {
 
 function docsEntriesForMode() {
   // Entries carry their index in the full docs_index array so navigation stays a filtered view
-  // of the same registry (never a re-indexed copy). "newera" (default) shows only the docs a run
-  // marked with operator_review_status; "all" shows every registered doc; "primary" shows only the
-  // curated default-visible set.
+  // of the same registry (never a re-indexed copy). "newera" shows only the docs a run marked
+  // with operator_review_status; "all" shows every registered doc; "primary" shows only the
+  // curated default-visible set. Which one a project OPENS on is derived from its own index
+  // (docsResolveOpeningMode).
   const entries = docsAllEntries.map((doc, index) => ({ doc, index }));
   if (docsVisibilityMode === "newera") return entries.filter(({ doc }) => hasOperatorReviewStatus(doc));
   if (docsVisibilityMode === "all") return entries;
@@ -2230,6 +2290,7 @@ function renderDocs(data) {
     byId("docs-reader").innerHTML = "";
     return;
   }
+  docsResolveOpeningMode(docs);
   // Curated default: open on the first default-visible (Primary KB) doc, not the first registered
   // entry. renderDocsNav paints the tier controls and the filtered category/tree navigation.
   const visible = docsEntriesForMode();
@@ -2237,6 +2298,18 @@ function renderDocs(data) {
   // Select first so docsActivePath is set, then paint the nav so the opened doc highlights.
   renderSelectedDoc(first);
   renderDocsNav();
+}
+
+// Derive the opening mode from the ACTIVE project's index — once per project load. The question
+// asked is the presence of the FIELD in the data, and the answer is read straight off the index
+// with the same predicate the "newera" filter itself uses, so the mode and the filter cannot
+// disagree: a project opens on "newera" exactly when that mode has something to show.
+// READ-ONLY on the index. This function decides what to DISPLAY; it writes nothing, and no
+// project ever gains `operator_review_status` by being looked at.
+function docsResolveOpeningMode(docs) {
+  if (docsOpeningModeResolved) return;
+  docsOpeningModeResolved = true;
+  docsVisibilityMode = (docs || []).some(hasOperatorReviewStatus) ? "newera" : "all";
 }
 
 function hasOperatorReviewStatus(doc) {
@@ -2828,23 +2901,36 @@ function displaySourcePath(value) {
   return text(value, "").replace(/^(?:\.{1,2}\/)+/, "").replace(/^\//, "");
 }
 
+// Console Diagnostics distinguishes THREE states, because there are three (O4.P13). Collapsing
+// the last two into "Failed" is what made the banner permanent and what made the panel unable to
+// answer the operator's actual question — is something broken, or is this project simply not the
+// project those routes belong to?
+//
+//   declared and loaded  — the project promised it and it is here.
+//   declared and failed  — the project promised it and it is not here. THE real absence (§20).
+//   not declared         — this project's emitter writes no such file (§18). Not an absence:
+//                          the route exists in the renderer because another console's project
+//                          had it, and nothing here ever claimed it would.
+//
+// A route that LOADED is reported loaded whether or not it was declared: what is on disk is a
+// measurement, and no declaration overrides it.
 function renderSources(data) {
-  const loaded = loadedSources.map((source) => `
+  const sourceRow = (label, path, detail) => `
     <div class="source-status-item">
-      <div class="source-status-label">Loaded</div>
-      <div class="source-path">${escapeHtml(displaySourcePath(source))}</div>
+      <div class="source-status-label">${escapeHtml(label)}</div>
+      <div class="source-path">${escapeHtml(displaySourcePath(path))}${detail ? escapeHtml(`: ${detail}`) : ""}</div>
     </div>
-  `).join("");
-  const failed = failedSources.map((source) => `
-    <div class="source-status-item">
-      <div class="source-status-label">Failed</div>
-      <div class="source-path">${escapeHtml(displaySourcePath(source))}</div>
-    </div>
-  `).join("");
+  `;
+  const loaded = loadedSources.map((source) => sourceRow("Loaded", source, "")).join("");
+  const declaredFailures = failedSources.filter((entry) => isDeclaredSource(entry.path));
+  const undeclared = failedSources.filter((entry) => !isDeclaredSource(entry.path));
+  const failed = declaredFailures.map((entry) => sourceRow("Failed", entry.path, entry.detail)).join("");
+  const notEmitted = undeclared.map((entry) => sourceRow("Not emitted", entry.path, "")).join("");
   byId("state-sources").innerHTML = `
     <div class="source-status-list">
       ${loaded || emptyState("No sources loaded.")}
-      ${failed ? `<div class="group-label">Optional source failures</div>${failed}` : ""}
+      ${failed ? `<div class="group-label">Declared sources that failed to load</div>${failed}` : ""}
+      ${notEmitted ? `<div class="group-label">Not emitted by this project</div>${notEmitted}` : ""}
     </div>
   `;
   // Read off PATHS, not re-typed: the routes shown here are the routes actually fetched, so this
@@ -4173,12 +4259,36 @@ function showFetchFallback(error) {
   `;
 }
 
+// §20's announcement, fired against WHAT THE PROJECT DECLARED (O4.P13).
+//
+// The transplanted version fired on `failedSources.length`, and the renderer fetches the fifteen
+// legacy routes while this emitter declares six. The nine that were never promised (§18.a: no
+// emitter, deliberately out of `.project/`) fail on every load of every project, so the banner
+// was ON permanently — and a notice that never goes off announces nothing. That is the failure
+// §20 exists to prevent, arrived at from the other side: not a silence, a permanent noise.
+//
+// So the gate is the DECLARATION, not the fetch list. The banner is NOT suppressed and NOT
+// conditioned on anything cosmetic: a file the project declares emitting and that does not load
+// still lights it up — and now the banner NAMES the file, which §20 required and the aggregate
+// wording never did. Files the project never declared are absent from this notice because they
+// are not absences; Console Diagnostics still lists them, under what they actually are.
 function showOptionalSourceNotice() {
-  if (!failedSources.length) return;
+  const declaredFailures = failedSources.filter((entry) => isDeclaredSource(entry.path));
+  if (!declaredFailures.length) return;
   const notice = byId("load-notice");
+  if (!notice) return;
   notice.hidden = false;
   notice.className = "readonly-banner";
-  notice.innerHTML = "<strong>Rendered from the primary snapshot.</strong><span>Some optional local state files could not be loaded. Open the Console Diagnostics panel in the Status tab for details.</span>";
+  const named = declaredFailures
+    .map((entry) => `<span class="mono">${escapeHtml(displaySourcePath(entry.path))}</span>`)
+    .join(", ");
+  const subject = declaredFailures.length === 1
+    ? "One file this project declares emitting could not be loaded"
+    : `${declaredFailures.length} files this project declares emitting could not be loaded`;
+  notice.innerHTML =
+    `<strong>Rendered from the primary snapshot.</strong>` +
+    `<span>${escapeHtml(subject)}: ${named}.</span>` +
+    `<span>Console Diagnostics, in the Status tab, lists every source with its state.</span>`;
 }
 
 function hideLoadNotice() {
@@ -4213,6 +4323,9 @@ function resetProjectScopedState() {
   appData = null;
   loadedSources.length = 0;
   failedSources.length = 0;
+  // The declaration belongs to the project that transported it; carrying it across a switch
+  // would judge one project's failures against another project's promises.
+  declaredArtifactPaths = [];
   roadmapV3ModelCache = null;
   v3DetailStack = [];
   v3DetailOrigin = "";
@@ -4225,7 +4338,10 @@ function resetProjectScopedState() {
   docBodyCache.clear();
   docsActivePath = null;
   docsAllEntries = [];
+  // Back to the neutral mode AND to "not yet derived": the next project decides its own opening
+  // mode from its own index (docsResolveOpeningMode), never inheriting the previous project's.
   docsVisibilityMode = "all";
+  docsOpeningModeResolved = false;
   historySelectedBranch = null;
   historyVersionMarker = null;
   stopHistoryAutoRefresh();
@@ -5548,6 +5664,11 @@ function setupTabs() {
 
 async function loadData() {
   const snapshot = await fetchJson(PATHS.snapshot, true);
+  // Read the project's declaration BEFORE fetching anything optional, so every failure below is
+  // classified against it (O4.P13). The required snapshot is the only artifact that can carry
+  // this: it is the one file §8 guarantees, so it is the one place a project can speak about
+  // the others from.
+  declaredArtifactPaths = readDeclaredArtifactPaths(snapshot);
   const [
     project,
     projectStatus,

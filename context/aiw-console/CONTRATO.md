@@ -1713,20 +1713,53 @@ Tres notas de contorno:
   aquí para que la asimetría no parezca descuido — mismo tratamiento que
   `aiw_flat_objectives_v1` en §10.c.
 
-- **`.project/git_history.json` es el ÚNICO artefacto emitido cuyo contenido
-  depende de la MÁQUINA que lo emite.** Todos los demás derivan de archivos
+- **`.project/git_history.json` fue el ÚNICO artefacto emitido cuyo contenido
+  dependía de la MÁQUINA que lo emitía — y esa dependencia queda CERRADA (O4.P13).**
+  El hecho, tal como se registró: todos los demás artefactos derivan de archivos
   versionados del repo y dos checkouts del mismo commit los emiten idénticos; éste
-  deriva de `.git`, y **las ramas locales difieren entre checkouts**. Medido: **35
-  commits** en un clon fresco frente a **42** en la máquina con ramas de trabajo.
-  No es un defecto del emisor —emite todas las ramas locales a propósito, porque
-  esconder una rama es política de visualización y es del lector, y un emisor que
-  descarta dato miente—; es una propiedad de la fuente. **Se registra como HECHO;
-  su resolución queda ABIERTA y nombrada, no decidida aquí:** acotar la emisión a
-  `main` (reproducible entre máquinas, a costa de ocultar trabajo en curso al
-  lector que sí lo tiene) **o** aceptar la dependencia de máquina y declararla en
-  el propio artefacto. Quien la resuelva decide también si el artefacto debe
-  declarar de qué checkout salió. Hasta entonces, una diferencia de conteo entre
-  dos máquinas **no es podredumbre** (§6) ni un emisor roto: es esta propiedad.
+  deriva de `.git`, y **las ramas locales difieren entre checkouts**. Medido
+  entonces: **35 commits** en un clon fresco frente a **42** en la máquina con ramas
+  de trabajo. No era un defecto del emisor —emitía todas las ramas locales a
+  propósito, porque esconder una rama es política de visualización y es del lector, y
+  un emisor que descarta dato miente—; era una propiedad de la fuente. La resolución
+  quedó **ABIERTA y nombrada**, con dos salidas: acotar la emisión o aceptar la
+  dependencia y declararla en el artefacto.
+
+  **DECIDIDO: se acota, y a la rama por DEFECTO DEL REPOSITORIO, detectada.** Cómo:
+  el emisor pregunta qué rama declara el remoto como su HEAD
+  (`refs/remotes/<remote>/HEAD`, remotos en orden), y si ninguno declara una, cae a la
+  rama en la que está el checkout y luego a la única rama local que haya; si nada
+  resuelve, no emite el archivo. **Ningún nombre de rama vive en el emisor** — no dice
+  `main` en ninguna parte, y un repo cuyo tronco se llame `trunk` o `master` funciona
+  sin tocar código (§10.d Regla 1.a aplicada a las ramas). `init.defaultBranch` NO se
+  consulta: es la preferencia global del operador para repos NUEVOS, no una
+  declaración de ÉSTE, y leerla cambiaría una dependencia de máquina por otra. El
+  artefacto declara lo que cubre: `default_branch` (la rama detectada) y
+  `branch_scope: "default_branch"` (la regla), y `head` pasa a ser la punta de esa
+  rama, no la del checkout. **`current_branch` desaparece**: nombraba el checkout que
+  corrió el emisor, que es exactamente el dato que se estaba quitando; el lector ya
+  cae a su propio default cuando la clave falta (`historyDefaultBranch`).
+
+  Por qué esta salida y no la otra: la alternativa —aceptar la dependencia y
+  declararla— deja el artefacto honesto pero **no comparable**, y §6 existe para que
+  dos lecturas del mismo estado se puedan comparar. El costo está aceptado y dicho:
+  el lector que tiene ramas de trabajo bajadas **ya no las ve en History**. Es
+  **divergencia deliberada respecto a la consola de Cantu**, que muestra todas las
+  ramas; se declara aquí como tal. El trabajo en curso no se pierde ni se oculta en el
+  repo — sigue en `git` —, sólo deja de publicarse en un artefacto derivado que
+  prometía ser reproducible.
+
+  Medido al cerrar, con el emisor 0.8.0, sobre los dos repos reales (antes → después):
+  **aiw-console 6 ramas / 71 commits → 1 rama / 43 commits**; **cantu-studio 2 ramas
+  locales —4 en el remoto, que es justo la asimetría del hecho— / 916 commits → 1 rama
+  / 461 commits**. A partir de
+  aquí, **una diferencia de conteo entre dos máquinas ya no es esta propiedad: es una
+  diferencia real de commits**, y vuelve a ser señal (§6).
+
+  Queda ABIERTO, y nombrado: qué hace el emisor cuando el default declarado por el
+  remoto **no está bajado como rama local**. Hoy cae a la rama del checkout, que es
+  reproducible sólo hasta donde ese checkout lo sea; leer el ref remoto en su lugar
+  reintroduciría "qué se ha fetcheado". Se decide el día que exista un checkout así.
 
 ## 20. La degradación es requisito SOBRE EL CONSUMIDOR
 

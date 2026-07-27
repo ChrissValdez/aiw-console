@@ -201,12 +201,21 @@ test("counts, open document, docs mode and vocabulary all reset across a switch 
 
   await select(harness, "cantu-studio");
 
-  // Docs mode: back to the default. Observed through the navigation — cantu-studio's index is
-  // listed WHOLE, which the dirtied "primary" mode could not produce.
+  // Docs mode: the dirtied mode is gone and the second project opens on the mode ITS OWN index
+  // decides (O4.P13 — presence of operator_review_status). cantu-studio carries the field, so it
+  // opens on "newera" and lists that subset. The three counts are distinct on this real index
+  // (140 registered / 53 default-visible / 38 reviewed), so the assertion cannot pass by accident
+  // and it still fails if the dirtied "primary" survived the switch.
   const cantuDocs = JSON.parse(readFileSync(join(CANTU, ".project", "docs_index.json"), "utf8")).docs;
   const cantuPrimary = cantuDocs.filter((doc) => doc.default_visible).length;
+  const cantuReviewed = cantuDocs.filter((doc) =>
+    Object.prototype.hasOwnProperty.call(doc, "operator_review_status") &&
+    String(doc.operator_review_status || "").trim() !== ""
+  ).length;
   assert.ok(cantuDocs.length > cantuPrimary, "cantu-studio's index cannot distinguish the two modes");
-  assert.equal(navItemCount(harness), cantuDocs.length * 2, "the docs navigation did not reset to the full index");
+  assert.ok(cantuReviewed > 0 && cantuReviewed !== cantuPrimary && cantuReviewed !== cantuDocs.length,
+    "cantu-studio's index cannot distinguish the reviewed subset from the other two modes");
+  assert.equal(navItemCount(harness), cantuReviewed * 2, "the docs navigation did not reset to this project's own opening mode");
 
   // Document: nothing of the file left open in aiw-console survives in the reader.
   const readerAfter = harness.element("docs-reader").innerHTML + harness.element("docs-body").innerHTML;

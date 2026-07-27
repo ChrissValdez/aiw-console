@@ -73,7 +73,15 @@ export const SCHEMA_VERSION = 1;
 // `.project/git_history.json` alone, so the console's History sync can refresh commits without
 // re-emitting the whole folder. An emitter that can be invoked per-artifact is not the emitter
 // that could only emit the folder, so the version moves (§6).
-export const PROJECTOR_VERSION = "0.7.0";
+// 0.8.0 (O4.P13, the parity finish) moves twice, and both moves are behaviour:
+//   - the snapshot now DECLARES which files of `.project/` this emission actually wrote
+//     (`emitted_artifacts`). Without it a consumer cannot tell "declared and missing" from
+//     "never emitted here", which is the difference between a real absence (§20 announces it)
+//     and a designed non-existence (§18 — nothing to announce).
+//   - the git-history artifact is SCOPED TO THE REPOSITORY'S DEFAULT BRANCH (detected, never
+//     named here), closing the machine dependency §19 registered as an open question. An
+//     emitter that emits one branch is not the emitter that emitted every local one.
+export const PROJECTOR_VERSION = "0.8.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 // Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
@@ -973,6 +981,22 @@ export function buildRoadmapTreeSnapshot(root, opts = {}) {
 
   return {
     ...projectFileEnvelope(root, opts, [layout.paths.roadmap, PACKAGE_SOURCE_PATH]),
+    // THE DECLARATION (O4.P13). `sources` (§6) says what this artifact was DERIVED FROM — its
+    // inputs. This says what the emission WROTE: the files of `.project/` this project promises
+    // a consumer it will find. They are two different questions and neither answers the other.
+    //
+    // It exists because §20's announcement needs a reference to be about anything. A consumer
+    // that fetches a route and gets a 404 cannot tell, from the 404 alone, whether a promised
+    // file went missing (a real absence, which §20 requires it to announce, naming the file) or
+    // whether the project simply never emitted that file (a designed non-existence, which §18
+    // says is not an absence at all and must not be announced). With this list, it can: the
+    // announcement fires for what is declared here and fails to load, and for nothing else.
+    //
+    // Filled by `writeProjectFolder`, which is the only caller that KNOWS what was written.
+    // Built standalone the key is OMITTED, never emitted empty — §7's discipline: a snapshot
+    // that was not part of a folder emission has no honest answer, and an empty list would read
+    // as "this project emits nothing", which is a claim, not a silence.
+    ...(Array.isArray(opts.emitted) ? { emitted_artifacts: opts.emitted } : {}),
     operational_status: deriveProjectOperationalStatus(runStatuses),
     project_summary:
       `${tree.title || tree.roadmap_id || "Roadmap"}: ${objectiveCount} objectives, ` +
@@ -1325,6 +1349,60 @@ function gitRead(bin, root, args) {
   });
 }
 
+// THE DEFAULT BRANCH OF THE REPOSITORY — detected, never named in this file (O4.P13, closing the
+// open question §19 left on the machine dependency of this artifact).
+//
+// The emitter used to read EVERY LOCAL branch. That made this the one artifact whose content
+// depended on the MACHINE emitting it: local branches are whatever a given checkout happens to
+// have fetched, so two checkouts of the same commit emitted different files (§19 measured 35
+// commits against 42). Scoping to the default branch removes the machine from the equation: the
+// answer now depends on the repository, not on the disk it sits on.
+//
+// The chain below is a chain of DECLARATIONS, tried in order, and it contains no branch name:
+//   1. what a remote declares as its own HEAD (`refs/remotes/<remote>/HEAD`) — the repository's
+//      own statement about which branch is the trunk. Remotes are read in `git remote` order.
+//   2. the branch this checkout is on, when no remote declares one.
+//   3. the only local branch, when there is exactly one.
+// `init.defaultBranch` is deliberately NOT consulted: it is the operator's global preference for
+// NEW repositories, not a statement by THIS one — reading it would swap one machine dependency
+// for another. A candidate is accepted only when it exists as a LOCAL branch, because a branch
+// that is not checked out here cannot be logged from local refs without asking what was fetched —
+// the very question this scoping exists to stop asking.
+// Returns null when nothing declares a default (detached HEAD with several branches); the caller
+// then emits no history at all rather than picking one arbitrarily.
+//
+// `read` is the Git reader, injected so the CHAIN can be tested without a repository: the tests
+// of this file never init, commit, branch or check out anything (here or in a temp dir), and a
+// rule about which branch is the default should not need a repository to be checked.
+export function detectDefaultBranch(bin, root, localBranches, read = gitRead) {
+  const local = new Set(localBranches);
+  let remotes = [];
+  try {
+    remotes = read(bin, root, ["remote"]).split(/\r?\n/).map((name) => name.trim()).filter(Boolean);
+  } catch {
+    remotes = [];
+  }
+  for (const remote of remotes) {
+    let ref = "";
+    try {
+      ref = read(bin, root, ["symbolic-ref", "--short", `refs/remotes/${remote}/HEAD`]).trim();
+    } catch {
+      continue; // this remote has no HEAD recorded locally; ask the next one
+    }
+    const prefix = `${remote}/`;
+    const name = ref.startsWith(prefix) ? ref.slice(prefix.length) : ref;
+    if (name && local.has(name)) return name;
+  }
+  let current = "";
+  try {
+    current = read(bin, root, ["branch", "--show-current"]).trim();
+  } catch {
+    current = "";
+  }
+  if (current && local.has(current)) return current;
+  return localBranches.length === 1 ? localBranches[0] : null;
+}
+
 // True only when `root` is the top of its own Git work tree. A project root that merely SITS
 // inside some larger repository gets no history: publishing the parent's commits under this
 // project's `.project/` would attribute another project's work to this one, and §20 prefers an
@@ -1403,44 +1481,48 @@ function parseGitLog(raw, branch, runIds) {
 
 // Build the git-history artifact from the root's own repository. Pure read. Returns null — and the
 // file is then simply not written — when Git is unavailable, when the root is not its own repo, when
-// the repo has no local branches, or when any read fails. Nothing partial and nothing invented.
+// the repo has no local branches, when nothing declares a default branch, or when any read fails.
+// Nothing partial and nothing invented.
 export function buildGitHistory(root, opts = {}) {
   const bin = resolveGitBin();
   if (!bin) return null;
   if (!isOwnGitRoot(bin, root)) return null;
 
-  let branches;
-  let currentBranch;
-  let head;
+  let localBranches;
   try {
-    branches = gitRead(bin, root, ["for-each-ref", "--format=%(refname:short)", "refs/heads"])
+    localBranches = gitRead(bin, root, ["for-each-ref", "--format=%(refname:short)", "refs/heads"])
       .split(/\r?\n/)
       .map((name) => name.trim())
       .filter(Boolean);
-    if (!branches.length) return null; // an initialized repo with no commits yet
-    currentBranch = gitRead(bin, root, ["branch", "--show-current"]).trim();
-    head = gitRead(bin, root, ["rev-parse", "HEAD"]).trim();
+  } catch {
+    return null;
+  }
+  if (!localBranches.length) return null; // an initialized repo with no commits yet
+
+  // THE SCOPE (O4.P13): one branch, the one the repository itself declares as its default. See
+  // `detectDefaultBranch` for why, and for why no branch name appears in this file.
+  const defaultBranch = detectDefaultBranch(bin, root, localBranches);
+  if (!defaultBranch) return null;
+
+  let head;
+  try {
+    // The tip of the DEFAULT BRANCH, not of HEAD: `head` must date the emitted history, and the
+    // emitted history is that branch's. A checkout parked on a feature branch emits the same
+    // sha as a fresh clone, which is the entire point of the scoping.
+    head = gitRead(bin, root, ["rev-parse", defaultBranch]).trim();
   } catch {
     return null;
   }
 
-  // `main` first (the reader tints it as the trunk), then code-unit order — the same determinism
-  // rule `listMarkdownFiles` follows, so the emitted order never depends on the machine's locale.
-  // EVERY local branch is emitted: hiding a branch is a display policy and belongs to the reader,
-  // which already filters its own (`historyVisibleBranches`). An emitter that drops data is lying.
-  branches.sort((a, b) => (a === "main" ? -1 : b === "main" ? 1 : a < b ? -1 : a > b ? 1 : 0));
-
   const layout = detectRootLayout(root);
   const runIds = roadmapRunIds(layout?.tree);
-  const commits = [];
+  let commits;
   try {
-    for (const branch of branches) {
-      commits.push(...parseGitLog(
-        gitRead(bin, root, ["log", branch, "--date=iso-strict", `--pretty=format:${GIT_LOG_FORMAT}`]),
-        branch,
-        runIds
-      ));
-    }
+    commits = parseGitLog(
+      gitRead(bin, root, ["log", defaultBranch, "--date=iso-strict", `--pretty=format:${GIT_LOG_FORMAT}`]),
+      defaultBranch,
+      runIds
+    );
   } catch {
     return null;
   }
@@ -1453,10 +1535,15 @@ export function buildGitHistory(root, opts = {}) {
     ...projectFileEnvelope(root, opts, [".git", ...(layout ? [layout.paths.roadmap] : [])]),
     model: GIT_HISTORY_MODEL,
     head,
-    // Omitted on a detached HEAD rather than emitted empty: the reader then picks its own default
-    // branch (`historyDefaultBranch`) instead of being handed a branch name that is not current.
-    ...(currentBranch ? { current_branch: currentBranch } : {}),
-    branches,
+    // What this artifact covers, said out loud. `default_branch` names the branch that was
+    // detected and `branch_scope` names the RULE, so a reader never has to infer from a
+    // one-element list whether the repository has one branch or the emitter emitted one.
+    // `current_branch` is GONE: it named the branch of whichever checkout ran the emitter, which
+    // is exactly the machine dependency this scoping removes. The reader already falls back to
+    // its own default when the key is absent (`historyDefaultBranch`).
+    default_branch: defaultBranch,
+    branch_scope: "default_branch",
+    branches: [defaultBranch],
     commit_total: commits.length,
     commits
   };
@@ -1528,7 +1615,17 @@ export function writeProjectFolder(root, opts = {}) {
     entries: gitHistory ? gitHistory.commit_total : 0
   });
 
-  const snapshot = buildRoadmapTreeSnapshot(root, { now });
+  // THE DECLARATION the snapshot transports (O4.P13). Built from `written` — what this emission
+  // ACTUALLY wrote a moment ago — plus the snapshot's own route, which is being written next and
+  // unconditionally (it is the one required artifact, §8). Never a hand-kept list and never the
+  // set of files this emitter COULD write: a project whose root has no Git declares no
+  // git_history, and a consumer must not announce that as a missing file (§18 vs §20).
+  const emitted = [
+    ...written.map((file) => ({ artifact: file.artifact, path: file.relative_path })),
+    { artifact: "snapshot", path: PROJECT_SNAPSHOT_RELATIVE_PATH.split(sep).join("/") }
+  ];
+
+  const snapshot = buildRoadmapTreeSnapshot(root, { now, emitted });
   const flat = flattenRoadmapTree(snapshot.roadmap_tree);
   write("snapshot", PROJECT_SNAPSHOT_RELATIVE_PATH, snapshot, {
     objectives: snapshot.roadmap_tree.objectives.length,
@@ -1552,7 +1649,7 @@ export function writeProjectFolder(root, opts = {}) {
 // only difference is that the other five artifacts are not rebuilt. Refuses (null) a root no
 // layout claims: single-artifact emission is a refresh for projects this emitter already
 // serves, never the first write into a root whose emission phase has not run.
-// Returns { ok, path, relative_path, bytes, head, current_branch, branches, commit_total,
+// Returns { ok, path, relative_path, bytes, head, default_branch, branches, commit_total,
 // generated_at } or null (no layout / Git unavailable / not its own repository).
 export function writeGitHistoryFile(root, opts = {}) {
   if (!detectRootLayout(root)) return null;
@@ -1567,7 +1664,7 @@ export function writeGitHistoryFile(root, opts = {}) {
     relative_path: repoRelative(root, outPath),
     bytes: statSync(outPath).size,
     head: gitHistory.head,
-    current_branch: gitHistory.current_branch || null,
+    default_branch: gitHistory.default_branch,
     branches: gitHistory.branches.length,
     commit_total: gitHistory.commit_total,
     generated_at: gitHistory.generated_at

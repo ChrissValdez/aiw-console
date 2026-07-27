@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-26T05:04:11.640Z",
-  "generated_from": "aiw-projector@0.7.0",
+  "generated_at": "2026-07-27T19:20:57.799Z",
+  "generated_from": "aiw-projector@0.8.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",

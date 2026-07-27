@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "project_id": "con_revision",
+  "generated_at": "2026-07-27T12:00:00.000Z",
+  "generated_from": "hand-authored-test-fixture (NOT emitted by any projector; tests only)",
+  "sources": [
+    {
+      "path": "README.md",
+      "mtime": "2026-07-27T11:00:00.000Z"
+    }
+  ],
+  "docs": [
+    {
+      "title": "Revisada A",
+      "path": "docs/a.md",
+      "nav_tier": "secondary",
+      "default_visible": false,
+      "ia_bucket": "docs",
+      "operator_review_status": "approved"
+    },
+    {
+      "title": "Sin revisar B",
+      "path": "docs/b.md",
+      "nav_tier": "primary",
+      "default_visible": true,
+      "ia_bucket": "docs"
+    },
+    {
+      "title": "Revisada C",
+      "path": "docs/c.md",
+      "nav_tier": "secondary",
+      "default_visible": false,
+      "ia_bucket": "docs",
+      "operator_review_status": "pending"
+    },
+    {
+      "title": "Sin revisar D",
+      "path": "docs/d.md",
+      "nav_tier": "primary",
+      "default_visible": true,
+      "ia_bucket": "docs"
+    }
+  ]
+}

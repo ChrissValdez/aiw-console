@@ -533,7 +533,9 @@ async function handleHistorySync(req, res, key) {
   sendJson(res, 200, {
     ok: true,
     head: result.head,
-    current_branch: result.current_branch,
+    // O4.P13 — the emitter scopes the artifact to the repository's DEFAULT branch, so what it
+    // reports back is which branch that was, not which branch this checkout happens to be on.
+    default_branch: result.default_branch,
     branches: result.branches,
     visible_branches: result.branches,
     commit_total: result.commit_total,

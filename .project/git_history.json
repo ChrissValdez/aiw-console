@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-26T05:12:38.471Z",
-  "generated_from": "aiw-projector@0.7.0",
+  "generated_at": "2026-07-27T19:20:58.893Z",
+  "generated_from": "aiw-projector@0.8.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-26T04:35:31.182Z"
+      "mtime": "2026-07-27T19:20:04.832Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,18 +14,24 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "8760f1af6383eb59128ab4d81d5d05e985d6140b",
-  "current_branch": "main",
+  "head": "2e02a8bae48125d4328b77006162f82012b0897f",
+  "default_branch": "main",
+  "branch_scope": "default_branch",
   "branches": [
-    "main",
-    "aiw/001-console-projector",
-    "aiw/002-canonical-path-and-autoproject",
-    "aiw/003-roadmap-emitter",
-    "aiw/003b-startup-projection-all-views",
-    "aiw/005-roadmap-contract-fix"
+    "main"
   ],
-  "commit_total": 71,
+  "commit_total": 43,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "2e02a8b",
+      "full_sha": "2e02a8bae48125d4328b77006162f82012b0897f",
+      "date": "2026-07-26T16:03:07-06:00",
+      "parents": "8760f1a",
+      "subject": "escritura: la consola global edita el roadmap y sincroniza historia (O4.P12)",
+      "body": "- Motor de roadmap trasplantado byte a byte desde cantu-studio; 40 lineas tocadas\n\n- Dos rutas POST; todo lo demas sigue en 405; guarda de frontera por root registrado\n\n- Re-emit de .project/ tras confirm; canonicos reales byte-identicos tras las pruebas\n\n- Suite 151/151; record ESCRITURA-CONSOLA-GLOBAL-O4-P12",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "8760f1a",
@@ -438,296 +444,6 @@
     },
     {
       "branch": "main",
-      "sha": "4f3ab11",
-      "full_sha": "4f3ab1158a13bf0bc36ab84719d73f25491041e1",
-      "date": "2026-07-10T19:51:16-06:00",
-      "parents": "",
-      "subject": "aiw-console: verbatim fork of JAME project console + smoke test + schema draft",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/001-console-projector",
-      "sha": "12d10db",
-      "full_sha": "12d10dbb5a12708aff31f43425b1ff5c4ef4cbe1",
-      "date": "2026-07-10T21:21:30-06:00",
-      "parents": "4f3ab11",
-      "subject": "aiw r1: 001-console-projector",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/001-console-projector",
-      "sha": "4f3ab11",
-      "full_sha": "4f3ab1158a13bf0bc36ab84719d73f25491041e1",
-      "date": "2026-07-10T19:51:16-06:00",
-      "parents": "",
-      "subject": "aiw-console: verbatim fork of JAME project console + smoke test + schema draft",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/002-canonical-path-and-autoproject",
-      "sha": "9e49b40",
-      "full_sha": "9e49b402dc5000fccfb33ed0af47f3534a7eb928",
-      "date": "2026-07-11T00:34:39-06:00",
-      "parents": "5576472",
-      "subject": "aiw r1: 002-canonical-path-and-autoproject",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/002-canonical-path-and-autoproject",
-      "sha": "5576472",
-      "full_sha": "5576472c667dbaf02626fb71dffd9441d34b5857",
-      "date": "2026-07-11T00:03:33-06:00",
-      "parents": "12d10db",
-      "subject": "chore: ignore generated .aiw snapshots",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/002-canonical-path-and-autoproject",
-      "sha": "12d10db",
-      "full_sha": "12d10dbb5a12708aff31f43425b1ff5c4ef4cbe1",
-      "date": "2026-07-10T21:21:30-06:00",
-      "parents": "4f3ab11",
-      "subject": "aiw r1: 001-console-projector",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/002-canonical-path-and-autoproject",
-      "sha": "4f3ab11",
-      "full_sha": "4f3ab1158a13bf0bc36ab84719d73f25491041e1",
-      "date": "2026-07-10T19:51:16-06:00",
-      "parents": "",
-      "subject": "aiw-console: verbatim fork of JAME project console + smoke test + schema draft",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/003-roadmap-emitter",
-      "sha": "cabf198",
-      "full_sha": "cabf19810b0a59c30f28e443bb294c68a9f2947a",
-      "date": "2026-07-11T00:45:02-06:00",
-      "parents": "5576472",
-      "subject": "aiw r1: 003-roadmap-emitter",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/003-roadmap-emitter",
-      "sha": "5576472",
-      "full_sha": "5576472c667dbaf02626fb71dffd9441d34b5857",
-      "date": "2026-07-11T00:03:33-06:00",
-      "parents": "12d10db",
-      "subject": "chore: ignore generated .aiw snapshots",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/003-roadmap-emitter",
-      "sha": "12d10db",
-      "full_sha": "12d10dbb5a12708aff31f43425b1ff5c4ef4cbe1",
-      "date": "2026-07-10T21:21:30-06:00",
-      "parents": "4f3ab11",
-      "subject": "aiw r1: 001-console-projector",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/003-roadmap-emitter",
-      "sha": "4f3ab11",
-      "full_sha": "4f3ab1158a13bf0bc36ab84719d73f25491041e1",
-      "date": "2026-07-10T19:51:16-06:00",
-      "parents": "",
-      "subject": "aiw-console: verbatim fork of JAME project console + smoke test + schema draft",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/003b-startup-projection-all-views",
-      "sha": "f061ea2",
-      "full_sha": "f061ea28f13b948a7f3ad7a314801d72daa18198",
-      "date": "2026-07-11T01:30:26-06:00",
-      "parents": "bd802bd",
-      "subject": "aiw r1: 003b-startup-projection-all-views",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/003b-startup-projection-all-views",
-      "sha": "bd802bd",
-      "full_sha": "bd802bda08894f81d4240aec94d615ab3140e5ef",
-      "date": "2026-07-11T00:58:50-06:00",
-      "parents": "9e49b40 cabf198",
-      "subject": "Merge branch 'aiw/003-roadmap-emitter': roadmap.json emitter",
-      "body": "Reconciled with 002's canonical-path move (.aiw/views/ wins on paths):\n- SNAPSHOT_RELATIVE_PATH stays .aiw/views/project_console.snapshot.json;\n  kept 003's ROADMAP_RELATIVE_PATH = .aiw/views/roadmap.json.\n- writeSnapshot: took 003's body (writeJsonAtomic + roadmap emission);\n  resolveSnapshotPath now routes through 003's generic resolveInsideAiw.\n- Schema doc keeps both sibling sections: \"5. Canonical location & flow\"\n  (002) and \"6. views/roadmap.json - Roadmap v3 view\" (003, renumbered\n  from 5); the section-3 roadmap cross-reference now points at 6.\n- startup-projection test: fixture objective total 4 -> 7 to track the\n  three fixture objectives 003 added to sample-project.\n\nAll 21 tests green (node --test).",
-      "is_merge": true
-    },
-    {
-      "branch": "aiw/003b-startup-projection-all-views",
-      "sha": "cabf198",
-      "full_sha": "cabf19810b0a59c30f28e443bb294c68a9f2947a",
-      "date": "2026-07-11T00:45:02-06:00",
-      "parents": "5576472",
-      "subject": "aiw r1: 003-roadmap-emitter",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/003b-startup-projection-all-views",
-      "sha": "9e49b40",
-      "full_sha": "9e49b402dc5000fccfb33ed0af47f3534a7eb928",
-      "date": "2026-07-11T00:34:39-06:00",
-      "parents": "5576472",
-      "subject": "aiw r1: 002-canonical-path-and-autoproject",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/003b-startup-projection-all-views",
-      "sha": "5576472",
-      "full_sha": "5576472c667dbaf02626fb71dffd9441d34b5857",
-      "date": "2026-07-11T00:03:33-06:00",
-      "parents": "12d10db",
-      "subject": "chore: ignore generated .aiw snapshots",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/003b-startup-projection-all-views",
-      "sha": "12d10db",
-      "full_sha": "12d10dbb5a12708aff31f43425b1ff5c4ef4cbe1",
-      "date": "2026-07-10T21:21:30-06:00",
-      "parents": "4f3ab11",
-      "subject": "aiw r1: 001-console-projector",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/003b-startup-projection-all-views",
-      "sha": "4f3ab11",
-      "full_sha": "4f3ab1158a13bf0bc36ab84719d73f25491041e1",
-      "date": "2026-07-10T19:51:16-06:00",
-      "parents": "",
-      "subject": "aiw-console: verbatim fork of JAME project console + smoke test + schema draft",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
-      "sha": "2d501a3",
-      "full_sha": "2d501a3482a6f07545e57e0870b50df471ce40e6",
-      "date": "2026-07-18T20:10:11-06:00",
-      "parents": "92ff2e1",
-      "subject": "aiw r1: 005-roadmap-contract-fix",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
-      "sha": "92ff2e1",
-      "full_sha": "92ff2e18fe2ff4d9736076a349a37baa92fe4db8",
-      "date": "2026-07-18T20:01:27-06:00",
-      "parents": "9429908 586fa60",
-      "subject": "merge aiw/006-roadmap-delivery-path: deliver roadmap view at .aiw/roadmap/ for the frozen UI",
-      "body": "",
-      "is_merge": true
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
-      "sha": "586fa60",
-      "full_sha": "586fa6086148a9ca3860f35871c5be0ef599091e",
-      "date": "2026-07-18T19:45:31-06:00",
-      "parents": "9429908",
-      "subject": "aiw r1: 006-roadmap-delivery-path",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
-      "sha": "9429908",
-      "full_sha": "94299080b9ef77622d101e3290b51d129478f8b0",
-      "date": "2026-07-18T19:34:11-06:00",
-      "parents": "f061ea2 ddff047",
-      "subject": "merge aiw/004-snapshot-enrichment: snapshot schema v1 + projector enrichment",
-      "body": "",
-      "is_merge": true
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
-      "sha": "ddff047",
-      "full_sha": "ddff047c76b7dd2c663d676429f8f41020e5d237",
-      "date": "2026-07-11T01:39:51-06:00",
-      "parents": "bd802bd",
-      "subject": "aiw r1: 004-snapshot-enrichment",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
-      "sha": "f061ea2",
-      "full_sha": "f061ea28f13b948a7f3ad7a314801d72daa18198",
-      "date": "2026-07-11T01:30:26-06:00",
-      "parents": "bd802bd",
-      "subject": "aiw r1: 003b-startup-projection-all-views",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
-      "sha": "bd802bd",
-      "full_sha": "bd802bda08894f81d4240aec94d615ab3140e5ef",
-      "date": "2026-07-11T00:58:50-06:00",
-      "parents": "9e49b40 cabf198",
-      "subject": "Merge branch 'aiw/003-roadmap-emitter': roadmap.json emitter",
-      "body": "Reconciled with 002's canonical-path move (.aiw/views/ wins on paths):\n- SNAPSHOT_RELATIVE_PATH stays .aiw/views/project_console.snapshot.json;\n  kept 003's ROADMAP_RELATIVE_PATH = .aiw/views/roadmap.json.\n- writeSnapshot: took 003's body (writeJsonAtomic + roadmap emission);\n  resolveSnapshotPath now routes through 003's generic resolveInsideAiw.\n- Schema doc keeps both sibling sections: \"5. Canonical location & flow\"\n  (002) and \"6. views/roadmap.json - Roadmap v3 view\" (003, renumbered\n  from 5); the section-3 roadmap cross-reference now points at 6.\n- startup-projection test: fixture objective total 4 -> 7 to track the\n  three fixture objectives 003 added to sample-project.\n\nAll 21 tests green (node --test).",
-      "is_merge": true
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
-      "sha": "cabf198",
-      "full_sha": "cabf19810b0a59c30f28e443bb294c68a9f2947a",
-      "date": "2026-07-11T00:45:02-06:00",
-      "parents": "5576472",
-      "subject": "aiw r1: 003-roadmap-emitter",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
-      "sha": "9e49b40",
-      "full_sha": "9e49b402dc5000fccfb33ed0af47f3534a7eb928",
-      "date": "2026-07-11T00:34:39-06:00",
-      "parents": "5576472",
-      "subject": "aiw r1: 002-canonical-path-and-autoproject",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
-      "sha": "5576472",
-      "full_sha": "5576472c667dbaf02626fb71dffd9441d34b5857",
-      "date": "2026-07-11T00:03:33-06:00",
-      "parents": "12d10db",
-      "subject": "chore: ignore generated .aiw snapshots",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
-      "sha": "12d10db",
-      "full_sha": "12d10dbb5a12708aff31f43425b1ff5c4ef4cbe1",
-      "date": "2026-07-10T21:21:30-06:00",
-      "parents": "4f3ab11",
-      "subject": "aiw r1: 001-console-projector",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "aiw/005-roadmap-contract-fix",
       "sha": "4f3ab11",
       "full_sha": "4f3ab1158a13bf0bc36ab84719d73f25491041e1",
       "date": "2026-07-10T19:51:16-06:00",

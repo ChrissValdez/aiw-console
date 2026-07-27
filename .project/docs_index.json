@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-26T05:04:11.640Z",
-  "generated_from": "aiw-projector@0.7.0",
+  "generated_at": "2026-07-27T19:20:57.799Z",
+  "generated_from": "aiw-projector@0.8.0",
   "sources": [
     {
       "path": "README.md",
@@ -26,11 +26,15 @@
     },
     {
       "path": "context/aiw-console/CONTRATO.md",
-      "mtime": "2026-07-26T04:30:13.933Z"
+      "mtime": "2026-07-27T19:17:12.925Z"
     },
     {
       "path": "context/aiw-console/records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md",
       "mtime": "2026-07-25T07:14:37.222Z"
+    },
+    {
+      "path": "context/aiw-console/records/ACABADO-PARIDAD-O4-P13.md",
+      "mtime": "2026-07-27T19:20:53.975Z"
     },
     {
       "path": "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md",
@@ -47,6 +51,10 @@
     {
       "path": "context/aiw-console/records/EMISOR-CARPETA-PROPIA-O4-P2.md",
       "mtime": "2026-07-24T21:59:32.161Z"
+    },
+    {
+      "path": "context/aiw-console/records/ESCRITURA-CONSOLA-GLOBAL-O4-P12.md",
+      "mtime": "2026-07-26T05:12:17.869Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-FUENTES-CONSOLA.md",
@@ -126,7 +134,7 @@
     },
     {
       "path": "project-console/README.md",
-      "mtime": "2026-07-25T12:09:10.312Z"
+      "mtime": "2026-07-26T05:08:42.031Z"
     },
     {
       "path": "start-console.README.md",
@@ -223,7 +231,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw-console",
-      "freshness": "2026-07-26T04:30:13.933Z"
+      "freshness": "2026-07-27T19:17:12.925Z"
     },
     {
       "title": "ACABADO VISUAL de Docs y EMISOR de `git_history` — cierre del port de la consola",
@@ -232,6 +240,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-25T07:14:37.222Z"
+    },
+    {
+      "title": "ACABADO DE PARIDAD — cuatro correcciones que cierran la migración de la consola",
+      "path": "context/aiw-console/records/ACABADO-PARIDAD-O4-P13.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-27T19:20:53.975Z"
     },
     {
       "title": "AUDIT-CONSOLE-O4-PHASE0 — Mapa de estado real",
@@ -264,6 +280,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-24T21:59:32.161Z"
+    },
+    {
+      "title": "ESCRITURA — la consola global gana su ruta de escritura (`O4.P12`)",
+      "path": "context/aiw-console/records/ESCRITURA-CONSOLA-GLOBAL-O4-P12.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-26T05:12:17.869Z"
     },
     {
       "title": "MEDICION-FUENTES-CONSOLA — Qué datos tiene HOY aiw-console para una consola idéntica a la de Cantu",
@@ -418,12 +442,12 @@
       "freshness": "2026-07-22T21:23:17.032Z"
     },
     {
-      "title": "Project Console (transplanted, read-only, multi-project)",
+      "title": "Project Console (transplanted, multi-project; read-only plus two write routes)",
       "path": "project-console/README.md",
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "project-console",
-      "freshness": "2026-07-25T12:09:10.312Z"
+      "freshness": "2026-07-26T05:08:42.031Z"
     },
     {
       "title": "start-console (.cmd / .ps1)",

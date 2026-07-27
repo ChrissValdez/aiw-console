@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "project_id": "todo_presente",
+  "generated_at": "2026-07-27T12:00:00.000Z",
+  "generated_from": "hand-authored-test-fixture (NOT emitted by any projector; tests only)",
+  "sources": [
+    {
+      "path": "roadmap/roadmap.json",
+      "mtime": "2026-07-27T11:00:00.000Z"
+    }
+  ],
+  "model": "fixture_tree_v1",
+  "roadmap_id": "todo_presente",
+  "title": "Fixture todo_presente",
+  "objectives": [
+    {
+      "objective_id": "O-1",
+      "title": "Objetivo unico",
+      "phases": [
+        {
+          "phase_id": "F-1",
+          "title": "Fase unica",
+          "runs": [
+            {
+              "run_id": "RUN-TODO_PRESENTE-001",
+              "queue_order": 1,
+              "title": "Primer run",
+              "summary": "Run de fixture.",
+              "status": "completed",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-TODO_PRESENTE-002",
+              "queue_order": 2,
+              "title": "Segundo run",
+              "summary": "Run de fixture.",
+              "status": "active",
+              "depends_on": [
+                "RUN-TODO_PRESENTE-001"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

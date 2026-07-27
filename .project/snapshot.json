@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-26T05:04:11.640Z",
-  "generated_from": "aiw-projector@0.7.0",
+  "generated_at": "2026-07-27T19:20:57.799Z",
+  "generated_from": "aiw-projector@0.8.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
@@ -11,6 +11,32 @@
     {
       "path": "package.json",
       "mtime": "2026-07-11T01:50:53.082Z"
+    }
+  ],
+  "emitted_artifacts": [
+    {
+      "artifact": "guardrails",
+      "path": ".project/guardrails.json"
+    },
+    {
+      "artifact": "no_claims",
+      "path": ".project/no_claims.json"
+    },
+    {
+      "artifact": "docs_index",
+      "path": ".project/docs_index.json"
+    },
+    {
+      "artifact": "roadmap",
+      "path": ".project/roadmap.json"
+    },
+    {
+      "artifact": "git_history",
+      "path": ".project/git_history.json"
+    },
+    {
+      "artifact": "snapshot",
+      "path": ".project/snapshot.json"
     }
   ],
   "operational_status": "active",

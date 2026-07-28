@@ -1547,3 +1547,416 @@ Referencias: [[D-049]] (el patrón de vocabulario declarado), [[D-050]] (el moto
 y la ruta de escritura que esto extiende), CONTRATO §10.a, §10.e, §12, §20.
 Criterio de borrado: la sustituye una decisión que cambie el modelo de carriles o
 adopte batch sobre estos campos.
+
+## D-052 — 2026-07-28 — El volteo de modo: canónico autorado en `aiw/roadmap/roadmap.json`, layout `repo_root`
+Primera de las cuatro decisiones que el operador aprobó sobre el roadmap de AIW.
+El documento que la razona —qué está en juego, opciones reales y costo medido de
+cada una— es `context/aiw-console/records/DECISION-ROADMAP-AIW.md` (D1, :54-179).
+Sus insumos son las dos mediciones del 2026-07-28
+(`records/MEDICION-ESTADO-DE-AIW.md`, `records/AUDIT-CONTENIDO-AIW.md`) y **aquí
+no se re-midió nada**: las citas de código (`PROJ:`, `Q:`, `K:`, `SERVE-LEGACY:`)
+son de segunda mano a través de esos dos records, y las de `CONTRATO` llegan por
+el documento de decisión, que sí lo leyó de primera mano. Este encargo **no
+ejecuta** la decisión: no escribe `aiw/roadmap/roadmap.json`, no emite ningún
+`.project/` y no toca `aiw` en ningún byte.
+
+**Lo decidido.** AIW estrena canónico **autorado** en `aiw/roadmap/roadmap.json`,
+layout `repo_root`. Escribir ahí un `roadmap_tree_v1` conforme hace que
+`detectRootMode(aiw)` deje de devolver `aiw_objectives` y devuelva `roadmap_tree`
+(PROJ:792-793 vía MEDICION R2); los dos modos son excluyentes por root. El
+archivo es **fuente autorada, no derivada**, con el precedente exacto del roadmap
+propio de `aiw-console`: «Escribir a mano en `roadmap/` no viola §18; hacerlo en
+`.project/` sí lo violaría» ([[D-044]]).
+
+**Por qué `repo_root` y no `project_local_aiw`.** Un canónico bajo
+`project_local_aiw` caería en `.aiw/`, que está **gitignoreado**
+(`aiw/.gitignore:7` vía MEDICION §3.1): no llegaría al remoto, ni a la laptop, ni
+al knowledge — exactamente el problema que este proyecto viene resolviendo. Y
+`.aiw/roadmap/roadmap.json` es además la ruta donde el servidor legacy deposita
+la copia de entrega de la vista mode-1 (SERVE-LEGACY:71 vía MEDICION §4.2,
+tensión R3). `repo_root` es carpeta nueva, trackeable, sin colisión con nada
+existente en `aiw`, y la misma que ya usa `aiw-console` (MEDICION §4.2).
+
+**EL HECHO QUE SEPARA LAS AGUAS: el volteo cambia lo que la consola MUESTRA de
+AIW, no lo que el kernel HACE.** La ejecución de la cola no depende del modo: el
+kernel parsea el ticket que se le da y `queue.mjs` recorre
+`objectives/pending/*.md` (Q:49 vía AUDIT §2; K:281-283 vía AUDIT §3.d).
+**Ninguno de los dos lee ningún roadmap.** Lo único en juego es la vista.
+
+**Y el valor de esa vista está medido.** Los 11 tickets abiertos son **cero
+ejecutables hoy**: 6 no parsean bajo el kernel actual (AUDIT §1.2.a), 3 nombran
+un proyecto no registrado en la config (AUDIT §1.2.b) y 2 tienen su run APPROVED
+cerrado desde el 2026-07-19 (AUDIT §2); y no son el backlog de AIW, son cola del
+kernel contra otros proyectos —las dos poblaciones son disjuntas (AUDIT §1.3)—.
+Lo que la consola tiene disponible de AIW es del 2026-07-22, de un emisor 8
+versiones menores anterior (MEDICION §5.4); muestra como `active`/«Now» un run
+muerto hace 9 días (MEDICION §5.2.a); sus 16 títulos de snapshot dicen «Project»
+(MEDICION R11); sus `depends_on` son artificio de presentación (MEDICION §3.3.i);
+4 de sus «runs terminados» no tienen ningún log detrás (MEDICION §5.2.b) y dos
+archivos reclaman el id `000` (MEDICION §5.2.c). Otras dos carpetas de la cola
+(`qualification/`, `queue-e7/`) ya eran invisibles a esa vista de todos modos
+(MEDICION R14). En una línea: **esa vista hoy miente más de lo que informa.**
+
+**La cola deja de importar como vista canónica; la MATERIA no se pierde.** Las
+carpetas de `objectives/` siguen trackeadas en git (24 entradas, AUDIT §1), y la
+puerta de **`CONTRATO §18.b` queda abierta** para una vista de cola con emisor el
+día que un incidente la justifique — mismo régimen que [[D-055]]. No se inventa
+hoy: sería un artefacto nuevo con emisor para conservar datos cuyo valor la
+medición acaba de tasar.
+
+**La incógnita, y se respeta como tal.** `serve-project-console.mjs` llama
+`buildSnapshot`/`buildRoadmap` incondicionalmente, sin consultar el modo
+(SERVE-LEGACY:56-72 vía MEDICION R2), así que **[NO VERIFICADO]** si esas dos
+vistas mode-1 seguirían emitiéndose tras el volteo o desaparecerían. Lo verificado
+es que el shell nuevo y las tres rutas de escritura sí exigen layout (MEDICION
+R2). **La decisión NO depende de despejarla:** la vista se da por retirada como
+canónica en cualquiera de los dos desenlaces. Si se quisiera certeza, es medición
+sobre fixture, nunca sobre `aiw`.
+
+**Consecuencias declaradas.** (a) La regularización de los 16 `run_id` mutantes
+del proyector (CONTRATO §10.d Regla 1.b, tramo 2) se convierte en retiro en vez de
+arreglo, porque la vista que los emitía deja de ser canónica — **[INFERENCIA]**
+sobre el alcance del tramo 2; el contrato no se enmienda por esto. (b) La tensión
+R3 queda como está: ese residuo está ignorado y sin trackear, y no participa de
+esta decisión. (c) Para que la consola renderice AIW hará falta emitir su
+`.project/`; el registro ya apunta bien (MEDICION §4.1) y `guardrails`/`no_claims`
+no tienen fuente, así que su ausencia degrada anunciándose (CONTRATO §19-§20).
+Emisión, archivado de los 2 tickets muertos y borrado de residuos son actos de
+encargos posteriores. (d) Los 3 tickets de `parked/` declaran `# Project` →
+`jame_snapshot`, no registrado en la config (AUDIT §1.2.b): ese caso roza
+`cantu-studio`, **se NOMBRA y pasa a su hilo**, sin ticket y sin recomendación de
+arreglo.
+
+Referencias: `context/aiw-console/records/DECISION-ROADMAP-AIW.md` D1 (:54-179),
+el documento que razona esta decisión; [[D-044]] (el precedente de `roadmap/` como
+fuente autorada), [[D-053]] (la portabilidad de la evidencia, escrita en el mismo
+acto), [[D-055]] (el régimen de mecanismo nuevo que gobierna la puerta de §18.b),
+CONTRATO §18, §18.b, §19-§20, §10.d Regla 1.b.
+Criterio de borrado: la sustituye una decisión que cambie el layout canónico de
+AIW o que restituya la vista de cola como canónica.
+
+## D-053 — 2026-07-28 — Portabilidad de la evidencia de AIW: `logs/` se versiona, `.aiw/` no, los audits mudan y `git_history.json` pasa a de-máquina
+Segunda de las cuatro. La razona
+`context/aiw-console/records/DECISION-ROADMAP-AIW.md` (D2, :183-308), sobre las
+mismas dos mediciones del 2026-07-28 y con el mismo régimen de cita: lo que aquí
+se afirma de `MEDICION`/`AUDIT` va por § o por línea, y las citas de código son de
+segunda mano. **Este encargo no ejecuta nada de esto:** no se toca ningún
+`.gitignore`, no se muda ningún archivo y no se ejecuta git en ninguna forma que
+escriba.
+
+**El problema medido.** Tres superficies quedan fuera de git: `aiw/logs/` y
+`aiw/.aiw/` (gitignoreados, `aiw/.gitignore` líneas 4 y 7 vía MEDICION §3.1) y
+`_reference/` (`AIW_Workspace/` no es repo; los dos audit reports no están dentro
+de ninguno, AUDIT §5). Consecuencia viva: **toda la evidencia de ejecución de AIW
+existe solo en esta máquina** (MEDICION R10) — la laptop clonó de GitHub y ve cero
+runs (MEDICION §5.2.e), y el knowledge de la cabina tampoco los ve.
+
+**EL ARGUMENTO DE GOBERNANZA QUE LA SOSTIENE.** `CONST:30` exige el incidente
+documentado en `DECISIONES.md` con sus cuatro campos, y **los dos incidentes
+reales que hoy existen viven en archivos gitignoreados**:
+`logs/INCIDENT-2026-07-11.md` y el forense del `000-sandbox`. AUDIT §6.5 lo
+constata de los dos `.md` sueltos de `logs/` —«están gitignoreados
+(`aiw/.gitignore:4`) y existen solo en esta máquina»— y AUDIT §6.1 levanta el
+forense del segundo. La cadena probatoria de la constitución depende hoy de una
+máquina: es literalmente «por qué el diff matinal no lo cazó» (`CONST:31`)
+convertido en política permanente. Son los dos incidentes que [[D-055]] documenta.
+
+**Las cuatro adjudicaciones.**
+1. **`aiw/logs/` — SE VERSIONA** (retirar la línea 4 del `.gitignore`, en el
+   encargo posterior). Costo declarado y aceptado: los 8 `summary.md` citan rutas
+   del workspace demolido (MEDICION §5.2.d) y se versionan tal cual, como registro
+   histórico inmutable; `000-sandbox` versiona una contradicción viva —dos runs en
+   una carpeta (AUDIT §6.1, punto 4)—, que no es motivo para ocultarla: es
+   exactamente el incidente que [[D-055]] documenta; y la evidencia llega al remoto
+   al ritmo del cierre de sesión, no en vivo. El volumen no es objeción: 52
+   archivos trackeados hoy (MEDICION §3.1), 9 carpetas de run en 17 días de vida.
+2. **`aiw/.aiw/` — SIGUE DE MÁQUINA**, no se toca su ignore. Su único contenido es
+   un snapshot stale en la ruta pre-002 (MEDICION §3.1), que el handoff ya lista
+   como residuo; y bajo [[D-052]] **nada canónico aterriza ahí jamás**: el canónico
+   va a `roadmap/` y lo emitido a `.project/`. Versionarlo solo haría viajar un
+   artefacto derivado y viejo; borrar el residuo es higiene de un encargo
+   posterior.
+3. **Los dos audit reports de `_reference/audits/` MUDAN a
+   `projects/aiw-console/context/aiw/`.** Hoy existen solo en esta máquina porque
+   `_reference/` no está dentro de ningún repo (AUDIT §5), y son insumos citados
+   por línea en los records de este hilo: dejarlos ahí deja citas que solo esta
+   máquina puede abrir. La casa natural es donde ya vive el contexto de gobernanza
+   de AIW mudado por [[D-037]]. **Sobre el resto de `_reference/` no se decide
+   nada:** la medición solo abrió `audits/` y esta entrada no afirma qué más hay.
+4. **`.project/git_history.json` — DE MÁQUINA, EN TODO EMISOR**, y **el resto de
+   `.project/` de AIW SÍ se versiona.** Razón del primero: es estructuralmente
+   imposible tenerlo commiteado y al día a la vez —**el commit que lo actualiza lo
+   desactualiza**, porque el artefacto describe N commits y su commit es el N+1— y
+   es el único artefacto cuya fuente (`.git`) **ya viaja con todo clon**, así que
+   regenerarlo en local es siempre posible y siempre más fresco que cualquier copia
+   commiteada; su regeneración además tiene botón y ruta (`history/sync`). Razón
+   del segundo: `.project/` deriva de fuentes versionadas, es reproducible y
+   comparable (CONTRATO §6), y es lo que hace que AIW muestre algo fuera de esta
+   máquina. Versionarla no la vuelve fuente: la fuente sigue siendo `roadmap/` y
+   las carpetas (CONTRATO §2, §18; [[D-044]]).
+
+**LA ADJUDICACIÓN DE `git_history.json` ES TRANSVERSAL, y se declara como tal.**
+No alcanza solo a AIW: alcanza también a **`aiw-console`** —donde hoy está
+versionado; el commit `b09dc4a` de este repo lo trae en su diff, verificado en este
+encargo— y a **`cantu-studio`**. Se recomienda uniforme a propósito: una excepción
+por proyecto sería una regla más que recordar. **Su ejecución se parte por hilo:**
+lo de `aiw` y lo de `aiw-console` son de sus encargos posteriores; **lo de
+`cantu-studio` pasa a su hilo**, y aquí solo se nombra — sin ticket y sin
+recomendación de arreglo. Y **[NO VERIFICADO]** si la regla roza `CONTRATO §19`,
+que hoy registra esa dependencia de máquina declarando la degradación («historia no
+disponible»); si la roza, la enmienda es de otro acto, no de éste.
+
+**Lo que queda condicionado, y no condiciona el resto.** La columna «knowledge» de
+D2 depende de R8, la contradicción medida entre `RM-AIW:5-8` ([[D-034]]: el repo
+`aiw` se sincroniza como knowledge) y `aiw/CONTEXTO.md` (`aiw-console` es el único
+sincronizable) — MEDICION §1.1, R8. **Cuál de las dos es verdad no es un hecho de
+disco:** es configuración de la cabina, se le pide al operador, y de su respuesta
+cuelga cuál de los dos documentos se corrige en el encargo posterior. Ninguna de
+las cuatro adjudicaciones de arriba depende de esa respuesta.
+
+Referencias: `context/aiw-console/records/DECISION-ROADMAP-AIW.md` D2 (:183-308),
+el documento que razona esta decisión; [[D-052]] (el volteo que esto hace
+portable), [[D-055]] (los dos incidentes cuya cadena probatoria esto rescata),
+[[D-037]] (la casa de `context/aiw/`), [[D-044]] (fuente autorada vs derivada),
+`aiw/CONSTITUCION.md:30-31`, CONTRATO §2, §6, §18, §19.
+Criterio de borrado: la sustituye una decisión que cambie el reparto de qué
+evidencia viaja en git.
+
+## D-054 — 2026-07-28 — Identidad y orden del roadmap de AIW: colisión aceptada, `roadmap_id`, tercer espacio 1..N, `RUN-AIW-*`; y la prioridad O0↔O4
+Tercera de las cuatro. La razona
+`context/aiw-console/records/DECISION-ROADMAP-AIW.md` (D3, :312-408), con el mismo
+régimen de cita. **Ninguna de las cuatro piezas exige enmendar el contrato**, y ésa
+es la mitad de lo que esta entrada registra: el contrato o ya las gobierna, o
+guarda silencio y se deja escrita la **condición de disparo** —el patrón de la
+Regla 4 de §10.d— para el día que aparezca el consumidor que obligue a decidir.
+
+**1. `objective_id` — se acepta la colisión léxica; el hueco `O4` es permanente.**
+AIW traería `O1..O3, O5, O6`, que colisionan léxicamente con los de Cantu; su `O4`
+—el caso engañoso, mismo tema que el `O4` de la consola (MEDICION R5)— **no
+existe**, y ese hueco permanente disuelve por construcción la peor colisión. Es
+legal hoy: `CONTRATO §10.d` Regla 1 exige unicidad global del **`run_id`** y **no
+dice nada del `objective_id`** (MEDICION R5); el contrato no fija ni su forma ni su
+unicidad. El precedente es exacto: «`objective_id` conserva el hueco (`O0`, `O4`) —
+es identidad, no se renumeró; el hueco dice la verdad» ([[D-046]]). Un namespace
+(`AIW-O1`) sería inventar una forma sin ejemplar contra dos roadmaps que ya usan
+`O<n>` desnudo — el patrón que `CONTRATO §3.b` prohíbe. **Sin enmienda. Condición
+de disparo:** el día que un consumidor necesite dirigirse a un objetivo A TRAVÉS de
+proyectos —hoy ninguno lo hace, `depends_on` es de run a run (CONTRATO §10.a)—, se
+delibera con ese consumidor enfrente.
+
+**2. `roadmap_id` — se adopta `"roadmap"`, sabiendo lo que es.** Vale `"roadmap"`
+en los dos roadmaps existentes: es el nombre del archivo, no el del proyecto
+(MEDICION R6; verificado de primera mano en este encargo sobre
+`projects/aiw-console/roadmap/roadmap.json`, que da `roadmap_id: "roadmap"`). Con
+AIW serían tres iguales. **[NO VERIFICADO]** que algún consumidor lo lea — la
+identidad de proyecto viaja por el registro y por `project_id`, no por esta clave.
+Darle a AIW `"aiw"` no compraría desambiguación para ningún lector medido y
+rompería la convención con dos ejemplares; arreglar los tres tocaría Cantu —**se
+nombra y pasa a su hilo**— y la consola, por un campo sin lector. El contrato lista
+la clave sin asignarle semántica (§10.a). **Sin enmienda. Condición de disparo:** el
+primer consumidor que lea `roadmap_id`; ese día se decide si identifica proyecto o
+archivo, con el lector enfrente.
+
+**3. `queue_order` — tercer espacio 1..N, y nace conforme.** El contrato ya lo
+gobierna: la secuencia es global **por archivo**, densa y única (§10.a, con los
+invariantes del motor verificándola, §10.e), y ningún barrier cruza archivos
+(§10.e, [[D-051]]). Dos precedentes en disco arrancan en 1 (MEDICION R7). Un orden
+inter-proyecto almacenado no existe en el modelo y sería un derivado persistido —
+la enfermedad de §12.c. **Sin enmienda:** AIW nace conforme, y la dimensión
+inter-proyecto que R7 señala no es del dato, es la prioridad de abajo.
+
+**4. Los `run_id` nuevos acuñan `RUN-AIW-<SLUG>-<NNN>`** (§10.d Regla 1.a),
+prefijo que [[D-046]] ya reservó — «ése es del kernel». Los 16 ids mutantes del
+proyector no se regularizan aquí (Regla 1.b, tramo 2; ver [[D-052]]). **Sin
+enmienda:** es forma ya gobernada, y se deja constancia.
+
+**LA PRIORIDAD O0↔O4, con su triage CERRADO.** Es lo que [[D-046]] dejó abierto con
+plazo «antes del tramo 5». El triage que la recomendación exigía **se hizo: el
+contenido de los tres runs vivos de O0 se leyó y NO reveló trabajo vivo y
+urgente.** Con eso la condición se resuelve en el sentido recomendado — **lo vivo
+de O4 va por delante de la cola de O0**: q35-q38, paridad → UI/UX → AIW → corte
+(verificado en el canónico: `RUN-CONSOLE-PARIDAD-RENDER-CANTU-001`,
+`RUN-CONSOLE-UI-UX-001`, `RUN-CONSOLE-AIW-TERCER-PROYECTO-001`,
+`RUN-CONSOLE-CORTE-RETIRO-LOCAL-001`, los cuatro `planned`), que es donde apunta la
+única compuerta real declarada. **El reorden de la cola NO se ejecuta aquí:** queda
+pendiente como **acto de edición propio** en la consola (dry-run → confirm, la ruta
+de `O4.P12`, [[D-050]]), **antes de la paridad** (`O4.P5`).
+
+**HECHO MEDIDO, no intención.** El run
+`RUN-CANTU-PROJECT-CONSOLE-LATENT-DEFECTS-001` (`queue_order` 10, O0) **pasó de
+`active` a `planned`**, editado desde la consola y commiteado como **`b09dc4a`**
+(«roadmap: el run #10 de O0 pasa de active a planned; .project re-emitido»). Razón:
+no estaba en curso, y O4 no tiene ningún run `active`. **Verificado contra el
+canónico en disco en este encargo:** `projects/aiw-console/roadmap/roadmap.json` da
+hoy ese run en `planned`, `queue_order` 10, bajo `O0.P3`; el archivo entero —45
+runs, `queue_order` 1..45 denso— **no contiene ningún run `active`** (36
+`completed`, 9 `planned`); y el commit `b09dc4a` existe con ese mensaje y su diff
+toca `roadmap/roadmap.json`.
+
+Referencias: `context/aiw-console/records/DECISION-ROADMAP-AIW.md` D3 (:312-408),
+el documento que razona esta decisión; [[D-046]] (el hueco, el prefijo y la
+prioridad que esto cierra), [[D-050]] (la ruta de escritura `O4.P12` por la que irá
+el reorden), [[D-051]] (`queue_order` denso y los barriers por archivo),
+[[D-052]] (los 16 ids mutantes), CONTRATO §3.b, §10.a, §10.d Reglas 1 y 4, §10.e,
+§12.c.
+Criterio de borrado: N/A (fija identidades; las condiciones de disparo escritas
+arriba la reabren pieza por pieza cuando aparezca el consumidor que cada una
+nombra).
+
+## D-055 — 2026-07-28 — `CONSTITUCION §4` como criterio de aceptación fijo del roadmap de AIW; cuatro casos, tres entran
+Cuarta de las cuatro. La razona
+`context/aiw-console/records/DECISION-ROADMAP-AIW.md` (D4, :412-491).
+`aiw/CONSTITUCION.md` §4 y §6 se leyeron **de primera mano** en este encargo; lo de
+`MEDICION`/`AUDIT` va citado por § y es de segunda mano salvo donde se diga. **Aquí
+no se escribe ningún run:** la norma se registra, y los runs la aplicarán el día que
+el roadmap de AIW se escriba.
+
+**LA NORMA.** Todo run del roadmap de AIW que **añada mecanismo** lleva, como
+criterios de aceptación **fijos**:
+1. **la cita de la entrada de `DECISIONES.md` que documenta su incidente**, con los
+   cuatro campos de `CONST:30-32` — fecha, qué se rompió, qué costó, por qué el
+   diff matinal no lo cazó. «Una idea no es un incidente. Un miedo no es un
+   incidente» (`CONST:32`);
+2. **su criterio de borrado escrito** en esa misma entrada — «se elimina si X»
+   (`CONST:33`); la convención ya existe en este log, donde las entradas cierran
+   con «Criterio de borrado:»;
+3. **su presupuesto declarado de líneas contra el techo**: cuántas añade al kernel
+   y, si lo excede, qué se borra — «Para añadir, se borra» (`CONST:28-29`). El
+   techo son ~500 líneas y hoy hay **22 de holgura (478/500)**; su enforcement es
+   **humano y documental** — no hay test, ni hook, ni check en la suite que lo
+   compruebe (AUDIT §4).
+
+**Alcance de «mecanismo», transcrito del documento de decisión:** código o paso
+nuevo en `aiw` — kernel, cola, lanzadores, guards. **No lo son:** papeles (roadmap,
+records, decisiones), ediciones de `.gitignore`, archivado de tickets, ni el trabajo
+del lado consola — ese lo gobierna el CONTRATO, no la constitución.
+
+**Y la norma se aplica a sí misma: no se automatiza.** Un check de techo o de
+incidente en la suite sería un **detector**, la clase nominalmente prohibida de
+`CONST:34-35`, y nacería sin incidente. El criterio es documental, como el
+enforcement que ya existe.
+
+**CASO 1 — MANIFEST POR RUN: ENTRA.** Añade mecanismo (el kernel escribiría un
+artefacto de identidad y desenlace por run). Su incidente, con los cuatro campos:
+**fecha** 2026-07-11; **qué se rompió** — el run 2 del id `000-sandbox` reutilizó la
+carpeta de log del run 1, porque `logDir` deriva solo del nombre del objetivo, sin
+timestamp, sin contador y sin comprobar que la carpeta ya exista (`K:283` vía AUDIT
+§6.1, punto 4), y murió antes de escribir `objective.md`, así que la carpeta quedó
+**afirmando APPROVED mientras el archivo archivado afirma ERROR** — dos verdades
+sobre el mismo id, y las dos ciertas sobre runs distintos (AUDIT §6.1); **qué
+costó** — la consola muestra un `completed` y un `blocked` para el mismo número, y
+el forense exigió arqueología de mtimes 17 días después (AUDIT §6.1, tabla de
+mtimes: todo el run 1 el 2026-07-10 entre 19:56:07 y 19:56:53, y `preflight.txt`
+solo, del run 2, el 2026-07-11 00:00:33); **por qué el diff matinal no lo cazó** —
+`logs/` está gitignoreado y la evidencia no participa de ningún diff (MEDICION
+§3.1; cruza con [[D-053]]), y el desenlace fue exit 1 de `Abort`, sin diff de código
+que revisar (AUDIT §6.1, punto 1: `ERROR` no es un veredicto, no existe en
+`OUTCOMES`, es la etiqueta que `Q:18` asigna al exit 1). **Criterio de borrado:**
+«se elimina si la evidencia por run gana identidad única por otra vía (p. ej.
+`logDir` irrepetible) **y** una revisión mensual (`CONST:44-47`) pasa sin que ningún
+forense ni ninguna revisión matinal lo consulte». **Presupuesto:** debe caber en las
+22 líneas de holgura o nombrar qué borra.
+
+**CASO 2 — LANZADOR DESACOPLADO: ENTRA.** Añade mecanismo del lado de la cola. Su
+incidente es `logs/INCIDENT-2026-07-11.md`, cuyo resumen citable es AUDIT §6.5:
+**fecha** 2026-07-11; **qué se rompió** — el terminal que alojaba `queue.mjs` murió
+entre `06:04:32Z` y `~06:20Z`, node saltó el `finally`, el lock sobrevivió huérfano
+y el proceso `claude` del executor —desprendido de la consola por `shell:true` +
+`windowsHide:true`— siguió editando `aiw-console` ~15 minutos hasta que el humano lo
+mató; **qué costó** — un proceso editando sin gobierno, un lock huérfano, la carpeta
+`logs/002-canonical-path-and-autoproject-orphan-20260711/` (que conserva solo
+`objective.md` y `preflight.txt`) y cuatro reparaciones M1-M4, hoy visibles como los
+comentarios `M1`-`M4` que encabezan `K:62-96`; **por qué el diff matinal no lo
+cazó** — el post-mortem entero vive en un archivo gitignoreado (`aiw/.gitignore:4`,
+AUDIT §6.5), y lo que un diff matinal habría mostrado son las ediciones que el
+executor desprendido dejó sobre `aiw-console`, no la ventana huérfana que las
+produjo. **[INFERENCIA]** en ese cuarto campo: su redacción definitiva sale del
+propio `INCIDENT-2026-07-11.md`, que este encargo **no abrió** —su lectura quedó
+fuera del alcance—; lo escrito aquí se deriva de AUDIT §6.5. **Criterio de
+borrado:** «se elimina si la métrica 1 de `CONST:44-47` (noches corridas
+desatendido) no sube en la primera revisión mensual tras su estreno».
+
+**Y su run DEROGA POR ESCRITO una regla operativa vigente; la derogación se registra
+aquí.** La regla con la que cerró el propio post-mortem —**«el terminal del queue se
+queda abierto e intocado durante toda la ventana»** (AUDIT §6.5)— **queda derogada
+por el lanzador desacoplado el día que entre**, al estilo de la caducidad explícita
+de `CONTRATO §9`: la regla vieja se retira **nombrándola**, no se deja conviviendo
+con su contradicción. Un lanzador cuyo punto entero es que la ventana sobreviva al
+terminal, y una regla que exige no tocar el terminal, son la clase de doble verdad
+que este sistema lleva tres semanas matando.
+
+**CASO 3 — GATE DE EVALS: NO ENTRA.** Añadiría un paso nuevo en el round loop, y la
+costura existe y está medida (`K:391`, AUDIT §3.a), pero **no tiene incidente**
+—«una idea no es un incidente»— y es además de la clase «detector» de
+`CONST:34-35`: doblemente cerrado. **Esto contradice la estructura acordada, y se
+dice: gana la decisión.** En su lugar se escribe **su condición de disparo**, el
+patrón que el contrato ya usa dos veces (§10.d Regla 4; §6, revisión a hash): *el
+gate de evals se delibera el día que exista un incidente con los cuatro campos de
+`CONST:30-32` —un veredicto aprobado cuyo daño un eval habría cazado y el diff
+matinal no cazó— y ese día entra como cualquier otro mecanismo.* Si se quisiera pese
+a todo, la vía honesta no es el roadmap: es enmendar la constitución, que exige
+decisión humana explícita (`CONST:5`), y la cabina recomienda no hacerlo.
+
+**CASO 4 — TEST DE PARSEO DE TICKETS: ENTRA. Y ESTE CASO CONTRADICE AL DOCUMENTO DE
+DECISIÓN.** `DECISION-ROADMAP-AIW.md` lo agrupó con el gate de evals; **no son el
+mismo caso, y gana la decisión del operador**: el gate no tiene incidente, éste sí.
+Sus cuatro campos, **verificados contra AUDIT §1.2.a** en este encargo:
+- **Fecha:** la del commit `7659ff3`, llamado literalmente «aiw2: **english
+  normalization** + green-baseline preflight + supervised-run prep». **[NO
+  VERIFICADO]** — AUDIT §1.2.a nombra el commit pero no trae su fecha, y este
+  encargo no abrió el repo de `aiw`. Lo que sí está fechado es la **constatación**:
+  2026-07-28, cuando el audit ejecutó el parser contra los archivos reales.
+- **Qué se rompió:** `parseObjective` (`K:129-149`) normaliza cada encabezado H1 con
+  `stripAccents` (`K:120`) y luego busca las claves **en inglés** (`K:138-144`). Los
+  seis tickets de `qualification/` y `queue-e7/` llevan sus encabezados en español
+  (`# Proyecto`, `# Objetivo`, `# Criterios de aceptación`…), así que las tres
+  secciones requeridas salen vacías y `K:146-147` aborta. Ejecutado sobre los 11
+  archivos reales, los seis —`e5-secreto`, `e6-changes-requerido`, `e8-multiarchivo`,
+  `a-resta`, `b-multiplica`, `c-imposible`— dan `ABORT: missing required sections:
+  project, objective, criteria`. **Los seis SÍ corrieron en su día**
+  (`records/QUALIFICATION.md:16-23`): lo que cambió es el parser, no los tickets —
+  el template quedó en inglés (`templates/objective.md:4-23`) y los seis fixtures se
+  quedaron atrás.
+- **Qué costó:** los cinco desenlaces del kernel tienen fixture, pero **dos de esos
+  fixtures son de los seis que hoy no parsean** (AUDIT §6.4) — `BLOCKED` por
+  veredicto o por guard, que cubre `e5-secreto`, y `ROUNDS_EXHAUSTED` por
+  `CHANGES_REQUIRED` agotado con exit 2, que cubre `e6-changes-requerido`. Es decir:
+  **dos de los cinco desenlaces se quedaron sin fixture ejecutable.** Y los seis son
+  letra muerta: abortarían en `K:147` antes de tocar git, antes del lockfile y antes
+  del preflight.
+- **Por qué ningún diff lo cazó:** el cambio estuvo en el parser y en el template, y
+  **los seis tickets no aparecieron en ese diff porque no se tocaron** — «lo que
+  cambió es el parser, no los tickets» (AUDIT §1.2.a). Nada en la suite los ejecuta,
+  así que ninguna prueba se puso roja; y son además **invisibles a toda vista** de la
+  consola (fuera de `OBJECTIVE_CLASSIFICATIONS`, `PROJ:97`, vía MEDICION §3.1):
+  están en disco, en el repo y en el remoto, no aparecen en ninguna vista y tampoco
+  se pueden ejecutar. La rotura solo salió a la luz cuando el audit importó
+  `parseObjective` y lo corrió contra los 11 archivos reales, 17 días después.
+
+**Presupuesto de líneas: 0 contra el techo.** El test vive **en la suite, no en
+`kernel.mjs`**; no consume ni una de las 22 líneas de holgura. Ésa es también la
+diferencia de forma con el gate de evals, que sí sería un paso dentro del round
+loop. **Criterio de borrado** (redactado aquí; el documento de decisión no traía uno
+para este caso, porque no lo trataba como caso propio): «se elimina si los tickets
+en Markdown dejan de ser la entrada del kernel —el test se queda sin sujeto— o si
+los cinco desenlaces ganan fixture por otra vía que la suite sí ejecute».
+
+**El resto de la estructura acordada no cae bajo §4:** escritura del roadmap,
+carriles y barriers como dato, papeles, archivados, `.gitignore` y emisión de
+`.project/` son dato y papel, o trabajo del lado consola. Los carriles y barriers ya
+los gobierna `CONTRATO §10.e` ([[D-051]]). **El barrido run por run se cierra al
+escribir el roadmap**, aplicando esta norma a cada run nuevo.
+
+Referencias: `context/aiw-console/records/DECISION-ROADMAP-AIW.md` D4 (:412-491),
+el documento que razona esta decisión; `aiw/CONSTITUCION.md` §4 (:28-35) y §6
+(:44-47), leídos de primera mano; `records/AUDIT-CONTENIDO-AIW.md` §1.2.a, §4,
+§6.1, §6.4 y §6.5, las cuatro secciones contra las que se verificaron los
+incidentes; [[D-053]] (la portabilidad que mete los dos incidentes dentro de git),
+[[D-052]] (mismo régimen: la puerta de §18.b solo se abre con incidente),
+[[D-051]] (carriles y barriers, ya gobernados por el contrato), CONTRATO §9 (la
+caducidad explícita que el caso 2 imita), §10.d Regla 4 y §6 (el patrón de condición
+de disparo que usa el caso 3).
+Criterio de borrado: la sustituye una decisión que cambie el régimen de `CONST §4`
+en el roadmap de AIW, o que resuelva de otro modo cualquiera de los cuatro casos.
+Los criterios de borrado de los tres mecanismos que entran son los escritos arriba y
+no caducan con esta entrada.

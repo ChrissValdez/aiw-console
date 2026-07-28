@@ -1,27 +1,37 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-28T06:16:24.292Z",
+  "generated_at": "2026-07-28T07:14:24.536Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-28T05:29:38.160Z"
+      "mtime": "2026-07-28T07:10:00.320Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-28T02:07:30.227Z"
+      "mtime": "2026-07-28T06:53:48.836Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "ed1bf49830a6d1dc768816393329100fa019ed6b",
+  "head": "6519ba596c790ad051e2261141ef6688800f1384",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 52,
+  "commit_total": 53,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "6519ba5",
+      "full_sha": "6519ba596c790ad051e2261141ef6688800f1384",
+      "date": "2026-07-28T00:24:51-06:00",
+      "parents": "ed1bf49",
+      "subject": "consola: boton de re-emision de .project/ y tercera ruta de escritura",
+      "body": "- Guarda espejo: edicion nunca en .project/, emision solo en .project/\n\n- Compuerta de canonico antes de emitir; 409 nombrado en vez de caida del server\n\n- Matriz read-only medida por test; suite 278/278\n\n- Pins obsoletos de cantu-studio actualizados 53 -> 71",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "ed1bf49",

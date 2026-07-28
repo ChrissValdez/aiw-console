@@ -513,6 +513,36 @@
                 "RUN-CONSOLE-LANES-BARRIERS-001"
               ],
               "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-CONSOLE-CANTU-IMPL-DOC-SPLIT-001",
+              "queue_order": 33,
+              "title": "Split of the runs that packed implementation and documentation together (`cantu-studio`)",
+              "summary": "The SECOND HALF of the lanes migration: the 17 Web component runs and the whole-set audit are split into an implementation half and a documentation half, so Cantu's `DOCUMENTATION` lane stops being 5 runs out of 53. Cantu goes 53 → 71 runs and its lanes 48/5 → 48/23. Recorded in `context/aiw-console/records/PARTICION-IMPLEMENTACION-Y-DOCUMENTACION-CANTU.md`.",
+              "full_description": "DELIVERED and committed as `ed1bf49`; its record is `context/aiw-console/records/PARTICION-IMPLEMENTACION-Y-DOCUMENTACION-CANTU.md`. THE SECOND HALF OF THE LANES MIGRATION, and the record says so in its own opening: the first half (`RUN-CONSOLE-CANTU-LANES-MIGRATION-001`) dealt the 53 existing runs between `DEVELOPMENT` and `DOCUMENTATION` and uncovered the problem this run fixes — the documentation lane came out with 5 runs of 53, not because Cantu documents little but because the roadmap was written BEFORE lanes existed and packed \"audit, implement AND document\" into a single run, which forbids exactly the parallelism lanes were introduced for: documenting component 1 while component 2 is implemented. WHAT WAS SPLIT, MEASURED AND NOT ASSUMED: the 17 runs were located BY THEIR TEXT (the ones whose `full_description` ends in the documentation sentence) and the set matched, exactly, the 17 edges `RUN-JAME-WEB-READINESS-EVIDENCE-001` declares; the script aborted if the two lists disagreed, and it did not abort. Two corrections to the commission were measured and recorded: phase `O1.P3` DOES NOT EXIST (the 17 live in `O1.P1B`, `O1.P1C` and `O1.P2`), and the packet contract is `RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001`, not the candidate the commission named. TEXT WAS DEALT, NOT DRAFTED: the documentation sentence migrated verbatim to the new half; the only drafted prose is the framing of the documentation half of the whole-set audit, and that is declared. IN FIGURES, on Cantu's canonical file: 53 → 71 runs, `queue_order` 1..71 dense, unique and contiguous, 7 objectives and 28 phases unchanged, 0 dangling dependencies, 0 renumbered identities, lanes `DEVELOPMENT` 48 · `DOCUMENTATION` 5 → 23, 30 non-ASCII bytes before and after. The two whole-set audits converge WITHOUT CROSSING: 17 implementation edges into `RUN-JAME-WEB-READINESS-EVIDENCE-001`, 17 documentation edges into `RUN-CANTU-WEB-DOCUMENTATION-EVIDENCE-001`, verified edge by edge. THE WRITE PATH WAS THE ENGINE: 22 operations through `planEdit` → `applyPlan`, rehearsed end to end on a COPY first, and the canonical came out byte-identical to the rehearsal. THE WORK LANDED IN CANTU, THE RECORD LIVES HERE, AND SO DOES THE RUN: lanes are a capability of this console (D-051), Cantu is where they were applied. NOTHING OF THIS ROADMAP WAS TOUCHED by that commission — `roadmap/roadmap.json` was md5 `58a726908ece58b59922ee0232b1eb15` before and after — and no `.project/` was re-emitted by it; Cantu's projection caught up later through the button of `RUN-CONSOLE-PROJECT-REEMIT-ROUTE-001` (commit `73945e56`). PLACED IN THIS PHASE because the phase title's second half — \"and their first real application\" — is exactly what this is: the same application, continued. ADDED ON 2026-07-28 by the roadmap closeout commission, for a record that had no run.",
+              "status": "completed",
+              "depends_on": [
+                "RUN-CONSOLE-CANTU-LANES-MIGRATION-001"
+              ],
+              "closeout_result": "completed_successfully"
+            }
+          ]
+        },
+        {
+          "phase_id": "O4.P15",
+          "title": "Manual re-emission of `.project/` — the console's third write route",
+          "runs": [
+            {
+              "run_id": "RUN-CONSOLE-PROJECT-REEMIT-ROUTE-001",
+              "queue_order": 34,
+              "title": "The `Re-emit .project/` button — a third write route, for a canonical somebody else edits",
+              "summary": "`.project/` is a PROJECTION and under parallel lanes the canonical is edited by another workshop, so the projection falls behind with no way to catch up. This run adds `POST …/__project-console/project/emit`, its mirror-image boundary guard and its canonical pre-check, and measures the read-only matrix again. Recorded in `context/aiw-console/records/REEMISION-MANUAL-PROJECT-O4-P14.md`.",
+              "full_description": "DELIVERED and committed as `6519ba5`; its record is `context/aiw-console/records/REEMISION-MANUAL-PROJECT-O4-P14.md`. THE PROBLEM: `.project/` is a PROJECTION whose canonical lives elsewhere, and until this run there were exactly two ways for it to be re-emitted — automatically after an edit confirm, and manually for ONE artifact via `history/sync`. Neither covers the normal case under the new methodology: THE CANONICAL IS EDITED BY SOMEBODY ELSE. Under parallel lanes commissions do NOT re-emit by design (two workshops writing the same `.project/` would collide), so the canonical advances and the projection stands still. The real case that motivated it: the implementation/documentation split took Cantu from 53 to 71 runs, the console kept showing 53, and the operator had to INVENT an edit — add a space to a title and remove it — to provoke the re-emission that follows a confirm. A BUTTON AND NOT AN AUTO-REFRESH, decided by the cabin: a watcher or a poll would rewrite six VERSIONED files under the operator's feet and dirty a Git working tree by a decision he did not take. Writing is an act and acts are asked for; the button says what it will do before and what it did after, with numbers, and it does NOT commit. WHAT LANDED: `POST /projects/<key>/__project-console/project/emit` in `project-console/serve.mjs`, with seven gates in a fixed order (method, locality, project, boundary, canonical, lock, write), each refusing without opening a file. THE BOUNDARY GUARD IS A MIRROR: `resolveEmissionWritePath` accepts only inside `.project/`, `resolveCanonicalWritePath` accepts everything but `.project/` — the two PARTITION the registered root between them, and that is proved as a property, not as a pair of cases. THE CANONICAL PRE-CHECK is what stops a half-emission: read, parse, shape gate, `checkInvariants` with external dependencies resolved from the registry (42 ids) — and the record measures that this last part is not decoration, because with an empty `externalRunIds` the pre-check would refuse to re-emit the very project that motivated the phase. A refusal NAMES THE FILE even when the server has none: `aiw` gets both candidate paths back with a verdict each. QA FOUND AND FIXED A CRASH: a malformed canonical (`depends_on` as an object) passed the shape gate, made the engine throw from an async handler and TOOK THE SERVER DOWN; the pre-check now wraps the engine call and answers `409 canonical_not_a_roadmap_tree` with the file named, fixed by two tests. THE READ-ONLY MATRIX IS MEASURED, not maintained by hand: exactly THREE routes accept POST, ZERO accept PUT/PATCH/DELETE, printed by the test that measures it. PLACED IN A NEW PHASE, NOT IN `O4.P12`: that phase's title names TWO write routes — \"the console edits the roadmap (dry-run→confirm) and syncs the history\" — and this is a THIRD, with its own guard, its own gates and its own record. THE RECORD'S OWN FILENAME CLAIMS `O4.P14`, and the cabin did not assign it: `O4.P14` is \"Lanes and barriers in the roadmap schema (D-051), and their first real application\", which does not cover a write route. The phase id is assigned here, `O4.P15`, new and never reused. ADDED ON 2026-07-28 by the roadmap closeout commission, for a record that had no run.",
+              "status": "completed",
+              "depends_on": [
+                "RUN-CONSOLE-ESCRITURA-ROADMAP-HISTORY-001"
+              ],
+              "closeout_result": "completed_successfully"
             }
           ]
         },
@@ -522,7 +552,7 @@
           "runs": [
             {
               "run_id": "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001",
-              "queue_order": 33,
+              "queue_order": 35,
               "title": "Global console renders Cantu (parity, operator QA)",
               "summary": "Bring the global console up over Cantu in read-only and reach parity with the local console, with operator QA.",
               "full_description": "It absorbs the bullet 'Consola global en aiw-console' (global console in aiw-console) (RM-AIW:149-151): Base, Cantu's console (the most advanced one). It is brought up ALONGSIDE the local one, pointing at Cantu in read-only first. The local one is not touched until parity. The global console renders Cantu reading its .project/ folder, and parity with the local one is reached with operator QA. ONE run until it is planned in detail.",
@@ -537,7 +567,7 @@
           "runs": [
             {
               "run_id": "RUN-CONSOLE-UI-UX-001",
-              "queue_order": 34,
+              "queue_order": 36,
               "title": "UI/UX of the global console",
               "summary": "Editing and UX of the global console, which the source explicitly defers to after read-only parity.",
               "full_description": "Stage 8 has no bullet of its own in the source: it lives only in prose. Editing and UX come after (RM-AIW:119-120) the read-only criterion of stable console, and can already go in parallel; new Features (batches, UI) only in the global one (RM-AIW:157). That this stage lacks a numbered bullet is part of the mismatch declared in the record. ONE run until it is planned in detail.",
@@ -552,7 +582,7 @@
           "runs": [
             {
               "run_id": "RUN-CONSOLE-AIW-TERCER-PROYECTO-001",
-              "queue_order": 35,
+              "queue_order": 37,
               "title": "AIW as a third project (roadmap Markdown → JSON v3)",
               "summary": "AIW enters the global console as a third project: its roadmap goes from temporary Markdown to JSON v3 and its .project/ folder is emitted.",
               "full_description": "The AIW part of 'Los tres roadmaps al contrato' (the three roadmaps to the contract) (RM-AIW:134): AIW goes from temporary markdown (roadmap_AIW_temp.md) to JSON v3 and enters the console with its real roadmap. AIW appears as a rendered manual-run project — the kernel never executes it. Important distinction: this drafting (O4) already took O4 to the roadmap of the CONSOLE because O4 is the objective of the console; stage 6 is the conversion of the COMPLETE roadmap of AIW (O1, O2, O3, O5, O6) to its own v3 and the removal of O4 from RM-AIW, which is a separate commission (§12 of the drafting commission). ONE run until it is planned in detail.",
@@ -567,7 +597,7 @@
           "runs": [
             {
               "run_id": "RUN-CONSOLE-CORTE-RETIRO-LOCAL-001",
-              "queue_order": 36,
+              "queue_order": 38,
               "title": "Cutover: retirement of Cantu's local console and deletion of .aiw",
               "summary": "When the global one renders and edits the same as the local one, retire the local one as a deliberate and recorded act, and delete .aiw.",
               "full_description": "Bullet 'Paridad y corte' (parity and cutover) (RM-AIW:155-157): when the global one renders and edits the same as the local one, the local one is retired as a deliberate and recorded act. New Features (batches, UI) only in the global one. The cutover includes the deletion of .aiw, which coexisted additively until here (contract §0, cutover of stage 7); the cost is measured: the day .aiw is deleted, 10 paths of Cantu's validator go red (CANTU-VALID:153-166). depends_on cites the explicit gate of the source: the local one is not touched until parity (RM-AIW:151, :155-156). ONE run until it is planned in detail. REINFORCED GATE (real depends_on): besides parity (RUN-CONSOLE-PARIDAD-RENDER-CANTU-001), the cutover now depends on the UI/UX review (RUN-CONSOLE-UI-UX-001) — the cutover is IRREVERSIBLE and does not proceed without the review of use. Both gates require explicit operator approval.",
@@ -585,7 +615,7 @@
           "runs": [
             {
               "run_id": "RUN-CONSOLE-MERGE-005-001",
-              "queue_order": 37,
+              "queue_order": 39,
               "title": "Merge of 005 into aiw-console",
               "summary": "The status honesty of the projector (ERROR/HUMAN_REVIEW → blocked, parked → Later, titles from # Objective); AIW's console lights up.",
               "full_description": "The status honesty of the projector (ERROR/HUMAN_REVIEW → blocked, parked → Later, titles from # Objective). Verified by tests BEFORE merging: branch of 005 with 31 green tests (5 files), green again on main after merge --no-ff (29c9478), pushed. Coupling adjustment of the move: projects.config.json corrected ../aiw → ../../aiw (the kernel went up one level when it moved). AIW's console LIGHTS UP: the server (serve-project-console.mjs, port 8787) re-projects on startup (project=aiw, objectives=16), Overview/Roadmap/Queue alive with real data, operator visual QA OK. 006 was already merged from before. MINOR polish pending (non-blocking): banner some optional local state files could not be loaded (benign) and the layout looks somewhat shifted (probably cache/state). Prior to the stage plan: it belongs to none of them; that is why it lives in the cross-cutting phase. Its high queue_order does NOT reflect chronology — queue_order follows the presentation order of the phase, and this phase goes at the end of the range of O4.",
@@ -595,7 +625,7 @@
             },
             {
               "run_id": "RUN-CONSOLE-LANZADOR-START-CONSOLE-001",
-              "queue_order": 38,
+              "queue_order": 40,
               "title": "`start-console` launcher at the root of the repo",
               "summary": "Double-click startup for the multi-project console: it verifies the checkout, frees the port, opens the browser. Tooling, not a console stage.",
               "full_description": "TOOLING work, not console-stage work: that is why it lives in the cross-cutting phase and not in the sequence of stages. Run CREATED IN THE RECORD CLOSEOUT of 2026-07-25 — the work was delivered with no run to cover it. DELIVERED AND CLOSED. IT HAS NO RECORD OF ITS OWN, and none was invented for it: its documentation is `start-console.README.md`, and the files are `start-console.cmd` and `start-console.ps1` at the root of the repo. What it does, according to that documentation: it derives the root of the repo from the location of the launcher itself and VERIFIES it by demanding `project-console/serve.mjs` and `project-console/projects.json` —no absolute path, no machine or user name baked in, so it works in any checkout and from any directory—; it stops the node process holding the port and verifies that it was freed, which is the failure it exists for (an old server holding the port and serving earlier code while one believes one is looking at the current one), and if whoever holds it is NOT node it reports so and refuses to start instead of fighting for it; it prints the exact URL and opens the browser when the port responds. Port 8788 by default —that of the server itself—, `PC_PORT` replaces it and the launcher operates on that one: it is the one it frees, verifies, prints and opens. What it starts is READ-ONLY: starting the console cannot change this repo nor any of the ones it reads. `depends_on` declared over the shell and not empty because `project-console/projects.json` —one of the two files the launcher demands in order to start— was born in `O4.P3`.",
@@ -607,7 +637,7 @@
             },
             {
               "run_id": "RUN-CONSOLE-CONTEXT-PACK-001",
-              "queue_order": 39,
+              "queue_order": 41,
               "title": "Context pack of the console",
               "summary": "A pack that carries RULES (not the plan): what the console is, the danger of the validator that asserts source text, derived vs canonical, the folder structure as a rule.",
               "full_description": "It carries RULES, not the plan (the plan is state and lives in the roadmap): what the console is, the danger of the validator that asserts source text, what is derived vs canonical, the folder structure as a rule. Tension noted: D-037/D-038 already moved the cockpit context to context/aiw-console/, with which this item is PARTIALLY superseded; deciding what is left alive in it is NOT part of this drafting commission. Cross-cutting: it does not map to a single stage.",
@@ -616,7 +646,7 @@
             },
             {
               "run_id": "RUN-CONSOLE-DIGEST-CABINA-001",
-              "queue_order": 40,
+              "queue_order": 42,
               "title": "Digest for the cockpit",
               "summary": "One more view of the projector: one file with the state of the three projects, dated and with SHA, to detect obsolescence.",
               "full_description": "One more view of the projector: ONE file with the state of the three projects (HEAD+branch+dirty, counts by state, active runs, next step, no-claims), dated and with SHA to detect obsolescence. Small, derived, never edited by hand. The source itself downgrades it from prerequisite to optimization: with the sync of the repo it is no longer a prerequisite, it is context optimization (RM-AIW:148). Downgraded is not dead. Cross-cutting: it does not map to a single stage.",
@@ -625,13 +655,25 @@
             },
             {
               "run_id": "RUN-CONSOLE-ROADMAP-ENGLISH-001",
-              "queue_order": 41,
+              "queue_order": 43,
               "title": "This roadmap is translated into English, through the engine",
               "summary": "The canonical roadmap mixed Spanish runs (O4) with English ones (O0); this run leaves it entirely in English by TRANSCRIPTION, not rewriting — same numbers, same quotes, same paths, same scope. Recorded in `context/aiw-console/records/TRADUCCION-ROADMAP-A-INGLES.md`.",
               "full_description": "DELIVERED and committed as `25b96b4`; its record is `context/aiw-console/records/TRADUCCION-ROADMAP-A-INGLES.md`. THE CANONICAL ROADMAP mixed Spanish prose (O4) with English prose (O0); this run leaves it entirely in English BY TRANSCRIPTION AND NOT BY REWRITING — every sentence keeps exactly what it asserted, with the same numbers, the same quotations, the same paths and the same scope. It applies the language rule fixed by `RUN-CONSOLE-LANES-QA-LANGUAGE-001`. IN FIGURES: 124 prose fields in the roadmap (1 root title + 2 objective titles + 16 phase titles + 35 runs × 3), of which 83 were translated and 41 were already in English — the root title plus the WHOLE of O0, which had not one sentence to translate. Zero whole fields were left untranslated for ambiguity. THE WRITE PATH WAS THE ENGINE: the JSON was not hand-edited. `set-text` was measured to cover run `title`/`summary`/`full_description` and phase and objective `title`, and it was used in a SINGLE `batch` of 37 sub-ops through `planEdit` → `applyPlan`, re-reading the written file with `checkInvariants` as the post-write authority. O0 came out BYTE-IDENTICAL — 19,845 bytes, md5 `8f954764427c6720361b01f3d785d075` — which is the live integrity check this objective has carried since `O4.P1`. THE ONE TOKEN LEFT BEHIND was `closeout_result: \"descartado_por_D-048\"` on `RUN-CONSOLE-PROTOTIPO-CONSOLA-001`, deliberately, because it is a token and not prose; the closeout commission of 2026-07-27 adjudicated it and it now reads `discarded_by_D-048`. PLACED IN THIS PHASE because it belongs to no stage of the nine-stage sequence: it is roadmap maintenance that cuts across all of them, which is what this phase holds. ADDED ON 2026-07-27 by the roadmap closeout commission, for a record that had no run.",
               "status": "completed",
               "depends_on": [
                 "RUN-CONSOLE-ESCRITURA-ROADMAP-HISTORY-001"
+              ],
+              "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-CONSOLE-LANE-EXECUTION-DISCIPLINE-001",
+              "queue_order": 44,
+              "title": "Parallel-execution discipline — \"one run at a time PER LANE\"",
+              "summary": "Cantu's process rule still declared SERIAL execution: written before lanes existed, it contradicted the methodology D-051 introduced. This run replaces it in the three places it lives and writes the four disciplines parallelism forces, and the `cantu-studio` thread relay hangs off it. Recorded in `context/aiw-console/records/DISCIPLINA-UN-RUN-POR-CARRIL.md`.",
+              "full_description": "DELIVERED and committed as `ed1bf49`; its record is `context/aiw-console/records/DISCIPLINA-UN-RUN-POR-CARRIL.md`. THE PROBLEM: the process rule declared SERIAL execution — \"ONE run at a time. Commit + confirm a clean git log BEFORE issuing the next ticket.\" — written before lanes existed, so a thread reading it would keep executing serially even with the roadmap already migrated. IT WAS MEASURED FIRST: a sweep of the whole workspace with thirteen declared patterns found the literal rule in exactly ONE place (`context/cantu-studio/CANTU_STUDIO_CONTEXT.md`), and the same seriality in pre-lane vocabulary in Cantu's own `AGENTS.md` and `CLAUDE.md` (pipeline rule 7, \"a single executor per phase\"); `cantu-studio/CONSTITUCION.md` DOES NOT EXIST, which the sweep also had to establish. THE NEW RULE: one run at a time PER LANE; lanes run in parallel, a single lane never runs two. THE HALF THAT WAS ALREADY RIGHT WAS NOT DELETED — \"NEVER launch two simultaneous runs touching the SAME file\" stays word for word, now with the condition that makes it operative under lanes: two lanes are parallel ONLY if their write surfaces are DISJOINT, and two runs that would touch the same file go in SERIES even in different lanes. THE FOUR DISCIPLINES PARALLELISM FORCES, written down: a commission never closes its own run and never re-emits `.project/` — it DECLARES the status its run must land in and the operator closes it from the global console, which is THE SERIALISATION POINT; the operator is the only one who runs Git, so a ticket does not wait on a clean git log; the full suite is never run in two workshops at once; write surfaces must be disjoint. THREE FILES WRITTEN, EACH IN ITS OWN LANGUAGE: the governance context here in English, `AGENTS.md` and `CLAUDE.md` in Cantu in Spanish (+11/−1 lines each). RULE 8 (\"components are not implemented in parallel\") WAS LEFT INTACT by cabin decision, read as component scope and not as scheduling; the kernel's `aiw/CONSTITUCION.md:41` lockfile rule was left alone as a different rule, with the vocabulary clash reported. THE RULE WAS PROVED WHILE IT WAS BEING WRITTEN: the record measured a real live collision — another workshop wrote Cantu's canonical eighty seconds before this commission wrote its governance files, disjoint surfaces, no damage. THE `cantu-studio` THREAD RELAY (`context/handoffs/cantu-studio.md`, created in this same commit) HANGS OFF THIS RUN AND HAS NO RUN OF ITS OWN: the project criterion is one run per RECORD and the relay has none; it is declared EPHEMERAL and overwritten each session, so a run pointing at it could never be verified against disk in the form it was delivered; and it is this discipline's first artifact — the relay without which a second thread cannot exist. PLACED IN THIS PHASE because it maps to none of the nine stages: it is methodology that cuts across all of them, which is what this phase holds, and it is the same reasoning that placed `RUN-CONSOLE-ROADMAP-ENGLISH-001` here. It was considered for `O4.P14` and rejected: that phase is the schema and its application to a roadmap, and this is a rule about how workshops execute. ADDED ON 2026-07-28 by the roadmap closeout commission, for a record that had no run.",
+              "status": "completed",
+              "depends_on": [
+                "RUN-CONSOLE-LANES-BARRIERS-001"
               ],
               "closeout_result": "completed_successfully"
             }
@@ -643,7 +685,7 @@
           "runs": [
             {
               "run_id": "RUN-CONSOLE-PROTOTIPO-CONSOLA-001",
-              "queue_order": 42,
+              "queue_order": 45,
               "title": "Prototype of the global console",
               "summary": "Prototype of the global console against REAL DATA: it reads aiw-console's own roadmap (2 objectives, 30 runs). First consumer of roadmap_tree_v1 and first operator-approval gate.",
               "full_description": "Prototype of the global console built AGAINST REAL DATA: it reads projects/aiw-console/roadmap/roadmap.json, which already exists with 2 objectives (O0, O4) and 30 runs. NO mockups and no invented data — that is exactly the pattern of the hand-written v0.3 that the contract exists to kill (D-039). It is besides the FIRST REAL CONSUMER of roadmap_tree_v1 (layer 2 of the contract, D-040), so it exercises the consumer-test doctrine (D-026) BEFORE the emitter is built: if the format does not hold up, it is known here and not three phases later. New phase O4.P10, placed THIRD in the objective (after the contract O4.P1, before the emitter O4.P2), to give a visible result early. It is the FIRST GATE of operator approval: RUN-CONSOLE-SHELL-MULTIPROYECTO-001 depends on this prototype being APPROVED and is not built in parallel. The gate requires explicit operator approval. ONE run until it is planned in detail. RETIRED AS A PHASE DELIVERABLE BY D-048 — the operator asked for an IDENTICAL MIGRATION of Cantu's console before the multi-console, with which the order that this run inaugurated (D-047: the prototype first) is reversed. NOTHING IS DELETED: the console/ prototype is still on disk and its knowledge deliverable is KEPT INTACT in context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md, which already served its purpose — roadmap_tree_v1 is consumable and held up against real data without inventing; its limit is what it delegates to the contract (the status vocabulary and the objective/phase derivation rule), an input the emitter inherits. The prototype→shell gate that D-047 wrote dissolves here: the multi-console comes to depend on the identical port. This run will not be executed again; its completed status says that it ran and closed (the code exists and the verdict is written) and closeout_result says HOW it closed. There is no token 'descartado' (discarded) in the closed vocabulary of run (CONTRATO §11.a: planned/active/blocked/completed), so the retirement travels in closeout_result, which is a free string (§14), and in this note. The phase stays at the end of the objective: it is history, not plan.",

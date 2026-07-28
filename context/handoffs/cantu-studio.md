@@ -30,6 +30,13 @@ cada uno dejó su record:
 
 **Ningún run está `active`.** Última actualización de este handoff: **2026-07-27**.
 
+> **RETOQUE del 2026-07-28** (cierre de registro; `records/CIERRE-REGISTRO-Y-RELEVO-TERCERO.md`).
+> **Un solo cambio de fondo:** el pendiente 1 decía que el `.project/` de Cantu estaba
+> desfasado (53 contra 71) y **ya no lo está** — se re-emitió y se commiteó. Está
+> corregido ahí, con la medición en disco y con la vía que lo resuelve en adelante: el
+> botón *Re-emit `.project/`* de la consola global. **Todo lo demás de este relevo se
+> conserva sin tocar**, y sus cifras siguen siendo las del 2026-07-27 con sus fuentes.
+
 ## El plan y el estado viven en el roadmap — no aquí
 
     projects/cantu-studio/.aiw/roadmap/roadmap.json
@@ -192,18 +199,40 @@ otra).
 
 ## Pendientes que son del OPERADOR, no del taller
 
-1. **`.project/` de Cantu está DESFASADO, a propósito.** Los seis artefactos
-   conservan `mtime` de las **17:43** del 2026-07-27, y su `.project/roadmap.json`
-   trae **53 runs** donde el canónico ya trae **71** (contado en los dos archivos).
-   **La consola mostrará 53 hasta que el operador haga su próxima escritura desde
-   ella**, que re-emite sola. No hay nada que arreglar; hay que saberlo antes de
-   mirar la consola y creer que la partición no ocurrió
-   (`records/PARTICION…` F.5 e I.1).
+1. ~~**`.project/` de Cantu está DESFASADO.**~~ **YA NO — resuelto y commiteado.**
+   Cuando este handoff se escribió, los seis artefactos conservaban `mtime` de las
+   17:43 del 2026-07-27 y su `.project/roadmap.json` traía **53 runs** donde el
+   canónico ya traía 71 (`records/PARTICION…` F.5 e I.1). **Se re-emitió**:
+   verificado en disco el **2026-07-28**, los seis artefactos llevan `generated_at`
+   `2026-07-28T06:15:51.858Z` y `.project/roadmap.json` trae **71 runs, 7 objetivos y
+   28 fases — las mismas cifras que el canónico**, contadas en los dos archivos; los
+   23 runs con `lane` explícito están en los dos. Commiteado como `73945e56`
+   («project: re-emision desde el boton de la consola»), y `git status --porcelain`
+   de Cantu está **vacío**.
+   **La vía para ese desfase, de aquí en adelante, es el BOTÓN.** La consola global
+   tiene **`Re-emit .project/`** en la fila de controles de la pestaña Roadmap: es la
+   **tercera ruta de escritura** (`POST …/__project-console/project/emit`), re-emite
+   los seis artefactos del proyecto seleccionado y **no commitea** — deja el diff
+   para el operador. Existe precisamente porque bajo carriles paralelos **los
+   encargos no re-emiten por diseño**, así que el canónico avanza y la proyección se
+   queda quieta; antes del botón el operador tenía que **inventar una edición** para
+   provocar la re-emisión. Su record es
+   `records/REEMISION-MANUAL-PROJECT-O4-P14.md` (Bloques A, B y C), y el acuse
+   esperado para Cantu es **`6 artifacts · 71 runs`**.
+   **El desfase puede volver** en cuanto un encargo en carril paralelo toque el
+   canónico: la regla operativa es **pulsar el botón después**, no re-emitir desde el
+   encargo.
 2. **Trabajo sin commitear en los dos repos.** `cantu-studio`: `.aiw/roadmap/roadmap.json`,
    `AGENTS.md` y `CLAUDE.md` modificados sobre HEAD `b4e8ed0f`. `aiw-console`:
    `context/cantu-studio/CANTU_STUDIO_CONTEXT.md` modificado y los dos records nuevos
    sin trackear, sobre HEAD `897c710`. Leído con `git status --porcelain`, **sólo
    lectura**. Git es del operador.
+   **YA NO — el operador commiteó los dos.** Medido el **2026-07-28**:
+   `cantu-studio` está en HEAD `73945e56` con `git status --porcelain` **vacío**;
+   `aiw-console` está en HEAD `6519ba5`. Lo que sí hay sin commitear en `aiw-console`
+   es lo que escribió **este cierre de registro** (el roadmap, seis pins de conteo en
+   cuatro tests, los dos handoffs y su record) — es trabajo de este hilo, no de
+   aquél, y el commit sigue siendo del operador.
 3. **La arista del #q63 sin decidir.** `RUN-JAME-PRODUCTION-LESSON-VALIDATION-001`
    nombra «Web, documentation, and Slide readiness evidence» y su arista de
    documentación apunta al **modelo canónico**, no a la evidencia de documentación de
@@ -273,7 +302,7 @@ o el lanzador de doble clic `start-console.cmd` / `start-console.ps1`
 (`start-console.README.md`). Puerto **8788** por defecto, `PC_PORT` lo sustituye.
 Cantu está registrado con la clave **`cantu-studio`** en
 `project-console/projects.json`, apuntando a `../../cantu-studio`; la consola lee su
-**`.project/`**, no su canónico — de ahí el pendiente 1.
+**`.project/`**, no su canónico — por eso existe el botón del pendiente 1.
 
 Esa consola es **la única que puede editar el canónico de Cantu** y **el punto de
 serialización** de la disciplina: su endpoint de escritura es

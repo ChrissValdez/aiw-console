@@ -148,7 +148,7 @@ test("aiw-console still renders exactly as measured, with the second project reg
   assert.equal(result.ok, true);
   assert.equal(result.snapshot.project_id, "aiw_console");
   assert.match(harness.element("roadmap-v3-tree").innerHTML, /Global Console/);
-  assert.match(harness.element("console-source-files").innerHTML, /2 objectives \/ 18 phases \/ 42 runs/);
+  assert.match(harness.element("console-source-files").innerHTML, /2 objectives \/ 19 phases \/ 45 runs/);
   assert.equal(harness.sandbox.document.title, "AIW Console Roadmap — Project Console");
 });
 
@@ -222,9 +222,9 @@ test("counts, open document, docs mode and vocabulary all reset across a switch 
   assert.ok(!readerAfter.includes(openedDoc.path), `the document open in aiw-console (${openedDoc.path}) is still open`);
   assert.ok(!readerAfter.includes(openedDoc.title), `the title of the aiw-console document survived the switch`);
 
-  // Counts: the diagnostics line reports cantu-studio's tree, not the 2/18/42 of aiw-console.
+  // Counts: the diagnostics line reports cantu-studio's tree, not the 2/19/45 of aiw-console.
   const counts = harness.element("console-source-files").innerHTML;
-  assert.doesNotMatch(counts, /2 objectives \/ 18 phases \/ 42 runs/);
+  assert.doesNotMatch(counts, /2 objectives \/ 19 phases \/ 45 runs/);
   // [O4.P14] 53 -> 71 runs: cantu-studio's canonical gained the documentation lane. The
   // objective and phase counts did not move; only the runs did.
   assert.match(counts, /7 objectives \/ 28 phases \/ 71 runs/);

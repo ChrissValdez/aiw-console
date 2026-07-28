@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-28T07:14:24.536Z",
+  "generated_at": "2026-07-28T07:45:02.640Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-28T07:10:00.320Z"
+      "mtime": "2026-07-28T07:14:48.202Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,14 +14,24 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "6519ba596c790ad051e2261141ef6688800f1384",
+  "head": "fbba1cc6009b35ec3668273d215cdfb6c1f3690e",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 53,
+  "commit_total": 54,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "fbba1cc",
+      "full_sha": "fbba1cc6009b35ec3668273d215cdfb6c1f3690e",
+      "date": "2026-07-28T01:14:48-06:00",
+      "parents": "6519ba5",
+      "subject": "cierre: tres runs nuevos, handoffs al dia, y medicion del estado de AIW",
+      "body": "- O4.P15 nueva: ruta de re-emision; 2/19/45; O0 byte-identico\n\n- Handoff de aiw-console reescrito; dos afirmaciones falsas corregidas\n\n- Handoff de cantu-studio retocado\n\n- Record MEDICION-ESTADO-DE-AIW con 14 riesgos",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "6519ba5",

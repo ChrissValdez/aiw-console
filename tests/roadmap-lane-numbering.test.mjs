@@ -331,7 +331,7 @@ test("the real counts and the global numbering are exactly what the canonicals s
     for (const phase of objective.phases) for (const run of phase.runs) orders.push(run.queue_order);
   }
   orders.sort((a, b) => a - b);
-  assert.equal(orders.length, 35);
+  assert.equal(orders.length, 42);
   assert.deepEqual(queuePositions(harness).slice().sort((a, b) => a - b), orders);
 
   const cantu = makeHarness();

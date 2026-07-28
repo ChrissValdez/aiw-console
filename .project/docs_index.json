@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-28T01:06:03.317Z",
+  "generated_at": "2026-07-28T02:17:52.115Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
@@ -51,6 +51,10 @@
     {
       "path": "context/aiw-console/records/CARRILES-Y-BARRIERS-ROADMAP.md",
       "mtime": "2026-07-27T21:52:55.842Z"
+    },
+    {
+      "path": "context/aiw-console/records/CIERRE-ROADMAP-AL-DIA-FASES-P13-P14.md",
+      "mtime": "2026-07-28T02:17:45.499Z"
     },
     {
       "path": "context/aiw-console/records/CORRECCIONES-QA-CARRILES-Y-REGLA-DE-IDIOMA.md",
@@ -304,6 +308,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-27T21:52:55.842Z"
+    },
+    {
+      "title": "CIERRE DEL ROADMAP AL DÍA — la fase entregada, la afirmación falsa, los siete huérfanos y el token",
+      "path": "context/aiw-console/records/CIERRE-ROADMAP-AL-DIA-FASES-P13-P14.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-28T02:17:45.499Z"
     },
     {
       "title": "CORRECCIONES DEL QA DE CARRILES, Y LA REGLA DE IDIOMA DE LA CONSOLA",

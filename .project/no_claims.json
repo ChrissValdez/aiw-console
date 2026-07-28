@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-27T20:07:31.697Z",
-  "generated_from": "aiw-projector@0.8.0",
+  "generated_at": "2026-07-28T01:06:03.317Z",
+  "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": "governance/no_claims.json",

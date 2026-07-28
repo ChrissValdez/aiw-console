@@ -55,7 +55,7 @@ const joinedDump = (harness) => Array.from(harness.dump().values()).join("\n----
 // `RUN-CANTU-` or `RUN-JAME-`: BOTH roadmaps use those prefixes (aiw-console's tree is full of
 // RUN-CANTU-* ids), so a prefix sweep would prove nothing here. These are roadmap titles,
 // objective titles and the model identifier — each present in exactly one of the two trees.
-const AIW_CONSOLE_ONLY = ["AIW Console Roadmap", "Consola global", "roadmap_tree_v1"];
+const AIW_CONSOLE_ONLY = ["AIW Console Roadmap", "Global Console", "roadmap_tree_v1"];
 const CANTU_ONLY = ["Cantu Studio Roadmap", "Asset Deduplication Layer", "Cantu Studio Web Components"];
 
 // The renderer's docs mode is a module-local `let`, so it is observed the way the operator does:
@@ -113,7 +113,7 @@ test("cantu-studio renders from its own emitted folder: overview, roadmap, queue
   const tree = harness.element("roadmap-v3-tree").innerHTML;
   assert.match(tree, /Cantu Studio Web Components/);
   assert.match(tree, /Asset Deduplication Layer/);
-  assert.doesNotMatch(tree, /Consola global/);
+  assert.doesNotMatch(tree, /Global Console/);
   assert.match(harness.element("run-queue-v3").innerHTML, /\S/);
 
   // Overview and title come from its own snapshot.
@@ -147,7 +147,7 @@ test("aiw-console still renders exactly as measured, with the second project reg
   const result = await select(harness, "aiw-console");
   assert.equal(result.ok, true);
   assert.equal(result.snapshot.project_id, "aiw_console");
-  assert.match(harness.element("roadmap-v3-tree").innerHTML, /Consola global/);
+  assert.match(harness.element("roadmap-v3-tree").innerHTML, /Global Console/);
   assert.match(harness.element("console-source-files").innerHTML, /2 objectives \/ 16 phases \/ 35 runs/);
   assert.equal(harness.sandbox.document.title, "AIW Console Roadmap — Project Console");
 });

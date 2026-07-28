@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-27T20:07:31.697Z",
-  "generated_from": "aiw-projector@0.8.0",
+  "generated_at": "2026-07-28T01:06:03.317Z",
+  "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": "README.md",
@@ -14,7 +14,7 @@
     },
     {
       "path": "context/DECISIONES.md",
-      "mtime": "2026-07-26T04:28:48.958Z"
+      "mtime": "2026-07-27T21:49:11.790Z"
     },
     {
       "path": "context/MIGRATION-REPORT.md",
@@ -26,7 +26,7 @@
     },
     {
       "path": "context/aiw-console/CONTRATO.md",
-      "mtime": "2026-07-27T19:17:12.925Z"
+      "mtime": "2026-07-27T21:48:27.392Z"
     },
     {
       "path": "context/aiw-console/records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md",
@@ -41,8 +41,20 @@
       "mtime": "2026-07-27T20:07:25.994Z"
     },
     {
+      "path": "context/aiw-console/records/ANCHO-DE-SUBVISTAS-CAUSA-RAIZ-FLEX.md",
+      "mtime": "2026-07-27T20:33:51.326Z"
+    },
+    {
       "path": "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md",
       "mtime": "2026-07-23T18:54:06.458Z"
+    },
+    {
+      "path": "context/aiw-console/records/CARRILES-Y-BARRIERS-ROADMAP.md",
+      "mtime": "2026-07-27T21:52:55.842Z"
+    },
+    {
+      "path": "context/aiw-console/records/CORRECCIONES-QA-CARRILES-Y-REGLA-DE-IDIOMA.md",
+      "mtime": "2026-07-27T22:39:04.869Z"
     },
     {
       "path": "context/aiw-console/records/DOCS-INDICE-CURADO-TRANSPORTADO.md",
@@ -85,6 +97,10 @@
       "mtime": "2026-07-24T08:46:34.694Z"
     },
     {
+      "path": "context/aiw-console/records/MIGRACION-CANTU-A-CARRILES.md",
+      "mtime": "2026-07-27T23:56:19.623Z"
+    },
+    {
       "path": "context/aiw-console/records/MIGRACION-O0.md",
       "mtime": "2026-07-24T08:26:08.077Z"
     },
@@ -103,6 +119,10 @@
     {
       "path": "context/aiw-console/records/SHELL-MULTIPROYECTO-O4-P3.md",
       "mtime": "2026-07-25T12:09:10.299Z"
+    },
+    {
+      "path": "context/aiw-console/records/TRADUCCION-ROADMAP-A-INGLES.md",
+      "mtime": "2026-07-28T01:05:56.699Z"
     },
     {
       "path": "context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md",
@@ -211,7 +231,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-07-26T04:28:48.958Z"
+      "freshness": "2026-07-27T21:49:11.790Z"
     },
     {
       "title": "MIGRATION-REPORT — Centralización del contexto de gobernanza en aiw-console",
@@ -235,7 +255,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw-console",
-      "freshness": "2026-07-27T19:17:12.925Z"
+      "freshness": "2026-07-27T21:48:27.392Z"
     },
     {
       "title": "ACABADO VISUAL de Docs y EMISOR de `git_history` — cierre del port de la consola",
@@ -262,12 +282,36 @@
       "freshness": "2026-07-27T20:07:25.994Z"
     },
     {
+      "title": "ANCHO DE SUBVISTAS — la causa raíz era el margen `auto` sobre un ítem flex",
+      "path": "context/aiw-console/records/ANCHO-DE-SUBVISTAS-CAUSA-RAIZ-FLEX.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-27T20:33:51.326Z"
+    },
+    {
       "title": "AUDIT-CONSOLE-O4-PHASE0 — Mapa de estado real",
       "path": "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md",
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-23T18:54:06.458Z"
+    },
+    {
+      "title": "CARRILES Y BARRIERS — el roadmap gana líneas paralelas y puntos de sincronización (D-051)",
+      "path": "context/aiw-console/records/CARRILES-Y-BARRIERS-ROADMAP.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-27T21:52:55.842Z"
+    },
+    {
+      "title": "CORRECCIONES DEL QA DE CARRILES, Y LA REGLA DE IDIOMA DE LA CONSOLA",
+      "path": "context/aiw-console/records/CORRECCIONES-QA-CARRILES-Y-REGLA-DE-IDIOMA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-27T22:39:04.869Z"
     },
     {
       "title": "DOCS — el índice curado se TRANSPORTA, el escaneo queda de respaldo (`O4.P5`)",
@@ -350,6 +394,14 @@
       "freshness": "2026-07-24T08:46:34.694Z"
     },
     {
+      "title": "MIGRACIÓN DE CANTU-STUDIO A CARRILES",
+      "path": "context/aiw-console/records/MIGRACION-CANTU-A-CARRILES.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-27T23:56:19.623Z"
+    },
+    {
       "title": "MIGRACIÓN O0 — extracción del roadmap de Cantu a aiw-console",
       "path": "context/aiw-console/records/MIGRACION-O0.md",
       "nav_tier": "evidence",
@@ -388,6 +440,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-25T12:09:10.299Z"
+    },
+    {
+      "title": "TRADUCCIÓN DEL ROADMAP CANÓNICO DE `aiw-console` AL INGLÉS",
+      "path": "context/aiw-console/records/TRADUCCION-ROADMAP-A-INGLES.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-28T01:05:56.699Z"
     },
     {
       "title": "VEREDICTO — `roadmap_tree_v1` como formato consumible",

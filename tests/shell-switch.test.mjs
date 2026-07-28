@@ -53,7 +53,7 @@ test("the renderer paints aiw-console through the shell hooks exactly as measure
   assert.equal(result.snapshot.project_id, "aiw_console");
   const tree = harness.element("roadmap-v3-tree").innerHTML;
   assert.match(tree, /Project Console/);
-  assert.match(tree, /Consola global/);
+  assert.match(tree, /Global Console/);
   const consoleFiles = harness.element("console-source-files").innerHTML;
   assert.match(consoleFiles, /2 objectives \/ 16 phases \/ 35 runs/);
   const docsNav = harness.element("docs-nav-list").innerHTML;
@@ -75,7 +75,7 @@ test("switching to the synthetic project leaves NOTHING of the previous one on a
 
   // Markers of the previous project: its id, its run-id prefixes, its objective titles, its
   // doc titles. None may survive anywhere the renderer paints.
-  for (const marker of ["aiw_console", "RUN-CANTU-", "RUN-JAME-", "RUN-CONSOLE-", "Consola global", "AIW Console Roadmap"]) {
+  for (const marker of ["aiw_console", "RUN-CANTU-", "RUN-JAME-", "RUN-CONSOLE-", "Global Console", "AIW Console Roadmap"]) {
     assert.ok(!after.includes(marker), `previous-project marker "${marker}" survived the switch`);
   }
   // The fixture's own data is what paints now, with ITS vocabulary verbatim.

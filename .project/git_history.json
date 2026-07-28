@@ -1,27 +1,37 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-27T23:56:26.280Z",
+  "generated_at": "2026-07-28T01:06:04.876Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-27T23:51:29.490Z"
+      "mtime": "2026-07-27T23:59:55.404Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-26T05:04:11.635Z"
+      "mtime": "2026-07-28T00:54:24.078Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "5887f0a9c16a2c216e8af99ae82f34ae17b1c016",
+  "head": "e05c0a212027bdf360f9b0e60c83279ff7be5f34",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 48,
+  "commit_total": 49,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "e05c0a2",
+      "full_sha": "e05c0a212027bdf360f9b0e60c83279ff7be5f34",
+      "date": "2026-07-27T17:59:55-06:00",
+      "parents": "5887f0a",
+      "subject": "carriles: ops de barrier y declaracion, control en el modal, migracion de Cantu",
+      "body": "- set-barrier y declare-lanes en el motor; global deliberadamente incomodo\n\n- Cantu migrado por el motor: DEVELOPMENT 48 / DOCUMENTATION 5, cero barriers\n\n- Suite 259/259; contenido de los 53 runs intacto",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "5887f0a",

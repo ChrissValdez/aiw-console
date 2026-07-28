@@ -336,8 +336,20 @@ a deliberate, narrow exception.
 ## Process discipline
 
 ```text
-- ONE run at a time. Commit + confirm a clean git log BEFORE issuing the next ticket.
-- NEVER launch two simultaneous runs touching the SAME file.
+- ONE run at a time PER LANE. Lanes run in parallel; a single lane never runs two.
+  (This replaces the pre-lane rule "ONE run at a time. Commit + confirm a clean git
+  log BEFORE issuing the next ticket.", written before lanes existed.)
+- NEVER launch two simultaneous runs touching the SAME file. Two lanes are parallel
+  ONLY if their WRITE surfaces are disjoint: if two runs would touch the same file
+  they go in SERIES, even when their lanes differ.
+- A ticket never changes its own run's status and never re-emits .project/. Each
+  ticket DECLARES the status its run must land in; the operator closes it from the
+  global console, whose write endpoint writes the canonical and re-emits .project/
+  atomically. The console is the serialisation point.
+- The operator is the only one who runs Git, so commits are already serialised
+  there. A ticket does not wait on a clean git log before the next one is issued.
+- NEVER run the full suite in two workshops at once: one writes while the other
+  reads, and that produces phantom failures.
 - Perfect the SYSTEM (rules), not the individual document or panel.
 - Each ticket states explicitly whether it is a NEW executor session or the open one.
 - Paste ONLY the ticket block into an executor.

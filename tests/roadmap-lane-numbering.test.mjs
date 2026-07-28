@@ -280,7 +280,10 @@ test("cantu-studio renders its declared lanes: a selector with both, and a label
   assert.deepEqual(options.slice().sort(), ["", ...laneIds].sort(), "the selector offers exactly the declared lanes plus All lanes");
   // Every row carries its lane label, and every label names a declared lane.
   const tags = laneTags(harness, "run-queue-v3");
-  assert.equal(tags.length, 53, "every row of the queue carries a lane label");
+  // [O4.P14] 53 -> 71: cantu-studio's canonical gained the documentation lane's runs. A count
+  // pin on real data follows the data; what this test asserts — a label on EVERY row, each
+  // naming a declared lane — is unchanged.
+  assert.equal(tags.length, 71, "every row of the queue carries a lane label");
   for (const tag of tags) {
     assert.ok(laneIds.some((laneId) => tag.startsWith(`${laneId}-`)), `lane label ${tag} names no declared lane`);
   }
@@ -303,9 +306,11 @@ test("cantu-studio numbers locally per lane when filtered, and the counts match 
     byLane.get(laneId).push(run);
   }
   // The split the migration produced, asserted against the file rather than a literal.
-  assert.equal(runs.length, 53);
+  // [O4.P14] 53 -> 71 after the implementation/documentation partition; the DEFAULT lane's 48
+  // did not move (the partition only grew the documentation lane), which is why that pin stands.
+  assert.equal(runs.length, 71);
   assert.equal(byLane.get(defaultLane).length, 48);
-  assert.equal(Array.from(byLane.values()).reduce((n, list) => n + list.length, 0), 53);
+  assert.equal(Array.from(byLane.values()).reduce((n, list) => n + list.length, 0), 71);
   for (const [laneId, laneRuns] of byLane) {
     setLane(harness, laneId);
     const queue = queuePositions(harness).slice().sort((a, b) => a - b);
@@ -342,6 +347,6 @@ test("the real counts and the global numbering are exactly what the canonicals s
     for (const phase of objective.phases) for (const run of phase.runs) theirOrders.push(run.queue_order);
   }
   theirOrders.sort((a, b) => a - b);
-  assert.equal(theirOrders.length, 53);
+  assert.equal(theirOrders.length, 71); // [O4.P14] 53 -> 71, see above
   assert.deepEqual(queuePositions(cantu).slice().sort((a, b) => a - b), theirOrders);
 });

@@ -5171,6 +5171,42 @@ details[open] > summary > .v3-caret {
   text-align: right;
   color: var(--text-tertiary);
 }
+/* [O4.P14] The re-emission acknowledgement, and the measurement behind its shape. This row is
+   FULL: at 1280 with a two-lane project it measured 293 (sub-tabs) + 352 (lane picker) + 318
+   (edit controls) = 963 of 962 available px. So the acknowledgement had to be built to fit a row
+   with no spare width, and it is:
+
+     - the WORKING state is short and `nowrap` — the numbers the operator came for and nothing
+       else — so it never wraps and never grows the row. The whole sentence (the canonical it
+       emitted from, any skipped artifact, the reminder that nothing was committed) rides on the
+       element's `title`, so nothing measured is lost;
+     - a REFUSAL is allowed to wrap, exactly the way the edit hint beside it already does when
+       edit mode explains itself. It names the FILE the emission refused about, and an ellipsis
+       there would hide the one thing worth reading. A refusal is rare and worth the two lines.
+
+   `flex: 0 0 auto` keeps the short states at their natural width instead of being crushed to a
+   sliver by the row (measured: without it the span collapsed to 59px and stacked six lines tall,
+   pushing the roadmap down 68px). The refusal state hands `flex` back so it can use what is left.
+   Following this block's own rule (see its header): state is distinguished by WEIGHT and COPY,
+   not colour — every state reads from an existing neutral token. */
+.roadmap-emit-state {
+  flex: 0 0 auto;
+  font-size: 12px;
+  max-width: 360px;
+  text-align: right;
+  white-space: nowrap;
+  color: var(--text-tertiary);
+}
+.roadmap-emit-state.is-ok {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.roadmap-emit-state.is-failed {
+  flex: 0 1 auto;
+  white-space: normal;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
 /* Point 4: the second-level tab underline runs the full width of the roadmap toolbar (under
    both the Run Queue / Roadmap tabs AND the Edit toggle), so the toggle sits on a continuous
    baseline instead of past where the segmented control's own shorter line stopped. The active

@@ -1,5 +1,5 @@
-// Project Console — local server for N projects: read-only static serving plus EXACTLY TWO
-// write routes (O4.P12).
+// Project Console — local server for N projects: read-only static serving plus EXACTLY THREE
+// write routes (O4.P12 opened two; O4.P14 adds the third).
 //
 // Serves two namespaces:
 //
@@ -12,7 +12,7 @@
 //      is the only door out of the repo: a root that is not registered is not reachable,
 //      and a registered root is readable only inside itself (no traversal, never .git).
 //
-// THE TWO WRITE ROUTES (D-050 — this console stops being read-only, deliberately and only here):
+// THE THREE WRITE ROUTES (D-050 — this console stops being read-only, deliberately and only here):
 //
 //   POST /projects/<key>/__project-console/roadmap/edit    dry-run (apply:false) previews a
 //        bounded roadmap edit and writes nothing; apply (apply:true, with the dry-run baseline
@@ -23,17 +23,45 @@
 //   POST /projects/<key>/__project-console/history/sync    re-emits `.project/git_history.json`
 //        of that project from its own repository (read-only Git), so the History tab refreshes
 //        without restarting the server.
+//   POST /projects/<key>/__project-console/project/emit    re-emits ALL SIX artifacts of that
+//        project's `.project/` folder from its canonical roadmap (O4.P14). The same gesture the
+//        route above already performs for ONE derived artifact, extended to the whole folder.
 //
-// Both routes go through the same funnel: the project must be REGISTERED (the key resolves in
-// the registry), its root must be claimed by a known layout (detectRootLayout — admission by
-// tree SHAPE, never by a schema-name string), and every write destination is verified to sit
-// INSIDE that registered root — and never inside the derived `.project/` folder, which only
-// the emitter writes — after full path resolution (`resolveCanonicalWritePath`). A registry
-// entry whose root composes a destination anywhere else is refused and reported, not executed.
+// WHY THE THIRD ROUTE EXISTS. `.project/` is a PROJECTION of a canonical the console does not
+// own. Two of the ways it gets re-emitted are already here — after a confirmed roadmap edit, and
+// per-artifact for History — but a canonical edited by ANYONE ELSE (a workshop run, an editor,
+// another agent) leaves the projection behind with no way to catch it up. Under parallel lanes
+// that is the normal case, not the exception: workshop runs deliberately do NOT re-emit, because
+// two lanes writing the same `.project/` would overwrite each other. Before this route the only
+// way to force an emission from the console was to INVENT a roadmap edit (add a space to a title
+// and take it out) purely for the re-emission that follows a confirm. That detour is what this
+// route removes.
+//
+// A BUTTON, NOT AN AUTO-REFRESH — deliberately. This server writes `.project/` only when the
+// operator asks. Watching the canonical and re-emitting on change would make files move under
+// the operator's feet and dirty their Git working tree without an action of theirs. The console
+// writes on request, visibly, and never on a timer. Nothing here polls, watches or schedules.
+//
+// All three routes go through the same funnel: the project must be REGISTERED (the key resolves
+// in the registry), its root must be claimed by a known layout (detectRootLayout — admission by
+// tree SHAPE, never by a schema-name string), and every write destination is verified INSIDE
+// that registered root after full path resolution. The two path guards are MIRROR IMAGES of one
+// another and neither can write where the other does:
+//   resolveCanonicalWritePath   inside the root, and NEVER inside the derived `.project/`
+//                               (canonical territory — the roadmap edit route).
+//   resolveEmissionWritePath    inside the root, and ONLY inside the derived `.project/`
+//                               (emitter territory — the emission routes).
+// A registry entry whose root composes a destination anywhere else is refused and reported,
+// not executed.
 //
 // Everything else stays read-only by construction: any method other than GET/HEAD on any path
-// that is not one of the two routes above answers 405 read_only_console; `.git` is never served
-// or written in any namespace; escaping a root answers 403.
+// that is not one of the three routes above answers 405 read_only_console; `.git` is never
+// served or written in any namespace; escaping a root answers 403.
+//
+// NO GIT THAT WRITES, EVER. The emission reads Git to derive `git_history.json` (the same
+// read-only `for-each-ref` / `rev-parse` / `log` the History emitter has always run). Nothing
+// in this file stages, commits, pushes, or mutates a repository in any way: after re-emitting,
+// the operator reviews the diff and commits it themselves.
 //
 // The registry is DATA, not code: no project name or path lives in this file. The env var
 // PC_REGISTRY (path relative to the repo root, or absolute) points the server at an
@@ -42,7 +70,7 @@
 //
 // Boundaries:
 //   - Node built-ins only. No dependencies, no package install.
-//   - Writes ONLY through the two routes above: the canonical roadmap of a registered project
+//   - Writes ONLY through the three routes above: the canonical roadmap of a registered project
 //     (via the transplanted roadmap engine's atomic temp+rename with tmpdir backup) and that
 //     project's `.project/` folder (via the projector's atomic emitters). No other code path
 //     in this file opens a file for writing.
@@ -69,7 +97,14 @@ import {
   hasRoadmapTreeShape,
   writeProjectFolder,
   writeGitHistoryFile,
-  PROJECT_DIR
+  ROOT_LAYOUTS,
+  PROJECT_DIR,
+  PROJECT_GUARDRAILS_RELATIVE_PATH,
+  PROJECT_NO_CLAIMS_RELATIVE_PATH,
+  PROJECT_DOCS_INDEX_RELATIVE_PATH,
+  PROJECT_ROADMAP_RELATIVE_PATH,
+  PROJECT_GIT_HISTORY_RELATIVE_PATH,
+  PROJECT_SNAPSHOT_RELATIVE_PATH
 } from "../tools/projector/project.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -82,13 +117,29 @@ const REGISTRY_URL_PATH = "/project-console/projects.json";
 const REGISTRY_DEFAULT_PATH = join(HERE, "projects.json");
 // URL prefix of the virtual per-project namespace.
 const PROJECTS_URL_PREFIX = "/projects/";
-// The two write routes, as suffixes under /projects/<key>/. The client composes them from its
+// The three write routes, as suffixes under /projects/<key>/. The client composes them from its
 // active-project base, so the same constant shape serves every registered project. They are
 // intercepted BEFORE static file resolution (like the source console's /__project-console/*),
-// so a real file at either path inside a project is shadowed, never served.
+// so a real file at any of these paths inside a project is shadowed, never served.
 const ROADMAP_EDIT_SUFFIX = "__project-console/roadmap/edit";
 const HISTORY_SYNC_SUFFIX = "__project-console/history/sync";
+const PROJECT_EMIT_SUFFIX = "__project-console/project/emit";
 const ROADMAP_EDIT_MAX_BODY = 1000000; // 1 MB cap on the request body
+
+// THE SIX ARTIFACTS a full emission writes, in the emitter's own order (O4.P14). This list is
+// not a second opinion about what `writeProjectFolder` emits: it is the set of destinations the
+// boundary guard checks BEFORE the emitter runs, taken from the projector's own exported route
+// constants so it cannot drift from them. `git_history` is written only when the root is its own
+// repository — the emitter skips a null artifact — so a successful emission reports between five
+// and six files and never pretends a skipped one was written.
+const PROJECT_EMIT_ARTIFACT_PATHS = [
+  ["guardrails", PROJECT_GUARDRAILS_RELATIVE_PATH],
+  ["no_claims", PROJECT_NO_CLAIMS_RELATIVE_PATH],
+  ["docs_index", PROJECT_DOCS_INDEX_RELATIVE_PATH],
+  ["roadmap", PROJECT_ROADMAP_RELATIVE_PATH],
+  ["git_history", PROJECT_GIT_HISTORY_RELATIVE_PATH],
+  ["snapshot", PROJECT_SNAPSHOT_RELATIVE_PATH]
+];
 const PORT = Number(process.env.PC_PORT) || 8788;
 const HOST = "127.0.0.1";
 
@@ -182,9 +233,9 @@ async function resolveVirtualPath(urlPath) {
   return { absPath };
 }
 
-// ---------------------------------------------------------------- write routes (O4.P12)
+// ---------------------------------------------------------------- write routes (O4.P12 / O4.P14)
 
-// Match /projects/<key>/<one of the two write suffixes>. Returns { key, endpoint } or null.
+// Match /projects/<key>/<one of the three write suffixes>. Returns { key, endpoint } or null.
 // Routing happens on the DECODED path, so an encoded form of the same URL matches too.
 function matchWriteRoute(urlPath) {
   if (!urlPath.startsWith(PROJECTS_URL_PREFIX)) return null;
@@ -195,6 +246,7 @@ function matchWriteRoute(urlPath) {
   const suffix = rest.slice(slash + 1);
   if (suffix === ROADMAP_EDIT_SUFFIX) return { key, endpoint: "roadmap_edit" };
   if (suffix === HISTORY_SYNC_SUFFIX) return { key, endpoint: "history_sync" };
+  if (suffix === PROJECT_EMIT_SUFFIX) return { key, endpoint: "project_emit" };
   return null;
 }
 
@@ -217,6 +269,33 @@ function resolveCanonicalWritePath(root, relativePath) {
     throw new Error(
       `write destination is inside the derived ${PROJECT_DIR}/ folder (emitter territory, ` +
       `overwritten on every emission): ${dest}`
+    );
+  }
+  return dest;
+}
+
+// THE OTHER HALF OF THE BOUNDARY GUARD (O4.P14) — the mirror image of the function above, and
+// the reason the two write territories cannot overlap. An EMISSION destination must sit inside
+// the registered project root, must not name `.git`, and must sit inside that root's derived
+// `.project/` folder — the only place the emission routes may write. Where
+// `resolveCanonicalWritePath` refuses everything INSIDE `.project/`, this refuses everything
+// OUTSIDE it, so no registry entry and no artifact route can make an emission land on a
+// canonical, on a source file, or anywhere in the repository at large.
+function resolveEmissionWritePath(root, relativePath) {
+  const absRoot = resolve(root);
+  const projectDir = resolve(absRoot, PROJECT_DIR);
+  const dest = resolve(absRoot, relativePath);
+  if (!isInsideRoot(dest, absRoot)) {
+    throw new Error(`emission destination escapes the registered project root: ${dest}`);
+  }
+  const segments = relative(absRoot, dest).split(sep);
+  if (segments.some((segment) => segment.toLowerCase() === ".git")) {
+    throw new Error(`emission destination names .git: ${dest}`);
+  }
+  if (dest === projectDir || !isInsideRoot(dest, projectDir)) {
+    throw new Error(
+      `emission destination is outside the derived ${PROJECT_DIR}/ folder (the only place an ` +
+      `emission may write): ${dest}`
     );
   }
   return dest;
@@ -543,6 +622,234 @@ async function handleHistorySync(req, res, key) {
   });
 }
 
+// ---------------------------------------------------------------- project emit (O4.P14)
+
+// Repo-relative POSIX form of an absolute path — the shape §7 requires of every emitted path,
+// and the shape a refusal must name a file in, so what the operator reads on screen is the same
+// string they would type at a prompt.
+function relativePosix(root, absPath) {
+  return relative(resolve(root), absPath).split(sep).join("/");
+}
+
+// WHY A ROOT NO LAYOUT CLAIMS WAS REFUSED, file by file. `detectRootLayout` answers a single
+// null: it probes each known layout's roadmap path and returns the first that both parses and
+// conforms. A refusal that only says "no layout" leaves the operator guessing WHICH file the
+// server looked for, so this re-walks the same list and reports a verdict per candidate. Pure
+// reads; it decides nothing, it only explains a decision already taken.
+function diagnoseCanonicalCandidates(root) {
+  return ROOT_LAYOUTS.map((paths) => {
+    const abs = resolve(root, paths.roadmap);
+    const file = paths.roadmap.split(sep).join("/");
+    let raw;
+    try {
+      raw = readFileSync(abs, "utf8");
+    } catch {
+      return { layout: paths.layout, file, verdict: "missing" };
+    }
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch (error) {
+      return { layout: paths.layout, file, verdict: "unparsable", detail: String(error && error.message || error).slice(0, 200) };
+    }
+    if (!hasRoadmapTreeShape(parsed)) {
+      return { layout: paths.layout, file, verdict: "not_a_roadmap_tree" };
+    }
+    return { layout: paths.layout, file, verdict: "ok" };
+  });
+}
+
+// THE PRE-CHECK, and the reason an emission is never half-written. The canonical is read,
+// parsed, shape-gated and run through the engine's invariants (with external dependencies
+// resolved against the registry, exactly as the edit route does) BEFORE the emitter is allowed
+// to open anything. A canonical that fails any of these stops the emission with a named reason
+// and the FILE it is about — no artifact is touched, so `.project/` keeps whatever coherent
+// state it already had rather than becoming a mix of old and new.
+//
+// Returns { ok:true, runs, objectives, model } or { ok:false, status, reason, file, ... }.
+function inspectCanonicalForEmission(root, canonicalPath, externalRunIds) {
+  const file = relativePosix(root, canonicalPath);
+  let raw;
+  try {
+    raw = readFileSync(canonicalPath, "utf8");
+  } catch (error) {
+    return { ok: false, status: 409, reason: "canonical_missing", file, detail: String(error && error.message || error).slice(0, 200) };
+  }
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (error) {
+    return { ok: false, status: 409, reason: "canonical_unparsable", file, detail: String(error && error.message || error).slice(0, 200) };
+  }
+  if (!hasRoadmapTreeShape(parsed)) {
+    return {
+      ok: false,
+      status: 409,
+      reason: "canonical_not_a_roadmap_tree",
+      file,
+      errors: ["the file does not have the objectives->phases->runs shape the emitter reads"]
+    };
+  }
+  // THE ENGINE CAN THROW, and a throw here must still be a NAMED REFUSAL. The shape gate above
+  // checks the three levels and their ids; it does not check the type of every field the engine
+  // then walks. A canonical whose `depends_on` is a string instead of an array passes the gate
+  // and makes `checkInvariants` throw on a non-iterable — found in QA, where it took the server
+  // process down with it instead of answering. A malformed canonical is exactly the case this
+  // gate exists for: it is reported by file, like every other refusal, and nothing is emitted.
+  let errors;
+  let flat;
+  try {
+    errors = checkInvariants(parsed, { externalRunIds });
+    flat = flattenRoadmapTree(parsed);
+  } catch (error) {
+    return {
+      ok: false,
+      status: 409,
+      reason: "canonical_not_a_roadmap_tree",
+      file,
+      errors: ["the file has the objectives->phases->runs shape but the roadmap engine could not read it"],
+      detail: String(error && error.message || error).slice(0, 200)
+    };
+  }
+  if (errors.length) {
+    return { ok: false, status: 422, reason: "canonical_invariants_failed", file, errors };
+  }
+  return {
+    ok: true,
+    file,
+    runs: flat.length,
+    objectives: Array.isArray(parsed.objectives) ? parsed.objectives.length : 0
+  };
+}
+
+// Serialise emissions the way applies are serialised. The projector's atomic writer names its
+// temp file `<destination>.tmp` with no pid in it, so two concurrent emissions of the SAME
+// project would race on the same six temp names. Under the lock each emission is a clean
+// temp+rename per artifact and no `.tmp` survives it.
+let projectEmitting = false;
+
+// THE RE-EMISSION BUTTON'S ENDPOINT (O4.P14). A POST re-emits ALL SIX artifacts of ONE
+// registered project's `.project/` folder from its canonical roadmap, through the projector's
+// own `writeProjectFolder` — the same builder, the same guard and the same atomic writes the
+// emission phase has always used. Nothing about WHICH project or WHERE its canonical lives is
+// decided here: the registry resolves the root and the root's own layout resolves the canonical.
+//
+// The order of the gates is the contract: method, locality, project, boundary, canonical, lock,
+// write. Every gate before the last one refuses without opening a file, and the canonical gate
+// names the file it refused about. The answer carries NUMBERS — how many artifacts were written
+// and how many runs the emitted tree ended up with — because a mute "done" cannot tell an
+// operator whether the projection actually moved.
+async function handleProjectEmit(req, res, key) {
+  if (req.method !== "POST") {
+    sendJson(res, 405, { ok: false, reason: "method_not_allowed" });
+    return;
+  }
+  if (!isLoopbackPeer(req)) {
+    sendJson(res, 403, { ok: false, reason: "forbidden_nonlocal" });
+    return;
+  }
+  if (!isLocalOrigin(req)) {
+    sendJson(res, 403, { ok: false, reason: "forbidden_origin" });
+    return;
+  }
+
+  // Registered key -> root -> layout -> guarded canonical. Same funnel as the other two routes.
+  const project = await resolveEditableProject(key);
+  if (project.status) {
+    const payload = { ok: false, reason: project.reason, ...(project.detail ? { detail: project.detail } : {}) };
+    // A root no layout claims is the case an operator actually meets (today: the `aiw` kernel),
+    // so the refusal says which files were looked for and what was wrong with each.
+    if (project.reason === "project_not_editable_no_layout") {
+      const root = (await readRegistry()).entries.get(key);
+      if (root) payload.candidates = diagnoseCanonicalCandidates(root);
+    }
+    sendJson(res, project.status, payload);
+    return;
+  }
+
+  // THE BOUNDARY GUARD, on all six destinations, before anything is opened. Composing them
+  // here (rather than trusting the emitter) is what makes a registry entry that points at a
+  // root the emission could escape a REFUSAL instead of a write.
+  const destinations = [];
+  try {
+    for (const [artifact, relativePath] of PROJECT_EMIT_ARTIFACT_PATHS) {
+      destinations.push({ artifact, path: resolveEmissionWritePath(project.root, relativePath) });
+    }
+  } catch (error) {
+    sendJson(res, 403, {
+      ok: false,
+      reason: "write_destination_out_of_bounds",
+      detail: String(error && error.message || error)
+    });
+    return;
+  }
+
+  // THE CANONICAL GATE. Nothing is written unless the source the projection is derived FROM
+  // reads clean; a failure names the file and the emission does not run.
+  const externalRunIds = await externalRunIdsFor(key);
+  const canonical = inspectCanonicalForEmission(project.root, project.canonicalPath, externalRunIds);
+  if (!canonical.ok) {
+    logLine(`project emit REFUSED (project=${key}): ${canonical.reason} on ${canonical.file}; nothing written`);
+    sendJson(res, canonical.status, {
+      ok: false,
+      reason: canonical.reason,
+      file: canonical.file,
+      ...(canonical.errors ? { errors: canonical.errors } : {}),
+      ...(canonical.detail ? { detail: canonical.detail } : {})
+    });
+    return;
+  }
+
+  if (projectEmitting) {
+    sendJson(res, 409, { ok: false, reason: "emit_in_progress" });
+    return;
+  }
+  projectEmitting = true;
+  let emitted;
+  try {
+    emitted = writeProjectFolder(project.root);
+  } catch (error) {
+    logLine(`project emit FAILED (project=${key}): ${String(error && error.message || error)}`);
+    sendJson(res, 500, { ok: false, reason: "emit_failed", file: canonical.file, detail: String(error && error.message || error).slice(0, 300) });
+    return;
+  } finally {
+    projectEmitting = false;
+  }
+
+  // What the emission ACTUALLY wrote — never the list it could have written. `git_history` is
+  // absent from a root that is not its own repository, and the answer reports that honestly
+  // rather than claiming six files every time.
+  const files = emitted.files.map((file) => ({
+    artifact: file.artifact,
+    path: file.relative_path,
+    bytes: file.bytes
+  }));
+  const snapshotFile = emitted.files.find((file) => file.artifact === "snapshot");
+  const skipped = PROJECT_EMIT_ARTIFACT_PATHS
+    .map(([artifact]) => artifact)
+    .filter((artifact) => !files.some((file) => file.artifact === artifact));
+  logLine(
+    `project emit: project=${key}; ${files.length} artifacts from ${canonical.file}; ` +
+    `${snapshotFile ? snapshotFile.runs : canonical.runs} runs` +
+    `${skipped.length ? `; skipped ${skipped.join(", ")}` : ""}`
+  );
+  sendJson(res, 200, {
+    ok: true,
+    layout: emitted.layout,
+    roadmap_model: emitted.roadmap_model,
+    project_id: emitted.project_id,
+    // The source this projection was derived from, named, so the acknowledgement can cite it.
+    canonical: canonical.file,
+    artifacts: files.length,
+    files,
+    skipped,
+    objectives: snapshotFile ? snapshotFile.objectives : canonical.objectives,
+    runs: snapshotFile ? snapshotFile.runs : canonical.runs,
+    // Stated, not implied: this route runs no Git command that writes and never commits.
+    committed: false
+  });
+}
+
 // ---------------------------------------------------------------- request funnel
 
 const server = http.createServer(async (req, res) => {
@@ -565,20 +872,22 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // The two write routes are matched BEFORE the read-only method gate and before any static
+  // The three write routes are matched BEFORE the read-only method gate and before any static
   // resolution. Each handler gates its own method (GET on the edit route is the client's
   // availability probe and answers 405 method_not_allowed / 404, never a file).
   const writeRoute = matchWriteRoute(urlPath);
   if (writeRoute) {
     if (writeRoute.endpoint === "roadmap_edit") {
       await handleRoadmapEdit(req, res, writeRoute.key);
-    } else {
+    } else if (writeRoute.endpoint === "history_sync") {
       await handleHistorySync(req, res, writeRoute.key);
+    } else {
+      await handleProjectEmit(req, res, writeRoute.key);
     }
     return;
   }
 
-  // Read-only by method for EVERYTHING else: the two routes above are the only paths on which
+  // Read-only by method for EVERYTHING else: the three routes above are the only paths on which
   // any method beyond GET/HEAD does anything, and nothing below this line has to know writes exist.
   if (req.method !== "GET" && req.method !== "HEAD") {
     res.writeHead(405, {
@@ -641,7 +950,7 @@ const RUN_DIRECTLY = process.argv[1]
 
 if (RUN_DIRECTLY) {
   server.listen(PORT, HOST, () => {
-    logLine(`serving ${REPO_ROOT} (GET/HEAD everywhere; the only write routes are per-project roadmap edit and history sync)`);
+    logLine(`serving ${REPO_ROOT} (GET/HEAD everywhere; the only write routes are per-project roadmap edit, history sync and project emit)`);
     logLine(`registry: ${activeRegistryPath()}`);
     logLine(`open  http://${HOST}:${PORT}${ENTRY}`);
   });
@@ -657,11 +966,16 @@ export {
   PROJECTS_URL_PREFIX,
   ROADMAP_EDIT_SUFFIX,
   HISTORY_SYNC_SUFFIX,
+  PROJECT_EMIT_SUFFIX,
+  PROJECT_EMIT_ARTIFACT_PATHS,
   activeRegistryPath,
   readRegistry,
   resolveVirtualPath,
   pathNamesGitDir,
   matchWriteRoute,
   resolveCanonicalWritePath,
+  resolveEmissionWritePath,
+  inspectCanonicalForEmission,
+  diagnoseCanonicalCandidates,
   externalRunIdsFor
 };

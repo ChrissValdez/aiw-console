@@ -100,6 +100,19 @@
                  lane name lives in this file. Switching lanes preserves the active subview. -->
             <div class="roadmap-lane-slot" id="roadmap-lane-slot"></div>
             <div class="roadmap-edit-controls">
+              <!-- [O4.P14] RE-EMISSION, on request. `.project/` is a projection of a canonical
+                   this console does not own: under parallel lanes the workshop runs deliberately
+                   do NOT re-emit (two lanes writing the same folder would overwrite each other),
+                   so the projection falls behind its canonical with no way to catch up. This
+                   button is that way. It lives in the EXISTING controls row of the Roadmap
+                   toolbar — the row that already carries the lane slot and the edit toggle — so
+                   the console gains no new line of chrome for it. A button and not a watcher on
+                   purpose: the console writes `.project/` only when the operator asks, never on
+                   a timer and never under their feet. The acknowledgement beside it carries
+                   NUMBERS (artifacts written, resulting run count) because a mute "done" cannot
+                   tell the operator whether anything actually moved. -->
+              <span id="roadmap-emit-state" class="roadmap-emit-state" role="status" aria-live="polite"></span>
+              <button class="btn btn-secondary btn-sm" id="roadmap-emit-btn" type="button" data-roadmap-emit>Re-emit .project/</button>
               <span id="roadmap-edit-hint" class="roadmap-edit-hint" role="status" aria-live="polite"></span>
               <!-- VISIBLE again (O4.P12): the write path exists — the server exposes a per-project
                    roadmap edit endpoint and PATHS.roadmapEdit points at it — so the O4.P11 hidden

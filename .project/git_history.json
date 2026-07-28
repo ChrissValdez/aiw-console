@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-28T02:17:53.437Z",
+  "generated_at": "2026-07-28T06:16:24.292Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-28T02:16:12.923Z"
+      "mtime": "2026-07-28T05:29:38.160Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,14 +14,34 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "25b96b44fb7b8619db4320c6ca84209e26be5c8a",
+  "head": "ed1bf49830a6d1dc768816393329100fa019ed6b",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 50,
+  "commit_total": 52,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "ed1bf49",
+      "full_sha": "ed1bf49830a6d1dc768816393329100fa019ed6b",
+      "date": "2026-07-27T23:29:38-06:00",
+      "parents": "897c710",
+      "subject": "cantu: disciplina por carril, particion impl/doc, y handoff del hilo",
+      "body": "- Regla 7 pasa de fase a carril; regla 8 examinada y conservada\n\n- Cantu 53 -> 71 runs; carriles 48/5 -> 48/23\n\n- Handoff inicial de cantu-studio; tres records nuevos",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "897c710",
+      "full_sha": "897c710f11e9d0cdba072eb8913bb38c3843b64f",
+      "date": "2026-07-27T20:20:13-06:00",
+      "parents": "25b96b4",
+      "subject": "roadmap: cierre al dia, fases P13 y P14, afirmaciones corregidas",
+      "body": "- P12 cerrada con evidencia; 7 records huerfanos con run\n\n- Dos afirmaciones falsas corregidas, siete premisas fechadas reportadas\n\n- closeout_result a discarded_by_D-048; O0 byte-identico\n\n- 2 obj / 18 fases / 42 runs; suite 259/259",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "25b96b4",

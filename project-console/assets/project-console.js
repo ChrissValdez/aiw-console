@@ -32,13 +32,18 @@ function setActiveProjectBase(repoBase) {
     memory: `${PROJECT_BASE}guardrails/project_memory.jsonl`,
     // Derived read-only Git commit history view (§19).
     gitHistory: `${PROJECT_BASE}git_history.json`,
-    // THE TWO WRITE ROUTES (O4.P12, reverting the O4.P11 deferral by D-050). Composed from
-    // REPO_BASE like every other route, so they always address the ACTIVE project: the server
-    // maps them onto that project's registered root, resolves its canonical roadmap through
-    // the root layout, and re-emits `.project/` after a confirmed write. Dry-run→confirm and
-    // the availability probe (v3ProbeEndpoint) are unchanged from the source console.
+    // THE THREE WRITE ROUTES (O4.P12 opened two, reverting the O4.P11 deferral by D-050;
+    // O4.P14 adds the third). Composed from REPO_BASE like every other route, so they always
+    // address the ACTIVE project: the server maps them onto that project's registered root,
+    // resolves its canonical roadmap through the root layout, and re-emits `.project/` after a
+    // confirmed write. Dry-run→confirm and the availability probe (v3ProbeEndpoint) are
+    // unchanged from the source console.
     historySync: `${REPO_BASE}__project-console/history/sync`,
-    roadmapEdit: `${REPO_BASE}__project-console/roadmap/edit`
+    roadmapEdit: `${REPO_BASE}__project-console/roadmap/edit`,
+    // [O4.P14] Re-emit the ACTIVE project's whole `.project/` folder from its canonical. The
+    // same gesture `historySync` already performs for ONE derived artifact, extended to all
+    // six — and fired only by the operator's click, never on a timer.
+    projectEmit: `${REPO_BASE}__project-console/project/emit`
   };
 }
 
@@ -4660,6 +4665,12 @@ function resetProjectScopedState() {
     editToggle.textContent = "Edit roadmap";
   }
   v3SetEditHint("");
+  // [O4.P14] The re-emission acknowledgement is per-project state: "Re-emitted 6 artifacts …
+  // 71 runs" is a statement ABOUT the project it was fired on, and carrying it into the next
+  // one would claim a re-emission that never happened there. Flag and text reset together, so
+  // neither the disabled button nor the stale sentence survives a switch.
+  projectEmitting = false;
+  projectEmitSetState("idle", "");
   // The drawer and modal hide on close but keep their last innerHTML; blank them so not even
   // hidden markup of the previous project survives the switch.
   const drawerBody = byId("drawer-body");
@@ -4750,6 +4761,175 @@ function setupStatusSubnav() {
       });
     });
   });
+}
+
+// ==========================================================================
+// RE-EMISSION OF `.project/` (O4.P14) — one button, one POST, no watcher.
+//
+// `.project/` is a PROJECTION of a canonical this console does not own. Two ways of refreshing
+// it already exist — automatically after a confirmed roadmap edit, and per-artifact from the
+// History tab's Sync — but a canonical edited by anyone ELSE leaves the projection behind with
+// no way to catch it up. Under parallel lanes that is the normal case: workshop runs deliberately
+// do not re-emit, because two lanes writing the same `.project/` would overwrite each other. The
+// operator's only recourse was to INVENT a roadmap edit (put a space in a title, take it out)
+// for the re-emission that follows a confirm. This replaces that detour.
+//
+// A BUTTON, NOT AN AUTO-REFRESH. Nothing below polls, watches, or schedules: the console writes
+// `.project/` when the operator clicks and at no other moment. Files that changed under their
+// feet would dirty their Git working tree without an action of theirs.
+//
+// The acknowledgement carries NUMBERS — artifacts written, resulting run count, the canonical
+// they came from — because "done" alone cannot answer the only question worth asking after a
+// re-emission: did anything actually move? A refusal names the FILE it is about and states that
+// nothing was written. Neither ever fakes a success the server did not report.
+// ==========================================================================
+
+let projectEmitting = false;
+let projectEmitState = { kind: "idle", text: "" };
+
+// `text` is what the row SHOWS; `full` (when it differs) is the whole sentence, parked on the
+// element's title so nothing measured is lost. The split exists for one reason: the controls row
+// is a single line of chrome and must stay one, so a success acknowledgement — the state the
+// operator will see most — is kept short enough not to wrap and push the roadmap down. A REFUSAL
+// is shown in full and allowed to wrap: it names the file the emission refused about, and hiding
+// that behind a tooltip would defeat the point of naming it.
+function projectEmitSetState(kind, text, full) {
+  projectEmitState = { kind, text, full: full || text };
+  const button = byId("roadmap-emit-btn");
+  if (button) button.disabled = projectEmitting;
+  const state = byId("roadmap-emit-state");
+  if (state) {
+    state.className = `roadmap-emit-state is-${kind}`;
+    state.textContent = text;
+    if (full && full !== text) state.setAttribute("title", full);
+    else state.removeAttribute("title");
+  }
+}
+
+// Turn the server's machine reason into one operator sentence. Every branch that can be about a
+// FILE names it ON SCREEN (§20's habit applied to a refusal): the canonical gates carry the path
+// they read, and a root no layout claims carries the per-candidate verdicts the server measured,
+// so the operator is told which files were looked for instead of being left to guess. What rides
+// on the title instead is only ever DETAIL — the engine's error text verbatim — never the reason
+// and never the file.
+function projectEmitRefusalText(status, payload) {
+  const reason = payload && payload.reason ? payload.reason : `HTTP ${status}`;
+  const file = payload && payload.file ? payload.file : "";
+  const errors = payload && Array.isArray(payload.errors) ? payload.errors : [];
+  const tail = "Nothing was written.";
+  const say = (short, full) => ({ short, full: full || short });
+  if (reason === "canonical_missing") return say(`Refused — the canonical ${file} could not be read. ${tail}`, payload.detail);
+  if (reason === "canonical_unparsable") {
+    return say(`Refused — the canonical ${file} does not parse as JSON. ${tail}`, payload.detail);
+  }
+  if (reason === "canonical_not_a_roadmap_tree") {
+    return say(`Refused — the canonical ${file} is not an objectives/phases/runs tree. ${tail}`);
+  }
+  if (reason === "canonical_invariants_failed") {
+    const count = errors.length === 1 ? "1 error" : `${errors.length} errors`;
+    return say(
+      `Refused — the canonical ${file} fails the roadmap invariants (${count}). ${tail}`,
+      errors.join("\n")
+    );
+  }
+  if (reason === "project_not_editable_no_layout") {
+    const candidates = payload && Array.isArray(payload.candidates) ? payload.candidates : [];
+    const named = candidates.map((c) => `${c.file} (${c.verdict})`).join(", ");
+    return say(`Refused — no canonical roadmap claims this project${named ? `: ${named}` : ""}. ${tail}`);
+  }
+  if (reason === "unknown_project") return say(`Refused — this project is not in the console registry. ${tail}`);
+  if (reason === "write_destination_out_of_bounds") {
+    return say(`Refused — the emission would write outside this project's registered root. ${tail}`, payload.detail);
+  }
+  if (reason === "emit_in_progress") return say(`Refused — another re-emission is still running. ${tail}`);
+  if (reason === "emit_failed") {
+    return say(`Failed while emitting${file ? ` from ${file}` : ""}; the folder may be incomplete.`, payload.detail);
+  }
+  return say(`Refused — ${reason}. ${tail}`);
+}
+
+// The success acknowledgement, in two lengths. Both report what the server SAID it wrote, never
+// the list it could have written: an artifact the emitter skipped (git_history, at a root that is
+// not its own repository) is named as skipped rather than counted. The SHORT form carries the two
+// numbers the operator came for — artifacts written and the resulting run count — plus the fact
+// that nothing was committed; the LONG form adds the canonical they were derived from and any
+// skipped artifact, and rides along as the element's title.
+function projectEmitSuccessText(payload) {
+  const artifacts = payload.artifacts != null ? payload.artifacts : 0;
+  const runs = payload.runs != null ? payload.runs : 0;
+  const objectives = payload.objectives != null ? payload.objectives : 0;
+  const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+  const skipped = Array.isArray(payload.skipped) && payload.skipped.length
+    ? ` ${payload.skipped.join(", ")} not written (nothing at this root to derive it from).`
+    : "";
+  return {
+    short: `${plural(artifacts, "artifact")} · ${plural(runs, "run")}`,
+    full: `Re-emitted ${plural(artifacts, "artifact")} from ${payload.canonical || "the canonical"} — ` +
+      `${plural(runs, "run")}, ${plural(objectives, "objective")}.${skipped}` +
+      ` Not committed: review and commit yourself.`
+  };
+}
+
+async function emitProjectFolder() {
+  if (projectEmitting) return;
+  // The route is composed per active project. The null guard only covers a click fired before
+  // any project base was set; the endpoint itself refuses, with a named reason, a project the
+  // emitter does not serve.
+  if (!PATHS || !PATHS.projectEmit) {
+    projectEmitSetState("failed", "Re-emission unavailable — no active project selected.");
+    return;
+  }
+  projectEmitting = true;
+  projectEmitSetState("emitting", "re-emitting…");
+  try {
+    let response;
+    let payload = null;
+    try {
+      response = await fetch(PATHS.projectEmit, {
+        method: "POST",
+        cache: "no-store",
+        headers: { Accept: "application/json" }
+      });
+      payload = await response.json().catch(() => null);
+    } catch (error) {
+      // Most likely the console is open without the local server (plain static host).
+      projectEmitting = false;
+      projectEmitSetState("failed", "Re-emission failed — local Project Console server not reachable.");
+      return;
+    }
+    if (!response.ok || !payload || payload.ok !== true) {
+      projectEmitting = false;
+      const refusal = projectEmitRefusalText(response.status, payload);
+      projectEmitSetState("failed", refusal.short, refusal.full);
+      return;
+    }
+    // The server wrote; never trust the in-memory model afterwards. Re-read every artifact of
+    // the ACTIVE project and re-render, so the queue, the tree, Docs, History and the governance
+    // panels all show the state that was just emitted — without a reload and without restarting
+    // the server. Chrome (active tab, subview, lane) is untouched: this is a refresh, not a switch.
+    projectEmitting = false;
+    const reloaded = await loadActiveProject();
+    // Edit affordances are injected on top of a fresh tree render, so they follow the reload.
+    try { v3DecorateTreeEditAffordances(); } catch (error) { /* edit mode off: nothing to decorate */ }
+    const said = projectEmitSuccessText(payload);
+    if (reloaded && reloaded.ok) {
+      projectEmitSetState("ok", said.short, said.full);
+    } else {
+      // The write happened and the views did not follow: say BOTH, and say the second one where
+      // it cannot be missed rather than tucking it into a tooltip.
+      const stale = `${said.full} The views could not be re-read; reload the page.`;
+      projectEmitSetState("failed", stale, stale);
+    }
+  } finally {
+    projectEmitting = false;
+    const button = byId("roadmap-emit-btn");
+    if (button) button.disabled = false;
+  }
+}
+
+function setupProjectEmit() {
+  const button = byId("roadmap-emit-btn");
+  if (button) button.addEventListener("click", () => { emitProjectFolder(); });
 }
 
 // ==========================================================================
@@ -6184,6 +6364,7 @@ function initConsoleChrome() {
   setupTabs();
   setupStatusSubnav();
   setupRoadmapEditMode();
+  setupProjectEmit();
   setOverviewCardTitles();
 }
 

@@ -225,7 +225,9 @@ test("counts, open document, docs mode and vocabulary all reset across a switch 
   // Counts: the diagnostics line reports cantu-studio's tree, not the 2/18/42 of aiw-console.
   const counts = harness.element("console-source-files").innerHTML;
   assert.doesNotMatch(counts, /2 objectives \/ 18 phases \/ 42 runs/);
-  assert.match(counts, /7 objectives \/ 28 phases \/ 53 runs/);
+  // [O4.P14] 53 -> 71 runs: cantu-studio's canonical gained the documentation lane. The
+  // objective and phase counts did not move; only the runs did.
+  assert.match(counts, /7 objectives \/ 28 phases \/ 71 runs/);
 
   // Vocabulary: the two trees genuinely use different tokens, and only cantu-studio's paint now.
   const tokensOf = (snapshot) =>

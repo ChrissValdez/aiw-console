@@ -1,4 +1,4 @@
-# Project Console (transplanted, multi-project; read-only plus two write routes)
+# Project Console (transplanted, multi-project; read-only plus three write routes)
 
 The Project Console of `cantu-studio`, transplanted onto this project's own sources (O4.P11), now
 wrapped by a **multi-project shell** (O4.P3): a persistent sidebar lists every registered project,
@@ -20,7 +20,8 @@ never edited for QA.
 The server serves the repository root read-only, plus one **virtual namespace**
 `/projects/<key>/**` that maps onto the roots listed in the registry — that is how sibling
 repositories' `.project/` folders and doc bodies are read. Since O4.P12 (D-050) it also exposes
-**exactly two write routes per registered project**, and nothing else accepts a write:
+write routes per registered project — **exactly three** since O4.P14 — and nothing else accepts
+a write:
 
 - `POST /projects/<key>/__project-console/roadmap/edit` — bounded roadmap edits with the
   dry-run→confirm contract (`apply:false` previews and writes nothing; `apply:true` requires the
@@ -30,11 +31,23 @@ repositories' `.project/` folders and doc bodies are read. Since O4.P12 (D-050) 
   that project's `.project/` folder so the console's next read matches what was written.
 - `POST /projects/<key>/__project-console/history/sync` — re-emits `.project/git_history.json`
   from the project's own repository (read-only Git), so the History tab refreshes live.
+- `POST /projects/<key>/__project-console/project/emit` — re-emits **all six** artifacts of that
+  project's `.project/` folder from its canonical roadmap (O4.P14). This is the endpoint behind
+  the **Re-emit `.project/`** button in the Roadmap toolbar, and it exists because `.project/` is
+  a projection of a canonical the console does not own: under parallel lanes the workshop runs
+  deliberately do not re-emit, so the projection falls behind and had no way to catch up. The
+  canonical is read, parsed, shape-gated and run through the engine's invariants **before**
+  anything is written — a failure names the file and emits nothing, so the folder is never left
+  half-written. A button and not a watcher, on purpose: the console writes `.project/` only when
+  the operator asks. It runs no Git that writes and never commits; after re-emitting, review the
+  diff and commit it yourself.
 
 Every other method on every other route still answers **405**; escaping a registered root answers
-403; `.git` is never served or written. Both write routes refuse, with a named reason, a project
-the registry does not list or whose root no layout claims, and every write destination is verified
-inside the registered root after path resolution.
+403; `.git` is never served or written. All three write routes refuse, with a named reason, a
+project the registry does not list or whose root no layout claims, and every write destination is
+verified inside the registered root after path resolution — by one of two mirror-image guards:
+`resolveCanonicalWritePath` (inside the root, never inside the derived `.project/`) and
+`resolveEmissionWritePath` (inside the root, only inside the derived `.project/`).
 
 ## The project registry
 

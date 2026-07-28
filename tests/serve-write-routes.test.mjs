@@ -1,5 +1,8 @@
-// The two write routes of the global console server (O4.P12) and everything that must stay
-// read-only around them. Runs the real serve.mjs on an ephemeral port against a GENERATED
+// The write routes of the global console server and everything that must stay read-only around
+// them. O4.P12 opened TWO; O4.P14 made it THREE by adding the manual re-emission of `.project/`
+// (`__project-console/project/emit`, whose own behaviour lives in tests/serve-project-emit.test.mjs
+// — what is measured HERE is the read-only matrix it sits inside). Runs the real serve.mjs on an
+// ephemeral port against a GENERATED
 // fixture registry (PC_REGISTRY) whose projects live in a temp dir, so no real repository is
 // written by the edit tests. The registry deliberately includes:
 //
@@ -23,7 +26,11 @@ import { fileURLToPath } from "node:url";
 import {
   server,
   HOST,
+  ROADMAP_EDIT_SUFFIX,
+  HISTORY_SYNC_SUFFIX,
+  PROJECT_EMIT_SUFFIX,
   resolveCanonicalWritePath,
+  resolveEmissionWritePath,
   externalRunIdsFor,
   matchWriteRoute
 } from "../project-console/serve.mjs";
@@ -262,6 +269,25 @@ test("boundary guard unit: a destination outside the root, in .git, or in the de
   assert.equal(resolveCanonicalWritePath(root, join("roadmap", "roadmap.json")), resolve(root, "roadmap", "roadmap.json"));
 });
 
+test("the two guards are MIRROR IMAGES: neither territory can be written through the other's door", () => {
+  // [O4.P14] The canonical guard and the emission guard partition the root between them: what
+  // one accepts, the other refuses. This is the property that keeps a roadmap edit from landing
+  // in the emitter's folder (where the next emission would silently undo it) AND an emission
+  // from landing on a canonical (which it would then read back as its own source).
+  const root = join(workDir, "editable");
+  const canonical = join("roadmap", "roadmap.json");
+  const emitted = join(".project", "snapshot.json");
+  assert.equal(resolveCanonicalWritePath(root, canonical), resolve(root, canonical));
+  assert.throws(() => resolveEmissionWritePath(root, canonical), /outside the derived \.project\//);
+  assert.equal(resolveEmissionWritePath(root, emitted), resolve(root, emitted));
+  assert.throws(() => resolveCanonicalWritePath(root, emitted), /derived \.project/);
+  // And both refuse the same two things, for the same two reasons.
+  for (const guard of [resolveCanonicalWritePath, resolveEmissionWritePath]) {
+    assert.throws(() => guard(root, join("..", "alien", "x.json")), /escapes the registered project root/);
+    assert.throws(() => guard(root, join(".git", "config")), /names \.git/);
+  }
+});
+
 test("external run ids are composed from the OTHER registered projects, as data", async () => {
   const ids = await externalRunIdsFor("editable");
   assert.equal(ids.has("RUN-ALIEN-ONE-001"), true, "the sibling fixture's runs are known");
@@ -318,11 +344,96 @@ test("read-only preserved: every method beyond GET/HEAD on any NON-route path an
 });
 
 test("read-only preserved: non-POST methods on the write routes answer 405 method_not_allowed (route exists, method does not)", async () => {
+  const routes = [ROADMAP_EDIT_SUFFIX, HISTORY_SYNC_SUFFIX, PROJECT_EMIT_SUFFIX];
   for (const method of ["PUT", "PATCH", "DELETE"]) {
-    const edit = await jsonRequest(method, "/projects/editable/__project-console/roadmap/edit");
-    assert.equal(edit.status, 405, method);
-    assert.equal(edit.payload.reason, "method_not_allowed", method);
+    for (const suffix of routes) {
+      const answer = await jsonRequest(method, `/projects/editable/${suffix}`);
+      assert.equal(answer.status, 405, `${method} ${suffix}`);
+      assert.equal(answer.payload.reason, "method_not_allowed", `${method} ${suffix}`);
+    }
   }
+});
+
+// ---------------------------------------------------------------- THE MATRIX, measured
+
+// [O4.P14] The read-only matrix, MEASURED against the running server rather than asserted from
+// memory — and the count that the phase moved: EXACTLY THREE routes accept POST, and ZERO accept
+// any other write method. The test prints the matrix it measured, so the record's table is a
+// transcript of this run and not a hand-kept list that can drift from the server.
+test("MATRIX: exactly THREE routes accept POST, zero accept PUT/PATCH/DELETE, everything else is 405 read_only_console", async (t) => {
+  const WRITE_SUFFIXES = [ROADMAP_EDIT_SUFFIX, HISTORY_SYNC_SUFFIX, PROJECT_EMIT_SUFFIX];
+  const NON_ROUTE_PATHS = [
+    "/project-console/index.html",
+    "/project-console/projects.json",
+    "/projects/editable/.project/snapshot.json",
+    "/projects/editable/roadmap/roadmap.json",
+    "/projects/editable/__project-console/roadmap",       // near-miss: a prefix of a route
+    "/projects/editable/__project-console/project",       // near-miss: a prefix of a route
+    "/projects/editable/__project-console/project/emit/x",// near-miss: a route plus a segment
+    "/no/existe"
+  ];
+  const METHODS = ["POST", "PUT", "PATCH", "DELETE"];
+  const rows = [];
+
+  // 1. The three routes. "Accepts POST" means the server ROUTED it — it answered with this
+  //    route's own vocabulary rather than the blanket read-only refusal. Whether that particular
+  //    POST then wrote is each route's own contract (a dry-run writes nothing; `editable` is not
+  //    a Git repository so its sync answers 503); what is measured here is the read-only shape.
+  let acceptPost = 0;
+  for (const suffix of WRITE_SUFFIXES) {
+    const cells = {};
+    for (const method of METHODS) {
+      const answer = await jsonRequest(method, `/projects/editable/${suffix}`, method === "POST" ? {} : undefined);
+      const reason = answer.payload && answer.payload.reason ? answer.payload.reason : "(none)";
+      cells[method] = `${answer.status} ${reason}`;
+      if (method === "POST") {
+        assert.notEqual(reason, "read_only_console", `POST ${suffix} must be routed, not blanket-refused`);
+        acceptPost += 1;
+      } else {
+        assert.equal(answer.status, 405, `${method} ${suffix}`);
+        assert.equal(reason, "method_not_allowed", `${method} ${suffix}`);
+      }
+    }
+    rows.push([suffix, cells]);
+  }
+  assert.equal(acceptPost, 3, "exactly three routes accept POST");
+  assert.equal(WRITE_SUFFIXES.length, 3, "and there are exactly three of them declared");
+
+  // 2. Everything else, including every near-miss of a route path.
+  for (const path of NON_ROUTE_PATHS) {
+    const cells = {};
+    for (const method of METHODS) {
+      const answer = await jsonRequest(method, path, method === "POST" ? {} : undefined);
+      assert.equal(answer.status, 405, `${method} ${path}`);
+      assert.equal(answer.payload.reason, "read_only_console", `${method} ${path}`);
+      cells[method] = `${answer.status} read_only_console`;
+    }
+    rows.push([path, cells]);
+  }
+
+  // 3. `.git` is forbidden in BOTH namespaces, by every method, before any resolution.
+  for (const path of ["/.git/config", "/projects/editable/.git/config"]) {
+    const cells = {};
+    for (const method of ["GET", ...METHODS]) {
+      const answer = await jsonRequest(method, path, method === "POST" ? {} : undefined);
+      assert.equal(answer.status, 403, `${method} ${path}`);
+      cells[method] = "403";
+    }
+    rows.push([path, cells]);
+  }
+
+  // 4. Traversal stays contained, raw (unnormalised) on the wire.
+  const port = server.address().port;
+  for (const path of ["/projects/editable/../alien/roadmap/roadmap.json", "/../projects.json"]) {
+    const status = await rawRequest(port, path);
+    assert.ok([403, 404].includes(status), `raw traversal ${path} answered ${status}`);
+    rows.push([`${path} (raw GET)`, { GET: String(status) }]);
+  }
+
+  t.diagnostic("READ-ONLY MATRIX (measured on the running server):");
+  rows.forEach(([label, cells]) => {
+    t.diagnostic(`  ${label} -> ${Object.entries(cells).map(([m, v]) => `${m}:${v}`).join(" | ")}`);
+  });
 });
 
 test("read-only preserved: .git stays forbidden and traversal stays contained in every namespace", async () => {
@@ -341,6 +452,7 @@ test("read-only preserved: .git stays forbidden and traversal stays contained in
 test("route matching is exact: near-miss paths are not write routes", () => {
   assert.deepEqual(matchWriteRoute("/projects/editable/__project-console/roadmap/edit"), { key: "editable", endpoint: "roadmap_edit" });
   assert.deepEqual(matchWriteRoute("/projects/editable/__project-console/history/sync"), { key: "editable", endpoint: "history_sync" });
+  assert.deepEqual(matchWriteRoute("/projects/editable/__project-console/project/emit"), { key: "editable", endpoint: "project_emit" });
   assert.equal(matchWriteRoute("/projects/editable/__project-console/roadmap/edit/extra"), null);
   assert.equal(matchWriteRoute("/projects/editable/__project-console/roadmap"), null);
   assert.equal(matchWriteRoute("/__project-console/roadmap/edit"), null);

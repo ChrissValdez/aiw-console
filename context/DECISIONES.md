@@ -1960,3 +1960,95 @@ Criterio de borrado: la sustituye una decisión que cambie el régimen de `CONST
 en el roadmap de AIW, o que resuelva de otro modo cualquiera de los cuatro casos.
 Los criterios de borrado de los tres mecanismos que entran son los escritos arriba y
 no caducan con esta entrada.
+
+## D-056 — 2026-07-28 — Corrección hacia adelante del criterio de borrado del caso 4 de D-055: la cláusula 2 pasa de disyunción a conjunción
+**CORRECCIÓN a [[D-055]], caso 4 —test de parseo de tickets—, y solo a su criterio
+de borrado.** Hacia adelante y **sin reescritura**: `D-055` no se toca ni un byte,
+como manda la cabecera de este archivo («log append-only. Nunca reescribir; solo
+agregar», `:1`). El precedente exacto de la maniobra está en este mismo log:
+[[D-045]] cerró el `[NO VERIFICADO]` que [[D-044]] había dejado sobre el estado del
+validador de Cantu declarándolo desde una entrada nueva —«D-044 no se reescribe;
+esta entrada lo verifica»—. Aquí igual. La decisión es del operador: esta entrada
+no delibera, no reabre `D-055` y no toca ninguno de sus otros tres casos.
+
+**El texto que se corrige.** `D-055` cerró el caso 4 con un criterio de borrado
+redactado por el taller, porque el documento de decisión no traía uno para ese caso
+—no lo trataba como caso propio—. Transcrito de `D-055`, leído en disco en este
+encargo:
+
+> «se elimina si los tickets en Markdown dejan de ser la entrada del kernel —el
+> test se queda sin sujeto— o si los cinco desenlaces ganan fixture por otra vía
+> que la suite sí ejecute».
+
+**CRITERIO DE BORRADO DEL CASO 4, CORREGIDO.** El test de parseo de tickets se
+elimina si:
+- **(a)** los tickets en Markdown dejan de ser la entrada del kernel —el test se
+  queda sin sujeto— *(cláusula 1, INTACTA: transcrita de `D-055`, sin reformular)*;
+  **o**
+- **(b)** los cinco desenlaces del kernel ganan fixture por otra vía que la suite sí
+  ejecute **Y**, **a la vez**, todos los tickets bajo `objectives/**` siguen
+  parseando bajo el parser vigente.
+
+Las dos condiciones de **(b)** son **conjuntas, no alternativas**: ninguna de las
+dos por separado basta para retirar el test. Si los cinco desenlaces tienen fixture
+ejecutable pero un solo ticket de `objectives/**` no parsea, el test **se queda**;
+si todos los tickets parsean pero un desenlace se quedó sin fixture que la suite
+ejecute, el test **también se queda**. Ésa es la sustancia entera de esta
+corrección.
+
+**Por qué.** El incidente del commit `7659ff3` produjo **dos daños**, verificados
+contra `AUDIT-CONTENIDO-AIW.md` en este encargo:
+1. **seis de los 11 tickets abiertos de AIW quedaron en letra muerta y nada lo
+   detectó en 17 días** — `e5-secreto`, `e6-changes-requerido`, `e8-multiarchivo`,
+   `a-resta`, `b-multiplica` y `c-imposible` dan hoy `ABORT: missing required
+   sections: project, objective, criteria` al correr `parseObjective` contra los
+   archivos reales; abortarían en `K:147` antes de tocar git, antes del lockfile y
+   antes del preflight; están en disco, en el repo y en el remoto, no aparecen en
+   ninguna vista, ninguna prueba los ejercita, y **no salieron en el diff porque no
+   se tocaron** —«lo que cambió es el parser, no los tickets» (AUDIT §1.2.a);
+2. **dos de los cinco desenlaces del kernel se quedaron sin fixture ejecutable** —
+   `BLOCKED` por veredicto o por guard, que cubre `e5-secreto`, y
+   `ROUNDS_EXHAUSTED` por `CHANGES_REQUIRED` agotado con exit 2, que cubre
+   `e6-changes-requerido`: «los cinco desenlaces del kernel tienen fixture, pero
+   dos de esos fixtures son de los seis que hoy no parsean» (AUDIT §6.4).
+
+**El daño 2 es un subconjunto del daño 1**: los dos fixtures que no se pueden
+ejecutar son dos de los seis tickets rotos. Y la cláusula 2 vieja, al ser
+disyunción, **permitía borrar el test reparando solo el daño 2**. El escenario
+concreto que esta corrección cierra: alguien escribe cinco fixtures nuevos en otro
+sitio, en el idioma que el parser vigente sí acepta, y la suite los ejecuta; los
+cinco desenlaces quedan cubiertos; **bajo el texto viejo eso bastaba para retirar el
+vigilante**, con los seis tickets pudiendo seguir rotos, invisibles y sin nada que
+lo detectara —exactamente el estado constatado el 2026-07-28—. El test nació por el
+daño 1; no debe poder morirse arreglando solo el daño 2.
+
+**ALCANCE: lo que esta entrada NO cambia**, para que nadie la lea como una revisión
+de `D-055`:
+- **la norma general de `CONST §4` sigue igual.** Los tres criterios de aceptación
+  fijos que `D-055` fijó para todo run que añada mecanismo —incidente con los cuatro
+  campos de `CONST:30-32`, criterio de borrado escrito «se elimina si X»
+  (`CONST:33`), y presupuesto declarado de líneas contra el techo (`CONST:28-29`)—
+  siguen tal cual. `CONST §4` (:28-35) se leyó de primera mano en este encargo y no
+  se tocó;
+- **los casos 1 (manifest por run), 2 (lanzador desacoplado) y 3 (gate de evals)
+  siguen EXACTAMENTE como `D-055` los dejó**, con sus criterios de borrado, la
+  derogación de la regla del terminal del queue y la condición de disparo del gate
+  intactos. Aquí solo se corrige el criterio de borrado del caso 4;
+- **el presupuesto del caso 4 sigue siendo 0 líneas contra el techo**: el test vive
+  en la suite, no en `kernel.mjs`, y no consume ni una de las 22 líneas de holgura;
+- **el `[NO VERIFICADO]` sobre la fecha del commit `7659ff3` sigue abierto.** Este
+  encargo no abrió el historial de git de `aiw` —donde vive esa fecha— y no lo
+  despeja. Lo que sigue fechado es la **constatación**: 2026-07-28, cuando el audit
+  ejecutó el parser contra los 11 archivos reales.
+
+Referencias: [[D-055]] caso 4, lo corregido, y de donde se transcribe la cláusula
+(a) tal cual; [[D-045]], el precedente de corrección hacia adelante en este mismo
+log (corrigió un `[NO VERIFICADO]` de [[D-044]] sin reescribirlo);
+`context/aiw-console/records/AUDIT-CONTENIDO-AIW.md` §1.2.a (los seis tickets en
+letra muerta, medidos no inferidos) y §6.4 (los dos desenlaces sin fixture
+ejecutable), de donde salen los dos daños; `aiw/CONSTITUCION.md` §4 (:28-35), leído
+de primera mano.
+Criterio de borrado: la sustituye una decisión que vuelva a cambiar el criterio de
+borrado del caso 4, o que resuelva el caso 4 de otro modo. Cuando el test se elimine
+por cumplirse (a) o (b), esta entrada queda como historia junto con `D-055`; no
+caduca por sí sola, y el criterio corregido de arriba es el vigente hasta entonces.

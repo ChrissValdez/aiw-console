@@ -216,7 +216,7 @@
               "title": "Fix three latent console defects found during editor QA",
               "summary": "Correct the Overview active-run label fallback, the missing model-cache fallback in the edit modal, and the Add run position default that asserts a false execution order.",
               "full_description": "Three latent defects surfaced during operator Human QA of the console editor, none of them blocking today. First, the Overview's active-run label falls back to the literal Now when no run is active, so once the audit run closes a planned run will be labelled as work in progress; this appeared when the queue readiness groups merged. Second, v3EditBeforeNode reads roadmapV3ModelCache without the fallback that v3OpenEditModal has, so if the cache were empty with the modal open the Position field would render but Preview all changes would report no changes. Third, the Add run affordance defaults to end-of-phase, which in an early phase produces a low queue_order that asserts the run executed near the start of the project; the launchers run nearly landed at position 2 this way.",
-              "status": "active",
+              "status": "planned",
               "depends_on": []
             },
             {

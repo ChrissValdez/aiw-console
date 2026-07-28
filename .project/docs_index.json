@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-28T07:14:24.536Z",
+  "generated_at": "2026-07-28T09:33:31.914Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
@@ -49,6 +49,10 @@
       "mtime": "2026-07-23T18:54:06.458Z"
     },
     {
+      "path": "context/aiw-console/records/AUDIT-CONTENIDO-AIW.md",
+      "mtime": "2026-07-28T08:58:30.214Z"
+    },
+    {
       "path": "context/aiw-console/records/CARRILES-Y-BARRIERS-ROADMAP.md",
       "mtime": "2026-07-27T21:52:55.842Z"
     },
@@ -61,8 +65,16 @@
       "mtime": "2026-07-28T02:17:45.499Z"
     },
     {
+      "path": "context/aiw-console/records/CONTRATO-FUENTE-UNICA-DOC-COMPONENTES-CANTU.md",
+      "mtime": "2026-07-28T08:52:51.501Z"
+    },
+    {
       "path": "context/aiw-console/records/CORRECCIONES-QA-CARRILES-Y-REGLA-DE-IDIOMA.md",
       "mtime": "2026-07-27T22:39:04.869Z"
+    },
+    {
+      "path": "context/aiw-console/records/DECISION-ROADMAP-AIW.md",
+      "mtime": "2026-07-28T09:25:24.613Z"
     },
     {
       "path": "context/aiw-console/records/DISCIPLINA-UN-RUN-POR-CARRIL.md",
@@ -83,6 +95,10 @@
     {
       "path": "context/aiw-console/records/ESCRITURA-CONSOLA-GLOBAL-O4-P12.md",
       "mtime": "2026-07-26T05:12:17.869Z"
+    },
+    {
+      "path": "context/aiw-console/records/MEDICION-DERIVA-ROADMAP-CANTU-71-RUNS.md",
+      "mtime": "2026-07-28T09:30:21.936Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-ESTADO-DE-AIW.md",
@@ -119,6 +135,10 @@
     {
       "path": "context/aiw-console/records/MIGRACION-O0.md",
       "mtime": "2026-07-24T08:26:08.077Z"
+    },
+    {
+      "path": "context/aiw-console/records/MODELO-CANONICO-DOCUMENTACION-CANTU.md",
+      "mtime": "2026-07-28T08:11:47.307Z"
     },
     {
       "path": "context/aiw-console/records/PARTICION-IMPLEMENTACION-Y-DOCUMENTACION-CANTU.md",
@@ -326,6 +346,14 @@
       "freshness": "2026-07-23T18:54:06.458Z"
     },
     {
+      "title": "AUDITORÍA DE CONTENIDO DE AIW",
+      "path": "context/aiw-console/records/AUDIT-CONTENIDO-AIW.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-28T08:58:30.214Z"
+    },
+    {
       "title": "CARRILES Y BARRIERS — el roadmap gana líneas paralelas y puntos de sincronización (D-051)",
       "path": "context/aiw-console/records/CARRILES-Y-BARRIERS-ROADMAP.md",
       "nav_tier": "evidence",
@@ -350,12 +378,28 @@
       "freshness": "2026-07-28T02:17:45.499Z"
     },
     {
+      "title": "CONTRATO DE FUENTE ÚNICA DE DOC POR COMPONENTE DE CANTU — EJECUCIÓN DEL q3 DEL CARRIL DOCUMENTATION",
+      "path": "context/aiw-console/records/CONTRATO-FUENTE-UNICA-DOC-COMPONENTES-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-28T08:52:51.501Z"
+    },
+    {
       "title": "CORRECCIONES DEL QA DE CARRILES, Y LA REGLA DE IDIOMA DE LA CONSOLA",
       "path": "context/aiw-console/records/CORRECCIONES-QA-CARRILES-Y-REGLA-DE-IDIOMA.md",
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-27T22:39:04.869Z"
+    },
+    {
+      "title": "DECISIÓN — LAS CUATRO FRONTERAS DEL ROADMAP DE AIW",
+      "path": "context/aiw-console/records/DECISION-ROADMAP-AIW.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-28T09:25:24.613Z"
     },
     {
       "title": "DISCIPLINA DE EJECUCIÓN PARALELA — «un run a la vez POR CARRIL»",
@@ -396,6 +440,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-26T05:12:17.869Z"
+    },
+    {
+      "title": "MEDICIÓN DE DERIVA ROADMAP↔DISCO DE CANTU — LOS 71 RUNS, UNO A UNO",
+      "path": "context/aiw-console/records/MEDICION-DERIVA-ROADMAP-CANTU-71-RUNS.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-28T09:30:21.936Z"
     },
     {
       "title": "MEDICIÓN DEL ESTADO REAL DE AIW",
@@ -468,6 +520,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-24T08:26:08.077Z"
+    },
+    {
+      "title": "MODELO CANÓNICO DE DOCUMENTACIÓN DE CANTU — EJECUCIÓN DEL q2 DEL CARRIL DOCUMENTATION",
+      "path": "context/aiw-console/records/MODELO-CANONICO-DOCUMENTACION-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-28T08:11:47.307Z"
     },
     {
       "title": "PARTICIÓN DE LOS RUNS QUE EMPAQUETABAN IMPLEMENTACIÓN Y DOCUMENTACIÓN",

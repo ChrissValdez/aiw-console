@@ -1,27 +1,67 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-28T07:45:02.640Z",
+  "generated_at": "2026-07-28T09:33:31.914Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-28T07:14:48.202Z"
+      "mtime": "2026-07-28T09:29:13.436Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-28T06:53:48.836Z"
+      "mtime": "2026-07-28T09:33:31.911Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "fbba1cc6009b35ec3668273d215cdfb6c1f3690e",
+  "head": "2489823ea8e65ce1ed23a505747f84bb86cc088a",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 54,
+  "commit_total": 58,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "2489823",
+      "full_sha": "2489823ea8e65ce1ed23a505747f84bb86cc088a",
+      "date": "2026-07-28T03:29:13-06:00",
+      "parents": "fe5c2c8",
+      "subject": "decision: las cuatro decisiones del roadmap de AIW (volteo de modo, portabilidad, identidad y orden, CONST 4)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fe5c2c8",
+      "full_sha": "fe5c2c81d78cbaa581d326500337ebbb74297c33",
+      "date": "2026-07-28T03:00:30-06:00",
+      "parents": "25e799c",
+      "subject": "record: contrato de fuente unica de doc por componente de Cantu (q3)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "25e799c",
+      "full_sha": "25e799cf23a9c3c37bec55c3eb87953bbf50326e",
+      "date": "2026-07-28T02:59:40-06:00",
+      "parents": "6623c4c",
+      "subject": "audit: contenido de AIW - los 11 tickets, las costuras del kernel y los tres casos de fallo",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6623c4c",
+      "full_sha": "6623c4ccdb3ecc7fa9e527a079692c6a5e1423aa",
+      "date": "2026-07-28T02:26:25-06:00",
+      "parents": "fbba1cc",
+      "subject": "record: modelo canonico de documentacion de Cantu (q2)",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "fbba1cc",

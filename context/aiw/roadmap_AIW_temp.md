@@ -1,3 +1,23 @@
+# RETIRADO — este documento ya no es autoridad
+
+> **Superseded por `RUN-AIW-MARKDOWN-RETIREMENT-001` (2026-07-28).** El canónico
+> del plan y del estado de AIW es `aiw/roadmap/roadmap.json` (`roadmap_tree_v1`).
+> Este archivo se conserva como registro histórico y **no se edita**: su cuerpo
+> queda intacto bajo esta cabecera, que es lo único que se le antepuso.
+>
+> **La numeración cambió: solo `O1` conserva número y sentido.** Toda cita de la
+> forma «O2 de AIW» se resuelve contra la tabla de equivalencia publicada en
+> `aiw/docs/docs_management/TABLA-DE-EQUIVALENCIA-DE-NUMERACION.md`.
+>
+> **Esta cabecera antepone 20 líneas.** Toda cita `RM-AIW:<línea>` escrita antes
+> de hoy apunta 20 líneas más arriba de lo que pretende, ADEMÁS del desfase de
+> +8 que ya arrastraba desde que se insertó la nota de puntero (hoy 120-126).
+>
+> **El borrado definitivo espera** a que se reparen las diez citas `RM-AIW:` del
+> canónico de `aiw-console`, que es trabajo de su propio hilo, no de este run.
+
+---
+
 # AIW — Roadmap (temporal)
 
 Semilla del futuro `.aiw/roadmap/roadmap.json` (v3). Vive en el repo `aiw\` y se

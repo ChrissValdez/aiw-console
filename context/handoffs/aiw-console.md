@@ -13,52 +13,57 @@
 > cita, y lo medido de disco se distingue de lo citado de un record — **un record
 > es una medición fechada, no el estado de hoy**.
 
-> **Por qué esta reescritura, y es una CORRECCIÓN.** La versión anterior declaraba
-> tres cosas que hoy son falsas, y las declaraba en LA FRONTERA, que es lo primero
-> que se lee: (1) que a `aiw` le quedaban **cuatro runs** para cerrar su `O2` —
-> medido hoy, `O2` está **10/10 `completed`** y ningún run de `aiw` está `active`;
-> (2) que `roadmap/roadmap.json` de este repo era **ARCHIVO DISPUTADO** con el hilo
-> de AIW — ya no lo es, aquel hilo terminó su tramo y no vuelve a este archivo;
-> (3) que las diez citas `RM-AIW:` eran materia de otro hilo — **ahora son trabajo
-> de éste**, y su desfase ya no es el `+8` que aquel texto medía sino **`+28`**,
-> porque el `#20` de AIW antepuso una cabecera de retiro de 20 líneas al Markdown.
-> Un hilo que arrancara con aquel texto esperaría a un hilo que ya cerró.
+> **Por qué esta reescritura: una AUDITORÍA HUMANA DE CABINA movió el canónico.**
+> El relevo anterior describía una cola de **45 runs** que ya no existe. La
+> auditoría del 2026-07-29/30 la dejó en **51**: seis runs nuevos, cuatro textos
+> reencuadrados, dos cierres y nueve aristas. Con la cola cambió la cabeza: donde
+> aquel texto decía que lo siguiente era el `#10` de `O0` con el triage cerrado en
+> sentido contrario, hoy el reorden **está ejecutado** y la cabeza de la cola viva
+> es el **`#39`**. Y una sección entera de aquel relevo —las diez citas `RM-AIW:`
+> como trabajo futuro de este hilo— **se retira**: quedan cinco y la reparación se
+> disolvió con las reescrituras. Un hilo que arrancara con aquel texto planificaría
+> sobre una cola que no está en disco. **Excepción declarada a «APUNTA, no
+> RECUENTA»: la sección del sistema de clasificación**, porque todavía no existe
+> como documento al que apuntar — publicarlo es el `#39`.
 
 **Estado del hilo:** O4 — la consola global existe, enciende, renderiza tres
 proyectos registrados y escribe. **Este hilo NO ejecutó ningún run en esta
 sesión**: fue un encargo de taller sin run, y su único byte escrito es este
 archivo. **Ningún run está `active` en ninguno de los dos objetivos.** Medido hoy
-sobre `roadmap/roadmap.json`: **36 `completed`, 9 `planned`, 0 `active`**.
-Última actualización: **2026-07-29**.
+sobre `roadmap/roadmap.json`: **38 `completed`, 13 `planned`, 0 `active`**.
+**La cabeza de la cola viva es el `#39`**, `RUN-CONSOLE-RUN-CLASSIFICATION-SPEC-001`.
+Última actualización: **2026-07-30**.
 
 ---
 
 ## ⚠ LA FRONTERA — leer antes de escribir un solo byte
 
-**1. `aiw` tiene hilo propio y su `O2` CERRÓ.** Medido hoy en READ-ONLY sobre
-`aiw/roadmap/roadmap.json`: **6 objetivos, 29 fases, 42 runs — 21 `completed`, 21
-`planned`, 0 `active`**; **`O2` está 10/10 `completed`**, incluidos el `#20`
-(`RUN-AIW-MARKDOWN-RETIREMENT-001`) y el `#21` (`RUN-AIW-THIRD-PROJECT-001`), que
-en el relevo anterior figuraban pendientes. Lo `planned` que le queda es `O3`,
-`O5`, `O6` y `O7` — nada de eso toca este repo. Su relevo vive en
-`context/handoffs/aiw.md`.
+**1. `aiw` tiene hilo propio, y este roadmap ya NO es archivo disputado por él.**
+Su relevo vive en `context/handoffs/aiw.md`. **Este hilo es hoy el único escritor
+del canónico de este repo.** La regla de serie —dos encargos sobre el mismo
+archivo van en serie— sigue vigente como regla; simplemente ya no hay segundo
+encargo. `aiw` **no se leyó en esta sesión**: fuera de alcance.
 
-**2. `aiw-console/roadmap/roadmap.json` YA NO es ARCHIVO DISPUTADO.** Cambio
-explícito respecto del relevo anterior, que lo declaraba disputado mientras
-durase el `O2` de AIW. Ese `O2` cerró; el `#21` que aterrizaba aquí está
-`completed`. **Este hilo es hoy el único escritor del canónico de este repo.** La
-regla de serie —dos encargos sobre el mismo archivo van en serie— sigue vigente
-como regla; simplemente ya no hay segundo encargo.
+**2. `cantu-studio` tiene hilo propio** (relevo en
+`context/handoffs/cantu-studio.md`) y escribe records en
+`context/aiw-console/records/`, **no este roadmap**. Rige la disciplina de
+carriles (`records/DISCIPLINA-UN-RUN-POR-CARRIL.md`): superficies de escritura
+disjuntas.
 
-**3. Sigue habiendo un hilo paralelo de `cantu-studio`** (relevo propio en
-`context/handoffs/cantu-studio.md`) que escribe records en
-`context/aiw-console/records/` pero **NO** el roadmap de este repo. Rige la
-disciplina de carriles (`records/DISCIPLINA-UN-RUN-POR-CARRIL.md`): superficies de
-escritura disjuntas.
-
-**4. Este hilo NO escribe en `aiw` ni en `cantu-studio`.** Un hallazgo sobre
+**3. Este hilo NO escribe en `aiw` ni en `cantu-studio`.** Un hallazgo sobre
 cualquiera de los dos se **NOMBRA** y se pasa a su hilo — sin ticket y sin
 recomendación de arreglo.
+
+**4. Excepción medida, y hay que decirla: dos runs vivos de ESTE roadmap escriben
+en `cantu-studio`** — el `#47` (`RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001`) y el
+`#48` (`RUN-CONSOLE-CORTE-RETIRO-LOCAL-001`). **Hay precedente**: este roadmap ya
+condujo escritura sobre aquel repo. **La ventana se coordina con ese hilo y no
+corren con un taller vivo allí.**
+
+**5. Este roadmap NO declara `lanes`.** Medido hoy: **0 runs con `lane`, 0 con
+`barrier`**. Un solo carril: **la cola es serial y el `queue_order` es la historia
+completa de la ejecución.** El vocabulario de carriles existe en el esquema
+(`D-051`) y este proyecto no lo usa.
 
 ---
 
@@ -66,198 +71,291 @@ recomendación de arreglo.
 
     projects/aiw-console/roadmap/roadmap.json
 
-Medido sobre ese archivo hoy: **2 objetivos, 19 fases, 45 runs**; `queue_order`
-**1..45 denso, único y contiguo**; **19 aristas `depends_on`, 0 colgantes**;
-**36 `completed`, 9 `planned`, 0 `active`**. El status de objetivo y de fase se
-**deriva al leer**, no se almacena (`CONTRATO §11`/`§12`).
+Medido sobre ese archivo hoy: **2 objetivos, 19 fases, 51 runs**; `queue_order`
+**1..51 denso, único y contiguo**; **26 aristas `depends_on`, 0 colgantes**;
+**38 `completed`, 13 `planned`, 0 `active`**; **36 runs con `closeout_result`**
+(los 15 sin él son los 13 `planned` más el `#4` y el `#9`, ambos `completed`). El
+status de objetivo y de fase se **deriva al leer**, no se almacena
+(`CONTRATO §11`/`§12`).
 
-- **O0 «Project Console»** — 3 fases, **12 runs**: 9 `completed`, **3 `planned`**
-  (`#10`, `#11`, `#12`).
-- **O4 «Global Console»** — 16 fases, **33 runs**: 27 `completed`, **6 `planned`**
-  (`#35`, `#36`, `#37`, `#38`, `#41`, `#42`).
+- **`O0` «Project Console»** — **3 fases, 12 runs**: 9 `completed`, **3 `planned`**
+  (`#41`, `#50`, `#51`).
+- **`O4` «Global Console»** — **16 fases, 39 runs**: 29 `completed`, **10
+  `planned`**.
 
-Línea base viva, medida hoy sobre el archivo entero: **94 296 B**, md5
-`f299d968fdf781bf31863d696bd9610e` — **idéntica a la del relevo anterior**: el
-canónico no se ha movido desde entonces.
+Línea base viva, medida hoy sobre el archivo entero: **116 437 B**, md5
+**`b0080299491eac173eeca4aa0f14ef40`**.
 
-**Los derivados están al día y NO hay nada que re-emitir al abrir sesión.**
-Comparados tupla a tupla (`run_id`, `phase_id`, `status`, `queue_order`) contra el
-canónico, **`.project/roadmap.json` y `snapshot.roadmap_tree` son idénticos en los
-45 runs, sin faltantes ni sobrantes**. `generated_at` de ambos:
-**`2026-07-28T09:33:31.914Z`**.
+## LO QUE QUEDA VIVO — los trece `planned`
 
-## LO QUE QUEDA VIVO — los nueve `planned`
-
-Títulos verbatim de disco: es lo único que el operador ve en pantalla.
+Títulos verbatim de disco: es lo único que el operador ve en pantalla. **Los trece
+se leyeron verbatim; ninguno quedó ilegible.** El orden es el de `queue_order`.
 
 | `#` | Fase | `run_id` | Título |
 |---:|---|---|---|
-| 10 | `O0.P3` | `RUN-CANTU-PROJECT-CONSOLE-LATENT-DEFECTS-001` | Fix three latent console defects found during editor QA |
-| 11 | `O0.P3` | `RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001` | Add phase and objective create and delete operations |
-| 12 | `O0.P3` | `RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001` | Deep Project Console audit |
-| 35 | `O4.P5` | `RUN-CONSOLE-PARIDAD-RENDER-CANTU-001` | Global console renders Cantu (parity, operator QA) |
-| 36 | `O4.P8` | `RUN-CONSOLE-UI-UX-001` | UI/UX of the global console |
-| 37 | `O4.P6` | `RUN-CONSOLE-AIW-TERCER-PROYECTO-001` | AIW as a third project (roadmap Markdown → JSON v3) |
-| 38 | `O4.P7` | `RUN-CONSOLE-CORTE-RETIRO-LOCAL-001` | Cutover: retirement of Cantu's local console and deletion of .aiw |
-| 41 | `O4.P9` | `RUN-CONSOLE-CONTEXT-PACK-001` | Context pack of the console |
-| 42 | `O4.P9` | `RUN-CONSOLE-DIGEST-CABINA-001` | Digest for the cockpit |
+| 39 | `O4.P9` | `RUN-CONSOLE-RUN-CLASSIFICATION-SPEC-001` | Publish the run classification specification and register it as a transversal decision |
+| 40 | `O4.P9` | `RUN-CONSOLE-SUITE-FIXTURES-001` | Make the test suite stable under change — assert against fixtures, not live sibling data |
+| 41 | `O0.P3` | `RUN-CANTU-PROJECT-CONSOLE-LATENT-DEFECTS-001` | Fix four defects in the global console renderer, and the projector mirror the tests assert against |
+| 42 | `O4.P9` | `RUN-CONSOLE-RUN-CLASSIFICATION-FIELDS-001` | The five classification fields enter the roadmap schema, with derivation at read time and a minimal view |
+| 43 | `O4.P9` | `RUN-CONSOLE-CLASSIFICATION-PILOT-001` | Classify aiw-console's live runs as the pilot, and rule on the procedure itself |
+| 44 | `O4.P9` | `RUN-CONSOLE-DIGEST-CABINA-001` | Digest for the cockpit |
+| 45 | `O4.P5` | `RUN-CONSOLE-PARIDAD-RENDER-CANTU-001` | Global console renders Cantu (parity, operator QA) |
+| 46 | `O4.P8` | `RUN-CONSOLE-UI-UX-001` | UI/UX of the global console |
+| 47 | `O4.P9` | `RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001` | Move cantu-studio's canonical roadmap out of .aiw before the cutover can delete it |
+| 48 | `O4.P7` | `RUN-CONSOLE-CORTE-RETIRO-LOCAL-001` | Cutover: retirement of Cantu's local console and deletion of .aiw |
+| 49 | `O4.P9` | `RUN-CONSOLE-STALE-TEXTS-REPAIR-001` | Repair the five texts that describe this repo falsely |
+| 50 | `O0.P3` | `RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001` | Add phase and objective create and delete operations |
+| 51 | `O0.P3` | `RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001` | Deep Project Console audit |
 
-Los nueve títulos se leyeron verbatim del disco; ninguno quedó ilegible.
+**La anomalía de fase se lee raro y es CORRECTA.** Tres runs de `O0.P3` llevan
+`queue_order` **41, 50 y 51**, muy por encima de los de `O4`, y `O4.P5`/`O4.P7`/
+`O4.P8` caen en 45/48/46 mientras `O4.P9` ocupa 33..49. **El orden lo da el
+`queue_order`, siempre y solo; el `phase_id` es identidad opaca** (`D-047`) y no
+implica posición. Es el resultado del reorden `O0`↔`O4` que el relevo anterior
+daba como pendiente: **está ejecutado.**
 
-**El siguiente `planned` por `queue_order` es el `#10`** — pero `D-054` cerró el
-triage en sentido contrario (ver «Qué NO está resuelto»).
+## Las aristas vivas — nueve, y todas salen de un run vivo
 
-## QUÉ CAMBIÓ DESDE EL RELEVO ANTERIOR — medido, no recontado
+De las **26** aristas del archivo, **nueve** tocan un run `planned`. **Las
+diecisiete restantes unen runs ya `completed`** y no gobiernan nada de lo que
+queda; no se transcriben. Este proyecto declara `depends_on` solo donde hay
+compuerta real (`D-046`).
 
-- **El `O2` de AIW cerró entero.** Los cuatro runs que aquel texto listaba como
-  pendientes (`#18`..`#21`) están hoy `completed`. → punto 1 de LA FRONTERA.
-- **El Markdown de AIW fue RETIRADO superseiendo, no borrando.**
-  `context/aiw/roadmap_AIW_temp.md` existe, tiene **228 líneas** (antes 208) y
-  abre con una cabecera de 20 líneas que declara «RETIRADO — este documento ya no
-  es autoridad». Sigue en disco a propósito: su borrado espera a que se reparen
-  las diez citas. → `records/RETIRO-MARKDOWN-AIW.md §5`.
-- **El solapamiento de `O4.P6` se movió.** Las dos piezas que el relevo anterior
-  daba por NO HECHAS —el retiro de `O4` del Markdown y la entrada de AIW en la
-  consola— son hoy el `#20` y el `#21` de AIW, ambos `completed`; el canónico de
-  AIW no lleva `O4` (sus objetivos son `O1`, `O2`, `O3`, `O5`, `O6`, `O7`). **Lo
-  que el `#37` de este roadmap conserva de trabajo propio se decide en cabina**:
-  no se editó nada. **[NO VERIFICADO]** que la consola pinte AIW en pantalla — no
-  se levantó. `aiw/.project/` **no se re-midió**: fuera del alcance de lectura de
-  este encargo.
+| Origen (`#`) | → | Destino (`#`) |
+|---|---|---|
+| `#40` Make the test suite stable under change — assert against fixtures, not live sibling data | → | `#41` Fix four defects in the global console renderer, and the projector mirror the tests assert against |
+| `#39` Publish the run classification specification and register it as a transversal decision | → | `#42` The five classification fields enter the roadmap schema, with derivation at read time and a minimal view |
+| `#40` Make the test suite stable under change — assert against fixtures, not live sibling data | → | `#42` The five classification fields enter the roadmap schema, with derivation at read time and a minimal view |
+| `#42` The five classification fields enter the roadmap schema, with derivation at read time and a minimal view | → | `#43` Classify aiw-console's live runs as the pilot, and rule on the procedure itself |
+| `#41` Fix four defects in the global console renderer, and the projector mirror the tests assert against | → | `#45` Global console renders Cantu (parity, operator QA) |
+| `#45` Global console renders Cantu (parity, operator QA) | → | `#46` UI/UX of the global console |
+| `#45` Global console renders Cantu (parity, operator QA) | → | `#48` Cutover: retirement of Cantu's local console and deletion of .aiw |
+| `#46` UI/UX of the global console | → | `#48` Cutover: retirement of Cantu's local console and deletion of .aiw |
+| `#47` Move cantu-studio's canonical roadmap out of .aiw before the cutover can delete it | → | `#48` Cutover: retirement of Cantu's local console and deletion of .aiw |
 
-## LAS DIEZ CITAS `RM-AIW:` — ahora son trabajo de ESTE hilo
+**Las tres compuertas del corte son APROBACIÓN EXPLÍCITA DEL OPERADOR**, no
+comprobación automática: la **paridad** (`#45`), la **revisión de uso** (`#46`) y
+**la salida del canónico de Cantu de `.aiw`** (`#47`). El corte es irreversible y
+no procede sin las tres.
 
-Re-medido hoy: **10 ocurrencias del token `RM-AIW:` en el canónico de este repo,
-repartidas en 8 runs** (`#36` y `#38` citan dos veces cada uno). El desfase vigente
-es **`RM-AIW:n` → línea `n + 28`** del Markdown de 228 líneas; se resolvió contra
-el archivo y coincide en las diez — `RM-AIW:114` cae en la línea 142, que dice
-«SECUENCIA ACORDADA (D-034) — la consola es lo SIGUIENTE y va primero.», y
-`RM-AIW:152` cae en la 180, que es el bullet «Pantalla multi-proyecto». La propia
-cabecera del Markdown lo declara: **+20 de la cabecera sobre el +8 que ya
-arrastraba**. → tabla de los 8 runs y las 10 citas con título verbatim y línea
-real en `records/RETIRO-MARKDOWN-AIW.md §4.2` — **no se reproduce aquí**.
+## Los derivados — al día, NADA que re-emitir al abrir sesión
 
-El token aparece además **fuera** del canónico, contado por archivo en esta sesión
-y **sin clasificar ni reparar**: `context/DECISIONES.md` **1**;
-`context/handoffs/` **16** (`aiw-console.md` 12 —medido sobre la versión que este
-archivo sustituye—, `aiw.md` 4, `cantu-studio.md` 0);
-`context/aiw-console/records/` **127 en 9 archivos** (`MEDICION-ESTADO-DE-AIW` 39,
-`MEDICION-O4` 32, `REDACCION-O4` 20, `RETIRO-MARKDOWN-AIW` 20,
-`TRADUCCION-ROADMAP-A-INGLES` 7, `ESCRITURA-ROADMAP-AIW` 3, y 2 en cada uno de
-`AIW-TERCER-PROYECTO`, `AUDIT-CONTENIDO-AIW` y `DECISION-ROADMAP-AIW`);
-`.project/roadmap.json` **10**; `.project/snapshot.json` **10**. Es **cuenta de
-alcance, no veredicto**: cuántas están rotas sigue **[NO VERIFICADO]** →
-`records/RETIRO-MARKDOWN-AIW.md §4.3` (que nombraba siete records; hoy son nueve).
+Comparado tupla a tupla (`run_id`, `phase_id`, `status`, `queue_order`) contra el
+canónico: **`.project/roadmap.json` es idéntico en los 51 runs, sin faltantes,
+sin sobrantes y sin una sola diferencia**; también coinciden los 2 objetivos, las
+19 fases y el reparto 38/13. `generated_at`: **`2026-07-30T22:46:56.173Z`**,
+`generated_from` **`aiw-projector@0.9.0`**. **No se re-emitió nada en esta sesión.**
 
-**La reparación nace como run propio de este roadmap y ESE RUN TODAVÍA NO EXISTE.**
-No se creó en esta sesión. Nace sin arista externa: el `#20` de AIW del que iba a
-depender ya está `completed`.
+## EL SISTEMA DE CLASIFICACIÓN — PROVISIONAL, y es la excepción declarada
 
-## LOS TRES ÁRBOLES DE CONSOLA — no confundirlos
+> **Esta sección viola «APUNTA, no RECUENTA» a propósito y es la única que lo
+> hace.** El sistema se cerró en la auditoría de cabina y **todavía no existe como
+> documento**: publicarlo es el `#39`. Por eso viaja aquí en compacto. **Cuando el
+> `#39` lo publique, esta sección se SUSTITUYE por un puntero** — no se mantiene en
+> paralelo.
+
+**Cinco campos almacenados**, todos **opcionales en el esquema**:
+
+- `correctness_model` — `SPECIFIED` · `JUDGED_ACCEPTS` · `JUDGED_DEFINES`
+- `work_type` — `COSMETIC` · `FUNCTIONAL` · `FOUNDATIONAL`
+- `blast_radius` — `LOCAL` · `ADJACENT` · `SYSTEMIC` · `PROJECT_SHAPE`, medido
+  **contando consumidores presentes y planificados**
+- `failure_surfaces` — `LOUD` · `VISIBLE` · `SILENT`
+- `external_effects` — lista de guarda, **vacía por defecto**
+
+Más `classified_at`. **El validador REPORTA los runs vivos sin clasificar; NO
+rechaza.**
+
+**Dos derivados, nunca almacenados: `severity` y `closure_mode`.**
+
+`severity` — tabla `work_type` × `blast_radius` (`LOCAL` / `ADJACENT` / `SYSTEMIC`
+/ `PROJECT_SHAPE`):
+
+| | `LOCAL` | `ADJACENT` | `SYSTEMIC` | `PROJECT_SHAPE` |
+|---|---|---|---|---|
+| `COSMETIC` | MINOR | MINOR | MODERATE | MODERATE |
+| `FUNCTIONAL` | MODERATE | MODERATE | MAJOR | MAJOR |
+| `FOUNDATIONAL` | MAJOR | MAJOR | CRITICAL | CRITICAL |
+
+Con **un solo ajuste** por `failure_surfaces`: `LOUD` **−1**, `VISIBLE` **0**,
+`SILENT` **+1**, saturando entre `MINOR` y `CRITICAL`.
+
+`closure_mode` — `SPECIFIED` + MINOR/MODERATE → `UNATTENDED`; `SPECIFIED` +
+MAJOR/CRITICAL → `SEMI_ATTENDED`; `JUDGED_ACCEPTS` → `SEMI_ATTENDED`;
+`JUDGED_DEFINES` → `ATTENDED`. **Guarda: `external_effects` no vacía →
+`SEMI_ATTENDED` como mínimo.**
+
+**Tres combinaciones ILEGALES que la consola rechaza:**
+`SPECIFIED`+`FOUNDATIONAL` · `FOUNDATIONAL`+`LOUD` · `JUDGED_*`+`UNATTENDED`.
+
+**DOS EJES, NO UNO — es la decisión de mayor alcance del sistema.** El **cierre se
+DERIVA** de la clasificación del run; la **delegabilidad se DECLARA a nivel de
+proyecto**, no por run. AIW ya declara la suya por escrito.
+
+**`care_budget`** es **configuración por proyecto editable en consola, no regla
+dura**: MINOR → Opus·Alto · MODERATE → Opus·Extra · MAJOR → Opus·Max · CRITICAL →
+Fable·Max.
+
+**Los `completed` no se clasifican.** Sí un puñado, como calibración.
+
+## QUÉ PRODUJO LA AUDITORÍA — un hito por línea
+
+- **Dos cierres.** «AIW as a third project» (`#32`) cerró con
+  `closeout_result: delivered_by_aiw_roadmap_O2`; «Context pack of the console»
+  (`#35`) con `superseded_by_D-037_D-038`. Ambos medidos hoy.
+- **Seis runs nuevos, los seis en `O4.P9`**: `#39`, `#40`, `#42`, `#43`, `#47`, `#49`.
+- **Cuatro textos reencuadrados** (los cuatro llevan la marca `REFRAMED 2026-07-30`
+  en su `full_description`): los defectos de consola pasan a la global **y suman un
+  cuarto** (`#41`); **paridad pasa de construcción a VERIFICACIÓN sobre tres
+  proyectos** (`#45`); UI/UX **recibe alcance escrito** —era una compuerta de
+  alcance indefinido bloqueando un acto irreversible— (`#46`); el corte **recibe su
+  precondición medida** (`#48`).
+- **Nueve aristas, dos de ellas repuestas.** Las diecisiete de runs `completed` no
+  se tocaron.
+- **La auditoría NO deja record, y es DELIBERADO.** Su producto es el roadmap
+  mismo, que es autoevidente y está en Git. **Las decisiones de fondo van a
+  `DECISIONES.md` por el `#39`**, no por un record de la auditoría.
+- **Dos deudas viejas CERRADAS sin tocar nada.** (a) Las **siete premisas fechadas**
+  viven en cinco runs `completed` y **no se editan**: se corrigen **añadiendo nota
+  fechada**, la forma que tres runs cerrados ya usan
+  (`CIERRE-ROADMAP-AL-DIA-FASES-P13-P14.md` B.3). (b) La reparación de las citas
+  `RM-AIW:` **no nace como run**: se disolvió con las reescrituras.
+
+## LAS CITAS `RM-AIW:` — MEDIDAS HOY, y la sección anterior queda RETIRADA
+
+Contadas hoy sobre `roadmap/roadmap.json`: **5 ocurrencias del token `RM-AIW:`**,
+una por run, en cinco runs:
+
+| `#` | Status | Run |
+|---:|---|---|
+| 10 | `completed` | Audit / Phase 0 of the migration to the global console |
+| 20 | `completed` | Multi-project shell reading aiw-console only |
+| 21 | `completed` | Cantu emits the new .project/ folder alongside .aiw |
+| 32 | `completed` | AIW as a third project (roadmap Markdown → JSON v3) |
+| **44** | **`planned`** | **Digest for the cockpit** |
+
+**Cuatro en runs `completed`, una en un run vivo — el digest.**
+
+Contexto: **eran diez**; cinco murieron al reescribirse paridad, UI/UX y el corte.
+**La cabina afirmó primero que habían muerto siete y lo corrigió al recontar** — se
+registra aquí porque es exactamente la disciplina de no afirmar cifras sin
+medirlas.
+
+**Consecuencia:** la condición de borrado del Markdown de AIW —«espera a que se
+reparen las diez citas», `records/RETIRO-MARKDOWN-AIW.md §5`— **ya no describe la
+realidad**. **Reformularla es del hilo de `aiw`, que la escribió** (ver reporte 2).
+La tabla de `§4.2` de aquel record describe un estado de diez citas que ya no
+existe: **es medición fechada, no estado de hoy.**
+
+## HALLAZGOS VIVOS Y DEUDAS
+
+### El validador viejo está EN ROJO y no valida esto
+
+`tools/project-console/validate-project-console-state.mjs` — **corrido hoy: 44
+líneas de error** (45 líneas de salida contando la cabecera «Project Console state
+validation failed:»), exit **1**. **Está en rojo desde antes de la auditoría.**
+Lee **54 ocurrencias de rutas bajo `.aiw/**`** (19 archivos distintos) y **no
+menciona `roadmap/roadmap.json` ni una sola vez**. Es **el validador de JAME
+trasplantado**: exige `.aiw/project.json project_id === "jame_system_dual"`
+(`:823`) y `schema_version === "jame.roadmap_v3.v0.2-progress"` (`:1606`).
+
+**Consecuencia operativa, en claro: un bloque de Git que use ese validador como
+guarda NO PUEDE PASAR NUNCA en este repo.** La guarda buena compara el conteo de
+runs del canónico contra el de `.project/`. → `records/MEDICION-VALIDADOR-ROJO.md`;
+**candidato a caer en el `#40`**.
+
+### Los cinco textos vencidos — son el `#49`, ninguno editado
+
+Re-leídos en esta sesión con **archivo y línea medidos hoy**; los cinco siguen
+diciendo lo que decían. → `records/AIW-TERCER-PROYECTO.md §6` (cubre cuatro de los
+cinco: no lista el de `context/README.md:80-81`).
+
+| Archivo y línea | Qué dice HOY |
+|---|---|
+| `project-console/README.md:114-115` | «Edit mode still probes the endpoint per project and refuses honestly where no layout claims a roadmap (**today: `aiw`, until O4.P6**)» — el paréntesis no describe ningún proyecto |
+| `project-console/README.md:57-66` (bloque JSON) | El ejemplo lista **dos** proyectos (`:62-63`); `project-console/projects.json` declara **tres** (medido hoy) |
+| `context/README.md:16-23` | «`aiw-console` **también** contiene un fork […] la consola viva está en `projects/cantu-studio`» — no dice cuál de los tres árboles es el fork, y la consola multiproyecto es `aiw-console/project-console/` |
+| `context/README.md:80-81` | «Todavía sin roadmap propio: O4 vive hoy en el roadmap de AIW y migra aquí en el tramo 1» — este repo tiene canónico propio con `O0` y `O4` |
+| `package.json:6` | `"AIW project console — verbatim fork of the JAME project console (zero dependencies)."` — falso respecto de los bytes, y `D-035` ya lo declaró |
+
+### Los tres árboles de consola — no confundirlos
 
 Verificado en disco hoy. → `records/AIW-TERCER-PROYECTO.md §3`.
 
-- **`project-console/` — LA CONSOLA VIVA.** Es la única que nombra el lanzador:
+- **`project-console/` — LA VIVA.** Es la única que nombra el lanzador:
   `start-console.ps1:33` fija `$SERVER_RELATIVE = "project-console\serve.mjs"` y
-  `:34` fija `$REGISTRY_RELATIVE = "project-console\projects.json"`. Puerto
-  **8788** (`project-console/serve.mjs:143`; `PC_PORT` lo sustituye). Es la única
-  con registro de proyectos.
-- **`docs/project-console/` — EL FORK descartado por `D-035`.** Solo `index.html`
-  y `assets/`: **no tiene `serve.mjs`, no tiene `projects.json`, y no declara
-  puerto alguno** (no hay servidor que lo declare). No conoce ningún registro de
-  proyectos.
+  `:34` fija `$REGISTRY_RELATIVE = "project-console\projects.json"`. Puerto **8788**
+  (`project-console/serve.mjs:143`; `PC_PORT` lo sustituye).
+- **`docs/project-console/` — EL FORK descartado por `D-035`.** Solo `index.html` y
+  `assets/`: **sin `serve.mjs`, sin `projects.json`, sin puerto** (re-verificado hoy).
 - **`console/` — el prototipo de `O4.P10`.** Puerto **propio y distinto: 8790**
-  (`console/serve.mjs:33`; `CONSOLE_PORT` lo sustituye), entrada `/web/index.html`.
-  Lee `roadmap/roadmap.json` crudo y **no toca `.project/`** — lo declara él mismo
-  en `console/README.md:30` y `console/web/assets/console.js:7`, y no hay una sola
-  referencia a `.project/` en su código.
+  (`console/serve.mjs:33`; `CONSOLE_PORT` lo sustituye). Lee `roadmap/roadmap.json`
+  crudo y **no toca `.project/`**. Es historia.
 
-## LOS TEXTOS VENCIDOS DE ESTE REPO — medidos HOY, ninguno editado
+### La suite — `[NO VERIFICADO]` aquí, y NO la corras
 
-Re-leídos en esta sesión, con la línea real medida aquí (no citada del record).
-Su reparación **se decide en cabina**. → `records/AIW-TERCER-PROYECTO.md §6`.
+**Medido por el hilo de `aiw` el 2026-07-29 y reportado, NO verificado en esta
+sesión: 278 tests, 268 pasan, 10 fallan**, y los diez asertan contra datos vivos y
+mutables. **Correrla deja el árbol sucio: re-emite `.project/` de verdad.** Es el
+`#40`. Este encargo no la corrió.
 
-| Archivo y línea | Qué dice HOY | Qué habría que cambiar |
-|---|---|---|
-| `project-console/README.md:115` («Three deliberate differences», punto 2) | «Edit mode still probes the endpoint per project and refuses honestly where no layout claims a roadmap (**today: `aiw`, until O4.P6**)» | **Vencido**: `aiw` ya tiene canónico propio (`aiw/roadmap/roadmap.json`, medido hoy) y está registrado. El paréntesis no describe ningún proyecto |
-| `project-console/README.md:57-66` (bloque JSON de «The project registry») | El ejemplo lista **dos** proyectos: `aiw-console` y `cantu-studio` | `project-console/projects.json` declara **tres** (medido hoy): falta la entrada de `aiw` con root `../../../aiw`. El ejemplo se lee como si fuera el archivo |
-| `context/README.md:16-23` | «`aiw-console` **también** contiene un fork de la consola de Cantu […] la consola viva está en `projects/cantu-studio`» | **Ambiguo en dos sentidos**: no dice cuál de los **tres** árboles es el fork —es `docs/project-console/`, no `console/`—, y la consola multiproyecto es `aiw-console/project-console/` |
-| `package.json:6` | `"description": "AIW project console — verbatim fork of the JAME project console (zero dependencies)."` | «verbatim fork» es falso respecto de los bytes, y `D-035` ya lo declaró |
+### Deudas anteriores que siguen vivas — punteros revalidados hoy, todos resuelven
 
-**Hallazgo adicional del mismo barrido, no listado en el record:**
-`context/README.md:80-81` dice que `aiw-console/` está «todavía sin roadmap propio:
-O4 vive hoy en el roadmap de AIW y migra aquí en el tramo 1». **También vencido**:
-este repo tiene canónico propio con `O0` y `O4`, y el canónico de AIW ya no lleva
-`O4`. No se editó.
-
-## Las compuertas vigentes (son `depends_on` reales en el roadmap)
-
-- **paridad + UI/UX → corte:** `RUN-CONSOLE-CORTE-RETIRO-LOCAL-001` (`#38`) depende
-  de `RUN-CONSOLE-PARIDAD-RENDER-CANTU-001` (`#35`) **y** de
-  `RUN-CONSOLE-UI-UX-001` (`#36`). Sin cambio desde `D-047`: el corte es
-  irreversible y no procede sin la revisión de uso.
-- **Es la ÚNICA compuerta viva.** Las otras 17 aristas unen runs ya `completed`.
-  Las 19 resuelven dentro del archivo; **la ubicación de las fases nuevas es
-  ORDEN, no compuerta** — este proyecto declara `depends_on` solo donde hay
-  compuerta real (`D-046`). La arista externa que se preveía hacia el `#20` de AIW
-  **ya no hace falta**: ese run está `completed`.
-
-## LAS DEUDAS DESTAPADAS Y NO TOCADAS
-
-- **El motor no puede crear ni borrar fase u objetivo.** Es el `#11` de O0, vivo y
-  `planned`; **tres cierres consecutivos lo han rodeado con escritura a mano**
+- **El motor no crea ni borra fase u objetivo.** Es el **`#50`**, vivo y `planned`;
+  **tres cierres consecutivos lo han rodeado con escritura a mano**
   (`CIERRE-ROADMAP-AL-DIA-FASES-P13-P14.md:485`,
   `CIERRE-REGISTRO-Y-RELEVO-TERCERO.md:631`, `ESCRITURA-ROADMAP-AIW.md:311` — los
-  tres re-verificados hoy).
+  tres resuelven).
 - **`CONTRATO §7` NO está enforced en código.** Un `contract_ref` que escapa del
-  root resuelve y se emite; la garantía de contención es documental, no de código.
-  → `GOBERNANZA-DECLARADA-AIW.md §6.3`.
-- **La ausencia de un artefacto tiene DOS canales y solo uno la cubre.** El banner
-  por sección la anuncia nombrando el archivo, pero el artefacto ausente no entra
-  en `emitted_artifacts`. → `EMISION-PROJECT-AIW.md §5.3`.
+  root resuelve y se emite; la contención es documental. →
+  `GOBERNANZA-DECLARADA-AIW.md §6.3` (resuelve).
 - **El escaneo del `docs_index` no consulta `.gitignore`**, así que produce
-  resultados distintos en cada máquina. → `EMISION-PROJECT-AIW.md §6` (su §6.3
-  lista las 36 rutas que no viajarían).
+  resultados distintos en cada máquina. → `EMISION-PROJECT-AIW.md §6` (resuelve; su
+  `§6.3` lista las 36 rutas que no viajarían).
 - **`git_history.json` a de-máquina en TODO emisor** — `D-053` adjudicación 4,
-  declarada **transversal**. **Sigue sin ejecutar en este repo.**
+  declarada transversal. **Sigue sin ejecutar en este repo.**
+- **La ausencia de un artefacto tiene DOS canales y solo uno la cubre**: el banner
+  por sección la anuncia, pero el artefacto ausente no entra en
+  `emitted_artifacts`. → `EMISION-PROJECT-AIW.md §5.3` (resuelve).
 
-## `D-057` PENDIENTE — tres cabos que no se pierden
+### `D-057` PENDIENTE — tres cabos que no se pierden
 
-Las tres **se corrigen hacia adelante, nunca reescribiendo** (precedente `D-045`).
-Verificado hoy: **`D-056` es la última entrada de `context/DECISIONES.md` y
-`D-057` no existe**; no hay entradas posteriores.
+Verificado hoy: **`D-056` es la última entrada de `context/DECISIONES.md`** (57
+entradas, `D-056` en `:1964`) y **`D-057` no existe**. Las tres **se corrigen hacia
+adelante, nunca reescribiendo** (precedente `D-045`).
 
 1. **La fecha de `7659ff3` sitúa la rotura 18 días antes de constatarla, no los 17
-   que citan `D-055` y `D-056`.** → `ESCRITURA-ROADMAP-AIW.md §6`.
+   que citan `D-055` y `D-056`.** → `ESCRITURA-ROADMAP-AIW.md §6` (resuelve).
 2. **El aplazamiento del `docs_index` es SECUENCIA, no divergencia de `D-053`** —
-   reencuadrar, no enmendar. → `EMISION-PROJECT-AIW.md §9.3`.
+   reencuadrar, no enmendar. → `EMISION-PROJECT-AIW.md §9.3` (resuelve).
 3. **`D-053` cita `aiw/.gitignore:4` para `logs/`; retirada esa línea, el `:4`
-   apunta hoy a otra cosa.** → cabo de aquel cierre; **no se re-midió aquí**,
-   `aiw` está fuera del alcance de lectura de este encargo salvo su `roadmap.json`.
+   apunta hoy a otra cosa.** **No re-medido aquí**: `aiw` está fuera del alcance de
+   lectura de este encargo.
 
-## Qué NO está resuelto, y el hilo nuevo debe saberlo
+## LOS CUATRO REPORTES PENDIENTES — del OPERADOR, no del taller
 
-1. **La prioridad `O0`↔`O4`, con triage CERRADO y reorden PENDIENTE.** `D-054` leyó
-   el contenido de los tres runs vivos de O0 y **no halló trabajo vivo y urgente**:
-   lo vivo de O4 (`#35`→`#38`) va por delante de la cola de O0. **El reorden no se
-   ejecutó**: queda como **acto de edición propio** en la consola (dry-run →
-   confirm, la ruta de `O4.P12`), **antes de la paridad** (`O4.P5`).
-2. **El `#10` de O0 sigue `planned`**, como quedó tras el cierre anterior. Medido
-   hoy: ni O0 ni O4 tienen ningún run `active`.
-3. **La consola no se ha levantado desde que AIW entró al registro.** Los tres
-   embudos del shell pasan en disco (`AIW-TERCER-PROYECTO.md §4`), pero **[NO
-   VERIFICADO]** que renderice AIW en pantalla. La lista de comprobación en
-   pantalla, para el operador, está en `AIW-TERCER-PROYECTO.md §5`.
+Sección propia **porque si se pierden, dos proyectos planifican sobre información
+falsa**. Ninguno es ticket, ninguno lleva recomendación de arreglo: se nombran y se
+pasan.
 
-## La auditoría de contenido del roadmap — DIFERIDA, pero ya sin bloqueo
+**A `aiw`:**
 
-Siete premisas fechadas reportadas y **sin tocar**
-(`records/CIERRE-ROADMAP-AL-DIA-FASES-P13-P14.md` Bloque B.3, re-verificado hoy:
-son siete filas). **La razón de orden que las difería YA NO SE SOSTIENE**: se
-diferían porque «O4 vive en dos sitios mientras el Markdown no se retire», y el
-Markdown está retirado y el canónico de AIW no lleva `O4`. El duplicado quedó
-medido ítem por ítem en `MEDICION-ESTADO-DE-AIW.md §2` — no hay que re-medirlo.
-**Abrirla o no es decisión de cabina**; aquí solo se declara que el bloqueo cayó.
+1. **La decisión de dos ejes** —el cierre se deriva, la delegabilidad se declara a
+   nivel de proyecto— **antes de que se escriba su `#34`**, que sigue bloqueado por
+   incidente pendiente.
+2. **La condición de borrado del Markdown la escribió él, y hay que reformularla**:
+   decía «espera a que se reparen las diez citas» y hoy quedan cinco.
+
+**A `cantu-studio`:**
+
+3. **Su canónico vive DENTRO de la carpeta que el corte borra** — ya tiene run
+   propio aquí, el **`#47`** —, y **su `schema_version` difiere de los otros dos**.
+4. **17 de sus runs afirman no tener corredor de tests habiendo 33 archivos de test
+   en disco.**
+
+Los cuatro proceden de la deliberación de cabina. **Los datos de `cantu-studio` de
+los puntos 3 y 4 NO se re-midieron aquí**: ese repo está fuera de alcance de
+lectura.
 
 ## Qué se puede mirar HOY
 
@@ -278,9 +376,12 @@ El server expone **exactamente tres rutas de escritura** —`roadmap/edit`,
 imprime**, no mantenida a mano (`records/REEMISION-MANUAL-PROJECT-O4-P14.md`
 Bloque C.2). Todo lo demás responde `405 read_only_console`; `.git` responde `403`.
 
+**[NO VERIFICADO]** que la consola pinte los tres proyectos en pantalla: **no se
+levantó en esta sesión**. La lista de comprobación en pantalla, para el operador,
+está en `AIW-TERCER-PROYECTO.md §5`.
+
 La consola local de Cantu sigue levantable pero **ya no es la herramienta** para su
-canónico; su puerto **no se re-midió aquí** (`cantu-studio` está fuera de alcance).
-El prototipo `console/` sigue siendo historia.
+canónico; su puerto **no se re-midió aquí**. El prototipo `console/` es historia.
 
 ## Pendientes que son del OPERADOR, no del taller
 
@@ -288,83 +389,67 @@ El prototipo `console/` sigue siendo historia.
    guardrails** y los **5 claims** (contados hoy en `governance/guardrails.json` y
    `governance/no_claims.json`) los **autoró el taller** en `O4.P2`: hay texto en
    pantalla que nadie con autoridad aprobó.
-2. **Las 7 premisas fechadas del roadmap** — ya sin la razón de orden que las
-   difería (ver arriba).
-3. **Los `run_id` con raíz española.** Decisión de **identidad, no de traducción**:
+2. **Los `run_id` con raíz española.** Decisión de **identidad, no de traducción**:
    `D-047` la declara opaca y renombrar rompe `depends_on`, records y
    `DECISIONES.md`. Los runs nuevos nacen en inglés.
-4. **Las 9 fuentes diferidas.** Sin emitir; el panel «Not emitted by this project»
+3. **Las 9 fuentes diferidas.** Sin emitir; el panel «Not emitted by this project»
    sigue diciendo la verdad (`project-console/assets/project-console.js:2940`,
-   re-verificado hoy). Es decisión, no fase abierta; materia de `O4.P5` si se pide.
-5. **¿El validador viaja a la consola global?** Recomendación de cabina: **que NO**;
-   los tres ROMPE viven en él y desaparecen con el corte.
-6. **Las dos deudas del cierre anterior**: los censos fijados a mano en la suite y
-   los records que se auto-asignan fase en su nombre
-   (`records/CIERRE-REGISTRO-Y-RELEVO-TERCERO.md` Bloque H, re-verificado hoy).
-
-## Deuda medida para la multiconsola — NO arreglada
-
-Tres sitios del **validador de Cantu** asumen que todo `run_id` vive en el roadmap
-local; con O0 fuera, eso es falso. Quedaron medidos y **no tocados** en su momento
-(`CANTU-VALID:847`, `CANTU-VALID:1059-1069`,
-`build-git-history-snapshot.mjs:103-108`); **esas tres líneas NO se re-verificaron
-en esta sesión** — viven en `cantu-studio`, que está fuera de alcance. El rojo
-agudo se cerró en `D-045`. El motor de Cantu **tolera pero no adopta** carriles,
-barriers y aristas externas — por eso su canónico se edita desde la consola global
-(`records/MIGRACION-CANTU-A-CARRILES.md` A.1, re-verificado hoy).
+   re-verificado hoy). Es decisión, no fase abierta.
+4. **¿El validador viejo viaja a la consola global?** Recomendación de cabina: **que
+   NO**; los tres ROMPE viven en él y desaparecen con el corte. Ver el hallazgo de
+   arriba: hoy no puede pasar en este repo.
+5. **Las dos deudas del cierre anterior**: los censos fijados a mano en la suite
+   (hoy materia del `#40`) y los records que se auto-asignan fase en su nombre
+   (`CIERRE-REGISTRO-Y-RELEVO-TERCERO.md` Bloque H, resuelve).
 
 ## El `.aiw/` de `aiw-console` NO es estado propio
 
 Es el área de entrega de la **proyección de AIW**: el proyector vive en este repo,
 lee `../../aiw/objectives/` y escribe ahí. **La simetría con Cantu no existe** —
-allá `.aiw/` sí es del proyecto. Supuesto tácito que ya hizo fallar un encargo
-(`D-044`, `MEDICION-PROYECTOR.md §5.a`, `MEDICION-FUENTES-CONSOLA.md` Bloque D —
-los tres re-verificados hoy). Verificado hoy: existe con `roadmap/` y `views/`,
-`mtime` **2026-07-22 15:38** — residuo. Lo vivo está en `.project/`.
+allá `.aiw/` sí es del proyecto, y por eso el `#47` existe. Supuesto tácito que ya
+hizo fallar un encargo (`D-044`, `MEDICION-PROYECTOR.md §5.a`,
+`MEDICION-FUENTES-CONSOLA.md` Bloque D). Lo vivo de este repo está en `.project/`.
 
 ## Regla de cierre de la cabina
 
 Cada cierre termina con **el mapa** y con **qué se puede mirar**; si un encargo no
 cambia nada observable, se dice. **Este encargo no cambió nada observable**:
-reescribió este archivo y nada más. Ni el roadmap, ni `.project/`, ni el código,
-ni un record, ni `DECISIONES.md`.
+reescribió este archivo y nada más. Ni el roadmap, ni `.project/`, ni el código, ni
+un record, ni `DECISIONES.md`, ni un solo byte de `aiw` o `cantu-studio`.
 
 ## Lecturas de arranque (en orden de utilidad)
 
 1. `projects/aiw-console/roadmap/roadmap.json` — el plan y el estado. **El estado
    real se mide aquí, no se recuerda.**
-2. `records/RETIRO-MARKDOWN-AIW.md` **§4.2 y §4.3** — las diez citas `RM-AIW:` con
-   su línea real, y las ocurrencias fuera del canónico. Es el insumo del run que
-   hay que crear.
-3. `records/AIW-TERCER-PROYECTO.md` **§3** (los tres árboles de consola), **§5**
-   (qué mirar en pantalla) y **§6** (los textos vencidos).
-4. `aiw/roadmap/roadmap.json` — **solo lectura**, y solo para confirmar que `O2`
-   cerró. Ese hilo ya no vuelve a este repo.
-5. `context/handoffs/cantu-studio.md` — el otro hilo paralelo.
-6. `context/DECISIONES.md` — **`D-056` es la última.** `D-051` (carriles y
-   barriers), `D-048` (orden de O4), `D-047` (identidad opaca), `D-046` (hueco de
-   capa 2, prioridad `O0`↔`O4`) y `D-035` (el fork descartado) siguen siendo el
-   suelo de este proyecto.
-7. `context/aiw-console/CONTRATO.md` — el contrato de la carpeta. `§7` (Rutas —
-   contención, no enforced), `§10.d` Reglas 1-3 (aristas externas), `§11`-`§12`
-   (status derivado), `§19`-`§20` (degradación).
-8. `context/aiw-console/records/` — por tema:
+2. **La sección «EL SISTEMA DE CLASIFICACIÓN» de este archivo** — hasta que el `#39`
+   la publique, es la única copia; el `#39`, el `#42` y el `#43` dependen de ella.
+3. `records/AIW-TERCER-PROYECTO.md` **§3** (los tres árboles de consola), **§5** (qué
+   mirar en pantalla) y **§6** (cuatro de los cinco textos vencidos).
+4. `context/DECISIONES.md` — **`D-056` es la última.** `D-051` (carriles y barriers,
+   que este proyecto no usa), `D-048` (orden de O4), `D-047` (identidad opaca),
+   `D-046` (aristas solo donde hay compuerta real) y `D-035` (el fork descartado)
+   siguen siendo el suelo de este proyecto.
+5. `context/handoffs/cantu-studio.md` y `context/handoffs/aiw.md` — los dos hilos
+   paralelos. **Léelos antes de tocar el `#47` o el `#48`.**
+6. `context/aiw-console/CONTRATO.md` — `§7` (Rutas — contención, no enforced),
+   `§10.d` Reglas 1-3 (aristas externas), `§11`-`§12` (status derivado), `§19`-`§20`
+   (degradación).
+7. `context/aiw-console/records/` — por tema:
    `REEMISION-MANUAL-PROJECT-O4-P14.md` (las tres rutas de escritura),
    `DISCIPLINA-UN-RUN-POR-CARRIL.md` (**la disciplina que gobierna los hilos
-   abiertos**), `CARRILES-Y-BARRIERS-ROADMAP.md`, `MEDICION-VALIDADOR-ROJO.md`,
-   `AUDIT-CONSOLE-O4-PHASE0.md` Bloque F.3 (qué se pierde en el corte).
+   abiertos**), `MEDICION-VALIDADOR-ROJO.md`, `AUDIT-CONSOLE-O4-PHASE0.md` Bloque
+   F.3 (qué se pierde en el corte).
 
 ## Pendientes menores (siguen vivos)
 
-- `package.json:6` se autodescribe como «verbatim fork» — falso (re-verificado hoy;
-  ver la tabla de textos vencidos).
 - **Un record cita un `run_id` que no existe**:
   `records/EMISOR-CANTU-CARPETA-PROPIA-O4-P4.md` se encabeza citando
-  `RUN-CONSOLE-EMISOR-CANTU-CARPETA-PROPIA-001`; el run real de `O4.P4` es
-  `RUN-CONSOLE-CANTU-EMITE-CARPETA-001` (`#24`). Re-verificado hoy. Los `run_id` no
-  se renombran (`D-047`).
+  `RUN-CONSOLE-EMISOR-CANTU-CARPETA-PROPIA-001`; el run real es
+  `RUN-CONSOLE-CANTU-EMITE-CARPETA-001` (`#21` hoy). Los `run_id` no se renombran
+  (`D-047`).
 - `records/DOCS-INDICE-CURADO-TRANSPORTADO.md` sigue diciendo `O4.P5` en su propio
-  H1 (re-verificado hoy), aunque el nombre del archivo ya no reclama esa fase.
-- `aiw/.aiw/project_console.snapshot.json` — copia stale reportada por el cierre
-  anterior; **no re-verificada aquí** (`aiw` fuera de alcance de lectura). Es del
-  hilo de AIW, no de éste.
+  H1, aunque el nombre del archivo ya no reclama esa fase.
+- Tres sitios del **validador de Cantu** asumen que todo `run_id` vive en el roadmap
+  local; con `O0` fuera, eso es falso (`CANTU-VALID:847`, `CANTU-VALID:1059-1069`,
+  `build-git-history-snapshot.mjs:103-108`). **No re-verificados aquí** —
+  `cantu-studio` está fuera de alcance. El rojo agudo se cerró en `D-045`.

@@ -1,27 +1,387 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-28T09:33:31.914Z",
+  "generated_at": "2026-07-30T22:46:56.173Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-28T09:29:13.436Z"
+      "mtime": "2026-07-30T01:18:37.370Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-28T09:33:31.911Z"
+      "mtime": "2026-07-30T22:19:04.381Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "2489823ea8e65ce1ed23a505747f84bb86cc088a",
+  "head": "333369899b367c6744c64ce31c4b6e84db809cf7",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 58,
+  "commit_total": 94,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "3333698",
+      "full_sha": "333369899b367c6744c64ce31c4b6e84db809cf7",
+      "date": "2026-07-29T19:18:37-06:00",
+      "parents": "6911923",
+      "subject": "record: frontera de parseo derivada del codigo y test de regresion en la suite; 0 lineas al kernel",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6911923",
+      "full_sha": "6911923631476eb5ea1f10c6bbc1e2fcb100d7b6",
+      "date": "2026-07-29T15:22:08-06:00",
+      "parents": "0f4fe29",
+      "subject": "record: docs: revalidacion de Columns segun la DoD compartida y packet de QA (#13); run activo pendiente de QA humana",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "0f4fe29",
+      "full_sha": "0f4fe29ed09ae6747c325ddb1329e02d0e92dd4e",
+      "date": "2026-07-29T04:30:54-06:00",
+      "parents": "ddc6a50",
+      "subject": "record: docs: inventario de color y math de los 17 componentes Web (#12), registro en el indice, cierre del run y reemision de .project/",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "ddc6a50",
+      "full_sha": "ddc6a50bc7973fc2308cf26a9835f4ffb771604c",
+      "date": "2026-07-29T04:30:03-06:00",
+      "parents": "476e152",
+      "subject": "record: la guarda de parseo del 24 aborta - dos de sus tres casos no parsean y processed/ es inmutable por doctrina",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "476e152",
+      "full_sha": "476e15210a7a87435aa62b06a48cbcf8de30dd94",
+      "date": "2026-07-29T03:56:26-06:00",
+      "parents": "26b9a4c",
+      "subject": "record: editor: senal de previa invalida en el modal de formulas, alineacion del boton y tipografia del campo LaTeX (#11); run activo pendiente de QA humana",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "26b9a4c",
+      "full_sha": "26b9a4c03e60be2110f1014e1538a35c1f554b7a",
+      "date": "2026-07-29T03:35:21-06:00",
+      "parents": "31d3f8d",
+      "subject": "record: medicion del incidente de scope - no existe; el guard queda tras la medicion de carga real",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "31d3f8d",
+      "full_sha": "31d3f8d11713367e4ccae5353324a17927a15496",
+      "date": "2026-07-29T03:27:38-06:00",
+      "parents": "f9cfc0f",
+      "subject": "handoff: reescritura de aiw-console medida contra disco tras el cierre de O2 de AIW; frontera vencida retirada y las diez citas RM-AIW pasan a este hilo",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f9cfc0f",
+      "full_sha": "f9cfc0ff5cd9cec414af388cf248b4322b5ea9a4",
+      "date": "2026-07-29T02:55:22-06:00",
+      "parents": "e03b27d",
+      "subject": "record: math: el modal nombra comando y causa en el rechazo, remapeo a \\mathrm{e}/\\mathrm{i}, y correccion del contrato de math (#11); run activo pendiente de QA humana",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e03b27d",
+      "full_sha": "e03b27d63d4ad96dd69691dc9faf4ae2a958646a",
+      "date": "2026-07-29T02:12:15-06:00",
+      "parents": "71b5e0a",
+      "subject": "handoff: relevo de aiw, y el record de O2.P7",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "71b5e0a",
+      "full_sha": "71b5e0ae517a3eed5299e930166823f8c9f57b55",
+      "date": "2026-07-29T01:03:27-06:00",
+      "parents": "72bac18",
+      "subject": "record: math: allowlist de rule.math ampliada a 230 comandos verificados contra KaTeX, mensaje de rechazo con comando y posicion, y superficie del editor de formulas (#11); run activo pendiente de QA humana",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "72bac18",
+      "full_sha": "72bac18a145046f6f954d54065c4dcae31a40a32",
+      "date": "2026-07-29T00:11:41-06:00",
+      "parents": "0826516",
+      "subject": "markdown: retiro de roadmap_AIW_temp.md como autoridad, y el record de O2.P6",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "0826516",
+      "full_sha": "082651697a7dedab4fe5ecc082e3d982f5ed3023",
+      "date": "2026-07-28T23:39:19-06:00",
+      "parents": "0ac7854",
+      "subject": "record: math: frontera de capacidad del teclado virtual (#10) y normalizacion de exponentialE e imaginaryI; run activo pendiente de QA humana",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "0ac7854",
+      "full_sha": "0ac78548fa179c2cdfe737e24809276f4580a964",
+      "date": "2026-07-28T23:38:31-06:00",
+      "parents": "e426fec",
+      "subject": "record: docs: indice curado de AIW - 12 entradas transportadas en vez de 71 escaneadas (O2.P5)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e426fec",
+      "full_sha": "e426fecd67392e46957acc9b5538d397d76bf143",
+      "date": "2026-07-28T22:11:42-06:00",
+      "parents": "701fc69",
+      "subject": "record: docs: convencion de documentacion de AIW - tres pruebas, nueve clases, docs/ como raiz documental (O2.P5, barrier de carril)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "701fc69",
+      "full_sha": "701fc69ba410511fbee1f2c08cef17d5466a5eec",
+      "date": "2026-07-28T21:45:39-06:00",
+      "parents": "19268f7",
+      "subject": "handoff: relevo de aiw-console al dia - la frontera con el hilo de aiw, las ocho citas rotas y las deudas de la consola",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "19268f7",
+      "full_sha": "19268f747b540a10b754e85e059547ed98e3330e",
+      "date": "2026-07-28T21:42:11-06:00",
+      "parents": "2259d85",
+      "subject": "record: mapa de nombres remedido y congelado (#5) y barrido de la ultima ruta legacy (#6) en Cantu",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2259d85",
+      "full_sha": "2259d85c78331834a7522690044b974d42a85376",
+      "date": "2026-07-28T20:54:43-06:00",
+      "parents": "2f48c9a",
+      "subject": "record: gobernanza: fuentes declaradas de AIW - 17 guardrails y 4 no-claims desde CONSTITUCION y claude.md; contract.json omitido (O2.P4)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2f48c9a",
+      "full_sha": "2f48c9ab10a2bdff0e335173c0217a22559a9ab6",
+      "date": "2026-07-28T20:41:50-06:00",
+      "parents": "319e3d3",
+      "subject": "record: docs: definition of done compartida de revalidacion de componentes (#9), registro en el indice, cierre del run y reemision de .project/",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "319e3d3",
+      "full_sha": "319e3d3a5998fa68be98cae8ef5392193ff8ea1d",
+      "date": "2026-07-28T20:36:45-06:00",
+      "parents": "05b72a0",
+      "subject": "record: tickets: reparados los seis que no parseaban desde 7659ff3 - solo encabezados, cuerpo intacto (O2.P2)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "05b72a0",
+      "full_sha": "05b72a0bff6cfa48e7ac8a227960701d7067c9af",
+      "date": "2026-07-28T20:18:28-06:00",
+      "parents": "ea7b2cd",
+      "subject": "record: docs: metodologia roadmap-first en AGENTS.md y el generador de contextos (#4), cierre del run y reemision de .project/",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "ea7b2cd",
+      "full_sha": "ea7b2cd6db3112abe68cf3c66655455a3c897ac8",
+      "date": "2026-07-28T19:59:23-06:00",
+      "parents": "d2bc3e7",
+      "subject": "record: cola: disposicion de las cuatro carpetas invisibles - los seis tickets son fixtures y se quedan; prepared/ y staged/ suprimidas (O2.P2)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d2bc3e7",
+      "full_sha": "d2bc3e7a1ff009c740ec0927d281fd53de030059",
+      "date": "2026-07-28T19:45:09-06:00",
+      "parents": "49f844e",
+      "subject": "record: cola: archivados 005 y 006, cuyos runs cerraron APPROVED el 2026-07-19 (O2.P2)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "49f844e",
+      "full_sha": "49f844ebf3251ac0f3de7dee3743d4ae51f4c21f",
+      "date": "2026-07-28T19:40:33-06:00",
+      "parents": "2ffdecd",
+      "subject": "record: docs: contrato de compatibilidad math/formula/Formula Inserter (#8), registro en el indice, cierre del run y reemision de .project/",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2ffdecd",
+      "full_sha": "2ffdecdde25248f7930526aa1caec748978439b9",
+      "date": "2026-07-28T18:01:31-06:00",
+      "parents": "d63612e",
+      "subject": "record: contrato de compatibilidad de color y paleta de Cantu (#7)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d63612e",
+      "full_sha": "d63612eb9ececfc007da6ac02f5ff0d50d8185d6",
+      "date": "2026-07-28T17:59:30-06:00",
+      "parents": "287bf6f",
+      "subject": "portabilidad: los dos audit reports entran al repo, y el record de la ejecucion de O2.P1",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "287bf6f",
+      "full_sha": "287bf6f8d5d76f3a6c7e93c56f1e94782e9ee1d3",
+      "date": "2026-07-28T17:37:22-06:00",
+      "parents": "7979d9f",
+      "subject": "record: encadenamiento de contratos 7 y 8 a 9 en el roadmap de Cantu",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7979d9f",
+      "full_sha": "7979d9f19ac08f00b22e57d46dc01a7652107499",
+      "date": "2026-07-28T15:24:21-06:00",
+      "parents": "1ee9a38",
+      "subject": "record: restitucion de aristas de #47 y correccion del par #46/#47 de Cantu",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1ee9a38",
+      "full_sha": "1ee9a387b6abba2676c4b20b31eaa7d29d51cd56",
+      "date": "2026-07-28T15:21:25-06:00",
+      "parents": "122bd9f",
+      "subject": "record: primera emision del .project de AIW, con la reproducibilidad de docs_index medida",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "122bd9f",
+      "full_sha": "122bd9fff344eb2c0765a58e82bd7177db1c9c60",
+      "date": "2026-07-28T14:49:20-06:00",
+      "parents": "7f4c474",
+      "subject": "record: reencuadre de ocho runs con texto vencido de Cantu",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7f4c474",
+      "full_sha": "7f4c474b09839da329d2338c580776dd320b4a88",
+      "date": "2026-07-28T14:48:04-06:00",
+      "parents": "c9e8652",
+      "subject": "record: escritura del canonico de AIW, con el volteo de modo medido y la fecha de 7659ff3",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c9e8652",
+      "full_sha": "c9e865286cb364617b7439462ce120b5469f074d",
+      "date": "2026-07-28T14:13:21-06:00",
+      "parents": "7374b95",
+      "subject": "decisiones: D-056 endurece el criterio de borrado del test de parseo (D-055 caso 4), hacia adelante y sin reescritura",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7374b95",
+      "full_sha": "7374b95d4724be067720868b52157d785fd4a5d1",
+      "date": "2026-07-28T14:08:42-06:00",
+      "parents": "f40e6d8",
+      "subject": "record: alta del run de cableado del Component Guide y reencuadre del audit de documentacion de Cantu",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f40e6d8",
+      "full_sha": "f40e6d892fe510fb2f0dc5ccb247001aef428d95",
+      "date": "2026-07-28T13:32:32-06:00",
+      "parents": "40dbf21",
+      "subject": "record: reencuadre de los 17 doc-runs de componente Web de Cantu",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "40dbf21",
+      "full_sha": "40dbf215a60e93c03b9758ad26dc876117020376",
+      "date": "2026-07-28T13:20:07-06:00",
+      "parents": "53f010d",
+      "subject": "decisiones: D-052 a D-055 - volteo de modo, portabilidad de la evidencia, identidad y orden, y CONSTITUCION 4 en el roadmap de AIW",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "53f010d",
+      "full_sha": "53f010dcf2b1f863c3fa197f26f530ef309c7536",
+      "date": "2026-07-28T03:39:54-06:00",
+      "parents": "b09dc4a",
+      "subject": "record: medicion de deriva del roadmap de Cantu (71 runs cruzados contra disco)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b09dc4a",
+      "full_sha": "b09dc4ab41b1f62c75d9f7c8358d82a99b40a26b",
+      "date": "2026-07-28T03:39:28-06:00",
+      "parents": "2489823",
+      "subject": "roadmap: el run #10 de O0 pasa de active a planned; .project re-emitido",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "2489823",

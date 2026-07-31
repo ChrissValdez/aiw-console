@@ -1,33 +1,43 @@
-// O4.P4 — the shell renders TWO REAL projects, each from its own emitted .project/, with
-// different roadmap models, different vocabulary usage and different data — and NOTHING crosses
+// O4.P4 — the shell renders TWO projects emitted by REAL emitters over REAL repositories, each
+// from its own `.project/`, with different roadmap models and different data — and NOTHING crosses
 // between them in either direction.
 //
 // The synthetic fixture (hilo-verde, O4.P3) already proved the shell can execute a FOREIGN
 // derivation table. What it could not prove is that a second REAL emitter, run over a real repo
 // that keeps its plan somewhere else, produces something this renderer paints. That is what these
-// tests are for, so both roots here are real: this repo and cantu-studio beside it.
+// tests are for, so both roots are the full output of a real emission.
+//
+// THEY ARE FROZEN, and that is the change. Until now these roots were the LIVE working trees of
+// this repository and of cantu-studio next door, and the counts below were their counts on the day
+// someone wrote them. Every one of those assertions failed the moment a neighbour committed —
+// cantu-studio went 71 -> 73 runs and 38 -> 46 reviewed documents, this repository's own queue went
+// 45 -> 51 — without one line of the console changing. The fixtures under tests/fixtures/neighbours/
+// are the same emitted folders captured as data, so the assertions keep their meaning and stop
+// measuring the neighbours' week. That the REAL projects still load is tested, once, in
+// tests/real-projects-smoke.test.mjs. See tests/helpers/neighbours.mjs.
 //
 // Same harness and same limits as tests/shell-switch.test.mjs: the REAL renderer inside node:vm
 // over a DOM stub. Layout, CSS and real clicks stay with the operator QA pass.
 import test from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createConsoleHarness } from "./helpers/console-dom.mjs";
 import { deriveCollectionStatus, snapshotSummary } from "../project-console/assets/project-shell.js";
+import { AIW_CONSOLE_FIXTURE, CANTU_FIXTURE, frozenDocsIndex, frozenSnapshot } from "./helpers/neighbours.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
-const CANTU = resolve(REPO_ROOT, "..", "cantu-studio");
 const RENDERER = join(REPO_ROOT, "project-console", "assets", "project-console.js");
-// Both projects must have an emitted contract folder for these to mean anything.
-const BOTH_EMITTED =
-  existsSync(join(REPO_ROOT, ".project", "snapshot.json")) &&
-  existsSync(join(CANTU, ".project", "snapshot.json"));
+const HILO_VERDE = join(REPO_ROOT, "tests", "fixtures", "multi", "hilo-verde");
 
-const ROOTS = new Map([["aiw-console", REPO_ROOT], ["cantu-studio", CANTU]]);
-const snapshotOf = (root) => JSON.parse(readFileSync(join(root, ".project", "snapshot.json"), "utf8"));
+const ROOTS = new Map([
+  ["aiw-console", AIW_CONSOLE_FIXTURE],
+  ["cantu-studio", CANTU_FIXTURE],
+  ["hilo-verde", HILO_VERDE]
+]);
+const snapshotOf = (key) => frozenSnapshot(key);
 
 function makeHarness() {
   return createConsoleHarness({ rendererPath: RENDERER, rootsByKey: ROOTS });
@@ -63,9 +73,9 @@ const CANTU_ONLY = ["Cantu Studio Roadmap", "Asset Deduplication Layer", "Cantu 
 // only the default-visible tier. The two numbers differ per project, which is the point.
 const navItemCount = (harness) => (harness.element("docs-nav-list").innerHTML.match(/docs-nav-item/g) || []).length;
 
-test("the two real projects declare DIFFERENT roadmap models, and neither is the other's", { skip: !BOTH_EMITTED }, () => {
-  const console_ = snapshotOf(REPO_ROOT);
-  const cantu = snapshotOf(CANTU);
+test("the two real projects declare DIFFERENT roadmap models, and neither is the other's", () => {
+  const console_ = snapshotOf("aiw-console");
+  const cantu = snapshotOf("cantu-studio");
   assert.equal(console_.project_id, "aiw_console");
   assert.equal(cantu.project_id, "cantu_studio");
   assert.notEqual(cantu.roadmap_tree.model, console_.roadmap_tree.model);
@@ -77,8 +87,8 @@ test("the two real projects declare DIFFERENT roadmap models, and neither is the
   }
 });
 
-test("the shell summarises BOTH by executing each snapshot's own table — no code knows either project", { skip: !BOTH_EMITTED }, () => {
-  const summaries = [snapshotOf(REPO_ROOT), snapshotOf(CANTU)].map((snapshot) => snapshotSummary(snapshot));
+test("the shell summarises BOTH by executing each snapshot's own table — no code knows either project", () => {
+  const summaries = [snapshotOf("aiw-console"), snapshotOf("cantu-studio")].map((snapshot) => snapshotSummary(snapshot));
   for (const summary of summaries) {
     assert.ok(summary, "the shell could not summarise a real emitted snapshot");
     assert.ok(summary.counts.runs > 0);
@@ -90,20 +100,26 @@ test("the shell summarises BOTH by executing each snapshot's own table — no co
   }
   const [consoleSummary, cantuSummary] = summaries;
   // The two projects genuinely differ in what the derivation produces, so this is not a
-  // tautology: aiw-console has an active run, cantu-studio has none.
-  assert.equal(consoleSummary.operationalStatus, "active");
-  assert.equal(cantuSummary.operationalStatus, "idle");
+  // tautology. The discriminator is the DERIVED VECTOR, not the one-word operational status:
+  // both fixtures happen to hold an active run and so both summarise as "active", and pinning
+  // that word would assert nothing about the table having been executed.
+  assert.deepEqual(consoleSummary.objectives.map((o) => o.status), ["in_progress", "active"]);
+  assert.deepEqual(cantuSummary.objectives.map((o) => o.status),
+    ["in_progress", "in_progress", "active", "planned", "planned", "planned", "planned"]);
   assert.notDeepEqual(consoleSummary.objectives, cantuSummary.objectives);
+  // Different trees, different shapes: 2 objectives against 7, from the same shell code.
+  assert.equal(consoleSummary.counts.objectives, 2);
+  assert.equal(cantuSummary.counts.objectives, 7);
 
   // The derivation is driven by the snapshot's table, not by this test's expectations: replay it.
-  const cantu = snapshotOf(CANTU);
+  const cantu = snapshotOf("cantu-studio");
   cantu.roadmap_tree.objectives.forEach((objective, index) => {
     const statuses = objective.phases.flatMap((phase) => phase.runs.map((run) => run.status));
     assert.equal(cantuSummary.objectives[index].status, deriveCollectionStatus(cantu.taxonomy_model, "objective", statuses));
   });
 });
 
-test("cantu-studio renders from its own emitted folder: overview, roadmap, queue, docs, history, governance", { skip: !BOTH_EMITTED }, async () => {
+test("cantu-studio renders from its own emitted folder: overview, roadmap, queue, docs, history, governance", async () => {
   const harness = makeHarness();
   const result = await select(harness, "cantu-studio");
   assert.equal(result.ok, true);
@@ -142,17 +158,17 @@ test("cantu-studio renders from its own emitted folder: overview, roadmap, queue
   assert.doesNotMatch(sources, /projects\/aiw-console\//);
 });
 
-test("aiw-console still renders exactly as measured, with the second project registered beside it", { skip: !BOTH_EMITTED }, async () => {
+test("aiw-console still renders exactly as measured, with the second project registered beside it", async () => {
   const harness = makeHarness();
   const result = await select(harness, "aiw-console");
   assert.equal(result.ok, true);
   assert.equal(result.snapshot.project_id, "aiw_console");
   assert.match(harness.element("roadmap-v3-tree").innerHTML, /Global Console/);
-  assert.match(harness.element("console-source-files").innerHTML, /2 objectives \/ 19 phases \/ 45 runs/);
+  assert.match(harness.element("console-source-files").innerHTML, /2 objectives \/ 19 phases \/ 51 runs/);
   assert.equal(harness.sandbox.document.title, "AIW Console Roadmap — Project Console");
 });
 
-test("aiw-console -> cantu-studio: nothing of the first survives on any surface", { skip: !BOTH_EMITTED }, async () => {
+test("aiw-console -> cantu-studio: nothing of the first survives on any surface", async () => {
   const harness = makeHarness();
   await select(harness, "aiw-console");
   const before = joinedDump(harness);
@@ -166,7 +182,7 @@ test("aiw-console -> cantu-studio: nothing of the first survives on any surface"
   for (const marker of CANTU_ONLY) assert.ok(after.includes(marker), `cantu-studio marker "${marker}" did not paint`);
 });
 
-test("cantu-studio -> aiw-console: nothing of the second survives either (the other direction)", { skip: !BOTH_EMITTED }, async () => {
+test("cantu-studio -> aiw-console: nothing of the second survives either (the other direction)", async () => {
   const harness = makeHarness();
   await select(harness, "cantu-studio");
   const before = joinedDump(harness);
@@ -180,7 +196,7 @@ test("cantu-studio -> aiw-console: nothing of the second survives either (the ot
   for (const marker of AIW_CONSOLE_ONLY) assert.ok(after.includes(marker), `aiw-console marker "${marker}" did not repaint`);
 });
 
-test("counts, open document, docs mode and vocabulary all reset across a switch — dirtied on purpose", { skip: !BOTH_EMITTED }, async () => {
+test("counts, open document and docs mode all reset across a switch — dirtied on purpose", async () => {
   const harness = makeHarness();
   await select(harness, "aiw-console");
 
@@ -191,7 +207,7 @@ test("counts, open document, docs mode and vocabulary all reset across a switch 
   assert.notEqual(consoleNavPrimary, consoleNavAll, "the docs mode change had no observable effect to dirty");
 
   // Open a document that exists ONLY in aiw-console, so its residue would be unmistakable.
-  const consoleDocs = JSON.parse(readFileSync(join(REPO_ROOT, ".project", "docs_index.json"), "utf8")).docs;
+  const consoleDocs = frozenDocsIndex("aiw-console").docs;
   const openedDoc = consoleDocs.find((doc) => doc.path.startsWith("context/aiw-console/records/"));
   assert.ok(openedDoc, "no aiw-console-only document to open");
   harness.sandbox.renderSelectedDoc(openedDoc);
@@ -203,10 +219,10 @@ test("counts, open document, docs mode and vocabulary all reset across a switch 
 
   // Docs mode: the dirtied mode is gone and the second project opens on the mode ITS OWN index
   // decides (O4.P13 — presence of operator_review_status). cantu-studio carries the field, so it
-  // opens on "newera" and lists that subset. The three counts are distinct on this real index
-  // (140 registered / 53 default-visible / 38 reviewed), so the assertion cannot pass by accident
+  // opens on "newera" and lists that subset. The three counts are distinct on this index
+  // (149 registered / 60 default-visible / 46 reviewed), so the assertion cannot pass by accident
   // and it still fails if the dirtied "primary" survived the switch.
-  const cantuDocs = JSON.parse(readFileSync(join(CANTU, ".project", "docs_index.json"), "utf8")).docs;
+  const cantuDocs = frozenDocsIndex("cantu-studio").docs;
   const cantuPrimary = cantuDocs.filter((doc) => doc.default_visible).length;
   const cantuReviewed = cantuDocs.filter((doc) =>
     Object.prototype.hasOwnProperty.call(doc, "operator_review_status") &&
@@ -222,31 +238,54 @@ test("counts, open document, docs mode and vocabulary all reset across a switch 
   assert.ok(!readerAfter.includes(openedDoc.path), `the document open in aiw-console (${openedDoc.path}) is still open`);
   assert.ok(!readerAfter.includes(openedDoc.title), `the title of the aiw-console document survived the switch`);
 
-  // Counts: the diagnostics line reports cantu-studio's tree, not the 2/19/45 of aiw-console.
+  // Counts: the diagnostics line reports cantu-studio's tree, not the 2/19/51 of aiw-console.
   const counts = harness.element("console-source-files").innerHTML;
-  assert.doesNotMatch(counts, /2 objectives \/ 19 phases \/ 45 runs/);
-  // [O4.P14] 53 -> 71 runs: cantu-studio's canonical gained the documentation lane. The
-  // objective and phase counts did not move; only the runs did.
-  assert.match(counts, /7 objectives \/ 28 phases \/ 71 runs/);
-
-  // Vocabulary: the two trees genuinely use different tokens, and only cantu-studio's paint now.
-  const tokensOf = (snapshot) =>
-    new Set(snapshot.roadmap_tree.objectives.flatMap((o) => o.phases.flatMap((p) => p.runs.map((r) => r.status))));
-  const cantuTokens = tokensOf(snapshotOf(CANTU));
-  const consoleOnly = [...tokensOf(snapshotOf(REPO_ROOT))].filter((token) => !cantuTokens.has(token));
-  assert.deepEqual([...cantuTokens].sort(), ["completed", "planned"]);
-  assert.deepEqual(consoleOnly, ["active"], "the two trees use the same tokens; this assertion would be vacuous");
-
-  // The DATA-driven chip for the token only aiw-console uses is gone from the queue. Asserted on
-  // the chip class, not on the word: the roadmap tree also paints a fixed four-column stat row
-  // LABELLED with the four tokens (its "Active" column reads 0 here), which is the renderer's own
-  // display layout, not data — the heuristic limit O4.P3 recorded and O4.P7/P8 own.
-  const queue = harness.element("run-queue-v3").innerHTML;
-  assert.match(queue, /v3-chip v3-chip-planned/);
-  assert.doesNotMatch(queue, /v3-chip v3-chip-active/, "the active-run chip of the previous project survived");
+  assert.doesNotMatch(counts, /2 objectives \/ 19 phases \/ 51 runs/);
+  assert.match(counts, /7 objectives \/ 28 phases \/ 73 runs/);
 });
 
-test("A -> B -> A repaints the first project identically, and B -> A -> B the second", { skip: !BOTH_EMITTED }, async () => {
+// The vocabulary half of the same reset, moved to a pair that can still express it.
+//
+// It used to ride on the switch above, where it worked because cantu-studio's tree happened to
+// use only `completed` and `planned` while this one also used `active`, so the active chip
+// disappearing proved the vocabulary had reset. Both fixtures now hold an active run, and their
+// run-status token SETS are identical — on that pair the assertion is vacuous, and pinning it
+// would only pin a coincidence of two neighbours' calendars. hilo-verde's tokens (por_hacer /
+// haciendo / hecho) are disjoint from this one's by construction, which is what the assertion
+// needs and what a synthetic fixture is for: the switch is proved with NO token in common,
+// which is strictly more than the old pair proved.
+test("the vocabulary resets across a switch: no chip of the previous project's tokens survives", async () => {
+  const harness = makeHarness();
+  await select(harness, "aiw-console");
+
+  const tokensOf = (snapshot) =>
+    new Set(snapshot.roadmap_tree.objectives.flatMap((o) => o.phases.flatMap((p) => p.runs.map((r) => r.status))));
+  const consoleTokens = tokensOf(snapshotOf("aiw-console"));
+  const hiloTokens = tokensOf(JSON.parse(readFileSync(join(HILO_VERDE, ".project", "snapshot.json"), "utf8")));
+  // Non-vacuity, asserted rather than assumed: the two vocabularies share nothing at all.
+  assert.deepEqual([...consoleTokens].filter((token) => hiloTokens.has(token)), [],
+    "the two trees share a token; this test would prove nothing");
+  assert.ok(consoleTokens.has("active") && consoleTokens.has("planned"));
+
+  const before = harness.element("run-queue-v3").innerHTML;
+  assert.match(before, /v3-chip v3-chip-active/);
+  assert.match(before, /v3-chip v3-chip-planned/);
+
+  await select(harness, "hilo-verde");
+
+  // The DATA-driven chips of the previous project are gone from the queue. Asserted on the chip
+  // class, not on the word: the roadmap tree also paints a fixed four-column stat row LABELLED
+  // with the four tokens, which is the renderer's own display layout, not data — the heuristic
+  // limit O4.P3 recorded and O4.P7/P8 own.
+  const queue = harness.element("run-queue-v3").innerHTML;
+  assert.match(queue, /\S/, "the second project painted no queue at all");
+  for (const token of consoleTokens) {
+    assert.doesNotMatch(queue, new RegExp(`v3-chip v3-chip-${token}\\b`),
+      `the "${token}" chip of the previous project survived the switch`);
+  }
+});
+
+test("A -> B -> A repaints the first project identically, and B -> A -> B the second", async () => {
   const harness = makeHarness();
 
   await select(harness, "aiw-console");

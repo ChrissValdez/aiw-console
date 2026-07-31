@@ -15,33 +15,34 @@
 //   2. archive   — a document under an `archive/` folder is not rendered, in any mode
 //   3. the path WINS over any grouping field an index may carry
 //
-// Then the same three are checked against the two real projects, where the numbers are known.
+// Then the same three are checked against the FROZEN emitted folders of the two real projects,
+// where the numbers are known and stay known (tests/fixtures/neighbours/).
 //
 // Same harness and same limits as the other consumer suites: the REAL renderer inside node:vm over
 // a DOM stub (tests/helpers/console-dom.mjs). Layout and real clicks stay with the operator QA pass.
 import test from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createConsoleHarness } from "./helpers/console-dom.mjs";
+import { AIW_CONSOLE_FIXTURE, CANTU_FIXTURE, frozenDocsIndexPath } from "./helpers/neighbours.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
 const RENDERER = join(REPO_ROOT, "project-console", "assets", "project-console.js");
 const FIX = join(REPO_ROOT, "tests", "fixtures", "rutas");
-const CANTU = resolve(REPO_ROOT, "..", "cantu-studio");
 
+// The two project roots are the FROZEN emitted folders, not the live repositories: the counts
+// and the group trees below are properties of those fixtures. Read live they measured the
+// neighbours' week — cantu-studio's reviewed set went 38 -> 46 while this ran. See
+// tests/helpers/neighbours.mjs.
 const ROOTS = new Map([
   ["mixto", join(FIX, "mixto")],
   ["bajo-una-carpeta", join(FIX, "bajo-una-carpeta")],
-  ["aiw-console", REPO_ROOT],
-  ["cantu-studio", CANTU]
+  ["aiw-console", AIW_CONSOLE_FIXTURE],
+  ["cantu-studio", CANTU_FIXTURE]
 ]);
-
-const REAL_EMITTED =
-  existsSync(join(REPO_ROOT, ".project", "snapshot.json")) &&
-  existsSync(join(CANTU, ".project", "snapshot.json"));
 
 async function select(key, mode) {
   const harness = createConsoleHarness({ rendererPath: RENDERER, rootsByKey: ROOTS });
@@ -187,32 +188,37 @@ test("the path OVERRIDES ia_bucket, category, related_area and source_role", asy
 // 4 — the same rule on the two real projects
 // ---------------------------------------------------------------------------
 
-test("cantu-studio: its 38 reviewed documents paint the nine categories its own console shows", { skip: !REAL_EMITTED }, async () => {
+test("cantu-studio: its 46 reviewed documents paint the nine categories its own console shows", async () => {
   const harness = await select("cantu-studio");
-  assert.equal(navItemCount(harness), 38);
+  assert.equal(navItemCount(harness), 46);
   assert.deepEqual(groupPaths(harness), [
     "Architecture (5)",
     "Components (17)",
     "Components / Web (17)",
     "Decisions (6)",
-    "Docs Management (1)",
+    "Docs Management (3)",
     "Governance (1)",
     "How-To (2)",
     "Operations (2)",
-    "Reference (3)",
+    "Reference (9)",
     "Start Here (1)"
   ]);
   assert.ok(!groupPaths(harness).join(" ").toLowerCase().includes("uncategorized"));
+  // The nine top-level groups partition the reviewed set: every document is counted once, under
+  // exactly one folder. `Components / Web` is a subgroup, so its 17 are Components' 17.
+  const top = paintedTree(harness).filter((group) => group.depth === 0);
+  assert.equal(top.length, 9);
+  assert.equal(top.reduce((total, group) => total + group.count, 0), 46);
 });
 
-test("cantu-studio: every document the console paints is one the project's index carries a review for", { skip: !REAL_EMITTED }, async () => {
+test("cantu-studio: every document the console paints is one the project's index carries a review for", async () => {
   // The categories above must be the categories of the REVIEWED set, not of some other selection.
-  const docs = JSON.parse(readFileSync(join(CANTU, ".project", "docs_index.json"), "utf8")).docs;
+  const docs = JSON.parse(readFileSync(frozenDocsIndexPath("cantu-studio"), "utf8")).docs;
   const reviewed = docs.filter((doc) =>
     Object.prototype.hasOwnProperty.call(doc, "operator_review_status") &&
     String(doc.operator_review_status || "").trim() !== ""
   );
-  assert.equal(reviewed.length, 38);
+  assert.equal(reviewed.length, 46);
   const harness = await select("cantu-studio");
   const titles = new Set(paintedTitles(harness));
   for (const doc of reviewed) {
@@ -220,8 +226,8 @@ test("cantu-studio: every document the console paints is one the project's index
   }
 });
 
-test("cantu-studio: its archived documents are absent from All registered too", { skip: !REAL_EMITTED }, async () => {
-  const docs = JSON.parse(readFileSync(join(CANTU, ".project", "docs_index.json"), "utf8")).docs;
+test("cantu-studio: its archived documents are absent from All registered too", async () => {
+  const docs = JSON.parse(readFileSync(frozenDocsIndexPath("cantu-studio"), "utf8")).docs;
   const archived = docs.filter((doc) => doc.path.split("/").slice(0, -1).includes("archive"));
   assert.ok(archived.length > 0, "the project has nothing archived; this test would prove nothing");
   const harness = await select("cantu-studio", "all");
@@ -232,12 +238,12 @@ test("cantu-studio: its archived documents are absent from All registered too", 
   }
 });
 
-test("aiw-console: every registered document stays grouped by its folders, none uncategorized", { skip: !REAL_EMITTED }, async () => {
+test("aiw-console: every registered document stays grouped by its folders, none uncategorized", async () => {
   // Counts are read off the emitted index rather than written here: this project's corpus grows by
   // one document every time a run leaves a record, and a hardcoded total would only measure how
   // recently the number was updated. What IS pinned is the SHAPE — which folders are groups and
   // which of them nest inside which — because that is what the path rule decides.
-  const docs = JSON.parse(readFileSync(join(REPO_ROOT, ".project", "docs_index.json"), "utf8")).docs;
+  const docs = JSON.parse(readFileSync(frozenDocsIndexPath("aiw-console"), "utf8")).docs;
   const harness = await select("aiw-console");
   assert.equal(navItemCount(harness), docs.length);
   assert.deepEqual(paintedTree(harness).map((group) => group.path), [
@@ -261,11 +267,11 @@ test("aiw-console: every registered document stays grouped by its folders, none 
   assert.ok(context.count > context.titles.length, "the parent count does not include its subgroups");
 });
 
-test("aiw-console: the group of every document is the folder its own path names", { skip: !REAL_EMITTED }, async () => {
+test("aiw-console: the group of every document is the folder its own path names", async () => {
   // Not a restatement of the tree above: it re-derives the expected group from each entry's path
   // straight out of the emitted index and checks the painted tree against it, document by
   // document. This is what "the path always wins" has to mean, entry by entry.
-  const docs = JSON.parse(readFileSync(join(REPO_ROOT, ".project", "docs_index.json"), "utf8")).docs;
+  const docs = JSON.parse(readFileSync(frozenDocsIndexPath("aiw-console"), "utf8")).docs;
   const harness = await select("aiw-console");
   const tree = paintedTree(harness);
   const groupOfTitle = new Map(tree.flatMap((group) => group.titles.map((title) => [title, group.path])));

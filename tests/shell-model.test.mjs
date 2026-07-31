@@ -2,8 +2,15 @@
 // taxonomy-driven status derivation — the shell's ONLY status derivation, executed from the
 // derivation table each snapshot carries (envelope decision, O4.P2). The foreign-vocabulary
 // fixture (hilo-verde) proves the shell respects a project's own tokens with zero code
-// changes; the real aiw-console snapshot proves the derived tokens match what O4.P2 and
-// O4.P11 measured (O0 -> active, O4 -> in_progress).
+// changes; a FROZEN aiw_console snapshot proves the derivation produces the right tokens over
+// a real emitter's output.
+//
+// The frozen snapshot replaced this repository's LIVE `.project/snapshot.json`. What the two
+// derivation tests below check is that the table is executed correctly — not what this
+// project's roadmap happens to hold today. Read live, they measured the cabin's last edit:
+// closing a run flipped O0's derived token, and the queue growing from 45 to 51 runs broke the
+// count, neither of which is a statement about this code. Frozen, the same assertions hold
+// their meaning and stop moving. See tests/helpers/neighbours.mjs.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -18,12 +25,13 @@ import {
   projectStateLine,
   projectAbsenceMessage
 } from "../project-console/assets/project-shell.js";
+import { frozenSnapshot } from "./helpers/neighbours.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
 
 const readJson = (path) => JSON.parse(readFileSync(path, "utf8"));
-const realSnapshot = readJson(join(REPO_ROOT, ".project", "snapshot.json"));
+const frozenConsoleSnapshot = frozenSnapshot("aiw-console");
 const fixtureSnapshot = readJson(join(REPO_ROOT, "tests", "fixtures", "multi", "hilo-verde", ".project", "snapshot.json"));
 
 // --------------------------- registry parsing ---------------------------
@@ -101,13 +109,17 @@ test("VOCABULARIO POR PROYECTO: the fixture's own tokens come out of ITS table",
   assert.equal(deriveCollectionStatus(taxonomy, "phase", phaseStatuses(phases[1])), "empezado");
 });
 
-test("aiw-console's real snapshot derives the measured statuses (O0 active, O4 in_progress)", () => {
-  const taxonomy = realSnapshot.taxonomy_model;
-  const objectives = realSnapshot.roadmap_tree.objectives;
+test("the frozen aiw_console snapshot derives one token per objective from its own table (O0 in_progress, O4 active)", () => {
+  const taxonomy = frozenConsoleSnapshot.taxonomy_model;
+  const objectives = frozenConsoleSnapshot.roadmap_tree.objectives;
   assert.equal(objectives.length, 2);
   const statusesOf = (objective) => objective.phases.flatMap((phase) => phase.runs.map((run) => run.status));
   const derived = objectives.map((objective) => deriveCollectionStatus(taxonomy, "objective", statusesOf(objective)));
-  assert.deepEqual(derived, ["active", "in_progress"]);
+  assert.deepEqual(derived, ["in_progress", "active"]);
+  // Not a tautology: the two objectives derive DIFFERENT tokens, and each is the one its own
+  // run statuses justify — O0 holds no active run, O4 holds the one active run of the fixture.
+  assert.deepEqual(statusesOf(objectives[0]).filter((s) => s === "active"), []);
+  assert.deepEqual(statusesOf(objectives[1]).filter((s) => s === "active"), ["active"]);
 });
 
 // --------------------------- snapshot summary ---------------------------
@@ -126,13 +138,17 @@ test("snapshotSummary counts by the snapshot's OWN run.status tokens, in declare
   assert.equal(summary.operationalStatus, "en_marcha");
 });
 
-test("snapshotSummary on the real snapshot matches the measured 2/19/45", () => {
-  const summary = snapshotSummary(realSnapshot);
+test("snapshotSummary on the frozen aiw_console snapshot counts its tree exactly (2/19/51)", () => {
+  const summary = snapshotSummary(frozenConsoleSnapshot);
   assert.equal(summary.projectId, "aiw_console");
-  assert.deepEqual(summary.counts, { objectives: 2, phases: 19, runs: 45 });
+  assert.deepEqual(summary.counts, { objectives: 2, phases: 19, runs: 51 });
   const byToken = Object.fromEntries(summary.runStatusCounts.map(({ token, count }) => [token, count]));
-  assert.equal(byToken.completed, 36);
+  assert.equal(byToken.completed, 39);
+  assert.equal(byToken.planned, 11);
   assert.equal(byToken.active, 1);
+  // The per-token counts are the whole tree, so a token silently dropped from the count would
+  // show up here rather than hiding behind the total.
+  assert.equal(byToken.completed + byToken.planned + byToken.active, summary.counts.runs);
 });
 
 test("a token present in data but missing from the declaration is reported, not hidden", () => {

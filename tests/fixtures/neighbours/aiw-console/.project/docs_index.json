@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T03:05:30.596Z",
+  "generated_at": "2026-07-31T02:16:28.108Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
@@ -97,10 +97,6 @@
       "mtime": "2026-07-29T01:20:47.754Z"
     },
     {
-      "path": "context/aiw-console/records/CONVENCION-CASOS-DE-EVALUACION-AIW.md",
-      "mtime": "2026-07-31T02:45:11.152Z"
-    },
-    {
       "path": "context/aiw-console/records/CONVENCION-DOCUMENTACION-AIW.md",
       "mtime": "2026-07-29T04:00:56.425Z"
     },
@@ -175,10 +171,6 @@
     {
       "path": "context/aiw-console/records/MEDICION-DERIVA-ROADMAP-CANTU-71-RUNS.md",
       "mtime": "2026-07-28T09:30:21.936Z"
-    },
-    {
-      "path": "context/aiw-console/records/MEDICION-ENUM-HEADER-Y-INFORME-DE-OPCIONES-CANTU.md",
-      "mtime": "2026-07-31T02:26:55.207Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-ESTADO-DE-AIW.md",
@@ -307,10 +299,6 @@
     {
       "path": "context/aiw-console/records/SHELL-MULTIPROYECTO-O4-P3.md",
       "mtime": "2026-07-25T12:09:10.299Z"
-    },
-    {
-      "path": "context/aiw-console/records/SUITE-CONTRA-FIXTURES.md",
-      "mtime": "2026-07-31T02:34:53.618Z"
     },
     {
       "path": "context/aiw-console/records/TRADUCCION-ROADMAP-A-INGLES.md",
@@ -606,14 +594,6 @@
       "freshness": "2026-07-29T01:20:47.754Z"
     },
     {
-      "title": "CONVENCIÓN DE CASOS DE EVALUACIÓN DE AIW — la adjudicación, la convención y la declaración",
-      "path": "context/aiw-console/records/CONVENCION-CASOS-DE-EVALUACION-AIW.md",
-      "nav_tier": "evidence",
-      "default_visible": false,
-      "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T02:45:11.152Z"
-    },
-    {
       "title": "CONVENCIÓN DE DOCUMENTACIÓN DE AIW — barrier del carril `DOCUMENTATION`",
       "path": "context/aiw-console/records/CONVENCION-DOCUMENTACION-AIW.md",
       "nav_tier": "evidence",
@@ -764,14 +744,6 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-28T09:30:21.936Z"
-    },
-    {
-      "title": "Medición del enum de Header e informe de opciones",
-      "path": "context/aiw-console/records/MEDICION-ENUM-HEADER-Y-INFORME-DE-OPCIONES-CANTU.md",
-      "nav_tier": "evidence",
-      "default_visible": false,
-      "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T02:26:55.207Z"
     },
     {
       "title": "MEDICIÓN DEL ESTADO REAL DE AIW",
@@ -1028,14 +1000,6 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-25T12:09:10.299Z"
-    },
-    {
-      "title": "SUITE CONTRA FIXTURES",
-      "path": "context/aiw-console/records/SUITE-CONTRA-FIXTURES.md",
-      "nav_tier": "evidence",
-      "default_visible": false,
-      "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T02:34:53.618Z"
     },
     {
       "title": "TRADUCCIÓN DEL ROADMAP CANÓNICO DE `aiw-console` AL INGLÉS",

@@ -8,13 +8,17 @@ import assert from "node:assert/strict";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createConsoleHarness } from "./helpers/console-dom.mjs";
+import { AIW_CONSOLE_FIXTURE } from "./helpers/neighbours.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
 const RENDERER = join(REPO_ROOT, "project-console", "assets", "project-console.js");
 
+// `aiw-console` is the FROZEN emitted folder, not this repository's live one: the counts below
+// are properties of that fixture, and asserting them against the working tree only measured how
+// recently the cabin closed a run. See tests/helpers/neighbours.mjs.
 const ROOTS = new Map([
-  ["aiw-console", REPO_ROOT],
+  ["aiw-console", AIW_CONSOLE_FIXTURE],
   ["hilo-verde", join(REPO_ROOT, "tests", "fixtures", "multi", "hilo-verde")],
   ["roto", join(REPO_ROOT, "tests", "fixtures", "multi", "roto")],
   ["vacio", join(REPO_ROOT, "tests", "fixtures", "multi", "vacio")]
@@ -46,7 +50,7 @@ function joinedDump(harness) {
   return Array.from(harness.dump().values()).join("\n----\n");
 }
 
-test("the renderer paints aiw-console through the shell hooks exactly as measured (2 objectives, 45 runs)", async () => {
+test("the renderer paints the frozen aiw_console folder through the shell hooks (2 objectives, 19 phases, 51 runs)", async () => {
   const harness = makeHarness();
   const result = await select(harness, "aiw-console");
   assert.equal(result.ok, true);
@@ -55,7 +59,7 @@ test("the renderer paints aiw-console through the shell hooks exactly as measure
   assert.match(tree, /Project Console/);
   assert.match(tree, /Global Console/);
   const consoleFiles = harness.element("console-source-files").innerHTML;
-  assert.match(consoleFiles, /2 objectives \/ 19 phases \/ 45 runs/);
+  assert.match(consoleFiles, /2 objectives \/ 19 phases \/ 51 runs/);
   const docsNav = harness.element("docs-nav-list").innerHTML;
   assert.match(docsNav, /docs-nav-item/);
   const history = harness.element("history-list").innerHTML;

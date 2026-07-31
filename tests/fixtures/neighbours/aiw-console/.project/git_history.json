@@ -1,47 +1,27 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T03:05:30.596Z",
+  "generated_at": "2026-07-31T02:16:28.108Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-31T03:03:46.377Z"
+      "mtime": "2026-07-31T02:16:03.239Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-31T03:05:30.593Z"
+      "mtime": "2026-07-31T02:12:43.245Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "37e2d773e7b3abdc8755b44035c2365734b4b499",
+  "head": "54f7c381b3b34c95855efe7d049cefd934e0aca0",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 101,
+  "commit_total": 99,
   "commits": [
-    {
-      "branch": "main",
-      "sha": "37e2d77",
-      "full_sha": "37e2d773e7b3abdc8755b44035c2365734b4b499",
-      "date": "2026-07-30T21:03:46-06:00",
-      "parents": "906273d",
-      "subject": "record: convencion de casos de evaluacion adjudicada - el caso es el fixture vivo, el historico es procedencia",
-      "body": "",
-      "is_merge": false
-    },
-    {
-      "branch": "main",
-      "sha": "906273d",
-      "full_sha": "906273dbbaf29f959db67c4f7dab562084e1ab17",
-      "date": "2026-07-30T20:29:58-06:00",
-      "parents": "54f7c38",
-      "subject": "record: medicion del enum de Header e informe de opciones (#15 sigue activo)",
-      "body": "",
-      "is_merge": false
-    },
     {
       "branch": "main",
       "sha": "54f7c38",

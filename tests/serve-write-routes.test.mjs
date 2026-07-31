@@ -36,6 +36,7 @@ import {
 } from "../project-console/serve.mjs";
 import { serialize } from "../tools/roadmap/roadmap-core.mjs";
 import { resolveGitBin } from "../tools/projector/project.mjs";
+import { makeRealLikeProject } from "./helpers/real-like-project.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
@@ -66,6 +67,7 @@ function fixtureTree(schemaName, runPrefix) {
 }
 
 let workDir = "";
+let selfProject = null;
 let baseUrl = "";
 let editableRoadmapPath = "";
 let alienRoadmapPath = "";
@@ -108,8 +110,11 @@ test.before(async () => {
   // fuera: a registered root that is NOT a project — no layout claims it.
   outsideDir = join(workDir, "outside-target");
   mkdirSync(outsideDir, { recursive: true });
-  // The generated registry. Roots resolve relative to the registry file's directory;
-  // `self` uses this repository's absolute root for the history-sync success path.
+  selfProject = makeRealLikeProject("serve-write-routes-self-");
+  // The generated registry. Roots resolve relative to the registry file's directory; `self` is a
+  // DISPOSABLE COPY of this repository (tests/helpers/real-like-project.mjs) for the history-sync
+  // success path. It used to be this repository by absolute root, so the success path below
+  // rewrote the real `.project/git_history.json` and left the working tree dirty on every run.
   writeFileSync(join(workDir, "registry.json"), JSON.stringify({
     registry_model: "project_registry_v1",
     title: "Write-route fixtures",
@@ -117,7 +122,7 @@ test.before(async () => {
       { key: "editable", root: "./editable" },
       { key: "alien", root: "./alien" },
       { key: "fuera", root: "./outside-target" },
-      { key: "self", root: REPO_ROOT.split("\\").join("/") }
+      { key: "self", root: selfProject.root.split("\\").join("/") }
     ]
   }, null, 2), "utf8");
   process.env.PC_REGISTRY = join(workDir, "registry.json");
@@ -129,6 +134,7 @@ test.after(async () => {
   delete process.env.PC_REGISTRY;
   await new Promise((resolveClose) => server.close(resolveClose));
   rmSync(workDir, { recursive: true, force: true });
+  if (selfProject) selfProject.cleanup();
 });
 
 // ---------------------------------------------------------------- probe (GET on the edit route)
@@ -305,7 +311,7 @@ test("history sync: refuses a project the emitter does not serve; 503 when Git h
 
 const gitAvailable = !!resolveGitBin();
 test("history sync: re-emits .project/git_history.json of a real project and reports the rebuild", { skip: gitAvailable ? false : "git unavailable" }, async () => {
-  const target = join(REPO_ROOT, ".project", "git_history.json");
+  const target = join(selfProject.root, ".project", "git_history.json");
   const beforeMtime = existsSync(target) ? statSync(target).mtimeMs : null;
   const sync = await jsonRequest("POST", "/projects/self/__project-console/history/sync");
   assert.equal(sync.status, 200, JSON.stringify(sync.payload));

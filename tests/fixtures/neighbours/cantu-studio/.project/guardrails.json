@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "project_id": "cantu_studio",
+  "generated_at": "2026-07-31T00:22:20.420Z",
+  "generated_from": "aiw-projector@0.9.0",
+  "sources": [
+    {
+      "path": ".aiw/guardrails/project_guardrails.json",
+      "mtime": "2026-07-23T01:01:55.452Z"
+    }
+  ],
+  "guardrails": [
+    {
+      "id": "guardrail-no-jame-lessons",
+      "rule": "Do not touch JAME_Lessons without explicit human approval.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "AGENTS.md",
+        "PASS-FUTURE-JAME-PROJECT-CONSOLE-CONTRACT-LITE-SEED-001"
+      ]
+    },
+    {
+      "id": "guardrail-no-aiw-monitored-checkout",
+      "rule": "Do not touch the AIW monitored checkout without explicit human approval.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "AGENTS.md",
+        "PASS-FUTURE-JAME-PROJECT-CONSOLE-CONTRACT-LITE-SEED-001"
+      ]
+    },
+    {
+      "id": "guardrail-no-schema-compiler-simple-ui",
+      "rule": "Do not change schema/compiler under simple UI tickets.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "docs/human/state/guardrails.json"
+      ]
+    },
+    {
+      "id": "guardrail-no-palette-renderers-unrelated-ui",
+      "rule": "Do not change palette/color system/renderers under unrelated UI tickets.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "docs/human/state/guardrails.json",
+        "docs/ops/JAME_OPS_STATE.md"
+      ]
+    },
+    {
+      "id": "guardrail-no-agent-git-mutation",
+      "rule": "Do not commit/push/stash/reset/checkout/revert as an agent.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "AGENTS.md"
+      ]
+    }
+  ]
+}

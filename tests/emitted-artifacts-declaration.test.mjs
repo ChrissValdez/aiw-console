@@ -21,10 +21,10 @@ import {
   buildRoadmapTreeSnapshot,
   writeProjectFolder
 } from "../tools/projector/project.mjs";
+import { AIW_CONSOLE_FIXTURE, CANTU_FIXTURE } from "./helpers/neighbours.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
-const CANTU = resolve(REPO_ROOT, "..", "cantu-studio");
 const FIXED_NOW = "2026-07-27T00:00:00.000Z";
 
 // A minimal roadmap_tree_v1 root in a temp dir — not a Git work tree, so the emission has one
@@ -134,11 +134,15 @@ test("the declaration is additive: everything the snapshot carried before is sti
   }
 });
 
-const REAL = [REPO_ROOT, CANTU].filter((root) => existsSync(join(root, ".project", "snapshot.json")));
-const skipReal = REAL.length === 2 ? false : "both real projects must have an emitted folder";
+// The two FROZEN emitted folders (tests/helpers/neighbours.mjs). Read live, this test asserted a
+// neighbour's artifact count: a project that stops keeping governance files emits five, and the
+// pin would break here for a reason that has nothing to do with the declaration being correct.
+// That the REAL projects' declarations still resolve on disk is checked in
+// tests/real-projects-smoke.test.mjs, without a count.
+const FROZEN = [AIW_CONSOLE_FIXTURE, CANTU_FIXTURE];
 
-test("both real projects declare six artifacts, and all six are on disk", { skip: skipReal }, () => {
-  for (const root of REAL) {
+test("both frozen projects declare six artifacts, and all six are on disk", () => {
+  for (const root of FROZEN) {
     const snapshot = JSON.parse(readFileSync(join(root, ".project", "snapshot.json"), "utf8"));
     const declared = snapshot.emitted_artifacts;
     assert.ok(Array.isArray(declared), `${root} transports no declaration`);

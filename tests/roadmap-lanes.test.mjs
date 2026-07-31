@@ -20,14 +20,18 @@ import {
   flattenRoadmapTree
 } from "../tools/projector/project.mjs";
 import { server, HOST } from "../project-console/serve.mjs";
+import { frozenCanonicalPath } from "./helpers/neighbours.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
 const FIXTURE_ROOT = join(HERE, "fixtures", "lanes", "project");
 const FIXTURE_ROADMAP = join(FIXTURE_ROOT, "roadmap", "roadmap.json");
+// The two canonicals, FROZEN as data (tests/fixtures/neighbours/). They used to be the live
+// files — this repo's own and cantu-studio's next door — so every count pinned below moved
+// whenever either project planned a run, and the suite went red for it.
 const REAL_CANONICALS = [
-  join(REPO_ROOT, "roadmap", "roadmap.json"),
-  resolve(REPO_ROOT, "..", "cantu-studio", ".aiw", "roadmap", "roadmap.json")
+  frozenCanonicalPath("aiw-console"),
+  frozenCanonicalPath("cantu-studio")
 ];
 
 const md5 = (bytes) => createHash("md5").update(bytes).digest("hex");
@@ -92,13 +96,12 @@ test("aiw-console is still lane-less: it declares no lanes and no run carries la
   }
 });
 
-// [O4.P14] The counts below moved 53 -> 71 (and the explicit-lane minority 5 -> 23) when the
-// implementation/documentation partition landed in cantu-studio's canonical. They are pins on
-// REAL data, so they follow the file; the properties around them — one default lane, every run
-// resolving to a declared lane, one explicit key, no barrier — are unchanged and are what this
-// test is actually about. This desfase between a canonical and what was pinned against it is the
-// same one the re-emission button exists for, arriving in the suite instead of in the console.
-test("cantu-studio declares two lanes, resolves all 71 runs into them, and carries NO barrier", () => {
+// The counts below are the FIXTURE's (73 runs, 50 default / 23 explicit). They used to be pins on
+// the live canonical next door and moved twice on their own — 53 -> 71 -> 73 — each time turning
+// this suite red without a line of this project changing. The properties around them — one default
+// lane, every run resolving to a declared lane, one explicit key, no barrier — are what this test
+// is actually about, and they are unchanged.
+test("cantu-studio declares two lanes, resolves all 73 runs into them, and carries NO barrier", () => {
   const obj = core.parseRoadmap(core.loadRaw(REAL_CANONICALS[1]));
   const lanes = core.declaredLanes(obj);
   assert.ok(lanes, "cantu-studio must declare a lane vocabulary");
@@ -107,7 +110,7 @@ test("cantu-studio declares two lanes, resolves all 71 runs into them, and carri
   assert.equal(lanes.filter((lane) => lane.default === true).length, 1);
   const defaultLane = core.defaultLaneId(obj);
   const runs = core.flattenRuns(obj).map(({ run }) => run);
-  assert.equal(runs.length, 71);
+  assert.equal(runs.length, 73);
   // Every run resolves to a DECLARED lane — the "every run has a lane" property, read.
   const declared = new Set(lanes.map((lane) => lane.lane_id));
   const counts = new Map();
@@ -120,8 +123,8 @@ test("cantu-studio declares two lanes, resolves all 71 runs into them, and carri
   // the explicit keys are the minority — which is the whole reason that lane is the default.
   const explicit = runs.filter((run) => "lane" in run);
   assert.equal(explicit.length, 23);
-  assert.equal(counts.get(defaultLane), 48);
-  assert.equal(counts.get(defaultLane) + explicit.length, 71);
+  assert.equal(counts.get(defaultLane), 50);
+  assert.equal(counts.get(defaultLane) + explicit.length, 73);
   // Every explicit key names the SAME non-default lane (the migration assigned one lane).
   const nonDefault = lanes.find((lane) => lane.lane_id !== defaultLane).lane_id;
   for (const run of explicit) assert.equal(run.lane, nonDefault);

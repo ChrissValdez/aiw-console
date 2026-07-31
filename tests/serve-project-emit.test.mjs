@@ -17,16 +17,23 @@
 //   desfase   a conforming repo_root project           -> the projection-behind-canonical case
 //   roto      a conforming project whose canonical is later broken -> the named-refusal case
 //   fuera     a root with NO layout                    -> refusal + nothing created there
-//   self      this repository, by absolute root        -> the real-project pass, where the
+//   self      a DISPOSABLE COPY of this repository     -> the real-project pass, where the
 //             DERIVED `.project/` is re-emitted (that is the route's function) and the CANONICAL
 //             is proved byte-identical by md5 before and after.
+//
+// `self` used to be this repository BY ABSOLUTE ROOT, and the pass below therefore re-emitted the
+// six real artifacts under `.project/` for real: running the suite left the working tree dirty,
+// every time. It is now a byte copy in a temp dir carrying the same six sources (see
+// tests/helpers/real-like-project.mjs), so the test still emits over a genuine repo_root project
+// with a real Git work tree, and the repository it runs in is left alone. Running this suite is a
+// read-only operation on this checkout, which is what parallel lanes require.
 //
 // Nothing here runs git in any form that writes, and nothing here commits.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, resolve, sep } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import {
@@ -41,6 +48,7 @@ import {
 } from "../project-console/serve.mjs";
 import { detectRootLayout, flattenRoadmapTree } from "../tools/projector/project.mjs";
 import { createConsoleHarness } from "./helpers/console-dom.mjs";
+import { makeRealLikeProject } from "./helpers/real-like-project.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
@@ -84,6 +92,7 @@ let baseUrl = "";
 let desfaseRoot = "";
 let rotoRoot = "";
 let outsideDir = "";
+let selfProject = null;
 
 const emitPath = (key) => `/projects/${key}/${PROJECT_EMIT_SUFFIX}`;
 
@@ -139,6 +148,7 @@ test.before(async () => {
   writeCanonical(desfaseRoot, tree("DESF", 3));
   writeCanonical(rotoRoot, tree("ROTO", 3));
   mkdirSync(outsideDir, { recursive: true });
+  selfProject = makeRealLikeProject("serve-project-emit-self-");
   writeFileSync(join(workDir, "registry.json"), JSON.stringify({
     registry_model: "project_registry_v1",
     title: "Project-emit fixtures",
@@ -146,7 +156,7 @@ test.before(async () => {
       { key: "desfase", root: "./desfase" },
       { key: "roto", root: "./roto" },
       { key: "fuera", root: "./outside-target" },
-      { key: "self", root: REPO_ROOT.split("\\").join("/") }
+      { key: "self", root: selfProject.root.split("\\").join("/") }
     ]
   }, null, 2), "utf8");
   process.env.PC_REGISTRY = join(workDir, "registry.json");
@@ -158,6 +168,7 @@ test.after(async () => {
   delete process.env.PC_REGISTRY;
   await new Promise((resolveClose) => server.close(resolveClose));
   rmSync(workDir, { recursive: true, force: true });
+  if (selfProject) selfProject.cleanup();
 });
 
 // ------------------------------------------------- the case that motivated the route
@@ -496,11 +507,12 @@ test("a canonical that fails the invariants is refused ON SCREEN by file, with t
 // ------------------------------------------------- the real project, without damage
 
 test("a REAL project: the derived .project/ is re-emitted (its function) and the CANONICAL is byte-identical — md5 before and after", async () => {
-  const layout = detectRootLayout(REPO_ROOT);
-  assert.ok(layout, "this repository must be claimed by a layout for this test to mean anything");
-  const canonicalPath = resolve(REPO_ROOT, layout.paths.roadmap);
+  const selfRoot = selfProject.root;
+  const layout = detectRootLayout(selfRoot);
+  assert.ok(layout, "the copy must be claimed by a layout for this test to mean anything");
+  const canonicalPath = resolve(selfRoot, layout.paths.roadmap);
   const canonicalBefore = md5(canonicalPath);
-  const snapshotTarget = join(REPO_ROOT, ".project", "snapshot.json");
+  const snapshotTarget = join(selfRoot, ".project", "snapshot.json");
   const derivedBefore = existsSync(snapshotTarget) ? statSync(snapshotTarget).mtimeMs : null;
 
   const emit = await jsonRequest("POST", emitPath("self"));
@@ -516,6 +528,12 @@ test("a REAL project: the derived .project/ is re-emitted (its function) and the
   // THE POINT: the projection moved, the canonical did not.
   assert.equal(md5(canonicalPath), canonicalBefore, "the canonical must be byte-identical after a re-emission");
   assert.ok(derivedBefore === null || statSync(snapshotTarget).mtimeMs >= derivedBefore, "the derived folder was re-emitted");
-  assert.equal(projectedRuns(REPO_ROOT), emit.payload.runs, "and the projection now agrees with the canonical");
-  assert.deepEqual(strayTempFiles(join(REPO_ROOT, ".project")), []);
+  assert.equal(projectedRuns(selfRoot), emit.payload.runs, "and the projection now agrees with the canonical");
+  assert.deepEqual(strayTempFiles(join(selfRoot, ".project")), []);
+
+  // And the repository this suite RUNS IN was not the thing emitted into: the route wrote only
+  // inside the registered root. Asserted rather than assumed, because the whole point of moving
+  // `self` off this checkout was that the suite must not touch it.
+  assert.ok(!resolve(selfRoot).startsWith(resolve(REPO_ROOT) + sep) && resolve(selfRoot) !== resolve(REPO_ROOT),
+    "the emission target must live outside this repository");
 });

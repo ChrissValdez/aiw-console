@@ -1,12 +1,21 @@
 // Fixture-based tests for the optional Roadmap-v3 view (tools/projector/project.mjs).
 //
 // They assert that buildRoadmap() emits the exact shape the console's Roadmap tab reads
-// (`v3Model()` in docs/project-console/assets/project-console.js): a single
-// objective → phase → runs container whose runs carry run_id / queue_order / title /
-// summary / full_description / status / depends_on. The mapping rules (pending → Now +
-// Ready Next, parked → Later, processed → History) are checked against the console's OWN
-// grouping logic via the mirrored roadmapQueueGroup(), and writeRoadmap() is asserted to
-// land the file at <root>/.aiw/views/roadmap.json and never outside .aiw/.
+// (`v3Model()` in project-console/assets/project-console.js): a single objective → phase → runs
+// container whose runs carry run_id / queue_order / title / summary / full_description / status /
+// depends_on. The mapping rules (pending → Now + Ready Next, parked → Later, processed →
+// History) are checked against THE CONSOLE'S OWN grouping function, and writeRoadmap() is
+// asserted to land the file at <root>/.aiw/views/roadmap.json and never outside .aiw/.
+//
+// AGAINST THE THING, NOT ITS MIRROR. These tests used to call `roadmapQueueGroup()` from the
+// projector, which declares itself a copy of the console's `v3QueueGroupKey()`. A copy is not
+// the reader: the two have already diverged (the console groups an active run awaiting human QA
+// under `needs_human_decision`, and bars a planned run behind a barrier, neither of which the
+// copy knows), so a green test over the copy said nothing about what the console paints. The
+// grouping function is now taken from the renderer itself, loaded in the same node:vm harness
+// the consumer suites use, so what is asserted is the behaviour of the code that runs.
+//
+// Repairing the copy is not this test's business and is deliberately NOT done here.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
@@ -18,9 +27,9 @@ import {
   ROADMAP_RELATIVE_PATH,
   buildRoadmap,
   resolveRoadmapPath,
-  roadmapQueueGroup,
   writeRoadmap
 } from "../tools/projector/project.mjs";
+import { consoleQueueGroupKey } from "./helpers/console-grouping.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FIXTURE = join(HERE, "fixtures", "sample-project");
@@ -47,7 +56,7 @@ function runsById(runs) {
 function groupOf(roadmap, runId) {
   const runs = runsOf(roadmap);
   const byId = runsById(runs);
-  return roadmapQueueGroup(byId.get(runId), byId);
+  return consoleQueueGroupKey(byId.get(runId), byId);
 }
 
 test("buildRoadmap emits the single objective→phase→runs container the console reads", () => {

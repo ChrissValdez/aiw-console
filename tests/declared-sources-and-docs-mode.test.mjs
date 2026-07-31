@@ -17,25 +17,22 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createConsoleHarness } from "./helpers/console-dom.mjs";
+import { AIW_CONSOLE_FIXTURE, CANTU_FIXTURE, frozenDocsIndexPath } from "./helpers/neighbours.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
 const RENDERER = join(REPO_ROOT, "project-console", "assets", "project-console.js");
 const FIX = join(REPO_ROOT, "tests", "fixtures", "declarado");
-const CANTU = resolve(REPO_ROOT, "..", "cantu-studio");
 
 const ROOTS = new Map([
   ["todo-presente", join(FIX, "todo-presente")],
   ["falta-uno", join(FIX, "falta-uno")],
   ["sin-declaracion", join(FIX, "sin-declaracion")],
   ["con-revision", join(FIX, "con-revision")],
-  ["aiw-console", REPO_ROOT],
-  ["cantu-studio", CANTU]
+  // FROZEN emitted folders, not the live repositories (tests/helpers/neighbours.mjs).
+  ["aiw-console", AIW_CONSOLE_FIXTURE],
+  ["cantu-studio", CANTU_FIXTURE]
 ]);
-
-const REAL_EMITTED =
-  existsSync(join(REPO_ROOT, ".project", "snapshot.json")) &&
-  existsSync(join(CANTU, ".project", "snapshot.json"));
 
 async function select(key) {
   const harness = createConsoleHarness({ rendererPath: RENDERER, rootsByKey: ROOTS });
@@ -124,7 +121,7 @@ test("a snapshot with NO declaration cannot narrow, so it does not: any failure 
   assert.match(banner(harness).innerHTML, /\.project\//);
 });
 
-test("the two REAL projects open with NO banner: everything each one declares is on disk", { skip: !REAL_EMITTED }, async () => {
+test("the two REAL projects open with NO banner: everything each one declares is on disk", async () => {
   for (const key of ["aiw-console", "cantu-studio"]) {
     const { harness, result } = await select(key);
     assert.equal(result.ok, true, `${key} did not render`);
@@ -143,7 +140,7 @@ test("the two REAL projects open with NO banner: everything each one declares is
   }
 });
 
-test("the declaration does not cross projects: it is re-read per load", { skip: !REAL_EMITTED }, async () => {
+test("the declaration does not cross projects: it is re-read per load", async () => {
   const harness = createConsoleHarness({ rendererPath: RENDERER, rootsByKey: ROOTS });
   const load = async (key) => {
     harness.sandbox.resetProjectScopedState();
@@ -196,26 +193,26 @@ test("the opening mode is the FIELD's presence, not the project — the same cod
   assert.ok(!before.includes("operator_review_status"), "the console invented operator_review_status");
 });
 
-test("the REAL projects open Docs on what their own index supports (38 of 140 / 33 of 33)", { skip: !REAL_EMITTED }, async () => {
-  const indexOf = (root) => JSON.parse(readFileSync(join(root, ".project", "docs_index.json"), "utf8")).docs;
+test("the two frozen projects open Docs on what their own index supports (46 of 149 / 90 of 90)", async () => {
+  const indexOf = (key) => JSON.parse(readFileSync(frozenDocsIndexPath(key), "utf8")).docs;
   const carries = (doc) =>
     Object.prototype.hasOwnProperty.call(doc, "operator_review_status") &&
     String(doc.operator_review_status || "").trim() !== "";
 
-  const cantuDocs = indexOf(CANTU);
+  const cantuDocs = indexOf("cantu-studio");
   const cantuReviewed = cantuDocs.filter(carries).length;
   assert.ok(cantuReviewed > 0 && cantuReviewed < cantuDocs.length);
   const cantu = await select("cantu-studio");
   assert.equal(navItemCount(cantu.harness), cantuReviewed, "cantu-studio did not open on its curated selection");
 
-  const consoleDocs = indexOf(REPO_ROOT);
+  const consoleDocs = indexOf("aiw-console");
   assert.equal(consoleDocs.filter(carries).length, 0, "aiw-console's index gained operator_review_status");
   const console_ = await select("aiw-console");
   assert.equal(navItemCount(console_.harness), consoleDocs.length, "aiw-console did not open on its full index");
 });
 
-test("NOTHING writes operator_review_status: the emitted indexes are unchanged by rendering", { skip: !REAL_EMITTED }, async () => {
-  const path = join(REPO_ROOT, ".project", "docs_index.json");
+test("NOTHING writes operator_review_status: the emitted indexes are unchanged by rendering", async () => {
+  const path = frozenDocsIndexPath("aiw-console");
   const before = readFileSync(path, "utf8");
   await select("aiw-console");
   assert.equal(readFileSync(path, "utf8"), before, "rendering modified the emitted docs index");

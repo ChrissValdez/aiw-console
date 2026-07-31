@@ -113,8 +113,14 @@ test("the operator's global init.defaultBranch is never consulted", () => {
 
 const GIT = resolveGitBin();
 const gitRead = (root, args) => execFileSync(GIT, ["-C", root, ...args], { encoding: "utf8" });
-const REAL_ROOTS = [REPO_ROOT, CANTU].filter((root) => existsSync(join(root, ".git")));
-const skipLive = GIT && REAL_ROOTS.length ? false : "no readable Git repository beside this one";
+// THIS repository only. These four tests need a real Git work tree, and they are self-verifying:
+// each compares what the emitter produced against what Git itself reports for the same repo at
+// the same moment, so no expected value can go stale. Running them over the sibling as well added
+// no property — the loop already proves the rule on a real repo — and only made this suite depend
+// on a neighbour's checkout being present and readable. What the sibling contributes is covered,
+// once, by tests/real-projects-smoke.test.mjs.
+const REAL_ROOTS = [REPO_ROOT].filter((root) => existsSync(join(root, ".git")));
+const skipLive = GIT && REAL_ROOTS.length ? false : "no readable Git repository here";
 
 test("the emitted history covers exactly ONE branch, and it is the one the repo declares", { skip: skipLive }, () => {
   for (const root of REAL_ROOTS) {

@@ -20,15 +20,18 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import { createConsoleHarness } from "./helpers/console-dom.mjs";
+import { AIW_CONSOLE_FIXTURE, CANTU_FIXTURE, frozenCanonicalPath } from "./helpers/neighbours.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
 const RENDERER = join(REPO_ROOT, "project-console", "assets", "project-console.js");
 const LANES_ROOT = join(HERE, "fixtures", "lanes", "project");
 
+// FROZEN emitted folders and canonicals (tests/helpers/neighbours.mjs): the counts pinned in
+// this file are the fixtures', not whatever the two projects planned this week.
 const ROOTS = new Map([
-  ["aiw-console", REPO_ROOT],
-  ["cantu-studio", resolve(REPO_ROOT, "..", "cantu-studio")],
+  ["aiw-console", AIW_CONSOLE_FIXTURE],
+  ["cantu-studio", CANTU_FIXTURE],
   ["lanes", LANES_ROOT]
 ]);
 
@@ -207,8 +210,8 @@ test("ZERO lane positions are stored: no canonical and no emitted artifact carri
     join(LANES_ROOT, ".project", "roadmap.json"),
     join(LANES_ROOT, ".project", "snapshot.json"),
     join(LANES_ROOT, ".project", "docs_index.json"),
-    join(REPO_ROOT, "roadmap", "roadmap.json"),
-    resolve(REPO_ROOT, "..", "cantu-studio", ".aiw", "roadmap", "roadmap.json")
+    frozenCanonicalPath("aiw-console"),
+    frozenCanonicalPath("cantu-studio")
   ];
   const FORBIDDEN = /^(lane_position|lane_order|lane_index|lane_queue_order|position_in_lane|in_lane_position|lane_seq|lane_label)$/;
   const walk = (node, path, file) => {
@@ -269,7 +272,7 @@ test("cantu-studio renders its declared lanes: a selector with both, and a label
   const harness = makeHarness();
   const result = await select(harness, "cantu-studio");
   assert.equal(result.ok, true);
-  const tree = JSON.parse(readFileSync(resolve(REPO_ROOT, "..", "cantu-studio", ".aiw", "roadmap", "roadmap.json"), "utf8"));
+  const tree = JSON.parse(readFileSync(frozenCanonicalPath("cantu-studio"), "utf8"));
   const laneIds = tree.lanes.map((lane) => lane.lane_id);
   assert.equal(laneIds.length, 2);
   // The selector exists and offers the declared vocabulary — read off the DOM, by value,
@@ -280,10 +283,10 @@ test("cantu-studio renders its declared lanes: a selector with both, and a label
   assert.deepEqual(options.slice().sort(), ["", ...laneIds].sort(), "the selector offers exactly the declared lanes plus All lanes");
   // Every row carries its lane label, and every label names a declared lane.
   const tags = laneTags(harness, "run-queue-v3");
-  // [O4.P14] 53 -> 71: cantu-studio's canonical gained the documentation lane's runs. A count
-  // pin on real data follows the data; what this test asserts — a label on EVERY row, each
-  // naming a declared lane — is unchanged.
-  assert.equal(tags.length, 71, "every row of the queue carries a lane label");
+  // The count is the FIXTURE's 73. Pinned against the live canonical it moved twice on its own
+  // (53 -> 71 -> 73); what this test asserts — a label on EVERY row, each naming a declared
+  // lane — is unchanged.
+  assert.equal(tags.length, 73, "every row of the queue carries a lane label");
   for (const tag of tags) {
     assert.ok(laneIds.some((laneId) => tag.startsWith(`${laneId}-`)), `lane label ${tag} names no declared lane`);
   }
@@ -294,7 +297,7 @@ test("cantu-studio renders its declared lanes: a selector with both, and a label
 test("cantu-studio numbers locally per lane when filtered, and the counts match the canonical", async () => {
   const harness = makeHarness();
   await select(harness, "cantu-studio");
-  const tree = JSON.parse(readFileSync(resolve(REPO_ROOT, "..", "cantu-studio", ".aiw", "roadmap", "roadmap.json"), "utf8"));
+  const tree = JSON.parse(readFileSync(frozenCanonicalPath("cantu-studio"), "utf8"));
   const defaultLane = tree.lanes.find((lane) => lane.default === true).lane_id;
   const runs = [];
   for (const objective of tree.objectives) for (const phase of objective.phases) for (const run of phase.runs) runs.push(run);
@@ -306,11 +309,11 @@ test("cantu-studio numbers locally per lane when filtered, and the counts match 
     byLane.get(laneId).push(run);
   }
   // The split the migration produced, asserted against the file rather than a literal.
-  // [O4.P14] 53 -> 71 after the implementation/documentation partition; the DEFAULT lane's 48
-  // did not move (the partition only grew the documentation lane), which is why that pin stands.
-  assert.equal(runs.length, 71);
-  assert.equal(byLane.get(defaultLane).length, 48);
-  assert.equal(Array.from(byLane.values()).reduce((n, list) => n + list.length, 0), 71);
+  // The fixture holds 73 runs, 50 in the default lane and 23 explicitly in the other. Pinned
+  // against the live canonical these read 71/48 and moved twice on their own.
+  assert.equal(runs.length, 73);
+  assert.equal(byLane.get(defaultLane).length, 50);
+  assert.equal(Array.from(byLane.values()).reduce((n, list) => n + list.length, 0), 73);
   for (const [laneId, laneRuns] of byLane) {
     setLane(harness, laneId);
     const queue = queuePositions(harness).slice().sort((a, b) => a - b);
@@ -330,23 +333,23 @@ test("cantu-studio numbers locally per lane when filtered, and the counts match 
 test("the real counts and the global numbering are exactly what the canonicals say", async () => {
   const harness = makeHarness();
   await select(harness, "aiw-console");
-  const own = JSON.parse(readFileSync(join(REPO_ROOT, "roadmap", "roadmap.json"), "utf8"));
+  const own = JSON.parse(readFileSync(frozenCanonicalPath("aiw-console"), "utf8"));
   const orders = [];
   for (const objective of own.objectives) {
     for (const phase of objective.phases) for (const run of phase.runs) orders.push(run.queue_order);
   }
   orders.sort((a, b) => a - b);
-  assert.equal(orders.length, 45);
+  assert.equal(orders.length, 51);
   assert.deepEqual(queuePositions(harness).slice().sort((a, b) => a - b), orders);
 
   const cantu = makeHarness();
   await select(cantu, "cantu-studio");
-  const theirs = JSON.parse(readFileSync(resolve(REPO_ROOT, "..", "cantu-studio", ".aiw", "roadmap", "roadmap.json"), "utf8"));
+  const theirs = JSON.parse(readFileSync(frozenCanonicalPath("cantu-studio"), "utf8"));
   const theirOrders = [];
   for (const objective of theirs.objectives) {
     for (const phase of objective.phases) for (const run of phase.runs) theirOrders.push(run.queue_order);
   }
   theirOrders.sort((a, b) => a - b);
-  assert.equal(theirOrders.length, 71); // [O4.P14] 53 -> 71, see above
+  assert.equal(theirOrders.length, 73);
   assert.deepEqual(queuePositions(cantu).slice().sort((a, b) => a - b), theirOrders);
 });

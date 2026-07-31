@@ -1,0 +1,1137 @@
+{
+  "schema_version": 1,
+  "project_id": "cantu_studio",
+  "generated_at": "2026-07-31T00:22:20.420Z",
+  "generated_from": "aiw-projector@0.9.0",
+  "sources": [
+    {
+      "path": ".aiw/roadmap/roadmap.json",
+      "mtime": "2026-07-31T00:22:20.416Z"
+    }
+  ],
+  "model": "jame.roadmap_v3.v0.2-progress",
+  "roadmap_id": "roadmap",
+  "title": "Cantu Studio Roadmap",
+  "lanes": [
+    {
+      "lane_id": "DEVELOPMENT",
+      "title": "Development — code, structure, tooling",
+      "default": true
+    },
+    {
+      "lane_id": "DOCUMENTATION",
+      "title": "Documentation — writing, updating, reorganising docs"
+    }
+  ],
+  "objectives": [
+    {
+      "objective_id": "O2",
+      "title": "Cantu Studio Knowledge Base and Documentation Source of Truth",
+      "phases": [
+        {
+          "phase_id": "O2.P1",
+          "title": "Deep Documentation Audit",
+          "runs": [
+            {
+              "run_id": "RUN-CANTU-DOCUMENTATION-DEEP-AUDIT-001",
+              "queue_order": 68,
+              "title": "Deep documentation audit",
+              "summary": "Full human-led audit of the documentation corpus, deferred until Cantu Studio development is further along.",
+              "full_description": "A thorough audit and classification of every documentation source, deferred deliberately. The operator decided that auditing the full corpus now would stall product development, and that the current documentation is good enough at a coarse level. This run stays planned until Cantu Studio is further developed and the lessons material exists. It has no dependencies and is not gated by anything; it is a horizon item the operator pulls forward when the time is right.",
+              "status": "planned",
+              "depends_on": [],
+              "lane": "DOCUMENTATION"
+            }
+          ]
+        },
+        {
+          "phase_id": "O2.P2",
+          "title": "Canonical Documentation Model and Cadence",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-DOCUMENTATION-CANONICAL-MODEL-001",
+              "queue_order": 2,
+              "title": "Define the canonical documentation model, IA, and cadence",
+              "summary": "Define source roles, authority, freshness rules, the Docs / Governance / Sources information architecture, and the documentation update cadence.",
+              "full_description": "Define which document classes own operational state, architecture decisions, author guidance, API contracts, evidence, governance, provenance, and historical context. Establish freshness rules, update responsibilities, indexing metadata, reconciliation rules for conflicts, a documentation update cadence, and the Docs / Governance / Sources information architecture that the later Project Console projection consumes. This is a model and IA definition; it implements no Docs, Governance, or Sources user interface.",
+              "status": "completed",
+              "depends_on": [],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001",
+              "queue_order": 3,
+              "title": "Define the component-doc single-source contract",
+              "summary": "Define one canonical structured component-doc packet consumed by both the Editor Component Guide and the Project Console Docs view.",
+              "full_description": "Define a component-doc single-source strategy so each component's documentation lives in one canonical structured packet that is rendered by the Editor Component Guide and by the Project Console Docs view, instead of being duplicated across guides and dashboards. Encode the preferred model as future work: Markdown for narrative docs, structured JSON/YAML component-doc packets for component docs, governance and no-claims JSON for governance, a sources/provenance manifest for Sources, and docs_index as a navigation and freshness registry rather than a content body. This Run defines the contract and its consumers only; it does not implement packet schema files, the Component Guide runtime, or the Docs renderer.",
+              "status": "completed",
+              "depends_on": [
+                "RUN-JAME-DOCUMENTATION-CANONICAL-MODEL-001"
+              ],
+              "lane": "DOCUMENTATION"
+            }
+          ]
+        },
+        {
+          "phase_id": "O2.P4",
+          "title": "Operating Methodology and Ordering Source",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001",
+              "queue_order": 4,
+              "title": "Update the operating methodology to roadmap-first ordering",
+              "summary": "Update AGENTS.md and generate_prompt_context.js so the canonical roadmap.json becomes the main work-ordering source, and decide what role NEXT_STEPS keeps now that it is archived.",
+              "full_description": "Make the canonical roadmap.json the main source of work ordering in the files that carry the instruction, instead of older NEXT_STEPS and context-pack assumptions. Two of the three surfaces still need the whole edit. AGENTS.md contains no occurrence of the string roadmap at all, declares docs/author-lite/NEXT_STEPS.md a current operating document at line 93, and lists it as mandatory reading at line 155. generate_prompt_context.js contains no occurrence either, and still joins NEXT_STEPS.md under its DOCS_AUTHOR_LITE_DIR constant at line 167. The third surface moved underneath this run: NEXT_STEPS.md now lives at docs/archive/author-lite/NEXT_STEPS.md, docs/author-lite/ holds zero files, and archived documentation sits inside the exclusion list that the disposition-map run freezes. So this Run first decides whether NEXT_STEPS keeps a status role from its archived location or whether its mention simply leaves the other two surfaces, and then applies that decision to AGENTS.md and generate_prompt_context.js. The end state this run once cited as already recorded, docs/CANONICAL_SOURCES.md, is itself archived at docs/archive/CANONICAL_SOURCES.md and cannot be treated as a live authority without the same decision. The Context Pack is external and operator-held, so the operator updates it rather than this Run. Scope is the ordering instruction only: it does not rewrite the rest of the governance rules, does not touch run identity, and does not migrate any legacy name.",
+              "status": "completed",
+              "depends_on": [
+                "RUN-CANTU-ROADMAP-CONTENT-AUDIT-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-NAMING-AUDIT-DISPOSITION-001",
+              "queue_order": 5,
+              "title": "Freeze the naming disposition map and exclusion list",
+              "summary": "Re-measure the archived disposition map against the tree as it stands today, then freeze it and its exclusion list as the contract every later rename run follows.",
+              "full_description": "Freeze the naming disposition map as the contract every later rename run follows, and freeze the exclusion list it defines: run and pass identifiers, the git branch name, the JAME_Lessons external repository reference, the jame-author-lite localStorage keys and the jame-default palette ids that persist user data, the second checkout under .claude/worktrees, the generated dist output, and the archived and historical documentation. The map is not where this run placed it and is not yet fit to freeze as it stands. It does not exist at docs/ops/NAMING_DISPOSITION_MAP.md; docs/ops/ holds zero entries. It exists at docs/archive/ops/NAMING_DISPOSITION_MAP.md, 36877 bytes, and its own header declares Status ANALYSIS ONLY, names its scanned repo root as the legacy JAME_System_Dual folder under JAME_Parallel_Workspace, names its branch as jame-parallel-audit-001, and counts 1,008 files in the tree it scanned. That folder has since been renamed to cantu-studio, and the branch recorded in .aiw/views/git_history.snapshot.json is main. So the work is to re-measure the map against the tree as it stands today, record what the re-measurement changes, and only then freeze the result. Nothing is renamed by this run; it converts a read-only analysis into an approved decision so the execution runs have a single authority for what is identity and what is renamable.",
+              "status": "completed",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "O2.P3",
+          "title": "Docs Console Projection",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-PROJECT-CONSOLE-DOCS-V3-001",
+              "queue_order": 67,
+              "title": "Update the canonical Docs view to render authority and consume packets by contract",
+              "summary": "The Docs view already renders real bodies; add the authority field, consume the component packets through the single-source contract, and repair the stale governance path in the category map.",
+              "full_description": "The read-only Docs view already renders real documentation bodies rather than metadata-only cards, so what remains is three named gaps rather than an implementation. Already working in docs/project-console/assets/project-console.js: renderDocBodyContent at line 2775 routes Markdown through renderDocMarkdownLite and stripLeadingStatusHeader at line 2777, bodies are fetched by registered path and cached in docBodyCache, and source role, freshness and navigation all render. The gaps are these. First, authority is not rendered: the string occurs exactly once in the 283684-byte file, at line 2320, and there it is a map key rather than a field. Second, the view consumes documents by index path from .aiw/docs/docs_index.json, declared at line 14, rather than consuming the component packets through the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md. Third, that same line 2320 carries a stale path: the category map keys GOVERNANCE off docs/GOVERNANCE-AUTHORITY-AND-NO-CLAIMS.md while the index registers that document at docs/governance/GOVERNANCE-AUTHORITY-AND-NO-CLAIMS.md, and because the lookup is by exact index path the document falls through to the uncategorized bucket. The view must remain a read-only projection: it must not create independent document status, must not add control-plane behavior, must not treat documentation as runtime approval, and is a later Run rather than part of the currently active Roadmap v3 prototype Run. Governance and Sources refactors remain separate future work and are not implemented here.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-DOCUMENTATION-CANONICAL-MODEL-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-COMPONENT-GUIDE-PACKET-WIRING-001",
+              "queue_order": 73,
+              "title": "Implement the Component Guide as a canonical packet consumer",
+              "summary": "Retire the Component Guide's inline per-component content, its inline status labels, and the script that guards them, and render the canonical packets read-only instead.",
+              "full_description": "The Editor Component Guide at tools/author-lite/editor-ui/src/features/editor/components/preview/ComponentGuide.jsx consumes no packet today: it carries inline hardcoded guide content for three of the seventeen Web components, asserts inline status labels of its own, and is held in place by a text-integrity script at tools/author-lite/scripts/checkComponentGuideTextIntegrity.cjs that guards that inline text as if it were the source. Make the Guide render the canonical packets under docs/components/web/ read-only, which is what the component-doc single-source contract asks of both of its consumers in Section 5; retire the inline per-component content, which that Section names as drift for a bounded run to remove; and dismantle the guard script, deciding in the same run what remains of its separate check over blockCatalog.js. Remove the inline certification label with it: no author-facing component is certified today, and component status has one source that every other surface points at and never restates. This Run changes the Guide runtime only; it authors and edits no packet, changes no component status, and makes no production-readiness claim.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "O2.P5",
+          "title": "Naming Rename Execution",
+          "runs": [
+            {
+              "run_id": "RUN-CANTU-REPO-RENAME-001",
+              "queue_order": 6,
+              "title": "Verify the repository rename and sweep its last legacy path reference",
+              "summary": "The folder rename and both cosmetic references already landed; verify them against the tree and sweep the one legacy repository path still left in live prose.",
+              "full_description": "The rename this run was written to perform has already happened, so what remains is verification and one line of prose. The repository folder is already named cantu-studio. The cosmetic file-tree label already emits cantu-studio/ from generate_prompt_context.js at lines 500 and 507. The launcher error string is already current: tools/dev/start-editor.ps1 line 29 reads that cantu-lessons is expected as a sibling of cantu-studio. One inbound reference is still stale, and it sits in a registered live document: docs/operations/OPERATIONS-STATE.md line 31 still names the primary repo as the legacy JAME_System_Dual folder under JAME_Parallel_Workspace. Verify the three landed changes against the tree, sweep that one line, and record the result. The repository resolves its root dynamically rather than through the folder name, so no path-resolution site needs editing. Keep the Git remote rename and the branch name as separate, explicitly coordinated operations, since the branch name is also matched by literal string in two executable console files. This Run verifies and sweeps cosmetic and prose references only; it renames nothing.",
+              "status": "completed",
+              "depends_on": [
+                "RUN-CANTU-NAMING-AUDIT-DISPOSITION-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-INTERNAL-CODE-RENAME-001",
+              "queue_order": 69,
+              "title": "Rename internal code directories and their references",
+              "summary": "Rename the Editor and content code directories from legacy names and update all inbound path references, atomically with the launcher root-proof anchor, after component work has stabilized.",
+              "full_description": "Rename the internal code directories carrying legacy names, primarily tools/author-lite and src/content/author_lite, and update every inbound path reference, following the frozen disposition map. These two directories carry the largest inbound coupling in the repository, so this run executes after the Web and Slide component work has stabilized, to avoid renaming directories while other runs still edit them. The launcher proves the repo root by asserting a file exists inside tools/author-lite, so that assertion and the launch path must change in the same atomic edit or the launcher exits reporting a broken checkout. Verify by human visual QA that the editor and launchers still resolve and run, since some references are path comments and runtime lookups that fail silently rather than at build time. This run renames internal code directories only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-CANTU-NAMING-AUDIT-DISPOSITION-001",
+                "RUN-JAME-WEB-READINESS-EVIDENCE-001",
+                "RUN-JAME-SLIDE-READINESS-EVIDENCE-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-DOCS-DIRECTORY-RENAME-001",
+              "queue_order": 70,
+              "title": "Sweep the legacy documentation paths and decide the empty directories",
+              "summary": "The two directories this run would rename are empty shells; sweep the inbound references that still point at them and decide separately what happens to the shells.",
+              "full_description": "The rename this run was written to perform has no object left. docs/author-lite/ and docs/jame-core/ still exist but hold zero files, subdirectories included: docs/author-lite/ carries audits, components, coverage, handoffs and sandbox, all empty, and docs/jame-core/ carries api, also empty. Their contents were moved to docs/archive/author-lite/ and docs/archive/jame-core/, which this run leaves untouched, so renaming the two directories would move no document. What is still broken is the prose. Inbound references to the two legacy paths are unchanged in AGENTS.md, which names them from line 93 onward; in CLAUDE.md, which carries twenty-nine of them; in generate_prompt_context.js, whose JAME_CORE_DOCS_DIR at line 19 and DOCS_AUTHOR_LITE_DIR at line 21 still join the empty directories; and in all seventeen packets under docs/components/web/, each of which points at the certification matrix under docs/author-lite/components/ while the file itself is at docs/archive/author-lite/components/. So the work is to sweep those references to the paths that exist today, following the frozen disposition map, and to decide separately what happens to the two empty directory shells. Leave archived and historical run-record directories untouched, since their contents encode identity, and leave the manually maintained prompts directory alone. This run sweeps documentation prose and disposes of the empty directories only; it does not touch code directories or runtime identifiers.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-CANTU-NAMING-AUDIT-DISPOSITION-001",
+                "RUN-CANTU-INTERNAL-CODE-RENAME-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-CANTU-RUNTIME-JAME-CLASS-RENAME-001",
+              "queue_order": 71,
+              "title": "Rename the jame-prefixed editor UI classes",
+              "summary": "Rename the jame-prefixed CSS classes and data attributes in the editor UI, in lockstep with their single stylesheet, before touching the Core j-prefix namespace.",
+              "full_description": "Rename the jame-prefixed runtime identifiers that belong to the Editor UI, meaning the seven jame-smart-formula CSS classes and the data-jame-active-layout attribute, in lockstep with their one matching stylesheet, and update the three test files that assert them. Do not touch the jame-author-lite localStorage keys or the jame-default palette ids, which are user state and user data on the frozen exclusion list, not styling. This run precedes the Core j-prefix rename deliberately, because j- is a prefix of jame- and a careless j- replacement would rewrite these tokens; renaming jame- first removes that overlap. Re-baseline visual QA, since these identifiers break rendering rather than compilation. This run handles the Editor UI jame- identifiers only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-CANTU-NAMING-AUDIT-DISPOSITION-001",
+                "RUN-CANTU-INTERNAL-CODE-RENAME-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-RUNTIME-J-NAMESPACE-RENAME-001",
+              "queue_order": 72,
+              "title": "Rename the Core j-prefix render namespace",
+              "summary": "Rename the j-prefixed Core render namespace across builders and stylesheets, including the cross-package preview and the dynamically constructed ids, with visual QA re-baselining.",
+              "full_description": "Rename the j-prefixed render namespace emitted by the Core builders, meaning the 334 j-prefix classes and the j-infinity-root id, across the builder files that emit them and the stylesheets that match them, following the frozen disposition map. Include the Editor preview renderer, which carries its own hand-written j- rules targeting Core markup, in the same change, or the preview renders unstyled while the build still passes. Verify the eight dynamically constructed j- ids explicitly, since their full literal never appears in source and only a prefix replacement reaches them. Re-baseline visual QA across Web and Slide output, since these identifiers break rendering rather than compilation. This run is the largest and quietest of the rename runs and runs last.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-CANTU-NAMING-AUDIT-DISPOSITION-001",
+                "RUN-CANTU-RUNTIME-JAME-CLASS-RENAME-001"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "objective_id": "O5",
+      "title": "Editor and Engine Shared Features",
+      "phases": [
+        {
+          "phase_id": "O5.P5",
+          "title": "Color and Palette Compatibility Contract",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-COLOR-PALETTE-COMPATIBILITY-CONTRACT-001",
+              "queue_order": 7,
+              "title": "Define the color and palette compatibility contract",
+              "summary": "Define the cross-cutting color and palette compatibility contract that Web component revalidation runs consume; apply it inside component runs, not here.",
+              "full_description": "Define the cross-cutting color and palette compatibility contract consumed by Web component revalidation runs: how the Editor stores variant, how the compiler resolves it against the active Web palette, how current-palette sync and the custom picker must behave, and how the known palette-regression pattern found after component approval is detected. The application of this contract to specific components — for example the Header and List palette-regression route, or the Callout and Details color controls — happens inside those components' own revalidation runs, not here. This is a foundation contract, not workspace UX and not a component repair.",
+              "status": "completed",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "O5.P7",
+          "title": "Math and Formula Compatibility Contract",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-MATH-FORMULA-COMPATIBILITY-CONTRACT-001",
+              "queue_order": 8,
+              "title": "Define the math, formula, and Formula Inserter compatibility contract",
+              "summary": "Define the cross-cutting math / formula / Formula Inserter compatibility contract that component revalidation runs consume; apply it inside component runs, not here.",
+              "full_description": "Define the cross-cutting math, formula, and Formula Inserter compatibility contract consumed by Web component revalidation runs: the supported LaTeX/KaTeX input surface, normalization and compile expectations, security boundaries, and how a component declares math/formula compatibility. The application of this contract to specific components — for example Arithmetic factorization and the Rule component — happens inside those components' own revalidation runs, not here. This foundation builds on the accepted Smart Formula Field RULE_ONLY baseline; it does not make MathLive globally available, does not make the Formula Inserter global-ready, and keeps the Smart Formula Field RULE_ONLY.",
+              "status": "completed",
+              "depends_on": [
+                "RUN-JAME-SMART-FORMULA-FIELD-RULE-ONLY-BASELINE-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "O5.P6",
+          "title": "Shared Component Contracts and Revalidation Checklist",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+              "queue_order": 9,
+              "title": "Define shared component contracts and the revalidation checklist",
+              "summary": "Define shared author-facing contract expectations, evidence boundaries, and the component revalidation Definition of Done consumed by every component run.",
+              "full_description": "Define the shared author-facing contract expectations used by every subsequent Web component revalidation Run, including supported inputs, editor controls, preview behavior, compile behavior, evidence requirements, and no-claim boundaries. Encode the shared component revalidation Definition of Done: audit the current component state; verify compatibility with the Color / Palette compatibility contract and the Math / Formula / Formula Inserter compatibility contract where applicable; run or prepare Human QA; repair only if Human QA finds a real defect; update the component's canonical single-source component-doc packet and Component Guide source; refresh docs_index freshness and evidence; and preserve all no-claims and documented source conflicts. Component-specific exceptions must remain explicit rather than hidden in the generic standard. This is a cross-cutting foundation consumed by components, not a per-component run, and it consumes the component-doc single-source contract so the documentation Definition of Done references one canonical packet model.",
+              "status": "completed",
+              "depends_on": [
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001",
+                "RUN-JAME-COLOR-PALETTE-COMPATIBILITY-CONTRACT-001",
+                "RUN-JAME-MATH-FORMULA-COMPATIBILITY-CONTRACT-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "O5.P1",
+          "title": "Smart Formula Field and Keyboard",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-SMART-FORMULA-FIELD-RULE-ONLY-BASELINE-001",
+              "queue_order": 1,
+              "title": "Establish the Smart Formula Field RULE_ONLY baseline",
+              "summary": "Preserve the accepted Smart Formula Field RULE_ONLY behavior and Human QA result as the baseline for future math-authoring work.",
+              "full_description": "Record the accepted RULE_ONLY Smart Formula Field behavior, keyboard profiles, drawer-height alignment, menu curation, and completed Human QA result as the stable baseline. Preserve the boundary that this result does not activate global MathLive, the Formula Inserter, or the Rule component.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-JAME-VIRTUAL-KEYBOARD-KATEX-COMPATIBILITY-001",
+              "queue_order": 10,
+              "title": "Validate virtual keyboard KaTeX compatibility",
+              "summary": "Audit supported keyboard commands against the real rendering pipeline while preserving the accepted keyboard UX baseline.",
+              "full_description": "Test visible keyboard commands against the actual MathLive input, normalization, compile, and KaTeX rendering path. Identify unsupported commands and repair compatibility without replacing the accepted keyboard layout or visual baseline. This is a cross-cutting math-authoring capability boundary, not a component repair.",
+              "status": "completed",
+              "depends_on": [
+                "RUN-JAME-SMART-FORMULA-FIELD-RULE-ONLY-BASELINE-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-MATH-ALLOWLIST-EXPANSION-AND-FORMULA-EDITOR-001",
+              "queue_order": 11,
+              "title": "Expand the math allowlist and repair the formula editor surface",
+              "summary": "Expand the rule.math allowlist to cover upper-secondary and undergraduate mathematics, repair the error message so it names the rejected command, and fix the formula editor surface shared by every math-capable component.",
+              "full_description": "Expand the rule.math command allowlist from its current narrow set to cover the mathematics an author actually writes: full Greek, calculus and analysis, standard functions, relations, set theory and logic, linear algebra including matrix environments, statistics, and physics notation. The current list of thirty-nine commands rejects ordinary notation such as integrals over surfaces, nabla, bold vectors, summation limits and most Greek letters, which was measured by the virtual keyboard capability boundary run: thirty-eight of the sixty-six commands the on-screen keyboard emits are rejected by policy, not by capability. Every command added must be verified against the pinned KaTeX runtime and against the security review that produced the blocklist; the blocklist itself is not relaxed, and any command that defines macros, expands arbitrarily, or emits HTML or links stays rejected. Repair the rejection message so it names the offending command and its position instead of stating only that the value is invalid, which is the accepted UI behavior gap this project has carried since the MathLive integration readiness run. Repair the formula editor surface that every math-capable component shares: the advanced LaTeX field, its typography and sizing, and the formula editing entry point. This Run owns the shared formula authoring surface because six components consume it and Rule is the reference implementation the others will copy; per-component block editor concerns such as placement and column span belong to each component's own revalidation run.",
+              "status": "completed",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "O5.P2",
+          "title": "MathLive Integration",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-MATHLIVE-INTEGRATION-READINESS-001",
+              "queue_order": 49,
+              "title": "Establish MathLive integration readiness",
+              "summary": "Define the supported MathLive integration boundary and remaining blockers after keyboard compatibility is validated.",
+              "full_description": "Define the supported MathLive integration contract, remaining technical blockers, security boundaries, normalization requirements, and accepted UI behavior after keyboard compatibility is known. Produce a clear go/no-go boundary for Formula Inserter integration. This is a cross-cutting capability boundary; it does not make MathLive globally available.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "MathLive is an installed dependency, imported and DOM-mounted as a shipped math-field in the Rule Smart Formula Field; integration readiness is satisfied in code. Closed in place; queue_order unchanged."
+            }
+          ]
+        },
+        {
+          "phase_id": "O5.P3",
+          "title": "Formula Inserter",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-FORMULA-INSERTER-INTEGRATION-001",
+              "queue_order": 50,
+              "title": "Verify global Formula Inserter integration after component revalidation",
+              "summary": "Audit that the Formula Inserter, integrated RULE_ONLY today, was correctly expanded across components during the Web revalidation round.",
+              "full_description": "Verify, after the Web component revalidation round, that the Formula Inserter was correctly integrated wherever components expanded it, rather than integrating it here. The Formula Inserter engine already ships integrated into the Rule Smart Formula Field and is RULE_ONLY today; its expansion to specific components happens inside those components' own revalidation runs. This Run audits the result across components: consistent editor entry, normalization, validation, preview, compile and rendered output within the accepted MathLive and RULE_ONLY boundaries, with no component made global-ready beyond what its own run established. This Run verifies and does not itself integrate; dependencies on the specific component runs it audits are added when the Web component objective is itself audited.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-MATHLIVE-INTEGRATION-READINESS-001"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "objective_id": "O1",
+      "title": "Cantu Studio Web Components",
+      "phases": [
+        {
+          "phase_id": "O1.P1",
+          "title": "Web Component Revalidation Baseline",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001",
+              "queue_order": 12,
+              "title": "Inventory the Web components and their color and math integration points",
+              "summary": "Normalize the inventory the WEB ENGINE dossier already produced into the two fields this run needs, register it, and retire the older status-group classification it replaces.",
+              "full_description": "The read of the real component code that this run was written to perform has already happened. docs/archive/rewrite-dossiers/WEB-ENGINE-CODE-AUDIT-DOSSIER.md, 177720 bytes, dated 2026-07-11 in its own header, audited src/builders/web/ and carries a component inventory at code level in its Section 7, whose Section 7.5 summary table lists exactly the seventeen author-pipeline component types with their renderer file. What it does not carry is this run's shape: that table records registry, renderer, schema, editor and defaults per component, not the two fields this run needs, which are whether the component reads the shared palette or carries hardcoded or local colors, and whether it has a math integration point. So the work is to normalize the dossier's findings into those two fields per component, verifying each against the code rather than copying the dossier forward, and then to register the result: the dossier declares itself DRAFT EVIDENCE, internal working material, not documentation, not registered, and no entry in .aiw/docs/docs_index.json points at it. Then retire the older status-group classification this inventory replaces, which is still live and still incomplete in .aiw/state/component_status.json: sixteen component_id entries, with columns missing as the seventeenth. This Run produces and registers the inventory and retires the older classification; it audits, repairs, and documents nothing, and it assigns no component status.",
+              "status": "completed",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "O1.P1B",
+          "title": "Web Components - Structure",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-WEB-COLUMNS-REVALIDATION-001",
+              "queue_order": 13,
+              "title": "Audit and implement the Columns component",
+              "summary": "Audit the Columns component against the color system, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Columns component against the color and palette compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "completed",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001",
+                "RUN-JAME-COLOR-PALETTE-COMPATIBILITY-CONTRACT-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-COLUMNS-DOC-001",
+              "queue_order": 14,
+              "title": "Verify the Columns component packet",
+              "summary": "Verify the Columns component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Columns packet already exists at docs/components/web/COLUMNS.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "completed",
+              "depends_on": [
+                "RUN-JAME-WEB-COLUMNS-REVALIDATION-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            }
+          ]
+        },
+        {
+          "phase_id": "O1.P1C",
+          "title": "Web Components - Basics",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-WEB-HEADER-REVALIDATION-001",
+              "queue_order": 15,
+              "title": "Audit and implement the Header component",
+              "summary": "Audit the Header component against the color system, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Header component against the color and palette compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "active",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001",
+                "RUN-JAME-COLOR-PALETTE-COMPATIBILITY-CONTRACT-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-HEADER-DOC-001",
+              "queue_order": 16,
+              "title": "Verify the Header component packet",
+              "summary": "Verify the Header component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Header packet already exists at docs/components/web/HEADER.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-HEADER-REVALIDATION-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-LIST-REVALIDATION-001",
+              "queue_order": 17,
+              "title": "Audit and implement the List component",
+              "summary": "Audit the List component against the color system, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the List component against the color and palette compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001",
+                "RUN-JAME-COLOR-PALETTE-COMPATIBILITY-CONTRACT-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-LIST-DOC-001",
+              "queue_order": 18,
+              "title": "Verify the List component packet",
+              "summary": "Verify the List component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The List packet already exists at docs/components/web/LIST.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-LIST-REVALIDATION-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-ICONLIST-REVALIDATION-001",
+              "queue_order": 19,
+              "title": "Audit and implement the IconList component",
+              "summary": "Audit the IconList component against the color system, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the IconList component against the color and palette compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001",
+                "RUN-JAME-COLOR-PALETTE-COMPATIBILITY-CONTRACT-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-ICONLIST-DOC-001",
+              "queue_order": 20,
+              "title": "Verify the IconList component packet",
+              "summary": "Verify the IconList component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The IconList packet already exists at docs/components/web/ICON-LIST.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-ICONLIST-REVALIDATION-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-CARD-REVALIDATION-001",
+              "queue_order": 21,
+              "title": "Audit and implement the Card component",
+              "summary": "Audit the Card component against the color system, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Card component against the color and palette compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001",
+                "RUN-JAME-COLOR-PALETTE-COMPATIBILITY-CONTRACT-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-CARD-DOC-001",
+              "queue_order": 22,
+              "title": "Verify the Card component packet",
+              "summary": "Verify the Card component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Card packet already exists at docs/components/web/CARD.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-CARD-REVALIDATION-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-VIDEO-REVALIDATION-001",
+              "queue_order": 23,
+              "title": "Audit and implement the Video component",
+              "summary": "Audit the Video component against the color system, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Video component against the color and palette compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-VIDEO-DOC-001",
+              "queue_order": 24,
+              "title": "Verify the Video component packet",
+              "summary": "Verify the Video component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Video packet already exists at docs/components/web/VIDEO.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-VIDEO-REVALIDATION-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-NARRATIVE-REPAIR-001",
+              "queue_order": 25,
+              "title": "Audit and implement the Narrative component",
+              "summary": "Audit the Narrative component against the color system, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Narrative component against the color and palette compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-NARRATIVE-DOC-001",
+              "queue_order": 26,
+              "title": "Verify the Narrative component packet",
+              "summary": "Verify the Narrative component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Narrative packet already exists at docs/components/web/NARRATIVE.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-NARRATIVE-REPAIR-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-CALLOUT-REPAIR-001",
+              "queue_order": 27,
+              "title": "Audit and implement the Callout component",
+              "summary": "Audit the Callout component against the color system, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Callout component against the color and palette compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001",
+                "RUN-JAME-COLOR-PALETTE-COMPATIBILITY-CONTRACT-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-CALLOUT-DOC-001",
+              "queue_order": 28,
+              "title": "Verify the Callout component packet",
+              "summary": "Verify the Callout component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Callout packet already exists at docs/components/web/CALLOUT.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-CALLOUT-REPAIR-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-DETAILS-REPAIR-001",
+              "queue_order": 29,
+              "title": "Audit and implement the Details component",
+              "summary": "Audit the Details component against the color system, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Details component against the color and palette compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001",
+                "RUN-JAME-COLOR-PALETTE-COMPATIBILITY-CONTRACT-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-DETAILS-DOC-001",
+              "queue_order": 30,
+              "title": "Verify the Details component packet",
+              "summary": "Verify the Details component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Details packet already exists at docs/components/web/DETAILS.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-DETAILS-REPAIR-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-SPLIT-SCOPE-AND-REPAIR-001",
+              "queue_order": 35,
+              "title": "Decide scope and enable the Split component",
+              "summary": "Decide the Split component scope, enable or defer it, and verify by human visual QA.",
+              "full_description": "Decide the scope of the Split component, which the editor block catalog currently marks disabled and which exists only as a Columns child rather than a top-level block. Determine whether to enable it as a full author-facing component, keep it as a Columns child only, or defer it, then implement that decision against the color and palette compatibility contract where applicable. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-SPLIT-DOC-001",
+              "queue_order": 36,
+              "title": "Verify the Split component packet",
+              "summary": "Verify the Split component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Split packet already exists at docs/components/web/SPLIT.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-SPLIT-SCOPE-AND-REPAIR-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-TABLE-AUDIT-AND-REPAIR-001",
+              "queue_order": 37,
+              "title": "Audit and implement the Table component",
+              "summary": "Audit the Table component against the color system, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Table component against the color and palette compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-TABLE-DOC-001",
+              "queue_order": 38,
+              "title": "Verify the Table component packet",
+              "summary": "Verify the Table component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Table packet already exists at docs/components/web/TABLE.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-TABLE-AUDIT-AND-REPAIR-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-VISUAL-AUDIT-AND-REPAIR-001",
+              "queue_order": 45,
+              "title": "Audit and implement the Visual component",
+              "summary": "Audit the Visual component against the color system, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Visual component against the color and palette compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-VISUAL-DOC-001",
+              "queue_order": 46,
+              "title": "Verify the Visual component packet",
+              "summary": "Verify the Visual component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Visual packet already exists at docs/components/web/VISUAL.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-VISUAL-AUDIT-AND-REPAIR-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            }
+          ]
+        },
+        {
+          "phase_id": "O1.P2",
+          "title": "Web Components - Math",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-WEB-ARITHMETIC-AUDIT-AND-REPAIR-001",
+              "queue_order": 31,
+              "title": "Audit and implement the Arithmetic component",
+              "summary": "Audit the Arithmetic component against the color system and the math inserter, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Arithmetic component against the color and palette compatibility contract and the math and Formula Inserter compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001",
+                "RUN-JAME-MATH-FORMULA-COMPATIBILITY-CONTRACT-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-ARITHMETIC-DOC-001",
+              "queue_order": 32,
+              "title": "Verify the Arithmetic component packet",
+              "summary": "Verify the Arithmetic component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Arithmetic packet already exists at docs/components/web/ARITHMETIC.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-ARITHMETIC-AUDIT-AND-REPAIR-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001",
+              "queue_order": 33,
+              "title": "Audit and implement the Rule component",
+              "summary": "Audit the Rule component against the color system and the math inserter, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Rule component against the color and palette compatibility contract and the math and Formula Inserter compatibility contract, using the accepted RULE_ONLY Smart Formula Field baseline. Bring its color and math integration to the shared contracts where the inventory shows a gap, implement what is missing, and verify the result by human visual QA rather than an automated test suite, since the repository has no test runner. Preserve the accepted keyboard and Smart Formula Field baseline.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001",
+                "RUN-JAME-MATH-FORMULA-COMPATIBILITY-CONTRACT-001",
+                "RUN-JAME-SMART-FORMULA-FIELD-RULE-ONLY-BASELINE-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-RULE-DOC-001",
+              "queue_order": 34,
+              "title": "Verify the Rule component packet",
+              "summary": "Verify the Rule component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Rule packet already exists at docs/components/web/RULE.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-CONCEPTGRID-AUDIT-AND-REPAIR-001",
+              "queue_order": 39,
+              "title": "Audit and implement the ConceptGrid component",
+              "summary": "Audit the ConceptGrid component against the color system and the math inserter, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the ConceptGrid component against the color and palette compatibility contract and the math and Formula Inserter compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-CONCEPTGRID-DOC-001",
+              "queue_order": 40,
+              "title": "Verify the ConceptGrid component packet",
+              "summary": "Verify the ConceptGrid component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The ConceptGrid packet already exists at docs/components/web/CONCEPT-GRID.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-CONCEPTGRID-AUDIT-AND-REPAIR-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-HIERARCHY-AUDIT-AND-REPAIR-001",
+              "queue_order": 41,
+              "title": "Audit and implement the Hierarchy component",
+              "summary": "Audit the Hierarchy component against the color system and the math inserter, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Hierarchy component against the color and palette compatibility contract and the math and Formula Inserter compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-HIERARCHY-DOC-001",
+              "queue_order": 42,
+              "title": "Verify the Hierarchy component packet",
+              "summary": "Verify the Hierarchy component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Hierarchy packet already exists at docs/components/web/HIERARCHY.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-HIERARCHY-AUDIT-AND-REPAIR-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            },
+            {
+              "run_id": "RUN-JAME-WEB-TIMELINE-AUDIT-AND-REPAIR-001",
+              "queue_order": 43,
+              "title": "Audit and implement the Timeline component",
+              "summary": "Audit the Timeline component against the color system and the math inserter, implement what is missing, and verify by human visual QA.",
+              "full_description": "Audit the Timeline component against the color and palette compatibility contract and the math and Formula Inserter compatibility contract, using the current component inventory as the starting point. Where the inventory shows the component carries hardcoded or local colors instead of the shared palette, or lacks a required integration point, implement the missing integration. Repair only what the audit and human visual QA show to be a real defect; do not rewrite accepted behavior. Verify the result by human visual QA rather than an automated test suite, since the repository has no test runner.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-COMPONENT-CONTRACT-STANDARDIZATION-001",
+                "RUN-JAME-WEB-COMPONENT-BASELINE-RECONCILIATION-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-TIMELINE-DOC-001",
+              "queue_order": 44,
+              "title": "Verify the Timeline component packet",
+              "summary": "Verify the Timeline component packet against the component-doc single-source contract, repair its two stale pointers, and refresh its status banner and registry entry together.",
+              "full_description": "The Timeline packet already exists at docs/components/web/TIMELINE.md and is registered, so what remains is not writing it. Verify the packet against the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 6 fixes this duty; repair the two stale pointers it carries, to the certification matrix and to REFERENCE-DRAFT-JSON; and refresh its status banner and its registry entry together. This Run still depends on its implementation run, which remains pending, and it keeps status reference-only.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-TIMELINE-AUDIT-AND-REPAIR-001",
+                "RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001"
+              ],
+              "lane": "DOCUMENTATION"
+            }
+          ]
+        },
+        {
+          "phase_id": "O1.P4",
+          "title": "Web Component Documentation and Readiness Evidence",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-WEB-READINESS-EVIDENCE-001",
+              "queue_order": 47,
+              "title": "Audit the Web components as a whole",
+              "summary": "General audit that the seventeen Web components and their canonical documentation are consistent, complete, and ready, after all component runs close.",
+              "full_description": "After the seventeen Web component runs close, audit the Web component set as a whole rather than any single component. Verify that each component was audited against the color and math contracts, implemented where the inventory showed a gap, and passed human visual QA; that each component's canonical packet exists and follows the component-doc single-source contract; and that no component was left with inherited status labels, unresolved documented conflicts, or a missing integration point. Consolidate the remaining blockers and the Generator-safe and column-compatibility boundaries into one readiness evidence package. This Run verifies and documents the whole; it does not re-audit or re-implement individual components, and it makes no production-readiness claim.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-HEADER-REVALIDATION-001",
+                "RUN-JAME-WEB-LIST-REVALIDATION-001",
+                "RUN-JAME-WEB-COLUMNS-REVALIDATION-001",
+                "RUN-JAME-WEB-ICONLIST-REVALIDATION-001",
+                "RUN-JAME-WEB-CARD-REVALIDATION-001",
+                "RUN-JAME-WEB-VIDEO-REVALIDATION-001",
+                "RUN-JAME-WEB-NARRATIVE-REPAIR-001",
+                "RUN-JAME-WEB-CALLOUT-REPAIR-001",
+                "RUN-JAME-WEB-DETAILS-REPAIR-001",
+                "RUN-JAME-WEB-ARITHMETIC-AUDIT-AND-REPAIR-001",
+                "RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001",
+                "RUN-JAME-WEB-SPLIT-SCOPE-AND-REPAIR-001",
+                "RUN-JAME-WEB-TABLE-AUDIT-AND-REPAIR-001",
+                "RUN-JAME-WEB-CONCEPTGRID-AUDIT-AND-REPAIR-001",
+                "RUN-JAME-WEB-HIERARCHY-AUDIT-AND-REPAIR-001",
+                "RUN-JAME-WEB-TIMELINE-AUDIT-AND-REPAIR-001",
+                "RUN-JAME-WEB-VISUAL-AUDIT-AND-REPAIR-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-WEB-DOCUMENTATION-EVIDENCE-001",
+              "queue_order": 48,
+              "title": "Audit the Web component documentation as a whole",
+              "summary": "General audit that the canonical documentation of the seventeen Web components is consistent, complete, and ready, after all component documentation runs close, recording one conformance verdict per component.",
+              "full_description": "After the seventeen Web component documentation runs close, audit the Web component documentation as a whole rather than any single component. Verify that each component's canonical packet under docs/components/web/ follows the component-doc single-source contract at docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md, whose Section 3 fixes the required sections and the field discipline; and that the repairs those seventeen runs owe have landed in every packet, with no stale pointer left behind and each status banner and registry entry refreshed together. Record one verdict per component: conforming, or exactly what it still lacks. This Run verifies and records the whole; it does not re-document individual components, does not repair any packet, and it makes no production-readiness claim.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-CANTU-WEB-COLUMNS-DOC-001",
+                "RUN-CANTU-WEB-HEADER-DOC-001",
+                "RUN-CANTU-WEB-LIST-DOC-001",
+                "RUN-CANTU-WEB-ICONLIST-DOC-001",
+                "RUN-CANTU-WEB-CARD-DOC-001",
+                "RUN-CANTU-WEB-VIDEO-DOC-001",
+                "RUN-CANTU-WEB-NARRATIVE-DOC-001",
+                "RUN-CANTU-WEB-CALLOUT-DOC-001",
+                "RUN-CANTU-WEB-DETAILS-DOC-001",
+                "RUN-CANTU-WEB-ARITHMETIC-DOC-001",
+                "RUN-CANTU-WEB-RULE-DOC-001",
+                "RUN-CANTU-WEB-SPLIT-DOC-001",
+                "RUN-CANTU-WEB-TABLE-DOC-001",
+                "RUN-CANTU-WEB-CONCEPTGRID-DOC-001",
+                "RUN-CANTU-WEB-HIERARCHY-DOC-001",
+                "RUN-CANTU-WEB-TIMELINE-DOC-001",
+                "RUN-CANTU-WEB-VISUAL-DOC-001"
+              ],
+              "lane": "DOCUMENTATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "objective_id": "O4",
+      "title": "Cantu Studio UX",
+      "phases": [
+        {
+          "phase_id": "O4.P5",
+          "title": "Cantu Studio UX Audit",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-AUTHORING-WORKSPACE-UX-AUDIT-001",
+              "queue_order": 58,
+              "title": "Audit Cantu Studio UX and route concrete follow-up runs",
+              "summary": "Run one bounded UX audit of the preview, settings, editor chrome, toolbar, panels, and shared controls, and route concrete follow-up runs; do not implement broad polish.",
+              "full_description": "Run one bounded audit of the shared Cantu Studio UX — preview surface, settings button, editor chrome, toolbar, panel layout, and shared authoring controls — and identify concrete, specific follow-up runs to route through the roadmap maintenance helper. This Run does not implement broad or vague polish, does not revalidate components, and does not touch the Color / Palette or Math / Formula compatibility contracts. It depends on the assembled Web component documentation and readiness evidence so the audit sits on stabilized component behavior.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-READINESS-EVIDENCE-001",
+                "RUN-JAME-SLIDE-READINESS-EVIDENCE-001",
+                "RUN-CANTU-WEB-DOCUMENTATION-EVIDENCE-001"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "objective_id": "O3",
+      "title": "Cantu Studio Slide Components",
+      "phases": [
+        {
+          "phase_id": "O3.P1",
+          "title": "Grid and Architecture Foundation",
+          "runs": [
+            {
+              "run_id": "RUN-CANTU-SLIDE-GRID-SYSTEM-001",
+              "queue_order": 51,
+              "title": "Audit and define the Slide grid system",
+              "summary": "Audit and define the Slide grid system as the editor foundation before sandbox reproduction and component work.",
+              "full_description": "Audit and define the Slide grid system that the editor uses to place content on a slide, before any sandbox reproduction or component work. Determine the grid model (how many rows and columns a slide supports and how a section is chosen), whether the grid is an insertable structural component like Web Columns or a property of the slide itself, and how an author configures it in the editor. Integrate it functionally in the editor so content can be placed into a chosen section. This Run defines and integrates the grid only; it does not reproduce sandbox files, audit components, or document them.",
+              "status": "planned",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-JAME-SLIDE-ARCHITECTURE-BASELINE-001",
+              "queue_order": 52,
+              "title": "Establish the Slide architecture baseline",
+              "summary": "Most of the Slide baseline already exists in the SLIDES ENGINE dossier; cover the two areas that dossier excluded by design, Editor integration and sandbox fixtures, and register the result.",
+              "full_description": "Most of this baseline already exists. docs/archive/rewrite-dossiers/SLIDES-ENGINE-CODE-AUDIT-DOSSIER.md, 173040 bytes, dated 2026-07-11 in its own header, is a source-backed audit of the real Slide builders, the supported component contracts, the preview and compile paths, the documentation divergences and the known limitations, and two registered complements already carry its findings forward: docs/architecture/ARCHITECTURE-SLIDES-ENGINE.md and docs/reference/REFERENCE-SLIDES-ENGINE-API.md. Two areas this run names are not covered, and the dossier excluded them by design: its declared source roots are src/builders/slides/, the slides path of repo-root main.js, src/design/slides/, src/design/tokens/ and src/content/, so Editor integration under tools/author-lite/ falls outside them, and sandbox fixtures are not audited. So the work is to audit those two areas against the code, fold the result into the existing baseline rather than restating what it already covers, and register the baseline as documentation: the dossier declares itself DRAFT EVIDENCE, internal working material, not documentation, not registered. Produce a source-backed baseline before selecting implementation work.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-CANTU-SLIDE-GRID-SYSTEM-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "O3.P2",
+          "title": "Sandbox Reproduction and Component Guide",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-SLIDE-SANDBOX-PARITY-001",
+              "queue_order": 53,
+              "title": "Reproduce the sandbox files in the editor",
+              "summary": "Reproduce the Slide sandbox files in the editor to surface the real component inventory and each component's fields.",
+              "full_description": "Reproduce the Slide sandbox files in the editor in their correct authoring format, compiling through to generated slides, so the real inventory of Slide components and each component's fields emerges from actual reproduction rather than a guessed list. Record the supported parity boundary between authoring, preview, and generated slides, and record intentional differences from Web instead of requiring visually identical behavior. The component inventory this produces is the input to the per-component runs defined later. This Run reproduces and inventories; it does not implement or document individual components.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-SLIDE-ARCHITECTURE-BASELINE-001"
+              ]
+            },
+            {
+              "run_id": "RUN-CANTU-SLIDE-COMPONENT-GUIDE-001",
+              "queue_order": 54,
+              "title": "Establish the Slide Component Guide from the Web template",
+              "summary": "Establish the Slide Component Guide using the accepted Web component guide as the template.",
+              "full_description": "Establish the Slide Component Guide as the single-source documentation format each Slide component will follow, using the accepted Web Component Guide as the template rather than designing a new one. Adapt the Web packet structure to Slide specifics, including grid compatibility, so that each per-component run has a defined documentation target to fill. This Run establishes the guide format only; it does not document individual components.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-SLIDE-SANDBOX-PARITY-001"
+              ],
+              "lane": "DOCUMENTATION"
+            }
+          ]
+        },
+        {
+          "phase_id": "O3.P3",
+          "title": "Component Implementation",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-SLIDE-BOUNDED-RUN-PLAN-001",
+              "queue_order": 55,
+              "title": "Audit the reproduced components and define the per-component runs",
+              "summary": "Audit the component inventory from sandbox reproduction and create one audit-implement-document run per Slide component.",
+              "full_description": "Once the sandbox files are reproduced and the real component inventory exists, audit that inventory and create one bounded run per Slide component, each of which audits, implements, and documents its component against the grid, the color and math contracts where they apply, and the Slide Component Guide, verified by human visual QA. This mirrors the Web approach of one run per component rather than a single broad batch. The per-component runs are created when this Run is reached, not before, because the inventory is not known until reproduction is done.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-SLIDE-SANDBOX-PARITY-001",
+                "RUN-CANTU-SLIDE-COMPONENT-GUIDE-001"
+              ]
+            },
+            {
+              "run_id": "RUN-JAME-SLIDE-FIRST-BOUNDED-COMPONENT-BATCH-001",
+              "queue_order": 56,
+              "title": "Per-component Slide runs, to be created by the definer run",
+              "summary": "Placeholder marking where the per-component Slide runs will be created by the definer run.",
+              "full_description": "Placeholder for the per-component Slide runs. These runs do not exist yet; they are created by the definer run once sandbox reproduction has produced the real component inventory. Each will audit, implement, and document one Slide component, one and one, following the Web approach. This placeholder holds the position in the phase and carries no implementation work itself.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-SLIDE-BOUNDED-RUN-PLAN-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "O3.P4",
+          "title": "Whole-set Audit",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-SLIDE-READINESS-EVIDENCE-001",
+              "queue_order": 57,
+              "title": "Assemble the Slide whole-set audit and readiness evidence",
+              "summary": "After the per-component runs close, audit the Slide component set as a whole and consolidate readiness evidence.",
+              "full_description": "After the per-component Slide runs close, audit the Slide component set as a whole rather than any single component, and consolidate the implemented results, remaining gaps, sandbox coverage, grid and parity boundaries, and unresolved dependencies into one readiness evidence package. Keep readiness evidence separate from any later approval decision. This Run verifies the whole and makes no production-readiness claim.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-SLIDE-FIRST-BOUNDED-COMPONENT-BATCH-001"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "objective_id": "O6",
+      "title": "Asset Deduplication Layer",
+      "phases": [
+        {
+          "phase_id": "O6.P1",
+          "title": "HTML Payload Measurement",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-HTML-PAYLOAD-MEASUREMENT-001",
+              "queue_order": 59,
+              "title": "Measure the generated HTML payload",
+              "summary": "Measure duplicated CSS and JavaScript payload across representative outputs before designing Asset Dedup.",
+              "full_description": "Generate representative outputs and measure repeated CSS, JavaScript, fonts, icons, and other embedded assets. Produce a reproducible baseline identifying the largest duplication sources and the expected value of deduplication.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-READINESS-EVIDENCE-001",
+                "RUN-JAME-SLIDE-READINESS-EVIDENCE-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "O6.P2",
+          "title": "Asset Registry Design",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-ASSET-REGISTRY-DESIGN-001",
+              "queue_order": 60,
+              "title": "Design the Asset Registry",
+              "summary": "Design stable asset identities and deduplication rules using the measured payload evidence.",
+              "full_description": "Design stable asset identifiers, ownership, registration, reuse, ordering, collision handling, and fallback rules from the measured payload evidence. Keep the Run design-only so renderer changes begin from an approved contract.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-HTML-PAYLOAD-MEASUREMENT-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "O6.P3",
+          "title": "ctx.assets Contract",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-CTX-ASSETS-CONTRACT-001",
+              "queue_order": 61,
+              "title": "Define the ctx.assets contract",
+              "summary": "Define the bounded ctx.assets contract and its compatibility requirements after the Asset Registry is designed.",
+              "full_description": "Define how builders and renderers declare required assets through ctx.assets, how assets are deduplicated, and how compatibility is preserved for self-contained output. Include migration and validation expectations without implementing renderer changes.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-ASSET-REGISTRY-DESIGN-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "O6.P4",
+          "title": "Renderer Integration and Validation",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-RENDERER-ASSET-INTEGRATION-001",
+              "queue_order": 62,
+              "title": "Integrate the Asset Registry into renderers",
+              "summary": "Integrate the approved asset contract into the relevant renderers while preserving self-contained output.",
+              "full_description": "Implement the approved registry and ctx.assets contract in the selected renderers while preserving existing content output. Add targeted tests for asset registration, ordering, reuse, fallback behavior, and compatibility.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-CTX-ASSETS-CONTRACT-001"
+              ]
+            },
+            {
+              "run_id": "RUN-JAME-ASSET-DEDUP-EQUIVALENCE-VALIDATION-001",
+              "queue_order": 63,
+              "title": "Validate Asset Dedup output equivalence",
+              "summary": "Validate that deduplicated output remains functionally and visually equivalent to the pre-dedup output.",
+              "full_description": "Compare representative pre-dedup and post-dedup outputs for functional behavior, visual rendering, asset availability, and payload reduction. Record any intentional output differences and reject the change if equivalence cannot be demonstrated.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-RENDERER-ASSET-INTEGRATION-001"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "objective_id": "O7",
+      "title": "Lessons, Production, and Deployment",
+      "phases": [
+        {
+          "phase_id": "O7.P1",
+          "title": "Production Lesson Validation",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-PRODUCTION-LESSON-VALIDATION-001",
+              "queue_order": 64,
+              "title": "Validate the production lesson workflow",
+              "summary": "Validate the complete production lesson workflow after Web, documentation, and Slide readiness evidence is available.",
+              "full_description": "Run representative lessons through authoring, preview, compile, generated output, and required safety boundaries using the accepted upstream systems. Record failures as bounded follow-up Runs rather than editing production lessons opportunistically.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-WEB-READINESS-EVIDENCE-001",
+                "RUN-JAME-DOCUMENTATION-CANONICAL-MODEL-001",
+                "RUN-JAME-SLIDE-READINESS-EVIDENCE-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "O7.P2",
+          "title": "Production Export",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-PRODUCTION-EXPORT-FLOW-001",
+              "queue_order": 65,
+              "title": "Implement and validate the production export flow",
+              "summary": "Implement or regularize the production export flow after the complete lesson workflow is validated.",
+              "full_description": "Implement or regularize the production export path, packaging rules, output locations, validation checks, and operator workflow after lesson validation closes. Verify that exported artifacts remain complete and reproducible.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-PRODUCTION-LESSON-VALIDATION-001"
+              ]
+            }
+          ]
+        },
+        {
+          "phase_id": "O7.P3",
+          "title": "Hosting and Deployment",
+          "runs": [
+            {
+              "run_id": "RUN-JAME-HOSTING-DEPLOYMENT-PLAN-001",
+              "queue_order": 66,
+              "title": "Define the hosting and deployment plan",
+              "summary": "Define the hosting and deployment approach, operational requirements, and release boundary after production export is validated.",
+              "full_description": "Define the deployment architecture, hosting assumptions, environment requirements, release process, rollback expectations, observability needs, and unresolved operational decisions. This Run produces a plan and decision boundary, not an automatic deployment.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-JAME-PRODUCTION-EXPORT-FLOW-001"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

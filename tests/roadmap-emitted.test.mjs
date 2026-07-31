@@ -4,17 +4,22 @@
 // runs the projector end-to-end — copies a fixture project into a temp dir, calls
 // writeRoadmap(), then loads the file the projector actually WROTE to
 // <root>/.aiw/views/roadmap.json — and asserts every requirement the console's Roadmap
-// reader (`v3Model()` and its callees in docs/project-console/assets/project-console.js)
+// reader (`v3Model()` and its callees in project-console/assets/project-console.js)
 // imposes. The fixture exercises the honest-mapping cases objective 005 targets: an empty
 // pending/ queue (parked must still land in Later), and ERROR-/HUMAN_REVIEW- processed runs
 // (which must read as `blocked`, never a clean green `completed`).
+//
+// The grouping is asserted against the CONSOLE'S OWN function, not against the projector's
+// `roadmapQueueGroup()` copy of it — the two have diverged, and only the console's decides what
+// is painted. See tests/helpers/console-grouping.mjs.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { cpSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
-import { roadmapQueueGroup, writeRoadmap } from "../tools/projector/project.mjs";
+import { writeRoadmap } from "../tools/projector/project.mjs";
+import { consoleQueueGroupKey } from "./helpers/console-grouping.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FIXTURE = join(HERE, "fixtures", "honest-project");
@@ -83,7 +88,7 @@ test("parked runs land in Later even with an empty pending queue (c)", () => {
     assert.equal(parked.status, "planned");
     // With no pending objectives the run still carries an unsatisfied dependency, so the
     // reader's own grouping logic files it under Later — never Ready Next.
-    assert.equal(roadmapQueueGroup(parked, byId), "later");
+    assert.equal(consoleQueueGroupKey(parked, byId), "later");
   });
 });
 
@@ -94,7 +99,7 @@ test("ERROR-/HUMAN_REVIEW- processed runs read as blocked, not clean completions
     assert.equal(err.status, "blocked");
     assert.notEqual(err.status, "completed");
     assert.equal(err.closeout_result, "error");
-    assert.equal(roadmapQueueGroup(err, byId), "history");
+    assert.equal(consoleQueueGroupKey(err, byId), "history");
 
     const review = byId.get("HUMAN_REVIEW-320-needs-eyes");
     assert.ok(review, "HUMAN_REVIEW- run missing (prefix parse must accept underscores)");

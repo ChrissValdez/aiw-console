@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "project_id": "cantu_studio",
+  "generated_at": "2026-07-31T00:22:20.420Z",
+  "generated_from": "aiw-projector@0.9.0",
+  "sources": [
+    {
+      "path": ".aiw/guardrails/no_claims.json",
+      "mtime": "2026-07-23T01:01:55.451Z"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "No certified-state claims",
+      "status": "DISALLOWED",
+      "allowed_only_if": "The run-state model (approved / changes-requested / blocked) is the single source of truth; certified-state claims are retired.",
+      "current_reason": "Certified state has been retired from the project; runs carry state, not certification.",
+      "source_refs": [
+        "AGENTS.md"
+      ]
+    }
+  ]
+}

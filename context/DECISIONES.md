@@ -2133,3 +2133,137 @@ Criterio de borrado: la sustituye una decisión que cambie la separación de los
 ejes —que vuelva a derivar la delegabilidad del run, o a declarar el cierre por
 proyecto—, o que traslade el documento normativo a otra casa. El hueco de las tres
 reglas de runs mixtos NO caduca esta entrada: se cierra con una entrada nueva.
+
+## D-058 — 2026-07-30 — Primera aplicación de `CONST §4` en el roadmap de AIW: la compuerta detiene un run sin incidente, y tres afirmaciones de `D-055` se corrigen hacia adelante
+
+**LA COMPUERTA FUNCIONA, y su primer efecto fue DETENER.** `O3` es el primer
+objetivo que añade mecanismo al kernel, y el primer run de su cola —
+`RUN-AIW-SCOPE-PREFLIGHT-GUARD-001`, *Make the scope pre-flight demand a real
+match*— **no pudo ejecutarse por falta de incidente**. `D-028` documenta el
+DEFECTO y es real en disco: la validación del `# Scope` es literalmente
+`if (!items.length)` (`kernel.mjs:152`), y los globs se compilan a regex que
+nunca se contrastan contra el disco. Pero un defecto no es un incidente
+(`CONST:32`), y la medición barrió las cuatro superficies donde podría constar
+uno: **cero `BLOCKED_SCOPE` en `logs/`**, los ocho runs con summary APPROVED en
+ronda 1, ninguna entrada posterior a `D-028`, y —la prueba más fuerte—
+**simulando el guard que ese run construiría, 14 de 14 tickets con repo
+registrado matchean el 100 % de sus globs contra archivos reales. Cero scopes
+muertos en toda la historia.** Evidencia positiva añadida: `QUALIFICATION.md:44-55`
+registra que en E4, el único ensayo deliberado de violación de alcance,
+`BLOCKED_SCOPE` **no llegó a dispararse** — lo que abre la sospecha de que el
+defecto real no es que el guard sea laxo sino que su rama sea inalcanzable, que
+es otra cosa y se repara de otra forma.
+
+**El run no se abandonó ni se empujó fuera de la vista.** Se movió al
+`queue_order` inmediatamente posterior a `RUN-AIW-REAL-LOAD-MEASUREMENT-001` y se
+le escribió la arista correspondiente. La razón es sustantiva y la escribe el
+propio run de carga real: *«Everything approved so far was against small
+repositories and closed in round one»*. Ésa es la explicación de que ningún scope
+haya fallado nunca —superficies pequeñas y conocidas— y hace de esa medición **el
+único experimento del roadmap capaz de producir el incidente que falta**. La
+arista impide; la posición comunica; ninguna sustituye a la otra. Si la medición
+vuelve limpia, la pregunta que queda no es cuándo se ejecuta el guard sino si el
+run es un miedo y debe retirarse.
+
+**TRES AFIRMACIONES DE `D-055` Y `D-056` SE CORRIGEN HACIA ADELANTE.** Ninguna se
+reescribe: las entradas son mediciones fechadas y corregirlas en su sitio es el
+vicio contrario.
+
+1. **«Los cinco desenlaces del kernel» conflaciona un desenlace con una
+   etiqueta.** Medido: `OUTCOMES` tiene **cuatro** claves. `ERROR` no está entre
+   ellas — es el rótulo que la COLA asigna al código de salida 1 que emerge del
+   catch del CLI (`queue.mjs:18`). La frase importa porque de ella se derivaba la
+   exigencia de que existiera fixture para una quinta rama de `OUTCOMES` que no
+   existe. La afirmación estaba repetida en `D-055`, en
+   `DISPOSICION-CARPETAS-COLA-AIW.md`, en el `full_description` de un run y en un
+   ticket de cabina: **cuatro copias, ninguna de disco.** Es el modo de fallo que
+   este sistema tiene documentado —una afirmación falsa gana autoridad cada vez
+   que se copia— y ésta es su aparición medida.
+
+2. **La fecha del commit `7659ff3` queda VERIFICADA: `2026-07-10T15:24:15-06:00`.**
+   `D-055` y `D-056` la dejaron `[NO VERIFICADO]` porque ninguna comisión anterior
+   había abierto el historial de git de `aiw`. Leída de primera mano, coincide con
+   lo que la comisión del roadmap reportó. Con eso, el incidente del caso 4 tiene
+   **sus cuatro campos verificados contra disco**, no contra papel. Corolario de
+   método: **una duración es una afirmación derivada y se equivoca; dos fechas no.**
+   Donde el registro diga «diecisiete días», lo que rige son las dos fechas.
+
+3. **`logs/` NO está gitignoreado.** `D-055:1851` afirma que sí. Medido hoy: el
+   `.gitignore` de `aiw` no lo contiene y **58 archivos de `logs/` están
+   trackeados**. `D-053` cambió ese régimen y `D-055`, posterior, describió el
+   anterior.
+
+**LO QUE LA COMPUERTA SÍ DEJÓ PASAR, Y LO QUE PRODUJO.** El caso 4 de `D-055`,
+corregido por `D-056`, tenía sus tres criterios completos, y su run se ejecutó:
+`RUN-AIW-TICKET-PARSE-REGRESSION-TEST-001`. Presupuesto cumplido al hueso —
+`kernel.mjs` en **478 líneas antes y 478 después**, cero contra el techo, porque
+el test vive en la suite. De ahí salieron dos cosas que este log registra por su
+consecuencia transversal:
+
+- **LA FRONTERA, derivada del código y no elegida.** El kernel **no conoce
+  carpetas**: toma la ruta del ticket como `argv[2]` (`kernel.mjs:263`) y no
+  menciona `objectives` ni `processed` en ninguna línea. Las carpetas son asunto
+  de la cola, y ahí `pending/` es la única entrada viva (`queue.mjs:14,49,55`)
+  mientras `processed/` es solo destino de escritura (`queue.mjs:15,58`). El test
+  asierta todo ticket bajo `objectives/**` **EXCEPTO `processed/`, por exclusión y
+  no por lista blanca**, porque el incidente que lo justifica ocurrió en carpetas
+  que ninguna lista blanca habría nombrado. Con esto, la doctrina de
+  inmutabilidad de `processed/` deja de ser una preferencia heredada y pasa a ser
+  un hecho derivado del código.
+
+- **QUÉ ES UN CASO DE EVALUACIÓN, adjudicado.** Un caso **es el fixture vivo** que
+  corre y parsea. El ticket histórico de `processed/` es **procedencia**, no caso:
+  no puede mantenerse ni vigilarse, y en la mitad de los escenarios ni siquiera
+  existe. Autorar desde la historia no es una tercera definición sino **la regla
+  de nacimiento**: la única vía legal para revivir lo que solo sobrevive
+  archivado, sin tocar un byte del registro. Los 22 candidatos quedaron
+  clasificados uno a uno — **7 casos, 6 procedencias, 10 ningunos**— y apareció un
+  séptimo caso vivo que ningún censo contaba: `sandbox/000-sandbox.md`, generado y
+  ya asertado por la suite. **Esta entrada APUNTA; los documentos CONTIENEN**:
+  `aiw/docs/kernel/CONVENCION-DE-CASOS-DE-EVALUACION.md` y
+  `aiw/docs/kernel/CASOS-DE-EVALUACION.md`. Aquí no se duplica ninguna tabla.
+
+**HUECO DECLARADO, no rellenado — y es un defecto del kernel.** El archivado de la
+cola usa `git mv -f` (`queue.mjs:26-31`), de modo que **sobrescribe el destino si
+ya existe**. Se descubrió de paso al escribir la convención, no se reparó, y **no
+se repara sin pasar por `CONST §4` como cualquier otro mecanismo**: necesita run
+propio con su incidente, su criterio de borrado y su presupuesto. Se nombra aquí
+para que no se pierda, no para autorizarlo.
+
+**Segundo hueco declarado:** la rama que probaba
+`HUMAN_REVIEW-999-sandbox-imposible` **no tiene ejemplar vivo en ninguna parte** —
+barrido el árbol entero. Su fixture está **declarado y no autorado**, por diseño:
+autorarlo era acto propio y no cabía en el run que estableció la convención.
+
+**ALCANCE: lo que esta entrada NO decide.**
+- **No modifica `CONST §4`.** La registra en aplicación; no toca su texto, su
+  umbral ni su definición de mecanismo.
+- **No retira ningún run.** Si `RUN-AIW-SCOPE-PREFLIGHT-GUARD-001` debe morir por
+  ser un miedo, eso se decide después de la medición de carga real, no aquí.
+- **No repara el `git mv -f`, no autora el fixture que falta, y no mueve ningún
+  archivo.** Los tres son actos propios y posteriores.
+- **No reescribe `D-055` ni `D-056`.** Sus afirmaciones corregidas siguen donde
+  están, con su fecha; lo que cambia es qué rige a partir de hoy.
+- **No decide nada sobre `cantu-studio` ni sobre la consola.** Los hallazgos que
+  esta sesión midió sobre `aiw-console` se pasaron a su hilo, nombrados y sin
+  recomendación de arreglo.
+
+Referencias: `context/aiw-console/records/MEDICION-INCIDENTE-SCOPE-PREFLIGHT.md`
+(las cuatro superficies barridas y la ausencia MEDIDA del incidente);
+`context/aiw-console/records/MEDICION-GUARDA-PARSEO-CASOS-EVALUACION.md` (la
+contradicción de premisa que detuvo el run de convención en su primer intento);
+`context/aiw-console/records/FRONTERA-Y-TEST-DE-PARSEO-TICKETS-AIW.md` (la
+frontera, con sus `ruta:línea`, y las dos guardas demostradas ejecutando);
+`context/aiw-console/records/CONVENCION-CASOS-DE-EVALUACION-AIW.md` (la
+adjudicación de los 22 candidatos y el conteo real de `OUTCOMES`);
+`aiw/docs/kernel/CONVENCION-DE-CASOS-DE-EVALUACION.md` y
+`aiw/docs/kernel/CASOS-DE-EVALUACION.md` (los documentos normativos);
+[[D-055]] y [[D-056]] (lo que esta entrada aplica y corrige hacia adelante);
+[[D-053]] (el cambio de régimen de `logs/` que `D-055` no recogió);
+[[D-028]] (el defecto del pre-flight, real y sin incidente);
+[[D-045]] y [[D-057]] (el precedente de corrección hacia adelante en este log).
+Criterio de borrado: se elimina si una decisión posterior deroga o reescribe
+`CONSTITUCION §4` —el requisito de incidente, el criterio de borrado o el
+presupuesto de líneas— de modo que la aplicación que esta entrada registra deje de
+ser el régimen vigente. Las tres correcciones de hecho NO caducan con ella: son
+mediciones de disco y se corrigen, si acaso, con una entrada nueva.

@@ -1,27 +1,107 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T03:08:50.056Z",
+  "generated_at": "2026-07-31T09:44:58.837Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-31T03:05:45.173Z"
+      "mtime": "2026-07-31T09:42:16.968Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-31T03:08:50.050Z"
+      "mtime": "2026-07-31T09:40:49.655Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "d10d06034aaa06b96eb3bfd2d68e937336a9c259",
+  "head": "e1b5d1b3511b6c321c7005c445fbc51d30dd9b14",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 102,
+  "commit_total": 110,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "e1b5d1b",
+      "full_sha": "e1b5d1b3511b6c321c7005c445fbc51d30dd9b14",
+      "date": "2026-07-31T03:41:30-06:00",
+      "parents": "4fd3616",
+      "subject": "handoff aiw: el hueco del editor queda cerrado con medicion; la consola edita full_description y la via manual deja de ser necesaria",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4fd3616",
+      "full_sha": "4fd36162c9ca090300977eeec1246699dbc29e7b",
+      "date": "2026-07-31T03:24:08-06:00",
+      "parents": "7241713",
+      "subject": "record: editor: picker personalizado en header y list (#16 ronda 2); cinco componentes fuera por descarte silencioso del hex en el compilador",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7241713",
+      "full_sha": "7241713bcd11a161557551e8c3763b87bbaea93c",
+      "date": "2026-07-30T23:33:49-06:00",
+      "parents": "ffa50a4",
+      "subject": "record: editor: unificacion del selector de color en componentes Web (#16, entrega parcial); split, timeline y table badge bloqueados por compuerta del compilador",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "ffa50a4",
+      "full_sha": "ffa50a4a5e368f7bbd0e6c107a4d8fb566a5e2b7",
+      "date": "2026-07-30T22:39:10-06:00",
+      "parents": "446b15b",
+      "subject": "record: roadmap: alta de #16 unificacion del selector de color y reemision de .project/",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "446b15b",
+      "full_sha": "446b15bc62f07764c7e380420a93186ddbae4664",
+      "date": "2026-07-30T21:57:44-06:00",
+      "parents": "b213f13",
+      "subject": "fix: repara los cuatro defectos de la consola global y el espejo del proyector; cierra el #41",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b213f13",
+      "full_sha": "b213f136c64eff4deb863222b1abc018a7805c28",
+      "date": "2026-07-30T21:57:08-06:00",
+      "parents": "d8a4f8e",
+      "subject": "handoff aiw: recoge la respuesta del hilo de la consola sobre el editor, el traspaso del hueco del proyector, y la leccion de que arbol limpio no prueba coherencia",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d8a4f8e",
+      "full_sha": "d8a4f8e2093884a34ff1e68d359c81c75e4940e7",
+      "date": "2026-07-30T21:21:59-06:00",
+      "parents": "0b99ac5",
+      "subject": "record: editor: enum de header.variant retirado y muestra de color en el selector (#15); run activo pendiente de re-QA",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "0b99ac5",
+      "full_sha": "0b99ac559396944bc5a17fb3c50af48c0dcff92a",
+      "date": "2026-07-30T21:17:19-06:00",
+      "parents": "d10d060",
+      "subject": "D-058 y handoff de aiw: primera aplicacion de CONST 4, la compuerta detiene un run sin incidente, y tres correcciones hacia adelante de D-055",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "d10d060",

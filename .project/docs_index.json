@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T03:08:50.056Z",
+  "generated_at": "2026-07-31T09:44:58.837Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
@@ -18,7 +18,7 @@
     },
     {
       "path": "context/DECISIONES.md",
-      "mtime": "2026-07-31T01:13:10.713Z"
+      "mtime": "2026-07-31T03:16:54.768Z"
     },
     {
       "path": "context/MIGRATION-REPORT.md",
@@ -51,6 +51,10 @@
     {
       "path": "context/aiw-console/records/ALTA-RUN-COMPONENT-GUIDE-Y-REENCUADRE-AUDIT-DOC.md",
       "mtime": "2026-07-28T19:55:55.434Z"
+    },
+    {
+      "path": "context/aiw-console/records/ALTA-RUN-UNIFICACION-SELECTOR-COLOR-CANTU.md",
+      "mtime": "2026-07-31T04:08:22.285Z"
     },
     {
       "path": "context/aiw-console/records/AMPLIACION-ALLOWLIST-MATH-Y-EDITOR-FORMULAS-CANTU.md",
@@ -113,6 +117,10 @@
       "mtime": "2026-07-28T09:25:24.613Z"
     },
     {
+      "path": "context/aiw-console/records/DEFECTOS-CONSOLA-Y-ESPEJO.md",
+      "mtime": "2026-07-31T03:36:52.521Z"
+    },
+    {
       "path": "context/aiw-console/records/DISCIPLINA-UN-RUN-POR-CARRIL.md",
       "mtime": "2026-07-28T04:38:46.316Z"
     },
@@ -167,6 +175,10 @@
     {
       "path": "context/aiw-console/records/INDICE-DOCS-CURADO-AIW.md",
       "mtime": "2026-07-29T04:20:40.333Z"
+    },
+    {
+      "path": "context/aiw-console/records/INSERCION-RUN-PROYECTOR-CASE-BANKS.md",
+      "mtime": "2026-07-31T09:44:51.158Z"
     },
     {
       "path": "context/aiw-console/records/INVENTARIO-COLOR-Y-MATH-DE-COMPONENTES-WEB-CANTU.md",
@@ -245,6 +257,10 @@
       "mtime": "2026-07-28T04:42:27.348Z"
     },
     {
+      "path": "context/aiw-console/records/PICKER-PERSONALIZADO-Y-MEDICION-DE-HEX-EN-EL-COMPILADOR-CANTU.md",
+      "mtime": "2026-07-31T07:27:57.637Z"
+    },
+    {
       "path": "context/aiw-console/records/PORT-IDENTICO-CONSOLA-O4-P11.md",
       "mtime": "2026-07-24T22:53:48.096Z"
     },
@@ -281,6 +297,10 @@
       "mtime": "2026-07-28T20:33:15.397Z"
     },
     {
+      "path": "context/aiw-console/records/REPARACION-ENUM-HEADER-Y-MEDICION-DE-CLASES-CANTU.md",
+      "mtime": "2026-07-31T03:19:21.514Z"
+    },
+    {
       "path": "context/aiw-console/records/REPARACION-PARSEO-TICKETS-AIW.md",
       "mtime": "2026-07-29T02:27:19.764Z"
     },
@@ -315,6 +335,10 @@
     {
       "path": "context/aiw-console/records/TRADUCCION-ROADMAP-A-INGLES.md",
       "mtime": "2026-07-28T01:05:56.699Z"
+    },
+    {
+      "path": "context/aiw-console/records/UNIFICACION-SELECTOR-COLOR-WEB-Y-COMPUERTA-DEL-COMPILADOR-CANTU.md",
+      "mtime": "2026-07-31T05:07:22.899Z"
     },
     {
       "path": "context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md",
@@ -358,7 +382,7 @@
     },
     {
       "path": "context/handoffs/aiw.md",
-      "mtime": "2026-07-29T06:22:13.443Z"
+      "mtime": "2026-07-31T09:41:24.417Z"
     },
     {
       "path": "context/handoffs/cantu-studio.md",
@@ -451,7 +475,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-07-31T01:13:10.713Z"
+      "freshness": "2026-07-31T03:16:54.768Z"
     },
     {
       "title": "MIGRATION-REPORT — Centralización del contexto de gobernanza en aiw-console",
@@ -516,6 +540,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-28T19:55:55.434Z"
+    },
+    {
+      "title": "Alta del run de unificación del selector de color",
+      "path": "context/aiw-console/records/ALTA-RUN-UNIFICACION-SELECTOR-COLOR-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T04:08:22.285Z"
     },
     {
       "title": "Ampliación de la allowlist de math y reparación del editor de fórmulas (cantu-studio)",
@@ -638,6 +670,14 @@
       "freshness": "2026-07-28T09:25:24.613Z"
     },
     {
+      "title": "Defectos de la consola global y del espejo del proyector",
+      "path": "context/aiw-console/records/DEFECTOS-CONSOLA-Y-ESPEJO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T03:36:52.521Z"
+    },
+    {
       "title": "DISCIPLINA DE EJECUCIÓN PARALELA — «un run a la vez POR CARRIL»",
       "path": "context/aiw-console/records/DISCIPLINA-UN-RUN-POR-CARRIL.md",
       "nav_tier": "evidence",
@@ -748,6 +788,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-29T04:20:40.333Z"
+    },
+    {
+      "title": "INSERCIÓN DEL RUN DEL PROYECTOR Y LOS BANCOS DE CASOS",
+      "path": "context/aiw-console/records/INSERCION-RUN-PROYECTOR-CASE-BANKS.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T09:44:51.158Z"
     },
     {
       "title": "Inventario de color y math de los componentes Web (Cantu Studio)",
@@ -902,6 +950,14 @@
       "freshness": "2026-07-28T04:42:27.348Z"
     },
     {
+      "title": "Picker «Personalizado» y medición del hex en el compilador",
+      "path": "context/aiw-console/records/PICKER-PERSONALIZADO-Y-MEDICION-DE-HEX-EN-EL-COMPILADOR-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T07:27:57.637Z"
+    },
+    {
       "title": "PORT IDÉNTICO — la consola viva de Cantu, trasplantada sobre las fuentes de `aiw-console` (`O4.P11`)",
       "path": "context/aiw-console/records/PORT-IDENTICO-CONSOLA-O4-P11.md",
       "nav_tier": "evidence",
@@ -974,6 +1030,14 @@
       "freshness": "2026-07-28T20:33:15.397Z"
     },
     {
+      "title": "Reparación del enum de Header y medición de clases de defecto",
+      "path": "context/aiw-console/records/REPARACION-ENUM-HEADER-Y-MEDICION-DE-CLASES-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T03:19:21.514Z"
+    },
+    {
       "title": "REPARACIÓN DEL PARSEO DE LOS SEIS TICKETS DE AIW",
       "path": "context/aiw-console/records/REPARACION-PARSEO-TICKETS-AIW.md",
       "nav_tier": "evidence",
@@ -1044,6 +1108,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-28T01:05:56.699Z"
+    },
+    {
+      "title": "Unificación del selector de color Web y la compuerta del compilador",
+      "path": "context/aiw-console/records/UNIFICACION-SELECTOR-COLOR-WEB-Y-COMPUERTA-DEL-COMPILADOR-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T05:07:22.899Z"
     },
     {
       "title": "VEREDICTO — `roadmap_tree_v1` como formato consumible",
@@ -1126,12 +1198,12 @@
       "freshness": "2026-07-31T01:13:29.415Z"
     },
     {
-      "title": "HANDOFF — hilo `aiw` (el kernel)",
+      "title": "Handoff — hilo `aiw`",
       "path": "context/handoffs/aiw.md",
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-07-29T06:22:13.443Z"
+      "freshness": "2026-07-31T09:41:24.417Z"
     },
     {
       "title": "HANDOFF — hilo `cantu-studio` (el proyecto)",

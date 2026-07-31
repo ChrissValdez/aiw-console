@@ -112,19 +112,19 @@ lo cual importa bajo carriles paralelos.
   entre `roadmap/roadmap.json`, `.project/roadmap.json` y `.project/snapshot.json`.
   Hecho hoy: los tres coinciden (42 / 23 / 3008).
 
-- **HUECO ABIERTO: no se sabe si la consola permite editar `full_description`.**
-  Corregir la premisa de un run antes de ejecutarlo costó cinco intercambios, un
-  script a mano sobre el canónico, un respaldo y saltarse la re-emisión atómica.
-  **El hilo de `aiw-console` tiene la pregunta y la medición está pendiente**: no
-  la hizo porque el archivo del editor lo estaba reescribiendo un run en vuelo, y
-  medir contra un archivo que se está reescribiendo caduca al instante. Maneja una
-  **HIPÓTESIS marcada como tal**: que el modal sí exponía el campo y reportaba «no
-  changes» habiéndolos, por lectura asimétrica de una caché vacía — lo que
-  explicaría que el `status` entrara y el `full_description` no, dos veces, sin
-  error visible. **No planificar sobre la hipótesis.** Hasta que haya medición
-  contra disco, la vía para reencuadrar un run sigue siendo el script a mano, y
-  después de usarla hay que re-emitir y verificar la coherencia.
-
+- - **CERRADO CON MEDICIÓN: la consola SÍ edita `full_description`, y la vía normal
+  vuelve a ser la consola.** Corregir la premisa de un run costó cinco
+  intercambios y un script a mano sobre el canónico. El hilo de `aiw-console`
+  midió la causa: el campo siempre fue editable (textarea
+  `data-v3edit-fulldesc`), y el fallo estaba en el preview del dry-run — dos
+  funciones leían una caché de modelo sin fallback y reportaban «No changes»
+  habiéndolos, así que el pegado entraba y nunca se llegaba al confirm. El
+  `status` sí entraba porque va por otra ruta. **Reparado en su `446b15b`, y
+  confirmado desde este hilo con un reintento: el preview lista el cambio.**
+  Consecuencia operativa: **el script de Node sobre el canónico ya no hace
+  falta.** Si volviera a hacer falta, después de usarlo hay que re-emitir y
+  verificar la coherencia de `.project/`.
+  
 ## LECTURAS DE ARRANQUE, EN ESTE ORDEN
 
 1. `context/DECISIONES.md`, entrada **`D-058`** — qué pasó y qué rige.

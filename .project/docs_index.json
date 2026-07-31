@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T10:45:14.552Z",
+  "generated_at": "2026-07-31T23:56:03.051Z",
   "generated_from": "aiw-projector@0.10.0",
   "sources": [
     {
@@ -77,12 +77,20 @@
       "mtime": "2026-07-27T21:52:55.842Z"
     },
     {
+      "path": "context/aiw-console/records/CIERRE-HUECOS-ESTANDAR-DOC-IDIOMA-Y-ASERCIONES-CANTU.md",
+      "mtime": "2026-07-31T23:36:53.803Z"
+    },
+    {
       "path": "context/aiw-console/records/CIERRE-REGISTRO-Y-RELEVO-TERCERO.md",
       "mtime": "2026-07-28T07:10:00.284Z"
     },
     {
       "path": "context/aiw-console/records/CIERRE-ROADMAP-AL-DIA-FASES-P13-P14.md",
       "mtime": "2026-07-28T02:17:45.499Z"
+    },
+    {
+      "path": "context/aiw-console/records/CLASIFICACION-MOTOR.md",
+      "mtime": "2026-07-31T23:27:36.894Z"
     },
     {
       "path": "context/aiw-console/records/CONGELADO-MAPA-NOMBRES-Y-BARRIDO-RUTA-LEGACY-CANTU.md",
@@ -231,6 +239,10 @@
     {
       "path": "context/aiw-console/records/MEDICION-SUPERFICIE-DOC-COMPONENTES-WEB-Y-FORMA-DEL-PACKET-CANTU.md",
       "mtime": "2026-07-31T09:58:06.783Z"
+    },
+    {
+      "path": "context/aiw-console/records/MEDICION-SUPERFICIES-CLASIFICACION.md",
+      "mtime": "2026-07-31T19:58:18.425Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-VALIDADOR-ROJO.md",
@@ -386,7 +398,7 @@
     },
     {
       "path": "context/handoffs/aiw-console.md",
-      "mtime": "2026-07-31T01:13:29.415Z"
+      "mtime": "2026-07-31T10:55:34.968Z"
     },
     {
       "path": "context/handoffs/aiw.md",
@@ -598,6 +610,14 @@
       "freshness": "2026-07-27T21:52:55.842Z"
     },
     {
+      "title": "Cierre de los dos huecos del estándar de documentación — regla de idioma y aserciones del validador",
+      "path": "context/aiw-console/records/CIERRE-HUECOS-ESTANDAR-DOC-IDIOMA-Y-ASERCIONES-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T23:36:53.803Z"
+    },
+    {
       "title": "CIERRE DE REGISTRO Y RELEVO — tres records huérfanos, los dos handoffs, y dos deudas anotadas",
       "path": "context/aiw-console/records/CIERRE-REGISTRO-Y-RELEVO-TERCERO.md",
       "nav_tier": "evidence",
@@ -612,6 +632,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-28T02:17:45.499Z"
+    },
+    {
+      "title": "CLASIFICACIÓN — MOTOR: los seis campos almacenados y los invariantes que rechazan",
+      "path": "context/aiw-console/records/CLASIFICACION-MOTOR.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T23:27:36.894Z"
     },
     {
       "title": "Congelado del mapa de nombres y barrido de la ruta legacy (cantu-studio)",
@@ -908,6 +936,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-31T09:58:06.783Z"
+    },
+    {
+      "title": "MEDICIÓN DE SUPERFICIES — los cinco campos de clasificación (`#43`)",
+      "path": "context/aiw-console/records/MEDICION-SUPERFICIES-CLASIFICACION.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T19:58:18.425Z"
     },
     {
       "title": "MEDICIÓN — validador de Cantu en rojo tras la extracción de O0",
@@ -1219,7 +1255,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-07-31T01:13:29.415Z"
+      "freshness": "2026-07-31T10:55:34.968Z"
     },
     {
       "title": "Handoff — hilo `aiw`",

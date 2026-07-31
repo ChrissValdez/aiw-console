@@ -1,27 +1,67 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T10:45:14.552Z",
+  "generated_at": "2026-07-31T23:56:03.051Z",
   "generated_from": "aiw-projector@0.10.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-31T10:26:05.273Z"
+      "mtime": "2026-07-31T23:52:49.141Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-31T10:32:09.819Z"
+      "mtime": "2026-07-31T23:16:53.288Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "1156574d88b4bc14b48e7619c61414b281708f36",
+  "head": "b62dd21fee83a6724c261f118290fe55611eff5c",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 112,
+  "commit_total": 116,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "b62dd21",
+      "full_sha": "b62dd21fee83a6724c261f118290fe55611eff5c",
+      "date": "2026-07-31T17:44:24-06:00",
+      "parents": "fe1ac28",
+      "subject": "record: cierre de los dos huecos del estandar de documentacion (idioma y aserciones del validador)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fe1ac28",
+      "full_sha": "fe1ac28a47c63a49676150c147259c016300602e",
+      "date": "2026-07-31T15:03:22-06:00",
+      "parents": "ceb863d",
+      "subject": "record: medicion read-only de las cinco superficies del run 43; 22 valores heredados verificados sin discrepancia y 4 hallazgos que reencuadran el ticket",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "ceb863d",
+      "full_sha": "ceb863d30ea02268e94354d7331de29ebb1b750a",
+      "date": "2026-07-31T05:06:00-06:00",
+      "parents": "02d1ac1",
+      "subject": "docs: reescribe el handoff de aiw-console medido contra disco al cierre de sesion",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "02d1ac1",
+      "full_sha": "02d1ac1654625c95dca7c7314c57c338f0bffde6",
+      "date": "2026-07-31T04:45:43-06:00",
+      "parents": "1156574",
+      "subject": "feat(projector): declara las carpetas de objectives/ que la emision no lee; cierra el #42",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "1156574",

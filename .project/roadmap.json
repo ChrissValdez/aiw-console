@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T09:44:58.837Z",
-  "generated_from": "aiw-projector@0.9.0",
+  "generated_at": "2026-07-31T10:45:14.552Z",
+  "generated_from": "aiw-projector@0.10.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-31T09:40:49.655Z"
+      "mtime": "2026-07-31T10:32:09.819Z"
     }
   ],
   "model": "roadmap_tree_v1",
@@ -711,7 +711,7 @@
               "title": "Make the projector see AIW's evaluation case banks",
               "summary": "The projector does not read objectives/qualification/ or objectives/queue-e7/, so AIW's evaluation case banks are invisible to every console. The convention that defines them is now published, which was the condition this repair was waiting on.",
               "full_description": "REPORTED BY THE aiw THREAD on 2026-07-30 and named here, not measured here: the projector does not read the objectives/qualification/ or objectives/queue-e7/ folders of aiw, so the evaluation cases they hold are invisible to every console. THE PROJECTOR IS THIS REPOSITORY'S CODE — tools/projector/project.mjs — so the gap is this project's, not the kernel's. DISPOSICION-CARPETAS-COLA-AIW.md section 9 left this open and made revisiting it conditional on an evaluation-case convention existing. That condition is now met: the convention was published as aiw/docs/kernel/CONVENCION-DE-CASOS-DE-EVALUACION.md and registered as D-058, and it adjudicated that an evaluation case IS the live fixture — the cases in those two banks are cases, not leftovers. The count reported was six across the two banks plus a seventh generated under sandbox/; THOSE FIGURES ARE TO BE VERIFIED AGAINST DISK AND REPORTED, not taken from this text. THE RUN MEASURES FIRST: exactly which paths under aiw/objectives/ the projector reads today, and what it does with the ones it does not. THEN IT DECIDES BETWEEN TWO OUTCOMES, and only one of them is a code change. Either the banks are projected, in which case the run defines what they project AS — a case bank is not a pending objective and must not be rendered as though it were a run about to execute — or they are deliberately not projected, in which case THE EMITTER SAYS SO instead of omitting them in silence. The second outcome is not a non-repair: silent omission is a known defect of this emitter in its own right, recorded as the two-channel problem in EMISION-PROJECT-AIW.md section 5.3, where a missing artifact is announced by a banner but never enters emitted_artifacts. Choosing between the two is the operator's, informed by the measurement. WHAT THIS RUN DOES NOT TOUCH: a single byte of the aiw repository. It reads aiw/objectives/ because that is what the projector reads, and it writes only in this one. Whatever has to change inside aiw, if anything, is that thread's work and is only named here.",
-              "status": "planned",
+              "status": "completed",
               "depends_on": []
             },
             {

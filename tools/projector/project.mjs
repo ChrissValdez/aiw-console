@@ -86,7 +86,15 @@ export const SCHEMA_VERSION = 1;
 // (snapshot and .project/roadmap.json, the same function). The emitter interprets nothing —
 // the vocabulary is the project's data, and no lane key is known here by name. A tree that
 // declares no lanes emits exactly what 0.8.0 emitted, byte for byte save this version string.
-export const PROJECTOR_VERSION = "0.9.0";
+// 0.10.0 (RUN-CONSOLE-PROJECTOR-CASE-BANKS-001) DECLARES THE OMISSION. Both snapshots now carry
+// `unprojected_inputs` / `unprojected_inputs_reason`: the subdirectories of `objectives/` this
+// emission did not read, and the mode that did not read them. Until now what fell outside the
+// reader left NO trace — not a count, not a path, not a key — and in mode 1 the artifact went
+// further and declared a closed three-token classification vocabulary against a disk that had
+// more. An emitter that says what it skipped is not the emitter that skipped it in silence, so
+// the version moves (§6). See `unprojectedObjectiveInputs` for why it is derived and for the
+// scope of the claim.
+export const PROJECTOR_VERSION = "0.10.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 // Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
@@ -265,6 +273,74 @@ function readObjectiveDetails(root) {
     }
   }
   return byClassification;
+}
+
+// ---------------------------------------------------------------------------
+// THE DECLARED OMISSION — `unprojected_inputs` / `unprojected_inputs_reason`
+// (RUN-CONSOLE-PROJECTOR-CASE-BANKS-001).
+//
+// What this repairs. Every reader of `objectives/` above walks a FIXED list of folder names and
+// never enumerates `objectives/` itself, so a sibling folder was not excluded — it was UNKNOWN.
+// It produced no count, no path and no key, in either mode. That is the silent omission: the
+// artifact was not wrong about the folders, it said nothing at all, and a consumer could not tell
+// "this root has three folders" from "this root has five and two were skipped". §20's discipline
+// applied to an input instead of a file: an absence is announced, never left silent.
+//
+// DERIVED, both halves. The folder names come off DISK; which of them count as unread comes off
+// the MODE. No bank name, no project name and no folder name is written anywhere in this file
+// beyond `OBJECTIVE_CLASSIFICATIONS`, which is this emitter's own vocabulary and not a project's.
+// A folder added under `objectives/` tomorrow declares itself with no edit here — the same rule
+// `ROOT_LAYOUTS` and `DOCS_NAV_TIER_RULES` already follow, and the reason §10.c gives for it.
+//
+// COMPLETE FOR WHAT IT COVERS. In mode `roadmap_tree` the root's plan is its roadmap tree and
+// `objectives/` is not an input AT ALL, so every subdirectory is declared — including the three
+// lifecycle folders. Declaring only the folders someone happened to be curious about would imply
+// the rest were projected, which is a half-truth that reads as a whole lie.
+//
+// THE SCOPE OF THE CLAIM, said out loud because a reader will otherwise generalise it: this
+// covers `objectives/`. It is NOT a manifest of everything this emitter did not read.
+//
+// The pair travels TOGETHER by construction — one function returns both keys or neither — because
+// a list without its reason is the same silence this exists to repair, one level down. When
+// `objectives/` does not exist the block is OMITTED entirely (§7's discipline, the same call
+// `emitted_artifacts` makes at :1054): an empty list is the honest answer to "I enumerated it and
+// nothing was unread", and it would be a false one where there was nothing to enumerate.
+function unprojectedObjectiveInputs(root, reader) {
+  const objectivesDir = join(root, "objectives");
+  if (!existsSync(objectivesDir)) return {};
+  const read = new Set(reader.reads);
+  return {
+    unprojected_inputs: safeReadDirNames(objectivesDir, { dirsOnly: true })
+      .filter((name) => !read.has(name))
+      .map((name) => ({
+        path: repoRelative(root, join(objectivesDir, name)),
+        // First-level files only, matching what the readers above would have counted had they
+        // looked. `safeReadDirNames` filters `isFile()`, so a nested directory is not an entry.
+        entries: safeReadDirNames(join(objectivesDir, name)).length
+      })),
+    unprojected_inputs_reason: reader.reason
+  };
+}
+
+// The two readers, each naming ITSELF — the mode, and for mode 2 the layout that supplied the
+// plan instead. Neither says anything about what the skipped folders CONTAIN: this emitter never
+// opened them, so any claim about them would be invented. One string per emission, in one place.
+function aiwObjectivesReader() {
+  return {
+    reads: OBJECTIVE_CLASSIFICATIONS,
+    reason:
+      `root read in mode aiw_objectives: under objectives/, only ` +
+      `${OBJECTIVE_CLASSIFICATIONS.join(", ")} are read`
+  };
+}
+
+function roadmapTreeReader(layout) {
+  return {
+    reads: [],
+    reason:
+      `root read in mode roadmap_tree (layout ${layout.layout}, plan at ` +
+      `${layout.paths.roadmap.split(sep).join("/")}): objectives/ is not an input of this mode`
+  };
 }
 
 // Build the Roadmap-v3 view the console's Roadmap tab reads. Mapping (per objective 003):
@@ -567,6 +643,9 @@ export function buildSnapshot(root, opts = {}) {
       objective_classifications: OBJECTIVE_CLASSIFICATIONS,
       operational_statuses: OPERATIONAL_STATUSES
     },
+    // What this emission did NOT read under objectives/, and the mode that did not read it.
+    // Omitted as a pair when there is no objectives/ at all (`unprojectedObjectiveInputs`).
+    ...unprojectedObjectiveInputs(root, aiwObjectivesReader()),
     // Optional §3 enrichment: per-run history derived from logs/<id>/summary.md. Omitted
     // entirely (fail-soft) when the project has no run-evidence folders.
     ...(runs.length > 0 ? { latest_history_items: latestHistoryItems(runs) } : {})
@@ -1079,7 +1158,11 @@ export function buildRoadmapTreeSnapshot(root, opts = {}) {
     // Still opaque, and honestly so: the capa-3 validator does not exist, so nothing real
     // fills this. §3.b — no schema without emitter and example.
     validation_summary: {},
-    taxonomy_model: buildTaxonomyModel(root, layout)
+    taxonomy_model: buildTaxonomyModel(root, layout),
+    // What this emission did NOT read under objectives/, and the mode that did not read it. In
+    // this mode that is EVERY subdirectory: the plan is the roadmap tree named in the reason, and
+    // objectives/ is not an input. Omitted as a pair when the root has no objectives/ at all.
+    ...unprojectedObjectiveInputs(root, roadmapTreeReader(layout))
   };
 }
 

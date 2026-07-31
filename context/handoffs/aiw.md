@@ -1,8 +1,8 @@
 # Handoff — hilo `aiw`
 
 Última actualización: 2026-07-30. Escrito al cerrar la primera sesión propia de
-este hilo. `aiw` en `66255a5` + el commit de este relevo; `aiw-console` en
-`37e2d77` + el mismo.
+este hilo. `aiw` en `66255a5`, árbol limpio y `.project/` **verificado coherente**
+contra el canónico. `aiw-console` en `0b99ac5` + el commit de este retoque.
 
 ## ⚠️ LOS NÚMEROS DE HOY, Y HOY SE MOVIERON DOS VECES
 
@@ -68,17 +68,27 @@ cada cosa:
 - **La recalificación de los siete casos** — su última ejecución consta
   `[NO VERIFICADO]` desde 2026-07-10.
 
+## PASADO A OTROS HILOS — no volver a levantarlo aquí
+
+- **Los bancos de casos invisibles al proyector** (`objectives/qualification/` y
+  `objectives/queue-e7/`, hueco de `DISPOSICION §9`). Reportado al hilo de
+  `aiw-console` y **aceptado por él**: es hueco del proyector, que es su código,
+  y tendrá run propio en su roadmap. La condición que lo tenía en pausa —que la
+  convención existiera— se cumplió hoy. **Nada que hacer de este lado.**
+
 ## EL `#22` ESTÁ BLOQUEADO POR FUERA, Y SE ESTÁ DESBLOQUEANDO SOLO
 
 El `#22` necesita un repo grande **con red de tests verde**. El blanco es
 `aiw-console` —la excepción está escrita en el canónico de AIW: *«runs targeting
 `aiw-console` are delegable to the kernel»*—, y su suite tenía **10 fallos de 278**
 al medirla: pins contra el estado real de dos repos que se movió, no defectos de
-código. **Pero el hilo de `aiw-console` está despinneando la suite hacia fixtures
-ahora mismo** (`tests/fixtures/neighbours/`, `tests/helpers/real-like-project.mjs`,
+código. **Pero el hilo de `aiw-console` está despinneando la suite hacia fixtures**
+(`tests/fixtures/neighbours/`, `tests/helpers/real-like-project.mjs`,
 `tests/real-projects-smoke.test.mjs`, un record `SUITE-CONTRA-FIXTURES.md`).
 **Antes de replantear el `#22`, preguntar a ese hilo si aterrizó.** Y cuando se
-lance, coordinar la ventana: el kernel creará rama y diff en su repo.
+lance, coordinar la ventana: el kernel creará rama y diff en su repo, y correr su
+suite ensucia su árbol —el test del proyecto real re-emite `.project/` de verdad—,
+lo cual importa bajo carriles paralelos.
 
 ## CÓMO SE TRABAJA AQUÍ — lecciones medidas de esta sesión
 
@@ -86,17 +96,34 @@ lance, coordinar la ventana: el kernel creará rama y diff en su repo.
   ocasiones (`§` y las rayas largas), no expande globs (`node --test tests/*.mjs`
   falla), y convierte cadenas multilínea en arrays, lo que produjo un ALTO falso.
   **Toda lectura del canónico o de `DECISIONES.md` va por Node.**
+- **La suite de `aiw` se invoca expandiendo el glob a mano**: no hay
+  `package.json`, así que es `node --test` sobre los doce `tests/*.test.mjs`
+  enumerados por PowerShell. Verificar de paso que son doce; si no, el glob falló
+  y la suite no corrió de verdad.
 - **Las guardas atraparon errores reales cuatro veces** en esta sesión: dos
   guardas de premisa que detuvieron talleres antes de que gastaran su sesión, y
   dos de estado que impidieron commits falsos. **Ninguna guarda salió sobrando.**
 - **Una guarda solo comprueba donde tiene ancla.** Anclar en la primera mitad de
   un texto largo no detecta un truncamiento en la segunda.
-- **HUECO ABIERTO, y es el hallazgo operativo más caro de la sesión: no se sabe si
-  la consola permite editar `full_description`.** Se preguntó tres veces y no se
-  obtuvo respuesta. Corregir la premisa de un run antes de ejecutarlo costó cinco
-  intercambios, un script a mano sobre el canónico, un respaldo y saltarse la
-  re-emisión atómica. **Averiguarlo es barato y hay que hacerlo**; si el campo no
-  es editable, es un hueco de la consola que su hilo debe conocer.
+- **«Árbol limpio» NO prueba coherencia.** Un `.project/` desfasado y commiteado
+  así sale igual de limpio que uno correcto. Después de cualquier escritura al
+  canónico que no pase por la consola, **re-emitir y VERIFICAR**: comparar total
+  de runs, cuenta de `completed` y el largo de un `full_description` conocido
+  entre `roadmap/roadmap.json`, `.project/roadmap.json` y `.project/snapshot.json`.
+  Hecho hoy: los tres coinciden (42 / 23 / 3008).
+
+- **HUECO ABIERTO: no se sabe si la consola permite editar `full_description`.**
+  Corregir la premisa de un run antes de ejecutarlo costó cinco intercambios, un
+  script a mano sobre el canónico, un respaldo y saltarse la re-emisión atómica.
+  **El hilo de `aiw-console` tiene la pregunta y la medición está pendiente**: no
+  la hizo porque el archivo del editor lo estaba reescribiendo un run en vuelo, y
+  medir contra un archivo que se está reescribiendo caduca al instante. Maneja una
+  **HIPÓTESIS marcada como tal**: que el modal sí exponía el campo y reportaba «no
+  changes» habiéndolos, por lectura asimétrica de una caché vacía — lo que
+  explicaría que el `status` entrara y el `full_description` no, dos veces, sin
+  error visible. **No planificar sobre la hipótesis.** Hasta que haya medición
+  contra disco, la vía para reencuadrar un run sigue siendo el script a mano, y
+  después de usarla hay que re-emitir y verificar la coherencia.
 
 ## LECTURAS DE ARRANQUE, EN ESTE ORDEN
 

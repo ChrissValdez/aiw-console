@@ -347,16 +347,60 @@ export function buildRoadmap(root, opts = {}) {
   };
 }
 
-// Mirror of the console's `v3QueueGroupKey`: derive an objective's queue group from a
-// run's status + depends_on exactly as the Roadmap tab does. Used by tests to assert the
-// mapping rules against the console's own grouping logic; not part of the emitted view.
-export function roadmapQueueGroup(run, runsById) {
-  if (run.status === "active") return "now";
+// MIRROR of the console's `v3QueueGroupKey` (project-console/assets/project-console.js): derive a
+// run's queue group from its status, its depends_on, and — when the caller has one — the queue
+// model that knows about D-051 barriers. Not part of the emitted view: nothing here is written to
+// disk, and no consumer reads a persisted group field.
+//
+// WHAT KEEPS THIS IN STEP, because a mirror with nothing holding it drifts and this one did.
+// It had lost the `needs_human_decision` branch and the barrier branch, and had dropped the
+// `model` parameter altogether, so it answered "now" for a run parked in Human QA and
+// "ready_next" for a run a barrier was holding. The tests that used to assert against it went
+// green over a description of the console that no longer described it.
+//
+//   tests/console-queue-keyspace.test.mjs is the test that holds the three declarations —
+//   this function, `v3QueueGroupKey`, and the console's `ROADMAP_V3_QUEUE_GROUP_LABELS` — over
+//   ONE key space, and replays a table of runs through both functions demanding the same answer.
+//   Add a key or a branch in one place without the other two and it goes red.
+//
+// The suite asserts against the CONSOLE (tests/helpers/console-grouping.mjs), never against this
+// copy. That is deliberate and must stay that way: the console decides what is painted.
+export function roadmapQueueGroup(run, runsById, model) {
+  if (run.status === "active") {
+    const current = deriveCurrentProgressEntry(run);
+    if (current && current.stage === "human_qa" && current.state === "waiting") {
+      return "needs_human_decision";
+    }
+    return "now";
+  }
   if (run.status === "planned") {
     const ready = (run.depends_on || []).every((id) => runsById.get(id)?.status === "completed");
-    return ready ? "ready_next" : "later";
+    // A barrier bars the start of every later planned run in its scope without any written
+    // depends_on edge, so satisfied dependencies alone do not mean ready. Only callers that pass
+    // a model get barrier awareness — exactly as in the console.
+    const barred = model ? roadmapBarrierBlockersFor(model, run).length > 0 : false;
+    return ready && !barred ? "ready_next" : "later";
   }
   return "history";
+}
+
+// Mirror of the console's `v3DeriveCurrent`: the progress entry a run is AT, derived from the
+// progress record alone and never from a persisted stage field.
+function deriveCurrentProgressEntry(run) {
+  const progress = Array.isArray(run.progress) ? run.progress : null;
+  if (!progress || !progress.length) return null;
+  const running = progress.filter((entry) => entry && entry.state === "running");
+  if (running.length === 1) return running[0];
+  return progress.find((entry) => entry && entry.state === "waiting") || null;
+}
+
+// Mirror of the console's `v3BarrierBlockersFor`: the incomplete barriers barring a run's start.
+// Takes the same model shape the console builds — `barrierBlockersByRunId`, a Map keyed by
+// run_id — so a caller can hand either console model or an equivalent straight through.
+function roadmapBarrierBlockersFor(model, run) {
+  if (!model || !run || run.status !== "planned") return [];
+  if (!model.barrierBlockersByRunId) return [];
+  return model.barrierBlockersByRunId.get(run.run_id) || [];
 }
 
 // Pull a single labelled metadata field out of a run summary.md body. Tolerates

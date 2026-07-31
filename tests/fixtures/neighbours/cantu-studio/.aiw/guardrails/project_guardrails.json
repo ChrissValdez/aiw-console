@@ -1,0 +1,47 @@
+{
+  "guardrails": [
+    {
+      "id": "guardrail-no-jame-lessons",
+      "rule": "Do not touch JAME_Lessons without explicit human approval.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "AGENTS.md",
+        "PASS-FUTURE-JAME-PROJECT-CONSOLE-CONTRACT-LITE-SEED-001"
+      ]
+    },
+    {
+      "id": "guardrail-no-aiw-monitored-checkout",
+      "rule": "Do not touch the AIW monitored checkout without explicit human approval.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "AGENTS.md",
+        "PASS-FUTURE-JAME-PROJECT-CONSOLE-CONTRACT-LITE-SEED-001"
+      ]
+    },
+    {
+      "id": "guardrail-no-schema-compiler-simple-ui",
+      "rule": "Do not change schema/compiler under simple UI tickets.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "docs/human/state/guardrails.json"
+      ]
+    },
+    {
+      "id": "guardrail-no-palette-renderers-unrelated-ui",
+      "rule": "Do not change palette/color system/renderers under unrelated UI tickets.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "docs/human/state/guardrails.json",
+        "docs/ops/JAME_OPS_STATE.md"
+      ]
+    },
+    {
+      "id": "guardrail-no-agent-git-mutation",
+      "rule": "Do not commit/push/stash/reset/checkout/revert as an agent.",
+      "status": "ACTIVE",
+      "source_refs": [
+        "AGENTS.md"
+      ]
+    }
+  ]
+}

@@ -55,6 +55,7 @@ class StubElement {
   querySelectorAll() { return []; }
   closest() { return null; }
   focus() {}
+  scrollIntoView() {}
 }
 
 // fetch stub: serves /projects/<key>/<relative> from the roots map, mirroring the server's

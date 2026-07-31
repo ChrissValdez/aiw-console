@@ -1,5 +1,5 @@
-// O4.P4 — the projector emits for a SECOND, REAL project (cantu-studio), and the two root modes
-// it already had keep behaving exactly as before.
+// O4.P4 — the projector emits for a SECOND project in a layout of its own (cantu-studio), and the
+// two root modes it already had keep behaving exactly as before.
 //
 // What these tests defend, in one line each:
 //   - the mode is claimed by the SHAPE of the tree, never by the model string it declares;
@@ -9,8 +9,10 @@
 //   - mode 1 does not flip into mode 2 after its own startup projection has run;
 //   - every run-status token in a real emitted tree is a token the emitted vocabulary declares.
 //
-// The tests that touch cantu-studio are READ-ONLY: they build in memory (buildX) and never call
-// writeProjectFolder against a real repo. The write path is exercised on temp fixtures only.
+// The tests that touch cantu-studio read a FROZEN fixture of its source layout, never the live
+// sibling repository (see the CANTU constant below). They are read-only either way: they build in
+// memory (buildX) and never call writeProjectFolder against it. The write path is exercised on
+// temp fixtures only.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -44,10 +46,24 @@ import {
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
 const AIW_FIXTURE = join(HERE, "fixtures", "sample-project");
-// The real second project. Present in the workspace this console aggregates; when it is not
-// checked out beside this repo the cantu-specific tests skip rather than fail.
-const CANTU = resolve(REPO_ROOT, "..", "cantu-studio");
-const CANTU_PRESENT = existsSync(join(CANTU, ".aiw", "roadmap", "roadmap.json"));
+// THE SECOND PROJECT, FROZEN. These tests used to point at `../cantu-studio` and read that
+// repository's live `.aiw/` — its roadmap, its governance, its curated docs index. #40 froze the
+// DERIVED side of the two neighbours (their `.project/` folders) for the reason written at the
+// top of tests/helpers/neighbours.mjs: a suite that asserts against a live neighbour cannot
+// arbitrate a change, because a real regression is indistinguishable from the neighbour having
+// moved. The five tests below were the SOURCE side, and they are frozen here on the same terms.
+//
+// The fixture carries the source layout the projector reads — `.aiw/roadmap/roadmap.json` (the
+// real canonical, byte-identical to the frozen `canonical/roadmap.json`), `.aiw/guardrails/`, and
+// a curated `.aiw/docs/docs_index.json` — beside the `.project/` folder #40 already froze. Its
+// docs corpus is REDUCED: six curated documents drawn verbatim from the head of the real
+// curation, and two Markdown files the curation does not select, so "the scan finds more than
+// the curation selects" is still true of it. Every assertion below is about the RELATIONSHIP
+// between the curation and what is transported, which a reduced corpus preserves exactly.
+//
+// FROZEN ON 2026-07-30. Refreshing it is a deliberate act; no test regenerates it, and none may
+// read the live neighbour to build it.
+const CANTU = join(HERE, "fixtures", "neighbours", "cantu-studio");
 const FIXED_NOW = "2026-07-25T00:00:00.000Z";
 
 // ---------------------------------------------------------------------------
@@ -229,7 +245,7 @@ test("the FIRST matching layout wins, as a whole bundle — a root is never read
 // The real second project. Read-only assertions against what was emitted for it.
 // ---------------------------------------------------------------------------
 
-test("cantu-studio: the layout applied is decided by the root's shape, and its tree keeps its own model", { skip: !CANTU_PRESENT }, () => {
+test("cantu-studio: the layout applied is decided by the root's shape, and its tree keeps its own model", () => {
   const layout = detectRootLayout(CANTU);
   assert.equal(layout.layout, "project_local_aiw");
   assert.equal(detectRootMode(CANTU), "roadmap_tree");
@@ -253,7 +269,7 @@ test("cantu-studio: the layout applied is decided by the root's shape, and its t
   for (const source of snapshot.sources) assert.ok(existsSync(join(CANTU, source.path)));
 });
 
-test("cantu-studio: every run-status token in the real tree is declared by the emitted vocabulary", { skip: !CANTU_PRESENT }, () => {
+test("cantu-studio: every run-status token in the real tree is declared by the emitted vocabulary", () => {
   for (const root of [CANTU, REPO_ROOT]) {
     const snapshot = buildRoadmapTreeSnapshot(root, { now: FIXED_NOW });
     const declared = new Set(snapshot.taxonomy_model.vocabularies["run.status"].tokens);
@@ -273,7 +289,7 @@ test("cantu-studio: every run-status token in the real tree is declared by the e
 // leaving a lock on the door this phase opened. What it defended that is still true — every path
 // resolves, no path escapes the repo, no foreign governance context leaks in — is asserted below,
 // and what it defended about the SCAN is asserted on the root that still scans, in the test after.
-test("cantu-studio: the docs index TRANSPORTS its curated index — same selection, same order", { skip: !CANTU_PRESENT }, () => {
+test("cantu-studio: the docs index TRANSPORTS its curated index — same selection, same order", () => {
   const curated = JSON.parse(readFileSync(join(CANTU, ".aiw", "docs", "docs_index.json"), "utf8"));
   const index = buildDocsIndex(CANTU, { now: FIXED_NOW });
 
@@ -330,7 +346,7 @@ test("aiw-console: with no curated index to transport, the docs index is still S
   assert.deepEqual(index.docs.map((d) => d.path), [...index.docs.map((d) => d.path)].sort());
 });
 
-test("cantu-studio: the emitted contract folder is on disk, complete, and parses", { skip: !CANTU_PRESENT }, () => {
+test("cantu-studio: the emitted contract folder is on disk, complete, and parses", () => {
   const emitted = [
     PROJECT_SNAPSHOT_RELATIVE_PATH,
     PROJECT_ROADMAP_RELATIVE_PATH,
@@ -354,7 +370,7 @@ test("cantu-studio: the emitted contract folder is on disk, complete, and parses
   }
 });
 
-test("cantu-studio: the optional roadmap file carries the same tree the snapshot carries", { skip: !CANTU_PRESENT }, () => {
+test("cantu-studio: the optional roadmap file carries the same tree the snapshot carries", () => {
   const roadmap = buildProjectRoadmap(CANTU, { now: FIXED_NOW });
   const snapshot = buildRoadmapTreeSnapshot(CANTU, { now: FIXED_NOW });
   assert.equal(roadmap.model, snapshot.roadmap_tree.model);

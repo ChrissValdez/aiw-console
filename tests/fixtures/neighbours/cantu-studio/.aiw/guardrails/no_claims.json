@@ -1,0 +1,13 @@
+{
+  "claims": [
+    {
+      "claim": "No certified-state claims",
+      "status": "DISALLOWED",
+      "allowed_only_if": "The run-state model (approved / changes-requested / blocked) is the single source of truth; certified-state claims are retired.",
+      "current_reason": "Certified state has been retired from the project; runs carry state, not certification.",
+      "source_refs": [
+        "AGENTS.md"
+      ]
+    }
+  ]
+}

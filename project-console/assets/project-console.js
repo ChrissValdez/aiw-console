@@ -90,6 +90,25 @@ const ROADMAP_V3_QUEUE_GROUPS = [
   { key: "upcoming", label: "Upcoming" },
   { key: "history", label: "History" }
 ];
+// The SEMANTIC queue-group key space: every key `v3QueueGroupKey` can return, with the label a
+// surface uses when it names that key to the operator.
+//
+// This is NOT the table above. ROADMAP_V3_QUEUE_GROUPS declares the four sections the Run Queue
+// DRAWS, and `v3QueueDisplayGroup` collapses `ready_next` + `later` into its "upcoming" section.
+// The two key spaces are deliberately different, and reading a semantic key out of the display
+// table is a lookup across that gap: it returned `undefined` for `ready_next` and `later` and
+// fired whatever literal the call site had for a fallback, whatever the run's status. Overview
+// names the semantic key, so Overview reads THIS table.
+//
+// Any key added to `v3QueueGroupKey` must be added here and to `roadmapQueueGroup` in
+// tools/projector/project.mjs; tests/console-queue-keyspace.test.mjs holds the three in step.
+const ROADMAP_V3_QUEUE_GROUP_LABELS = {
+  needs_human_decision: "Needs Human Decision",
+  now: "Now",
+  ready_next: "Ready Next",
+  later: "Later",
+  history: "History"
+};
 const ROADMAP_V3_STATUS_TONES = {
   planned: "gray",
   active: "blue",
@@ -3670,11 +3689,29 @@ function v3UpdateSubtabCounts(model, visibleRuns, historyCount) {
 // pending runs after Next up, completed runs skipped), and the Queue snapshot grid.
 // Everything derives from roadmap.json at render time; cards and rows open the
 // shared v3 Run Detail in place with origin "Overview". Read-only throughout.
+// Show or hide the WHOLE "Current work" card (eyebrow included), not just its body. Used by
+// renderOverviewV3 to drop the block when there is no active run and no eligible next one.
+// Every other path — an absent roadmap, a render error, a blanked project surface — states its
+// absence INSIDE the card, so the card must be visible for them; renderOverviewV3 therefore
+// restores visibility on entry and only hides on its own last line.
+function v3SetOverviewCurrentWorkVisible(visible) {
+  const root = byId("project-overview");
+  if (!root) return;
+  // Both the container and its card carry the state. The CARD is what the operator sees go —
+  // hiding only the container would leave the "Current work" eyebrow standing over nothing —
+  // and the container carries the same flag so that whatever writes into it later (the blanking
+  // sweep, an absence message) cannot land inside a block that is on screen only by half.
+  root.hidden = !visible;
+  const card = typeof root.closest === "function" ? root.closest(".overview-card") : null;
+  if (card) card.hidden = !visible;
+}
+
 function renderOverviewV3(data) {
   const currentWorkRoot = byId("project-overview");
   const nextActionRoot = byId("next-pending-runs");
   const snapshotRoot = byId("overview-activity");
   if (!currentWorkRoot || !nextActionRoot || !snapshotRoot) return;
+  v3SetOverviewCurrentWorkVisible(true);
   const model = v3Model(data);
   if (!model) {
     v3Unavailable("project-overview", roadmapAbsenceMessage(data));
@@ -3685,9 +3722,15 @@ function renderOverviewV3(data) {
   roadmapV3ModelCache = model;
   setOverviewCardTitles();
   const runs = model.allRuns.slice().sort((a, b) => a.queue_order - b.queue_order);
-  const groupLabels = Object.fromEntries(ROADMAP_V3_QUEUE_GROUPS.map((group) => [group.key, group.label]));
-  const active = runs.find((run) => run.status === "active") || runs[0];
-  const activeGroupLabel = active ? (groupLabels[v3QueueGroupKey(active, model.runsById, model)] || "Now") : "Now";
+  // The SEMANTIC labels (five keys), not the Run Queue's four display sections. Reading the
+  // display table here is what made `ready_next` and `later` miss and fall back to a literal.
+  const groupLabels = ROADMAP_V3_QUEUE_GROUP_LABELS;
+  // "Current work item" means a run that is RUNNING. There is no fallback to the head of the
+  // queue: that fallback painted whatever sat at #1 — routinely a COMPLETED run — under a label
+  // asserting it was the current work. With no active run the block shows the next eligible run
+  // under "Next up" instead, and with neither it hides entirely (below).
+  const active = runs.find((run) => run.status === "active") || null;
+  const activeGroupLabel = active ? groupLabels[v3QueueGroupKey(active, model.runsById, model)] : "";
   // [D-051] "Ready" here mirrors v3QueueGroupKey's ready_next: dependencies satisfied AND
   // no incomplete barrier bars the run — Next up must never name a run a barrier holds.
   const ready = runs.filter((run) => run.status === "planned" &&
@@ -3707,18 +3750,22 @@ function renderOverviewV3(data) {
         <span class="v3-ov-chip">${escapeHtml(activeGroupLabel)}</span>
       </span>
       <span class="v3-ov-summary">${escapeHtml(active.summary)}</span>
-    </button>` : emptyState("No runs in the roadmap.")}
+    </button>` : ""}
     ${nextWork ? `
     <button class="v3-ov-card v3-ov-card-next" type="button" data-v3-run="${escapeHtml(nextWork.run_id)}">
       <span class="v3-ov-label">Next up</span>
       <span class="v3-ov-titleline"><span class="v3-ov-order">#${nextWork.queue_order}</span><span class="v3-ov-title">${escapeHtml(nextWork.title)}</span></span>
       <span class="v3-ov-chips">
-        <span class="v3-ov-chip is-ready-next">${escapeHtml(groupLabels.ready_next || "Ready Next")}</span>
+        <span class="v3-ov-chip is-ready-next">${escapeHtml(groupLabels.ready_next)}</span>
         <span class="v3-ov-chip">Ready</span>
       </span>
       <span class="v3-ov-summary">${escapeHtml(nextWork.summary)}</span>
     </button>` : ""}
   `;
+  // Neither a running run nor an eligible next one: the block has nothing true to say, so the
+  // whole card goes — title included. An "Current work" eyebrow over an empty body reads as a
+  // failed render; a card that is not there reads as what it is.
+  v3SetOverviewCurrentWorkVisible(!!(active || nextWork));
 
   nextActionRoot.innerHTML = upcoming.length
     ? upcoming.map((run) => `
@@ -4732,6 +4779,9 @@ function showProjectUnavailable(error) {
     `;
   }
   const message = `${displaySourcePath(PATHS.snapshot)} could not be loaded, so this view has nothing to render.`;
+  // The Current work card may be hidden by the PREVIOUS project's render (no active run and no
+  // eligible next one). Blanking states an absence, so the card has to be on screen to state it.
+  v3SetOverviewCurrentWorkVisible(true);
   PROJECT_SURFACE_IDS.forEach((id) => {
     const container = byId(id);
     if (container) container.innerHTML = emptyState(message);
@@ -5084,7 +5134,7 @@ function v3MountRunEditor(runId) {
   const header = byId("run-drawer") ? byId("run-drawer").querySelector(".drawer-header") : null;
   if (header) { const ex = header.querySelector("[data-v3edit-open-run]"); if (ex) ex.remove(); }
   if (!v3EditMode || !v3RoadmapOriginActive() || !header) return;
-  const model = roadmapV3ModelCache;
+  const model = v3EditModel();
   if (!model || !model.runsById.get(runId)) return;
   const btn = `<button class="v3-edit-drawer-btn" type="button" data-v3edit-open-run="${escapeHtml(runId)}"><svg class="v3-edit-drawer-icon" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path></svg><span>Edit</span></button>`;
   const closeBtn = byId("drawer-close");
@@ -5103,9 +5153,26 @@ function v3FindPhase(model, phaseId) {
 
 function v3MarkModalDirty() { v3EditModalDirty = true; }
 
+// THE ONE MODEL READ OF THE EDIT SURFACES.
+//
+// The modal used to read the model two different ways. The renderers read
+// `roadmapV3ModelCache || v3Model(appData)`; the DIFF path — v3EditBeforeNode, and with it
+// v3BatchOpChanged and the insert payload — read the bare cache. The cache is null on the whole
+// stretch between a project reset and the first Roadmap render (resetProjectScopedState clears
+// it, v3EditReloadRoadmap repopulates it), and the two halves disagreed for exactly that stretch:
+// the modal rendered its fields off the fallback, while the diff saw no before-node at all and
+// v3BatchOpChanged returned false for every op. "Preview all changes" then reported NO CHANGES
+// over a modal that held real ones — indistinguishable, from the operator's chair, from having
+// nothing to apply.
+//
+// One accessor, one answer. Every edit-surface read goes through here.
+function v3EditModel() {
+  return roadmapV3ModelCache || v3Model(appData);
+}
+
 function v3OpenEditModal(target) {
   if (!v3EditMode) return;
-  const model = roadmapV3ModelCache || v3Model(appData);
+  const model = v3EditModel();
   if (!model) return;
   v3EditModalTarget = target;
   v3EditModalDirty = false;
@@ -5332,7 +5399,7 @@ function v3RenderObjectiveEditorExtras(id, node) {
   // Objective-only controls (Run B). Position = presentational reorder (move-objective);
   // Archive = the single stored objective flag (set-objective-archived). Each block declares
   // the op it produces via data-v3edit-op so the global batch preview can collect it.
-  const model = roadmapV3ModelCache || v3Model(appData);
+  const model = v3EditModel();
   const objectives = model && model.roadmap ? (model.roadmap.objectives || []) : [];
   const total = objectives.length;
   const currentIndex = objectives.findIndex((o) => o.objective_id === id) + 1;
@@ -5357,16 +5424,20 @@ function v3RenderInsertForm(target, model) {
   const phaseEntry = v3FindPhase(model, target.anchorId);
   const phaseLabel = phaseEntry ? phaseEntry.phase.title : String(target.anchorId || "");
   const total = model.allRuns.length;
-  const defaultPos = v3InsertDefaultOrder(model, target.anchorId);
-  const whereText = v3InsertWhereText(model, target.anchorId, defaultPos);
+  // Read-only CONTEXT, not a prefill: the span of queue_order the anchor phase occupies today.
+  const phaseOrders = (phaseEntry && Array.isArray(phaseEntry.phase.runs) ? phaseEntry.phase.runs : []).map((r) => r.queue_order);
+  const phaseSpan = phaseOrders.length
+    ? `${phaseLabel} currently holds #${Math.min(...phaseOrders)} to #${Math.max(...phaseOrders)}`
+    : `${phaseLabel} currently holds no runs`;
   return `
     <div class="v3-edit v3-modal-edit" data-v3edit-insert data-v3edit-anchor-phase="${escapeHtml(String(target.anchorId || ""))}">
       <div class="v3-edit-note">Insert a new run. Run ID is required, must be new, and becomes permanent identity. The core refuses duplicates and forward dependencies.</div>
       <div class="v3-edit-block">
         <div class="v3-edit-block-title">Where</div>
-        <div class="v3-edit-note">Position in the global queue of ${total} runs. Prefilled to add at the end of ${escapeHtml(phaseLabel)}. Lower numbers place the run earlier; the whole queue re-sequences around it.</div>
-        <label class="v3-edit-field"><span class="v3-edit-label">Position</span><input type="number" data-v3edit-insert-position min="1" max="${total + 1}" value="${defaultPos}"></label>
-        <div class="v3-edit-note" data-v3edit-insert-where>${escapeHtml(whereText)}</div>
+        <div class="v3-edit-note">Enter the position where this run will REALLY execute. Nothing is prefilled: a queue_order is an assertion about execution order, and the console cannot derive one — only you know it. Lower numbers place the run earlier; the whole queue re-sequences around it.</div>
+        <div class="v3-edit-note">Queue of ${total} runs; ${escapeHtml(phaseSpan)}.</div>
+        <label class="v3-edit-field"><span class="v3-edit-label">Position (1 to ${total + 1})</span><input type="number" data-v3edit-insert-position min="1" max="${total + 1}" placeholder="enter a position"></label>
+        <div class="v3-edit-note" data-v3edit-insert-where>${escapeHtml(V3_INSERT_NO_POSITION_TEXT)}</div>
       </div>
       <div class="v3-edit-block">
         <div class="v3-edit-block-title">New run</div>
@@ -5378,8 +5449,8 @@ function v3RenderInsertForm(target, model) {
       </div>
       <div class="v3-edit-block">
         <div class="v3-edit-block-title">Dependencies</div>
-        <div class="v3-edit-note">Dependencies must be earlier than the new run's position; the core refuses forward links.</div>
-        ${v3RenderDepPicker("insertdeps", "multi", model.allRuns.filter((r) => r.queue_order < defaultPos), [], model)}
+        <div class="v3-edit-note">Dependencies must be earlier than the new run's position; the core refuses forward links. Eligible runs appear once a position is entered.</div>
+        ${v3RenderDepPicker("insertdeps", "multi", [], [], model)}
       </div>
       <button class="btn btn-secondary btn-sm" type="button" data-v3edit-op="insert">Preview insert</button>
       <div id="v3-edit-preview" class="v3-edit-preview" hidden></div>
@@ -5391,25 +5462,33 @@ function v3RenderInsertForm(target, model) {
 // an operator-facing global queue position into that vocabulary without adding any core parameter.
 // position N  -> after the run currently at queue_order N-1
 // position 1  -> before the run currently at queue_order 1
-function v3InsertDefaultOrder(model, phaseId) {
-  const total = model ? model.allRuns.length : 0;
-  const entry = v3FindPhase(model, phaseId);
-  if (entry && entry.phase && Array.isArray(entry.phase.runs) && entry.phase.runs.length) {
-    const maxOrder = entry.phase.runs.reduce((m, r) => Math.max(m, r.queue_order), 0);
-    return maxOrder + 1;
-  }
-  return total + 1;
-}
+//
+// THERE IS NO DEFAULT POSITION, and the absence is the repair.
+//
+// "Add run" used to prefill end-of-phase (the anchor phase's highest queue_order + 1). Clicked on
+// an early phase that produces a LOW queue_order, and a queue_order is not a slot: it asserts that
+// the run executes near the start of the project. The rule this roadmap is governed by is that a
+// run is inserted where it will really execute, never at the end nor at the beginning for
+// convenience — and the launchers run nearly landed at position 2 down exactly this path.
+//
+// Every candidate default asserts the same kind of thing (end-of-queue and the execution frontier
+// included), and when a run will really execute is the operator's judgement: it is not derivable
+// from anything the console can read. So the field is born EMPTY and the preview refuses until it
+// is filled. Cabin decision of 2026-07-30, recorded in
+// context/aiw-console/records/DEFECTOS-CONSOLA-Y-ESPEJO.md.
+const V3_INSERT_NO_POSITION_TEXT = "No position entered yet — enter one to see where the run lands.";
+const V3_INSERT_NEEDS_POSITION_MESSAGE = "Enter a position before previewing. This run's queue_order says when it executes, so the console will not choose one for you: type the position where it will really run, between #1 and the end of the queue.";
 
+// The position currently entered, clamped to the queue, or NULL when the field is empty or holds
+// no number. Null is a real answer here — "the operator has not said yet" — and every caller
+// handles it rather than substituting a guess.
 function v3InsertCurrentPosition(model) {
   const total = model ? model.allRuns.length : 0;
-  const t = v3EditModalTarget;
-  const fallback = (model && t) ? v3InsertDefaultOrder(model, t.anchorId) : 1;
   const modal = byId("edit-modal-body");
   const input = modal ? modal.querySelector("[data-v3edit-insert-position]") : null;
-  if (!input) return fallback;
+  if (!input) return null;
   const n = parseInt(input.value, 10);
-  if (!Number.isFinite(n)) return fallback;
+  if (!Number.isFinite(n)) return null;
   if (n < 1) return 1;
   if (n > total + 1) return total + 1;
   return n;
@@ -5442,6 +5521,8 @@ function v3InsertPhaseTitleForRun(model, run) {
 
 function v3InsertWhereText(model, phaseId, position) {
   const total = model ? model.allRuns.length : 0;
+  // No position entered: name the absence instead of describing a landing nobody asked for.
+  if (position == null) return V3_INSERT_NO_POSITION_TEXT;
   const anchor = v3InsertAnchorArgs(model, phaseId, position);
   let landing = "at end of phase";
   let phaseTitle;
@@ -5460,7 +5541,7 @@ function v3InsertWhereText(model, phaseId, position) {
 }
 
 function v3InsertOnPositionChange() {
-  const model = roadmapV3ModelCache;
+  const model = v3EditModel();
   const modal = byId("edit-modal-body");
   const t = v3EditModalTarget;
   if (!model || !modal || !t) return;
@@ -5474,7 +5555,8 @@ function v3InsertOnPositionChange() {
       Array.prototype.slice.call(chipsWrap.querySelectorAll("[data-v3edit-chip]")).forEach((chip) => {
         const id = chip.getAttribute("data-v3edit-chip");
         const run = model.runsById.get(id);
-        if (!run || run.queue_order >= position) chip.remove();
+        // With the position cleared no run is known-earlier, so no dependency is eligible.
+        if (!run || position == null || run.queue_order >= position) chip.remove();
       });
     }
     v3EditPickerRender(depsPicker);
@@ -5534,6 +5616,9 @@ function v3EditPickerEligible(name, model) {
   }
   if (name === "insertdeps") {
     const position = v3InsertCurrentPosition(model);
+    // Eligibility is "earlier than the new run". With no position entered there is no "earlier",
+    // so the picker offers nothing rather than offering everything.
+    if (position == null) return [];
     return model.allRuns.filter((r) => r.queue_order < position);
   }
   return model.allRuns.slice();
@@ -5548,7 +5633,7 @@ function v3EditPickerRender(picker) {
   const name = picker.getAttribute("data-v3edit-picker");
   const mode = picker.getAttribute("data-v3edit-picker-mode");
   const select = picker.querySelector("[data-v3edit-picker-select]");
-  const model = roadmapV3ModelCache;
+  const model = v3EditModel();
   if (!model || !select) return;
   const selected = v3EditPickerValues(picker);
   const available = v3EditPickerEligible(name, model).filter((r) => selected.indexOf(r.run_id) === -1);
@@ -5563,7 +5648,7 @@ function v3EditPickerPick(pick) {
   const chips = picker.querySelector("[data-v3edit-chips]");
   const id = pick.getAttribute("data-v3edit-picker-pick");
   if (mode === "single") chips.innerHTML = "";
-  if (v3EditPickerValues(picker).indexOf(id) === -1) chips.insertAdjacentHTML("beforeend", v3DepChipHtml(id, roadmapV3ModelCache));
+  if (v3EditPickerValues(picker).indexOf(id) === -1) chips.insertAdjacentHTML("beforeend", v3DepChipHtml(id, v3EditModel()));
   const search = picker.querySelector("[data-v3edit-picker-search]");
   if (search) { search.value = ""; search.focus(); }
   v3EditPickerRender(picker);
@@ -5581,7 +5666,7 @@ function v3EditPickerOnSelect(select) {
   const chips = picker.querySelector("[data-v3edit-chips]");
   if (mode === "single") chips.innerHTML = "";
   if (v3EditPickerValues(picker).indexOf(id) === -1) {
-    chips.insertAdjacentHTML("beforeend", v3DepChipHtml(id, roadmapV3ModelCache));
+    chips.insertAdjacentHTML("beforeend", v3DepChipHtml(id, v3EditModel()));
   }
   v3EditPickerRender(picker);
   v3MarkModalDirty();
@@ -5675,7 +5760,9 @@ function v3ModalAttachHandlers() {
 
 function v3EditBeforeNode() {
   const t = v3EditModalTarget;
-  const model = roadmapV3ModelCache;
+  // v3EditModel(), never the bare cache: this function decides whether "Preview all changes"
+  // sees any change at all, and a null here silently answers "nothing changed".
+  const model = v3EditModel();
   if (!t || !model) return null;
   if (t.kind === "run") return model.runsById.get(t.id);
   if (t.kind === "phase") { const e = v3FindPhase(model, t.id); return e ? e.phase : null; }
@@ -5776,7 +5863,8 @@ function v3BatchOpChanged(op, args, beforeNode) {
     return String(args.toOrder) !== String(beforeNode.queue_order);
   }
   if (op === "move-objective") {
-    const objs = (roadmapV3ModelCache && roadmapV3ModelCache.roadmap) ? (roadmapV3ModelCache.roadmap.objectives || []) : [];
+    const model = v3EditModel();
+    const objs = (model && model.roadmap) ? (model.roadmap.objectives || []) : [];
     const currentIndex = objs.indexOf(beforeNode) + 1;
     return String(args.toIndex) !== String(currentIndex);
   }
@@ -5840,7 +5928,7 @@ function v3EditBuildPayload(op) {
     return null;
   }
   if (op === "insert") {
-    const model = roadmapV3ModelCache;
+    const model = v3EditModel();
     const depsPicker = modal.querySelector('[data-v3edit-picker="insertdeps"]');
     const args = {
       runId: (val("[data-v3edit-newid]") || "").trim(),
@@ -5851,6 +5939,9 @@ function v3EditBuildPayload(op) {
       dependsOn: depsPicker ? v3EditPickerValues(depsPicker) : []
     };
     const position = v3InsertCurrentPosition(model);
+    // No position, no payload. The refusal the operator sees is raised in v3EditPreview, which
+    // checks the same condition; returning null here keeps the anchor from being invented.
+    if (position == null) return null;
     Object.assign(args, v3InsertAnchorArgs(model, t.anchorId, position));
     return { op, args };
   }
@@ -5954,6 +6045,12 @@ function v3EditSetPanel(html) {
 }
 
 async function v3EditPreview(op) {
+  // Insert has no default position (see v3InsertCurrentPosition). Say what is missing: the bare
+  // `return` below is silent, and a silent button reads as broken rather than as a refusal.
+  if (op === "insert" && v3InsertCurrentPosition(v3EditModel()) == null) {
+    v3EditSetPanel(`<div class="v3-edit-preview-status">${escapeHtml(V3_INSERT_NEEDS_POSITION_MESSAGE)}</div>`);
+    return;
+  }
   const payload = v3EditBuildPayload(op);
   if (!payload) return;
   const beforeNode = v3EditBeforeNode();
@@ -6042,7 +6139,7 @@ function v3EditDiffHtml(op, args, beforeNode) {
     // Name the SCOPE and, for a scope that bars anything, the count it bars — read from the
     // model exactly as the barred set is derived, so the preview and the rendered roadmap
     // can never disagree about what this one field does.
-    const model = roadmapV3ModelCache;
+    const model = v3EditModel();
     const scopeText = (scope) => {
       if (scope !== "lane" && scope !== "global") return "(no barrier)";
       if (!model) return scope === "global" ? "GLOBAL" : "lane";
@@ -6074,7 +6171,8 @@ function v3EditDiffHtml(op, args, beforeNode) {
     rows.push(v3EditDiffRow("depends_on", "(new)", (args.dependsOn || []).join(", ") || "(none)"));
   }
   if (op === "move-objective") {
-    const objs = (roadmapV3ModelCache && roadmapV3ModelCache.roadmap) ? (roadmapV3ModelCache.roadmap.objectives || []) : [];
+    const model = v3EditModel();
+    const objs = (model && model.roadmap) ? (model.roadmap.objectives || []) : [];
     const fromPos = beforeNode ? objs.indexOf(beforeNode) + 1 : 0;
     const toPos = args.toIndex;
     const msg = (fromPos && String(fromPos) === String(toPos))
@@ -6146,7 +6244,7 @@ function v3EditEnrichMoveErrors(errors) {
 }
 
 function v3EditRemoveChoiceUi() {
-  const model = roadmapV3ModelCache;
+  const model = v3EditModel();
   const t = v3EditModalTarget;
   const eligible = model && t ? model.allRuns.filter((r) => r.run_id !== t.id) : [];
   return `

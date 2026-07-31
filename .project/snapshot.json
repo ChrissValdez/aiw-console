@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T03:05:30.596Z",
+  "generated_at": "2026-07-31T03:08:50.056Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-31T03:05:30.593Z"
+      "mtime": "2026-07-31T03:08:50.050Z"
     },
     {
       "path": "package.json",
@@ -41,7 +41,7 @@
   ],
   "operational_status": "idle",
   "project_summary": "AIW Console Roadmap: 2 objectives, 19 phases, 51 runs.",
-  "current_status_summary": "No active run; 40 of 51 runs completed.",
+  "current_status_summary": "No active run; 41 of 51 runs completed.",
   "roadmap_tree": {
     "model": "roadmap_tree_v1",
     "roadmap_id": "roadmap",
@@ -260,7 +260,7 @@
                 "title": "Fix four defects in the global console renderer, and the projector mirror the tests assert against",
                 "summary": "Correct the Overview active-run label fallback, the missing model-cache fallback in the edit modal, and the Add run position default that asserts a false execution order.",
                 "full_description": "REFRAMED 2026-07-30 by the cabin's human audit, after a read-only measurement of the code. This run was written against the LOCAL console of cantu-studio during editor QA. Its defects travelled byte for byte into the global console when that console was ported, and MEASURED TODAY ALL THREE ARE PRESENT IN BOTH COPIES, none of them touched by the finishing runs, and NONE OF THEM COVERED BY ANY TEST. So this is now a run against the GLOBAL console — the live one at project-console/, the one the launcher starts, never the fork at docs/project-console/ nor the retired prototype at console/. Repairing them in the live copy is what matters; the local copy is retired by the cutover. FOUR DEFECTS, and the fourth was found by the same measurement. (A) THE OVERVIEW LABEL FALLS BACK TO THE LITERAL \"Now\", and the cause in the original text — that it happens when no run is active — is WRONG, which matters because it changes the repair. The real cause is a KEY-SPACE MISMATCH: the function that computes a run's queue group returns five keys, while the label table declares four and is missing ready_next and later. When a run resolves to either of those two the lookup returns undefined and the fallback fires, whatever the run's status. Measured on this project today, with zero active runs, the label produced is actually \"History\", because the fallback picks the first run of the queue and that one is completed — which is its own defect: a COMPLETED run painted under \"Current work item\". THE DECISION THE OPERATOR TOOK, which removes the only judged part of this run: when no run is active, show the NEXT ELIGIBLE run labelled \"Next up\", and hide the block entirely when there is none. The machinery already exists — ready_next is computed and only missing from the label table. (B) THE EDIT MODAL'S CACHE READ IS ASYMMETRIC: one function reads the model cache with a fallback and the other reads it without, so with the cache empty and the modal open the Position field renders while Preview all changes reports NO CHANGES WHEN THERE ARE. That is the worst of the four: it does not look wrong, it makes the operator conclude there was nothing to apply. (C) THE ADD RUN AFFORDANCE DEFAULTS TO END-OF-PHASE, which in an early phase produces a low queue_order asserting the run executed near the start of the project. It is not cosmetic: it pushes against the rule that governs this roadmap, that a run is inserted where it will really execute and never at the end for convenience. Its own original text records that the launchers run nearly landed at position 2 this way. (D) THE PROJECTOR'S MIRROR HAS DIVERGED. tools/projector/project.mjs declares a function to be a mirror of the console's queue-group function and no longer is: it lacks the needs_human_decision branch and the barrier branch. AND THE TESTS ASSERT AGAINST THE MIRROR, NOT AGAINST THE RENDERER — which is why defect (A) has no net. It is repaired here rather than in the suite run because it is the same function and the same key space, and separating them guarantees they diverge again.",
-                "status": "planned",
+                "status": "completed",
                 "depends_on": [
                   "RUN-CONSOLE-SUITE-FIXTURES-001"
                 ]

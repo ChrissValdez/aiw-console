@@ -3,3 +3,10 @@ node_modules/
 .aiw/views/git_history.snapshot.json
 
 .aiw/
+
+# ...except inside the test fixtures. tests/fixtures/neighbours/<project>/.aiw/ is the frozen
+# SOURCE layout the projector reads (roadmap, governance, curated docs index): it is data the
+# suite asserts against, so it must be versioned like any other fixture. The directory itself has
+# to be re-included — git does not descend into an excluded directory, so a negation on the files
+# inside it alone would never take effect.
+!tests/fixtures/**/.aiw/

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-30T22:46:56.173Z",
+  "generated_at": "2026-07-31T02:00:58.201Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
@@ -13,8 +13,12 @@
       "mtime": "2026-07-24T20:23:55.779Z"
     },
     {
+      "path": "context/CLASIFICACION-DE-RUNS.md",
+      "mtime": "2026-07-31T01:12:31.803Z"
+    },
+    {
       "path": "context/DECISIONES.md",
-      "mtime": "2026-07-28T20:10:46.360Z"
+      "mtime": "2026-07-31T01:13:10.713Z"
     },
     {
       "path": "context/MIGRATION-REPORT.md",
@@ -185,6 +189,10 @@
       "mtime": "2026-07-29T10:12:11.919Z"
     },
     {
+      "path": "context/aiw-console/records/MEDICION-HEADER-Y-RETIRO-DE-PLACEMENT-CANTU.md",
+      "mtime": "2026-07-31T00:18:23.612Z"
+    },
+    {
       "path": "context/aiw-console/records/MEDICION-INCIDENTE-SCOPE-PREFLIGHT.md",
       "mtime": "2026-07-29T09:01:37.010Z"
     },
@@ -237,6 +245,10 @@
       "mtime": "2026-07-28T23:48:33.751Z"
     },
     {
+      "path": "context/aiw-console/records/PUBLICACION-CLASIFICACION-DE-RUNS.md",
+      "mtime": "2026-07-31T01:14:49.563Z"
+    },
+    {
       "path": "context/aiw-console/records/REARCHIVO-BLOQUE-RENAME.md",
       "mtime": "2026-07-24T01:38:32.780Z"
     },
@@ -265,6 +277,10 @@
       "mtime": "2026-07-29T02:27:19.764Z"
     },
     {
+      "path": "context/aiw-console/records/REPARACION-SELECTOR-COLOR-HEADER-CANTU.md",
+      "mtime": "2026-07-31T00:44:52.296Z"
+    },
+    {
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "mtime": "2026-07-28T21:05:27.999Z"
     },
@@ -291,6 +307,10 @@
     {
       "path": "context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md",
       "mtime": "2026-07-24T20:26:13.701Z"
+    },
+    {
+      "path": "context/aiw-console/records/VERIFICACION-PACKET-COLUMNS-Y-CONVENCIONES-DE-AUDITORIA-CANTU.md",
+      "mtime": "2026-07-31T00:18:36.337Z"
     },
     {
       "path": "context/aiw/AIW_CONTEXT.md",
@@ -322,7 +342,7 @@
     },
     {
       "path": "context/handoffs/aiw-console.md",
-      "mtime": "2026-07-29T09:05:05.588Z"
+      "mtime": "2026-07-31T01:13:29.415Z"
     },
     {
       "path": "context/handoffs/aiw.md",
@@ -406,12 +426,20 @@
       "freshness": "2026-07-24T20:23:55.779Z"
     },
     {
+      "title": "CLASIFICACIÓN DE RUNS — especificación canónica",
+      "path": "context/CLASIFICACION-DE-RUNS.md",
+      "nav_tier": "primary",
+      "default_visible": true,
+      "ia_bucket": "context",
+      "freshness": "2026-07-31T01:12:31.803Z"
+    },
+    {
       "title": "DECISIONES.md — log append-only. Nunca reescribir; solo agregar.",
       "path": "context/DECISIONES.md",
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-07-28T20:10:46.360Z"
+      "freshness": "2026-07-31T01:13:10.713Z"
     },
     {
       "title": "MIGRATION-REPORT — Centralización del contexto de gobernanza en aiw-console",
@@ -750,6 +778,14 @@
       "freshness": "2026-07-29T10:12:11.919Z"
     },
     {
+      "title": "Medición de Header y plan de retirada de los controles de placement",
+      "path": "context/aiw-console/records/MEDICION-HEADER-Y-RETIRO-DE-PLACEMENT-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T00:18:23.612Z"
+    },
+    {
       "title": "MEDICIÓN DEL INCIDENTE DEL PRE-FLIGHT DE ALCANCE",
       "path": "context/aiw-console/records/MEDICION-INCIDENTE-SCOPE-PREFLIGHT.md",
       "nav_tier": "evidence",
@@ -854,6 +890,14 @@
       "freshness": "2026-07-28T23:48:33.751Z"
     },
     {
+      "title": "RECORD — publicación de la especificación de clasificación de runs",
+      "path": "context/aiw-console/records/PUBLICACION-CLASIFICACION-DE-RUNS.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T01:14:49.563Z"
+    },
+    {
       "title": "RE-ARCHIVO — El bloque de rename sale de O0 y entra en O2",
       "path": "context/aiw-console/records/REARCHIVO-BLOQUE-RENAME.md",
       "nav_tier": "evidence",
@@ -910,6 +954,14 @@
       "freshness": "2026-07-29T02:27:19.764Z"
     },
     {
+      "title": "Reparación del selector de color de Header",
+      "path": "context/aiw-console/records/REPARACION-SELECTOR-COLOR-HEADER-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T00:44:52.296Z"
+    },
+    {
       "title": "RESTITUCIÓN DE LAS 17 ARISTAS DE `#47` Y RE-ENCUADRE A AUDITORÍA AL CIERRE — CANTU",
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "nav_tier": "evidence",
@@ -964,6 +1016,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-24T20:26:13.701Z"
+    },
+    {
+      "title": "Verificación del packet de Columns y fijado de las convenciones de auditoría",
+      "path": "context/aiw-console/records/VERIFICACION-PACKET-COLUMNS-Y-CONVENCIONES-DE-AUDITORIA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-07-31T00:18:36.337Z"
     },
     {
       "title": "AIW — Orchestration Context",
@@ -1027,7 +1087,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-07-29T09:05:05.588Z"
+      "freshness": "2026-07-31T01:13:29.415Z"
     },
     {
       "title": "HANDOFF — hilo `aiw` (el kernel)",

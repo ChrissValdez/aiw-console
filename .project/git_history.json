@@ -1,27 +1,67 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-30T22:46:56.173Z",
+  "generated_at": "2026-07-31T02:00:58.201Z",
   "generated_from": "aiw-projector@0.9.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-30T01:18:37.370Z"
+      "mtime": "2026-07-31T01:54:39.756Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-30T22:19:04.381Z"
+      "mtime": "2026-07-31T02:00:58.197Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "333369899b367c6744c64ce31c4b6e84db809cf7",
+  "head": "d8aa4634a0a06d5006aae563fae0b6b72e4104fc",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 94,
+  "commit_total": 98,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "d8aa463",
+      "full_sha": "d8aa4634a0a06d5006aae563fae0b6b72e4104fc",
+      "date": "2026-07-30T19:54:39-06:00",
+      "parents": "fb8b349",
+      "subject": "record: editor: el selector de color de Header recibe la paleta activa (#15); run activo pendiente de re-QA",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fb8b349",
+      "full_sha": "fb8b3497572b731b07c0eba5bfd892dc5d1d08e2",
+      "date": "2026-07-30T18:22:34-06:00",
+      "parents": "cebb824",
+      "subject": "record: docs: verificacion del packet de Columns y cierre de #14; medicion de Header y packet de QA (#15 sigue activo)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "cebb824",
+      "full_sha": "cebb824e6ea87d3d2dad5ae8566d9bd7a08a758a",
+      "date": "2026-07-30T17:52:10-06:00",
+      "parents": "c9eeca2",
+      "subject": "handoff: reescritura tras la auditoria humana - cola de 51, sistema de clasificacion provisional, los cuatro reportes pendientes y el validador viejo en rojo",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c9eeca2",
+      "full_sha": "c9eeca25257a1461554309072a7def1357e6ffa5",
+      "date": "2026-07-30T17:24:01-06:00",
+      "parents": "3333698",
+      "subject": "roadmap: auditoria humana de cabina - seis runs nuevos, cuatro full_description reescritos, un titulo, dos closeout_result y nueve aristas; cola 1..51 densa",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "3333698",

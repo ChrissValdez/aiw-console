@@ -146,57 +146,13 @@ sin sobrantes y sin una sola diferencia**; también coinciden los 2 objetivos, l
 19 fases y el reparto 38/13. `generated_at`: **`2026-07-30T22:46:56.173Z`**,
 `generated_from` **`aiw-projector@0.9.0`**. **No se re-emitió nada en esta sesión.**
 
-## EL SISTEMA DE CLASIFICACIÓN — PROVISIONAL, y es la excepción declarada
+## EL SISTEMA DE CLASIFICACIÓN — YA ES DOCUMENTO; aquí solo el puntero
 
-> **Esta sección viola «APUNTA, no RECUENTA» a propósito y es la única que lo
-> hace.** El sistema se cerró en la auditoría de cabina y **todavía no existe como
-> documento**: publicarlo es el `#39`. Por eso viaja aquí en compacto. **Cuando el
-> `#39` lo publique, esta sección se SUSTITUYE por un puntero** — no se mantiene en
-> paralelo.
-
-**Cinco campos almacenados**, todos **opcionales en el esquema**:
-
-- `correctness_model` — `SPECIFIED` · `JUDGED_ACCEPTS` · `JUDGED_DEFINES`
-- `work_type` — `COSMETIC` · `FUNCTIONAL` · `FOUNDATIONAL`
-- `blast_radius` — `LOCAL` · `ADJACENT` · `SYSTEMIC` · `PROJECT_SHAPE`, medido
-  **contando consumidores presentes y planificados**
-- `failure_surfaces` — `LOUD` · `VISIBLE` · `SILENT`
-- `external_effects` — lista de guarda, **vacía por defecto**
-
-Más `classified_at`. **El validador REPORTA los runs vivos sin clasificar; NO
-rechaza.**
-
-**Dos derivados, nunca almacenados: `severity` y `closure_mode`.**
-
-`severity` — tabla `work_type` × `blast_radius` (`LOCAL` / `ADJACENT` / `SYSTEMIC`
-/ `PROJECT_SHAPE`):
-
-| | `LOCAL` | `ADJACENT` | `SYSTEMIC` | `PROJECT_SHAPE` |
-|---|---|---|---|---|
-| `COSMETIC` | MINOR | MINOR | MODERATE | MODERATE |
-| `FUNCTIONAL` | MODERATE | MODERATE | MAJOR | MAJOR |
-| `FOUNDATIONAL` | MAJOR | MAJOR | CRITICAL | CRITICAL |
-
-Con **un solo ajuste** por `failure_surfaces`: `LOUD` **−1**, `VISIBLE` **0**,
-`SILENT` **+1**, saturando entre `MINOR` y `CRITICAL`.
-
-`closure_mode` — `SPECIFIED` + MINOR/MODERATE → `UNATTENDED`; `SPECIFIED` +
-MAJOR/CRITICAL → `SEMI_ATTENDED`; `JUDGED_ACCEPTS` → `SEMI_ATTENDED`;
-`JUDGED_DEFINES` → `ATTENDED`. **Guarda: `external_effects` no vacía →
-`SEMI_ATTENDED` como mínimo.**
-
-**Tres combinaciones ILEGALES que la consola rechaza:**
-`SPECIFIED`+`FOUNDATIONAL` · `FOUNDATIONAL`+`LOUD` · `JUDGED_*`+`UNATTENDED`.
-
-**DOS EJES, NO UNO — es la decisión de mayor alcance del sistema.** El **cierre se
-DERIVA** de la clasificación del run; la **delegabilidad se DECLARA a nivel de
-proyecto**, no por run. AIW ya declara la suya por escrito.
-
-**`care_budget`** es **configuración por proyecto editable en consola, no regla
-dura**: MINOR → Opus·Alto · MODERATE → Opus·Extra · MAJOR → Opus·Max · CRITICAL →
-Fable·Max.
-
-**Los `completed` no se clasifican.** Sí un puñado, como calibración.
+**Publicado como `context/CLASIFICACION-DE-RUNS.md`** (normativo y transversal a
+los tres proyectos), y registrado como decisión en `context/DECISIONES.md`
+(`D-057`, los dos ejes). **La copia provisional que vivía en esta sección queda
+retirada**: la excepción a «APUNTA, no RECUENTA» ya no existe porque ya hay a qué
+apuntar.
 
 ## QUÉ PRODUJO LA AUDITORÍA — un hito por línea
 

@@ -2052,3 +2052,84 @@ Criterio de borrado: la sustituye una decisión que vuelva a cambiar el criterio
 borrado del caso 4, o que resuelva el caso 4 de otro modo. Cuando el test se elimine
 por cumplirse (a) o (b), esta entrada queda como historia junto con `D-055`; no
 caduca por sí sola, y el criterio corregido de arriba es el vigente hasta entonces.
+
+## D-057 — 2026-07-30 — Dos ejes, no uno: el CIERRE se deriva del run, la DELEGABILIDAD se declara por proyecto; la especificación de clasificación pasa a documento canónico
+**Lo transversal de esta entrada es la SEPARACIÓN DE DOS EJES**, y por eso vive
+aquí y no en la carpeta de un proyecto. El **CIERRE se DERIVA** —qué hace falta
+para cerrar un run— de la clasificación de ese run. La **DELEGABILIDAD se
+DECLARA a nivel de PROYECTO**: si AIW puede ejecutar ese trabajo o no. Son dos
+preguntas distintas; colapsarlas en una es lo que produjo el desorden que esta
+decisión cierra. En el workspace existen **cuatro vocabularios en competencia**
+para ese eje y un run `planned` del roadmap de `aiw` está a punto de construir
+uno de ellos: **separar los dos ejes es lo que impide que se añada un quinto.**
+`aiw` ya declara su lado por escrito —todo run de su roadmap es **manual** bajo la
+regla **anti-auto-hosting**, con **`aiw-console` como excepción explícita**—, así
+que en su caso la declaración ya existe y no se re-decide run por run.
+
+**Esta entrada APUNTA; el documento CONTIENE.** El sistema queda publicado como
+**`context/CLASIFICACION-DE-RUNS.md`**, documento **normativo y TRANSVERSAL a los
+tres proyectos**: los cinco campos almacenados y sus valores admitidos, la nota de
+que todos son opcionales en el esquema, las **dos tablas de derivación** de
+`severity` y `closure_mode` —ambos **DERIVADOS y nunca almacenados**—, las **tres
+combinaciones ilegales** que la consola rechaza, la guarda de `external_effects`,
+la tabla `care_budget` como configuración por proyecto y no regla dura, y el
+régimen de los `completed`. **Aquí no se duplica ni una tabla**: dos copias de una
+tabla de derivación son dos verdades en cuanto una se edite. Vive en `context/` y
+no en la carpeta de un proyecto porque **la clasificación es del RUN, no del repo
+que lo aloja**.
+
+**Procedencia y por qué ahora.** El sistema nació en el hilo de `cantu-studio`
+—que midió que el tipo de trabajo que representa un run no estaba declarado en
+ninguna parte— y se cerró en la **auditoría humana de cabina del 2026-07-29/30**.
+Hasta hoy existía **solo como texto pegado en dos conversaciones de cabina** y como
+copia provisional dentro de `context/handoffs/aiw-console.md`: ningún ticket podía
+citarlo, ningún run podía depender de él, y la consola no podía referenciar la
+tabla que debe implementar. Un handoff es efímero y se sobrescribe ([[D-038]]), así
+que doctrina alojada ahí es estado que se pudre; esa sección **ordenaba ella misma
+su sustitución por un puntero** en cuanto el documento existiera, y **la
+sustitución queda ejecutada** — las dos copias no se mantienen en paralelo.
+
+**HUECO DECLARADO, no rellenado.** El `full_description` del run que ejecuta esta
+publicación dice que también publica **tres reglas mecánicas para runs mixtos**.
+**No están en disco**: no en la sección del handoff que sirve de fuente, no en el
+handoff completo, no en `context/aiw-console/records/`, no en este log. Lo único
+que consta es la mención en ese `full_description`, que afirma que existen pero no
+dice cuáles son. **No se reconstruyen por coherencia con el resto del sistema**:
+una regla inventada que se lea como acordada es peor que un hueco declarado. El
+documento lleva la sección «Runs mixtos — PENDIENTE» que lo dice con todas las
+letras y remite a la búsqueda registrada en el record. Se cierra por **corrección
+hacia adelante** —entrada nueva y sección nueva, sin reescribir nada—, que es el
+régimen de este log desde su cabecera («log append-only. Nunca reescribir; solo
+agregar», `:1`) y cuyo precedente es [[D-045]] y, más cerca, [[D-056]].
+
+**ALCANCE: lo que esta entrada NO decide.**
+- **No añade campos a ningún esquema** —roadmap, emisor o validador—, **no
+  clasifica ningún run** y **no toca código ni tests**. La publicación es papel; el
+  esquema y la clasificación son runs propios y posteriores.
+- **No declara la delegabilidad de ningún proyecto** que no la tuviera ya declarada
+  por escrito. Fija dónde vive esa declaración —a nivel de proyecto—, no su
+  contenido.
+- **La ejecución en `aiw` y en `cantu-studio` es trabajo de SUS hilos, no de éste.**
+  Los punteros a `context/CLASIFICACION-DE-RUNS.md` en el `CLAUDE.md` y el
+  `AGENTS.md` de cada repo, y la declaración de delegabilidad de cada proyecto, los
+  escribe el hilo dueño de ese repo. Aquí solo se nombran. Este encargo no leyó ni
+  escribió un byte de ninguno de los dos.
+- **En la raíz de `aiw-console` no existen hoy `CLAUDE.md` ni `AGENTS.md`**
+  (comprobado en disco al escribir esta entrada). **No se crearon**: dar reglas de
+  agente a este repo es una decisión de gobernanza propia y no se toma de paso.
+
+Referencias: `context/CLASIFICACION-DE-RUNS.md`, el documento normativo que esta
+entrada instituye y al que apunta todo lo anterior;
+`context/aiw-console/records/PUBLICACION-CLASIFICACION-DE-RUNS.md` (qué se
+transcribió y de dónde, la búsqueda de las reglas de runs mixtos con los comandos
+usados, y qué no se hizo); `context/handoffs/aiw-console.md`, cuya sección «EL
+SISTEMA DE CLASIFICACIÓN — PROVISIONAL, y es la excepción declarada» era la única
+copia existente y queda sustituida por un puntero; [[D-038]] (handoff efímero vs
+contexto permanente, que es por qué la doctrina no puede quedarse en el relevo);
+[[D-045]] y [[D-056]] (el precedente de corrección hacia adelante en este mismo
+log); [[D-029]] y [[D-030]], el vocabulario anterior de categorías de run por
+closeout, que esta separación de ejes reencuadra sin reescribir.
+Criterio de borrado: la sustituye una decisión que cambie la separación de los dos
+ejes —que vuelva a derivar la delegabilidad del run, o a declarar el cierre por
+proyecto—, o que traslade el documento normativo a otra casa. El hueco de las tres
+reglas de runs mixtos NO caduca esta entrada: se cierra con una entrada nueva.

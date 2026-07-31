@@ -52,8 +52,45 @@ export const RUN_REQUIRED_FIELDS = ["run_id", "queue_order", "title", "summary",
 // completed it bars every LATER run in its scope — later by global queue_order; the
 // blocked set is DERIVED at read, never stored, never expanded into depends_on edges).
 // They sit before the closeout fields: planning fields precede outcome fields.
-export const RUN_OPTIONAL_FIELDS = ["lane", "barrier", "closeout_result", "progress"];
+// [#43] The six STORED classification fields (context/CLASIFICACION-DE-RUNS.md §1):
+// four measured tokens, one guard list, one mark. Every one of them is OPTIONAL and
+// ABSENT BY DEFAULT, without exception -- optionality is membership in THIS array and
+// not in RUN_REQUIRED_FIELDS, exactly as `lane` declares it above. There is no flag, no
+// nullable, no written default: ABSENCE IS THE DEFAULT, and no write of this engine ever
+// fills a classification field the operator did not put. A required field here would put
+// every unclassified live run in three roadmaps in the red at once.
+//
+// `severity` and `closure_mode` are DERIVED and NEVER stored (§2), so they are absent
+// from this array by construction, not by omission.
+//
+// They sit after the planning fields and before the closeout fields: classifying a run is
+// a statement about the work, not about its outcome.
+export const RUN_OPTIONAL_FIELDS = [
+  "lane",
+  "barrier",
+  "correctness_model",
+  "work_type",
+  "blast_radius",
+  "failure_surfaces",
+  "external_effects",
+  "classified_at",
+  "closeout_result",
+  "progress",
+];
 export const BARRIER_SCOPES = ["lane", "global"];
+// [#43] The four closed vocabularies of §1, verbatim and in the spec's own order. Tokens
+// are DATA, read as-is by schema and validator -- never translated, never localized.
+export const CORRECTNESS_MODELS = ["SPECIFIED", "JUDGED_ACCEPTS", "JUDGED_DEFINES"];
+export const WORK_TYPES = ["COSMETIC", "FUNCTIONAL", "FOUNDATIONAL"];
+export const BLAST_RADII = ["LOCAL", "ADJACENT", "SYSTEMIC", "PROJECT_SHAPE"];
+export const FAILURE_SURFACES = ["LOUD", "VISIBLE", "SILENT"];
+// The four in one table, so the validator loops instead of repeating itself four times.
+export const CLASSIFICATION_VOCABULARIES = {
+  correctness_model: CORRECTNESS_MODELS,
+  work_type: WORK_TYPES,
+  blast_radius: BLAST_RADII,
+  failure_surfaces: FAILURE_SURFACES,
+};
 // Canonical serialization order for a run object's keys.
 export const CANONICAL_RUN_KEY_ORDER = [...RUN_REQUIRED_FIELDS, ...RUN_OPTIONAL_FIELDS];
 export const RUN_ALLOWED_FIELDS = CANONICAL_RUN_KEY_ORDER;
@@ -379,6 +416,44 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
         // [D-051] Barrier scope is a closed two-token vocabulary.
         if ("barrier" in run && !BARRIER_SCOPES.includes(run.barrier)) {
           errors.push(`${runLabel} barrier must be one of ${BARRIER_SCOPES.join(", ")}; found ${JSON.stringify(run.barrier)}`);
+        }
+        // [#43] Classification, §1. ABSENT IS ALWAYS LEGAL -- every check below is gated on
+        // `in`, so an unclassified run raises nothing at all. What is NOT legal is a key
+        // that is PRESENT carrying a value outside its closed vocabulary: `work_type:
+        // "FUNCIONAL"` is not an absent field, it is an invalid one, and the two must not
+        // collapse into each other.
+        for (const [field, vocabulary] of Object.entries(CLASSIFICATION_VOCABULARIES)) {
+          if (field in run && !vocabulary.includes(run[field])) {
+            errors.push(`${runLabel} ${field} must be one of ${vocabulary.join(", ")}; found ${JSON.stringify(run[field])}`);
+          }
+        }
+        // §1 declares `external_effects` a guard list, empty by default. The spec declares
+        // no vocabulary for its ENTRIES, so none is invented here: the shape is checked
+        // (a list of non-empty strings), the contents are not.
+        if ("external_effects" in run) {
+          if (!Array.isArray(run.external_effects)) {
+            errors.push(`${runLabel} external_effects must be an array when present; a run with no external effects omits the key`);
+          } else if (run.external_effects.some((e) => typeof e !== "string" || !e)) {
+            errors.push(`${runLabel} external_effects must contain only non-empty strings`);
+          }
+        }
+        // §1 declares `classified_at` "the mark of when it was classified" and declares NO
+        // format. A non-empty string is therefore the whole contract; imposing ISO-8601
+        // here would be inventing a rule the specification does not state.
+        if ("classified_at" in run && (typeof run.classified_at !== "string" || !run.classified_at)) {
+          errors.push(`${runLabel} classified_at must be a non-empty string when present`);
+        }
+        // [#43] The ILLEGAL COMBINATIONS of §3 that are decidable from STORED fields alone.
+        // Both fire only when BOTH their fields are present: a half-classified run is
+        // incomplete, not illegal. The third combination of §3, `JUDGED_*` + `UNATTENDED`,
+        // is NOT here -- `UNATTENDED` is a value of `closure_mode`, which §2 derives and
+        // never stores. It cannot be checked without the derivation function, and that
+        // function is not this run's surface.
+        if (run.correctness_model === "SPECIFIED" && run.work_type === "FOUNDATIONAL") {
+          errors.push(`${runLabel} illegal classification SPECIFIED + FOUNDATIONAL: foundational work cannot have its correctness fully specified up front`);
+        }
+        if (run.work_type === "FOUNDATIONAL" && run.failure_surfaces === "LOUD") {
+          errors.push(`${runLabel} illegal classification FOUNDATIONAL + LOUD: foundational work does not fail loudly`);
         }
         allRuns.push(run);
       }

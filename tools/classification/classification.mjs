@@ -280,8 +280,11 @@ export function unclassifiedLiveRuns(runs, { terminalStatuses = [] } = {}) {
 export const SEVERITY_DERIVATION_NAME = "severity_from_work_type_and_blast_radius";
 export const CLOSURE_MODE_DERIVATION_NAME = "closure_mode_from_correctness_model_and_severity";
 
-export function buildClassificationTaxonomy() {
+export function buildClassificationTaxonomy(options = {}) {
   return {
+    // §5 — PER-PROJECT configuration, and the one entry of this taxonomy whose CONTENT is
+    // the project's rather than the specification's. See buildCareBudgetDeclaration.
+    care_budget: buildCareBudgetDeclaration(options.careBudget),
     vocabularies: {
       "run.correctness_model": { axis: "run", stored: true, optional: true, tokens: CORRECTNESS_MODELS },
       "run.work_type": { axis: "run", stored: true, optional: true, tokens: WORK_TYPES },
@@ -308,5 +311,136 @@ export function buildClassificationTaxonomy() {
       { fields: ["work_type", "failure_surfaces"], values: ["FOUNDATIONAL", "LOUD"], enforced_by: "stored_field_invariant" },
       { fields: ["correctness_model", "closure_mode"], values: ["JUDGED_*", "UNATTENDED"], enforced_by: "derivation_property" },
     ],
+  };
+}
+
+// ---------------------------------------------------------------------------
+// §5 — `care_budget`: PER-PROJECT CONFIGURATION, AND ADVICE RATHER THAN A RULE.
+//
+// It is the one part of this model that is NOT the same for every project. §5 says so in its
+// own words: "es configuración POR PROYECTO, editable desde la consola", "es CONSEJO, no regla
+// dura", "no bloquea nada, no condiciona el cierre y un proyecto puede fijar la suya distinta".
+// Everything above is the specification's; the VALUE below is the project's.
+//
+// THREE CONSEQUENCES, and each one is load-bearing:
+//
+//   1. It is NOT a run field. It is keyed BY severity, not stored ON a run. A run whose
+//      classification derives a severity whose budget the run did not respect is a run that
+//      DEVIATED, and §5 puts that deviation in the ticket, never in a field. Nothing in this
+//      module or the engine ever compares a run against a budget.
+//   2. It is OPTIONAL AND ABSENT BY DEFAULT, exactly like the six stored fields of §1. A
+//      project with no `care_budget` is fully valid and gets ADVICE FROM NOBODY, which is a
+//      different thing from getting the defaults silently.
+//   3. Only its FORM is an invariant. §5 publishes defaults, but a project that fixes other
+//      values is LEGAL — that is the entire reason the configuration is per-project. So the
+//      checker below refuses a malformed table and says nothing whatever about its content.
+//
+// PUBLISHED DEFAULTS, transcribed verbatim from `context/CLASIFICACION-DE-RUNS.md` §5. They
+// are NOT applied to anything: nothing here falls back to them, and a project that declares no
+// budget is not treated as if it had declared these. They exist so the console can OFFER them
+// (§5's "editable desde la consola") without inventing values on screen.
+//
+// The cells are transcribed as they are PUBLISHED, including `Alto` — the specification's
+// language rule puts the closed VOCABULARY tokens in English (SPECIFIED, COSMETIC, MINOR…) but
+// §5's cells are not a closed vocabulary: §5 declares no token list for model or effort, and
+// translating a published cell here would be inventing a value the cabin did not publish.
+// ---------------------------------------------------------------------------
+
+export const CARE_BUDGET_PUBLISHED_DEFAULTS = {
+  MINOR:    { model: "Opus",  effort: "Alto" },
+  MODERATE: { model: "Opus",  effort: "Extra" },
+  MAJOR:    { model: "Opus",  effort: "Max" },
+  CRITICAL: { model: "Fable", effort: "Max" },
+};
+
+// The two keys one level entry carries, in the order §5's cells read (`Opus · Alto`).
+export const CARE_BUDGET_ENTRY_FIELDS = ["model", "effort"];
+
+// `advice`, and it is transported so a consumer cannot render this table as a rule by mistake.
+export const CARE_BUDGET_BINDING = "advice";
+export const CARE_BUDGET_BINDING_NOTE =
+  "Advice, not a hard rule: it blocks nothing, it gates no run's closure, and a project may " +
+  "fix its own. A run may deviate in either direction, and the deviation travels in the run's " +
+  "ticket, never in a field.";
+
+// FORM ONLY, and the ONE checker: the engine's invariant and the write operation both call it,
+// so a hand-edited file and a console write are refused for exactly the same reasons in exactly
+// the same words. Returns an array of error strings — empty means well-formed.
+//
+// What it checks: an object (not an array, not null); every one of the four severity levels
+// present, since §5's table has a row for each and a budget silent on one severity gives advice
+// with a hole in it; no key outside SEVERITIES; and each entry an object carrying exactly
+// `model` and `effort`, both non-empty strings.
+//
+// What it deliberately does NOT check: WHICH model and WHICH effort. A project fixing values
+// other than the published defaults is the point of the feature, not a defect.
+export function careBudgetErrors(value, label = "care_budget") {
+  const errors = [];
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    errors.push(`${label} must be an object keyed by severity (${SEVERITIES.join(", ")}); a project with no care budget omits the key entirely`);
+    return errors;
+  }
+  for (const key of Object.keys(value)) {
+    if (!SEVERITIES.includes(key)) {
+      errors.push(`${label} carries unknown severity ${key}; only ${SEVERITIES.join(", ")} are severity levels`);
+    }
+  }
+  for (const level of SEVERITIES) {
+    if (!(level in value)) {
+      errors.push(`${label} is missing severity ${level}; the published table has a row for every level, and a budget silent on one gives advice with a hole in it`);
+      continue;
+    }
+    const entry = value[level];
+    const entryLabel = `${label}.${level}`;
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
+      errors.push(`${entryLabel} must be an object { model, effort }`);
+      continue;
+    }
+    for (const key of Object.keys(entry)) {
+      if (!CARE_BUDGET_ENTRY_FIELDS.includes(key)) {
+        errors.push(`${entryLabel} carries unexpected field ${key}; only ${CARE_BUDGET_ENTRY_FIELDS.join(", ")} are allowed`);
+      }
+    }
+    for (const key of CARE_BUDGET_ENTRY_FIELDS) {
+      if (typeof entry[key] !== "string" || !entry[key].trim()) {
+        errors.push(`${entryLabel}.${key} must be a non-empty string`);
+      }
+    }
+  }
+  return errors;
+}
+
+// Rebuild the table through the canonical key order, so what reaches disk has the four levels
+// in scale order with `model` before `effort` regardless of how the caller ordered them. Callers
+// must have validated first — this shapes, it does not check.
+export function normalizeCareBudget(value) {
+  const out = {};
+  for (const level of SEVERITIES) {
+    out[level] = { model: value[level].model, effort: value[level].effort };
+  }
+  return out;
+}
+
+// THE ENVELOPE BLOCK. `declared` and `declared_reason` travel TOGETHER, by construction — one
+// function returns both keys or neither — which is the precedent the emitter already set for
+// `unprojected_inputs` / `unprojected_inputs_reason`: a value without its reason is silence one
+// level down, and the console cannot tell "this project declares none" from "the emitter did
+// not look". A project with no budget therefore emits `declared: null` WITH the reason, never
+// an empty object (which would read as a budget that says nothing) and never the defaults
+// (which would read as a budget the project never fixed).
+export function buildCareBudgetDeclaration(declared) {
+  const present = !!declared && typeof declared === "object" && !Array.isArray(declared);
+  return {
+    applies_to: ["project"],
+    keyed_by: "run.severity",
+    levels: SEVERITIES,
+    entry_form: { model: "non_empty_string", effort: "non_empty_string" },
+    binding: CARE_BUDGET_BINDING,
+    binding_note: CARE_BUDGET_BINDING_NOTE,
+    published_defaults: CARE_BUDGET_PUBLISHED_DEFAULTS,
+    declared: present ? declared : null,
+    declared_reason: present
+      ? "declared by this project at root.care_budget"
+      : "this project declares no root.care_budget; the key is optional and absent by default, and nothing is blocked, refused or defaulted by its absence",
   };
 }

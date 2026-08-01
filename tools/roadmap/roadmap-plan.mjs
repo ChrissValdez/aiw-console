@@ -26,7 +26,7 @@
 import { createHash } from "node:crypto";
 import * as core from "./roadmap-core.mjs";
 
-export const KNOWN_OPS = ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "declare-lanes", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"];
+export const KNOWN_OPS = ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "declare-lanes", "declare-care-budget", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"];
 
 // Content baseline for compare-and-swap. Hash of the exact bytes read (utf8), so any change
 // -- including a single CRLF or em-dash byte -- produces a different token.
@@ -123,6 +123,12 @@ function dispatch(op, obj, args, externalRunIds = null) {
       // The core refuses a malformed entry, a missing/ambiguous default, and any
       // declaration that would orphan a lane runs still carry.
       return core.declareLanes(obj, { lanes: args.lanes != null ? args.lanes : null });
+    case "declare-care-budget":
+      // [#43] The root care budget of context/CLASIFICACION-DE-RUNS.md §5, replaced WHOLE (or
+      // cleared with null / {}). PER-PROJECT CONFIGURATION, not a run field: it takes no --run
+      // and there is no run it could take. The core refuses a malformed table, naming the level
+      // and the key; it refuses NOTHING about the values, because §5 lets a project fix its own.
+      return core.setCareBudget(obj, { careBudget: args.careBudget != null ? args.careBudget : null });
     case "clear-progress":
       // --run is the WHOLE input. There is nothing to select or shape: the op removes the
       // progress key entirely, and it deliberately accepts no status argument -- closing the
@@ -184,7 +190,10 @@ function dispatch(op, obj, args, externalRunIds = null) {
       // and a single write, which is how the operator means it. declare-lanes is
       // deliberately NOT batchable: it is a root-level vocabulary change, not a per-run
       // edit, and pairing it with the set-lane calls that depend on it would hide which
-      // half of the pair a refusal came from.
+      // half of the pair a refusal came from. [#43] declare-care-budget is NOT batchable for
+      // exactly that reason, inherited: it is the second root-level configuration op, and a
+      // per-project advisory written in the same breath as a run edit would hide which of the
+      // two a refusal belongs to.
       // [#43] set-classification joins the batchable set for the same reason set-lane and
       // set-barrier are in it: optional keys on ONE run, no *_id surrendered, so
       // checkIdentityPreserved needs no sanction. It also makes "this run is FUNCTIONAL /

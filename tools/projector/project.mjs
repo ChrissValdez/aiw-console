@@ -115,7 +115,16 @@ export const SCHEMA_VERSION = 1;
 //     so it raises no error, changes no exit code and blocks no emission.
 // An emitter that publishes a derivation table it did not publish before, and fills a summary it
 // used to emit empty, is not the emitter of 0.10.0, so the version moves (§6).
-export const PROJECTOR_VERSION = "0.11.0";
+// 0.12.0 (RUN-CONSOLE-RUN-CLASSIFICATION-FIELDS-001, third commission) moves once, and it is
+// behaviour: `taxonomy_model` now also transports §5's `care_budget` — the PER-PROJECT care
+// configuration. What travels is the model (the four severity levels, the entry form, the
+// `advice` binding and the published defaults) plus the value THIS project declared at
+// `root.care_budget`, as a `declared`/`declared_reason` pair that is never split. It is ADVICE:
+// no consumer may gate anything on it, this emitter compares no run against it, and a project
+// that declares none emits `declared: null` with its reason rather than the defaults.
+// An emitter that carries a per-project configuration it did not carry before is not the
+// emitter of 0.11.0, so the version moves (§6).
+export const PROJECTOR_VERSION = "0.12.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 // Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
@@ -991,7 +1000,10 @@ function buildTaxonomyModel(root, layout) {
   // written out here for the same reason COLLECTION_STATUS_RULES is a constant and not a
   // literal: a second transcription is a second truth as soon as one of them is edited, and
   // §2 of the specification exists precisely to stop two consumers deriving differently.
-  const classification = buildClassificationTaxonomy();
+  // [#43] §5 `care_budget` is the one entry whose CONTENT is the PROJECT's, so the tree's own
+  // root key is handed in. The emitter does not interpret it, does not fall back to the
+  // published defaults when it is absent, and does not compare any run against it.
+  const classification = buildClassificationTaxonomy({ careBudget: layout.tree.care_budget });
   // Pointer to the normative document, when the PROJECT declares where its own contract lives
   // (the layout's `contract_ref`). No document path is baked in here: a project that declares
   // nothing simply gets no pointer, and a declared path that does not resolve is omitted (§7).
@@ -1054,6 +1066,18 @@ function buildTaxonomyModel(root, layout) {
     // is a property of the derivation table above rather than a field check, and each entry
     // says which.
     illegal_combinations: classification.illegal_combinations,
+    // [#43] §5, transported INSIDE this key and not beside it, for one reason: `care_budget` is
+    // keyed by `severity`, a DERIVED token that exists nowhere in the envelope except here.
+    // Carried anywhere else — beside `lanes` in the tree block, say — the table's own keys would
+    // be the first severity tokens ever to travel outside `taxonomy_model`, and the discipline
+    // that says the derived RESULT never travels would have to be read with an exception.
+    //
+    // What travels is the MODEL (levels, form, binding, the published defaults) plus what THIS
+    // project declared, as a `declared`/`declared_reason` pair that is never split. The declared
+    // half is the project's, so two projects on the same model legitimately carry two different
+    // tables — which is exactly what §5 means by per-project configuration, and why this is not
+    // a vocabulary entry.
+    care_budget: classification.care_budget,
     ...(specifiedBy ? { specified_by: specifiedBy.path } : {})
   };
 }

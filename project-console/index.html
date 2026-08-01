@@ -124,6 +124,15 @@
             </div>
           </div>
 
+          <!-- [#43] CARE BUDGET slot — the console's FIRST per-project configuration surface.
+               It sits above the subviews and outside both, because what it edits belongs to the
+               PROJECT (root.care_budget) and not to any run, objective or phase: putting it
+               inside the run editor would say the opposite of what §5 says. The renderer fills
+               it from the emitted envelope (taxonomy_model.care_budget) and renders nothing at
+               all when there is no envelope to read; no severity level, model or effort value
+               lives in this file. -->
+          <div class="roadmap-care-budget-slot" id="roadmap-care-budget"></div>
+
           <div id="roadmap-sub-v3queue" class="roadmap-subview active">
             <div id="run-queue-v3"></div>
           </div>

@@ -33,6 +33,11 @@ import {
   FAILURE_SURFACES,
   CLASSIFICATION_VOCABULARIES,
   CLASSIFICATION_STORED_FIELDS,
+  // [#43] §5 `care_budget` — PER-PROJECT configuration at the ROOT, not a run field. The form
+  // checker is imported rather than restated so the invariant below and the write operation
+  // refuse the same shapes in the same words.
+  careBudgetErrors,
+  normalizeCareBudget,
 } from "../classification/classification.mjs";
 
 // ---------------------------------------------------------------------------
@@ -43,13 +48,19 @@ import {
 // (work lines that advance in parallel). Declared by the project, never baked here: this
 // module knows no lane by name. Absent -> the project has ONE implicit lane and nothing
 // below changes behaviour.
-export const ROOT_ALLOWED_FIELDS = ["schema_version", "roadmap_id", "title", "objectives", "lanes"];
+// [#43] `care_budget` joins it for the same reason `lanes` did, and is the same KIND of thing:
+// OPTIONAL configuration OF THE PROJECT, declared once at the root, absent by default. It is
+// explicitly NOT a run field — §5 puts a run's deviation in its ticket, never in a key — so it
+// appears here and nowhere in RUN_OPTIONAL_FIELDS.
+export const ROOT_ALLOWED_FIELDS = ["schema_version", "roadmap_id", "title", "objectives", "lanes", "care_budget"];
 // Canonical serialization order for the ROOT object's keys. Deliberately NOT the same
 // array as ROOT_ALLOWED_FIELDS: membership and layout are different questions, and
 // ROOT_ALLOWED_FIELDS appends `lanes` last because that is the order its error message
 // has always printed. On disk the vocabulary belongs with the other small root fields,
 // so `objectives` -- effectively the whole file -- stays the last key.
-export const CANONICAL_ROOT_KEY_ORDER = ["schema_version", "roadmap_id", "title", "lanes", "objectives"];
+// [#43] `care_budget` sits beside `lanes`, for the identical reason: both are small root-level
+// project configuration, and `objectives` -- effectively the whole file -- stays the last key.
+export const CANONICAL_ROOT_KEY_ORDER = ["schema_version", "roadmap_id", "title", "lanes", "care_budget", "objectives"];
 // [D-051] A lane entry: stable key + human name, plus the single stored exception
 // `default: true` (the archived discipline: stored only as true, exactly one entry).
 export const LANE_ALLOWED_FIELDS = ["lane_id", "title", "default"];
@@ -361,6 +372,22 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
         errors.push(`root.lanes must mark exactly one lane as default (found ${defaults}); lane-less runs resolve to it`);
       }
     }
+  }
+
+  // [#43] §5 `care_budget` — A FORM INVARIANT AND NOTHING ELSE, and the distinction is the
+  // whole point of the field. ABSENT IS THE NORMAL CASE and is never reported: a project with
+  // no care budget is valid, and all three canonicals are in that state today.
+  //
+  // Present -> the shape §5 publishes: the four severity levels, each with a `model` and an
+  // `effort`. WHICH model and WHICH effort is NOT checked and must never be: §5 says a project
+  // may fix its own, so a table that differs from the published defaults is the feature working.
+  //
+  // And this is the ONLY place `care_budget` can reach the error channel. It gates no run's
+  // closure, contributes to no blocker, changes no exit code, and is invisible to every other
+  // check in this function: a run whose classification deviates from the project's budget is
+  // not an error here or anywhere, because the budget is ADVICE.
+  if ("care_budget" in obj) {
+    errors.push(...careBudgetErrors(obj.care_budget, "root.care_budget"));
   }
 
   const allRuns = [];
@@ -1421,6 +1448,71 @@ export function declareLanes(obj, opts) {
   // the tree that uses it, and the tree stays the last (largest) key of the file.
   normalizeRootKeyOrder(obj);
   return { errors, warnings, before, after: obj.lanes.map((l) => l.lane_id), defaultLane: defaultLaneId(obj) };
+}
+
+// ---------------------------------------------------------------------------
+// [#43] §5 care budget declaration. declare-care-budget writes root.care_budget -- the second
+// root-level field this engine can write, and it follows declareLanes above in every structural
+// decision, on purpose:
+//
+//   - REPLACED WHOLE, never one level at a time. The table is a single statement about the
+//     project ("this is how much care work of each severity is worth here"), and §5 publishes
+//     it as four rows at once. A per-level operation would make a half-declared budget a
+//     representable state for no gain.
+//   - CLEARED with null / {}. The key is deleted, not emptied: absent is the declared default,
+//     and `care_budget: {}` would be a third state the file model does not have.
+//   - NOT BATCHABLE, for declareLanes' own reason (roadmap-plan.mjs): a root-level project
+//     configuration change is not a per-run edit, and hiding it inside a batch of run edits
+//     would blur which half of a refusal came from where.
+//   - It NEVER TOUCHES A RUN. Not one, in either direction. It does not classify, it does not
+//     re-classify, and it does not look at any run's classification -- there is no run whose
+//     stored fields this operation reads. §5 is advice: a run already classified outside the
+//     new budget stays exactly as it is, and that is not a conflict to resolve but the
+//     documented mechanic of a per-project advisory.
+//
+// TWO refusals, and only two, because only the form is knowable:
+//
+//   G1 -- the shape checkInvariants demands (careBudgetErrors, the SAME function, so a hand-
+//   edited file and a console write are refused identically). Refused here rather than
+//   surfaced as a post-check failure with no idea which level was wrong.
+//
+//   G2 -- nothing. There is no second guard and there must not be one: the operation cannot
+//   refuse a budget for being "too low", cannot refuse it for differing from the published
+//   defaults, and cannot refuse it because some run deviates from it.
+//
+// It changes no *_id, so it needs no identity sanction.
+// ---------------------------------------------------------------------------
+
+export function setCareBudget(obj, opts) {
+  const errors = [];
+  const warnings = [];
+  const { careBudget } = opts;
+
+  const clearing =
+    careBudget == null ||
+    (typeof careBudget === "object" && !Array.isArray(careBudget) && Object.keys(careBudget).length === 0);
+
+  if (clearing) {
+    const before = obj.care_budget || null;
+    if (!("care_budget" in obj)) {
+      warnings.push("declare-care-budget: the roadmap declares no care budget; nothing to clear");
+    }
+    delete obj.care_budget;
+    // Clearing is ALWAYS allowed. There is no analogue of declare-lanes' G2 here (no run can
+    // "still be using" a budget), and refusing to clear an advisory would make it a rule.
+    return { errors, warnings, before, after: null };
+  }
+
+  // G1 -- the form, level by level, so the message names the offending level and key.
+  errors.push(...careBudgetErrors(careBudget, "declare-care-budget: care_budget"));
+  if (errors.length) return { errors, warnings };
+
+  const before = obj.care_budget || null;
+  obj.care_budget = normalizeCareBudget(careBudget);
+  // root.care_budget sits beside root.lanes, before `objectives`: project configuration
+  // before the tree, and the tree stays the last (largest) key of the file.
+  normalizeRootKeyOrder(obj);
+  return { errors, warnings, before, after: obj.care_budget };
 }
 
 // ---------------------------------------------------------------------------

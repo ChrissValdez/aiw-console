@@ -142,9 +142,13 @@ test("E.3: the version marks the envelope carries, and the fact that the emitter
   // §6: behaviour changed, so the emitter version changed with it. That, plus the tree's own
   // `model`, is how the status precedent versions its table — no per-table version field is
   // invented here, because the precedent this copies has none.
-  assert.equal(PROJECTOR_VERSION, "0.11.0");
+  // [#43, third commission] The pinned value moved 0.11.0 -> 0.12.0 and the pin stays a pin:
+  // the envelope gained §5's per-project `care_budget` block, which is behaviour, so §6 moves
+  // the version. Registering the new number here is the point of the assertion — it fails on
+  // the NEXT undeclared drift exactly as it failed on this declared one.
+  assert.equal(PROJECTOR_VERSION, "0.12.0");
   assert.equal(snapshot.generated_from, GENERATED_FROM);
-  assert.equal(snapshot.generated_from, "aiw-projector@0.11.0");
+  assert.equal(snapshot.generated_from, "aiw-projector@0.12.0");
   // The second mark: the identifier the TREE gives itself, carried verbatim and never
   // relabelled — which is why a project on another model name gets its own declaration of the
   // same tables rather than being refused for its name.

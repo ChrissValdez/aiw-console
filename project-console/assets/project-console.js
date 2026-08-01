@@ -3794,6 +3794,240 @@ function v3UnclassifiedNoteHtml(data) {
   `;
 }
 
+// ---------------------------------------------------------------------------
+// [#43] CARE BUDGET — the console's FIRST per-project configuration surface.
+//
+// Everything the console could already write was a RUN edit (set-text, set-status, set-lane,
+// set-barrier, set-classification). `declare-lanes` proved a root write can travel the same
+// endpoint, but it never had a screen: a project vocabulary could only be declared from a
+// script. §5 says `care_budget` must be "editable desde la consola", so this is that screen.
+//
+// THREE RULES THIS SURFACE OBEYS, and each one is visible on it:
+//
+//   1. IT IS ADVICE, and it says so in words, in its own line, before any value. An operator
+//      meeting this table for the first time has to be able to tell that deviating is allowed.
+//      The sentence is not written here: it is `binding_note`, read from the envelope, so the
+//      screen cannot say something the model does not.
+//   2. A PROJECT WITH NO BUDGET READS AS *NOT CONFIGURED*, never as zero and never as the
+//      defaults. The published defaults are shown BESIDE that state, labelled as not in effect,
+//      as an OFFER — one button fills the form with them. Showing them as if they applied would
+//      be inventing a configuration the project never made.
+//   3. NO VALUE IN THIS FILE. The levels, the entry keys, the published defaults and the advice
+//      sentence all come from `taxonomy_model.care_budget`. A snapshot from an emitter that does
+//      not carry the block renders nothing at all, exactly as the unclassified note does.
+//
+// Reading the SNAPSHOT and not the canonical is not a preference either: the console never opens
+// a canonical (PATHS has no route to one), so a `care_budget` that does not travel is a
+// `care_budget` this screen cannot show.
+// ---------------------------------------------------------------------------
+
+// Draft values held across a re-render (the "fill with defaults" click re-renders the panel),
+// and the previewed-but-unconfirmed write. Both are UI-only: nothing here reaches disk unless
+// the operator previews AND confirms.
+let careBudgetDraft = null;
+let careBudgetPending = null;
+
+// The declaration block, or null when this snapshot predates it. Never falls back to anything.
+function careBudgetBlock(data) {
+  const block = data && data.snapshot && data.snapshot.taxonomy_model
+    ? data.snapshot.taxonomy_model.care_budget
+    : null;
+  if (!block || typeof block !== "object") return null;
+  if (!Array.isArray(block.levels) || !block.levels.length) return null;
+  return block;
+}
+
+// What the four inputs currently hold. Returns null when any is blank: a half-filled table is
+// not a budget, and the preview says so rather than posting something the engine will refuse.
+function careBudgetFormValues(block) {
+  const slot = byId("roadmap-care-budget");
+  if (!slot) return null;
+  const out = {};
+  for (const level of block.levels) {
+    const model = slot.querySelector(`[data-care-budget-input="${level}.model"]`);
+    const effort = slot.querySelector(`[data-care-budget-input="${level}.effort"]`);
+    if (!model || !effort) return null;
+    const modelValue = model.value.trim();
+    const effortValue = effort.value.trim();
+    if (!modelValue || !effortValue) return null;
+    out[level] = { model: modelValue, effort: effortValue };
+  }
+  return out;
+}
+
+// True when the form differs from what the project has declared. Drives the preview button's
+// refusal message, so "nothing to preview" is said instead of silently posting a no-op.
+function careBudgetFormChanged(block) {
+  const values = careBudgetFormValues(block);
+  if (!values) return false;
+  return JSON.stringify(values) !== JSON.stringify(block.declared || null);
+}
+
+function careBudgetRowsHtml(block, values, editable) {
+  return block.levels.map((level) => {
+    const entry = (values && values[level]) || null;
+    const model = entry && typeof entry.model === "string" ? entry.model : "";
+    const effort = entry && typeof entry.effort === "string" ? entry.effort : "";
+    const cells = editable
+      ? `<td><input class="care-budget-input" type="text" data-care-budget-input="${escapeHtml(level)}.model" value="${escapeHtml(model)}" aria-label="${escapeHtml(level)} model"></td>
+         <td><input class="care-budget-input" type="text" data-care-budget-input="${escapeHtml(level)}.effort" value="${escapeHtml(effort)}" aria-label="${escapeHtml(level)} effort"></td>`
+      : `<td>${model ? escapeHtml(model) : '<span class="care-budget-unset">—</span>'}</td>
+         <td>${effort ? escapeHtml(effort) : '<span class="care-budget-unset">—</span>'}</td>`;
+    return `<tr class="care-budget-row"><th scope="row" class="care-budget-level">${escapeHtml(level)}</th>${cells}</tr>`;
+  }).join("");
+}
+
+function careBudgetTableHtml(block, values, editable) {
+  return `
+    <table class="care-budget-table">
+      <thead><tr><th scope="col">severity</th><th scope="col">model</th><th scope="col">effort</th></tr></thead>
+      <tbody>${careBudgetRowsHtml(block, values, editable)}</tbody>
+    </table>
+  `;
+}
+
+function renderCareBudget(data) {
+  const slot = byId("roadmap-care-budget");
+  if (!slot) return;
+  const block = careBudgetBlock(data);
+  if (!block) { slot.innerHTML = ""; return; }
+  const configured = !!block.declared;
+  const editable = v3EditMode;
+  const values = configured ? block.declared : (editable ? careBudgetDraft : null);
+  // The state line, and it is the whole point of F.3: absent reads as ABSENT.
+  const state = configured
+    ? '<span class="care-budget-state is-set">Configured</span>'
+    : '<span class="care-budget-state is-unset">Not configured</span>';
+  const reason = typeof block.declared_reason === "string" ? block.declared_reason : "";
+  // The published defaults, shown ONLY when nothing is declared, and labelled as not in effect.
+  const defaults = !configured && block.published_defaults
+    ? `<details class="care-budget-defaults">
+         <summary>Published defaults — <strong>not in effect</strong> for this project</summary>
+         <div class="care-budget-defaults-body">
+           ${careBudgetTableHtml({ levels: block.levels }, block.published_defaults, false)}
+           <div class="care-budget-defaults-note">These are the values the specification publishes. This project has not adopted them, and nothing applies them on its behalf.${editable ? " Use <em>Fill with published defaults</em> below to adopt them as-is, or type your own." : ""}</div>
+         </div>
+       </details>`
+    : "";
+  const controls = editable
+    ? `<div class="care-budget-controls">
+         ${!configured ? '<button class="btn btn-secondary btn-sm" type="button" data-care-budget-defaults>Fill with published defaults</button>' : ""}
+         <button class="btn btn-secondary btn-sm" type="button" data-care-budget-preview>Preview care budget</button>
+         ${configured ? '<button class="btn btn-secondary btn-sm" type="button" data-care-budget-clear>Clear (back to not configured)</button>' : ""}
+       </div>`
+    : '<div class="care-budget-controls"><span class="care-budget-readonly">Turn on <strong>Edit roadmap</strong> to change this.</span></div>';
+  slot.innerHTML = `
+    <section class="care-budget-panel" aria-label="Care budget">
+      <div class="care-budget-head">
+        <span class="care-budget-title">Care budget</span>
+        <span class="care-budget-scope">project configuration</span>
+        ${state}
+      </div>
+      <div class="care-budget-advice"><span class="care-budget-binding">${escapeHtml(block.binding || "")}</span> ${escapeHtml(block.binding_note || "")}</div>
+      ${reason ? `<div class="care-budget-reason">${escapeHtml(reason)}</div>` : ""}
+      ${careBudgetTableHtml(block, values, editable)}
+      ${defaults}
+      ${controls}
+      <div class="care-budget-preview" id="care-budget-preview" hidden></div>
+    </section>
+  `;
+  careBudgetWire(slot);
+}
+
+function careBudgetSetPanel(html) {
+  const panel = byId("care-budget-preview");
+  if (!panel) return;
+  panel.hidden = false;
+  panel.innerHTML = html;
+}
+
+function careBudgetWire(slot) {
+  if (slot.dataset.careBudgetWired === "true") return;
+  slot.dataset.careBudgetWired = "true";
+  slot.addEventListener("click", (event) => {
+    if (event.target.closest("[data-care-budget-defaults]")) { careBudgetFillDefaults(); return; }
+    if (event.target.closest("[data-care-budget-preview]")) { careBudgetPreview(false); return; }
+    if (event.target.closest("[data-care-budget-clear]")) { careBudgetPreview(true); return; }
+    if (event.target.closest("[data-care-budget-confirm]")) { careBudgetConfirm(); return; }
+  });
+}
+
+function careBudgetFillDefaults() {
+  const block = careBudgetBlock(appData);
+  if (!block || !block.published_defaults) return;
+  careBudgetDraft = block.published_defaults;
+  renderCareBudget(appData);
+  careBudgetSetPanel('<div class="care-budget-preview-status">The published defaults are in the form, and <strong>nothing is written yet</strong>. Edit any cell, then preview.</div>');
+}
+
+// Dry run -> confirm -> apply, against the same bounded endpoint every other write uses. The op
+// is `declare-care-budget` and it carries NO run: this is a project configuration, and there is
+// no run it could name.
+async function careBudgetPreview(clearing) {
+  const block = careBudgetBlock(appData);
+  if (!block) return;
+  let careBudget = null;
+  if (!clearing) {
+    careBudget = careBudgetFormValues(block);
+    if (!careBudget) {
+      careBudgetSetPanel('<div class="care-budget-preview-status">Every level needs a model and an effort before this can be previewed. A budget that is silent on one severity would be advice with a hole in it.</div>');
+      return;
+    }
+    if (!careBudgetFormChanged(block)) {
+      careBudgetSetPanel('<div class="care-budget-preview-status">No changes to preview — the form matches what this project already declares.</div>');
+      return;
+    }
+  }
+  careBudgetSetPanel('<div class="care-budget-preview-status">Previewing (dry run)...</div>');
+  const result = await v3EditPost({ op: "declare-care-budget", apply: false, args: { careBudget } });
+  if (result.networkError) {
+    careBudgetSetPanel('<div class="care-budget-preview-status is-refused">The roadmap write endpoint is not reachable. Nothing was written.</div>');
+    return;
+  }
+  if (!result.json || !result.json.ok) {
+    const errors = result.json && Array.isArray(result.json.errors) ? result.json.errors : [];
+    careBudgetSetPanel(`
+      <div class="care-budget-preview-status is-refused"><strong>Refusing; nothing written.</strong></div>
+      ${errors.length ? `<ul class="care-budget-preview-errors">${errors.map((e) => `<li>${escapeHtml(String(e))}</li>`).join("")}</ul>` : ""}
+    `);
+    return;
+  }
+  careBudgetPending = { careBudget, baseline: result.json.baseline };
+  const before = block.declared;
+  const rows = block.levels.map((level) => {
+    const b = before && before[level] ? `${before[level].model} · ${before[level].effort}` : "(not configured)";
+    const a = careBudget && careBudget[level] ? `${careBudget[level].model} · ${careBudget[level].effort}` : "(not configured)";
+    return `<tr${b === a ? "" : ' class="is-changed"'}><th scope="row">${escapeHtml(level)}</th><td>${escapeHtml(b)}</td><td>-&gt;</td><td>${escapeHtml(a)}</td></tr>`;
+  }).join("");
+  careBudgetSetPanel(`
+    <div class="care-budget-preview-title">Preview: declare-care-budget</div>
+    <table class="care-budget-preview-table"><tbody>${rows}</tbody></table>
+    <div class="care-budget-preview-note">This writes <code>root.care_budget</code> — a setting of the PROJECT. It classifies nothing, changes no run, and blocks nothing: runs already classified stay exactly as they are, including any that sit outside this budget.</div>
+    <button class="btn btn-primary btn-sm" type="button" data-care-budget-confirm>Confirm and write</button>
+  `);
+}
+
+async function careBudgetConfirm() {
+  if (!careBudgetPending) return;
+  const pending = careBudgetPending;
+  careBudgetSetPanel('<div class="care-budget-preview-status">Writing (apply)...</div>');
+  const result = await v3EditPost({ op: "declare-care-budget", apply: true, baseline: pending.baseline, args: { careBudget: pending.careBudget } });
+  if (result.networkError) {
+    careBudgetSetPanel('<div class="care-budget-preview-status is-refused">The roadmap write endpoint is not reachable. Nothing was written.</div>');
+    return;
+  }
+  if (result.json && result.json.ok) {
+    careBudgetPending = null;
+    careBudgetDraft = null;
+    careBudgetSetPanel('<div class="care-budget-preview-status is-ok"><strong>Applied.</strong> The roadmap was written and re-read; the validator passed. Re-emit <code>.project/</code> for this panel to show the new value.</div>');
+    return;
+  }
+  const reason = result.json && result.json.reason === "stale_baseline"
+    ? "The roadmap changed since this preview. Nothing was written; preview again."
+    : "The write was refused; nothing changed on disk.";
+  careBudgetSetPanel(`<div class="care-budget-preview-status is-refused">${escapeHtml(reason)}</div>`);
+}
+
 function renderOverviewV3(data) {
   const currentWorkRoot = byId("project-overview");
   const nextActionRoot = byId("next-pending-runs");
@@ -4570,6 +4804,15 @@ function renderAll(data) {
   } catch (error) {
     v3Unavailable("roadmap-v3-tree", error && error.message ? error.message : "render error");
   }
+  // [#43] The per-project care budget panel. Its own try/catch and its own slot: it reads the
+  // ENVELOPE (taxonomy_model), not the tree, so a roadmap that fails to render must not take
+  // it down and a missing block must not take the roadmap down.
+  try {
+    renderCareBudget(data);
+  } catch (error) {
+    const slot = byId("roadmap-care-budget");
+    if (slot) slot.innerHTML = "";
+  }
   try {
     renderRunQueueV3(data);
   } catch (error) {
@@ -5214,6 +5457,10 @@ async function v3ToggleEditMode() {
     v3EditMode = false;
     if (toggle) { toggle.setAttribute("aria-pressed", "false"); toggle.textContent = "Edit roadmap"; }
     v3SetEditHint("");
+    // [#43] The care budget panel is re-rendered on the way OUT too, so its inputs and its
+    // write buttons disappear the moment edit mode does. Scoped to this panel deliberately:
+    // the tree surfaces keep the refresh behaviour they already had.
+    try { renderCareBudget(appData); } catch (e) { /* leave prior render */ }
     v3EditReopenIfOpen();
     return;
   }
@@ -5240,6 +5487,9 @@ function v3EditRefreshRoadmapViews() {
   if (!appData) return;
   try { renderRoadmapV3(appData); } catch (e) { /* leave prior render */ }
   try { renderRunQueueV3(appData); } catch (e) { /* leave prior render */ }
+  // [#43] The care budget panel turns editable with the same toggle: it is a roadmap write and
+  // must never be reachable while edit mode is off.
+  try { renderCareBudget(appData); } catch (e) { /* leave prior render */ }
   v3DecorateTreeEditAffordances();
 }
 

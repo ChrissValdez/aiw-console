@@ -6470,3 +6470,207 @@ details[open] > summary > .v3-caret {
   color: var(--text-primary);
   border-color: var(--accent-border);
 }
+
+/* ---------------------------------------------------------------------------
+   [#43] CARE BUDGET — the per-project configuration panel of the Roadmap tab.
+
+   One rule governs every declaration below, and it comes from §5 rather than from taste:
+   THIS IS ADVICE, SO IT MUST NOT LOOK LIKE ENFORCEMENT. No red, no amber, no alarm colour,
+   no badge that reads like a verdict — those tokens are spoken for by things that actually
+   block. The panel is quiet chrome: an inset card with the same border and background the
+   console already uses for read-only context.
+
+   Second, "not configured" is a STATE and not a warning, so it is rendered in the tertiary
+   text colour, the same weight as any other neutral label. A project with no care budget is
+   correct, not late.
+   --------------------------------------------------------------------------- */
+.roadmap-care-budget-slot:empty {
+  display: none;
+}
+.care-budget-panel {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  background: var(--bg-inset);
+}
+.care-budget-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.care-budget-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.care-budget-scope {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+}
+.care-budget-state {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 600;
+}
+.care-budget-state.is-set {
+  color: var(--text-secondary);
+}
+/* Deliberately NOT a warning colour: an unconfigured project is valid. */
+.care-budget-state.is-unset {
+  color: var(--text-tertiary);
+}
+/* The advice sentence sits ABOVE the values, because an operator who reads the table first
+   and the caveat second has already read it as a rule. */
+.care-budget-advice {
+  margin-top: 8px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.care-budget-reason {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-tertiary);
+}
+.care-budget-table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+  font-size: 11.5px;
+}
+.care-budget-table th,
+.care-budget-table td {
+  padding: 4px 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+.care-budget-table thead th {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+}
+.care-budget-level {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.care-budget-unset {
+  color: var(--text-tertiary);
+}
+.care-budget-input {
+  width: 100%;
+  font: inherit;
+  font-size: 11.5px;
+  padding: 2px 6px;
+  color: var(--text-primary);
+  background: var(--bg-default);
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+}
+.care-budget-defaults {
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+.care-budget-defaults summary {
+  cursor: pointer;
+  color: var(--text-tertiary);
+}
+.care-budget-defaults-body {
+  padding-left: 10px;
+  border-left: 1px dashed var(--border-default);
+}
+.care-budget-defaults-note {
+  margin: 6px 0 2px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-tertiary);
+}
+.care-budget-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.care-budget-readonly {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+.care-budget-preview {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: var(--bg-default);
+}
+.care-budget-preview-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.care-budget-preview-status {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.care-budget-preview-status.is-ok {
+  color: var(--green-text, var(--text-primary));
+}
+.care-budget-preview-status.is-refused {
+  color: var(--red-text);
+}
+.care-budget-preview-errors {
+  margin: 6px 0 0 16px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--red-text);
+}
+.care-budget-preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11.5px;
+}
+.care-budget-preview-table th,
+.care-budget-preview-table td {
+  padding: 3px 8px;
+  text-align: left;
+  color: var(--text-tertiary);
+}
+.care-budget-preview-table tr.is-changed th,
+.care-budget-preview-table tr.is-changed td {
+  color: var(--text-primary);
+}
+.care-budget-preview-note {
+  margin: 8px 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-tertiary);
+}
+/* The binding token itself (`advice`), read from the envelope and shown as a flag rather than
+   restated in prose — the sentence beside it is the model's own words. */
+.care-budget-binding {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 0 5px;
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  line-height: 15px;
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  vertical-align: 1px;
+}

@@ -276,8 +276,15 @@ test("the op vocabulary is the transplanted one plus the three lane ops (D-051) 
   // canonical file, which is the thing this vocabulary exists to make impossible. It sits
   // beside set-lane/set-barrier because it is the same kind of act: optional keys on ONE run,
   // no identity touched, batchable with them.
+  //
+  // [#43, third commission] REGISTERED, not absorbed: declare-care-budget, the write side of
+  // the PER-PROJECT care budget of context/CLASIFICACION-DE-RUNS.md §5. It arrives for the same
+  // reason every op above it did — §5 requires the table to be "editable desde la consola", and
+  // without an op the only way to fix one would be hand-editing the canonical. It sits
+  // immediately after declare-lanes because it is the same kind of act and the only other one
+  // of its kind: a ROOT-level project configuration, replaced whole, deliberately NOT batchable.
   assert.deepEqual(
     KNOWN_OPS,
-    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "declare-lanes", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
+    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "declare-lanes", "declare-care-budget", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
   );
 });

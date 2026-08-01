@@ -1,27 +1,37 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-01T02:26:05.587Z",
+  "generated_at": "2026-08-01T02:49:51.415Z",
   "generated_from": "aiw-projector@0.11.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-01T02:25:44.214Z"
+      "mtime": "2026-08-01T02:43:12.698Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-07-31T23:16:53.288Z"
+      "mtime": "2026-08-01T02:49:51.412Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "101e0535b1f759723e3175c501b822c1156a0c29",
+  "head": "1d5e88a1a1be7cb486065513d79c0d8fe71a63b1",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 120,
+  "commit_total": 121,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "1d5e88a",
+      "full_sha": "1d5e88a1a1be7cb486065513d79c0d8fe71a63b1",
+      "date": "2026-07-31T20:39:27-06:00",
+      "parents": "101e053",
+      "subject": "project: re-emision de .project/ con el proyector 0.11.0; el sobre transporta vocabulario, tabla de derivacion y combinaciones ilegales en taxonomy_model, y validation_summary lista los 10 runs vivos sin clasificar como informacion; QA humana pasada; el run 43 sigue active",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "101e053",

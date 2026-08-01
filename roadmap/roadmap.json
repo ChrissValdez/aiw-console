@@ -2,6 +2,24 @@
   "schema_version": "roadmap_tree_v1",
   "roadmap_id": "roadmap",
   "title": "AIW Console Roadmap",
+  "care_budget": {
+    "MINOR": {
+      "model": "Opus",
+      "effort": "Alto"
+    },
+    "MODERATE": {
+      "model": "Opus",
+      "effort": "Extra"
+    },
+    "MAJOR": {
+      "model": "Opus",
+      "effort": "Max"
+    },
+    "CRITICAL": {
+      "model": "Fable",
+      "effort": "Max"
+    }
+  },
   "objectives": [
     {
       "objective_id": "O0",
@@ -710,7 +728,7 @@
               "title": "The five classification fields enter the roadmap schema, with derivation at read time and a minimal view",
               "summary": "Add the five stored classification fields as optional run keys, derive severity and closure_mode at read time, and transport the derivation table in the envelope.",
               "full_description": "Implements in the schema, the engine, the validator, the emitter and the console what the specification run publishes. THE SHAPE IS ALREADY SET BY PRECEDENT: the run that brought lanes and barriers into the schema did exactly this — schema, engine allowlists, invariants, emitter transport and a minimal view, all in one run — and this one copies that shape rather than inventing one. WHAT IS STORED: correctness_model, work_type, blast_radius, failure_surfaces, external_effects and classified_at. WHAT IS NEVER STORED: severity and closure_mode. They are COMPUTED AT READ TIME from the stored fields, which is the contract's own rule against persisted derivatives, the same rule under which objective and phase status are derived and never written. The payoff is that the day the derivation table improves, no data migrates. THE FIELDS ARE OPTIONAL KEYS, ABSENT BY DEFAULT, and this is load-bearing: on the day they land there are roughly 89 live runs across three projects with no classification, and a required field would make all three roadmaps invalid at once and force classification under pressure — the worst possible condition for work that needs the operator's judgement. The precedent is measured: fifty runs of cantu-studio carry no lane key at all and resolve to the declared default at read time. THE VALIDATOR REPORTS, IT DOES NOT REJECT: a live run with no classification is listed, not refused. An absent classified_at is exactly the console's to-do list, at no extra cost. WHAT THE VALIDATOR DOES REJECT are the three illegal combinations: SPECIFIED with FOUNDATIONAL, FOUNDATIONAL with LOUD, and any JUDGED_ with UNATTENDED. A field that can be saved wrong gets saved wrong. TRANSPORT: the envelope carries the vocabulary and the derivation table as a versioned executable table, and the RESULT does not travel — the same discipline already recorded for the status vocabulary. TWO OBSTACLES MEASURED BY THE CABIN AND NOT PREVIOUSLY SEEN, both of which this run must resolve or explicitly defer. First, cantu-studio's canonical declares a DIFFERENT schema_version — jame.roadmap_v3.v0.2-progress, where this repo and aiw declare roadmap_tree_v1 — so engine, validator and emitter must either accept both or that project migrates first. Second, the roadmap engine EXISTS IN TWO COPIES: this repo holds roadmap-core.mjs and roadmap-plan.mjs, while the CLI roadmap-edit.mjs still lives only in cantu-studio. If the fields land only in this repo's engine, the other copy is blind to them, and that project has by far the largest set of runs to classify. What has to change inside cantu-studio is that thread's work and is only named here. ALSO IN SCOPE: the care_budget table — the per-severity model and effort defaults — as PER-PROJECT configuration, editable from the console, with the defaults the cabin fixed. It is advice, not a rule; a single run may deviate in either direction, and the deviation travels in the ticket, not in a field.",
-              "status": "active",
+              "status": "completed",
               "depends_on": [
                 "RUN-CONSOLE-RUN-CLASSIFICATION-SPEC-001",
                 "RUN-CONSOLE-SUITE-FIXTURES-001"

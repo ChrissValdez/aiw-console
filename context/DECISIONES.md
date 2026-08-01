@@ -2267,3 +2267,71 @@ Criterio de borrado: se elimina si una decisión posterior deroga o reescribe
 presupuesto de líneas— de modo que la aplicación que esta entrada registra deje de
 ser el régimen vigente. Las tres correcciones de hecho NO caducan con ella: son
 mediciones de disco y se corrigen, si acaso, con una entrada nueva.
+
+
+## D-059 — 2026-07-31 — La clasificación de runs aterriza en la maquinaria: seis adjudicaciones que la especificación no fijaba
+**Entrada transversal**, porque lo implementado viaja a los tres proyectos en el
+sobre (`taxonomy_model`) y los tres leerán las mismas tablas. La ejecución en `aiw`
+y en `cantu-studio` es de sus hilos y aquí sólo se nombra.
+
+`RUN-CONSOLE-RUN-CLASSIFICATION-FIELDS-001` (`queue_order` 43) se ejecutó en TRES
+encargos de taller: motor, emisor-y-consola, y `care_budget`. Seis decisiones que la
+especificación no fijaba, todas con su cita medida en disco:
+
+1. **El tercer invariante se comprueba sobre la TABLA, no sobre los datos.**
+   `JUDGED_*` + `UNATTENDED` nombra un token de `closure_mode`, que es DERIVADO y
+   nadie almacena: no hay campo que validar. Se implementa como propiedad de la
+   derivación —`enforced_by: "derivation_property"`, frente al
+   `stored_field_invariant` de las otras dos— y se prueba recorriendo las **216**
+   combinaciones del producto completo. Bajo la tabla de §2.2 la combinación es
+   inalcanzable por construcción. `tools/classification/classification.mjs:312`;
+   prueba en `tests/classification-derivation.test.mjs:279`.
+   **Esto es una asimetría que §3 no declara:** enuncia las tres combinaciones en pie
+   de igualdad y no dice que una se guarde en otro sitio.
+2. **`classified_at` lo escribe el MOTOR, en ISO-8601 UTC**, con el formato que el
+   repo ya emite en `generated_at`. No lo teclea el operador: una marca tecleada es
+   una marca que puede mentir, y un segundo formato es una segunda verdad.
+   `tools/roadmap/roadmap-core.mjs:1194-1200` y `:1301`.
+3. **`external_effects` se verifica en FORMA, no en vocabulario**, porque §1 no
+   enuncia entradas; y **ausente ≡ `[]`**: la lista es «vacía por defecto», luego las
+   dos son la misma respuesta y la guarda de §2.2 no se aplica a ninguna.
+   `classification.mjs:296`, `:124`, `:155-160`.
+4. **Un derivado sin sus entradas devuelve AUSENTE, no un defecto.** No hay severidad
+   ni modo de cierre por defecto: un run sin clasificar no tiene severidad, y decir
+   que la tiene sería la segunda copia que se pudre con forma de default.
+   `classification.mjs:132-142`.
+5. **La derivación vive en UN módulo único** que consumen emisor y consola, sin
+   `import` de ninguna clase para que ambos runtimes lo carguen: el emisor lo importa
+   de disco y el navegador lo baja por HTTP del mismo archivo, con test que exige
+   BYTES IDÉNTICOS entre las dos vías. Es lo que impide que dos consumidores deriven
+   distinto, que es el propósito declarado de §2.
+   `tools/classification/classification.mjs`; `tools/projector/project.mjs:59`;
+   `project-console/assets/project-shell.js:30` y `:533`.
+6. **`care_budget` viaja DENTRO de `taxonomy_model`**, no al lado de `lanes`, con el
+   modelo y el valor del proyecto separados y el par `declared`/`declared_reason` que
+   nunca se parte. Razón: está indexado por `severity`, un token DERIVADO; alojarlo
+   fuera habría hecho que las claves de su propia tabla fueran los primeros tokens de
+   severidad viajando fuera de esa clave. Ausente emite `declared: null` **con su
+   razón**, nunca `{}` ni los defaults. `project.mjs:1080`; `classification.mjs:431`.
+
+**DOS OBSTÁCULOS DEL PROPIO RUN, RESUELTOS AL MEDIRLOS.** El primero **no existía**:
+el `full_description` exigía que motor, validador y emisor aceptaran dos
+`schema_version` o que `cantu-studio` migrara primero, y la medición no encontró **ni
+una sola comparación** de ese string en las tres superficies. El segundo —el motor en
+dos copias, con `roadmap-edit.mjs` viviendo sólo en `cantu-studio`— **sigue abierto y
+es de aquel hilo**: cuando clasifique, su copia estará ciega a los seis campos. Su
+precedente está en su propio disco, `[lanes: TOLERATE, NOT ADOPT]`,
+`tools/roadmap/roadmap-core.mjs:27-35`. `aiw` NO está en ese lote: declara
+`roadmap_tree_v1` y usa este motor.
+
+**LO QUE SIGUE ABIERTO, y se declara para que no se descubra como hallazgo:**
+las **tres reglas mecánicas de runs mixtos** de §7 siguen siendo hueco y no se
+reconstruyeron; **no existe procedimiento escrito** de clasificación más allá del
+vocabulario; y **cómo se DECLARA la calibración** de un `completed` no está resuelto
+en ninguna parte. Las tres las hereda el run del piloto. El proyector queda en
+**0.12.0**.
+
+**Criterio de borrado:** la sustituye una decisión que cambie la forma de transporte
+del modelo de taxonomía, o que reubique la derivación fuera del módulo único. Las
+seis adjudicaciones caducan una a una si la especificación las absorbe en su texto;
+mientras no lo haga, esta entrada es su única sede.

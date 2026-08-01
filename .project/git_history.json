@@ -1,27 +1,47 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-01T02:49:51.415Z",
-  "generated_from": "aiw-projector@0.11.0",
+  "generated_at": "2026-08-01T03:43:32.688Z",
+  "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-01T02:43:12.698Z"
+      "mtime": "2026-08-01T03:39:28.594Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-01T02:49:51.412Z"
+      "mtime": "2026-08-01T03:43:24.781Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "1d5e88a1a1be7cb486065513d79c0d8fe71a63b1",
+  "head": "5ce887ae8c1b4833b420296602d8bd9a38c58d9c",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 121,
+  "commit_total": 123,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "5ce887a",
+      "full_sha": "5ce887ae8c1b4833b420296602d8bd9a38c58d9c",
+      "date": "2026-07-31T21:36:26-06:00",
+      "parents": "a982b1a",
+      "subject": "run 43 (encargo 3 de 3): care_budget entra como clave de RAIZ por el camino de declare-lanes, con verbo propio declare-care-budget no batcheable, invariante de forma, y transporte dentro de taxonomy_model separando modelo y valor declarado; proyector 0.11.0 -> 0.12.0; serve.mjs sin cambios. La suite queda 442/441/1: el unico fallo es el pin de fines de linea de roadmap-engine.test.mjs, que exige que los dos canonicos reales difieran en EOL y hoy ambos son CRLF. CAUSA IDENTIFICADA: el git checkout del revert de la QA reescribio el canonico a CRLF con core.autocrlf activo y sin .gitattributes; no es defecto de codigo y el roundtrip sigue byte-identico. Su reparacion tiene dueno en el run de .gitattributes y no se hace aqui. Corrige hacia adelante la linea base que esta cabina venia citando: era 418/417/1, no 418/418/0. El run 43 sigue active",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "a982b1a",
+      "full_sha": "a982b1ae0fed733ce866d936cc546f22c9960a3b",
+      "date": "2026-07-31T20:56:51-06:00",
+      "parents": "1d5e88a",
+      "subject": "project: re-emision de .project/ tras revertir la clasificacion de prueba de la QA. Corrige hacia adelante el mensaje de 1d5e88a, que afirmaba 'QA humana pasada' antes de que ocurriera: la QA se ejecuto DESPUES, en esta vuelta. Resultado: los dos invariantes implementados rechazaron en vivo y a la vez (SPECIFIED+FOUNDATIONAL y FOUNDATIONAL+LOUD) sin escribir nada, y el operador reporta el resto de los pasos conforme. Los diez runs vivos quedan sin clasificar, como estaban. El run 43 sigue active",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "1d5e88a",

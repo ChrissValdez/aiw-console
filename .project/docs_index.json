@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-01T02:49:51.415Z",
-  "generated_from": "aiw-projector@0.11.0",
+  "generated_at": "2026-08-01T03:43:32.688Z",
+  "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": "README.md",
@@ -87,6 +87,10 @@
     {
       "path": "context/aiw-console/records/CIERRE-ROADMAP-AL-DIA-FASES-P13-P14.md",
       "mtime": "2026-07-28T02:17:45.499Z"
+    },
+    {
+      "path": "context/aiw-console/records/CLASIFICACION-CARE-BUDGET.md",
+      "mtime": "2026-08-01T03:23:33.140Z"
     },
     {
       "path": "context/aiw-console/records/CLASIFICACION-EMISOR-Y-CONSOLA.md",
@@ -640,6 +644,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-28T02:17:45.499Z"
+    },
+    {
+      "title": "CLASIFICACIÓN — `care_budget`: configuración POR PROYECTO, editable desde la consola",
+      "path": "context/aiw-console/records/CLASIFICACION-CARE-BUDGET.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T03:23:33.140Z"
     },
     {
       "title": "CLASIFICACIÓN — EMISOR Y CONSOLA: la derivación, el transporte, la vista, la lista y la escritura",

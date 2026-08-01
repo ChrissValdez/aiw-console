@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-01T03:43:32.688Z",
+  "generated_at": "2026-08-01T03:54:01.232Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-01T03:39:28.594Z"
+      "mtime": "2026-08-01T03:49:35.098Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,14 +14,24 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "5ce887ae8c1b4833b420296602d8bd9a38c58d9c",
+  "head": "8f60657abb37558a170466aa6e37df29a00b07f0",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 123,
+  "commit_total": 124,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "8f60657",
+      "full_sha": "8f60657abb37558a170466aa6e37df29a00b07f0",
+      "date": "2026-07-31T21:44:52-06:00",
+      "parents": "5ce887a",
+      "subject": "run 43 CERRADO: los cinco campos de clasificacion mas classified_at viven en el esquema como claves opcionales, severity y closure_mode se derivan al leer desde un modulo unico, el sobre transporta vocabulario, tablas, combinaciones ilegales y care_budget en taxonomy_model con proyector 0.12.0, la consola ve, escribe y lista sin rechazar, y este proyecto declara su care_budget con los defaults publicados. QA humana pasada: la derivacion dio CRITICAL y SEMI_ATTENDED como se calculo a mano, la saturacion aguanto en MINOR, la guarda de external_effects subio el modo, las dos combinaciones ilegales rechazaron en vivo sin escribir, y un run que se desvia del presupuesto guardo sin queja. Registra D-059 con las seis adjudicaciones. Queda abierto y declarado: las tres reglas de runs mixtos, el procedimiento escrito, y como se declara la calibracion de un completed",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "5ce887a",

@@ -20,277 +20,274 @@
 > (`records/CORRECCIONES-QA-CARRILES-Y-REGLA-DE-IDIOMA.md` Bloque C): el proyecto
 > declara, el consumidor obedece.
 
-**Estado del hilo:** el roadmap de Cantu está **migrado a carriles y ya partido en
-implementación y documentación**, y la disciplina de proceso ya dice "un run a la
-vez POR CARRIL". Los **dos encargos que este handoff da por hechos SE CORRIERON**, y
-cada uno dejó su record:
+**Última actualización de este handoff: 2026-08-01.** Reescrito entero: las cifras del
+relevo anterior eran del 2026-07-27 y ninguna sigue en pie. Todas las de abajo se
+midieron en disco el 2026-08-01 contra
+`projects/cantu-studio/.aiw/roadmap/roadmap.json` (md5 `6d13a7c617801b4b197b6075f418cbac`)
+y contra el validador por la vía que no escribe.
 
-- la partición → `context/aiw-console/records/PARTICION-IMPLEMENTACION-Y-DOCUMENTACION-CANTU.md` (2026-07-27);
-- la disciplina → `context/aiw-console/records/DISCIPLINA-UN-RUN-POR-CARRIL.md` (2026-07-27).
+---
 
-**Ningún run está `active`.** Última actualización de este handoff: **2026-07-27**.
+## QUÉ SIGUE — lo primero
 
-> **RETOQUE del 2026-07-28** (cierre de registro; `records/CIERRE-REGISTRO-Y-RELEVO-TERCERO.md`).
-> **Un solo cambio de fondo:** el pendiente 1 decía que el `.project/` de Cantu estaba
-> desfasado (53 contra 71) y **ya no lo está** — se re-emitió y se commiteó. Está
-> corregido ahí, con la medición en disco y con la vía que lo resuelve en adelante: el
-> botón *Re-emit `.project/`* de la consola global. **Todo lo demás de este relevo se
-> conserva sin tocar**, y sus cifras siguen siendo las del 2026-07-27 con sus fuentes.
+El ciclo de componentes se paró a propósito para arreglar el mapa. **El mapa ya está
+arreglado**: el carril `DOCUMENTATION` está rediseñado
+(`records/REDISENO-CARRIL-DOCUMENTATION-CANTU.md`) y los 46 pendientes están
+clasificados (`records/CLASIFICACION-DE-LOS-46-RUNS-PENDIENTES-CANTU.md`). **El ciclo
+se reanuda.**
 
-## El plan y el estado viven en el roadmap — no aquí
+**Hay 20 runs elegibles hoy** — `planned` con **todas** sus `depends_on` en `completed`,
+contado sobre el canónico. El validador da `ready_next=20`, que coincide. Títulos
+**verbatim del canónico, en inglés**:
+
+| `#N` | carril | `run_id` | título (verbatim) | fase | `closure_mode` |
+|---|---|---|---|---|---|
+| #17 | `DOCUMENTATION` | `RUN-CANTU-DOCUMENTATION-DEEP-AUDIT-001` | "Audit the documentation corpus and produce the disposition list" | O2.P1 | SEMI_ATTENDED |
+| #18 | `DEVELOPMENT` | `RUN-JAME-WEB-LIST-REVALIDATION-001` | "Audit and implement the List component" | O1.P1C | ATTENDED |
+| #19 | `DEVELOPMENT` | `RUN-JAME-WEB-ICONLIST-REVALIDATION-001` | "Audit and implement the IconList component" | O1.P1C | ATTENDED |
+| #20 | `DEVELOPMENT` | `RUN-JAME-WEB-CARD-REVALIDATION-001` | "Audit and implement the Card component" | O1.P1C | ATTENDED |
+| #21 | `DEVELOPMENT` | `RUN-JAME-WEB-VIDEO-REVALIDATION-001` | "Audit and implement the Video component" | O1.P1C | ATTENDED |
+| #22 | `DEVELOPMENT` | `RUN-JAME-WEB-NARRATIVE-REPAIR-001` | "Audit and implement the Narrative component" | O1.P1C | ATTENDED |
+| #23 | `DEVELOPMENT` | `RUN-JAME-WEB-CALLOUT-REPAIR-001` | "Audit and implement the Callout component" | O1.P1C | ATTENDED |
+| #24 | `DEVELOPMENT` | `RUN-JAME-WEB-DETAILS-REPAIR-001` | "Audit and implement the Details component" | O1.P1C | ATTENDED |
+| #25 | `DEVELOPMENT` | `RUN-JAME-WEB-ARITHMETIC-AUDIT-AND-REPAIR-001` | "Audit and implement the Arithmetic component" | O1.P2 | ATTENDED |
+| #26 | `DEVELOPMENT` | `RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001` | "Audit and implement the Rule component" | O1.P2 | ATTENDED |
+| #27 | `DEVELOPMENT` | `RUN-JAME-WEB-SPLIT-SCOPE-AND-REPAIR-001` | "Decide scope and enable the Split component" | O1.P1C | ATTENDED |
+| #28 | `DEVELOPMENT` | `RUN-JAME-WEB-TABLE-AUDIT-AND-REPAIR-001` | "Audit and implement the Table component" | O1.P1C | ATTENDED |
+| #29 | `DEVELOPMENT` | `RUN-JAME-WEB-CONCEPTGRID-AUDIT-AND-REPAIR-001` | "Audit and implement the ConceptGrid component" | O1.P2 | ATTENDED |
+| #30 | `DEVELOPMENT` | `RUN-JAME-WEB-HIERARCHY-AUDIT-AND-REPAIR-001` | "Audit and implement the Hierarchy component" | O1.P2 | ATTENDED |
+| #31 | `DEVELOPMENT` | `RUN-JAME-WEB-TIMELINE-AUDIT-AND-REPAIR-001` | "Audit and implement the Timeline component" | O1.P2 | ATTENDED |
+| #32 | `DEVELOPMENT` | `RUN-JAME-WEB-VISUAL-AUDIT-AND-REPAIR-001` | "Audit and implement the Visual component" | O1.P1C | ATTENDED |
+| #33 | `DEVELOPMENT` | `RUN-CANTU-COMPONENT-GUIDE-PACKET-WIRING-001` | "Unify the Component Guide mechanism and fix its template" | O2.P3 | ATTENDED |
+| #41 | `DEVELOPMENT` | `RUN-JAME-FORMULA-INSERTER-INTEGRATION-001` | "Verify global Formula Inserter integration after component revalidation" | O5.P3 | SEMI_ATTENDED |
+| #42 | `DEVELOPMENT` | `RUN-CANTU-SLIDE-GRID-SYSTEM-001` | "Audit and define the Slide grid system" | O3.P1 | ATTENDED |
+| #58 | `DEVELOPMENT` | `RUN-JAME-PROJECT-CONSOLE-DOCS-V3-001` | "Update the canonical Docs view to render authority and consume packets by contract" | O2.P3 | UNATTENDED |
+
+**19 son `DEVELOPMENT`, 1 es `DOCUMENTATION`.** El carril `DOCUMENTATION` tiene
+**exactamente un** elegible, el **#17**; sus otros 7 pendientes esperan a runs de
+implementación (los cuatro lotes #35–#38 esperan sus componentes; #45 espera Slide
+sandbox parity; #59 espera al propio #17; #61 espera a #60). Medido arista por arista.
+
+`DEVELOPMENT` es el carril **por defecto** y **se resuelve al leer**: los runs de ese
+carril **no llevan clave `lane`**. Sólo `DOCUMENTATION` va escrito (`D-051` en
+`context/DECISIONES.md`).
+
+---
+
+## El estado del roadmap, medido de primera mano
 
     projects/cantu-studio/.aiw/roadmap/roadmap.json
 
-Ésa es **la fuente del plan y del estado** de Cantu, y es **el único roadmap** del
-proyecto. Este handoff apunta ahí y no lo duplica.
+**La fuente del plan y del estado**, y **el único roadmap** del proyecto. Contado sobre
+ese archivo el **2026-08-01**:
 
-Al cierre, **contado sobre ese archivo en disco el 2026-07-27**: **7 objetivos, 28
-fases, 71 runs**; `queue_order` **1..71 denso, único y contiguo**; **150 aristas
-`depends_on`**, de las que **1 es externa** (ver compuertas); **0 `barrier`**.
-Status: **2 `completed`, 69 `planned`**, ninguno `active` ni `blocked`. Carriles:
-**`DEVELOPMENT` 48 · `DOCUMENTATION` 23**.
+| | |
+|---|---|
+| objetivos / fases / runs | **7 / 28 / 63** |
+| status | **17 `completed`, 46 `planned`** · ninguno `active` ni `blocked` |
+| aristas `depends_on` | **126**, de las que **1 es externa** |
+| `queue_order` | **1..63 denso, único y contiguo** |
+| carriles | `DEVELOPMENT` **52** (por ausencia de clave) · `DOCUMENTATION` **11** |
+| `barrier` | **0 ocurrencias** |
 
-Las mismas cifras, medidas por el validador del propio repo — el comando de lectura
-que no escribe:
+Las mismas cifras por el validador del propio repo — el comando de lectura que no
+escribe, corrido desde `projects/cantu-studio`:
 
 ```bash
 node tools/project-console/validate-project-console-state.mjs
 ```
 
-`EXIT 0` — «7 objectives / 28 phases / **71** runs; queue groups
-needs_human_decision=0 now=0 ready_next=9 later=60 history=2», citado en
-`records/DISCIPLINA-UN-RUN-POR-CARRIL.md` D.1 y en
-`records/PARTICION-IMPLEMENTACION-Y-DOCUMENTACION-CANTU.md` F.6. El único aviso es
-el **no bloqueante de siempre**, la arista externa.
+`EXIT 0` — «7 objectives / 28 phases / **63** runs; queue groups
+needs_human_decision=0 now=0 **ready_next=20** later=26 **history=17**». Único aviso, el
+**no bloqueante de siempre**: la arista externa
+`RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` →
+`RUN-CANTU-ROADMAP-CONTENT-AUDIT-001`, que vive en el roadmap de `aiw-console`.
+**Ese run ya está `completed` en Cantu**, así que la arista ya no gobierna nada del
+orden — pero **el aviso sigue**, y sigue costando (ver deriva).
 
-Los dos `completed` son `RUN-JAME-SMART-FORMULA-FIELD-RULE-ONLY-BASELINE-001` (q1) y
-`RUN-JAME-MATHLIVE-INTEGRATION-READINESS-001` (q48) — `history=2` del validador es
-justo eso.
+Los **17 `completed`** son `#1`–`#16` más `#40`
+(`RUN-JAME-MATHLIVE-INTEGRATION-READINESS-001`). Son los diecisiete runs que cerró la
+sesión del 2026-07-31/08-01.
 
-## Los dos carriles, y cuál es el defecto
+---
 
-El vocabulario **lo declara el proyecto**, en `root.lanes` de su propio canónico
-(patrón fijado por `D-051` en `context/DECISIONES.md`). Leído de ahí, verbatim:
+## La clasificación — qué puede delegarse y qué es cabina
 
-| `lane_id` | `title` | `default` |
-|---|---|---|
-| `DEVELOPMENT` | Development — code, structure, tooling | **`true`** |
-| `DOCUMENTATION` | Documentation — writing, updating, reorganising docs | — |
+**`closure_mode` NO está en disco: se deriva al leer**, de `correctness_model` +
+`severity`, y después la guarda de `external_effects`, que sólo sube
+(`records/CLASIFICACION-EMISOR-Y-CONSOLA.md` §2.2). Los 46 pendientes llevan los seis
+campos almacenados, todos con `classified_at: 2026-08-01T05:45:24.479Z`.
 
-- **`DEVELOPMENT` es el defecto, y el defecto se resuelve AL LEER.** Los 48 runs de
-  ese carril **no llevan clave `lane`** en el dato: la ausencia resuelve al default
-  declarado. Sólo los 23 de `DOCUMENTATION` llevan `lane` escrito (medido en disco:
-  48 sin clave, 23 con `lane: "DOCUMENTATION"`).
-- **`queue_order` sigue siendo global, denso y único.** La posición dentro del
-  carril **se DERIVA filtrando** y no se almacena en ninguna parte (`D-051` pieza 3).
-  Por eso un run tiene dos números: su posición global y su posición en su carril.
-- **Qué significan.** `DEVELOPMENT` es código, estructura y tooling; `DOCUMENTATION`
-  es escribir, actualizar y reorganizar docs. La partición existe porque el roadmap
-  se escribió ANTES de los carriles y empaquetaba «audit, implement **and document**»
-  en un solo run, lo que impedía exactamente el paralelismo que motivó los carriles:
-  documentar el componente 1 mientras se implementa el 2
-  (`records/PARTICION…` encabezado y Bloque D).
+Cifras producidas **ejecutando** `deriveSeverity()`/`deriveClosureMode()` de
+`tools/classification/classification.mjs` sobre el canónico, no copiando tabla:
 
-## LO SIGUIENTE, EN CADA CARRIL
+| `closure_mode` | runs pendientes | `DEVELOPMENT` | `DOCUMENTATION` |
+|---|---:|---:|---:|
+| **ATTENDED** | **23** | 23 | 0 |
+| **SEMI_ATTENDED** | **17** | 10 | 7 |
+| **UNATTENDED** | **6** | 5 | 1 |
+| **Total** | **46** | 38 | 8 |
 
-El primer run desbloqueado de cada carril — **desbloqueado = `planned` con todas sus
-`depends_on` en `completed`**, verificado sobre `.aiw/roadmap/roadmap.json` y, para
-la arista externa, sobre `aiw-console/roadmap/roadmap.json`:
+Severidad derivada, mismo universo: CRITICAL **15** · MAJOR **9** · MODERATE **22** ·
+MINOR **0**. Coincide run a run con
+`records/CLASIFICACION-DE-LOS-46-RUNS-PENDIENTES-CANTU.md` §4.3.
 
-### Carril `DEVELOPMENT`
+**Los 23 `ATTENDED` son cabina.** Las familias que agrupan estos 46 están en
+`records/FAMILIAS-DE-RUNS-PENDIENTES-CANTU.md` (trece familias; dos concentran 19 runs),
+y la tolerancia del criterio está en `records/TOLERANCIA-DE-CLASIFICACION-EN-CANTU.md`.
 
-    RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001
-    q4 global · posición 2 del carril · fase O2.P4 · objetivo O2 · planned
-    "Update the operating methodology to roadmap-first ordering"
+---
 
-**Su única dependencia es la externa** —
-`RUN-CANTU-ROADMAP-CONTENT-AUDIT-001`— y **está `completed`**: vive en el roadmap de
-`aiw-console` (q4, fase `O0.P3`), donde su status se leyó como `completed`. Por eso
-está desbloqueado.
+## LAS DECISIONES DEL OPERADOR QUE SIGUEN ABIERTAS
 
-**Matiz que hay que llevar puesto:** el validador de Cantu dice `ready_next=9`, no
-10, porque **su motor no sabe resolver esa arista externa** (no tiene
-`externalRunIds`; es la extensión que vive sólo en aiw-console — `D-051`, «impacto
-medido sobre el tooling local», y `records/PARTICION…` F.6). La consola global sí la
-resuelve. Si se prefiere el primero cuya cadena es **enteramente local**, es el
-siguiente: `RUN-CANTU-NAMING-AUDIT-DISPOSITION-001` (q5, posición 3 del carril,
-`depends_on` vacío, «Freeze the naming disposition map and exclusion list»).
+Se listan, no se resuelven. **Sin recomendación del taller: son suyas.**
 
-### Carril `DOCUMENTATION`
+1. **El contrato de fuente única contradice la decisión del operador.**
+   `docs/docs_management/COMPONENT-DOC-SINGLE-SOURCE-CONTRACT.md` §5 dice, verbatim:
+   «Both consumers render the same packet», y fija como *target* de la Guía «Renders the
+   canonical packet; keeps no inline per-component content and no own status». Se decidió
+   que son **dos fuentes con audiencias distintas**, y el rediseño hace lo contrario a
+   propósito. Enmendar el contrato quedó fuera de alcance.
+   → `records/REDISENO-CARRIL-DOCUMENTATION-CANTU.md` §17.1 · §5 verificada en disco.
 
-    RUN-JAME-DOCUMENTATION-CANONICAL-MODEL-001
-    q2 global · posición 1 del carril · fase O2.P2 · objetivo O2 · planned
-    "Define the canonical documentation model, IA, and cadence"
+2. **No existe contrato de contenido de autor para la Guía, ni run que lo cree.** La
+   medición lo recomendaba como run de `DOCUMENTATION` temprano; el encargo no lo pidió.
+   El run que escribe la Guía (`#34`, "Write the Component Guide content") se apoya en la
+   plantilla que fija `#33`, que es **runtime, no norma documental**.
+   → `records/REDISENO-CARRIL-DOCUMENTATION-CANTU.md` §17.2 y §6.2.
 
-`depends_on` **vacío**. Es la fundación del carril: de él cuelga
-`RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001` (q3), que a su vez es
-dependencia de **los 17 runs de documentación por componente** — es decir, el carril
-de documentación **no puede avanzar más allá de q3 hasta que estos dos cierren**.
+3. **El `success` de `timeline.detailsVariant` no es token de paleta y resuelve al
+   fallback en silencio.** La recomendación medida es **o** promover los alias
+   (`success`/`warning`/`error`/`info`) a tokens reales **o** sacar `success` del enum,
+   «porque la mezcla actual manda un valor seleccionable al fallback». Medido: el
+   compilador **nunca llama al resolvedor de paleta** para `detailsVariant`; `success`,
+   `def` y `ctx` caen todos en el mismo `#5E81AC` hardcodeado.
+   → `records/CONTRATO-COLOR-Y-PALETA-CANTU.md` decisión abierta 4, §D.2 y Bloque H.3 ·
+   `records/INVENTARIO-COLOR-Y-MATH-DE-COMPONENTES-WEB-CANTU.md` hallazgo 3.
 
-Los otros desbloqueados hoy, por si la cabina quiere ordenar distinto (mismo
-criterio, misma medición): `DEVELOPMENT` q7, q8, q10, q11, q49, q50 ·
-`DOCUMENTATION` q67.
+4. **La compuerta del compilador.** Segunda compuerta cerrada **dentro del compilador**,
+   además de la del schema, sobre `split`, `timeline` y el badge de `table`. Verificada en
+   disco en `tools/author-lite/compiler-api/services/compiler.js`: `:66` +`:579`
+   (`SPLIT_VARIANT_VALUES = new Set(['ctx','focus','wrn'])` — **`split` está en el techo
+   con tres valores**), `:985` (timeline) y `:481-483` (badge de table, que lanza). Y
+   deja a **cinco componentes** —`callout`, `rule`, `table`, `details`, `conceptGrid`—
+   emitiendo **sólo el token id**, que el motor Web mapea contra un mapa fijo de doce
+   claves no derivado de la paleta del autor: **descartan el hex en silencio**.
+   **Aunque el operador elija hoy, la decisión no basta: falta la compuerta.**
+   → `records/UNIFICACION-SELECTOR-COLOR-WEB-Y-COMPUERTA-DEL-COMPILADOR-CANTU.md`
+   §1 hallazgo 1, §6.1 y la tabla de §229-231.
 
-## Las compuertas vigentes (son `depends_on` reales en el roadmap)
+5. **Los seis huecos abiertos del rediseño**, en `records/REDISENO-CARRIL-DOCUMENTATION-CANTU.md`
+   §17 — los dos primeros son los puntos 1 y 2 de arriba; los otros cuatro:
+   - **La frontera de idioma no está declarada en ninguna parte.** Los packets son inglés
+     sin acentos por BLUEPRINT §2; la Guía es español acentuado. Los textos lo dicen en
+     prosa, **ninguna norma lo fija**.
+   - **Cinco lugares de la Definition of Done quedan desfasados** y sin tocar (§4.3).
+   - **El `run_id` del run reencuadrado de la Guía sigue diciendo `PACKET-WIRING`** (§6.4)
+     — identidad inmutable por `D-047`, así que es decisión, no bug.
+   - **`#61` "Sweep the legacy documentation paths" y los cuatro lotes comparten
+     superficie**: los diecisiete packets. Van en serie por `queue_order`, así que la
+     regla 7 se cumple, pero **el solape de alcance sigue existiendo**.
 
-- **Los DOS audits de conjunto tras el split — cada carril converge en el suyo, sin
-  cruce:**
+---
 
-  | run | `queue_order` | carril | aristas | a qué |
-  |---|---|---|---|---|
-  | `RUN-JAME-WEB-READINESS-EVIDENCE-001` «Audit the Web components as a whole» | 46 | `DEVELOPMENT` (posición 27) | **17** | los 17 runs de **implementación** |
-  | `RUN-CANTU-WEB-DOCUMENTATION-EVIDENCE-001` «Audit the Web component documentation as a whole» | 47 | `DOCUMENTATION` (posición 20) | **17** | los 17 runs de **documentación** |
+## LA DERIVA CONOCIDA Y SIN DUEÑO
 
-  **Cero cruces**, verificado arista por arista en disco: los 17 del primero son
-  todos `DEVELOPMENT`, los 17 del segundo todos `DOCUMENTATION`. Ése es el punto
-  entero de la partición (`records/PARTICION…` E.2).
+Se nombra; **no se toca**. Cada una con su fuente.
 
-- **Los 17 nuevos de documentación llevan dos aristas cada uno** — su propio run de
-  implementación **y** `RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001`, el que
-  define el formato del packet. 2 × 17 = 34 aristas (`records/PARTICION…` E.1).
+1. **La suite de `cantu-studio` NO está verde: 4 fallos previos.** Declarados en
+   `records/TOLERANCIA-DE-CLASIFICACION-EN-CANTU.md` §7 — 173 tests, 169 pass, **4 fail**
+   (`clearProgress` 1, `createPhase` 2, `deletePhase` 1). Misma causa en los cuatro: esos
+   tests copian el canónico real y `checkInvariants` marca la dependencia huérfana
+   `RUN-CANTU-ROADMAP-CONTENT-AUDIT-001` — **la misma arista del aviso no bloqueante**.
+   *[NO VERIFICADO en esta sesión: correr suites está fuera de alcance de este encargo;
+   la cifra es la de aquel record, no una medición de hoy.]*
 
-- **Aguas abajo de los dos audits**, contado en disco:
-  - `RUN-JAME-AUTHORING-WORKSPACE-UX-AUDIT-001` (q57) depende de **los dos**, más de
-    `RUN-JAME-SLIDE-READINESS-EVIDENCE-001`. La arista a la mitad de documentación se
-    añadió en la partición porque su propio texto la nombra.
-  - `RUN-JAME-HTML-PAYLOAD-MEASUREMENT-001` (q58), `RUN-JAME-PRODUCTION-LESSON-VALIDATION-001`
-    (q63) y `RUN-CANTU-INTERNAL-CODE-RENAME-001` (q68) dependen **sólo** de la mitad
-    de implementación (más Slide). Sin cambio, con la razón en `records/PARTICION…` E.3.
+2. **Mojibake en los mensajes de error de los dos schemas.** Medido hoy en disco,
+   contando líneas con marcador (`Ã`, `Â`, `â`, `�`):
+   `tools/author-lite/compiler-api/schemas/draftSchema.js` → **32 líneas**;
+   `tools/author-lite/editor-ui/src/schemas/draftSchema.js` → **23 líneas**. Son mensajes
+   que **ve el autor**. La ironía medida: el script guardián vigila exactamente esos
+   cuatro marcadores, pero **sólo sobre `ComponentGuide.jsx` y `blockCatalog.js`** — las
+   dos superficies limpias — y no sobre los dos schemas.
+   → `records/MEDICION-SUPERFICIE-DOC-COMPONENTES-WEB-Y-FORMA-DEL-PACKET-CANTU.md` §4.3.
 
-- **La arista externa, legal y única:**
-  `RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` →
-  `RUN-CANTU-ROADMAP-CONTENT-AUDIT-001`, que vive en el roadmap de `aiw-console`. Es
-  el aviso no bloqueante del validador y **es la de siempre**, no una nueva.
+3. **Un puntero de ruta muerto, con su unidad.** `docs/author-lite/components/COMPONENT_CERTIFICATION_MATRIX.md`
+   **no existe** (la ruta real es `docs/archive/author-lite/components/…`). Medido hoy
+   sobre todo `cantu-studio`, excluidos `.git` y `node_modules`: **462 apariciones en 112
+   archivos — de UN SOLO puntero**. La unidad es *apariciones*, no *rutas distintas*: las
+   rutas distintas muertas son **496** en el corpus documental entero y **83** en el vivo.
+   → `records/CIERRE-HUECOS-ESTANDAR-DOC-IDIOMA-Y-ASERCIONES-CANTU.md` §6.1.
 
-- **Ningún `barrier` aplicado.** Medido: **0 ocurrencias** en el canónico. Los
-  candidatos están medidos y siguen **abiertos** en
-  `records/MIGRACION-CANTU-A-CARRILES.md` Bloque E — con sus efectos contados, uno
-  por uno. Es decisión del operador, no del taller.
+4. **403 líneas de documentación inalcanzables en el catálogo de bloques.** En
+   `tools/author-lite/editor-ui/src/features/editor/constants/blockCatalog.js` (1 176
+   líneas), tres campos `docs:`: `list` `:240-544` = 305 · `columns` `:952-1033` = 82 ·
+   `header` `:146-161` = 16 → **403**. Rangos verificados hoy. Son inalcanzables porque la
+   Guía no lee un solo packet: **0 referencias a `docs/components/` en todo
+   `editor-ui/src`**, medido hoy.
+   → mismo record, §6.2.
 
-## La disciplina de ejecución paralela (ya actualizada, es la vigente)
+5. **`AGENTS.md` está en español siendo artefacto interno, y declara un número de runs
+   caducado.** Verificado hoy: 671 líneas, íntegramente en español; su línea 70 dice «Hoy
+   contiene 7 objectives, 28 phases y **72 runs**» y su línea 73 «hoy **49 de 72** runs no
+   declaran `lane` y **23** declaran `DOCUMENTATION`». El canónico trae **63 runs**, **52
+   sin clave** y **11 `DOCUMENTATION`**. **Las tres cifras están caducadas.**
+   → `records/CIERRE-HUECOS-ESTANDAR-DOC-IDIOMA-Y-ASERCIONES-CANTU.md` §7 hallazgo 4.
 
-Escrita en `CANTU_STUDIO_CONTEXT.md` («Process discipline», en inglés) y en
-`cantu-studio/AGENTS.md` y `cantu-studio/CLAUDE.md` (regla 7 del pipeline más la
-subsección «Disciplina de ejecución paralela», en español). Los tres sitios los
-escribió `records/DISCIPLINA-UN-RUN-POR-CARRIL.md`, Bloques B y C.
+6. **`component_status.json` tiene 16 componentes frente a 17 packets.** Verificado hoy:
+   `docs/components/web/` trae **17** `.md`; `.aiw/state/component_status.json` trae
+   **16 ids** y **falta `columns`**, mientras `COLUMNS.md` existe. El validador lo reporta
+   como «Component statuses: 16». Los universos «proyección de status» y «packets» **no
+   coinciden**.
+   → `records/CONTRATO-FUENTE-UNICA-DOC-COMPONENTES-CANTU.md` Bloque I.6.
 
-1. **Un run a la vez POR CARRIL.** Los carriles corren en paralelo; un mismo carril
-   nunca corre dos. Sustituye a la regla pre-carril «ONE run at a time. Commit +
-   confirm a clean git log BEFORE issuing the next ticket.»
-2. **Nunca dos runs simultáneos tocando el MISMO archivo.** Esa mitad **no se borró**:
-   dos carriles son paralelos **sólo si sus superficies de escritura son disjuntas**.
-   Si dos runs tocarían el mismo archivo van **en serie, aunque estén en carriles
-   distintos**. El carril no autoriza la colisión.
-3. **El encargo no cierra su propio run.** No cambia status y **no re-emite
-   `.project/`**: **declara** el status en el que su run debe quedar. **Lo cierra el
-   operador desde la consola global**, cuyo endpoint de escritura escribe el canónico
-   y re-emite `.project/` de forma atómica. **La consola es el punto de
-   serialización** — el único escritor, aunque haya N talleres.
-4. **El operador es el único que ejecuta git**, así que los commits ya están
-   serializados ahí: **un ticket no espera un git log limpio** antes de que se emita
-   el siguiente.
-5. **La suite completa no se corre en dos talleres a la vez** — uno escribe mientras
-   el otro lee, y eso produce fallos fantasma.
+---
 
-Que esto funciona ya está medido, y por accidente: las dos sesiones del 2026-07-27
-corrieron a la vez con superficies disjuntas y no se pisaron
-(`records/DISCIPLINA…` E.1 y `records/PARTICION…` Bloque H, que se citan la una a la
-otra).
+## LA DISCIPLINA QUE HAY QUE CONOCER
 
-## Pendientes que son del OPERADOR, no del taller
+1. **El hilo paralelo de `aiw-console` escribe en el mismo repo.** El `git add` va con
+   los nombres **uno a uno**, **nunca `-A`**. Pasar la lista entera de `git status` a
+   `git add` es «`-A` disfrazado»: el árbol puede traer, y trajo, trabajo ajeno a mitad de
+   sesión. → `context/handoffs/aiw-console.md` §13.3.
+2. **Tras actualizar el emisor, reiniciar el PROCESO de la consola**, no sólo el
+   navegador: **Node cachea los módulos al arrancar** y recargar el navegador no vuelve a
+   leer el disco. Costó una vuelta entera de QA. → ídem §13.1.
+3. **Nadie clasifica más hasta que el piloto de `aiw-console` entregue su procedimiento.**
+   Regla vigente, verbatim: «Cada hilo audita y estabiliza su roadmap. Nadie clasifica
+   hasta que el piloto de aiw-console entregue el procedimiento. El piloto corre cuando
+   los tres roadmaps estén estables.» → ídem §8. **La clasificación de Cantu ya está
+   hecha y es PREVIA a esa regla**: no la viola y no se re-hace.
+4. **Un run a la vez POR CARRIL**, y **nunca dos runs simultáneos tocando el MISMO
+   archivo** — el carril no autoriza la colisión. **El encargo no cierra su propio run ni
+   re-emite `.project/`**: declara el status y lo cierra el operador desde la consola
+   global, que es el punto de serialización. → `records/DISCIPLINA-UN-RUN-POR-CARRIL.md`
+   Bloques B y C; escrito en `CANTU_STUDIO_CONTEXT.md`, `AGENTS.md` y `CLAUDE.md`.
 
-1. ~~**`.project/` de Cantu está DESFASADO.**~~ **YA NO — resuelto y commiteado.**
-   Cuando este handoff se escribió, los seis artefactos conservaban `mtime` de las
-   17:43 del 2026-07-27 y su `.project/roadmap.json` traía **53 runs** donde el
-   canónico ya traía 71 (`records/PARTICION…` F.5 e I.1). **Se re-emitió**:
-   verificado en disco el **2026-07-28**, los seis artefactos llevan `generated_at`
-   `2026-07-28T06:15:51.858Z` y `.project/roadmap.json` trae **71 runs, 7 objetivos y
-   28 fases — las mismas cifras que el canónico**, contadas en los dos archivos; los
-   23 runs con `lane` explícito están en los dos. Commiteado como `73945e56`
-   («project: re-emision desde el boton de la consola»), y `git status --porcelain`
-   de Cantu está **vacío**.
-   **La vía para ese desfase, de aquí en adelante, es el BOTÓN.** La consola global
-   tiene **`Re-emit .project/`** en la fila de controles de la pestaña Roadmap: es la
-   **tercera ruta de escritura** (`POST …/__project-console/project/emit`), re-emite
-   los seis artefactos del proyecto seleccionado y **no commitea** — deja el diff
-   para el operador. Existe precisamente porque bajo carriles paralelos **los
-   encargos no re-emiten por diseño**, así que el canónico avanza y la proyección se
-   queda quieta; antes del botón el operador tenía que **inventar una edición** para
-   provocar la re-emisión. Su record es
-   `records/REEMISION-MANUAL-PROJECT-O4-P14.md` (Bloques A, B y C), y el acuse
-   esperado para Cantu es **`6 artifacts · 71 runs`**.
-   **El desfase puede volver** en cuanto un encargo en carril paralelo toque el
-   canónico: la regla operativa es **pulsar el botón después**, no re-emitir desde el
-   encargo.
-2. **Trabajo sin commitear en los dos repos.** `cantu-studio`: `.aiw/roadmap/roadmap.json`,
-   `AGENTS.md` y `CLAUDE.md` modificados sobre HEAD `b4e8ed0f`. `aiw-console`:
-   `context/cantu-studio/CANTU_STUDIO_CONTEXT.md` modificado y los dos records nuevos
-   sin trackear, sobre HEAD `897c710`. Leído con `git status --porcelain`, **sólo
-   lectura**. Git es del operador.
-   **YA NO — el operador commiteó los dos.** Medido el **2026-07-28**:
-   `cantu-studio` está en HEAD `73945e56` con `git status --porcelain` **vacío**;
-   `aiw-console` está en HEAD `6519ba5`. Lo que sí hay sin commitear en `aiw-console`
-   es lo que escribió **este cierre de registro** (el roadmap, seis pins de conteo en
-   cuatro tests, los dos handoffs y su record) — es trabajo de este hilo, no de
-   aquél, y el commit sigue siendo del operador.
-3. **La arista del #q63 sin decidir.** `RUN-JAME-PRODUCTION-LESSON-VALIDATION-001`
-   nombra «Web, documentation, and Slide readiness evidence» y su arista de
-   documentación apunta al **modelo canónico**, no a la evidencia de documentación de
-   los componentes Web, que hasta la partición no existía como run. Se dejó como
-   estaba porque su texto no la nombra. Si el operador la quiere, es **una** operación
-   `set-deps --add-dep` (`records/PARTICION…` E.3).
-4. **El `full_description` de los 17 runs de documentación es UNA sola frase.** Es
-   fiel al encargo —un reparto no inventa contenido—, pero cuando
-   `RUN-JAME-COMPONENT-DOC-SINGLE-SOURCE-CONTRACT-001` defina el contrato de packet,
-   esos 17 querrán texto propio: qué secciones, qué evidencia, qué QA
-   (`records/PARTICION…` I.4).
-5. **Las oraciones de marco de la mitad de documentación del audit de conjunto** son
-   lo único **redactado** y no sólo repartido en toda la partición; se declara por si
-   el operador lo quiere de otra manera (`records/PARTICION…` D.2).
-6. **Los barriers**, con sus efectos ya contados (`records/MIGRACION-CANTU-A-CARRILES.md`
-   E.1/E.2). El de más alcance sería el de `RUN-CANTU-NAMING-AUDIT-DISPOSITION-001`:
-   barraría **41 runs** que hoy no lo alcanzan por dependencia — «nada avanza hasta
-   que se apruebe el mapa de nombres». Es calendario, no contrato.
-7. **Slide sigue sin paridad, y es correcto.** Sus runs por componente aún no
-   existen: son un placeholder hasta que la reproducción del sandbox produzca el
-   inventario real. La paridad de Slide sale sola cuando se creen, aplicando la misma
-   forma que la partición Web (`records/PARTICION…` I.5).
-8. **La regla 8 de `AGENTS.md`/`CLAUDE.md`** («No se implementan componentes en
-   paralelo») quedó **intacta por decisión de la cabina**, tratada como alcance de
-   componentes y no como scheduling. Si algún día se lee como scheduling, contradirá
-   los carriles igual que lo hacía la 7 (`records/DISCIPLINA…` E.2).
-9. **Editar el canónico de Cantu es de la consola global, no del tooling local.** El
-   motor de Cantu **tolera** `lanes`/`lane`/`barrier` pero **no los adopta** (no
-   resuelve carril, no deriva defecto, no lee barrier, no tiene operación que los
-   escriba — `records/MIGRACION-CANTU-A-CARRILES.md` A.1), y además no sabe resolver
-   la arista externa. La decisión de actualizar ese tooling o aceptar el arreglo hasta
-   el corte está **abierta** desde `D-051`.
+---
 
 ## Punteros
 
-- **Su contexto de gobernanza:**
-  `projects/aiw-console/context/cantu-studio/CANTU_STUDIO_CONTEXT.md` — en inglés,
-  lleva gobernanza y peligros, **no lleva estado**. Es la lectura de arranque del
-  hilo. *Aviso medido:* su tabla de «dónde viven los hechos» cita `SESSION_START.md`
-  y `docs/ops/JAME_OPS_STATE.md`, y **ninguno de los dos existe hoy** en el repo
-  (buscados por ruta y por barrido del workspace). No es urgente; es un puntero que
-  falla si se sigue.
+- **Contexto de gobernanza:** `context/cantu-studio/CANTU_STUDIO_CONTEXT.md` — en inglés,
+  gobernanza y peligros, **no lleva estado**. Lectura de arranque del hilo.
 - **Reglas dentro del repo:** `cantu-studio/AGENTS.md` (autoridad del repositorio) y
-  `cantu-studio/CLAUDE.md`, los dos en español, los dos con la regla 7 ya actualizada.
-- **Su roadmap canónico:** `projects/cantu-studio/.aiw/roadmap/roadmap.json`. **El
-  único.** `.project/` es **derivada: NO es destino de escritura** — se escribe el
-  canónico y se re-emite.
-- **Las decisiones que gobiernan los carriles:** `context/DECISIONES.md`, **`D-051`**
-  (carriles, barrier, posición derivada) y `D-047` (identidad inmutable: `run_id`,
-  `phase_id`, `objective_id` no se renombran nunca; los runs nuevos nacen
-  `RUN-CANTU-`, los viejos conservan `RUN-JAME-`).
-- **Los records de este tramo**, en `context/aiw-console/records/`:
-  `MIGRACION-CANTU-A-CARRILES.md` (el reparto de los 53 en dos carriles, y los
-  candidatos a barrier medidos) · `PARTICION-IMPLEMENTACION-Y-DOCUMENTACION-CANTU.md`
-  (los 18 pares, las 22 operaciones, los invariantes) ·
-  `DISCIPLINA-UN-RUN-POR-CARRIL.md` (la regla nueva y dónde se escribió).
+  `cantu-studio/CLAUDE.md` — ver deriva 5 antes de creerle una cifra.
+- **Roadmap canónico:** `projects/cantu-studio/.aiw/roadmap/roadmap.json`. **El único.**
+  `.project/` es **derivada: NO es destino de escritura** — se escribe el canónico y se
+  re-emite con el botón *Re-emit `.project/`* de la consola global
+  (`records/REEMISION-MANUAL-PROJECT-O4-P14.md`).
+- **Decisiones que gobiernan:** `context/DECISIONES.md` — **`D-051`** (carriles, barrier,
+  posición derivada) y **`D-047`** (identidad inmutable: `run_id`, `phase_id`,
+  `objective_id` no se renombran nunca).
+- **Los records de esta sesión**, en `context/aiw-console/records/`: el estándar de
+  documentación → `CIERRE-HUECOS-ESTANDAR-DOC-IDIOMA-Y-ASERCIONES-CANTU.md` y
+  `MEDICION-SUPERFICIE-DOC-COMPONENTES-WEB-Y-FORMA-DEL-PACKET-CANTU.md` · el rediseño del
+  carril → `REDISENO-CARRIL-DOCUMENTATION-CANTU.md` · la tolerancia y la clasificación →
+  `TOLERANCIA-DE-CLASIFICACION-EN-CANTU.md`, `FAMILIAS-DE-RUNS-PENDIENTES-CANTU.md` y
+  `CLASIFICACION-DE-LOS-46-RUNS-PENDIENTES-CANTU.md`.
+- **Este relevo** lo escribió `records/RELEVO-CANTU-AL-CIERRE-2026-08-01.md`, que declara
+  qué se dejó fuera y por qué.
 
-### Cómo levantar la consola global para verlo
+### Cómo levantar la consola global
 
 Desde la raíz de `projects/aiw-console`:
 
@@ -298,18 +295,6 @@ Desde la raíz de `projects/aiw-console`:
 node project-console/serve.mjs
 ```
 
-o el lanzador de doble clic `start-console.cmd` / `start-console.ps1`
-(`start-console.README.md`). Puerto **8788** por defecto, `PC_PORT` lo sustituye.
-Cantu está registrado con la clave **`cantu-studio`** en
-`project-console/projects.json`, apuntando a `../../cantu-studio`; la consola lee su
-**`.project/`**, no su canónico — por eso existe el botón del pendiente 1.
-
-Esa consola es **la única que puede editar el canónico de Cantu** y **el punto de
-serialización** de la disciplina: su endpoint de escritura es
-`POST /projects/<key>/__project-console/roadmap/edit`, con flujo **dry-run
-(`apply:false`) → confirm (`apply:true`)**, y re-emite `.project/` a continuación
-(declarado en el encabezado de `project-console/serve.mjs`).
-
-La **consola local de Cantu** sigue levantable en `projects/cantu-studio` con
-`node tools/project-console/serve-project-console.mjs`, puerto 8787 — pero para el
-canónico ya no es la herramienta: ver el pendiente 9.
+Puerto **8788** por defecto, `PC_PORT` lo sustituye. Cantu está registrado con la clave
+`cantu-studio` en `project-console/projects.json`. **Es la única que puede editar el
+canónico de Cantu**, con flujo dry-run (`apply:false`) → confirm (`apply:true`).

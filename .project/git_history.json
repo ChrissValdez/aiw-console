@@ -1,27 +1,147 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-01T03:54:01.232Z",
+  "generated_at": "2026-08-01T09:27:23.120Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-01T03:49:35.098Z"
+      "mtime": "2026-08-01T09:27:02.423Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-01T03:43:24.781Z"
+      "mtime": "2026-08-01T09:18:12.275Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "8f60657abb37558a170466aa6e37df29a00b07f0",
+  "head": "c81a9b49e5149e05cf621f4b2028cb106815ad57",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 124,
+  "commit_total": 136,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "c81a9b4",
+      "full_sha": "c81a9b49e5149e05cf621f4b2028cb106815ad57",
+      "date": "2026-08-01T03:26:59-06:00",
+      "parents": "579f896",
+      "subject": "roadmap: reestructuracion de objetivos y fases decidida en la auditoria humana del operador. O0 Project Console queda como historia con sus completed intactos; los nueve vivos pasan a O4 en cuatro fases nuevas por naturaleza del trabajo. Entran tres runs pedidos por el hilo aiw, encadenados detras del piloto: depends_on_human_approved, congelar la forma de progress, y batches; los tres declaran por escrito la mitad del kernel que NO construyen. La auditoria profunda se reencuadra como auditoria visual del operador y queda la ultima. Todo por el motor en 18 escrituras con dry-run y checkInvariants, cero rollbacks. Cola 52 -> 55 runs, densa, 26 -> 29 aristas, 0 colgantes, ningun run_id ni depends_on preexistente alterado. MEDIDO: insert --after hereda la fase del ancla y no acepta fase de destino, sin error ni warning",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "579f896",
+      "full_sha": "579f8965220496b62e6829118d900b91eaf541ce",
+      "date": "2026-08-01T01:58:13-06:00",
+      "parents": "da56858",
+      "subject": "medicion: piezas compartidas de los quince runs de componente; cuatro huecos sin dueno (read-only, sin run)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "da56858",
+      "full_sha": "da568587e3e3efcdb53b8fe222f2001c92659bbe",
+      "date": "2026-08-01T01:15:27-06:00",
+      "parents": "4b4b534",
+      "subject": "roadmap: reparados los textos de #48, #49 y #51 por set-text en un solo batch (dry-run verde, 0 filas de remap, checkInvariants verde sobre el archivo releido). El #51 se reescribe entero: su texto declaraba pendientes cuatro operaciones de contenedor que el motor ya exporta, imposibles de borrar dos fases fantasma que ya no existen, pendiente una guarda de identidad ya extendida, y abierta una decision de borrado que el codigo ya tomo (rechaza, no cascadea); lo unico vivo es exponerlas en el frontend, medido con cero ocurrencias en project-console. El #48 y el #49 reciben una correccion acotada: sale la cifra de 73 runs de cantu-studio (hoy 63 y moviendose) y se sustituye por medirla al ejecutar; todo lo demas preservado verbatim. CORRIGE HACIA ADELANTE LA LINEA BASE DE LA SUITE: es 442/440/2, no 442/441/1. Los dos rojos son preexistentes, sin dueno, y comparten causa: afirman contra el estado vivo del disco en vez de contra fixtures",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4b4b534",
+      "full_sha": "4b4b5340591a18069ba201781c2dbb99b2167db5",
+      "date": "2026-08-01T01:11:24-06:00",
+      "parents": "63cb12c",
+      "subject": "handoff: relevo del hilo cantu-studio al cierre de sesion (63 runs, 46 clasificados, ciclo de componentes listo para arrancar)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "63cb12c",
+      "full_sha": "63cb12caf8a1207c9efb109908d80b37c7d03b1d",
+      "date": "2026-08-01T00:51:26-06:00",
+      "parents": "e0cdfcc",
+      "subject": "record: roadmap: clasificacion de los 46 runs pendientes en una sola escritura atomica (18 grupos, seis campos, severity y closure_mode derivados) y reemision de .project/",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e0cdfcc",
+      "full_sha": "e0cdfcc817617365721bee0ce761921cdcc67067",
+      "date": "2026-07-31T23:14:36-06:00",
+      "parents": "d0290cf",
+      "subject": "handoff: relevo del hilo aiw-console al cierre de la sesion del run 43. Cabeza de la cola viva: #44, el piloto de clasificacion. Recoge el veredicto de la auditoria (el texto del #51 debe repararse antes de pilotar), la elegibilidad run por run con los cinco bloqueos que solo viven en prosa, el censo de mixtos y su consecuencia para el piloto, la regla de coordinacion de los tres hilos, los seis hallazgos de UI/UX y las lecciones de operacion. Corrige una afirmacion falsa de esta cabina: el run de .gitattributes NO existe, medido sobre los 52; el cabo del test EOL rojo queda declarado SIN DUENO",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d0290cf",
+      "full_sha": "d0290cfcc65fd089abb4081b3dcbabdbd99e2d94",
+      "date": "2026-07-31T23:12:43-06:00",
+      "parents": "1758409",
+      "subject": "record: familias de runs pendientes de Cantu para clasificar",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1758409",
+      "full_sha": "175840998e25dfc942b013536d9083ce4b57de57",
+      "date": "2026-07-31T23:11:56-06:00",
+      "parents": "83a8158",
+      "subject": "record: cantu: tolerar (no adoptar) los seis campos de clasificacion y care_budget en el validador y la copia del motor; posicion entre barrier y closeout_result para preservar byte-exactitud; 18 tests aditivos; canonico intacto",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "83a8158",
+      "full_sha": "83a8158062936826a024797ff473c4b992bd9170",
+      "date": "2026-07-31T22:53:32-06:00",
+      "parents": "e2cb6e2",
+      "subject": "record: auditoria del roadmap vivo de aiw-console (9 runs planned; los 43 completed no se auditan). Las 7 cifras heredadas se confirman exactas. Hallazgos: el texto de #51 describe como pendientes cuatro operaciones que ya existen en el motor desde 2e02a8b, 28 posiciones antes, y solo falta su capa de consola; 5 de 9 elegibles arrastran bloqueos declarados en prosa que ninguna arista expresa; los cinco textos falsos de #50 se confirman y se amplian con un sexto y con tres full_description caducadas que hoy no tienen dueno. Censo de mixtos: 7 de 9, y la mezcla codigo + acto sobre documento normativo NO aparece en esta cola, confirmando por medicion la sospecha del hilo aiw. Veredicto: la cola no esta lista para el piloto hasta reparar el texto de #51",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e2cb6e2",
+      "full_sha": "e2cb6e282dac701cae32f1c1e4c5a36bf6499bad",
+      "date": "2026-07-31T22:42:57-06:00",
+      "parents": "6b7e07b",
+      "subject": "record: roadmap: redisenio del carril DOCUMENTATION (74 -> 63 runs), enmienda de S9/S10 en la DoD, y reemision de .project/",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6b7e07b",
+      "full_sha": "6b7e07befd0a97fa7e685aa5f513e67453832194",
+      "date": "2026-07-31T22:32:55-06:00",
+      "parents": "53dd268",
+      "subject": "project: re-emision de .project/ de aiw-console tras el cierre del run 43; refleja el run en completed, el care_budget declarado y el taxonomy_model del proyector 0.12.0",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "53dd268",
+      "full_sha": "53dd268afd0162acf00aaeda09b5904f0d29c8e9",
+      "date": "2026-07-31T22:00:48-06:00",
+      "parents": "8f60657",
+      "subject": "record: auditoria del roadmap de aiw - 42 runs medidos, 5 de 17 vivos elegibles, 9 detenidos por CONST 4 sin incidente, censo de 7 runs mixtos y 12 reparaciones propuestas sin aplicar",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "8f60657",

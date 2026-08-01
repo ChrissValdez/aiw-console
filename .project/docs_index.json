@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-01T03:54:01.232Z",
+  "generated_at": "2026-08-01T09:27:23.120Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -73,6 +73,10 @@
       "mtime": "2026-07-28T08:58:30.214Z"
     },
     {
+      "path": "context/aiw-console/records/AUDITORIA-ROADMAP-AIW-CONSOLE.md",
+      "mtime": "2026-08-01T04:46:59.036Z"
+    },
+    {
       "path": "context/aiw-console/records/AUDITORIA-ROADMAP-AIW.md",
       "mtime": "2026-08-01T03:49:10.653Z"
     },
@@ -95,6 +99,10 @@
     {
       "path": "context/aiw-console/records/CLASIFICACION-CARE-BUDGET.md",
       "mtime": "2026-08-01T03:23:33.140Z"
+    },
+    {
+      "path": "context/aiw-console/records/CLASIFICACION-DE-LOS-46-RUNS-PENDIENTES-CANTU.md",
+      "mtime": "2026-08-01T05:50:55.704Z"
     },
     {
       "path": "context/aiw-console/records/CLASIFICACION-EMISOR-Y-CONSOLA.md",
@@ -181,6 +189,10 @@
       "mtime": "2026-07-28T20:36:45.840Z"
     },
     {
+      "path": "context/aiw-console/records/FAMILIAS-DE-RUNS-PENDIENTES-CANTU.md",
+      "mtime": "2026-08-01T05:11:18.173Z"
+    },
+    {
       "path": "context/aiw-console/records/FRONTERA-CAPACIDAD-TECLADO-VIRTUAL-KATEX-CANTU.md",
       "mtime": "2026-07-29T04:39:59.262Z"
     },
@@ -243,6 +255,10 @@
     {
       "path": "context/aiw-console/records/MEDICION-O4.md",
       "mtime": "2026-07-24T09:21:31.012Z"
+    },
+    {
+      "path": "context/aiw-console/records/MEDICION-PIEZAS-COMPARTIDAS-COMPONENTES-CANTU.md",
+      "mtime": "2026-08-01T07:49:36.505Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-PROYECTOR.md",
@@ -321,6 +337,10 @@
       "mtime": "2026-07-24T10:28:41.017Z"
     },
     {
+      "path": "context/aiw-console/records/REDISENO-CARRIL-DOCUMENTATION-CANTU.md",
+      "mtime": "2026-08-01T04:10:25.202Z"
+    },
+    {
       "path": "context/aiw-console/records/REEMISION-MANUAL-PROJECT-O4-P14.md",
       "mtime": "2026-07-28T06:15:03.232Z"
     },
@@ -331,6 +351,14 @@
     {
       "path": "context/aiw-console/records/REENCUADRE-OCHO-RUNS-CON-TEXTO-VENCIDO-CANTU.md",
       "mtime": "2026-07-28T20:33:15.397Z"
+    },
+    {
+      "path": "context/aiw-console/records/REESTRUCTURACION-OBJETIVOS-Y-FASES.md",
+      "mtime": "2026-08-01T09:23:11.386Z"
+    },
+    {
+      "path": "context/aiw-console/records/RELEVO-CANTU-AL-CIERRE-2026-08-01.md",
+      "mtime": "2026-08-01T07:03:16.963Z"
     },
     {
       "path": "context/aiw-console/records/REPARACION-ENUM-HEADER-Y-MEDICION-DE-CLASES-CANTU.md",
@@ -367,6 +395,10 @@
     {
       "path": "context/aiw-console/records/SUITE-CONTRA-FIXTURES.md",
       "mtime": "2026-07-31T02:34:53.618Z"
+    },
+    {
+      "path": "context/aiw-console/records/TOLERANCIA-DE-CLASIFICACION-EN-CANTU.md",
+      "mtime": "2026-08-01T05:06:44.147Z"
     },
     {
       "path": "context/aiw-console/records/TRADUCCION-ROADMAP-A-INGLES.md",
@@ -414,7 +446,7 @@
     },
     {
       "path": "context/handoffs/aiw-console.md",
-      "mtime": "2026-07-31T10:55:34.968Z"
+      "mtime": "2026-08-01T05:12:01.980Z"
     },
     {
       "path": "context/handoffs/aiw.md",
@@ -422,7 +454,7 @@
     },
     {
       "path": "context/handoffs/cantu-studio.md",
-      "mtime": "2026-07-28T07:02:33.996Z"
+      "mtime": "2026-08-01T07:00:49.091Z"
     },
     {
       "path": "docs/snapshot-schema-v1.md",
@@ -618,6 +650,14 @@
       "freshness": "2026-07-28T08:58:30.214Z"
     },
     {
+      "title": "AUDITORÍA DEL ROADMAP DE AIW-CONSOLE",
+      "path": "context/aiw-console/records/AUDITORIA-ROADMAP-AIW-CONSOLE.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T04:46:59.036Z"
+    },
+    {
       "title": "AUDITORÍA DEL ROADMAP DE AIW",
       "path": "context/aiw-console/records/AUDITORIA-ROADMAP-AIW.md",
       "nav_tier": "evidence",
@@ -664,6 +704,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-01T03:23:33.140Z"
+    },
+    {
+      "title": "Clasificación de los 46 runs pendientes — `cantu-studio`",
+      "path": "context/aiw-console/records/CLASIFICACION-DE-LOS-46-RUNS-PENDIENTES-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T05:50:55.704Z"
     },
     {
       "title": "CLASIFICACIÓN — EMISOR Y CONSOLA: la derivación, el transporte, la vista, la lista y la escritura",
@@ -834,6 +882,14 @@
       "freshness": "2026-07-28T20:36:45.840Z"
     },
     {
+      "title": "FAMILIAS DE RUNS PENDIENTES — `cantu-studio`, y sus datos objetivos",
+      "path": "context/aiw-console/records/FAMILIAS-DE-RUNS-PENDIENTES-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T05:11:18.173Z"
+    },
+    {
       "title": "FRONTERA DE CAPACIDAD DEL TECLADO VIRTUAL CONTRA KATEX — CANTU",
       "path": "context/aiw-console/records/FRONTERA-CAPACIDAD-TECLADO-VIRTUAL-KATEX-CANTU.md",
       "nav_tier": "evidence",
@@ -960,6 +1016,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-24T09:21:31.012Z"
+    },
+    {
+      "title": "Medición de las piezas compartidas que consumen los quince runs de componente",
+      "path": "context/aiw-console/records/MEDICION-PIEZAS-COMPARTIDAS-COMPONENTES-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T07:49:36.505Z"
     },
     {
       "title": "MEDICIÓN DEL EMISOR — el proyector de AIW",
@@ -1114,6 +1178,14 @@
       "freshness": "2026-07-24T10:28:41.017Z"
     },
     {
+      "title": "Rediseño del carril DOCUMENTATION de Cantu Studio",
+      "path": "context/aiw-console/records/REDISENO-CARRIL-DOCUMENTATION-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T04:10:25.202Z"
+    },
+    {
       "title": "RE-EMISIÓN — el botón que pone `.project/` al día con su canónico (`O4.P14`)",
       "path": "context/aiw-console/records/REEMISION-MANUAL-PROJECT-O4-P14.md",
       "nav_tier": "evidence",
@@ -1136,6 +1208,22 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-28T20:33:15.397Z"
+    },
+    {
+      "title": "REESTRUCTURACIÓN DEL ROADMAP — cuatro fases nuevas por naturaleza del trabajo",
+      "path": "context/aiw-console/records/REESTRUCTURACION-OBJETIVOS-Y-FASES.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T09:23:11.386Z"
+    },
+    {
+      "title": "Relevo de `cantu-studio` al cierre del 2026-08-01",
+      "path": "context/aiw-console/records/RELEVO-CANTU-AL-CIERRE-2026-08-01.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T07:03:16.963Z"
     },
     {
       "title": "Reparación del enum de Header y medición de clases de defecto",
@@ -1208,6 +1296,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-31T02:34:53.618Z"
+    },
+    {
+      "title": "Tolerancia de los campos de clasificación de runs en `cantu-studio`",
+      "path": "context/aiw-console/records/TOLERANCIA-DE-CLASIFICACION-EN-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T05:06:44.147Z"
     },
     {
       "title": "TRADUCCIÓN DEL ROADMAP CANÓNICO DE `aiw-console` AL INGLÉS",
@@ -1303,7 +1399,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-07-31T10:55:34.968Z"
+      "freshness": "2026-08-01T05:12:01.980Z"
     },
     {
       "title": "Handoff — hilo `aiw`",
@@ -1319,7 +1415,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-07-28T07:02:33.996Z"
+      "freshness": "2026-08-01T07:00:49.091Z"
     },
     {
       "title": "Snapshot schema v1 — `project_console.snapshot.json`",

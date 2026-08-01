@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T23:56:03.051Z",
-  "generated_from": "aiw-projector@0.10.0",
+  "generated_at": "2026-08-01T02:26:05.587Z",
+  "generated_from": "aiw-projector@0.11.0",
   "sources": [
     {
       "path": "README.md",
@@ -87,6 +87,10 @@
     {
       "path": "context/aiw-console/records/CIERRE-ROADMAP-AL-DIA-FASES-P13-P14.md",
       "mtime": "2026-07-28T02:17:45.499Z"
+    },
+    {
+      "path": "context/aiw-console/records/CLASIFICACION-EMISOR-Y-CONSOLA.md",
+      "mtime": "2026-08-01T00:45:13.253Z"
     },
     {
       "path": "context/aiw-console/records/CLASIFICACION-MOTOR.md",
@@ -191,6 +195,10 @@
     {
       "path": "context/aiw-console/records/INVENTARIO-COLOR-Y-MATH-DE-COMPONENTES-WEB-CANTU.md",
       "mtime": "2026-07-29T10:18:09.966Z"
+    },
+    {
+      "path": "context/aiw-console/records/MEDICION-CARRIL-DOCUMENTATION-Y-CASCADA-CANTU.md",
+      "mtime": "2026-08-01T00:45:28.088Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-DERIVA-ROADMAP-CANTU-71-RUNS.md",
@@ -634,6 +642,14 @@
       "freshness": "2026-07-28T02:17:45.499Z"
     },
     {
+      "title": "CLASIFICACIÓN — EMISOR Y CONSOLA: la derivación, el transporte, la vista, la lista y la escritura",
+      "path": "context/aiw-console/records/CLASIFICACION-EMISOR-Y-CONSOLA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T00:45:13.253Z"
+    },
+    {
       "title": "CLASIFICACIÓN — MOTOR: los seis campos almacenados y los invariantes que rechazan",
       "path": "context/aiw-console/records/CLASIFICACION-MOTOR.md",
       "nav_tier": "evidence",
@@ -840,6 +856,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-29T10:18:09.966Z"
+    },
+    {
+      "title": "Medición del carril DOCUMENTATION de Cantu Studio y de su cascada",
+      "path": "context/aiw-console/records/MEDICION-CARRIL-DOCUMENTATION-Y-CASCADA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T00:45:28.088Z"
     },
     {
       "title": "MEDICIÓN DE DERIVA ROADMAP↔DISCO DE CANTU — LOS 71 RUNS, UNO A UNO",

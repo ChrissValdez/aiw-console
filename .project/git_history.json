@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T23:56:03.051Z",
-  "generated_from": "aiw-projector@0.10.0",
+  "generated_at": "2026-08-01T02:26:05.587Z",
+  "generated_from": "aiw-projector@0.11.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-07-31T23:52:49.141Z"
+      "mtime": "2026-08-01T02:25:44.214Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,14 +14,54 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "b62dd21fee83a6724c261f118290fe55611eff5c",
+  "head": "101e0535b1f759723e3175c501b822c1156a0c29",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 116,
+  "commit_total": 120,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "101e053",
+      "full_sha": "101e0535b1f759723e3175c501b822c1156a0c29",
+      "date": "2026-07-31T19:01:55-06:00",
+      "parents": "cad2040",
+      "subject": "run 43 (encargo 2 de 3): la derivacion de severity y closure_mode vive en un modulo unico que consumen emisor y consola, transporte en taxonomy_model con proyector 0.11.0, vista minima, lista de vivos sin clasificar por el canal que reporta, y operacion set-classification; suite 373->418 verde; .project NO re-emitido en este commit; el run sigue active",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "cad2040",
+      "full_sha": "cad20405c2b2f90ecb5518ba61a0bf63c8c72889",
+      "date": "2026-07-31T18:59:54-06:00",
+      "parents": "0b70f97",
+      "subject": "record: medicion del carril DOCUMENTATION y la cascada de retirar los doc-runs por componente",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "0b70f97",
+      "full_sha": "0b70f977dd22bd8b89315eaf17bf5fc42f03fe2f",
+      "date": "2026-07-31T17:59:57-06:00",
+      "parents": "fec04e1",
+      "subject": "run 43 (encargo 1 de 3): los seis campos de clasificacion entran al motor como claves opcionales, allowlist 11->17, y dos de los tres invariantes ilegales rechazan; el tercero pasa al encargo 2 como test de la tabla de derivacion; suite 325->373 verde; el run sigue active",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fec04e1",
+      "full_sha": "fec04e10ee312913d711dc6e1596455a9b54bf36",
+      "date": "2026-07-31T17:59:57-06:00",
+      "parents": "b62dd21",
+      "subject": "roadmap: el run 43 pasa de planned a active; .project re-emitido por la consola",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "b62dd21",

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T23:56:03.051Z",
-  "generated_from": "aiw-projector@0.10.0",
+  "generated_at": "2026-08-01T02:26:05.587Z",
+  "generated_from": "aiw-projector@0.11.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
@@ -826,7 +826,113 @@
     "total": 5,
     "source": ".project/no_claims.json"
   },
-  "validation_summary": {},
+  "validation_summary": {
+    "reports": [
+      {
+        "report": "unclassified_live_runs",
+        "kind": "information",
+        "rule": "a run whose status is not terminal and which carries no classified_at is UNCLASSIFIED; it is LISTED, never refused",
+        "specified_by": "context/CLASIFICACION-DE-RUNS.md#1",
+        "terminal_statuses": [
+          "completed",
+          "blocked"
+        ],
+        "total": 10,
+        "runs": [
+          {
+            "run_id": "RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001",
+            "queue_order": 51,
+            "status": "planned",
+            "title": "Add phase and objective create and delete operations",
+            "objective_id": "O0",
+            "phase_id": "O0.P3",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001",
+            "queue_order": 52,
+            "status": "planned",
+            "title": "Deep Project Console audit",
+            "objective_id": "O0",
+            "phase_id": "O0.P3",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001",
+            "queue_order": 46,
+            "status": "planned",
+            "title": "Global console renders Cantu (parity, operator QA)",
+            "objective_id": "O4",
+            "phase_id": "O4.P5",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-CONSOLE-UI-UX-001",
+            "queue_order": 47,
+            "status": "planned",
+            "title": "UI/UX of the global console",
+            "objective_id": "O4",
+            "phase_id": "O4.P8",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-CONSOLE-CORTE-RETIRO-LOCAL-001",
+            "queue_order": 49,
+            "status": "planned",
+            "title": "Cutover: retirement of Cantu's local console and deletion of .aiw",
+            "objective_id": "O4",
+            "phase_id": "O4.P7",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-CONSOLE-RUN-CLASSIFICATION-FIELDS-001",
+            "queue_order": 43,
+            "status": "active",
+            "title": "The five classification fields enter the roadmap schema, with derivation at read time and a minimal view",
+            "objective_id": "O4",
+            "phase_id": "O4.P9",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-CONSOLE-CLASSIFICATION-PILOT-001",
+            "queue_order": 44,
+            "status": "planned",
+            "title": "Classify aiw-console's live runs as the pilot, and rule on the procedure itself",
+            "objective_id": "O4",
+            "phase_id": "O4.P9",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-CONSOLE-DIGEST-CABINA-001",
+            "queue_order": 45,
+            "status": "planned",
+            "title": "Digest for the cockpit",
+            "objective_id": "O4",
+            "phase_id": "O4.P9",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001",
+            "queue_order": 48,
+            "status": "planned",
+            "title": "Move cantu-studio's canonical roadmap out of .aiw before the cutover can delete it",
+            "objective_id": "O4",
+            "phase_id": "O4.P9",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-001",
+            "queue_order": 50,
+            "status": "planned",
+            "title": "Repair the five texts that describe this repo falsely",
+            "objective_id": "O4",
+            "phase_id": "O4.P9",
+            "stored_fields": []
+          }
+        ]
+      }
+    ]
+  },
   "taxonomy_model": {
     "model": "roadmap_tree_v1",
     "vocabularies": {
@@ -871,6 +977,81 @@
           "active",
           "blocked",
           "completed"
+        ]
+      },
+      "run.correctness_model": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "tokens": [
+          "SPECIFIED",
+          "JUDGED_ACCEPTS",
+          "JUDGED_DEFINES"
+        ]
+      },
+      "run.work_type": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "tokens": [
+          "COSMETIC",
+          "FUNCTIONAL",
+          "FOUNDATIONAL"
+        ]
+      },
+      "run.blast_radius": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "tokens": [
+          "LOCAL",
+          "ADJACENT",
+          "SYSTEMIC",
+          "PROJECT_SHAPE"
+        ]
+      },
+      "run.failure_surfaces": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "tokens": [
+          "LOUD",
+          "VISIBLE",
+          "SILENT"
+        ]
+      },
+      "run.external_effects": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "form": "array_of_non_empty_strings",
+        "empty_by_default": true
+      },
+      "run.classified_at": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "form": "iso_8601_utc_instant"
+      },
+      "run.severity": {
+        "axis": "run",
+        "stored": false,
+        "derived_by": "severity_from_work_type_and_blast_radius",
+        "tokens": [
+          "MINOR",
+          "MODERATE",
+          "MAJOR",
+          "CRITICAL"
+        ]
+      },
+      "run.closure_mode": {
+        "axis": "run",
+        "stored": false,
+        "derived_by": "closure_mode_from_correctness_model_and_severity",
+        "tokens": [
+          "UNATTENDED",
+          "SEMI_ATTENDED",
+          "ATTENDED"
         ]
       }
     },
@@ -931,8 +1112,137 @@
           }
         ],
         "empty_input": "idle"
+      },
+      "severity_from_work_type_and_blast_radius": {
+        "applies_to": [
+          "run"
+        ],
+        "input": [
+          "run.work_type",
+          "run.blast_radius"
+        ],
+        "scale": [
+          "MINOR",
+          "MODERATE",
+          "MAJOR",
+          "CRITICAL"
+        ],
+        "table": {
+          "COSMETIC": {
+            "LOCAL": "MINOR",
+            "ADJACENT": "MINOR",
+            "SYSTEMIC": "MODERATE",
+            "PROJECT_SHAPE": "MODERATE"
+          },
+          "FUNCTIONAL": {
+            "LOCAL": "MODERATE",
+            "ADJACENT": "MODERATE",
+            "SYSTEMIC": "MAJOR",
+            "PROJECT_SHAPE": "MAJOR"
+          },
+          "FOUNDATIONAL": {
+            "LOCAL": "MAJOR",
+            "ADJACENT": "MAJOR",
+            "SYSTEMIC": "CRITICAL",
+            "PROJECT_SHAPE": "CRITICAL"
+          }
+        },
+        "adjustment": {
+          "input": "run.failure_surfaces",
+          "steps": {
+            "LOUD": -1,
+            "VISIBLE": 0,
+            "SILENT": 1
+          },
+          "saturating": true,
+          "absent_input": "no_adjustment"
+        },
+        "missing_input": "absent"
+      },
+      "closure_mode_from_correctness_model_and_severity": {
+        "applies_to": [
+          "run"
+        ],
+        "input": [
+          "run.correctness_model",
+          "run.severity"
+        ],
+        "scale": [
+          "UNATTENDED",
+          "SEMI_ATTENDED",
+          "ATTENDED"
+        ],
+        "precedence": [
+          {
+            "token": "UNATTENDED",
+            "correctness_model": "SPECIFIED",
+            "severity_in": [
+              "MINOR",
+              "MODERATE"
+            ]
+          },
+          {
+            "token": "SEMI_ATTENDED",
+            "correctness_model": "SPECIFIED",
+            "severity_in": [
+              "MAJOR",
+              "CRITICAL"
+            ]
+          },
+          {
+            "token": "SEMI_ATTENDED",
+            "correctness_model": "JUDGED_ACCEPTS"
+          },
+          {
+            "token": "ATTENDED",
+            "correctness_model": "JUDGED_DEFINES"
+          }
+        ],
+        "guard": {
+          "input": "run.external_effects",
+          "when": "non_empty",
+          "minimum": "SEMI_ATTENDED",
+          "direction": "raise_only",
+          "absent_input": "empty"
+        },
+        "missing_input": "absent"
       }
     },
+    "illegal_combinations": [
+      {
+        "fields": [
+          "correctness_model",
+          "work_type"
+        ],
+        "values": [
+          "SPECIFIED",
+          "FOUNDATIONAL"
+        ],
+        "enforced_by": "stored_field_invariant"
+      },
+      {
+        "fields": [
+          "work_type",
+          "failure_surfaces"
+        ],
+        "values": [
+          "FOUNDATIONAL",
+          "LOUD"
+        ],
+        "enforced_by": "stored_field_invariant"
+      },
+      {
+        "fields": [
+          "correctness_model",
+          "closure_mode"
+        ],
+        "values": [
+          "JUDGED_*",
+          "UNATTENDED"
+        ],
+        "enforced_by": "derivation_property"
+      }
+    ],
     "specified_by": "context/aiw-console/CONTRATO.md"
   }
 }

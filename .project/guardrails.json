@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-07-31T23:56:03.051Z",
-  "generated_from": "aiw-projector@0.10.0",
+  "generated_at": "2026-08-01T02:26:05.587Z",
+  "generated_from": "aiw-projector@0.11.0",
   "sources": [
     {
       "path": "governance/guardrails.json",

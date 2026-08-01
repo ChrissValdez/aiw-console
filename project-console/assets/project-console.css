@@ -6319,3 +6319,154 @@ details[open] > summary > .v3-caret {
     flex: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   [#43] CLASSIFICATION — the minimal view.
+
+   Two rules govern every declaration below, and both come from the specification rather
+   than from taste:
+
+   1. A DERIVED value must never be able to pass for a stored one. `severity` and
+      `closure_mode` are computed at read time and never written, so the pair sits in its own
+      bordered block under a heading that says exactly that, and each row carries a small
+      "derived" marker. No input, no control, no editable affordance touches either.
+   2. An UNCLASSIFIED run must read as unclassified — not as empty, and above all not as
+      MINOR. There is therefore NO chip for a run with no severity: the absence is rendered
+      as words in the drawer, never as the bottom of the scale.
+
+   No new colour token: severity uses the amber/red/green scale the console already declares,
+   which is why the four levels needed nothing added to :root.
+   --------------------------------------------------------------------------- */
+.v3-severity-tag {
+  display: inline-block;
+  margin-left: 7px;
+  padding: 0 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 16px;
+  color: var(--text-secondary);
+  background: var(--bg-inset);
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.v3-severity-tag.is-minor {
+  color: var(--text-tertiary);
+}
+.v3-severity-tag.is-moderate {
+  color: var(--text-primary);
+}
+.v3-severity-tag.is-major {
+  color: var(--amber);
+  background: var(--amber-bg);
+  border-color: var(--amber-border);
+}
+.v3-severity-tag.is-critical {
+  color: var(--red-text);
+  background: var(--red-bg);
+  border-color: var(--red-border);
+  font-weight: 700;
+}
+/* The derived block of the run drawer: fenced off from the stored rows above it. */
+.v3-classification-derived {
+  margin-top: 10px;
+  padding: 8px 10px 2px;
+  border: 1px dashed var(--border-default);
+  border-radius: 6px;
+  background: var(--bg-inset);
+}
+.v3-classification-derived-head {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+/* The per-row marker. Small, quiet and always present on a derived row — the operator should
+   be able to tell what is stored from what is computed without reading the heading again. */
+.v3-derived-mark {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 4px;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 14px;
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  cursor: help;
+}
+.v3-derived-row .data-value .is-faint {
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+/* The live derivation readout inside the editor block. */
+.v3-edit-derived-note code {
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 11px;
+}
+/* ---------------------------------------------------------------------------
+   [#43] The unclassified-live-runs note on Overview. INFORMATION, NOT AN ERROR: no red, no
+   alarm border, no icon. It is deliberately styled like the quiet notes around it and NOT
+   like the source-absence banners, because those announce something broken and this announces
+   something a human has not done yet.
+   --------------------------------------------------------------------------- */
+.v3-ov-note {
+  display: block;
+  margin-top: 12px;
+  padding: 9px 11px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: var(--bg-inset);
+}
+.v3-ov-note-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+.v3-ov-note-count {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 6px;
+  font-size: 10px;
+  line-height: 16px;
+  color: var(--text-primary);
+  background: var(--bg-elevated, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+}
+.v3-ov-note-body {
+  display: block;
+  margin-top: 4px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-tertiary);
+}
+.v3-ov-note-runs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+.v3-ov-note-run {
+  font: inherit;
+  font-size: 11px;
+  padding: 2px 7px;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.v3-ov-note-run:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-border);
+}

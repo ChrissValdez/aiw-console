@@ -26,7 +26,7 @@
 import { createHash } from "node:crypto";
 import * as core from "./roadmap-core.mjs";
 
-export const KNOWN_OPS = ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "declare-lanes", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"];
+export const KNOWN_OPS = ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "declare-lanes", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"];
 
 // Content baseline for compare-and-swap. Hash of the exact bytes read (utf8), so any change
 // -- including a single CRLF or em-dash byte -- produces a different token.
@@ -103,6 +103,21 @@ function dispatch(op, obj, args, externalRunIds = null) {
       // [D-051] barrier is "lane" | "global" to mark, or null/"" to clear the key. The
       // core refuses an unknown scope, and refuses a lane barrier where no lane exists.
       return core.setBarrier(obj, { run: args.run, barrier: args.barrier != null ? args.barrier : null });
+    case "set-classification":
+      // [#43] The six STORED classification fields of context/CLASIFICACION-DE-RUNS.md §1 on
+      // one run. A field the caller omits is left alone; null/"" clears that key. The core
+      // refuses a token outside its closed vocabulary, naming it.
+      //
+      // `classified_at` is deliberately NOT relayed: the core writes the mark itself, so the
+      // console cannot type an instant and no request body can carry one.
+      return core.setClassification(obj, {
+        run: args.run,
+        correctnessModel: args.correctnessModel,
+        workType: args.workType,
+        blastRadius: args.blastRadius,
+        failureSurfaces: args.failureSurfaces,
+        externalEffects: args.externalEffects,
+      });
     case "declare-lanes":
       // [D-051] The root lane vocabulary, replaced WHOLE (or cleared with null / []).
       // The core refuses a malformed entry, a missing/ambiguous default, and any
@@ -170,7 +185,12 @@ function dispatch(op, obj, args, externalRunIds = null) {
       // deliberately NOT batchable: it is a root-level vocabulary change, not a per-run
       // edit, and pairing it with the set-lane calls that depend on it would hide which
       // half of the pair a refusal came from.
-      const batchable = ["set-text", "set-deps", "set-status", "set-lane", "set-barrier", "clear-progress", "move", "move-objective", "set-objective-archived"];
+      // [#43] set-classification joins the batchable set for the same reason set-lane and
+      // set-barrier are in it: optional keys on ONE run, no *_id surrendered, so
+      // checkIdentityPreserved needs no sanction. It also makes "this run is FUNCTIONAL /
+      // SYSTEMIC and moves to position 7" a SINGLE preview and a single write, which is how
+      // the operator means it.
+      const batchable = ["set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "clear-progress", "move", "move-objective", "set-objective-archived"];
       const warnings = [];
       for (let i = 0; i < ops.length; i++) {
         const sub = ops[i] || {};

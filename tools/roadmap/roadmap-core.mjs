@@ -23,6 +23,17 @@
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
+// [#43] The classification vocabulary, imported so `checkInvariants` can loop over it and
+// re-exported below so this engine stays the address every existing importer already uses.
+// See the re-export site for why the tokens live there and not here.
+import {
+  CORRECTNESS_MODELS,
+  WORK_TYPES,
+  BLAST_RADII,
+  FAILURE_SURFACES,
+  CLASSIFICATION_VOCABULARIES,
+  CLASSIFICATION_STORED_FIELDS,
+} from "../classification/classification.mjs";
 
 // ---------------------------------------------------------------------------
 // Vocabulary (mirrors the validator's v3 allowlists; kept minimal per Q1)
@@ -78,18 +89,26 @@ export const RUN_OPTIONAL_FIELDS = [
   "progress",
 ];
 export const BARRIER_SCOPES = ["lane", "global"];
-// [#43] The four closed vocabularies of §1, verbatim and in the spec's own order. Tokens
-// are DATA, read as-is by schema and validator -- never translated, never localized.
-export const CORRECTNESS_MODELS = ["SPECIFIED", "JUDGED_ACCEPTS", "JUDGED_DEFINES"];
-export const WORK_TYPES = ["COSMETIC", "FUNCTIONAL", "FOUNDATIONAL"];
-export const BLAST_RADII = ["LOCAL", "ADJACENT", "SYSTEMIC", "PROJECT_SHAPE"];
-export const FAILURE_SURFACES = ["LOUD", "VISIBLE", "SILENT"];
-// The four in one table, so the validator loops instead of repeating itself four times.
-export const CLASSIFICATION_VOCABULARIES = {
-  correctness_model: CORRECTNESS_MODELS,
-  work_type: WORK_TYPES,
-  blast_radius: BLAST_RADII,
-  failure_surfaces: FAILURE_SURFACES,
+// [#43] The four closed vocabularies of §1 are RE-EXPORTED, not declared here.
+//
+// They were declared in this file when the stored fields landed, and they moved out the
+// moment a SECOND runtime needed them: the browser console derives `severity` and
+// `closure_mode` from the same tokens, and this module can never be loaded by a browser
+// (`node:fs` above). The vocabulary now lives with the derivation that reads it, in
+// tools/classification/classification.mjs -- a leaf that imports nothing and so loads in
+// both runtimes. Re-exporting keeps every existing importer of this engine working and
+// keeps the token list at ONE address.
+//
+// What did NOT move is the enforcement: `checkInvariants` below is still the only thing
+// that refuses an illegal value, and the derivation is still not called anywhere in this
+// engine. The engine validates what is STORED; it does not derive.
+export {
+  CORRECTNESS_MODELS,
+  WORK_TYPES,
+  BLAST_RADII,
+  FAILURE_SURFACES,
+  CLASSIFICATION_VOCABULARIES,
+  CLASSIFICATION_STORED_FIELDS,
 };
 // Canonical serialization order for a run object's keys.
 export const CANONICAL_RUN_KEY_ORDER = [...RUN_REQUIRED_FIELDS, ...RUN_OPTIONAL_FIELDS];
@@ -1128,6 +1147,137 @@ export function setBarrier(obj, opts) {
   normalizeRunKeyOrder(entry.run);
   const after = "barrier" in entry.run ? entry.run.barrier : null;
   return { errors, warnings, run, before, after };
+}
+
+// ---------------------------------------------------------------------------
+// [#43] CLASSIFICATION. set-classification writes the SIX STORED fields of
+// context/CLASIFICACION-DE-RUNS.md §1 on ONE run and does nothing else: no queue_order,
+// no depends_on, no status, no lane, no barrier.
+//
+// It is the WRITE side the stored fields were missing. Until it existed the six keys
+// validated but could only be filled by hand-editing the canonical file, which is not a
+// path the console can offer an operator.
+//
+// SAME SHAPE AS set-lane / set-barrier, because it is the same kind of act -- optional keys
+// on one run, stored only when they say something:
+//   a token -> store it;   null / "" -> delete that key WHOLE.
+// A run with no classification stores nothing, so "never classified" and "cleared" read back
+// identically (the archived/closeout/lane/barrier discipline).
+//
+// `classified_at` IS NOT AN ARGUMENT. The operation writes it itself, as an ISO-8601 UTC
+// instant in the exact form this repo already emits in `generated_at`
+// (`2026-07-31T10:45:14.552Z` -- Date#toISOString). Two reasons it is not typed: a mark the
+// operator can type is a mark that can lie about when the judgement was made, and a second
+// format in the same repository is a second truth. Clearing the last stored field clears the
+// mark with it -- a `classified_at` on a run with no classification would be exactly that
+// kind of lie.
+//
+// WHAT IT REFUSES, and what it deliberately does not:
+//
+//   It refuses a token outside its closed vocabulary, BY NAME, and a malformed
+//   `external_effects` -- the same values `checkInvariants` rejects one stage later, so the
+//   mutation refuses what the guard would refuse, naming the vocabulary (the set-lane rule).
+//
+//   It does NOT re-check the ILLEGAL COMBINATIONS of §3. `checkInvariants` owns that rule and
+//   runs on the mutated object one stage later, which is exactly where SPECIFIED+FOUNDATIONAL
+//   and FOUNDATIONAL+LOUD get caught, with the file left untouched. Duplicating the check
+//   here would be the drift debt the core comments warn about.
+//
+//   It does NOT derive anything. `severity` and `closure_mode` are computed at READ time by
+//   tools/classification/classification.mjs and are never stored, so this write cannot
+//   produce them and must not try.
+//
+// It changes no *_id, so it needs no identity sanction, and it is BATCHABLE alongside
+// set-lane / set-barrier / set-text / set-status: classifying a run and moving it are one
+// edit of one run in the operator's head, and should be one preview and one write.
+// ---------------------------------------------------------------------------
+
+export function setClassification(obj, opts) {
+  const errors = [];
+  const warnings = [];
+  const { run } = opts;
+
+  if (!run) errors.push("set-classification requires --run");
+  const entry = run ? findRunEntry(obj, run) : null;
+  if (run && !entry) errors.push(`set-classification: run ${run} not found`);
+
+  // The four closed-vocabulary fields, read from the caller's option names. A field the
+  // caller does not mention at all is LEFT EXACTLY AS IT IS: this op assigns what it was
+  // handed and never clears by omission.
+  const fieldByOption = {
+    correctnessModel: "correctness_model",
+    workType: "work_type",
+    blastRadius: "blast_radius",
+    failureSurfaces: "failure_surfaces",
+  };
+  const assignments = new Map();
+  for (const [option, field] of Object.entries(fieldByOption)) {
+    if (!(option in opts) || opts[option] === undefined) continue;
+    const value = opts[option];
+    if (value === null || value === "") {
+      assignments.set(field, null);
+      continue;
+    }
+    const vocabulary = CLASSIFICATION_VOCABULARIES[field];
+    if (typeof value !== "string" || !vocabulary.includes(value)) {
+      errors.push(`set-classification: ${field} must be one of ${vocabulary.join(", ")} (or empty to clear); got ${JSON.stringify(value)}`);
+      continue;
+    }
+    assignments.set(field, value);
+  }
+
+  // §1's guard list. An empty array and an absent key mean the same thing to the derivation,
+  // so an empty list is stored as ABSENCE rather than as `[]`: one shape on disk for one
+  // meaning, which is the same reason a run on the default lane stores no lane.
+  if ("externalEffects" in opts && opts.externalEffects !== undefined) {
+    const value = opts.externalEffects;
+    if (value === null || value === "") {
+      assignments.set("external_effects", null);
+    } else if (!Array.isArray(value)) {
+      errors.push(`set-classification: external_effects must be an array of non-empty strings (or empty to clear); got ${JSON.stringify(value)}`);
+    } else {
+      const cleaned = value.map((item) => (typeof item === "string" ? item.trim() : item)).filter((item) => item !== "");
+      if (cleaned.some((item) => typeof item !== "string")) {
+        errors.push("set-classification: external_effects must contain only non-empty strings");
+      } else {
+        assignments.set("external_effects", cleaned.length ? cleaned : null);
+      }
+    }
+  }
+
+  if (errors.length) return { errors, warnings };
+  if (!assignments.size) {
+    warnings.push(`set-classification: run ${run} -- no classification field was given; nothing to write`);
+    return { errors, warnings, run, before: null, after: null };
+  }
+
+  const snapshot = (target) => {
+    const out = {};
+    for (const field of CLASSIFICATION_STORED_FIELDS) {
+      if (field in target) out[field] = target[field];
+    }
+    return out;
+  };
+
+  const before = snapshot(entry.run);
+  for (const [field, value] of assignments) {
+    if (value === null) delete entry.run[field];
+    else entry.run[field] = value;
+  }
+
+  // THE MARK, written by the operation and never by the operator. It stands only while some
+  // classification is actually stored; clearing the last field clears the mark with it.
+  const stillClassified = CLASSIFICATION_STORED_FIELDS.some(
+    (field) => field !== "classified_at" && field in entry.run
+  );
+  if (stillClassified) {
+    entry.run.classified_at = opts.now != null ? opts.now : new Date().toISOString();
+  } else {
+    delete entry.run.classified_at;
+  }
+
+  normalizeRunKeyOrder(entry.run);
+  return { errors, warnings, run, before, after: snapshot(entry.run) };
 }
 
 // ---------------------------------------------------------------------------

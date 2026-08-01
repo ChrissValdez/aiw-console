@@ -260,7 +260,7 @@ test("atomicity: a passing re-check leaves the new bytes in place and reports th
   assert.equal(loadCurrent(filePath).baseline, computeBaseline(plan.serialized));
 });
 
-test("the op vocabulary is the transplanted one plus the three lane ops (D-051)", () => {
+test("the op vocabulary is the transplanted one plus the three lane ops (D-051) and set-classification (#43)", () => {
   // The transplant's vocabulary, extended by exactly THREE ops, all from D-051's lane
   // model: set-lane (which lane a run rides), set-barrier (whether a run bars later work,
   // and in what scope) and declare-lanes (the root vocabulary itself). set-barrier and
@@ -269,8 +269,15 @@ test("the op vocabulary is the transplanted one plus the three lane ops (D-051)"
   // vocabulary could only be declared the same way — which is exactly what the rule that
   // every edit goes through the engine forbids. The pin stays a pin: any further drift
   // from this list is a decision to register, not an accident to absorb.
+  //
+  // [#43] REGISTERED, not absorbed: set-classification, the write side of the six stored
+  // classification fields of context/CLASIFICACION-DE-RUNS.md §1. It arrives for exactly the
+  // reason set-barrier did — the keys validated but could only be filled by hand-editing the
+  // canonical file, which is the thing this vocabulary exists to make impossible. It sits
+  // beside set-lane/set-barrier because it is the same kind of act: optional keys on ONE run,
+  // no identity touched, batchable with them.
   assert.deepEqual(
     KNOWN_OPS,
-    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "declare-lanes", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
+    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "declare-lanes", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
   );
 });

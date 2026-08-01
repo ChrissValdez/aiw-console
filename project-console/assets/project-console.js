@@ -74,6 +74,53 @@ const failedSources = [];
 let declaredArtifactPaths = [];
 let appData = null;
 
+// [#43] THE CLASSIFICATION MODEL, INJECTED — never re-implemented here.
+//
+// `severity` and `closure_mode` are DERIVED and NEVER stored
+// (context/CLASIFICACION-DE-RUNS.md §2), and §2 exists precisely so that two consumers cannot
+// derive differently. There is therefore ONE implementation, in
+// tools/classification/classification.mjs, and this renderer CALLS it — it does not carry a
+// copy of the two tables, and there is nothing here to edit out of step with the emitter.
+//
+// It arrives by injection because this file is a CLASSIC script (index.html loads it with
+// `defer`) and cannot import. project-shell.js — which is a module — imports the file and
+// hands it over through `setClassificationModel`, the same direction it already drives
+// `setActiveProjectBase` and `loadActiveProject`. The suite injects the same module the same
+// way, so what the tests exercise is what the browser runs.
+//
+// UNINJECTED IS NOT A DEFAULT. With no model the two derived values are simply UNAVAILABLE
+// and the view says so; it never falls back to a guess, because a guessed severity is exactly
+// the second copy §2 forbids.
+let classificationModel = null;
+
+function setClassificationModel(model) {
+  classificationModel = model || null;
+}
+
+// The six STORED fields, in the specification's own order. Read from the injected model when
+// there is one so the order has a single source; the literal is only the shape the drawer
+// needs before any model arrives, and it stores nothing.
+function v3ClassificationStoredFields() {
+  return (classificationModel && classificationModel.CLASSIFICATION_STORED_FIELDS)
+    || ["correctness_model", "work_type", "blast_radius", "failure_surfaces", "external_effects", "classified_at"];
+}
+
+// Both derived values of one run, or nulls. `null` means ABSENT — a run with no work_type has
+// no severity, and that is information, not a hole to fill.
+function v3DerivedClassification(run) {
+  if (!classificationModel || typeof classificationModel.deriveClassification !== "function") {
+    return { severity: null, closure_mode: null, available: false };
+  }
+  const derived = classificationModel.deriveClassification(run);
+  return { severity: derived.severity, closure_mode: derived.closure_mode, available: true };
+}
+
+// Which of the six the run actually carries — the difference between "not classified" and
+// "half classified", which the drawer must not blur.
+function v3StoredClassification(run) {
+  return v3ClassificationStoredFields().filter((field) => run && field in run);
+}
+
 // NO BAKED IDENTITY. The source console kept, right here, a parent run id and four
 // lifecycle-stage run ids of its own project, plus a per-run display-copy table keyed by twelve
 // more. Every one of them named runs of another project: they matched nothing here and, worse,
@@ -3356,6 +3403,13 @@ function v3RunRowTags(model, run) {
   if (run.barrier === "global" || run.barrier === "lane") {
     tags.push(`<span class="v3-barrier-tag is-${escapeHtml(run.barrier)}" title="${run.barrier === "global" ? "Global barrier: bars every later run in every lane until completed" : "Lane barrier: bars later runs on its own lane until completed"}">Barrier · ${run.barrier === "global" ? "GLOBAL" : "lane"}</span>`);
   }
+  // [#43] The severity chip, DERIVED at read time. It appears only when the run actually has a
+  // severity — an unclassified run gets no chip at all, because a chip reading MINOR over a run
+  // nobody has classified would be a claim the file does not make.
+  const severity = v3DerivedClassification(run).severity;
+  if (severity) {
+    tags.push(`<span class="v3-severity-tag is-${escapeHtml(severity.toLowerCase())}" title="Severity ${escapeHtml(severity)} — DERIVED from work_type, blast_radius and failure_surfaces at read time; never stored">${escapeHtml(severity)}</span>`);
+  }
   return tags.join("");
 }
 
@@ -3706,6 +3760,40 @@ function v3SetOverviewCurrentWorkVisible(visible) {
   if (card) card.hidden = !visible;
 }
 
+// [#43] THE LIST THAT REPORTS AND DOES NOT REFUSE.
+//
+// §1: "the validator REPORTS live runs with no classification; it does NOT reject. The absence
+// of a classification is information the console shows, not an error that prevents anything."
+// So this renders as a NOTE beside the queue counters, not as a banner, not in red, and not as
+// anything that counts:
+//   - it does not touch `failedSources` and so cannot move the load-failure count;
+//   - it disables no control and blocks no write;
+//   - an empty list renders NOTHING, because "0 runs need classifying" is not news.
+//
+// The list is not derived here. It is READ from `validation_summary.reports`, which the emitter
+// fills off the canonical — one computation of "who is unclassified", in the tool that owns the
+// roadmap, rather than a second opinion in the renderer. A snapshot from an older emitter
+// carries no such report and this surface simply does not appear.
+function v3UnclassifiedNoteHtml(data) {
+  const reports = data && data.snapshot && data.snapshot.validation_summary
+    ? data.snapshot.validation_summary.reports
+    : null;
+  const report = Array.isArray(reports)
+    ? reports.find((entry) => entry && entry.report === "unclassified_live_runs")
+    : null;
+  if (!report || !Array.isArray(report.runs) || !report.runs.length) return "";
+  const runs = report.runs.slice().sort((a, b) => a.queue_order - b.queue_order);
+  return `
+    <div class="v3-ov-note" data-v3-unclassified>
+      <span class="v3-ov-note-label">Unclassified live runs <span class="v3-ov-note-count">${runs.length}</span></span>
+      <span class="v3-ov-note-body">These runs have no <code>classified_at</code> and are still live. This is information, not an error: nothing is blocked and nothing is refused. Closed runs are not listed — a run that will not execute again is not classified.</span>
+      <span class="v3-ov-note-runs">
+        ${runs.map((entry) => `<button class="v3-ov-note-run" type="button" data-v3-run="${escapeHtml(entry.run_id)}">#${escapeHtml(String(entry.queue_order))} ${escapeHtml(entry.title || entry.run_id)}</button>`).join("")}
+      </span>
+    </div>
+  `;
+}
+
 function renderOverviewV3(data) {
   const currentWorkRoot = byId("project-overview");
   const nextActionRoot = byId("next-pending-runs");
@@ -3795,6 +3883,7 @@ function renderOverviewV3(data) {
     <div class="v3-ov-snapshot">
       ${snapshotCells.map((cell) => `<span class="v3-ov-snapshot-cell"><span class="v3-ov-snapshot-label">${escapeHtml(cell.label)}</span><span class="v3-ov-snapshot-num ${cell.cls}">${cell.n}</span></span>`).join("")}
     </div>
+    ${v3UnclassifiedNoteHtml(data)}
   `;
   v3AttachHandlers(byId("tab-overview"), { origin: "Overview" });
 }
@@ -4190,6 +4279,100 @@ function v3DetailCell(label, valueHtml, cellClass) {
   return `<span class="v3-detail-cell${cellClass ? ` ${cellClass}` : ""}"><span class="v3-detail-cell-label">${escapeHtml(label)}</span><span class="v3-detail-cell-value">${valueHtml}</span></span>`;
 }
 
+// [#43] THE MINIMAL VIEW — the classification section of the run drawer.
+//
+// It shows the SIX STORED fields and the TWO DERIVED ones, and it never lets the operator
+// mistake one kind for the other:
+//   - the derived pair sits in its own block, labelled "Derived — computed at read time, never
+//     stored", each value carrying the marker that names the table it came from. Nothing in
+//     this block is an input, and the editor offers no control for either;
+//   - a run with NO classification reads "Not classified yet", by name. It does not read as
+//     empty, and it certainly does not read as MINOR: an unclassified run has no severity, and
+//     printing the bottom of the scale would be inventing the answer the operator has not given;
+//   - a run classified only in part shows what it carries and says which derived value is still
+//     absent FOR WANT OF WHICH FIELD, so the gap is actionable instead of mysterious.
+function v3ClassificationSection(run) {
+  const stored = v3StoredClassification(run);
+  const measured = stored.filter((field) => field !== "classified_at");
+  const derived = v3DerivedClassification(run);
+
+  const label = {
+    correctness_model: "Correctness model",
+    work_type: "Work type",
+    blast_radius: "Blast radius",
+    failure_surfaces: "Failure surfaces",
+    external_effects: "External effects",
+    classified_at: "Classified at"
+  };
+  const shown = (field) => {
+    const value = run[field];
+    if (field === "external_effects") {
+      return Array.isArray(value) && value.length ? value.join(" · ") : "(none)";
+    }
+    return String(value);
+  };
+
+  if (!measured.length) {
+    return `
+    <div class="drawer-section">
+      <details class="v3-section-details">
+        <summary><span class="v3-caret">${v3Chevron(11)}</span>Classification <span class="v3-section-count">0</span></summary>
+        <div class="v3-section-body">
+          <div class="v3-empty-note">Not classified yet — this run carries none of the six stored classification fields, so it has no severity and no closure mode. Open the editor to classify it.</div>
+        </div>
+      </details>
+    </div>
+  `;
+  }
+
+  const storedRows = v3ClassificationStoredFields()
+    .filter((field) => field in run)
+    .map((field) => row(label[field], shown(field), field === "classified_at" ? "mono" : ""))
+    .join("");
+
+  // Why a derived value is absent, named by the field that is missing. §2: severity needs
+  // work_type and blast_radius; closure_mode needs correctness_model, and on the SPECIFIED
+  // branch the severity too.
+  const missingFor = (which) => {
+    if (!derived.available) return "the derivation table has not been loaded";
+    const absent = (field) => !(field in run);
+    if (which === "severity") {
+      const need = ["work_type", "blast_radius"].filter(absent);
+      return need.length ? `needs ${need.map((f) => label[f].toLowerCase()).join(" and ")}` : "inputs are outside the vocabulary";
+    }
+    if (absent("correctness_model")) return "needs correctness model";
+    if (!derived.severity) return "needs the severity, which is itself absent";
+    return "inputs are outside the vocabulary";
+  };
+
+  const derivedRow = (name, value, which, tableNote) => `
+      <div class="data-row v3-derived-row">
+        <div class="data-label">${escapeHtml(name)} <span class="v3-derived-mark" title="${escapeHtml(tableNote)}">derived</span></div>
+        <div class="data-value">${value
+          ? `<span class="v3-severity-tag is-${escapeHtml(String(value).toLowerCase())}">${escapeHtml(String(value))}</span>`
+          : `<span class="is-faint">absent — ${escapeHtml(missingFor(which))}</span>`}</div>
+      </div>
+  `;
+
+  return `
+    <div class="drawer-section">
+      <details class="v3-section-details" open>
+        <summary><span class="v3-caret">${v3Chevron(11)}</span>Classification <span class="v3-section-count">${measured.length}</span></summary>
+        <div class="v3-section-body">
+          <div class="v3-detail-rows">${storedRows}</div>
+          <div class="v3-classification-derived">
+            <div class="v3-classification-derived-head">Derived — computed at read time, never stored, not editable</div>
+            <div class="v3-detail-rows">
+              ${derivedRow("Severity", derived.severity, "severity", "work_type × blast_radius, then the failure_surfaces adjustment, saturating between MINOR and CRITICAL")}
+              ${derivedRow("Closure mode", derived.closure_mode, "closure_mode", "correctness_model (and severity on the SPECIFIED branch), then the external_effects guard, which only raises")}
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+  `;
+}
+
 function v3OpenRunDetail(runId, mode) {
   const model = roadmapV3ModelCache || v3Model(appData);
   if (!model) return;
@@ -4344,6 +4527,7 @@ function v3OpenRunDetail(runId, mode) {
         </div>
       </details>
     </div>
+    ${v3ClassificationSection(run)}
     ${v3ProgressTimeline(run)}
   `;
   v3AttachHandlers(byId("run-drawer"), { nested: true });
@@ -5275,7 +5459,7 @@ function v3RenderRunEditor(run, context, model) {
         <div class="v3-edit-note">Only earlier runs (lower position) are eligible. The core refuses the rest.</div>
         ${v3RenderDepPicker("deps", "multi", depCandidates, currentDeps, model)}
       </div>
-${v3RenderLaneBlock(run, model)}${v3RenderBarrierBlock(run, model)}
+${v3RenderLaneBlock(run, model)}${v3RenderBarrierBlock(run, model)}${v3RenderClassificationBlock(run, model)}
       <div class="v3-edit-block" data-v3edit-op="set-status">
         <div class="v3-edit-block-title">Status</div>
         <label class="v3-edit-field"><span class="v3-edit-label">Status</span><select data-v3edit-status>${statusOptions}</select></label>
@@ -5373,6 +5557,62 @@ function v3RenderBarrierBlock(run, model) {
           <div class="v3-edit-note">A global barrier is a project-wide synchronisation point: it holds ${later.length} later run(s) across ${hasLanes ? `all ${model.lanes.length} lanes` : "the whole queue"} until this run completes. That is the opposite of what lanes are for${hasLanes ? " — every lane stops, not just this one" : ""}. Prefer a lane barrier unless the whole project really must stop here.</div>
           <label class="v3-edit-field v3-edit-check"><input type="checkbox" data-v3edit-barrier-ack${current === "global" ? " checked" : ""}><span class="v3-edit-label">I mean this as a project-wide synchronisation point</span></label>
         </div>
+      </div>
+`;
+}
+
+// [#43] CLASSIFICATION block of the run editor — the write side of the six stored fields.
+//
+// Without it the fields validate but nobody can fill them except by hand-editing the canonical
+// JSON, which is not a path the console can offer.
+//
+// WHAT IT OFFERS: the four closed vocabularies as selects (each with a "(not classified)"
+// option that CLEARS the key, the set-lane gesture), and the guard list as free text — §1
+// declares no vocabulary for its entries, so the console invents none.
+//
+// WHAT IT DELIBERATELY DOES NOT OFFER:
+//   - `classified_at`. The engine writes it, as an ISO-8601 UTC instant in the same form this
+//     repo already emits in `generated_at`. A mark the operator can type is a mark that can lie
+//     about when the judgement was made.
+//   - `severity` and `closure_mode`. They are derived and never stored, so there is nothing to
+//     edit; the block PREVIEWS what the current selection would derive to, live off the same
+//     module the drawer reads, which is the honest way to show that the two follow from the
+//     four rather than being chosen beside them.
+//
+// The options come from the injected model's vocabularies, so no token is written in this file.
+function v3RenderClassificationBlock(run, model) {
+  const vocabularies = classificationModel && classificationModel.CLASSIFICATION_VOCABULARIES;
+  // No model, no controls. Offering selects whose vocabulary we do not have would let the
+  // operator submit tokens the engine is going to refuse.
+  if (!vocabularies) return "";
+  const fields = [
+    ["correctness_model", "Correctness model", "correctnessmodel"],
+    ["work_type", "Work type", "worktype"],
+    ["blast_radius", "Blast radius", "blastradius"],
+    ["failure_surfaces", "Failure surfaces", "failuresurfaces"]
+  ];
+  const selects = fields.map(([field, label, hook]) => {
+    const current = typeof run[field] === "string" ? run[field] : "";
+    const options = [
+      `<option value=""${current ? "" : " selected"}>(not classified)</option>`,
+      ...(vocabularies[field] || []).map((token) =>
+        `<option value="${escapeHtml(token)}"${current === token ? " selected" : ""}>${escapeHtml(token)}</option>`)
+    ].join("");
+    return `<label class="v3-edit-field"><span class="v3-edit-label">${escapeHtml(label)}</span><select data-v3edit-${hook}>${options}</select></label>`;
+  }).join("");
+
+  const effects = Array.isArray(run.external_effects) ? run.external_effects.join(", ") : "";
+  const derived = v3DerivedClassification(run);
+  const derivedNow = (value) => (value ? escapeHtml(value) : "absent — the inputs it needs are not all set");
+
+  return `
+      <div class="v3-edit-block" data-v3edit-op="set-classification">
+        <div class="v3-edit-block-title">Classification</div>
+        <div class="v3-edit-note">The four measured fields plus the guard list, as specified in context/CLASIFICACION-DE-RUNS.md §1. All six are OPTIONAL: leaving a field on "(not classified)" stores nothing, and clearing every one of them clears the classification mark with them.</div>
+        ${selects}
+        <label class="v3-edit-field"><span class="v3-edit-label">External effects</span><input type="text" data-v3edit-externaleffects value="${escapeHtml(effects)}" placeholder="comma-separated; empty means none"></label>
+        <div class="v3-edit-note">External effects is a GUARD LIST, empty by default. A non-empty list forces the closure mode to SEMI_ATTENDED as a minimum — it can only raise it, never lower it.</div>
+        <div class="v3-edit-note v3-edit-derived-note">Currently derived from what is stored: <strong>severity</strong> ${derivedNow(derived.severity)} &middot; <strong>closure mode</strong> ${derivedNow(derived.closure_mode)}. Both are computed at read time and are NEVER written to the roadmap, so neither can be edited here. The mark <code>classified_at</code> is written by the engine, not typed.</div>
       </div>
 `;
 }
@@ -5770,7 +6010,7 @@ function v3EditBeforeNode() {
   return null;
 }
 
-const V3_BATCHABLE_OPS = ["set-text", "set-deps", "set-status", "set-lane", "set-barrier", "clear-progress", "move", "move-objective", "set-objective-archived"];
+const V3_BATCHABLE_OPS = ["set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "clear-progress", "move", "move-objective", "set-objective-archived"];
 
 // The core applies batch sub-ops IN ARRAY ORDER and aborts on the first that errors. One pair
 // has a hard ordering requirement: clear-progress MUST precede set-status. set-status refuses to
@@ -5852,6 +6092,23 @@ function v3BatchOpChanged(op, args, beforeNode) {
     const beforeBarrier = beforeNode.barrier === "lane" || beforeNode.barrier === "global" ? beforeNode.barrier : "";
     const afterBarrier = args.barrier != null ? String(args.barrier) : "";
     return beforeBarrier !== afterBarrier;
+  }
+  if (op === "set-classification") {
+    // [#43] Stored value vs chosen value, field by field; "" stands for "not classified" on
+    // both sides, so re-picking what is already there is correctly a no-op and the mark is not
+    // rewritten. `classified_at` is NOT compared: the engine sets it as a consequence of a real
+    // change, so treating it as an input would make every open-and-close of the modal a write.
+    const changedToken = ["correctness_model", "work_type", "blast_radius", "failure_surfaces"].some((field) => {
+      const option = { correctness_model: "correctnessModel", work_type: "workType", blast_radius: "blastRadius", failure_surfaces: "failureSurfaces" }[field];
+      const before = typeof beforeNode[field] === "string" ? beforeNode[field] : "";
+      const after = args[option] != null ? String(args[option]) : "";
+      return before !== after;
+    });
+    const beforeEffects = Array.isArray(beforeNode.external_effects) ? beforeNode.external_effects : [];
+    const afterEffects = Array.isArray(args.externalEffects) ? args.externalEffects : [];
+    const changedEffects = beforeEffects.length !== afterEffects.length ||
+      beforeEffects.some((value, i) => value !== afterEffects[i]);
+    return changedToken || changedEffects;
   }
   if (op === "clear-progress") {
     // v3EditBuildPayload returns null unless the box is ticked, so a payload reaching here
@@ -5995,6 +6252,29 @@ function v3EditBuildPayload(op) {
     // "" (the no-barrier option) travels as null: the engine's clearing gesture.
     return { op, args: { run: t.id, barrier: scope || null } };
   }
+  if (op === "set-classification") {
+    // [#43] The four measured fields plus the guard list. "" (the "(not classified)" option and
+    // an empty text box) travels as null: the engine's clearing gesture, the same one set-lane
+    // and set-barrier use. `classified_at` is NOT collected — the engine writes the mark, so
+    // there is no field here to read and no way for a request body to carry an instant.
+    const sel = q("[data-v3edit-correctnessmodel]");
+    if (!sel) return null;
+    const pick = (selector) => { const el = q(selector); return el && el.value ? el.value : null; };
+    const effectsEl = q("[data-v3edit-externaleffects]");
+    const effectsRaw = effectsEl ? String(effectsEl.value || "") : "";
+    const effects = effectsRaw.split(",").map((part) => part.trim()).filter(Boolean);
+    return {
+      op,
+      args: {
+        run: t.id,
+        correctnessModel: pick("[data-v3edit-correctnessmodel]"),
+        workType: pick("[data-v3edit-worktype]"),
+        blastRadius: pick("[data-v3edit-blastradius]"),
+        failureSurfaces: pick("[data-v3edit-failuresurfaces]"),
+        externalEffects: effects.length ? effects : null
+      }
+    };
+  }
   if (op === "clear-progress") {
     // An UNTICKED box produces no payload at all, so the op is simply absent from the batch
     // (v3EditBuildBatch skips a null payload). Retiring a record is never the default.
@@ -6121,7 +6401,35 @@ function v3EditDiffHtml(op, args, beforeNode) {
     return `<div class="v3-edit-diff v3-edit-diff-text">${inner}</div>`;
   }
   const rows = [];
-  if ((op === "set-deps" || op === "set-status" || op === "set-lane" || op === "set-barrier" || op === "move" || op === "clear-progress") && !beforeNode) return "";
+  if ((op === "set-deps" || op === "set-status" || op === "set-lane" || op === "set-barrier" || op === "set-classification" || op === "move" || op === "clear-progress") && !beforeNode) return "";
+  if (op === "set-classification") {
+    // [#43] Field by field, then the two DERIVED values before and after — because the point
+    // of the four selects is what they derive to, and an operator confirming a write should see
+    // that consequence in the same preview, not discover it in the drawer afterwards.
+    const map = { correctness_model: "correctnessModel", work_type: "workType", blast_radius: "blastRadius", failure_surfaces: "failureSurfaces" };
+    const after = {};
+    Object.entries(map).forEach(([field, option]) => {
+      const value = args[option] != null && args[option] !== "" ? String(args[option]) : null;
+      rows.push(v3EditDiffRow(field, typeof beforeNode[field] === "string" ? beforeNode[field] : "(not classified)", value || "(not classified)"));
+      if (value) after[field] = value;
+    });
+    const afterEffects = Array.isArray(args.externalEffects) ? args.externalEffects : [];
+    if (afterEffects.length) after.external_effects = afterEffects;
+    rows.push(v3EditDiffRow(
+      "external_effects",
+      (Array.isArray(beforeNode.external_effects) ? beforeNode.external_effects : []).join(", ") || "(none)",
+      afterEffects.join(", ") || "(none)"
+    ));
+    const beforeDerived = v3DerivedClassification(beforeNode);
+    const afterDerived = v3DerivedClassification(after);
+    rows.push(v3EditDiffRow("severity (derived)", beforeDerived.severity || "(absent)", afterDerived.severity || "(absent)"));
+    rows.push(v3EditDiffRow("closure_mode (derived)", beforeDerived.closure_mode || "(absent)", afterDerived.closure_mode || "(absent)"));
+    rows.push(v3EditDiffRow(
+      "classified_at",
+      typeof beforeNode.classified_at === "string" ? beforeNode.classified_at : "(none)",
+      Object.keys(after).length ? "(written by the engine — ISO-8601 UTC instant)" : "(cleared with the classification)"
+    ));
+  }
   if (op === "clear-progress") {
     // Name the record being retired entry by entry. The whole reason this is a separate op is
     // that the loss should be READ before it is confirmed, not buried in a status change.

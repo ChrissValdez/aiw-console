@@ -22,6 +22,16 @@
 // The module is import-safe in Node (no DOM at top level), so the pure pieces are unit-tested
 // directly by the suite. Browser boot happens only when the shell markup is present.
 
+// [#43] The ONE implementation of the run classification model — the closed vocabularies and
+// the two derivation tables of context/CLASIFICACION-DE-RUNS.md §2. Imported, never copied:
+// the emitter imports this exact file too, and a second implementation would be two truths the
+// moment either is edited. The specifier resolves identically on both sides — on disk for the
+// Node tests, and over HTTP from the repository root the console's server already serves.
+import * as classification from "../../tools/classification/classification.mjs";
+
+// Re-exported so the suite can assert the shell hands over THE module and not a copy of it.
+export { classification };
+
 // Registry location, fixed for the client — relative to the DOCUMENT
 // (/project-console/index.html), because fetch() resolves against the page, not this module.
 // The server serves this URL from the active registry file (PC_REGISTRY can point it at
@@ -503,6 +513,24 @@ async function shellBoot() {
   shellState.recordsByKey = new Map(records.map((record) => [record.key, record]));
   renderShellChrome();
   shellShowView("portfolio");
+}
+
+// [#43] HAND THE CLASSIFICATION MODEL TO THE RENDERER.
+//
+// `severity` and `closure_mode` are DERIVED and never stored, and the specification's §2
+// exists to stop two consumers deriving differently — so there is exactly ONE implementation
+// (tools/classification/classification.mjs) and both consumers call it. The emitter imports
+// it from disk; the browser fetches the same file over the same server that serves this
+// module, and gets the same bytes.
+//
+// It arrives through the SHELL because project-console.js is a CLASSIC script (index.html
+// loads it with `defer`, not as a module) and so cannot import anything. This is the same
+// direction the shell already drives — it calls `setActiveProjectBase` and
+// `loadActiveProject` the same way — and it keeps the renderer free of a second copy of the
+// tables. A renderer that was never handed the model derives nothing and says so; it never
+// falls back to a guess.
+if (IS_BROWSER && typeof setClassificationModel === "function") {
+  setClassificationModel(classification);
 }
 
 if (IS_BROWSER && document.getElementById("shell-sidebar")) {

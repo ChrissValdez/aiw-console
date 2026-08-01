@@ -52,6 +52,13 @@ import {
 } from "node:fs";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+// [#43] The ONE implementation of the classification model — vocabularies, the two derivation
+// tables, and the functions that execute them. This emitter DECLARES those tables in the
+// envelope and never restates them; the console imports the same file and derives from it.
+import {
+  buildClassificationTaxonomy,
+  unclassifiedLiveRuns
+} from "../classification/classification.mjs";
 
 export const SCHEMA_VERSION = 1;
 // CONTRATO §6 — `generated_from` names tool AND version, so the version moves whenever the
@@ -94,7 +101,21 @@ export const SCHEMA_VERSION = 1;
 // more. An emitter that says what it skipped is not the emitter that skipped it in silence, so
 // the version moves (§6). See `unprojectedObjectiveInputs` for why it is derived and for the
 // scope of the claim.
-export const PROJECTOR_VERSION = "0.10.0";
+// 0.11.0 (RUN-CONSOLE-RUN-CLASSIFICATION-FIELDS-001) moves twice, and both moves are behaviour:
+//   - `taxonomy_model` now TRANSPORTS the run classification model: the closed vocabularies of
+//     the six STORED fields, and the two derivation tables for `severity` and `closure_mode`,
+//     which are DERIVED and never stored. The tables travel; THE RESULT DOES NOT. They are the
+//     same objects `tools/classification/classification.mjs` executes, so — exactly as with
+//     COLLECTION_STATUS_RULES — the declaration in the envelope cannot drift from the behaviour
+//     of the code, and the console derives from the transported table instead of from a second
+//     copy of the rules.
+//   - `validation_summary`, opaque since §3.b left it "until there is an emitter and an example",
+//     OPENS with its first real content: the LIVE runs that carry no classification. It is a
+//     REPORT and not a refusal — §1's own words, "the validator reports, it does not reject" —
+//     so it raises no error, changes no exit code and blocks no emission.
+// An emitter that publishes a derivation table it did not publish before, and fills a summary it
+// used to emit empty, is not the emitter of 0.10.0, so the version moves (§6).
+export const PROJECTOR_VERSION = "0.11.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 // Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
@@ -776,6 +797,10 @@ export const ROADMAP_TREE_MODEL = "roadmap_tree_v1";
 
 // CONTRATO §11.a — run status: STORED, four tokens, closed vocabulary.
 const RUN_STATUSES = ["planned", "active", "blocked", "completed"];
+// [#43] Which of those four END a run. Declared here because it is STATUS doctrine and this
+// file owns the status vocabulary; it is handed to the classification report rather than baked
+// inside it, so the classification module knows no status token by name.
+const TERMINAL_RUN_STATUSES = ["completed", "blocked"];
 // CONTRATO §11.b — objective/phase status: DERIVED, five tokens, never stored (§10.b, §12.c).
 const DERIVED_COLLECTION_STATUSES = ["planned", "in_progress", "active", "blocked", "completed"];
 // Project-level operational status (capa 1 §3, `operational_status`). A different axis from
@@ -962,6 +987,11 @@ export function deriveProjectOperationalStatus(runStatuses) {
 // constants the emitter itself executes, so the declaration is derived, never a parallel literal
 // (the defect §17 measured in mode 1, `PROJ:38,40` → `:463-466`).
 function buildTaxonomyModel(root, layout) {
+  // [#43] The run classification model, from the module that OWNS it. Merged in rather than
+  // written out here for the same reason COLLECTION_STATUS_RULES is a constant and not a
+  // literal: a second transcription is a second truth as soon as one of them is edited, and
+  // §2 of the specification exists precisely to stop two consumers deriving differently.
+  const classification = buildClassificationTaxonomy();
   // Pointer to the normative document, when the PROJECT declares where its own contract lives
   // (the layout's `contract_ref`). No document path is baked in here: a project that declares
   // nothing simply gets no pointer, and a declared path that does not resolve is omitted (§7).
@@ -992,7 +1022,12 @@ function buildTaxonomyModel(root, layout) {
         stored: false,
         derived_by: "collection_status_from_runs",
         tokens: DERIVED_COLLECTION_STATUSES
-      }
+      },
+      // [#43] The six STORED classification fields and the TWO DERIVED ones. Same shape as
+      // the four above: `stored` says whether the token is on disk, and the two that are not
+      // name the table that produces them (`derived_by`). Nothing here is a literal — the
+      // entries come from the classification module itself.
+      ...classification.vocabularies
     },
     // Executable declaration: evaluate `precedence` in order against the `status` of the runs in
     // the collection; the first rule whose quantifier holds wins. An empty collection is
@@ -1009,8 +1044,16 @@ function buildTaxonomyModel(root, layout) {
         input: "run.status",
         precedence: PROJECT_STATUS_RULES,
         empty_input: "idle"
-      }
+      },
+      // [#43] The two classification tables of §2, verbatim, as executable declarations. The
+      // consumer receives THE TABLE and derives; the RESULT never travels.
+      ...classification.derivations
     },
+    // [#43] §3, as data: the combinations a classified run may not carry. Two are decidable
+    // from stored fields and the engine refuses them; the third names a DERIVED token, so it
+    // is a property of the derivation table above rather than a field check, and each entry
+    // says which.
+    illegal_combinations: classification.illegal_combinations,
     ...(specifiedBy ? { specified_by: specifiedBy.path } : {})
   };
 }
@@ -1112,6 +1155,8 @@ export function buildRoadmapTreeSnapshot(root, opts = {}) {
   const noClaims = safeReadJson(resolve(root, layout.paths.no_claims));
   const noClaimsCount = noClaims && Array.isArray(noClaims.claims) ? noClaims.claims.length : null;
   const noClaimsSource = sourceRecord(root, PROJECT_NO_CLAIMS_RELATIVE_PATH);
+  // [#43] Derived from the SAME flattened tree every summary above reads, once.
+  const unclassified = unclassifiedLiveRuns(flat, { terminalStatuses: TERMINAL_RUN_STATUSES });
 
   return {
     ...projectFileEnvelope(root, opts, [layout.paths.roadmap, PACKAGE_SOURCE_PATH]),
@@ -1155,9 +1200,34 @@ export function buildRoadmapTreeSnapshot(root, opts = {}) {
       noClaimsCount != null && noClaimsSource
         ? { total: noClaimsCount, source: noClaimsSource.path }
         : {},
-    // Still opaque, and honestly so: the capa-3 validator does not exist, so nothing real
-    // fills this. §3.b — no schema without emitter and example.
-    validation_summary: {},
+    // [#43] THE CHANNEL THAT REPORTS WITHOUT REFUSING. §3.b left this opaque "until there is
+    // an emitter and an example"; §1 of the classification specification supplies both, and it
+    // is emphatic about the shape: "the validator REPORTS live runs with no classification; it
+    // does NOT reject. The absence of a classification is information the console shows, not an
+    // error that prevents anything."
+    //
+    // So this key is INFORMATION and nothing else. It increments no error counter, changes no
+    // exit code, fails no emission and blocks no write — it is built from the same flattened
+    // tree the summaries above are built from, after every one of them, and if the list is long
+    // the emission is exactly as successful as if it were empty.
+    //
+    // COMPLETED RUNS ARE NOT IN IT. §6: closed runs are not classified. A run that will never
+    // execute again does not appear on a to-do list, and classifying one is archaeology — so
+    // the terminal statuses are excluded by name, and the name is passed in from this file's
+    // own status vocabulary rather than known inside the classification module.
+    validation_summary: {
+      reports: [
+        {
+          report: "unclassified_live_runs",
+          kind: "information",
+          rule: "a run whose status is not terminal and which carries no classified_at is UNCLASSIFIED; it is LISTED, never refused",
+          specified_by: "context/CLASIFICACION-DE-RUNS.md#1",
+          terminal_statuses: TERMINAL_RUN_STATUSES,
+          total: unclassified.length,
+          runs: unclassified
+        }
+      ]
+    },
     taxonomy_model: buildTaxonomyModel(root, layout),
     // What this emission did NOT read under objectives/, and the mode that did not read it. In
     // this mode that is EVERY subdirectory: the plan is the roadmap tree named in the reason, and

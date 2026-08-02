@@ -2335,3 +2335,93 @@ en ninguna parte. Las tres las hereda el run del piloto. El proyector queda en
 del modelo de taxonomía, o que reubique la derivación fuera del módulo único. Las
 seis adjudicaciones caducan una a una si la especificación las absorbe en su texto;
 mientras no lo haga, esta entrada es su única sede.
+
+## D-060 — 2026-08-02 — El procedimiento de clasificación existe, y lo que el piloto deja abierto se declara con su condición de cierre
+**Entrada transversal**, porque el procedimiento gobierna cómo clasifican los tres
+proyectos. La ejecución en `aiw` y en `cantu-studio` es de sus hilos y aquí sólo se
+nombra.
+
+El run piloto —`RUN-CONSOLE-CLASSIFICATION-PILOT-001` (`queue_order` 44),
+*Classify aiw-console's live runs as the pilot, and rule on the procedure itself*—
+clasificó los **doce runs vivos** de este roadmap con el juicio del operador
+aportado como entrada, y de ese ejercicio salen seis adjudicaciones:
+
+1. **Existe procedimiento escrito**, en `context/PROCEDIMIENTO-DE-CLASIFICACION.md`.
+   Cierra el primero de los tres huecos que [[D-059]] declaró. **Si discrepa de
+   `context/CLASIFICACION-DE-RUNS.md`, gana la especificación**: ese documento dice
+   qué significan los campos, éste dice cómo se aplican, y están separados para que
+   revisar el método no obligue a mover el normativo.
+
+2. **Definición de run MIXTO:** un run es mixto cuando su propia superficie de
+   ESCRITURA abarca dos naturalezas distintas. **La frontera es dónde el run escribe,
+   no de qué depende ni de qué habla.** Una precondición fuera del grafo NO es mezcla.
+   Medido: bajo esta definición el censo de `aiw` pasa de 17 mixtos de 21 a **2 de
+   21**, y los 13 que salen son runs que esperan una entrada de este mismo log.
+
+3. **Regla provisional de mezcla**, vigente mientras §7 de la especificación siga
+   abierto: si un run sostiene varias superficies de fallo, **gana la peor**; y si eso
+   sube injustamente al run entero, **la señal es partirlo**.
+
+4. **Criterio de irreversibilidad:** un acto es irreversible cuando el sistema, tal
+   como está construido, no tiene ruta de vuelta. No cuenta que git lo permitiría si
+   esa ruta no existe en el código, ni cuenta si la única vuelta atrás exige un acto
+   que la doctrina prohíbe.
+
+5. **Formas de `external_effects`:** `writes_repo:<proyecto>` cuando el run escribe en
+   otro repositorio, y `obliges_project:<proyecto>` cuando produce una norma que otro
+   proyecto debe obedecer sin tocarlo. [[D-059]] adjudicó que el campo se verifica en
+   FORMA y no en vocabulario; esto no lo contradice: fija las formas en uso para que
+   sean contables, no un enum que el motor imponga.
+
+6. **Fuente única de `acceptance_criteria`**, para cuando ese campo exista: para un run
+   que ejecuta AIW, el campo del roadmap es la FUENTE y el intake genera el ticket;
+   para un encargo de cabina el ticket sigue siendo autorado y el campo queda vacío.
+   Aprobada por el operador a petición del hilo `aiw`. Sin esto el campo sería una
+   segunda sede de lo mismo.
+
+**LO QUE QUEDA ABIERTO, cada uno con su condición de cierre, y ninguno se reconstruye
+por coherencia:**
+
+- **Las tres reglas mecánicas de runs mixtos**, hueco de `CLASIFICACION-DE-RUNS.md`
+  §7. Al escribir esta entrada la población de casos reales bajo la definición de
+  arriba es **tres**. Se cierran cuando haya población suficiente de
+  mixtos-por-entregable en los tres roadmaps, y se escriben con esos casos delante.
+- **Cómo se DECLARA la calibración de un `completed`.** Sin un solo caso. Los **43**
+  `completed` de este roadmap quedan sin clasificar.
+- **La irreversibilidad no tiene eje propio** y llega a la severidad de rebote, por
+  `blast_radius` y `failure_surfaces`. **Hueco declarado SIN testigo**: el candidato
+  que el hilo `aiw` propuso existe sólo bajo una reordenación que aún no está en
+  disco. Se reabre si aparece un run pequeño, local, de fallo visible e irreversible
+  en la población real.
+
+**LO QUE EL PILOTO MIDIÓ Y NO SE MAQUILLA.** Reparto derivado de los doce: **6
+CRITICAL · 3 MAJOR · 3 MODERATE · 0 MINOR**, y **4 `ATTENDED` · 6 `SEMI_ATTENDED` ·
+2 `UNATTENDED`**. **Esta cola no produce ningún MINOR**: los cuatro escalones de
+severidad NO están ocupados, y eso es dato de calibración, no defecto a corregir. Los
+seis CRITICAL son los que tocan el esquema que obedecen tres proyectos o actúan sobre
+otro repositorio. Los dos `UNATTENDED` son los primeros candidatos reales a ventana
+desatendida que este workspace ha producido.
+
+**Y una lectura que costó media sesión y queda fijada:** `closure_mode` NO es una
+escala de riesgo. Mide **presencia** —cuánta persona hace falta dentro del run para
+que cierre—; `severity` mide **daño**. Van en ejes distintos y se cruzan: el run del
+corte deriva CRITICAL y `SEMI_ATTENDED`, y la auditoría visual deriva MODERATE y
+`ATTENDED`. Leerlos como una sola escala produce la conclusión falsa de que el modelo
+subprotege el acto irreversible.
+
+Referencias: `context/PROCEDIMIENTO-DE-CLASIFICACION.md`, el documento que esta
+entrada instituye; `context/CLASIFICACION-DE-RUNS.md`, el normativo que gana en caso
+de discrepancia; `context/aiw-console/records/MEDICION-PILOTO-CLASIFICACION-AIW-CONSOLE.md`
+(la medición previa, con el coste real de dar de alta un campo) y
+`ESCRITURA-CLASIFICACION-DOCE-RUNS-AIW-CONSOLE.md` y `-2.md` (la parada por una
+derivación mal hecha a mano, y la escritura verificada campo a campo); [[D-059]] (las
+seis adjudicaciones de maquinaria que ésta continúa, y los tres huecos que declara);
+[[D-056]] (el precedente de que un criterio de borrado redactado por el taller cuesta
+después una entrada de corrección); [[D-038]] (por qué esto no puede vivir en un
+handoff).
+Criterio de borrado: la sustituye una decisión que derogue el procedimiento como
+documento, que traslade su casa, o que cambie la definición de mixto o el criterio de
+irreversibilidad de arriba. **Los tres huecos declarados NO caducan esta entrada:
+cada uno se cierra con una entrada nueva, y cerrarlos es precisamente lo que ésta
+prevé.** Las cifras del piloto son mediciones fechadas y se corrigen, si acaso, hacia
+adelante.

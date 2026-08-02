@@ -1,27 +1,97 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-01T09:27:23.120Z",
+  "generated_at": "2026-08-02T08:35:21.627Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-01T09:27:02.423Z"
+      "mtime": "2026-08-02T07:31:13.248Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-01T09:18:12.275Z"
+      "mtime": "2026-08-02T08:35:21.622Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "c81a9b49e5149e05cf621f4b2028cb106815ad57",
+  "head": "57e372b0801d07565cb9ff5dfbb484b264d0a55a",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 136,
+  "commit_total": 143,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "57e372b",
+      "full_sha": "57e372b0801d07565cb9ff5dfbb484b264d0a55a",
+      "date": "2026-08-01T21:24:09-06:00",
+      "parents": "1959e9c",
+      "subject": "record: medicion previa a la clasificacion de los 21 planned de aiw - grafia de los seis campos contra codigo, censo de mixtos separando compuerta de entregable, consumidores por run sin traducir a etiqueta, y la tension del testigo de irreversibilidad",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1959e9c",
+      "full_sha": "1959e9c7afb84cfeb02ef11922bcbc092e0a77e0",
+      "date": "2026-08-01T21:14:50-06:00",
+      "parents": "be8626a",
+      "subject": "record: feat(cantu): carry the author palette through the compiler and the Web engine for callout, rule, details, conceptGrid and table; 13 new tests; operator QA packet written; #19 pending QA",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "be8626a",
+      "full_sha": "be8626a41275aaaac97f4632cfbefbfeebf4284a",
+      "date": "2026-08-01T21:13:23-06:00",
+      "parents": "c279e23",
+      "subject": "record: auditoria del corpus documental de cantu y lista de disposicion (keep 340 / move 7 / delete 0); #18 sigue active a la espera de firma",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c279e23",
+      "full_sha": "c279e236ae944e826f211878aae245877f6019b6",
+      "date": "2026-08-01T20:41:32-06:00",
+      "parents": "8199dd1",
+      "subject": "record: docs(cantu): refresh the revalidation Definition of Done against measured surfaces (seven stale matrix rows, run count, verification boundary); close #17; drop stray roadmap-titulos.md",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8199dd1",
+      "full_sha": "8199dd12a88e5b50b7f204ced70cca90fb0c15b9",
+      "date": "2026-08-01T16:26:28-06:00",
+      "parents": "848a3b9",
+      "subject": "record: roadmap(cantu): insert three shared-piece runs at 17/19/29 and six depends_on edges; open #17",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "848a3b9",
+      "full_sha": "848a3b99293fb97fdf7b5d3212091d59bf868274",
+      "date": "2026-08-01T03:39:10-06:00",
+      "parents": "3ab8628",
+      "subject": "handoff: relevo del hilo aiw-console al cierre de la sesion de reestructuracion. Cabeza de la cola: #44, el piloto de clasificacion, con dependencias satisfechas. Recoge la estructura nueva (O0 como historia, cuatro fases bajo O4), los tres runs pedidos por aiw, el reencuadre de la auditoria visual, el censo de mixtos y su consecuencia para el piloto, la regla de los tres hilos, los siete hallazgos de UI/UX y las lecciones de operacion del motor",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "3ab8628",
+      "full_sha": "3ab8628da03c622b6c524b19fd1b5777874d8cbf",
+      "date": "2026-08-01T03:28:43-06:00",
+      "parents": "c81a9b4",
+      "subject": "project: re-emision de .project/ tras la reestructuracion de objetivos y fases; el espejo pasa a 55 runs, cuatro fases nuevas bajo O4, y los 12 vivos sin clasificar que el piloto va a clasificar",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "c81a9b4",

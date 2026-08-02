@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-01T09:27:23.120Z",
+  "generated_at": "2026-08-02T08:35:21.627Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-01T09:18:12.275Z"
+      "mtime": "2026-08-02T08:35:21.622Z"
     }
   ],
   "model": "roadmap_tree_v1",
@@ -701,7 +701,12 @@
               "status": "planned",
               "depends_on": [
                 "RUN-CANTU-PROJECT-CONSOLE-LATENT-DEFECTS-001"
-              ]
+              ],
+              "correctness_model": "JUDGED_ACCEPTS",
+              "work_type": "FUNCTIONAL",
+              "blast_radius": "ADJACENT",
+              "failure_surfaces": "SILENT",
+              "classified_at": "2026-08-02T07:27:15.868Z"
             },
             {
               "run_id": "RUN-CONSOLE-UI-UX-001",
@@ -712,7 +717,12 @@
               "status": "planned",
               "depends_on": [
                 "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001"
-              ]
+              ],
+              "correctness_model": "JUDGED_ACCEPTS",
+              "work_type": "FUNCTIONAL",
+              "blast_radius": "ADJACENT",
+              "failure_surfaces": "SILENT",
+              "classified_at": "2026-08-02T07:27:15.875Z"
             },
             {
               "run_id": "RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001",
@@ -721,7 +731,15 @@
               "summary": "Move Cantu's canonical roadmap out of the folder the cutover deletes, and resolve its layout at the new path.",
               "full_description": "MEASURED BY THE CABIN ON 2026-07-30, from two independent sources, and it is the finding that made this run exist. Cantu-studio's CANONICAL roadmap lives at .aiw/roadmap/roadmap.json — verified on disk, and how many runs it holds is measured when this run executes, because that project is restructuring its roadmap right now — and this roadmap's own write-paths run states the same thing in writing, that in aiw-console the canonical is roadmap/roadmap.json while in cantu-studio it is .aiw/roadmap/roadmap.json. The cutover run declares that it deletes .aiw. AS WRITTEN, THE CUTOVER WOULD DELETE THAT PROJECT'S ENTIRE PLAN — not a derived copy, the source. Nothing anywhere in the three roadmaps moves that file first. THE HISTORICAL REASON THE TRAP EXISTS: .aiw/ was AIW's projection delivery area, and Cantu's roadmap was written into it before the folder contract separated canonical from derived. The contract now says .project/ is derived and is never a write destination, and that the canonical is written and re-emitted — but Cantu's canonical was left inside the folder that the additive coexistence was always going to end by removing. SCOPE: move that canonical out of .aiw to a path outside it, make the project's layout resolve it at the new path so the global console keeps reading and WRITING it, and verify the three write routes still reach it. THE SECOND HALF, and it belongs here because it is the same movement: that canonical declares schema_version jame.roadmap_v3.v0.2-progress while the other two declare roadmap_tree_v1. Whether it migrates here or the engine accepts both is decided with the measurement in hand. CROSS-REPOSITORY WRITE: this run writes in cantu-studio. There is precedent for runs of this roadmap doing so — that project's migration to lanes and the split of its packed runs both did — and the window is coordinated with that project's thread; it does not run while a workshop is live there. It executes BEFORE the cutover, and the cutover depends on it.",
               "status": "planned",
-              "depends_on": []
+              "depends_on": [],
+              "correctness_model": "JUDGED_DEFINES",
+              "work_type": "FOUNDATIONAL",
+              "blast_radius": "PROJECT_SHAPE",
+              "failure_surfaces": "SILENT",
+              "external_effects": [
+                "writes_repo:cantu-studio"
+              ],
+              "classified_at": "2026-08-02T07:27:15.882Z"
             },
             {
               "run_id": "RUN-CONSOLE-CORTE-RETIRO-LOCAL-001",
@@ -734,7 +752,15 @@
                 "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001",
                 "RUN-CONSOLE-UI-UX-001",
                 "RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001"
-              ]
+              ],
+              "correctness_model": "JUDGED_ACCEPTS",
+              "work_type": "FOUNDATIONAL",
+              "blast_radius": "PROJECT_SHAPE",
+              "failure_surfaces": "SILENT",
+              "external_effects": [
+                "writes_repo:cantu-studio"
+              ],
+              "classified_at": "2026-08-02T07:27:15.890Z"
             }
           ]
         },
@@ -749,7 +775,12 @@
               "summary": "The core, the shared plan and the CLI already implement create and delete for phases and objectives; what is missing is the console surface, so every structural correction still has to go through the CLI.",
               "full_description": "REWRITTEN ON 2026-07-31 BY THE ROADMAP AUDIT, WHICH MEASURED THAT THIS RUN'S ORIGINAL TEXT DESCRIBED WORK ALREADY DONE. The previous text said the tool \"has no operation to create or delete a phase or an objective\", that the two ghost phases could not be deleted, that the identity guard still had to be extended, and that the operator had not yet decided between refusing and cascading on deletion. ALL FOUR ARE FALSE ON DISK. Measured: roadmap-core.mjs exports createPhase, deletePhase, createObjective and deleteObjective; roadmap-plan.mjs carries the four verbs in KNOWN_OPS with their four dispatch branches and declares them identity ops alongside insert and remove; this roadmap holds zero empty phases; and deletion REFUSES a non-empty container rather than cascading, which is the precedent the original text itself proposed. The implementation landed twenty-eight queue positions before this run's own position, and nobody updated the text. WHAT IS ACTUALLY LEFT is one thing: the operations are CLI and endpoint only. A search for the four verbs across the console's frontend assets returns nothing, so a structural correction that the console can already authorize still has to be typed at the command line — which is the gap this run now closes. SCOPE: a console surface for the four operations over the same core the CLI calls, so both paths behave identically because both run the same code. THREE CONSTRAINTS THE SURFACE MUST RESPECT, EACH TO BE VERIFIED AGAINST THE CODE RATHER THAN ASSUMED FROM THIS TEXT: they are identity operations and are refused inside a batch, so the surface cannot fold them into a multi-edit; both create verbs make a legal EMPTY container and seed nothing; and the delete verbs refuse rather than cascade, with delete-objective additionally refusing to remove the last objective because the validator requires at least one, while delete-phase carries no last-phase guard since an objective with zero phases is legal. THE ORIGINAL MOTIVATION SURVIVES AND IS WORTH RE-MEASURING AT EXECUTION: the Project Console objective was said to lack a phase for meta-work, which is why the dev launchers landed in Roadmap Maintenance for want of a better home. Whether that is still true, and whether it should be fixed with this surface, is the operator's judgement and not this run's to assume. WHAT THIS RUN DOES NOT DO: it does not change the core, the plan layer or the CLI, all of which are implemented and tested; it does not decide the cascade question, which is already decided in code; and it makes no claim about the phases of any other project's roadmap.",
               "status": "planned",
-              "depends_on": []
+              "depends_on": [],
+              "correctness_model": "SPECIFIED",
+              "work_type": "FUNCTIONAL",
+              "blast_radius": "LOCAL",
+              "failure_surfaces": "VISIBLE",
+              "classified_at": "2026-08-02T07:27:15.902Z"
             },
             {
               "run_id": "RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001",
@@ -758,7 +789,12 @@
               "summary": "The operator walks the whole console surface and reports what should improve; each finding becomes its own run. Deliberately last: it opens work rather than closing it.",
               "full_description": "REFRAMED 2026-08-01 BY THE OPERATOR'S HUMAN AUDIT OF THIS ROADMAP. The previous text deferred this run until Cantu Studio was further developed and the console had accumulated real operational use. THAT MOMENT HAS ARRIVED and the operator declares it: the console now renders three projects, edits the canonical through three write routes, and has been operated daily for weeks. WHAT IT IS: the operator walks the console surface by surface and reports what should improve — not a defect list, an accumulated backlog of use. Each finding becomes its own run, sized and placed on its own. Repairs that are small and unambiguous may be resolved inside a single workshop session under this run; anything that needs a verdict or does not fit becomes a run. WHY IT IS DELIBERATELY LAST: it OPENS work rather than closing it, and the operator wants the outstanding queue cleared before adding a long list of improvements. That is a scheduling decision, not a judgement about its value. HOW IT DIFFERS FROM THE UI/UX GATE OF THE CUTOVER, and confusing them is expensive: that run is a GATE, and it asks only whether anything is WORSE than the local console gives today — a deliberately narrow question guarding an irreversible act, which is why desirable improvements must not be poured into it. This run asks the opposite: what could be BETTER. IT DEPENDS ON NOTHING, and that is kept: what decides when it runs is the operator, not an edge. SIX FINDINGS ALREADY MEASURED BY THE CABIN ON 2026-07-31, to be verified rather than trusted from this text: the classification counter shows a bare zero with no unit, where zero of six would read; an active run displays \"Current stage: Not started\", correct but reading as a contradiction; the list of live unclassified runs travels in validation_summary but was not found anywhere on screen; the modal's confirm fires when cancelling; a run deriving CRITICAL does not show its care_budget advice in its own detail even though the table travels in the same envelope, which the cabin judged the most valuable of the six; and the phases of an objective read out of order against queue_order, which is opaque identity and must NOT be renumbered, though the console could make it evident.",
               "status": "planned",
-              "depends_on": []
+              "depends_on": [],
+              "correctness_model": "JUDGED_DEFINES",
+              "work_type": "FUNCTIONAL",
+              "blast_radius": "ADJACENT",
+              "failure_surfaces": "VISIBLE",
+              "classified_at": "2026-08-02T07:27:15.908Z"
             }
           ]
         },
@@ -772,10 +808,19 @@
               "title": "Classify aiw-console's live runs as the pilot, and rule on the procedure itself",
               "summary": "Classify this roadmap's live runs as the first real application, and deliver a verdict on the procedure itself for the other two threads.",
               "full_description": "FIRST REAL APPLICATION of the classification system, and it is deliberately a PILOT. The project's own doctrine is that a new procedure is never launched in a batch: the first application goes alone and its ticket asks for a verdict on the procedure itself — which step was not executable, what had to be interpreted, which exit criterion was missing. The measured reason is that a gap found in one place costs one session, while found in three it costs three and produces verdicts that cannot be compared, because each one resolved the gap its own way. THE DELIVERABLE IS THEREFORE DOUBLE: the live runs of this roadmap classified, and a written verdict on the procedure that the aiw and cantu-studio threads start from instead of rediscovering. WHY THIS ROADMAP IS THE PILOT: it holds the smallest live set of the three, it is the thread that implements the fields, and its live runs already have their text transcribed verbatim. THE COMPLETED RUNS ARE NOT CLASSIFIED. closure_mode routes execution and a closed run is never executed again; classifying it is archaeology with zero operational value, and across the three projects it would be roughly 59 runs of work that buys nothing. A handful of closed runs MAY be classified as calibration, chosen for that purpose and declared as such. THIS RUN IS ATTENDED BY ITS OWN CLASSIFICATION: correctness is the operator's judgement supplied as an INPUT, not accepted at the end, so it executes in the cockpit with the operator and not as delegated work. THINGS THE CABIN ALREADY MEASURED AND THAT THIS RUN SHOULD WATCH FOR: the criterion that catches runs establishing something others consume caught roughly a third of the runs in scope across the three roadmaps, so blast_radius inflation is a real risk for that third and is detected by counting; a run may hold several failure surfaces, in which case the worst one wins and, if that unfairly raises the whole run, the signal is to split it; and a precondition the operator must satisfy BEFORE a run starts does not make that run JUDGED_DEFINES — nine runs in AIW's roadmap declare they cannot execute until an entry is written, and reading those as judgement would divert nine runs away from the kernel forever.",
-              "status": "planned",
+              "status": "completed",
               "depends_on": [
                 "RUN-CONSOLE-RUN-CLASSIFICATION-FIELDS-001"
-              ]
+              ],
+              "correctness_model": "JUDGED_DEFINES",
+              "work_type": "FOUNDATIONAL",
+              "blast_radius": "PROJECT_SHAPE",
+              "failure_surfaces": "SILENT",
+              "external_effects": [
+                "obliges_project:aiw",
+                "obliges_project:cantu-studio"
+              ],
+              "classified_at": "2026-08-02T07:27:15.828Z"
             },
             {
               "run_id": "RUN-CONSOLE-DIGEST-CABINA-001",
@@ -784,7 +829,12 @@
               "summary": "One more view of the projector: one file with the state of the three projects, dated and with SHA, to detect obsolescence.",
               "full_description": "One more view of the projector: ONE file with the state of the three projects (HEAD+branch+dirty, counts by state, active runs, next step, no-claims), dated and with SHA to detect obsolescence. Small, derived, never edited by hand. The source itself downgrades it from prerequisite to optimization: with the sync of the repo it is no longer a prerequisite, it is context optimization (RM-AIW:148). Downgraded is not dead. Cross-cutting: it does not map to a single stage.",
               "status": "planned",
-              "depends_on": []
+              "depends_on": [],
+              "correctness_model": "SPECIFIED",
+              "work_type": "FUNCTIONAL",
+              "blast_radius": "ADJACENT",
+              "failure_surfaces": "SILENT",
+              "classified_at": "2026-08-02T07:27:15.861Z"
             },
             {
               "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-001",
@@ -793,7 +843,12 @@
               "summary": "Repair the five texts in this repo that describe it falsely, including the README that says it has no roadmap of its own.",
               "full_description": "FIVE TEXTS, all measured on disk with their line, all in this repository, none of them touched by the runs that made them false. This is not hygiene: two of the five live in the document that describes the system's topology to every session that opens, and one of them contradicts the file this run is written in. (1) context/README.md says of this repository \"Todavía sin roadmap propio: O4 vive hoy en el roadmap de AIW y migra aquí en el tramo 1\". This roadmap has 51 runs. (2) context/README.md carries the discarded-fork warning saying that \"la consola viva está en projects/cantu-studio\". Measured: this repository holds THREE console trees — the fork discarded by D-035 at docs/project-console/, the retired prototype at console/, and the LIVE one at project-console/, which is the one the launcher starts and the only one with a project registry. The warning names neither which of the three is the fork nor that the console rendering three projects now lives here. (3) project-console/README.md states that edit mode \"refuses honestly where no layout claims a roadmap (today: aiw, until O4.P6)\". Measured: that layout resolves and the edit button is enabled for aiw; the parenthesis describes no project. (4) project-console/README.md shows a project registry example listing TWO projects, while the real registry declares three, the third being aiw. (5) package.json describes the package as a \"verbatim fork of the JAME project console\", which D-035 already declared false of the bytes and which four later runs of modification make falser. WHAT THIS RUN DOES NOT DO: it does not touch any run's full_description, and it does not rewrite history. A stale premise inside a CLOSED run is corrected by APPENDING a dated note, never by rewriting the paragraph — which is the form three closed runs of this roadmap already use — and the seven dated premises reported by an earlier closeout stay as they are for exactly that reason.",
               "status": "planned",
-              "depends_on": []
+              "depends_on": [],
+              "correctness_model": "SPECIFIED",
+              "work_type": "COSMETIC",
+              "blast_radius": "LOCAL",
+              "failure_surfaces": "SILENT",
+              "classified_at": "2026-08-02T07:27:15.896Z"
             }
           ]
         },
@@ -808,7 +863,12 @@
               "summary": "Add depends_on_human_approved as an optional run-level list, so a consumer that must wait for a person is distinguishable from one that only needs the work to exist.",
               "full_description": "REQUESTED BY THE aiw THREAD after its own human roadmap audit, and the need is measured there: its kernel treats all twenty of its edges as identical, so it cannot tell an edge that waits on a person from one that does not. THE DISTINCTION, and it is NOT about who closed a run: depends_on is satisfied when the work of the target run EXISTS — the consumer can proceed. depends_on_human_approved is satisfied only once a person has reviewed the target — the consumer cannot start before that. The operator's criterion for choosing: if the target turns out to be wrong, does the consumer have to be redone? If yes, the edge waits on a person. THIS IS NOT closure_mode. closure_mode predicts whether closing a run will need a person; this list says whether a DIFFERENT run has to wait for that to happen. A single SEMI_ATTENDED run may have consumers that wait and consumers that do not, and today nothing distinguishes them. SHAPE: optional, absent by default, additive, following exactly the discipline by which lanes and the five classification fields entered — no existing roadmap becomes invalid, and depends_on is NOT touched. THE RENAME IS OUT OF SCOPE AND DELIBERATELY SO: the aiw thread considered renaming depends_on to depends_on_AI_approved and discarded it as a live-data migration across three canonicals; the AI/human difference is carried in the SCREEN LABEL, and the rename, if it ever happens, is its own later run with the three roadmaps at rest. THE HALF THIS RUN DOES NOT BUILD, DECLARED HERE SO IT IS NOT DISCOVERED LATE: this run adds the field, its invariants, its transport and its rendering. MAKING THE KERNEL OBEY IT IS aiw's WORK AND aiw's ALONE. The warning is not hypothetical and the aiw thread raised it against its own precedent: lanes were designed in this console, entered the schema, are validated by the engine and rendered by the console, six aiw runs declare them with two barriers — and no executor obeys them. This run's acceptance must state, in writing, which half is the kernel's, so a second field that nobody obeys is not what this delivers.",
               "status": "planned",
-              "depends_on": []
+              "depends_on": [],
+              "correctness_model": "SPECIFIED",
+              "work_type": "FUNCTIONAL",
+              "blast_radius": "SYSTEMIC",
+              "failure_surfaces": "SILENT",
+              "classified_at": "2026-08-02T07:27:15.838Z"
             },
             {
               "run_id": "RUN-CONSOLE-PROGRESS-NORMATIVE-001",
@@ -819,7 +879,16 @@
               "status": "planned",
               "depends_on": [
                 "RUN-CONSOLE-DEPENDS-ON-HUMAN-APPROVED-001"
-              ]
+              ],
+              "correctness_model": "JUDGED_DEFINES",
+              "work_type": "FOUNDATIONAL",
+              "blast_radius": "PROJECT_SHAPE",
+              "failure_surfaces": "SILENT",
+              "external_effects": [
+                "obliges_project:aiw",
+                "obliges_project:cantu-studio"
+              ],
+              "classified_at": "2026-08-02T07:27:15.845Z"
             },
             {
               "run_id": "RUN-CONSOLE-BATCHES-001",
@@ -831,7 +900,12 @@
               "depends_on": [
                 "RUN-CONSOLE-DEPENDS-ON-HUMAN-APPROVED-001",
                 "RUN-CONSOLE-PROGRESS-NORMATIVE-001"
-              ]
+              ],
+              "correctness_model": "SPECIFIED",
+              "work_type": "FUNCTIONAL",
+              "blast_radius": "SYSTEMIC",
+              "failure_surfaces": "SILENT",
+              "classified_at": "2026-08-02T07:27:15.853Z"
             }
           ]
         }

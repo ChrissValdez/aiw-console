@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-01T09:27:23.120Z",
+  "generated_at": "2026-08-02T08:35:21.627Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -18,11 +18,15 @@
     },
     {
       "path": "context/DECISIONES.md",
-      "mtime": "2026-08-01T03:44:45.252Z"
+      "mtime": "2026-08-02T08:30:39.184Z"
     },
     {
       "path": "context/MIGRATION-REPORT.md",
       "mtime": "2026-07-23T18:57:22.111Z"
+    },
+    {
+      "path": "context/PROCEDIMIENTO-DE-CLASIFICACION.md",
+      "mtime": "2026-08-02T07:49:24.089Z"
     },
     {
       "path": "context/README.md",
@@ -71,6 +75,10 @@
     {
       "path": "context/aiw-console/records/AUDIT-CONTENIDO-AIW.md",
       "mtime": "2026-07-28T08:58:30.214Z"
+    },
+    {
+      "path": "context/aiw-console/records/AUDITORIA-CORPUS-DOCUMENTAL-Y-LISTA-DE-DISPOSICION-CANTU.md",
+      "mtime": "2026-08-02T03:04:56.364Z"
     },
     {
       "path": "context/aiw-console/records/AUDITORIA-ROADMAP-AIW-CONSOLE.md",
@@ -181,6 +189,14 @@
       "mtime": "2026-07-28T21:57:46.829Z"
     },
     {
+      "path": "context/aiw-console/records/ESCRITURA-CLASIFICACION-DOCE-RUNS-AIW-CONSOLE-2.md",
+      "mtime": "2026-08-02T07:31:09.631Z"
+    },
+    {
+      "path": "context/aiw-console/records/ESCRITURA-CLASIFICACION-DOCE-RUNS-AIW-CONSOLE.md",
+      "mtime": "2026-08-02T03:27:14.588Z"
+    },
+    {
       "path": "context/aiw-console/records/ESCRITURA-CONSOLA-GLOBAL-O4-P12.md",
       "mtime": "2026-07-26T05:12:17.869Z"
     },
@@ -211,6 +227,10 @@
     {
       "path": "context/aiw-console/records/INSERCION-RUN-PROYECTOR-CASE-BANKS.md",
       "mtime": "2026-07-31T09:45:30.760Z"
+    },
+    {
+      "path": "context/aiw-console/records/INSERCION-TRES-RUNS-PIEZAS-COMPARTIDAS-CANTU.md",
+      "mtime": "2026-08-01T16:25:04.265Z"
     },
     {
       "path": "context/aiw-console/records/INVENTARIO-COLOR-Y-MATH-DE-COMPONENTES-WEB-CANTU.md",
@@ -261,6 +281,14 @@
       "mtime": "2026-08-01T07:49:36.505Z"
     },
     {
+      "path": "context/aiw-console/records/MEDICION-PILOTO-CLASIFICACION-AIW-CONSOLE.md",
+      "mtime": "2026-08-02T03:15:18.824Z"
+    },
+    {
+      "path": "context/aiw-console/records/MEDICION-PREVIA-A-LA-CLASIFICACION-DE-LOS-21-PLANNED-DE-AIW.md",
+      "mtime": "2026-08-02T03:20:27.323Z"
+    },
+    {
       "path": "context/aiw-console/records/MEDICION-PROYECTOR.md",
       "mtime": "2026-07-24T02:29:28.400Z"
     },
@@ -299,6 +327,10 @@
     {
       "path": "context/aiw-console/records/MODELO-CANONICO-DOCUMENTACION-CANTU.md",
       "mtime": "2026-07-28T08:11:47.307Z"
+    },
+    {
+      "path": "context/aiw-console/records/PALETA-DE-AUTOR-COMPILADOR-Y-MOTOR-CANTU.md",
+      "mtime": "2026-08-02T03:12:44.122Z"
     },
     {
       "path": "context/aiw-console/records/PARTICION-IMPLEMENTACION-Y-DOCUMENTACION-CANTU.md",
@@ -355,6 +387,10 @@
     {
       "path": "context/aiw-console/records/REESTRUCTURACION-OBJETIVOS-Y-FASES.md",
       "mtime": "2026-08-01T09:23:11.386Z"
+    },
+    {
+      "path": "context/aiw-console/records/REFRESCO-DOD-REVALIDACION-CANTU.md",
+      "mtime": "2026-08-01T22:40:47.765Z"
     },
     {
       "path": "context/aiw-console/records/RELEVO-CANTU-AL-CIERRE-2026-08-01.md",
@@ -446,7 +482,7 @@
     },
     {
       "path": "context/handoffs/aiw-console.md",
-      "mtime": "2026-08-01T05:12:01.980Z"
+      "mtime": "2026-08-01T09:38:16.512Z"
     },
     {
       "path": "context/handoffs/aiw.md",
@@ -543,7 +579,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-08-01T03:44:45.252Z"
+      "freshness": "2026-08-02T08:30:39.184Z"
     },
     {
       "title": "MIGRATION-REPORT — Centralización del contexto de gobernanza en aiw-console",
@@ -552,6 +588,14 @@
       "default_visible": true,
       "ia_bucket": "context",
       "freshness": "2026-07-23T18:57:22.111Z"
+    },
+    {
+      "title": "Procedimiento de clasificación de runs",
+      "path": "context/PROCEDIMIENTO-DE-CLASIFICACION.md",
+      "nav_tier": "primary",
+      "default_visible": true,
+      "ia_bucket": "context",
+      "freshness": "2026-08-02T07:49:24.089Z"
     },
     {
       "title": "context/ — Contexto de gobernanza de la cabina",
@@ -648,6 +692,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-28T08:58:30.214Z"
+    },
+    {
+      "title": "AUDITORÍA DEL CORPUS DOCUMENTAL DE CANTU Y LISTA DE DISPOSICIÓN",
+      "path": "context/aiw-console/records/AUDITORIA-CORPUS-DOCUMENTAL-Y-LISTA-DE-DISPOSICION-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-02T03:04:56.364Z"
     },
     {
       "title": "AUDITORÍA DEL ROADMAP DE AIW-CONSOLE",
@@ -866,6 +918,22 @@
       "freshness": "2026-07-28T21:57:46.829Z"
     },
     {
+      "title": "Escritura de la clasificación de los doce runs vivos — aiw-console (2.º intento, EJECUTADO)",
+      "path": "context/aiw-console/records/ESCRITURA-CLASIFICACION-DOCE-RUNS-AIW-CONSOLE-2.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-02T07:31:09.631Z"
+    },
+    {
+      "title": "Escritura de la clasificación de los doce runs vivos — aiw-console",
+      "path": "context/aiw-console/records/ESCRITURA-CLASIFICACION-DOCE-RUNS-AIW-CONSOLE.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-02T03:27:14.588Z"
+    },
+    {
       "title": "ESCRITURA — la consola global gana su ruta de escritura (`O4.P12`)",
       "path": "context/aiw-console/records/ESCRITURA-CONSOLA-GLOBAL-O4-P12.md",
       "nav_tier": "evidence",
@@ -928,6 +996,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-31T09:45:30.760Z"
+    },
+    {
+      "title": "Inserción de tres runs de piezas compartidas en el roadmap canónico de Cantu",
+      "path": "context/aiw-console/records/INSERCION-TRES-RUNS-PIEZAS-COMPARTIDAS-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T16:25:04.265Z"
     },
     {
       "title": "Inventario de color y math de los componentes Web (Cantu Studio)",
@@ -1026,6 +1102,22 @@
       "freshness": "2026-08-01T07:49:36.505Z"
     },
     {
+      "title": "Medición para el piloto de clasificación — aiw-console",
+      "path": "context/aiw-console/records/MEDICION-PILOTO-CLASIFICACION-AIW-CONSOLE.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-02T03:15:18.824Z"
+    },
+    {
+      "title": "MEDICIÓN PREVIA A LA CLASIFICACIÓN — los 21 `planned` de `aiw`",
+      "path": "context/aiw-console/records/MEDICION-PREVIA-A-LA-CLASIFICACION-DE-LOS-21-PLANNED-DE-AIW.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-02T03:20:27.323Z"
+    },
+    {
       "title": "MEDICIÓN DEL EMISOR — el proyector de AIW",
       "path": "context/aiw-console/records/MEDICION-PROYECTOR.md",
       "nav_tier": "evidence",
@@ -1104,6 +1196,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-28T08:11:47.307Z"
+    },
+    {
+      "title": "Paleta de autor a través del compilador y el motor Web — ejecución del run 19",
+      "path": "context/aiw-console/records/PALETA-DE-AUTOR-COMPILADOR-Y-MOTOR-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-02T03:12:44.122Z"
     },
     {
       "title": "PARTICIÓN DE LOS RUNS QUE EMPAQUETABAN IMPLEMENTACIÓN Y DOCUMENTACIÓN",
@@ -1216,6 +1316,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-01T09:23:11.386Z"
+    },
+    {
+      "title": "Refresco de la Definition of Done de revalidación de componentes",
+      "path": "context/aiw-console/records/REFRESCO-DOD-REVALIDACION-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-01T22:40:47.765Z"
     },
     {
       "title": "Relevo de `cantu-studio` al cierre del 2026-08-01",
@@ -1399,7 +1507,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-08-01T05:12:01.980Z"
+      "freshness": "2026-08-01T09:38:16.512Z"
     },
     {
       "title": "Handoff — hilo `aiw`",

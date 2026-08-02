@@ -2425,3 +2425,53 @@ irreversibilidad de arriba. **Los tres huecos declarados NO caducan esta entrada
 cada uno se cierra con una entrada nueva, y cerrarlos es precisamente lo que ésta
 prevé.** Las cifras del piloto son mediciones fechadas y se corrigen, si acaso, hacia
 adelante.
+
+## D-061 — 2026-08-02 — La ampliación del alcance de un run abierto se autoriza por veredicto de QA humana, y sólo con las cuatro condiciones
+El alcance de un run abierto no lo amplía ni el taller ni la cabina. Sí lo amplía
+un veredicto de QA humana del operador, que es la única entrada capaz de descubrir
+un defecto que ninguna medición previa vio. La Definition of Done de revalidación
+de Cantu ya lo dice para la reparación: se autoriza por veredicto, no por
+iniciativa. Cerrar un run a medias para abrir otro que rehace el mismo trabajo y
+obliga a re-verificar la misma superficie dos veces es desperdicio, no disciplina.
+
+La ampliación procede cuando se cumplen las cuatro: (1) la pide el operador por
+escrito como veredicto de QA — nunca la propone la cabina ni la toma el taller;
+(2) cae sobre la superficie que la QA ejercitó, o sobre la pieza cuya limitación el
+propio run acaba de levantar — un deseo adyacente que la QA no tocó es un run
+nuevo; (3) no cambia la identidad del run: si obligara a cambiar su título, su
+objetivo o su fase, es otro run; (4) el texto del run se enmienda en el MISMO
+encargo, para que su descripción cubra lo que el run realmente hace. Sin enmienda,
+el roadmap afirma algo falso, que es el modo de fallo que esta política existe para
+no comprar.
+
+El record lo declara siempre: alcance original, qué reveló la QA, qué se añadió y
+por qué no era un run nuevo. La QA posterior cubre el alcance ampliado entero, no
+sólo lo añadido. Corolario: una ampliación que crece dos veces en el mismo run es
+señal de que el encuadre estaba mal; la segunda se para y se devuelve al operador.
+
+Procedencia: se decide en el hilo de `cantu-studio`, en el run `queue_order` 19 de
+su roadmap, cuya QA humana reveló que el selector de color personalizado estaba
+acotado a las dos colocaciones que el compilador resolvía — limitación que ese
+mismo run acababa de levantar. La política es transversal a los tres proyectos y se
+ejecuta en cada hilo por separado; esta entrada la registra y no la ejecuta en
+ningún otro repo.
+
+Referencias: `projects/cantu-studio/docs/reference/REFERENCE-COMPONENT-REVALIDATION-DEFINITION-OF-DONE.md`,
+la Definition of Done que el primer párrafo cita;
+`context/aiw-console/records/AMPLIACION-SELECTOR-COLOR-PERSONALIZADO-CANTU.md`, el
+record del caso que la origina, con el veredicto `CHANGES_REQUIRED` y la enmienda; el
+run es `RUN-CANTU-AUTHOR-PALETTE-COMPILER-ENGINE-001`, *Carry the author palette
+through the compiler and the Web engine*, `queue_order` 19 de
+`projects/cantu-studio/.aiw/roadmap/roadmap.json`. [[D-048]] es el precedente de que
+el `full_description` de un run se enmienda en el mismo encargo que cambia su
+disposición, y de que el `summary` y el veredicto se conservan intactos; [[D-058]]
+mide el modo de fallo que la cuarta condición evita — una afirmación que gana
+autoridad cada vez que se copia sin estar en disco.
+Criterio de borrado: la sustituye una decisión que cambie quién puede ampliar el
+alcance de un run abierto, que altere cualquiera de las cuatro condiciones o el
+corolario de la segunda ampliación, o que traslade la obligación de enmendar el
+texto del run fuera del encargo que amplía. También la caduca que la política se
+absorba en un documento normativo —`CLASIFICACION-DE-RUNS.md` o
+`PROCEDIMIENTO-DE-CLASIFICACION.md`—; mientras eso no ocurra, esta entrada es su
+única sede. **Que la política se ejecute en otros hilos NO la caduca: es
+precisamente lo que prevé.**

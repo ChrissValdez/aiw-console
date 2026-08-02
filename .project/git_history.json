@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-02T08:35:21.627Z",
+  "generated_at": "2026-08-02T19:30:11.025Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-02T07:31:13.248Z"
+      "mtime": "2026-08-02T19:28:04.848Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,14 +14,44 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "57e372b0801d07565cb9ff5dfbb484b264d0a55a",
+  "head": "e7b6181cdd08105e4a3f17abf8260c97b3f9d38e",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 143,
+  "commit_total": 146,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "e7b6181",
+      "full_sha": "e7b6181cdd08105e4a3f17abf8260c97b3f9d38e",
+      "date": "2026-08-02T13:28:04-06:00",
+      "parents": "da06ac7",
+      "subject": "record: feat(cantu): carry the author palette roles through the compiler and the Web engine; custom colour picker across every component colour selector; open both draft schemas to hex; 193 tests green; re-QA packet written; #19 pending re-QA",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "da06ac7",
+      "full_sha": "da06ac7529f31ce3c3b7c9039a7d794e446ee62d",
+      "date": "2026-08-02T02:54:08-06:00",
+      "parents": "9edf44e",
+      "subject": "decision: D-061 ampliacion de alcance por veredicto humano de QA; y medicion que para el bloque B del run 19 de cantu (los roles derivados no llegan al render)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "9edf44e",
+      "full_sha": "9edf44ee0681bf0accb11e2583ad4cada3ac63c3",
+      "date": "2026-08-02T02:35:35-06:00",
+      "parents": "57e372b",
+      "subject": "roadmap: cierra el piloto de clasificacion - los 12 runs vivos clasificados y escritos por el motor, reparto 6 CRITICAL/3 MAJOR/3 MODERATE/0 MINOR y 4 ATTENDED/6 SEMI_ATTENDED/2 UNATTENDED",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "57e372b",

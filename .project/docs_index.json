@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-02T08:35:21.627Z",
+  "generated_at": "2026-08-02T19:30:11.025Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -18,7 +18,7 @@
     },
     {
       "path": "context/DECISIONES.md",
-      "mtime": "2026-08-02T08:30:39.184Z"
+      "mtime": "2026-08-02T08:37:46.262Z"
     },
     {
       "path": "context/MIGRATION-REPORT.md",
@@ -63,6 +63,10 @@
     {
       "path": "context/aiw-console/records/AMPLIACION-ALLOWLIST-MATH-Y-EDITOR-FORMULAS-CANTU.md",
       "mtime": "2026-07-29T06:55:01.884Z"
+    },
+    {
+      "path": "context/aiw-console/records/AMPLIACION-SELECTOR-COLOR-PERSONALIZADO-CANTU.md",
+      "mtime": "2026-08-02T08:49:41.689Z"
     },
     {
       "path": "context/aiw-console/records/ANCHO-DE-SUBVISTAS-CAUSA-RAIZ-FLEX.md",
@@ -147,6 +151,10 @@
     {
       "path": "context/aiw-console/records/CORRECCIONES-QA-CARRILES-Y-REGLA-DE-IDIOMA.md",
       "mtime": "2026-07-27T22:39:04.869Z"
+    },
+    {
+      "path": "context/aiw-console/records/CUATRO-ROLES-AL-RENDER-Y-SELECTOR-PERSONALIZADO-CANTU.md",
+      "mtime": "2026-08-02T09:42:11.620Z"
     },
     {
       "path": "context/aiw-console/records/DECISION-ROADMAP-AIW.md",
@@ -579,7 +587,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-08-02T08:30:39.184Z"
+      "freshness": "2026-08-02T08:37:46.262Z"
     },
     {
       "title": "MIGRATION-REPORT — Centralización del contexto de gobernanza en aiw-console",
@@ -668,6 +676,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-29T06:55:01.884Z"
+    },
+    {
+      "title": "Ampliación del selector de color personalizado — `cantu-studio`, `queue_order` 19",
+      "path": "context/aiw-console/records/AMPLIACION-SELECTOR-COLOR-PERSONALIZADO-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-02T08:49:41.689Z"
     },
     {
       "title": "ANCHO DE SUBVISTAS — la causa raíz era el margen `auto` sobre un ítem flex",
@@ -836,6 +852,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-07-27T22:39:04.869Z"
+    },
+    {
+      "title": "Cuatro roles al render y selector personalizado — `cantu-studio`, `queue_order` 19",
+      "path": "context/aiw-console/records/CUATRO-ROLES-AL-RENDER-Y-SELECTOR-PERSONALIZADO-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-02T09:42:11.620Z"
     },
     {
       "title": "DECISIÓN — LAS CUATRO FRONTERAS DEL ROADMAP DE AIW",

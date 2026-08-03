@@ -283,8 +283,16 @@ test("the op vocabulary is the transplanted one plus the three lane ops (D-051) 
   // without an op the only way to fix one would be hand-editing the canonical. It sits
   // immediately after declare-lanes because it is the same kind of act and the only other one
   // of its kind: a ROOT-level project configuration, replaced whole, deliberately NOT batchable.
+  //
+  // [#45] REGISTERED, not absorbed: set-human-deps, the write side of
+  // `depends_on_human_approved` — the SECOND dependency list, whose edges wait for a PERSON to
+  // review the target rather than merely for the target's work to exist. It arrives for the same
+  // reason every op above it did: the key validates, but without an op the only way to fill one
+  // would be hand-editing the canonical. It sits IMMEDIATELY AFTER set-deps because it is the
+  // same kind of act on the sibling list — and it is a SEPARATE op, not a widening of set-deps,
+  // because `depends_on` was explicitly out of scope for the run that added the field.
   assert.deepEqual(
     KNOWN_OPS,
-    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "declare-lanes", "declare-care-budget", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
+    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-human-deps", "set-status", "set-lane", "set-barrier", "set-classification", "declare-lanes", "declare-care-budget", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
   );
 });

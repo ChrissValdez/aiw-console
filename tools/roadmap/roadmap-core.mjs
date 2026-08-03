@@ -87,7 +87,26 @@ export const RUN_REQUIRED_FIELDS = ["run_id", "queue_order", "title", "summary",
 //
 // They sit after the planning fields and before the closeout fields: classifying a run is
 // a statement about the work, not about its outcome.
+// [#45] `depends_on_human_approved` is a SECOND dependency list, and it is first in this
+// array so it serializes immediately after `depends_on`: the two lists are read together or
+// not at all. THE DISTINCTION IS THE SATISFACTION CONDITION, and it is not about who closed
+// a run: `depends_on` is satisfied when the target's work EXISTS; this list is satisfied only
+// once a PERSON has reviewed the target. The operator's criterion: if the target turns out to
+// be wrong, does the consumer have to be redone? If yes, the edge waits on a person.
+//
+// IT IS NOT `closure_mode`. `closure_mode` predicts whether closing a run will need a person;
+// this list says whether a DIFFERENT run has to wait for that to happen. One SEMI_ATTENDED run
+// may have consumers that wait and consumers that do not, and nothing else distinguishes them.
+//
+// OPTIONAL, ABSENT BY DEFAULT, ADDITIVE -- membership in THIS array and not in
+// RUN_REQUIRED_FIELDS, exactly as `lane` and the classification fields declare it. No write of
+// this engine ever creates the key on a run that did not carry it, and `depends_on` is NOT
+// touched: neither its shape, nor its invariants, nor its data. THE RENAME of `depends_on` to
+// something that names the AI side was considered by the aiw thread and DISCARDED as a
+// live-data migration across three canonicals; the AI/human difference is carried in the
+// SCREEN LABEL, not in a second key name here.
 export const RUN_OPTIONAL_FIELDS = [
+  "depends_on_human_approved",
   "lane",
   "barrier",
   "correctness_model",
@@ -530,6 +549,53 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
 
   // Dependencies: array, exists (no orphan), strict precedence, no self, no dup.
   const runsById = new Map(allRuns.map((run) => [run.run_id, run]));
+
+  // [#45] The SECOND dependency list, checked with the SAME edge discipline as `depends_on`
+  // below and by a SEPARATE walk: `depends_on` is not touched, not read differently and not
+  // widened by this block. ABSENT IS ALWAYS LEGAL -- the whole block is gated on `in`, so
+  // every run in every existing roadmap raises nothing at all.
+  //
+  // A PRESENT key is held to four rules, and the first of them is the one this run exists to
+  // enforce: AN ENTRY MUST NAME A RUN THAT EXISTS. A destination that no registered project
+  // declares is a DANGLING edge and FAILS validation -- an edge that waits on a person to
+  // review something that does not exist can never be satisfied, and silently ignoring it
+  // would be the same defect as a dangling `depends_on`. The §10.d escape hatch is the same
+  // one `depends_on` gets and for the same reason: a target declared by ANOTHER registered
+  // project exists, it merely does not exist HERE.
+  //
+  // Strict precedence is required for the same reason `depends_on` requires it: a consumer
+  // cannot wait for the review of work that is scheduled after it. THEOREM, recorded with
+  // this change: because both lists point strictly backward by queue_order, an edge of this
+  // list can close no cycle that the `depends_on` walk below would have to catch, and can
+  // create no barrier deadlock the barrier check below would have to catch. Those two walks
+  // are therefore deliberately left reading `depends_on` alone -- not by omission.
+  for (const run of allRuns) {
+    if (!("depends_on_human_approved" in run)) continue;
+    const runLabel = `run ${run.run_id}`;
+    if (!Array.isArray(run.depends_on_human_approved)) {
+      errors.push(`${runLabel} depends_on_human_approved must be an array when present; a run with no human-approval edges omits the key`);
+      continue;
+    }
+    const seenHumanDeps = new Set();
+    for (const depId of run.depends_on_human_approved) {
+      if (typeof depId !== "string" || !depId) {
+        errors.push(`${runLabel} depends_on_human_approved must contain only non-empty run ids; found ${JSON.stringify(depId)}`);
+        continue;
+      }
+      if (depId === run.run_id) errors.push(`${runLabel} must not wait on its own human approval`);
+      if (seenHumanDeps.has(depId)) errors.push(`${runLabel} lists duplicate human-approval dependency ${depId}`);
+      seenHumanDeps.add(depId);
+      const dep = runsById.get(depId);
+      if (!dep) {
+        if (!(externalRunIds && externalRunIds.has(depId))) {
+          errors.push(`${runLabel} waits on human approval of unknown run ${depId} (dangling dependency: declared by no registered project)`);
+        }
+      } else if (!(dep.queue_order < run.queue_order)) {
+        errors.push(`${runLabel} (queue_order ${run.queue_order}) must wait on human approval only of earlier runs; ${depId} has queue_order ${dep.queue_order}`);
+      }
+    }
+  }
+
   for (const run of allRuns) {
     if (!Array.isArray(run.depends_on)) {
       errors.push(`run ${run.run_id} depends_on must be an array`);
@@ -869,10 +935,20 @@ export function removeRun(obj, opts) {
   const dependents = flattenRuns(obj)
     .map((e) => e.run)
     .filter((r) => Array.isArray(r.depends_on) && r.depends_on.includes(run));
+  // [#45] The SECOND list's dependents, gathered SEPARATELY so the `depends_on` set above is
+  // computed exactly as it always was. A run can appear in both, and the two sets are unioned
+  // only for the refusal message and for the count the operator reads. WHY THIS BRANCH EXISTS
+  // AT ALL: without it, removing a run some other run waits on for human approval leaves a
+  // dangling entry that `checkInvariants` then refuses one stage later -- a removal that can
+  // only fail, with the reason arriving from a different layer than the gesture.
+  const humanDependents = flattenRuns(obj)
+    .map((e) => e.run)
+    .filter((r) => Array.isArray(r.depends_on_human_approved) && r.depends_on_human_approved.includes(run));
+  const allDependentIds = [...new Set([...dependents, ...humanDependents].map((r) => r.run_id))];
 
-  if (dependents.length > 0 && reassignDependentsTo == null && !dropDependentEdges) {
+  if (allDependentIds.length > 0 && reassignDependentsTo == null && !dropDependentEdges) {
     errors.push(
-      `remove: ${dependents.length} run(s) depend on ${run} (${dependents.map((r) => r.run_id).join(", ")}). ` +
+      `remove: ${allDependentIds.length} run(s) depend on ${run} (${allDependentIds.join(", ")}). ` +
       "Refusing. Pass --reassign-dependents-to RUN-Y or --drop-dependent-edges."
     );
     return { errors, warnings };
@@ -888,9 +964,24 @@ export function removeRun(obj, opts) {
         .map((id) => (id === run ? reassignDependentsTo : id))
         .filter((id, i, arr) => arr.indexOf(id) === i && id !== dep.run_id);
     }
+    // [#45] The same rewrite on the second list. An edge that survives as an EMPTY list would
+    // be a stored `[]` where absence is the default, so the key is deleted whole -- the same
+    // one-shape-per-meaning rule set-classification applies to `external_effects`.
+    for (const dep of humanDependents) {
+      const rewritten = dep.depends_on_human_approved
+        .map((id) => (id === run ? reassignDependentsTo : id))
+        .filter((id, i, arr) => arr.indexOf(id) === i && id !== dep.run_id);
+      if (rewritten.length) dep.depends_on_human_approved = rewritten;
+      else delete dep.depends_on_human_approved;
+    }
   } else if (dropDependentEdges) {
     for (const dep of dependents) {
       dep.depends_on = dep.depends_on.filter((id) => id !== run);
+    }
+    for (const dep of humanDependents) {
+      const kept = dep.depends_on_human_approved.filter((id) => id !== run);
+      if (kept.length) dep.depends_on_human_approved = kept;
+      else delete dep.depends_on_human_approved;
     }
   }
 
@@ -900,7 +991,7 @@ export function removeRun(obj, opts) {
   const reduced = globalOrdered(obj).filter((r) => r.run_id !== run);
   applyOrder(obj, reduced);
 
-  return { errors, warnings, removedRun: run, reassignedDependents: dependents.map((r) => r.run_id) };
+  return { errors, warnings, removedRun: run, reassignedDependents: allDependentIds };
 }
 
 export function swapRuns(obj, opts) {
@@ -1021,6 +1112,78 @@ export function setDeps(obj, opts) {
 
   const before = current;
   entry.run.depends_on = deduped;
+  return { errors, warnings, run, before, after: deduped };
+}
+
+// [#45] The WRITE side of the second dependency list. A SEPARATE function from `setDeps` on
+// purpose: `depends_on` is out of scope for this run, so its mutation is not widened, not
+// parameterized by field name and not read here. The two ops are batchable together, which is
+// how an operator who is really saying "this edge waits on a person" edits both at once.
+//
+// SHAPE, following set-lane / set-barrier / set-classification: the list is replaced WHOLE, and
+// an EMPTY list is stored as ABSENCE rather than as `[]` -- one shape on disk for one meaning,
+// so "never had human-approval edges" and "had them and they were cleared" read back identically.
+//
+// WHAT IT REFUSES is what `checkInvariants` would refuse one stage later, named at the gesture
+// instead of at the guard (the set-lane rule): a self-edge, and a destination that exists
+// nowhere. It does NOT re-check strict precedence -- `checkInvariants` owns that rule and runs
+// on the mutated object with the file still untouched, and duplicating it here would be the
+// drift debt the comments above warn about.
+export function setHumanApprovedDeps(obj, opts) {
+  const errors = [];
+  const warnings = [];
+  const { run, dependsOnHumanApproved, addDep, removeDep, externalRunIds = null } = opts;
+
+  if (!run) errors.push("set-human-deps requires --run");
+  const modes = [dependsOnHumanApproved != null, addDep != null, removeDep != null].filter(Boolean).length;
+  if (modes !== 1) errors.push("set-human-deps requires exactly one of --depends-on-human-approved, --add-dep, --remove-dep");
+  const entry = run ? findRunEntry(obj, run) : null;
+  if (run && !entry) errors.push(`set-human-deps: run ${run} not found`);
+  if (errors.length) return { errors, warnings };
+
+  const current = Array.isArray(entry.run.depends_on_human_approved) ? [...entry.run.depends_on_human_approved] : [];
+  let next;
+  if (dependsOnHumanApproved != null) {
+    next = [...dependsOnHumanApproved];
+  } else if (addDep != null) {
+    next = current.includes(addDep) ? current : [...current, addDep];
+  } else {
+    if (!current.includes(removeDep)) warnings.push(`set-human-deps --remove-dep: ${run} did not wait on human approval of ${removeDep}`);
+    next = current.filter((id) => id !== removeDep);
+  }
+
+  const seen = new Set();
+  const deduped = [];
+  for (const id of next) {
+    if (id === run) {
+      errors.push(`set-human-deps: ${run} must not wait on its own human approval`);
+      continue;
+    }
+    if (typeof id !== "string" || !id) {
+      errors.push(`set-human-deps: every entry must be a non-empty run id; got ${JSON.stringify(id)}`);
+      continue;
+    }
+    if (!findRunEntry(obj, id)) {
+      if (externalRunIds && externalRunIds.has(id)) {
+        warnings.push(`set-human-deps: ${id} resolves outside this roadmap (external, declared by another registered project)`);
+      } else {
+        errors.push(`set-human-deps: ${id} is not a known run in this roadmap or any registered project`);
+      }
+    }
+    if (!seen.has(id)) {
+      seen.add(id);
+      deduped.push(id);
+    }
+  }
+  if (errors.length) return { errors, warnings };
+
+  const before = current;
+  if (deduped.length) {
+    entry.run.depends_on_human_approved = deduped;
+    normalizeRunKeyOrder(entry.run);
+  } else {
+    delete entry.run.depends_on_human_approved;
+  }
   return { errors, warnings, run, before, after: deduped };
 }
 

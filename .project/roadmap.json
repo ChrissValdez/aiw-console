@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-02T19:30:11.025Z",
+  "generated_at": "2026-08-03T05:47:33.974Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-02T08:35:21.622Z"
+      "mtime": "2026-08-03T05:47:33.971Z"
     }
   ],
   "model": "roadmap_tree_v1",
@@ -862,7 +862,7 @@
               "title": "A second dependency list for edges that wait on a person",
               "summary": "Add depends_on_human_approved as an optional run-level list, so a consumer that must wait for a person is distinguishable from one that only needs the work to exist.",
               "full_description": "REQUESTED BY THE aiw THREAD after its own human roadmap audit, and the need is measured there: its kernel treats all twenty of its edges as identical, so it cannot tell an edge that waits on a person from one that does not. THE DISTINCTION, and it is NOT about who closed a run: depends_on is satisfied when the work of the target run EXISTS — the consumer can proceed. depends_on_human_approved is satisfied only once a person has reviewed the target — the consumer cannot start before that. The operator's criterion for choosing: if the target turns out to be wrong, does the consumer have to be redone? If yes, the edge waits on a person. THIS IS NOT closure_mode. closure_mode predicts whether closing a run will need a person; this list says whether a DIFFERENT run has to wait for that to happen. A single SEMI_ATTENDED run may have consumers that wait and consumers that do not, and today nothing distinguishes them. SHAPE: optional, absent by default, additive, following exactly the discipline by which lanes and the five classification fields entered — no existing roadmap becomes invalid, and depends_on is NOT touched. THE RENAME IS OUT OF SCOPE AND DELIBERATELY SO: the aiw thread considered renaming depends_on to depends_on_AI_approved and discarded it as a live-data migration across three canonicals; the AI/human difference is carried in the SCREEN LABEL, and the rename, if it ever happens, is its own later run with the three roadmaps at rest. THE HALF THIS RUN DOES NOT BUILD, DECLARED HERE SO IT IS NOT DISCOVERED LATE: this run adds the field, its invariants, its transport and its rendering. MAKING THE KERNEL OBEY IT IS aiw's WORK AND aiw's ALONE. The warning is not hypothetical and the aiw thread raised it against its own precedent: lanes were designed in this console, entered the schema, are validated by the engine and rendered by the console, six aiw runs declare them with two barriers — and no executor obeys them. This run's acceptance must state, in writing, which half is the kernel's, so a second field that nobody obeys is not what this delivers.",
-              "status": "planned",
+              "status": "completed",
               "depends_on": [],
               "correctness_model": "SPECIFIED",
               "work_type": "FUNCTIONAL",

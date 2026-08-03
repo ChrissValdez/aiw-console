@@ -4525,6 +4525,51 @@ function v3DetailCell(label, valueHtml, cellClass) {
 //     printing the bottom of the scale would be inventing the answer the operator has not given;
 //   - a run classified only in part shows what it carries and says which derived value is still
 //     absent FOR WANT OF WHICH FIELD, so the gap is actionable instead of mysterious.
+// [#45] THE SECOND DEPENDENCY LIST, on screen. Rendered ONLY for a run that carries the key:
+// a run without it shows exactly the surface it showed before, with no empty section added.
+//
+// THE SCREEN LABEL IS WHERE THE AI/HUMAN DIFFERENCE LIVES. The aiw thread considered renaming
+// `depends_on` to name the AI side and discarded it as a live-data migration across three
+// canonicals, so the distinction is carried HERE, in words, and the ordinary Dependencies
+// section above is left exactly as it was.
+//
+// WHAT THIS SURFACE MUST NOT CLAIM: that an edge is satisfied. Satisfaction of a human-approval
+// edge means A PERSON HAS REVIEWED THE TARGET, and nothing in this console — or anywhere in the
+// schema this run adds — stores that fact. So each row reports the ONE thing that is known, the
+// target's own status, and says in words what is still owed. A green "satisfied" tick here would
+// be an invention, and it is precisely the invention that makes an unobeyed field dangerous.
+function v3HumanApprovalSection(run, model) {
+  const edges = Array.isArray(run.depends_on_human_approved) ? run.depends_on_human_approved : [];
+  if (!edges.length) return "";
+  const rows = edges.map((dependencyId) => {
+    const dependency = model.runsById.get(dependencyId);
+    if (!dependency) {
+      // Same shape the Dependencies section uses for an id it cannot resolve, so an
+      // unresolved edge reads identically in both lists and needs no style of its own.
+      return `<div class="v3-dependency-row"><span class="mono">${escapeHtml(dependencyId)}</span>${badge("unknown", "red")}</div>`;
+    }
+    return `
+      <button class="v3-dependency-row" type="button" data-v3-run="${escapeHtml(dependency.run_id)}">
+        <span class="v3-dep-order">#${dependency.queue_order}</span>
+        <span class="v3-dep-title">${escapeHtml(dependency.title)}</span>
+        <span class="v3-dep-state is-waiting"><span class="v3-dep-dot" aria-hidden="true"></span>${escapeHtml(dependency.status === "completed" ? "work done · awaiting a person's review" : "waiting · " + dependency.status)}</span>
+      </button>
+    `;
+  }).join("");
+  return `
+    <div class="drawer-section">
+      <details class="v3-section-details" open>
+        <summary><span class="v3-caret">${v3Chevron(11)}</span>Waits on a person <span class="v3-section-count">${edges.length}</span></summary>
+        <div class="v3-section-body">
+          <div class="v3-edit-note">This run cannot START until a PERSON has reviewed the run(s) below. That is a stronger wait than the Dependencies section above, which only needs the work to exist. The criterion: if the target turns out to be wrong, this run has to be redone.</div>
+          ${rows}
+          <div class="v3-empty-note">No approval is recorded anywhere: this console shows the edge and the target's status, and no executor enforces the wait yet.</div>
+        </div>
+      </details>
+    </div>
+  `;
+}
+
 function v3ClassificationSection(run) {
   const stored = v3StoredClassification(run);
   const measured = stored.filter((field) => field !== "classified_at");
@@ -4761,6 +4806,7 @@ function v3OpenRunDetail(runId, mode) {
         </div>
       </details>
     </div>
+    ${v3HumanApprovalSection(run, model)}
     ${v3ClassificationSection(run)}
     ${v3ProgressTimeline(run)}
   `;
@@ -5672,6 +5718,10 @@ function v3RenderRunEditor(run, context, model) {
   const total = model.allRuns.length;
   const depCandidates = model.allRuns.filter((r) => r.queue_order < run.queue_order);
   const currentDeps = Array.isArray(run.depends_on) ? run.depends_on : [];
+  // [#45] The second list, read the same way and kept a SEPARATE variable: the block below
+  // never writes through `currentDeps`, so `depends_on` cannot be touched from this editor
+  // by the new control.
+  const currentHumanDeps = Array.isArray(run.depends_on_human_approved) ? run.depends_on_human_approved : [];
   const swapCandidates = model.allRuns.filter((r) => r.run_id !== run.run_id);
   // Progress retirement (clear-progress) is offered ONLY where it can do work: a run that
   // actually carries a record and is not yet terminal. A terminal run's all-done progress is
@@ -5708,6 +5758,13 @@ function v3RenderRunEditor(run, context, model) {
         <div class="v3-edit-block-title">Dependencies</div>
         <div class="v3-edit-note">Only earlier runs (lower position) are eligible. The core refuses the rest.</div>
         ${v3RenderDepPicker("deps", "multi", depCandidates, currentDeps, model)}
+      </div>
+
+      <div class="v3-edit-block" data-v3edit-op="set-human-deps">
+        <div class="v3-edit-block-title">Waits on a person</div>
+        <div class="v3-edit-note">A SECOND, stronger list, and it does not replace the one above. Put a run here when this run cannot start until a PERSON has reviewed that run — the test is: if the target turns out to be wrong, does this run have to be redone? The list above only needs the target's work to exist.</div>
+        <div class="v3-edit-note">Same eligibility rule: only earlier runs. Emptying the list removes the field entirely, exactly like a run that never had one. Nothing enforces the wait yet — no executor obeys this field.</div>
+        ${v3RenderDepPicker("humandeps", "multi", depCandidates, currentHumanDeps, model)}
       </div>
 ${v3RenderLaneBlock(run, model)}${v3RenderBarrierBlock(run, model)}${v3RenderClassificationBlock(run, model)}
       <div class="v3-edit-block" data-v3edit-op="set-status">
@@ -6260,7 +6317,7 @@ function v3EditBeforeNode() {
   return null;
 }
 
-const V3_BATCHABLE_OPS = ["set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "clear-progress", "move", "move-objective", "set-objective-archived"];
+const V3_BATCHABLE_OPS = ["set-text", "set-deps", "set-human-deps", "set-status", "set-lane", "set-barrier", "set-classification", "clear-progress", "move", "move-objective", "set-objective-archived"];
 
 // The core applies batch sub-ops IN ARRAY ORDER and aborts on the first that errors. One pair
 // has a hard ordering requirement: clear-progress MUST precede set-status. set-status refuses to
@@ -6320,6 +6377,13 @@ function v3BatchOpChanged(op, args, beforeNode) {
   if (op === "set-deps") {
     const before = Array.isArray(beforeNode.depends_on) ? beforeNode.depends_on : [];
     const after = Array.isArray(args.dependsOn) ? args.dependsOn : [];
+    return before.length !== after.length || before.some((id, i) => id !== after[i]);
+  }
+  if (op === "set-human-deps") {
+    // [#45] Absent key and empty list are the SAME state on the before side, so opening the
+    // modal on a run with no human-approval edges and closing it is correctly not a change.
+    const before = Array.isArray(beforeNode.depends_on_human_approved) ? beforeNode.depends_on_human_approved : [];
+    const after = Array.isArray(args.dependsOnHumanApproved) ? args.dependsOnHumanApproved : [];
     return before.length !== after.length || before.some((id, i) => id !== after[i]);
   }
   if (op === "set-status") {
@@ -6473,6 +6537,12 @@ function v3EditBuildPayload(op) {
   if (op === "set-deps") {
     const picker = modal.querySelector('[data-v3edit-picker="deps"]');
     return { op, args: { run: t.id, dependsOn: picker ? v3EditPickerValues(picker) : [] } };
+  }
+  if (op === "set-human-deps") {
+    // [#45] Its OWN picker key, so the two lists can never read each other's chips. An empty
+    // list travels as `[]` and the engine turns it into ABSENCE — the clearing gesture.
+    const picker = modal.querySelector('[data-v3edit-picker="humandeps"]');
+    return { op, args: { run: t.id, dependsOnHumanApproved: picker ? v3EditPickerValues(picker) : [] } };
   }
   if (op === "set-status") {
     const status = val("[data-v3edit-status]");
@@ -6690,6 +6760,15 @@ function v3EditDiffHtml(op, args, beforeNode) {
   }
   if (op === "set-deps") {
     rows.push(v3EditDiffRow("depends_on", (beforeNode.depends_on || []).join(", ") || "(none)", (args.dependsOn || []).join(", ") || "(none)"));
+  } else if (op === "set-human-deps") {
+    // [#45] The key is named VERBATIM, like depends_on above: the preview reports what will be
+    // written to disk. "(none)" on the after side means the KEY IS REMOVED, not stored empty.
+    const after = (args.dependsOnHumanApproved || []).join(", ");
+    rows.push(v3EditDiffRow(
+      "depends_on_human_approved",
+      (beforeNode.depends_on_human_approved || []).join(", ") || "(none)",
+      after || "(none — the key is removed)"
+    ));
   } else if (op === "set-lane") {
     const beforeLane = typeof beforeNode.lane === "string" && beforeNode.lane ? beforeNode.lane : "(project default)";
     rows.push(v3EditDiffRow("Lane", beforeLane, args.lane != null && args.lane !== "" ? args.lane : "(project default)"));

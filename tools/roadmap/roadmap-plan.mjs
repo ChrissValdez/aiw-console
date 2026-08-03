@@ -26,7 +26,7 @@
 import { createHash } from "node:crypto";
 import * as core from "./roadmap-core.mjs";
 
-export const KNOWN_OPS = ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "declare-lanes", "declare-care-budget", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"];
+export const KNOWN_OPS = ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-human-deps", "set-status", "set-lane", "set-barrier", "set-classification", "declare-lanes", "declare-care-budget", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"];
 
 // Content baseline for compare-and-swap. Hash of the exact bytes read (utf8), so any change
 // -- including a single CRLF or em-dash byte -- produces a different token.
@@ -85,6 +85,18 @@ function dispatch(op, obj, args, externalRunIds = null) {
       return core.setDeps(obj, {
         run: args.run,
         dependsOn: args.dependsOn != null ? args.dependsOn : null,
+        addDep: args.addDep,
+        removeDep: args.removeDep,
+        externalRunIds,
+      });
+    case "set-human-deps":
+      // [#45] The SECOND dependency list — the edges that wait for a PERSON to review the
+      // target, not merely for the target's work to exist. Replaced whole; an empty list
+      // clears the key. `externalRunIds` threads through for the same §10.d reason set-deps
+      // gets it: a target declared by another registered project exists, just not here.
+      return core.setHumanApprovedDeps(obj, {
+        run: args.run,
+        dependsOnHumanApproved: args.dependsOnHumanApproved != null ? args.dependsOnHumanApproved : null,
         addDep: args.addDep,
         removeDep: args.removeDep,
         externalRunIds,
@@ -199,7 +211,7 @@ function dispatch(op, obj, args, externalRunIds = null) {
       // checkIdentityPreserved needs no sanction. It also makes "this run is FUNCTIONAL /
       // SYSTEMIC and moves to position 7" a SINGLE preview and a single write, which is how
       // the operator means it.
-      const batchable = ["set-text", "set-deps", "set-status", "set-lane", "set-barrier", "set-classification", "clear-progress", "move", "move-objective", "set-objective-archived"];
+      const batchable = ["set-text", "set-deps", "set-human-deps", "set-status", "set-lane", "set-barrier", "set-classification", "clear-progress", "move", "move-objective", "set-objective-archived"];
       const warnings = [];
       for (let i = 0; i < ops.length; i++) {
         const sub = ops[i] || {};

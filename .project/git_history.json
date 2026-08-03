@@ -1,27 +1,77 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-02T19:30:11.025Z",
+  "generated_at": "2026-08-03T05:47:33.974Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-02T19:28:04.848Z"
+      "mtime": "2026-08-03T05:12:14.462Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-02T08:35:21.622Z"
+      "mtime": "2026-08-03T05:47:33.971Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "e7b6181cdd08105e4a3f17abf8260c97b3f9d38e",
+  "head": "e1b5e05662c701281d24350cb780d21a2ac8e894",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 146,
+  "commit_total": 151,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "e1b5e05",
+      "full_sha": "e1b5e05662c701281d24350cb780d21a2ac8e894",
+      "date": "2026-08-02T23:12:14-06:00",
+      "parents": "767dccb",
+      "subject": "record: roadmap(cantu): retire the compiler variant gates run and hand each gate to the component that owns it (Split, Table badge, Timeline); nobody displaced",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "767dccb",
+      "full_sha": "767dccbcd42d73ca777687b613c0551ac6842c4b",
+      "date": "2026-08-02T22:18:02-06:00",
+      "parents": "caa29d4",
+      "subject": "record: insumos objetivos para clasificar los 21 runs vivos de aiw; canonico y .project/ equivalentes en los cinco campos comparados",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "caa29d4",
+      "full_sha": "caa29d430d1d01b98af5bb23c2acdce0aada984f",
+      "date": "2026-08-02T20:45:51-06:00",
+      "parents": "7147b9e",
+      "subject": "handoff: relevo del 2026-08-02 - cierra el piloto de clasificacion, lleva la sustancia dentro por el recorte del sync, y deja decidido que el run de cabeza de cola mide el coste de un alta de campo",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7147b9e",
+      "full_sha": "7147b9efdf9a68723666b7d2e5a91efb58696a0e",
+      "date": "2026-08-02T20:37:41-06:00",
+      "parents": "5af9416",
+      "subject": "cierre de sesion del hilo aiw - relevo con la auditoria humana de O3 y O7, el veredicto de CONST 4 sobre el 26, las tres imprecisiones del 27, la auditoria y estabilizacion del roadmap, los cuatro runs nuevos y el hallazgo de que kernel.mjs no lee el roadmap; handoff reescrito con la sustancia dentro",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "5af9416",
+      "full_sha": "5af94165df02c6fd253702f576173c73baeef276",
+      "date": "2026-08-02T13:44:22-06:00",
+      "parents": "e7b6181",
+      "subject": "chore(project): re-emision de la derivada - indice de docs con dos records nuevos de cantu-studio e historia de commits al dia; sin cambios de contenido en snapshot ni roadmap",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "e7b6181",

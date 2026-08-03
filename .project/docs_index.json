@@ -1,516 +1,536 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-02T19:30:11.025Z",
+  "generated_at": "2026-08-03T05:47:33.974Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": "README.md",
-      "mtime": "2026-07-11T01:49:30.808Z"
+      "mtime": "2026-08-03T00:11:56.274Z"
     },
     {
       "path": "console/README.md",
-      "mtime": "2026-07-24T20:23:55.779Z"
+      "mtime": "2026-08-03T00:11:56.274Z"
     },
     {
       "path": "context/CLASIFICACION-DE-RUNS.md",
-      "mtime": "2026-07-31T01:12:31.803Z"
+      "mtime": "2026-08-03T00:11:56.277Z"
     },
     {
       "path": "context/DECISIONES.md",
-      "mtime": "2026-08-02T08:37:46.262Z"
+      "mtime": "2026-08-03T00:11:56.280Z"
     },
     {
       "path": "context/MIGRATION-REPORT.md",
-      "mtime": "2026-07-23T18:57:22.111Z"
+      "mtime": "2026-08-03T00:11:56.280Z"
     },
     {
       "path": "context/PROCEDIMIENTO-DE-CLASIFICACION.md",
-      "mtime": "2026-08-02T07:49:24.089Z"
+      "mtime": "2026-08-03T00:11:56.281Z"
     },
     {
       "path": "context/README.md",
-      "mtime": "2026-07-23T20:07:33.158Z"
+      "mtime": "2026-08-03T00:11:56.281Z"
     },
     {
       "path": "context/aiw-console/CONTRATO.md",
-      "mtime": "2026-07-27T21:48:27.392Z"
+      "mtime": "2026-08-03T00:11:56.282Z"
     },
     {
       "path": "context/aiw-console/records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md",
-      "mtime": "2026-07-25T07:14:37.222Z"
+      "mtime": "2026-08-03T00:11:56.282Z"
     },
     {
       "path": "context/aiw-console/records/ACABADO-PARIDAD-O4-P13.md",
-      "mtime": "2026-07-27T19:20:53.975Z"
+      "mtime": "2026-08-03T00:11:56.284Z"
     },
     {
       "path": "context/aiw-console/records/AGRUPACION-DOCS-POR-RUTA-Y-DOCS-DE-CANTU.md",
-      "mtime": "2026-07-27T20:07:25.994Z"
+      "mtime": "2026-08-03T00:11:56.284Z"
     },
     {
       "path": "context/aiw-console/records/AIW-TERCER-PROYECTO.md",
-      "mtime": "2026-07-29T06:25:59.038Z"
+      "mtime": "2026-08-03T00:11:56.285Z"
+    },
+    {
+      "path": "context/aiw-console/records/ALTA-DEPENDS-ON-HUMAN-APPROVED.md",
+      "mtime": "2026-08-03T04:22:58.243Z"
     },
     {
       "path": "context/aiw-console/records/ALTA-RUN-COMPONENT-GUIDE-Y-REENCUADRE-AUDIT-DOC.md",
-      "mtime": "2026-07-28T19:55:55.434Z"
+      "mtime": "2026-08-03T00:11:56.285Z"
     },
     {
       "path": "context/aiw-console/records/ALTA-RUN-UNIFICACION-SELECTOR-COLOR-CANTU.md",
-      "mtime": "2026-07-31T04:08:22.285Z"
+      "mtime": "2026-08-03T00:11:56.286Z"
     },
     {
       "path": "context/aiw-console/records/AMPLIACION-ALLOWLIST-MATH-Y-EDITOR-FORMULAS-CANTU.md",
-      "mtime": "2026-07-29T06:55:01.884Z"
+      "mtime": "2026-08-03T00:11:56.286Z"
     },
     {
       "path": "context/aiw-console/records/AMPLIACION-SELECTOR-COLOR-PERSONALIZADO-CANTU.md",
-      "mtime": "2026-08-02T08:49:41.689Z"
+      "mtime": "2026-08-03T00:11:56.287Z"
     },
     {
       "path": "context/aiw-console/records/ANCHO-DE-SUBVISTAS-CAUSA-RAIZ-FLEX.md",
-      "mtime": "2026-07-27T20:33:51.326Z"
+      "mtime": "2026-08-03T00:11:56.287Z"
     },
     {
       "path": "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md",
-      "mtime": "2026-07-23T18:54:06.458Z"
+      "mtime": "2026-08-03T00:11:56.288Z"
     },
     {
       "path": "context/aiw-console/records/AUDIT-CONTENIDO-AIW.md",
-      "mtime": "2026-07-28T08:58:30.214Z"
+      "mtime": "2026-08-03T00:11:56.288Z"
     },
     {
       "path": "context/aiw-console/records/AUDITORIA-CORPUS-DOCUMENTAL-Y-LISTA-DE-DISPOSICION-CANTU.md",
-      "mtime": "2026-08-02T03:04:56.364Z"
+      "mtime": "2026-08-03T00:11:56.289Z"
     },
     {
       "path": "context/aiw-console/records/AUDITORIA-ROADMAP-AIW-CONSOLE.md",
-      "mtime": "2026-08-01T04:46:59.036Z"
+      "mtime": "2026-08-03T00:11:56.289Z"
     },
     {
       "path": "context/aiw-console/records/AUDITORIA-ROADMAP-AIW.md",
-      "mtime": "2026-08-01T03:49:10.653Z"
+      "mtime": "2026-08-03T00:11:56.291Z"
     },
     {
       "path": "context/aiw-console/records/CARRILES-Y-BARRIERS-ROADMAP.md",
-      "mtime": "2026-07-27T21:52:55.842Z"
+      "mtime": "2026-08-03T00:11:56.291Z"
     },
     {
       "path": "context/aiw-console/records/CIERRE-HUECOS-ESTANDAR-DOC-IDIOMA-Y-ASERCIONES-CANTU.md",
-      "mtime": "2026-07-31T23:36:53.803Z"
+      "mtime": "2026-08-03T00:11:56.292Z"
     },
     {
       "path": "context/aiw-console/records/CIERRE-REGISTRO-Y-RELEVO-TERCERO.md",
-      "mtime": "2026-07-28T07:10:00.284Z"
+      "mtime": "2026-08-03T00:11:56.292Z"
     },
     {
       "path": "context/aiw-console/records/CIERRE-ROADMAP-AL-DIA-FASES-P13-P14.md",
-      "mtime": "2026-07-28T02:17:45.499Z"
+      "mtime": "2026-08-03T00:11:56.293Z"
     },
     {
       "path": "context/aiw-console/records/CLASIFICACION-CARE-BUDGET.md",
-      "mtime": "2026-08-01T03:23:33.140Z"
+      "mtime": "2026-08-03T00:11:56.293Z"
     },
     {
       "path": "context/aiw-console/records/CLASIFICACION-DE-LOS-46-RUNS-PENDIENTES-CANTU.md",
-      "mtime": "2026-08-01T05:50:55.704Z"
+      "mtime": "2026-08-03T00:11:56.294Z"
     },
     {
       "path": "context/aiw-console/records/CLASIFICACION-EMISOR-Y-CONSOLA.md",
-      "mtime": "2026-08-01T00:45:13.253Z"
+      "mtime": "2026-08-03T00:11:56.294Z"
     },
     {
       "path": "context/aiw-console/records/CLASIFICACION-MOTOR.md",
-      "mtime": "2026-07-31T23:27:36.894Z"
+      "mtime": "2026-08-03T00:11:56.295Z"
     },
     {
       "path": "context/aiw-console/records/CONGELADO-MAPA-NOMBRES-Y-BARRIDO-RUTA-LEGACY-CANTU.md",
-      "mtime": "2026-07-29T03:06:52.619Z"
+      "mtime": "2026-08-03T00:11:56.295Z"
     },
     {
       "path": "context/aiw-console/records/CONTRATO-COLOR-Y-PALETA-CANTU.md",
-      "mtime": "2026-07-28T23:54:47.461Z"
+      "mtime": "2026-08-03T00:11:56.297Z"
     },
     {
       "path": "context/aiw-console/records/CONTRATO-FUENTE-UNICA-DOC-COMPONENTES-CANTU.md",
-      "mtime": "2026-07-28T08:52:51.501Z"
+      "mtime": "2026-08-03T00:11:56.297Z"
     },
     {
       "path": "context/aiw-console/records/CONTRATO-MATH-FORMULA-Y-FORMULA-INSERTER-CANTU.md",
-      "mtime": "2026-07-29T01:20:47.754Z"
+      "mtime": "2026-08-03T00:11:56.298Z"
     },
     {
       "path": "context/aiw-console/records/CONVENCION-CASOS-DE-EVALUACION-AIW.md",
-      "mtime": "2026-07-31T02:45:11.152Z"
+      "mtime": "2026-08-03T00:11:56.299Z"
     },
     {
       "path": "context/aiw-console/records/CONVENCION-DOCUMENTACION-AIW.md",
-      "mtime": "2026-07-29T04:00:56.425Z"
+      "mtime": "2026-08-03T00:11:56.299Z"
     },
     {
       "path": "context/aiw-console/records/CORRECCIONES-QA-CARRILES-Y-REGLA-DE-IDIOMA.md",
-      "mtime": "2026-07-27T22:39:04.869Z"
+      "mtime": "2026-08-03T00:11:56.300Z"
     },
     {
       "path": "context/aiw-console/records/CUATRO-ROLES-AL-RENDER-Y-SELECTOR-PERSONALIZADO-CANTU.md",
-      "mtime": "2026-08-02T09:42:11.620Z"
+      "mtime": "2026-08-03T00:11:56.300Z"
     },
     {
       "path": "context/aiw-console/records/DECISION-ROADMAP-AIW.md",
-      "mtime": "2026-07-28T09:25:24.613Z"
+      "mtime": "2026-08-03T00:11:56.301Z"
     },
     {
       "path": "context/aiw-console/records/DEFECTOS-CONSOLA-Y-ESPEJO.md",
-      "mtime": "2026-07-31T03:36:52.521Z"
+      "mtime": "2026-08-03T00:11:56.301Z"
     },
     {
       "path": "context/aiw-console/records/DISCIPLINA-UN-RUN-POR-CARRIL.md",
-      "mtime": "2026-07-28T04:38:46.316Z"
+      "mtime": "2026-08-03T00:11:56.302Z"
     },
     {
       "path": "context/aiw-console/records/DISPOSICION-CARPETAS-COLA-AIW.md",
-      "mtime": "2026-07-29T01:55:40.246Z"
+      "mtime": "2026-08-03T00:11:56.302Z"
     },
     {
       "path": "context/aiw-console/records/DOCS-INDICE-CURADO-TRANSPORTADO.md",
-      "mtime": "2026-07-25T12:30:48.201Z"
+      "mtime": "2026-08-03T00:11:56.303Z"
     },
     {
       "path": "context/aiw-console/records/DOD-REVALIDACION-COMPONENTES-Y-CONTRATOS-COMPARTIDOS-CANTU.md",
-      "mtime": "2026-07-29T02:34:30.717Z"
+      "mtime": "2026-08-03T00:11:56.303Z"
     },
     {
       "path": "context/aiw-console/records/EMISION-PROJECT-AIW.md",
-      "mtime": "2026-07-28T21:09:18.117Z"
+      "mtime": "2026-08-03T00:11:56.304Z"
     },
     {
       "path": "context/aiw-console/records/EMISOR-CANTU-CARPETA-PROPIA-O4-P4.md",
-      "mtime": "2026-07-25T12:09:10.292Z"
+      "mtime": "2026-08-03T00:11:56.304Z"
     },
     {
       "path": "context/aiw-console/records/EMISOR-CARPETA-PROPIA-O4-P2.md",
-      "mtime": "2026-07-24T21:59:32.161Z"
+      "mtime": "2026-08-03T00:11:56.305Z"
     },
     {
       "path": "context/aiw-console/records/ENCADENAMIENTO-CONTRATOS-7-8-A-9-CANTU.md",
-      "mtime": "2026-07-28T21:57:46.829Z"
+      "mtime": "2026-08-03T00:11:56.305Z"
     },
     {
       "path": "context/aiw-console/records/ESCRITURA-CLASIFICACION-DOCE-RUNS-AIW-CONSOLE-2.md",
-      "mtime": "2026-08-02T07:31:09.631Z"
+      "mtime": "2026-08-03T00:11:56.306Z"
     },
     {
       "path": "context/aiw-console/records/ESCRITURA-CLASIFICACION-DOCE-RUNS-AIW-CONSOLE.md",
-      "mtime": "2026-08-02T03:27:14.588Z"
+      "mtime": "2026-08-03T00:11:56.306Z"
     },
     {
       "path": "context/aiw-console/records/ESCRITURA-CONSOLA-GLOBAL-O4-P12.md",
-      "mtime": "2026-07-26T05:12:17.869Z"
+      "mtime": "2026-08-03T00:11:56.308Z"
     },
     {
       "path": "context/aiw-console/records/ESCRITURA-ROADMAP-AIW.md",
-      "mtime": "2026-07-28T20:36:45.840Z"
+      "mtime": "2026-08-03T00:11:56.308Z"
     },
     {
       "path": "context/aiw-console/records/FAMILIAS-DE-RUNS-PENDIENTES-CANTU.md",
-      "mtime": "2026-08-01T05:11:18.173Z"
+      "mtime": "2026-08-03T00:11:56.309Z"
     },
     {
       "path": "context/aiw-console/records/FRONTERA-CAPACIDAD-TECLADO-VIRTUAL-KATEX-CANTU.md",
-      "mtime": "2026-07-29T04:39:59.262Z"
+      "mtime": "2026-08-03T00:11:56.309Z"
     },
     {
       "path": "context/aiw-console/records/FRONTERA-Y-TEST-DE-PARSEO-TICKETS-AIW.md",
-      "mtime": "2026-07-29T20:41:39.116Z"
+      "mtime": "2026-08-03T00:11:56.310Z"
     },
     {
       "path": "context/aiw-console/records/GOBERNANZA-DECLARADA-AIW.md",
-      "mtime": "2026-07-29T02:49:37.690Z"
+      "mtime": "2026-08-03T00:11:56.310Z"
     },
     {
       "path": "context/aiw-console/records/INDICE-DOCS-CURADO-AIW.md",
-      "mtime": "2026-07-29T04:20:40.333Z"
+      "mtime": "2026-08-03T00:11:56.311Z"
     },
     {
       "path": "context/aiw-console/records/INSERCION-RUN-PROYECTOR-CASE-BANKS.md",
-      "mtime": "2026-07-31T09:45:30.760Z"
+      "mtime": "2026-08-03T00:11:56.311Z"
     },
     {
       "path": "context/aiw-console/records/INSERCION-TRES-RUNS-PIEZAS-COMPARTIDAS-CANTU.md",
-      "mtime": "2026-08-01T16:25:04.265Z"
+      "mtime": "2026-08-03T00:11:56.312Z"
     },
     {
       "path": "context/aiw-console/records/INVENTARIO-COLOR-Y-MATH-DE-COMPONENTES-WEB-CANTU.md",
-      "mtime": "2026-07-29T10:18:09.966Z"
+      "mtime": "2026-08-03T00:11:56.312Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-CARRIL-DOCUMENTATION-Y-CASCADA-CANTU.md",
-      "mtime": "2026-08-01T00:45:28.088Z"
+      "mtime": "2026-08-03T00:11:56.313Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-DERIVA-ROADMAP-CANTU-71-RUNS.md",
-      "mtime": "2026-07-28T09:30:21.936Z"
+      "mtime": "2026-08-03T00:11:56.314Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-ENUM-HEADER-Y-INFORME-DE-OPCIONES-CANTU.md",
-      "mtime": "2026-07-31T02:26:55.207Z"
+      "mtime": "2026-08-03T00:11:56.314Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-ESTADO-DE-AIW.md",
-      "mtime": "2026-07-28T07:00:12.060Z"
+      "mtime": "2026-08-03T00:11:56.315Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-FUENTES-CONSOLA.md",
-      "mtime": "2026-07-24T21:05:04.251Z"
+      "mtime": "2026-08-03T00:11:56.315Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-GRAFO-O0.md",
-      "mtime": "2026-07-24T01:02:40.276Z"
+      "mtime": "2026-08-03T00:11:56.316Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-GUARDA-PARSEO-CASOS-EVALUACION.md",
-      "mtime": "2026-07-29T10:12:11.919Z"
+      "mtime": "2026-08-03T00:11:56.316Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-HEADER-Y-RETIRO-DE-PLACEMENT-CANTU.md",
-      "mtime": "2026-07-31T00:18:23.612Z"
+      "mtime": "2026-08-03T00:11:56.317Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-INCIDENTE-SCOPE-PREFLIGHT.md",
-      "mtime": "2026-07-29T09:01:37.010Z"
+      "mtime": "2026-08-03T00:11:56.318Z"
+    },
+    {
+      "path": "context/aiw-console/records/MEDICION-INSUMOS-CLASIFICACION-AIW-2026-08-02.md",
+      "mtime": "2026-08-03T04:11:14.521Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-O4.md",
-      "mtime": "2026-07-24T09:21:31.012Z"
+      "mtime": "2026-08-03T00:11:56.318Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-PIEZAS-COMPARTIDAS-COMPONENTES-CANTU.md",
-      "mtime": "2026-08-01T07:49:36.505Z"
+      "mtime": "2026-08-03T00:11:56.319Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-PILOTO-CLASIFICACION-AIW-CONSOLE.md",
-      "mtime": "2026-08-02T03:15:18.824Z"
+      "mtime": "2026-08-03T00:11:56.320Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-PREVIA-A-LA-CLASIFICACION-DE-LOS-21-PLANNED-DE-AIW.md",
-      "mtime": "2026-08-02T03:20:27.323Z"
+      "mtime": "2026-08-03T00:11:56.320Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-PROYECTOR.md",
-      "mtime": "2026-07-24T02:29:28.400Z"
+      "mtime": "2026-08-03T00:11:56.321Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-ROADMAP-V3.md",
-      "mtime": "2026-07-23T23:36:52.332Z"
+      "mtime": "2026-08-03T00:11:56.321Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-SUPERFICIE-DOC-COMPONENTES-WEB-Y-FORMA-DEL-PACKET-CANTU.md",
-      "mtime": "2026-07-31T09:58:06.783Z"
+      "mtime": "2026-08-03T00:11:56.322Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-SUPERFICIES-CLASIFICACION.md",
-      "mtime": "2026-07-31T19:58:18.425Z"
+      "mtime": "2026-08-03T00:11:56.323Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-VALIDADOR-ROJO.md",
-      "mtime": "2026-07-24T08:46:34.694Z"
+      "mtime": "2026-08-03T00:11:56.324Z"
     },
     {
       "path": "context/aiw-console/records/MENSAJE-DEL-MODAL-Y-HUECO-MATHLIVE-KATEX-CANTU.md",
-      "mtime": "2026-07-29T08:14:28.374Z"
+      "mtime": "2026-08-03T00:11:56.324Z"
     },
     {
       "path": "context/aiw-console/records/METODOLOGIA-ROADMAP-FIRST-CANTU.md",
-      "mtime": "2026-07-29T02:01:28.451Z"
+      "mtime": "2026-08-03T00:11:56.325Z"
     },
     {
       "path": "context/aiw-console/records/MIGRACION-CANTU-A-CARRILES.md",
-      "mtime": "2026-07-27T23:56:19.623Z"
+      "mtime": "2026-08-03T00:11:56.325Z"
     },
     {
       "path": "context/aiw-console/records/MIGRACION-O0.md",
-      "mtime": "2026-07-24T08:26:08.077Z"
+      "mtime": "2026-08-03T00:11:56.326Z"
     },
     {
       "path": "context/aiw-console/records/MODELO-CANONICO-DOCUMENTACION-CANTU.md",
-      "mtime": "2026-07-28T08:11:47.307Z"
+      "mtime": "2026-08-03T00:11:56.327Z"
     },
     {
       "path": "context/aiw-console/records/PALETA-DE-AUTOR-COMPILADOR-Y-MOTOR-CANTU.md",
-      "mtime": "2026-08-02T03:12:44.122Z"
+      "mtime": "2026-08-03T00:11:56.327Z"
     },
     {
       "path": "context/aiw-console/records/PARTICION-IMPLEMENTACION-Y-DOCUMENTACION-CANTU.md",
-      "mtime": "2026-07-28T04:42:27.348Z"
+      "mtime": "2026-08-03T00:11:56.328Z"
     },
     {
       "path": "context/aiw-console/records/PICKER-PERSONALIZADO-Y-MEDICION-DE-HEX-EN-EL-COMPILADOR-CANTU.md",
-      "mtime": "2026-07-31T07:27:57.637Z"
+      "mtime": "2026-08-03T00:11:56.328Z"
+    },
+    {
+      "path": "context/aiw-console/records/PILOTO-REVALIDACION-COMPONENTE-LISTA-CANTU.md",
+      "mtime": "2026-08-03T05:34:31.624Z"
     },
     {
       "path": "context/aiw-console/records/PORT-IDENTICO-CONSOLA-O4-P11.md",
-      "mtime": "2026-07-24T22:53:48.096Z"
+      "mtime": "2026-08-03T00:11:56.329Z"
     },
     {
       "path": "context/aiw-console/records/PORTABILIDAD-EVIDENCIA-AIW.md",
-      "mtime": "2026-07-28T23:48:33.751Z"
+      "mtime": "2026-08-03T00:11:56.329Z"
     },
     {
       "path": "context/aiw-console/records/PROYECTOR-BANCOS-DE-CASOS.md",
-      "mtime": "2026-07-31T10:25:57.163Z"
+      "mtime": "2026-08-03T00:11:56.330Z"
     },
     {
       "path": "context/aiw-console/records/PUBLICACION-CLASIFICACION-DE-RUNS.md",
-      "mtime": "2026-07-31T01:14:49.563Z"
+      "mtime": "2026-08-03T00:11:56.330Z"
     },
     {
       "path": "context/aiw-console/records/REARCHIVO-BLOQUE-RENAME.md",
-      "mtime": "2026-07-24T01:38:32.780Z"
+      "mtime": "2026-08-03T00:11:56.331Z"
     },
     {
       "path": "context/aiw-console/records/RECONCILIACION-COLA-AIW.md",
-      "mtime": "2026-07-29T01:41:04.542Z"
+      "mtime": "2026-08-03T00:11:56.331Z"
     },
     {
       "path": "context/aiw-console/records/REDACCION-O4.md",
-      "mtime": "2026-07-24T10:28:41.017Z"
+      "mtime": "2026-08-03T00:11:56.332Z"
     },
     {
       "path": "context/aiw-console/records/REDISENO-CARRIL-DOCUMENTATION-CANTU.md",
-      "mtime": "2026-08-01T04:10:25.202Z"
+      "mtime": "2026-08-03T00:11:56.333Z"
     },
     {
       "path": "context/aiw-console/records/REEMISION-MANUAL-PROJECT-O4-P14.md",
-      "mtime": "2026-07-28T06:15:03.232Z"
+      "mtime": "2026-08-03T00:11:56.333Z"
     },
     {
       "path": "context/aiw-console/records/REENCUADRE-DOC-RUNS-COMPONENTES-WEB-CANTU.md",
-      "mtime": "2026-07-28T19:16:27.610Z"
+      "mtime": "2026-08-03T00:11:56.333Z"
     },
     {
       "path": "context/aiw-console/records/REENCUADRE-OCHO-RUNS-CON-TEXTO-VENCIDO-CANTU.md",
-      "mtime": "2026-07-28T20:33:15.397Z"
+      "mtime": "2026-08-03T00:11:56.334Z"
     },
     {
       "path": "context/aiw-console/records/REESTRUCTURACION-OBJETIVOS-Y-FASES.md",
-      "mtime": "2026-08-01T09:23:11.386Z"
+      "mtime": "2026-08-03T00:11:56.335Z"
     },
     {
       "path": "context/aiw-console/records/REFRESCO-DOD-REVALIDACION-CANTU.md",
-      "mtime": "2026-08-01T22:40:47.765Z"
+      "mtime": "2026-08-03T00:11:56.335Z"
+    },
+    {
+      "path": "context/aiw-console/records/RELEVO-AIW-AL-CIERRE-2026-08-02.md",
+      "mtime": "2026-08-03T02:23:05.975Z"
     },
     {
       "path": "context/aiw-console/records/RELEVO-CANTU-AL-CIERRE-2026-08-01.md",
-      "mtime": "2026-08-01T07:03:16.963Z"
+      "mtime": "2026-08-03T00:11:56.336Z"
     },
     {
       "path": "context/aiw-console/records/REPARACION-ENUM-HEADER-Y-MEDICION-DE-CLASES-CANTU.md",
-      "mtime": "2026-07-31T03:19:21.514Z"
+      "mtime": "2026-08-03T00:11:56.336Z"
     },
     {
       "path": "context/aiw-console/records/REPARACION-PARSEO-TICKETS-AIW.md",
-      "mtime": "2026-07-29T02:27:19.764Z"
+      "mtime": "2026-08-03T00:11:56.337Z"
     },
     {
       "path": "context/aiw-console/records/REPARACION-SELECTOR-COLOR-HEADER-CANTU.md",
-      "mtime": "2026-07-31T00:44:52.296Z"
+      "mtime": "2026-08-03T00:11:56.337Z"
     },
     {
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
-      "mtime": "2026-07-28T21:05:27.999Z"
+      "mtime": "2026-08-03T00:11:56.338Z"
     },
     {
       "path": "context/aiw-console/records/RETIRO-MARKDOWN-AIW.md",
-      "mtime": "2026-07-29T05:48:54.414Z"
+      "mtime": "2026-08-03T00:11:56.338Z"
+    },
+    {
+      "path": "context/aiw-console/records/RETIRO-RUN-COMPUERTAS-VARIANTE-CANTU.md",
+      "mtime": "2026-08-03T04:52:37.695Z"
     },
     {
       "path": "context/aiw-console/records/REVALIDACION-COLUMNS-Y-VEREDICTO-DE-LA-DOD-CANTU.md",
-      "mtime": "2026-07-29T20:33:29.439Z"
+      "mtime": "2026-08-03T00:11:56.339Z"
     },
     {
       "path": "context/aiw-console/records/SENAL-DE-PREVIA-INVALIDA-Y-SUPERFICIE-DEL-EDITOR-DE-FORMULAS-CANTU.md",
-      "mtime": "2026-07-29T09:40:44.643Z"
+      "mtime": "2026-08-03T00:11:56.340Z"
     },
     {
       "path": "context/aiw-console/records/SHELL-MULTIPROYECTO-O4-P3.md",
-      "mtime": "2026-07-25T12:09:10.299Z"
+      "mtime": "2026-08-03T00:11:56.340Z"
     },
     {
       "path": "context/aiw-console/records/SUITE-CONTRA-FIXTURES.md",
-      "mtime": "2026-07-31T02:34:53.618Z"
+      "mtime": "2026-08-03T00:11:56.341Z"
     },
     {
       "path": "context/aiw-console/records/TOLERANCIA-DE-CLASIFICACION-EN-CANTU.md",
-      "mtime": "2026-08-01T05:06:44.147Z"
+      "mtime": "2026-08-03T00:11:56.341Z"
     },
     {
       "path": "context/aiw-console/records/TRADUCCION-ROADMAP-A-INGLES.md",
-      "mtime": "2026-07-28T01:05:56.699Z"
+      "mtime": "2026-08-03T00:11:56.342Z"
     },
     {
       "path": "context/aiw-console/records/UNIFICACION-SELECTOR-COLOR-WEB-Y-COMPUERTA-DEL-COMPILADOR-CANTU.md",
-      "mtime": "2026-07-31T05:07:22.899Z"
+      "mtime": "2026-08-03T00:11:56.342Z"
     },
     {
       "path": "context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md",
-      "mtime": "2026-07-24T20:26:13.701Z"
+      "mtime": "2026-08-03T00:11:56.343Z"
     },
     {
       "path": "context/aiw-console/records/VERIFICACION-PACKET-COLUMNS-Y-CONVENCIONES-DE-AUDITORIA-CANTU.md",
-      "mtime": "2026-07-31T00:18:36.337Z"
+      "mtime": "2026-08-03T00:11:56.343Z"
     },
     {
       "path": "context/aiw/AIW_CONTEXT.md",
-      "mtime": "2026-07-23T18:54:06.429Z"
+      "mtime": "2026-08-03T00:11:56.344Z"
     },
     {
       "path": "context/aiw/Audit_Report_AIW_Kernel_v1.md",
-      "mtime": "2026-07-24T12:19:12.546Z"
+      "mtime": "2026-08-03T00:11:56.345Z"
     },
     {
       "path": "context/aiw/Audit_Report_Contexto_Metodologia_v1.md",
-      "mtime": "2026-07-24T12:20:12.983Z"
+      "mtime": "2026-08-03T00:11:56.346Z"
     },
     {
       "path": "context/aiw/DELEGACION.md",
-      "mtime": "2026-07-11T01:43:21.346Z"
+      "mtime": "2026-08-03T00:11:56.347Z"
     },
     {
       "path": "context/aiw/ESTADO.md",
-      "mtime": "2026-07-23T18:54:06.415Z"
+      "mtime": "2026-08-03T00:11:56.348Z"
     },
     {
       "path": "context/aiw/roadmap_AIW_temp.md",
-      "mtime": "2026-07-29T05:43:53.575Z"
+      "mtime": "2026-08-03T00:11:56.348Z"
     },
     {
       "path": "context/cantu-studio/CANTU_STUDIO_CONTEXT.md",
-      "mtime": "2026-07-28T04:36:28.517Z"
+      "mtime": "2026-08-03T00:11:56.349Z"
     },
     {
       "path": "context/handoffs/aiw-console.md",
-      "mtime": "2026-08-01T09:38:16.512Z"
+      "mtime": "2026-08-03T02:45:42.700Z"
     },
     {
       "path": "context/handoffs/aiw.md",
-      "mtime": "2026-07-31T09:41:24.417Z"
+      "mtime": "2026-08-03T02:22:39.315Z"
     },
     {
       "path": "context/handoffs/cantu-studio.md",
-      "mtime": "2026-08-01T07:00:49.091Z"
+      "mtime": "2026-08-03T00:11:56.351Z"
     },
     {
       "path": "docs/snapshot-schema-v1.md",
-      "mtime": "2026-07-22T21:23:17.032Z"
+      "mtime": "2026-08-03T00:11:56.357Z"
     },
     {
       "path": "project-console/README.md",
-      "mtime": "2026-07-28T06:07:06.457Z"
+      "mtime": "2026-08-03T00:11:56.361Z"
     },
     {
       "path": "start-console.README.md",
-      "mtime": "2026-07-26T03:24:18.564Z"
+      "mtime": "2026-08-03T00:11:56.368Z"
     }
   ],
   "nav_tier_model": {
@@ -563,7 +583,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "root",
-      "freshness": "2026-07-11T01:49:30.808Z"
+      "freshness": "2026-08-03T00:11:56.274Z"
     },
     {
       "title": "Prototipo de la consola global",
@@ -571,7 +591,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "console",
-      "freshness": "2026-07-24T20:23:55.779Z"
+      "freshness": "2026-08-03T00:11:56.274Z"
     },
     {
       "title": "CLASIFICACIÓN DE RUNS — especificación canónica",
@@ -579,7 +599,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-07-31T01:12:31.803Z"
+      "freshness": "2026-08-03T00:11:56.277Z"
     },
     {
       "title": "DECISIONES.md — log append-only. Nunca reescribir; solo agregar.",
@@ -587,7 +607,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-08-02T08:37:46.262Z"
+      "freshness": "2026-08-03T00:11:56.280Z"
     },
     {
       "title": "MIGRATION-REPORT — Centralización del contexto de gobernanza en aiw-console",
@@ -595,7 +615,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-07-23T18:57:22.111Z"
+      "freshness": "2026-08-03T00:11:56.280Z"
     },
     {
       "title": "Procedimiento de clasificación de runs",
@@ -603,7 +623,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-08-02T07:49:24.089Z"
+      "freshness": "2026-08-03T00:11:56.281Z"
     },
     {
       "title": "context/ — Contexto de gobernanza de la cabina",
@@ -611,7 +631,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-07-23T20:07:33.158Z"
+      "freshness": "2026-08-03T00:11:56.281Z"
     },
     {
       "title": "CONTRATO DE LA CARPETA — Capa 1: el archivo requerido",
@@ -619,7 +639,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw-console",
-      "freshness": "2026-07-27T21:48:27.392Z"
+      "freshness": "2026-08-03T00:11:56.282Z"
     },
     {
       "title": "ACABADO VISUAL de Docs y EMISOR de `git_history` — cierre del port de la consola",
@@ -627,7 +647,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-25T07:14:37.222Z"
+      "freshness": "2026-08-03T00:11:56.282Z"
     },
     {
       "title": "ACABADO DE PARIDAD — cuatro correcciones que cierran la migración de la consola",
@@ -635,7 +655,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-27T19:20:53.975Z"
+      "freshness": "2026-08-03T00:11:56.284Z"
     },
     {
       "title": "AGRUPACIÓN DE DOCS POR RUTA — y la reorganización de `docs/` en `cantu-studio`",
@@ -643,7 +663,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-27T20:07:25.994Z"
+      "freshness": "2026-08-03T00:11:56.284Z"
     },
     {
       "title": "AIW COMO TERCER PROYECTO RENDERIZABLE — MEDICIÓN DE LOS TRES EMBUDOS Y ALTA DEL HANDOFF",
@@ -651,7 +671,15 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T06:25:59.038Z"
+      "freshness": "2026-08-03T00:11:56.285Z"
+    },
+    {
+      "title": "ALTA DE `depends_on_human_approved` — el campo, y lo que cuesta darlo de alta",
+      "path": "context/aiw-console/records/ALTA-DEPENDS-ON-HUMAN-APPROVED.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T04:22:58.243Z"
     },
     {
       "title": "ALTA DEL RUN DEL COMPONENT GUIDE Y RE-ENCUADRE DEL AUDIT DE DOCUMENTACIÓN",
@@ -659,7 +687,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T19:55:55.434Z"
+      "freshness": "2026-08-03T00:11:56.285Z"
     },
     {
       "title": "Alta del run de unificación del selector de color",
@@ -667,7 +695,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T04:08:22.285Z"
+      "freshness": "2026-08-03T00:11:56.286Z"
     },
     {
       "title": "Ampliación de la allowlist de math y reparación del editor de fórmulas (cantu-studio)",
@@ -675,7 +703,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T06:55:01.884Z"
+      "freshness": "2026-08-03T00:11:56.286Z"
     },
     {
       "title": "Ampliación del selector de color personalizado — `cantu-studio`, `queue_order` 19",
@@ -683,7 +711,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-02T08:49:41.689Z"
+      "freshness": "2026-08-03T00:11:56.287Z"
     },
     {
       "title": "ANCHO DE SUBVISTAS — la causa raíz era el margen `auto` sobre un ítem flex",
@@ -691,7 +719,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-27T20:33:51.326Z"
+      "freshness": "2026-08-03T00:11:56.287Z"
     },
     {
       "title": "AUDIT-CONSOLE-O4-PHASE0 — Mapa de estado real",
@@ -699,7 +727,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-23T18:54:06.458Z"
+      "freshness": "2026-08-03T00:11:56.288Z"
     },
     {
       "title": "AUDITORÍA DE CONTENIDO DE AIW",
@@ -707,7 +735,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T08:58:30.214Z"
+      "freshness": "2026-08-03T00:11:56.288Z"
     },
     {
       "title": "AUDITORÍA DEL CORPUS DOCUMENTAL DE CANTU Y LISTA DE DISPOSICIÓN",
@@ -715,7 +743,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-02T03:04:56.364Z"
+      "freshness": "2026-08-03T00:11:56.289Z"
     },
     {
       "title": "AUDITORÍA DEL ROADMAP DE AIW-CONSOLE",
@@ -723,7 +751,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T04:46:59.036Z"
+      "freshness": "2026-08-03T00:11:56.289Z"
     },
     {
       "title": "AUDITORÍA DEL ROADMAP DE AIW",
@@ -731,7 +759,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T03:49:10.653Z"
+      "freshness": "2026-08-03T00:11:56.291Z"
     },
     {
       "title": "CARRILES Y BARRIERS — el roadmap gana líneas paralelas y puntos de sincronización (D-051)",
@@ -739,7 +767,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-27T21:52:55.842Z"
+      "freshness": "2026-08-03T00:11:56.291Z"
     },
     {
       "title": "Cierre de los dos huecos del estándar de documentación — regla de idioma y aserciones del validador",
@@ -747,7 +775,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T23:36:53.803Z"
+      "freshness": "2026-08-03T00:11:56.292Z"
     },
     {
       "title": "CIERRE DE REGISTRO Y RELEVO — tres records huérfanos, los dos handoffs, y dos deudas anotadas",
@@ -755,7 +783,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T07:10:00.284Z"
+      "freshness": "2026-08-03T00:11:56.292Z"
     },
     {
       "title": "CIERRE DEL ROADMAP AL DÍA — la fase entregada, la afirmación falsa, los siete huérfanos y el token",
@@ -763,7 +791,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T02:17:45.499Z"
+      "freshness": "2026-08-03T00:11:56.293Z"
     },
     {
       "title": "CLASIFICACIÓN — `care_budget`: configuración POR PROYECTO, editable desde la consola",
@@ -771,7 +799,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T03:23:33.140Z"
+      "freshness": "2026-08-03T00:11:56.293Z"
     },
     {
       "title": "Clasificación de los 46 runs pendientes — `cantu-studio`",
@@ -779,7 +807,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T05:50:55.704Z"
+      "freshness": "2026-08-03T00:11:56.294Z"
     },
     {
       "title": "CLASIFICACIÓN — EMISOR Y CONSOLA: la derivación, el transporte, la vista, la lista y la escritura",
@@ -787,7 +815,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T00:45:13.253Z"
+      "freshness": "2026-08-03T00:11:56.294Z"
     },
     {
       "title": "CLASIFICACIÓN — MOTOR: los seis campos almacenados y los invariantes que rechazan",
@@ -795,7 +823,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T23:27:36.894Z"
+      "freshness": "2026-08-03T00:11:56.295Z"
     },
     {
       "title": "Congelado del mapa de nombres y barrido de la ruta legacy (cantu-studio)",
@@ -803,7 +831,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T03:06:52.619Z"
+      "freshness": "2026-08-03T00:11:56.295Z"
     },
     {
       "title": "CONTRATO DE COMPATIBILIDAD DE COLOR Y PALETA — RUN `#7` EN CANTU",
@@ -811,7 +839,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T23:54:47.461Z"
+      "freshness": "2026-08-03T00:11:56.297Z"
     },
     {
       "title": "CONTRATO DE FUENTE ÚNICA DE DOC POR COMPONENTE DE CANTU — EJECUCIÓN DEL q3 DEL CARRIL DOCUMENTATION",
@@ -819,7 +847,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T08:52:51.501Z"
+      "freshness": "2026-08-03T00:11:56.297Z"
     },
     {
       "title": "CONTRATO DE COMPATIBILIDAD DE MATH, FÓRMULA Y FORMULA INSERTER — RUN `#8` EN CANTU",
@@ -827,7 +855,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T01:20:47.754Z"
+      "freshness": "2026-08-03T00:11:56.298Z"
     },
     {
       "title": "CONVENCIÓN DE CASOS DE EVALUACIÓN DE AIW — la adjudicación, la convención y la declaración",
@@ -835,7 +863,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T02:45:11.152Z"
+      "freshness": "2026-08-03T00:11:56.299Z"
     },
     {
       "title": "CONVENCIÓN DE DOCUMENTACIÓN DE AIW — barrier del carril `DOCUMENTATION`",
@@ -843,7 +871,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T04:00:56.425Z"
+      "freshness": "2026-08-03T00:11:56.299Z"
     },
     {
       "title": "CORRECCIONES DEL QA DE CARRILES, Y LA REGLA DE IDIOMA DE LA CONSOLA",
@@ -851,7 +879,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-27T22:39:04.869Z"
+      "freshness": "2026-08-03T00:11:56.300Z"
     },
     {
       "title": "Cuatro roles al render y selector personalizado — `cantu-studio`, `queue_order` 19",
@@ -859,7 +887,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-02T09:42:11.620Z"
+      "freshness": "2026-08-03T00:11:56.300Z"
     },
     {
       "title": "DECISIÓN — LAS CUATRO FRONTERAS DEL ROADMAP DE AIW",
@@ -867,7 +895,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T09:25:24.613Z"
+      "freshness": "2026-08-03T00:11:56.301Z"
     },
     {
       "title": "Defectos de la consola global y del espejo del proyector",
@@ -875,7 +903,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T03:36:52.521Z"
+      "freshness": "2026-08-03T00:11:56.301Z"
     },
     {
       "title": "DISCIPLINA DE EJECUCIÓN PARALELA — «un run a la vez POR CARRIL»",
@@ -883,7 +911,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T04:38:46.316Z"
+      "freshness": "2026-08-03T00:11:56.302Z"
     },
     {
       "title": "DISPOSICIÓN DE LAS CUATRO CARPETAS DE COLA DE AIW",
@@ -891,7 +919,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T01:55:40.246Z"
+      "freshness": "2026-08-03T00:11:56.302Z"
     },
     {
       "title": "DOCS — el índice curado se TRANSPORTA, el escaneo queda de respaldo (`O4.P5`)",
@@ -899,7 +927,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-25T12:30:48.201Z"
+      "freshness": "2026-08-03T00:11:56.303Z"
     },
     {
       "title": "DOD COMPARTIDA DE REVALIDACIÓN DE COMPONENTES Y CONTRATOS AUTHOR-FACING — RUN `#9` EN CANTU",
@@ -907,7 +935,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T02:34:30.717Z"
+      "freshness": "2026-08-03T00:11:56.303Z"
     },
     {
       "title": "PRIMERA EMISIÓN DEL `.project/` DE AIW — Y SU MEDICIÓN",
@@ -915,7 +943,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T21:09:18.117Z"
+      "freshness": "2026-08-03T00:11:56.304Z"
     },
     {
       "title": "EMISOR — `cantu-studio` emite su carpeta propia (`O4.P4`)",
@@ -923,7 +951,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-25T12:09:10.292Z"
+      "freshness": "2026-08-03T00:11:56.304Z"
     },
     {
       "title": "EMISOR — `aiw-console` emite su propia carpeta (`O4.P2`)",
@@ -931,7 +959,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T21:59:32.161Z"
+      "freshness": "2026-08-03T00:11:56.305Z"
     },
     {
       "title": "ENCADENAMIENTO DE LOS CONTRATOS `#7` → `#8` → `#9` — DOS ARISTAS EN CANTU",
@@ -939,7 +967,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T21:57:46.829Z"
+      "freshness": "2026-08-03T00:11:56.305Z"
     },
     {
       "title": "Escritura de la clasificación de los doce runs vivos — aiw-console (2.º intento, EJECUTADO)",
@@ -947,7 +975,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-02T07:31:09.631Z"
+      "freshness": "2026-08-03T00:11:56.306Z"
     },
     {
       "title": "Escritura de la clasificación de los doce runs vivos — aiw-console",
@@ -955,7 +983,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-02T03:27:14.588Z"
+      "freshness": "2026-08-03T00:11:56.306Z"
     },
     {
       "title": "ESCRITURA — la consola global gana su ruta de escritura (`O4.P12`)",
@@ -963,7 +991,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-26T05:12:17.869Z"
+      "freshness": "2026-08-03T00:11:56.308Z"
     },
     {
       "title": "ESCRITURA DEL ROADMAP CANÓNICO DE AIW",
@@ -971,7 +999,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T20:36:45.840Z"
+      "freshness": "2026-08-03T00:11:56.308Z"
     },
     {
       "title": "FAMILIAS DE RUNS PENDIENTES — `cantu-studio`, y sus datos objetivos",
@@ -979,7 +1007,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T05:11:18.173Z"
+      "freshness": "2026-08-03T00:11:56.309Z"
     },
     {
       "title": "FRONTERA DE CAPACIDAD DEL TECLADO VIRTUAL CONTRA KATEX — CANTU",
@@ -987,7 +1015,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T04:39:59.262Z"
+      "freshness": "2026-08-03T00:11:56.309Z"
     },
     {
       "title": "FRONTERA Y TEST DE REGRESIÓN DE PARSEO DE TICKETS DE AIW",
@@ -995,7 +1023,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T20:41:39.116Z"
+      "freshness": "2026-08-03T00:11:56.310Z"
     },
     {
       "title": "LAS FUENTES DE GOBERNANZA DECLARADA DE AIW — ESCRITAS Y MEDIDAS",
@@ -1003,7 +1031,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T02:49:37.690Z"
+      "freshness": "2026-08-03T00:11:56.310Z"
     },
     {
       "title": "ÍNDICE DE DOCUMENTACIÓN DE AIW, CURADO A MANO",
@@ -1011,7 +1039,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T04:20:40.333Z"
+      "freshness": "2026-08-03T00:11:56.311Z"
     },
     {
       "title": "INSERCIÓN DEL RUN DEL PROYECTOR Y LOS BANCOS DE CASOS",
@@ -1019,7 +1047,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T09:45:30.760Z"
+      "freshness": "2026-08-03T00:11:56.311Z"
     },
     {
       "title": "Inserción de tres runs de piezas compartidas en el roadmap canónico de Cantu",
@@ -1027,7 +1055,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T16:25:04.265Z"
+      "freshness": "2026-08-03T00:11:56.312Z"
     },
     {
       "title": "Inventario de color y math de los componentes Web (Cantu Studio)",
@@ -1035,7 +1063,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T10:18:09.966Z"
+      "freshness": "2026-08-03T00:11:56.312Z"
     },
     {
       "title": "Medición del carril DOCUMENTATION de Cantu Studio y de su cascada",
@@ -1043,7 +1071,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T00:45:28.088Z"
+      "freshness": "2026-08-03T00:11:56.313Z"
     },
     {
       "title": "MEDICIÓN DE DERIVA ROADMAP↔DISCO DE CANTU — LOS 71 RUNS, UNO A UNO",
@@ -1051,7 +1079,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T09:30:21.936Z"
+      "freshness": "2026-08-03T00:11:56.314Z"
     },
     {
       "title": "Medición del enum de Header e informe de opciones",
@@ -1059,7 +1087,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T02:26:55.207Z"
+      "freshness": "2026-08-03T00:11:56.314Z"
     },
     {
       "title": "MEDICIÓN DEL ESTADO REAL DE AIW",
@@ -1067,7 +1095,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T07:00:12.060Z"
+      "freshness": "2026-08-03T00:11:56.315Z"
     },
     {
       "title": "MEDICION-FUENTES-CONSOLA — Qué datos tiene HOY aiw-console para una consola idéntica a la de Cantu",
@@ -1075,7 +1103,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T21:05:04.251Z"
+      "freshness": "2026-08-03T00:11:56.315Z"
     },
     {
       "title": "MEDICIÓN — Grafo de dependencias alrededor de O0 (alcance de la migración de D-034)",
@@ -1083,7 +1111,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T01:02:40.276Z"
+      "freshness": "2026-08-03T00:11:56.316Z"
     },
     {
       "title": "CONVENCIÓN DE CASOS DE EVALUACIÓN DE AIW — **RUN DETENIDO POR LA GUARDA DE PARSEO**",
@@ -1091,7 +1119,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T10:12:11.919Z"
+      "freshness": "2026-08-03T00:11:56.316Z"
     },
     {
       "title": "Medición de Header y plan de retirada de los controles de placement",
@@ -1099,7 +1127,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T00:18:23.612Z"
+      "freshness": "2026-08-03T00:11:56.317Z"
     },
     {
       "title": "MEDICIÓN DEL INCIDENTE DEL PRE-FLIGHT DE ALCANCE",
@@ -1107,7 +1135,15 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T09:01:37.010Z"
+      "freshness": "2026-08-03T00:11:56.318Z"
+    },
+    {
+      "title": "MEDICIÓN DE INSUMOS PARA CLASIFICACIÓN — `aiw`",
+      "path": "context/aiw-console/records/MEDICION-INSUMOS-CLASIFICACION-AIW-2026-08-02.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T04:11:14.521Z"
     },
     {
       "title": "MEDICIÓN O4 — el objetivo \"Consola global\" en el roadmap de AIW",
@@ -1115,7 +1151,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T09:21:31.012Z"
+      "freshness": "2026-08-03T00:11:56.318Z"
     },
     {
       "title": "Medición de las piezas compartidas que consumen los quince runs de componente",
@@ -1123,7 +1159,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T07:49:36.505Z"
+      "freshness": "2026-08-03T00:11:56.319Z"
     },
     {
       "title": "Medición para el piloto de clasificación — aiw-console",
@@ -1131,7 +1167,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-02T03:15:18.824Z"
+      "freshness": "2026-08-03T00:11:56.320Z"
     },
     {
       "title": "MEDICIÓN PREVIA A LA CLASIFICACIÓN — los 21 `planned` de `aiw`",
@@ -1139,7 +1175,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-02T03:20:27.323Z"
+      "freshness": "2026-08-03T00:11:56.320Z"
     },
     {
       "title": "MEDICIÓN DEL EMISOR — el proyector de AIW",
@@ -1147,7 +1183,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T02:29:28.400Z"
+      "freshness": "2026-08-03T00:11:56.321Z"
     },
     {
       "title": "MEDICIÓN — Roadmap v3 de Cantu y `taxonomy_model`",
@@ -1155,7 +1191,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-23T23:36:52.332Z"
+      "freshness": "2026-08-03T00:11:56.321Z"
     },
     {
       "title": "MEDICIÓN — superficie documental de los componentes Web y forma del packet",
@@ -1163,7 +1199,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T09:58:06.783Z"
+      "freshness": "2026-08-03T00:11:56.322Z"
     },
     {
       "title": "MEDICIÓN DE SUPERFICIES — los cinco campos de clasificación (`#43`)",
@@ -1171,7 +1207,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T19:58:18.425Z"
+      "freshness": "2026-08-03T00:11:56.323Z"
     },
     {
       "title": "MEDICIÓN — validador de Cantu en rojo tras la extracción de O0",
@@ -1179,7 +1215,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T08:46:34.694Z"
+      "freshness": "2026-08-03T00:11:56.324Z"
     },
     {
       "title": "Mensaje del modal de fórmula, medición del hueco MathLive/KaTeX y constantes rectas (cantu-studio)",
@@ -1187,7 +1223,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T08:14:28.374Z"
+      "freshness": "2026-08-03T00:11:56.324Z"
     },
     {
       "title": "METODOLOGÍA OPERATIVA A ORDEN ROADMAP-FIRST — RUN `#4` EN CANTU",
@@ -1195,7 +1231,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T02:01:28.451Z"
+      "freshness": "2026-08-03T00:11:56.325Z"
     },
     {
       "title": "MIGRACIÓN DE CANTU-STUDIO A CARRILES",
@@ -1203,7 +1239,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-27T23:56:19.623Z"
+      "freshness": "2026-08-03T00:11:56.325Z"
     },
     {
       "title": "MIGRACIÓN O0 — extracción del roadmap de Cantu a aiw-console",
@@ -1211,7 +1247,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T08:26:08.077Z"
+      "freshness": "2026-08-03T00:11:56.326Z"
     },
     {
       "title": "MODELO CANÓNICO DE DOCUMENTACIÓN DE CANTU — EJECUCIÓN DEL q2 DEL CARRIL DOCUMENTATION",
@@ -1219,7 +1255,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T08:11:47.307Z"
+      "freshness": "2026-08-03T00:11:56.327Z"
     },
     {
       "title": "Paleta de autor a través del compilador y el motor Web — ejecución del run 19",
@@ -1227,7 +1263,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-02T03:12:44.122Z"
+      "freshness": "2026-08-03T00:11:56.327Z"
     },
     {
       "title": "PARTICIÓN DE LOS RUNS QUE EMPAQUETABAN IMPLEMENTACIÓN Y DOCUMENTACIÓN",
@@ -1235,7 +1271,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T04:42:27.348Z"
+      "freshness": "2026-08-03T00:11:56.328Z"
     },
     {
       "title": "Picker «Personalizado» y medición del hex en el compilador",
@@ -1243,7 +1279,15 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T07:27:57.637Z"
+      "freshness": "2026-08-03T00:11:56.328Z"
+    },
+    {
+      "title": "Piloto de revalidación de componente — «Lista» — `cantu-studio`, `queue_order` 20",
+      "path": "context/aiw-console/records/PILOTO-REVALIDACION-COMPONENTE-LISTA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T05:34:31.624Z"
     },
     {
       "title": "PORT IDÉNTICO — la consola viva de Cantu, trasplantada sobre las fuentes de `aiw-console` (`O4.P11`)",
@@ -1251,7 +1295,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T22:53:48.096Z"
+      "freshness": "2026-08-03T00:11:56.329Z"
     },
     {
       "title": "PORTABILIDAD DE LA EVIDENCIA DE AIW — TRES DE CUATRO ADJUDICACIONES",
@@ -1259,7 +1303,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T23:48:33.751Z"
+      "freshness": "2026-08-03T00:11:56.329Z"
     },
     {
       "title": "EL PROYECTOR Y LOS BANCOS DE CASOS DE EVALUACIÓN DE AIW",
@@ -1267,7 +1311,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T10:25:57.163Z"
+      "freshness": "2026-08-03T00:11:56.330Z"
     },
     {
       "title": "RECORD — publicación de la especificación de clasificación de runs",
@@ -1275,7 +1319,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T01:14:49.563Z"
+      "freshness": "2026-08-03T00:11:56.330Z"
     },
     {
       "title": "RE-ARCHIVO — El bloque de rename sale de O0 y entra en O2",
@@ -1283,7 +1327,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T01:38:32.780Z"
+      "freshness": "2026-08-03T00:11:56.331Z"
     },
     {
       "title": "RECONCILIACIÓN DE LA COLA DE AIW",
@@ -1291,7 +1335,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T01:41:04.542Z"
+      "freshness": "2026-08-03T00:11:56.331Z"
     },
     {
       "title": "REDACCIÓN O4 — conversión de \"Consola global\" a `roadmap_tree_v1`",
@@ -1299,7 +1343,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T10:28:41.017Z"
+      "freshness": "2026-08-03T00:11:56.332Z"
     },
     {
       "title": "Rediseño del carril DOCUMENTATION de Cantu Studio",
@@ -1307,7 +1351,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T04:10:25.202Z"
+      "freshness": "2026-08-03T00:11:56.333Z"
     },
     {
       "title": "RE-EMISIÓN — el botón que pone `.project/` al día con su canónico (`O4.P14`)",
@@ -1315,7 +1359,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T06:15:03.232Z"
+      "freshness": "2026-08-03T00:11:56.333Z"
     },
     {
       "title": "RE-ENCUADRE DE LOS DIECISIETE DOC-RUNS DE COMPONENTE WEB DE CANTU",
@@ -1323,7 +1367,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T19:16:27.610Z"
+      "freshness": "2026-08-03T00:11:56.333Z"
     },
     {
       "title": "RE-ENCUADRE DE OCHO RUNS CUYO TEXTO YA NO DESCRIBE LO QUE FALTA — CANTU",
@@ -1331,7 +1375,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T20:33:15.397Z"
+      "freshness": "2026-08-03T00:11:56.334Z"
     },
     {
       "title": "REESTRUCTURACIÓN DEL ROADMAP — cuatro fases nuevas por naturaleza del trabajo",
@@ -1339,7 +1383,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T09:23:11.386Z"
+      "freshness": "2026-08-03T00:11:56.335Z"
     },
     {
       "title": "Refresco de la Definition of Done de revalidación de componentes",
@@ -1347,7 +1391,15 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T22:40:47.765Z"
+      "freshness": "2026-08-03T00:11:56.335Z"
+    },
+    {
+      "title": "RELEVO DE `aiw` AL CIERRE DEL 2026-08-02",
+      "path": "context/aiw-console/records/RELEVO-AIW-AL-CIERRE-2026-08-02.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T02:23:05.975Z"
     },
     {
       "title": "Relevo de `cantu-studio` al cierre del 2026-08-01",
@@ -1355,7 +1407,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T07:03:16.963Z"
+      "freshness": "2026-08-03T00:11:56.336Z"
     },
     {
       "title": "Reparación del enum de Header y medición de clases de defecto",
@@ -1363,7 +1415,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T03:19:21.514Z"
+      "freshness": "2026-08-03T00:11:56.336Z"
     },
     {
       "title": "REPARACIÓN DEL PARSEO DE LOS SEIS TICKETS DE AIW",
@@ -1371,7 +1423,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T02:27:19.764Z"
+      "freshness": "2026-08-03T00:11:56.337Z"
     },
     {
       "title": "Reparación del selector de color de Header",
@@ -1379,7 +1431,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T00:44:52.296Z"
+      "freshness": "2026-08-03T00:11:56.337Z"
     },
     {
       "title": "RESTITUCIÓN DE LAS 17 ARISTAS DE `#47` Y RE-ENCUADRE A AUDITORÍA AL CIERRE — CANTU",
@@ -1387,7 +1439,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T21:05:27.999Z"
+      "freshness": "2026-08-03T00:11:56.338Z"
     },
     {
       "title": "RETIRO DE `roadmap_AIW_temp.md` Y PUBLICACIÓN DE LA TABLA DE EQUIVALENCIA",
@@ -1395,7 +1447,15 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T05:48:54.414Z"
+      "freshness": "2026-08-03T00:11:56.338Z"
+    },
+    {
+      "title": "Retiro del run de las compuertas de variante del compilador",
+      "path": "context/aiw-console/records/RETIRO-RUN-COMPUERTAS-VARIANTE-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T04:52:37.695Z"
     },
     {
       "title": "Revalidación de Columns y veredicto sobre la DoD",
@@ -1403,7 +1463,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T20:33:29.439Z"
+      "freshness": "2026-08-03T00:11:56.339Z"
     },
     {
       "title": "Señal de vista previa inválida, botón y tipografía del editor de fórmulas (cantu-studio)",
@@ -1411,7 +1471,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-29T09:40:44.643Z"
+      "freshness": "2026-08-03T00:11:56.340Z"
     },
     {
       "title": "SHELL MULTIPROYECTO — la consola agrega N proyectos con menú lateral (`O4.P3`)",
@@ -1419,7 +1479,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-25T12:09:10.299Z"
+      "freshness": "2026-08-03T00:11:56.340Z"
     },
     {
       "title": "SUITE CONTRA FIXTURES",
@@ -1427,7 +1487,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T02:34:53.618Z"
+      "freshness": "2026-08-03T00:11:56.341Z"
     },
     {
       "title": "Tolerancia de los campos de clasificación de runs en `cantu-studio`",
@@ -1435,7 +1495,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-01T05:06:44.147Z"
+      "freshness": "2026-08-03T00:11:56.341Z"
     },
     {
       "title": "TRADUCCIÓN DEL ROADMAP CANÓNICO DE `aiw-console` AL INGLÉS",
@@ -1443,7 +1503,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-28T01:05:56.699Z"
+      "freshness": "2026-08-03T00:11:56.342Z"
     },
     {
       "title": "Unificación del selector de color Web y la compuerta del compilador",
@@ -1451,7 +1511,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T05:07:22.899Z"
+      "freshness": "2026-08-03T00:11:56.342Z"
     },
     {
       "title": "VEREDICTO — `roadmap_tree_v1` como formato consumible",
@@ -1459,7 +1519,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-24T20:26:13.701Z"
+      "freshness": "2026-08-03T00:11:56.343Z"
     },
     {
       "title": "Verificación del packet de Columns y fijado de las convenciones de auditoría",
@@ -1467,7 +1527,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-07-31T00:18:36.337Z"
+      "freshness": "2026-08-03T00:11:56.343Z"
     },
     {
       "title": "AIW — Orchestration Context",
@@ -1475,7 +1535,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw",
-      "freshness": "2026-07-23T18:54:06.429Z"
+      "freshness": "2026-08-03T00:11:56.344Z"
     },
     {
       "title": "Audit Report — AIW Kernel v1",
@@ -1483,7 +1543,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw",
-      "freshness": "2026-07-24T12:19:12.546Z"
+      "freshness": "2026-08-03T00:11:56.345Z"
     },
     {
       "title": "Audit Report — Contexto y Metodología (v1)",
@@ -1491,7 +1551,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw",
-      "freshness": "2026-07-24T12:20:12.983Z"
+      "freshness": "2026-08-03T00:11:56.346Z"
     },
     {
       "title": "DELEGACION.md — Rúbrica de ruteo de trabajo (v1)",
@@ -1499,7 +1559,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw",
-      "freshness": "2026-07-11T01:43:21.346Z"
+      "freshness": "2026-08-03T00:11:56.347Z"
     },
     {
       "title": "ESTADO.md — actualizar al cierre de cada sesión",
@@ -1507,7 +1567,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw",
-      "freshness": "2026-07-23T18:54:06.415Z"
+      "freshness": "2026-08-03T00:11:56.348Z"
     },
     {
       "title": "RETIRADO — este documento ya no es autoridad",
@@ -1515,7 +1575,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw",
-      "freshness": "2026-07-29T05:43:53.575Z"
+      "freshness": "2026-08-03T00:11:56.348Z"
     },
     {
       "title": "Cantu Studio - Orchestration Context",
@@ -1523,15 +1583,15 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/cantu-studio",
-      "freshness": "2026-07-28T04:36:28.517Z"
+      "freshness": "2026-08-03T00:11:56.349Z"
     },
     {
-      "title": "HANDOFF — hilo `aiw-console` (la consola)",
+      "title": "Relevo — hilo `aiw-console`",
       "path": "context/handoffs/aiw-console.md",
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-08-01T09:38:16.512Z"
+      "freshness": "2026-08-03T02:45:42.700Z"
     },
     {
       "title": "Handoff — hilo `aiw`",
@@ -1539,7 +1599,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-07-31T09:41:24.417Z"
+      "freshness": "2026-08-03T02:22:39.315Z"
     },
     {
       "title": "HANDOFF — hilo `cantu-studio` (el proyecto)",
@@ -1547,7 +1607,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-08-01T07:00:49.091Z"
+      "freshness": "2026-08-03T00:11:56.351Z"
     },
     {
       "title": "Snapshot schema v1 — `project_console.snapshot.json`",
@@ -1555,7 +1615,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "docs",
-      "freshness": "2026-07-22T21:23:17.032Z"
+      "freshness": "2026-08-03T00:11:56.357Z"
     },
     {
       "title": "Project Console (transplanted, multi-project; read-only plus three write routes)",
@@ -1563,7 +1623,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "project-console",
-      "freshness": "2026-07-28T06:07:06.457Z"
+      "freshness": "2026-08-03T00:11:56.361Z"
     },
     {
       "title": "start-console (.cmd / .ps1)",
@@ -1571,7 +1631,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "root",
-      "freshness": "2026-07-26T03:24:18.564Z"
+      "freshness": "2026-08-03T00:11:56.368Z"
     }
   ]
 }

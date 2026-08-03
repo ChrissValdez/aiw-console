@@ -1,27 +1,47 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-03T05:47:33.974Z",
+  "generated_at": "2026-08-03T06:25:13.581Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-03T05:12:14.462Z"
+      "mtime": "2026-08-03T06:24:02.774Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-03T05:47:33.971Z"
+      "mtime": "2026-08-03T06:20:05.080Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "e1b5e05662c701281d24350cb780d21a2ac8e894",
+  "head": "43834d5c52b86495fe1ec925cc00b4580e6dd8a0",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 151,
+  "commit_total": 153,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "43834d5",
+      "full_sha": "43834d5c52b86495fe1ec925cc00b4580e6dd8a0",
+      "date": "2026-08-02T23:48:41-06:00",
+      "parents": "dcd22e7",
+      "subject": "record: audit(cantu): revalidation pilot for the List component - ten steps executed, five defects measured and none repaired pending operator QA, seven divergences declared, procedure verdict delivered",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "dcd22e7",
+      "full_sha": "dcd22e73b9fe6929c869eeea563d92d7a6cfba11",
+      "date": "2026-08-02T23:48:05-06:00",
+      "parents": "e1b5e05",
+      "subject": "roadmap: alta de depends_on_human_approved - lista opcional de run con seis invariantes, transporte verificado y superficie propia en la consola; la frontera con aiw fijada por tests; coste medido en 17 sitios sobre 3 archivos de codigo",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "e1b5e05",

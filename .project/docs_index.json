@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-03T05:47:33.974Z",
+  "generated_at": "2026-08-03T06:25:13.581Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -235,6 +235,10 @@
     {
       "path": "context/aiw-console/records/INDICE-DOCS-CURADO-AIW.md",
       "mtime": "2026-08-03T00:11:56.311Z"
+    },
+    {
+      "path": "context/aiw-console/records/INSERCION-REGISTRO-DE-CAMPOS.md",
+      "mtime": "2026-08-03T06:23:58.356Z"
     },
     {
       "path": "context/aiw-console/records/INSERCION-RUN-PROYECTOR-CASE-BANKS.md",
@@ -1040,6 +1044,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T00:11:56.311Z"
+    },
+    {
+      "title": "Inserción del run del registro de campos en `queue_order` 47",
+      "path": "context/aiw-console/records/INSERCION-REGISTRO-DE-CAMPOS.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T06:23:58.356Z"
     },
     {
       "title": "INSERCIÓN DEL RUN DEL PROYECTOR Y LOS BANCOS DE CASOS",

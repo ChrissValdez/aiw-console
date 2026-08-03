@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-03T06:25:13.581Z",
+  "generated_at": "2026-08-03T08:39:21.589Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -129,6 +129,10 @@
       "mtime": "2026-08-03T00:11:56.295Z"
     },
     {
+      "path": "context/aiw-console/records/CLASIFICACION-Y-REPARACION-REGISTRO-DE-CAMPOS.md",
+      "mtime": "2026-08-03T06:34:39.252Z"
+    },
+    {
       "path": "context/aiw-console/records/CONGELADO-MAPA-NOMBRES-Y-BARRIDO-RUTA-LEGACY-CANTU.md",
       "mtime": "2026-08-03T00:11:56.295Z"
     },
@@ -199,6 +203,10 @@
     {
       "path": "context/aiw-console/records/ENCADENAMIENTO-CONTRATOS-7-8-A-9-CANTU.md",
       "mtime": "2026-08-03T00:11:56.305Z"
+    },
+    {
+      "path": "context/aiw-console/records/ESCRITURA-CLASIFICACION-21-RUNS-AIW.md",
+      "mtime": "2026-08-03T07:00:37.571Z"
     },
     {
       "path": "context/aiw-console/records/ESCRITURA-CLASIFICACION-DOCE-RUNS-AIW-CONSOLE-2.md",
@@ -451,6 +459,10 @@
     {
       "path": "context/aiw-console/records/REVALIDACION-COLUMNS-Y-VEREDICTO-DE-LA-DOD-CANTU.md",
       "mtime": "2026-08-03T00:11:56.339Z"
+    },
+    {
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-LISTA-CON-ETIQUETAS-CANTU.md",
+      "mtime": "2026-08-03T06:40:47.950Z"
     },
     {
       "path": "context/aiw-console/records/SENAL-DE-PREVIA-INVALIDA-Y-SUPERFICIE-DEL-EDITOR-DE-FORMULAS-CANTU.md",
@@ -830,6 +842,14 @@
       "freshness": "2026-08-03T00:11:56.295Z"
     },
     {
+      "title": "Clasificación y reparación de texto del run `queue_order` 47 — «One registry for the plumbing every optional run field repeats»",
+      "path": "context/aiw-console/records/CLASIFICACION-Y-REPARACION-REGISTRO-DE-CAMPOS.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T06:34:39.252Z"
+    },
+    {
       "title": "Congelado del mapa de nombres y barrido de la ruta legacy (cantu-studio)",
       "path": "context/aiw-console/records/CONGELADO-MAPA-NOMBRES-Y-BARRIDO-RUTA-LEGACY-CANTU.md",
       "nav_tier": "evidence",
@@ -972,6 +992,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T00:11:56.305Z"
+    },
+    {
+      "title": "Escritura de la clasificación aprobada en los 21 runs `planned` de `aiw`",
+      "path": "context/aiw-console/records/ESCRITURA-CLASIFICACION-21-RUNS-AIW.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T07:00:37.571Z"
     },
     {
       "title": "Escritura de la clasificación de los doce runs vivos — aiw-console (2.º intento, EJECUTADO)",
@@ -1476,6 +1504,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T00:11:56.339Z"
+    },
+    {
+      "title": "Revalidación de componente — «Lista con etiquetas» (`iconList`) — `cantu-studio`, `queue_order` 21",
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-LISTA-CON-ETIQUETAS-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T06:40:47.950Z"
     },
     {
       "title": "Señal de vista previa inválida, botón y tipografía del editor de fórmulas (cantu-studio)",

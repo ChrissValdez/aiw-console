@@ -1,27 +1,67 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-03T06:25:13.581Z",
+  "generated_at": "2026-08-03T08:39:21.589Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-03T06:24:02.774Z"
+      "mtime": "2026-08-03T08:38:13.349Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-03T06:20:05.080Z"
+      "mtime": "2026-08-03T06:31:16.374Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "43834d5c52b86495fe1ec925cc00b4580e6dd8a0",
+  "head": "04b1ecbf4fc2de7a589100c94f318ea421d7fdd7",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 153,
+  "commit_total": 157,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "04b1ecb",
+      "full_sha": "04b1ecbf4fc2de7a589100c94f318ea421d7fdd7",
+      "date": "2026-08-03T02:38:10-06:00",
+      "parents": "fac43dd",
+      "subject": "record: roadmap: clasificacion de los 21 runs vivos escrita por el motor bajo D-059/D-060, marca unica 2026-08-03T06:57:46.901Z; .project/ re-emitido",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fac43dd",
+      "full_sha": "fac43ddf8ec838efe0eeaa7e2690ecdc10e9a5d6",
+      "date": "2026-08-03T00:54:24-06:00",
+      "parents": "c0c8e0b",
+      "subject": "record: audit(cantu): revalidation of the IconList component - ten steps executed, six defects measured and none repaired pending operator QA, four divergences declared",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c0c8e0b",
+      "full_sha": "c0c8e0bdc6773fd5b4e39726c6476f9a41f5b6a8",
+      "date": "2026-08-03T00:42:59-06:00",
+      "parents": "5b9cf21",
+      "subject": "roadmap: clasifica el registro de fontaneria de campos - SPECIFIED/FUNCTIONAL/ADJACENT/SILENT, deriva MAJOR y SEMI_ATTENDED; y su texto deja de citar una posicion para citar el titulo del run que aporto la medicion",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "5b9cf21",
+      "full_sha": "5b9cf21678a8a861ced3244822555462ef49d1ca",
+      "date": "2026-08-03T00:28:01-06:00",
+      "parents": "43834d5",
+      "subject": "roadmap: inserta el registro de fontaneria de campos en queue_order 47 - nueve runs desplazados a 48..56, arista del run de batches hacia el nuevo; 56 runs densos, cero colgantes, los doce clasificados intactos",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "43834d5",

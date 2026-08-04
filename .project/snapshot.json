@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-03T09:19:11.922Z",
+  "generated_at": "2026-08-04T21:47:16.241Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-03T06:31:16.374Z"
+      "mtime": "2026-08-04T21:47:16.234Z"
     },
     {
       "path": "package.json",
@@ -41,7 +41,7 @@
   ],
   "operational_status": "idle",
   "project_summary": "AIW Console Roadmap: 2 objectives, 23 phases, 56 runs.",
-  "current_status_summary": "No active run; 45 of 56 runs completed.",
+  "current_status_summary": "No active run; 46 of 56 runs completed.",
   "roadmap_tree": {
     "model": "roadmap_tree_v1",
     "roadmap_id": "roadmap",
@@ -787,6 +787,9 @@
                   "RUN-CONSOLE-UI-UX-001",
                   "RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001"
                 ],
+                "depends_on_human_approved": [
+                  "RUN-CONSOLE-DEPENDS-ON-HUMAN-APPROVED-001"
+                ],
                 "correctness_model": "JUDGED_ACCEPTS",
                 "work_type": "FOUNDATIONAL",
                 "blast_radius": "PROJECT_SHAPE",
@@ -910,7 +913,7 @@
                 "title": "Freeze the shape of progress so human approval becomes machine-readable",
                 "summary": "The new edge can be written but nothing can check it: promote progress from evidence to norm so a validator can answer whether a person reviewed a run.",
                 "full_description": "THE GAP THIS CLOSES: the previous run lets a run declare that it waits for a person, but nothing can answer whether that has happened. The four statuses — planned, active, blocked, completed — do not distinguish a run an AI closed from one a person reviewed, so a validator reading depends_on_human_approved has nothing to look at. THE SURFACE ALREADY EXISTS AND IS ALREADY RENDERED: progress carries cycles with ai_review, human_qa and commit/closeout, and the console already paints the current cycle, the stage in progress and the result of each human QA. Nothing has to be invented. WHAT IS MISSING IS ITS STATUS: CONTRATO §15 declares that the internal shape of progress is NOT frozen at that layer, because it existed in one run out of sixty-five and was therefore treated as evidence rather than norm. A shape that is not frozen cannot be read by a validator. This run promotes it: from evidence to norm, in the contract. THE MOMENT IS NOW AND NOT LATER, because freezing a shape obliges every run that carries it, and today almost none do — measured, zero of forty-two in aiw. The reason §15 left it unfrozen no longer holds: it was rare because AIW was not connected, not because the shape was in doubt. SECOND DEFECT, MEASURED IN THIS SESSION AND FIXED HERE BECAUSE IT IS THE SAME SURFACE: the operator closes runs by hand and leaves closeout_result empty — seven of this roadmap's forty-three terminal runs carry no value — and the History view renders those as blocked. Empty is not blocked, and a correctly closed run showing as a problem corrupts the memory of the system. The operator's decision, already taken: closeout_result becomes REQUIRED at close, with the console asking for it, and History stops painting absence as a blockage. VERIFY BEFORE BUILDING rather than assuming from this text: what values closeout_result actually holds today, and what writes it.",
-                "status": "planned",
+                "status": "completed",
                 "depends_on": [
                   "RUN-CONSOLE-DEPENDS-ON-HUMAN-APPROVED-001"
                 ],
@@ -922,7 +925,8 @@
                   "obliges_project:aiw",
                   "obliges_project:cantu-studio"
                 ],
-                "classified_at": "2026-08-02T07:27:15.845Z"
+                "classified_at": "2026-08-02T07:27:15.845Z",
+                "closeout_result": "done as specified"
               },
               {
                 "run_id": "RUN-CONSOLE-FIELD-PLUMBING-REGISTRY-001",

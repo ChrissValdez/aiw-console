@@ -1528,9 +1528,54 @@ Candidato a estructurarse — separar `code` + `notes` — **el día que algo lo
 con esa forma**, no antes. Hoy ningún emisor lo escribe; estructurarlo sin emisor y
 sin ejemplo es §3.b.
 
-## 15. `progress`: opcional, documentado, NO congelado
+### 14.a PRECISIÓN — la lista de la consola es SUGERIDA, no un vocabulario
 
-Opcional. Existe en **1 de 65 runs**
+**Añadido el 2026-08-04**, enmienda del mismo run 46 (record
+`records/PROGRESS-COMO-NORMA.md`, sección H). **No cambia nada de §14: se escribe
+para que no se pueda leer mal.**
+
+Desde esta fecha la superficie de cierre de la consola ofrece **cinco desenlaces
+sugeridos** —`done as specified`, `done with deviations`, `superseded`,
+`not needed`, `partially done`— con el primero preseleccionado, más una entrada
+«Write my own outcome…» que abre una caja de texto libre. Su única razón es de
+coste: el cierre a mano es el gesto que el operador repite decenas de veces, y una
+lista lo convierte en confirmar en vez de redactar.
+
+**Lo que esa lista NO es:**
+
+- **NO es un enum.** `closeout_result` sigue siendo `string` sin enum, exactamente
+  como adjudica §14 y registra la fila `i` de la tabla de capa 2. El motor sigue
+  aceptando **cualquier texto no vacío**: un desenlace que nadie previó se guarda
+  verbatim. Cerrar la lista haría indeclarable ese caso, y eso sería adjudicación
+  de cabina, no una decisión de taller.
+- **NO es norma de este contrato.** La lista vive **solo en la pantalla**
+  (`project-console/assets/project-console.js`, `V3_CLOSEOUT_SUGGESTIONS`) y el
+  motor no conoce ninguno de los cinco tokens. Ningún consumidor de este contrato
+  debe esperarlos, validarlos ni derivar nada de ellos.
+- **NO es un default del motor.** La preselección es AYUDA DE PANTALLA. El motor
+  sigue rehusando `set-status` a un estado terminal sin desenlace
+  (`tools/roadmap/roadmap-core.mjs`, `setStatus` — precondición del ACTO, no
+  requisito de forma: §14 y §21 siguen intactos y `checkInvariants` no levanta nada
+  por ausencia). Un run **ya terminal sin desenlace** —los 9 de 45 medidos el
+  2026-08-03 en el canónico de este proyecto— **no se rellena**: la pantalla le
+  muestra «(no outcome recorded)» y solo un acto deliberado del operador le escribe
+  un valor.
+
+## 15. `progress`: opcional, y su forma interna CONGELADA — NORMA
+
+**Enmendado el 2026-08-03** por adjudicación de la cabina y el operador, ejecutada
+por el run `queue_order` 46 de este roadmap (`RUN-CONSOLE-PROGRESS-NORMATIVE-001`,
+«Freeze the shape of progress so human approval becomes machine-readable»; record
+`records/PROGRESS-COMO-NORMA.md`). La versión anterior de esta sección declaraba la
+forma NO congelada; esa decisión está registrada como fila `j` de la tabla de capa 2
+(D-040, 2026-07-23), que registra lo adjudicado en su fecha y no se reescribe. La
+razón de `j` —"1 de 65 es evidencia débil"— caducó por su otra mitad: la rareza
+venía de que AIW no estaba conectado, no de que la forma estuviera en duda, y una
+forma sin congelar no la puede leer ningún validador.
+
+### 15.a La medición original — evidencia de acto pasado, se conserva
+
+Existía en **1 de 65 runs**
 (`RUN-JAME-PROJECT-CONSOLE-ROADMAP-V3-PROTOTYPE-001`, CANTU-ROADMAP:51 vía
 MEDICION:274-277): un array de 13 entradas, cada una con exactamente estas cinco
 claves (MEDICION:278-284):
@@ -1543,15 +1588,81 @@ claves (MEDICION:278-284):
 | `state` | `done` (13/13) |
 | `result` | `implemented`, `approved`, `changes_requested`, `passed`, `completed` |
 
-Esta tabla es **evidencia, no norma**. Un solo ejemplar es evidencia débil, y la
-propia medición lo dice: "cualquier contrato que lo asuma general estaría asumiendo
-un caso único" (MEDICION:288-290). **La forma interna de `progress` NO se congela
-en esta capa.** Lo único normativo aquí: la clave es opcional, ausente por defecto,
-y su ausencia no invalida el run (64/65 no la tienen).
+Puntero al estado vigente (medido 2026-08-03): ese run vive hoy en el canónico de
+ESTE proyecto (`roadmap/roadmap.json`, `queue_order` 3) y sigue siendo el único
+ejemplar con `progress`: 1 de 56 aquí, 0 de 46 en `aiw`, 0 de 66 en
+`cantu-studio`. Una sola variante viva; la congelación no invalida ningún canónico
+registrado.
 
-El único vocabulario de estado-por-etapa de todo el roadmap vive aquí, en un run.
+### 15.b La forma congelada
+
+Se congela **la forma que ya existe en disco y que la consola ya pinta** — no se
+inventa estructura. Cada pieza lleva su testigo: el ejemplar de 15.a, o el lector
+ya embarcado que la lee (`project-console/assets/project-console.js`,
+`tools/roadmap/roadmap-core.mjs`).
+
+- `progress` sigue **OPCIONAL, ausente por defecto**; su ausencia no invalida el
+  run. Presente → **array NO VACÍO de objetos-entrada**.
+- Claves de entrada — **requeridas:** `cycle`, `stage`, `attempt`, `state`;
+  **opcionales:** `result`, `note`; **ninguna otra.** (`result` presente en 13/13
+  entradas del ejemplar pero el lector lo guarda con `"result" in entry`,
+  project-console.js:3348,3363; `note` con 0 ejemplares en disco pero pintada por
+  el lector, project-console.js:3379 — congelar entradas sin `note` declararía
+  ilegal lo que la consola embarcada ya pinta.)
+- `cycle`: entero ≥ 1. `attempt`: entero ≥ 1.
+- `stage` ∈ {`execution`, `ai_review`, `human_qa`, `correction`, `closeout`} —
+  CERRADO (los cinco del ejemplar, los cinco del mapa de etiquetas,
+  project-console.js:189-195).
+- `state` ∈ {`waiting`, `running`, `done`} — CERRADO (en disco solo `done`; el
+  motor deriva la frontera activa de `waiting`/`running`, roadmap-core.mjs:799, y
+  la consola los pinta, project-console.js:196-200. Congelar solo `done` haría
+  insatisfacible por construcción la frontera que el propio motor exige a un run
+  `active` con `progress`).
+- `result`: string NO VACÍA, **sin enum** — el criterio de §14: la consola mapea
+  etiquetas y cae a la cadena cruda (project-console.js:3363). `note`: string NO
+  VACÍA.
+- El **acoplamiento con `status`** no cambia y sigue siendo ley del motor en el
+  acto de mutación (roadmap-core.mjs `statusProgressErrors`): `planned` no lleva
+  `progress`; `active` con `progress` exige frontera `waiting`/`running`;
+  terminal exige todas las entradas `done`. El validador estático
+  (`checkInvariants`) valida la **FORMA** de las entradas; el acoplamiento
+  pertenece al acto, donde ya vivía.
+- El **orden interno** de las entradas no se congela: ningún lector embarcado
+  depende de él más allá de lo que el acoplamiento ya impone, y congelarlo sería
+  regla sin testigo (§3.b).
+
+La implementación única de esta forma vive en `tools/progress/progress.mjs` — el
+mismo patrón de una-sola-implementación que `tools/classification/classification.mjs`:
+el motor la importa y la consola la recibe inyectada; ningún consumidor lleva copia.
+
+### 15.c ADJUDICADO: la QA humana positiva satisface la arista — `completed` solo, NO
+
+**Adjudicado por la cabina y el operador (run 46), y ésta es la mitad que motiva
+el congelado:** los cuatro `status` de §11.a no distinguen un run que cerró una IA
+de uno que revisó una persona. La distinción vive en `progress`, y ahora es norma:
+
+- Un run tiene **QA HUMANA POSITIVA** cuando su `progress` contiene al menos una
+  entrada con `stage: "human_qa"`, `state: "done"` y `result: "passed"` — un ciclo
+  con QA humana de resultado positivo. `passed` es el único token positivo con
+  ejemplar en disco (15.a) y el que la consola etiqueta "Passed"
+  (project-console.js:204); `changes_requested` es el negativo medido — la propia
+  consola le reserva el tono negativo (project-console.js:3352) — y NO satisface;
+  cualquier otro valor de `result` NO satisface (cerrado en falso).
+- Esa QA positiva **SATISFACE una arista `depends_on_human_approved` que apunte a
+  ese run** (§10.d segunda lista, decisión del run 45).
+- **`status: "completed"` por sí solo NO satisface la arista.** Ese es el hueco
+  entero que esta sección cierra.
+
+Consecuencia obligatoria en la consola: la fila del destino que hoy dice
+**«work done · awaiting a person's review»** dice la verdad completa cuando el
+destino trae esa QA positiva; cuando NO la trae, sigue diciendo exactamente lo de
+hoy — **nunca «satisfied» sin QA positiva registrada**. El predicado es la misma
+implementación única (`tools/progress/progress.mjs`, `humanApprovalSatisfied`);
+sin el módulo inyectado la consola cae al texto de hoy, jamás a «satisfied».
+
 El detalle de run de la consola deriva su "Current stage" de este array (Anexo
-B.1) — para los otros 64 runs no hay de dónde derivar.
+B.1) — para los runs sin `progress` no hay de dónde derivar, y eso sigue siendo
+correcto: ausencia es un estado, no un hueco.
 
 ## 16. `category` (D-029) y `batch` (D-030) — reservados, nacen vacíos
 

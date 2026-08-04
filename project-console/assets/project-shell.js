@@ -29,8 +29,15 @@
 // Node tests, and over HTTP from the repository root the console's server already serves.
 import * as classification from "../../tools/classification/classification.mjs";
 
-// Re-exported so the suite can assert the shell hands over THE module and not a copy of it.
+// [#46] The ONE implementation of the frozen `progress` shape and the §15.c human-approval
+// predicate (CONTRATO §15). Imported, never copied, for the same reason as the
+// classification model above: "did a person review this run?" must have one answer, and the
+// engine imports this exact file too.
+import * as progress from "../../tools/progress/progress.mjs";
+
+// Re-exported so the suite can assert the shell hands over THE modules and not copies.
 export { classification };
+export { progress };
 
 // Registry location, fixed for the client — relative to the DOCUMENT
 // (/project-console/index.html), because fetch() resolves against the page, not this module.
@@ -531,6 +538,13 @@ async function shellBoot() {
 // falls back to a guess.
 if (IS_BROWSER && typeof setClassificationModel === "function") {
   setClassificationModel(classification);
+}
+
+// [#46] HAND THE PROGRESS MODEL TO THE RENDERER — same direction, same reason. A renderer
+// that was never handed the model keeps today's words on every human-approval row and never
+// claims "satisfied": fail-closed is the §15.c rule, not a degradation.
+if (IS_BROWSER && typeof setProgressModel === "function") {
+  setProgressModel(progress);
 }
 
 if (IS_BROWSER && document.getElementById("shell-sidebar")) {

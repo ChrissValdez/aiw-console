@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-03T09:19:11.922Z",
+  "generated_at": "2026-08-04T21:47:16.241Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -26,7 +26,7 @@
     },
     {
       "path": "context/PROCEDIMIENTO-DE-CLASIFICACION.md",
-      "mtime": "2026-08-03T00:11:56.281Z"
+      "mtime": "2026-08-03T09:58:45.788Z"
     },
     {
       "path": "context/README.md",
@@ -34,7 +34,7 @@
     },
     {
       "path": "context/aiw-console/CONTRATO.md",
-      "mtime": "2026-08-03T00:11:56.282Z"
+      "mtime": "2026-08-04T20:57:03.985Z"
     },
     {
       "path": "context/aiw-console/records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md",
@@ -321,6 +321,10 @@
       "mtime": "2026-08-03T00:11:56.321Z"
     },
     {
+      "path": "context/aiw-console/records/MEDICION-PUERTA-DE-OPERACIONES-Y-ETIQUETAS.md",
+      "mtime": "2026-08-03T09:48:10.063Z"
+    },
+    {
       "path": "context/aiw-console/records/MEDICION-ROADMAP-V3.md",
       "mtime": "2026-08-03T00:11:56.321Z"
     },
@@ -365,6 +369,10 @@
       "mtime": "2026-08-03T00:11:56.328Z"
     },
     {
+      "path": "context/aiw-console/records/PICKER-DE-COLOR-FORMATO-POR-DEFECTO-CANTU.md",
+      "mtime": "2026-08-03T09:40:44.171Z"
+    },
+    {
       "path": "context/aiw-console/records/PICKER-PERSONALIZADO-Y-MEDICION-DE-HEX-EN-EL-COMPILADOR-CANTU.md",
       "mtime": "2026-08-03T00:11:56.328Z"
     },
@@ -379,6 +387,10 @@
     {
       "path": "context/aiw-console/records/PORTABILIDAD-EVIDENCIA-AIW.md",
       "mtime": "2026-08-03T00:11:56.329Z"
+    },
+    {
+      "path": "context/aiw-console/records/PROGRESS-COMO-NORMA.md",
+      "mtime": "2026-08-04T21:02:47.124Z"
     },
     {
       "path": "context/aiw-console/records/PROYECTOR-BANCOS-DE-CASOS.md",
@@ -463,6 +475,10 @@
     {
       "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-LISTA-CON-ETIQUETAS-CANTU.md",
       "mtime": "2026-08-03T06:40:47.950Z"
+    },
+    {
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-TARJETA-CANTU.md",
+      "mtime": "2026-08-03T10:03:34.943Z"
     },
     {
       "path": "context/aiw-console/records/SENAL-DE-PREVIA-INVALIDA-Y-SUPERFICIE-DEL-EDITOR-DE-FORMULAS-CANTU.md",
@@ -639,7 +655,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-08-03T00:11:56.281Z"
+      "freshness": "2026-08-03T09:58:45.788Z"
     },
     {
       "title": "context/ — Contexto de gobernanza de la cabina",
@@ -655,7 +671,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw-console",
-      "freshness": "2026-08-03T00:11:56.282Z"
+      "freshness": "2026-08-04T20:57:03.985Z"
     },
     {
       "title": "ACABADO VISUAL de Docs y EMISOR de `git_history` — cierre del port de la consola",
@@ -1226,6 +1242,14 @@
       "freshness": "2026-08-03T00:11:56.321Z"
     },
     {
+      "title": "Medición: la puerta de operaciones, el artefacto que no carga y `closure_mode` en la lista",
+      "path": "context/aiw-console/records/MEDICION-PUERTA-DE-OPERACIONES-Y-ETIQUETAS.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T09:48:10.063Z"
+    },
+    {
       "title": "MEDICIÓN — Roadmap v3 de Cantu y `taxonomy_model`",
       "path": "context/aiw-console/records/MEDICION-ROADMAP-V3.md",
       "nav_tier": "evidence",
@@ -1314,6 +1338,14 @@
       "freshness": "2026-08-03T00:11:56.328Z"
     },
     {
+      "title": "Formato por defecto del selector de color personalizado en el editor de Cantu",
+      "path": "context/aiw-console/records/PICKER-DE-COLOR-FORMATO-POR-DEFECTO-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T09:40:44.171Z"
+    },
+    {
       "title": "Picker «Personalizado» y medición del hex en el compilador",
       "path": "context/aiw-console/records/PICKER-PERSONALIZADO-Y-MEDICION-DE-HEX-EN-EL-COMPILADOR-CANTU.md",
       "nav_tier": "evidence",
@@ -1344,6 +1376,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T00:11:56.329Z"
+    },
+    {
+      "title": "`progress` como norma — congelado de §15, QA humana legible por máquina, y el defecto de `closeout_result`",
+      "path": "context/aiw-console/records/PROGRESS-COMO-NORMA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-04T21:02:47.124Z"
     },
     {
       "title": "EL PROYECTOR Y LOS BANCOS DE CASOS DE EVALUACIÓN DE AIW",
@@ -1512,6 +1552,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T06:40:47.950Z"
+    },
+    {
+      "title": "Revalidación de componente — «Tarjeta» (`card`) — `cantu-studio`, `queue_order` 22",
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-TARJETA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-03T10:03:34.943Z"
     },
     {
       "title": "Señal de vista previa inválida, botón y tipografía del editor de fórmulas (cantu-studio)",

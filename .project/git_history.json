@@ -1,27 +1,57 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-03T09:19:11.922Z",
+  "generated_at": "2026-08-04T21:47:16.241Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-03T08:57:36.445Z"
+      "mtime": "2026-08-04T21:11:15.324Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-03T06:31:16.374Z"
+      "mtime": "2026-08-04T21:47:16.234Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "10181066e19fd1a0e204459d76a90a15ca42af20",
+  "head": "a5113aa4b825986221b11c993c1095f650b4da0a",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 159,
+  "commit_total": 162,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "a5113aa",
+      "full_sha": "a5113aa4b825986221b11c993c1095f650b4da0a",
+      "date": "2026-08-03T04:13:07-06:00",
+      "parents": "6c6ccd3",
+      "subject": "record: audit(cantu): revalidation of the Card component - seven defects measured and none repaired pending operator QA, nine divergences declared; card body collision has not returned",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6c6ccd3",
+      "full_sha": "6c6ccd3ce2743afd5175d733d729c9da2da99483",
+      "date": "2026-08-03T03:43:02-06:00",
+      "parents": "6a21d03",
+      "subject": "record: el picker de color personalizado es el input nativo del navegador; el formato por defecto no es controlable desde la app (encargo sin run, cero cambios de codigo)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6a21d03",
+      "full_sha": "6a21d038c3dfcf9edadc41754a901fe071181b86",
+      "date": "2026-08-03T03:19:27-06:00",
+      "parents": "1018106",
+      "subject": "chore(project): re-emite la derivada - el run 47 llevaba su clasificacion y su texto reparado en el canonico y no en .project",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "1018106",

@@ -214,3 +214,23 @@ este workspace ha producido.**
 **Hacia adelante.** Los records que lo alimentan son mediciones fechadas y no se
 reescriben. Una corrección entra como sección nueva o como enmienda datada, con la
 medición que la respalda.
+
+---
+
+## 9. La clasificación entra con el alta — añadido 2026-08-03
+
+**Adjudicado por la cabina y el operador** (run `queue_order` 46 de `aiw-console`,
+`RUN-CONSOLE-PROGRESS-NORMATIVE-001`; record
+`context/aiw-console/records/PROGRESS-COMO-NORMA.md`):
+
+> Un run que se CREA se clasifica en el mismo acto. El ticket que lo crea escribe
+> sus cuatro valores y su lista de guarda, o declara POR ESCRITO por qué no y en
+> qué turno se hará.
+
+Su caso medido, en una línea: el primer run creado tras instituirse el
+procedimiento (`RUN-CONSOLE-FIELD-PLUMBING-REGISTRY-001`, hoy `queue_order` 47)
+entró sin clasificar, y lo detectó el operador mirando la pantalla, no ningún
+mecanismo — sin clasificar no es error de ningún validador ni blocker de ninguna
+vista, así que la única alarma era la nota de la consola, y la clasificación llegó
+al día siguiente por encargo aparte
+(`records/CLASIFICACION-Y-REPARACION-REGISTRO-DE-CAMPOS.md`).

@@ -39,6 +39,20 @@ import {
   careBudgetErrors,
   normalizeCareBudget,
 } from "../classification/classification.mjs";
+// [#46] The frozen `progress` shape and the §15.c human-approval predicate, imported so
+// `checkInvariants` can validate the form and re-exported below so this engine stays the
+// address every existing importer already uses. One implementation for both runtimes —
+// the classification.mjs pattern; see that module's header for why the leaf lives there.
+import {
+  PROGRESS_STAGES,
+  PROGRESS_STATES,
+  PROGRESS_ENTRY_REQUIRED_FIELDS,
+  PROGRESS_ENTRY_OPTIONAL_FIELDS,
+  PROGRESS_ENTRY_ALLOWED_FIELDS,
+  HUMAN_QA_POSITIVE_RESULT,
+  progressShapeErrors,
+  humanApprovalSatisfied,
+} from "../progress/progress.mjs";
 
 // ---------------------------------------------------------------------------
 // Vocabulary (mirrors the validator's v3 allowlists; kept minimal per Q1)
@@ -139,6 +153,21 @@ export {
   FAILURE_SURFACES,
   CLASSIFICATION_VOCABULARIES,
   CLASSIFICATION_STORED_FIELDS,
+};
+// [#46] The frozen `progress` shape (CONTRATO §15.b) and the §15.c predicate, re-exported
+// under the same discipline: the vocabulary lives in the leaf both runtimes can load
+// (tools/progress/progress.mjs), the enforcement lives HERE — `checkInvariants` below is
+// the only thing that refuses a malformed shape, and the predicate is not called anywhere
+// in this engine. The engine validates what is STORED; satisfaction is the reader's
+// question.
+export {
+  PROGRESS_STAGES,
+  PROGRESS_STATES,
+  PROGRESS_ENTRY_REQUIRED_FIELDS,
+  PROGRESS_ENTRY_OPTIONAL_FIELDS,
+  PROGRESS_ENTRY_ALLOWED_FIELDS,
+  HUMAN_QA_POSITIVE_RESULT,
+  humanApprovalSatisfied,
 };
 // Canonical serialization order for a run object's keys.
 export const CANONICAL_RUN_KEY_ORDER = [...RUN_REQUIRED_FIELDS, ...RUN_OPTIONAL_FIELDS];
@@ -507,6 +536,15 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
         // here would be inventing a rule the specification does not state.
         if ("classified_at" in run && (typeof run.classified_at !== "string" || !run.classified_at)) {
           errors.push(`${runLabel} classified_at must be a non-empty string when present`);
+        }
+        // [#46] The frozen `progress` shape, CONTRATO §15.b. ABSENT IS ALWAYS LEGAL — the
+        // check is gated on `in`, like every optional key above, so a run without the key
+        // raises nothing. A PRESENT key is held to the frozen FORM (entry allowlist, closed
+        // stage/state vocabularies, positive integers, non-empty strings). The coupling
+        // with `status` is NOT checked here: it belongs to the mutation act, where it
+        // already lived (statusProgressErrors) — §15.b states the split.
+        if ("progress" in run) {
+          errors.push(...progressShapeErrors(run.progress, runLabel));
         }
         // [#43] The ILLEGAL COMBINATIONS of §3 that are decidable from STORED fields alone.
         // Both fire only when BOTH their fields are present: a half-classified run is
@@ -1200,6 +1238,21 @@ export function setStatus(obj, opts) {
   if (errors.length) return { errors, warnings };
 
   errors.push(...statusProgressErrors(entry.run, status, closeoutResult != null ? closeoutResult : null, `set-status ${run}`));
+  // [#46] closeout_result is REQUIRED AT CLOSE — the operator's decision, recorded in run
+  // 46's ticket: closing by hand and leaving it empty is what put 9 of 45 terminal runs
+  // in this canonical without an outcome, and History then painted them as blocked. The
+  // obligation binds THE ACT, not the stored data: a terminal run already on disk without
+  // the key stays valid (§14 untouched, checkInvariants raises nothing), old runs are NOT
+  // backfilled, and the postcondition is simply that a close ENDS with an outcome — one
+  // supplied here, or one the run already carries. Scoped to set-status on purpose: this
+  // is the close gesture the measurement caught; insert of a born-terminal run has no
+  // closeout channel and stays as it was.
+  if (closeoutResult != null && (typeof closeoutResult !== "string" || !closeoutResult.trim())) {
+    errors.push(`set-status ${run}: closeout_result must be a non-empty string; empty is not an outcome`);
+  }
+  if (TERMINAL_STATUSES.includes(status) && closeoutResult == null && !("closeout_result" in entry.run)) {
+    errors.push(`set-status ${run}: closing to ${status} requires a closeout_result — record the outcome of the run (empty is not blocked, and absence would paint a correctly closed run as a problem)`);
+  }
   if (errors.length) return { errors, warnings };
 
   const before = { status: entry.run.status, closeout_result: entry.run.closeout_result };

@@ -97,6 +97,28 @@ function setClassificationModel(model) {
   classificationModel = model || null;
 }
 
+// [#46] THE PROGRESS MODEL, INJECTED — never re-implemented here. Same mechanism, same
+// reason as the classification model above: CONTRATO §15.c makes "did a person review
+// this run?" a question with ONE answer, so the predicate lives in
+// tools/progress/progress.mjs and this renderer CALLS it. project-shell.js injects it.
+//
+// UNINJECTED IS NOT A DEFAULT, and here that rule has teeth: with no model the
+// human-approval section simply keeps today's words — it NEVER says "satisfied", because
+// a satisfied edge nothing verified is precisely the invention §15.c forbids.
+let progressModel = null;
+
+function setProgressModel(model) {
+  progressModel = model || null;
+}
+
+// §15.c through the injected model, fail-closed: no model, no progress, or no positive
+// human QA all answer false. `status` is deliberately not read here — completed alone
+// satisfies nothing, which is the gap the norm closes.
+function v3HumanApprovalSatisfied(run) {
+  if (!progressModel || typeof progressModel.humanApprovalSatisfied !== "function") return false;
+  return progressModel.humanApprovalSatisfied(run) === true;
+}
+
 // The six STORED fields, in the specification's own order. Read from the injected model when
 // there is one so the order has a single source; the literal is only the shape the drawer
 // needs before any model arrives, and it stores nothing.
@@ -3437,8 +3459,16 @@ function v3RoadmapRunRow(run, model) {
 // template, following the same caller-computed pattern as the History lead icon.
 function v3QueueRowCells(run, groupKey, runsById, model) {
   if (groupKey === "history") {
-    const closeout = "closeout_result" in run ? v3ResultText(run.closeout_result) : "Blocked";
-    const tone = run.status === "completed" ? " is-green" : "";
+    // [#46] ABSENCE IS NOT BLOCKED. This cell used to fall back to the word "Blocked"
+    // whenever closeout_result was missing, which painted 9 correctly closed runs of this
+    // very canonical as problems — empty is an unrecorded outcome, not a blockage, and a
+    // closed run showing as a problem corrupts the memory of the system. Absence now reads
+    // as exactly what it is, muted and never green; the status itself already travels in
+    // the row's lead icon. Old runs are NOT backfilled — the obligation to record an
+    // outcome binds new closes (the engine refuses a close without one), never the past.
+    const hasCloseout = "closeout_result" in run && run.closeout_result != null && String(run.closeout_result).trim() !== "";
+    const closeout = hasCloseout ? v3ResultText(run.closeout_result) : "No closeout recorded";
+    const tone = hasCloseout ? (run.status === "completed" ? " is-green" : "") : " is-muted";
     return {
       cells: `<span class="v3-row-cell"><span class="v3-row-cell-label">Closeout</span><span class="v3-row-cell-value${tone}">${escapeHtml(closeout)}</span></span>`,
       chip: ""
@@ -4533,11 +4563,14 @@ function v3DetailCell(label, valueHtml, cellClass) {
 // canonicals, so the distinction is carried HERE, in words, and the ordinary Dependencies
 // section above is left exactly as it was.
 //
-// WHAT THIS SURFACE MUST NOT CLAIM: that an edge is satisfied. Satisfaction of a human-approval
-// edge means A PERSON HAS REVIEWED THE TARGET, and nothing in this console — or anywhere in the
-// schema this run adds — stores that fact. So each row reports the ONE thing that is known, the
-// target's own status, and says in words what is still owed. A green "satisfied" tick here would
-// be an invention, and it is precisely the invention that makes an unobeyed field dangerous.
+// WHAT THIS SURFACE MUST NOT CLAIM: an edge satisfied that nothing records. [#46] Since
+// CONTRATO §15.c there IS a recorded fact that satisfies this edge — a positive human QA
+// (`human_qa` done with result "passed") in the TARGET's frozen progress record — and the row
+// says so when, and only when, the target carries it. Everything else keeps today's words: a
+// completed target with no positive QA still reads "work done · awaiting a person's review",
+// because completed alone cannot distinguish a run an AI closed from one a person reviewed.
+// The predicate is the injected §15.c model (fail-closed): uninjected or absent, never
+// "satisfied".
 function v3HumanApprovalSection(run, model) {
   const edges = Array.isArray(run.depends_on_human_approved) ? run.depends_on_human_approved : [];
   if (!edges.length) return "";
@@ -4548,11 +4581,19 @@ function v3HumanApprovalSection(run, model) {
       // unresolved edge reads identically in both lists and needs no style of its own.
       return `<div class="v3-dependency-row"><span class="mono">${escapeHtml(dependencyId)}</span>${badge("unknown", "red")}</div>`;
     }
+    // [#46] The full truth, in the one case the norm lets it be told: work done AND a person
+    // reviewed it positively. The satisfied state renders ONLY on a completed target whose
+    // own progress records the positive QA — the row B.7 names is the completed one, and a
+    // non-completed target keeps its waiting words even if a QA entry exists.
+    const satisfied = dependency.status === "completed" && v3HumanApprovalSatisfied(dependency);
+    const stateHtml = satisfied
+      ? `<span class="v3-dep-state is-satisfied"><span class="v3-dep-dot" aria-hidden="true"></span>${escapeHtml("work done · reviewed by a person — satisfied")}</span>`
+      : `<span class="v3-dep-state is-waiting"><span class="v3-dep-dot" aria-hidden="true"></span>${escapeHtml(dependency.status === "completed" ? "work done · awaiting a person's review" : "waiting · " + dependency.status)}</span>`;
     return `
       <button class="v3-dependency-row" type="button" data-v3-run="${escapeHtml(dependency.run_id)}">
         <span class="v3-dep-order">#${dependency.queue_order}</span>
         <span class="v3-dep-title">${escapeHtml(dependency.title)}</span>
-        <span class="v3-dep-state is-waiting"><span class="v3-dep-dot" aria-hidden="true"></span>${escapeHtml(dependency.status === "completed" ? "work done · awaiting a person's review" : "waiting · " + dependency.status)}</span>
+        ${stateHtml}
       </button>
     `;
   }).join("");
@@ -4563,7 +4604,7 @@ function v3HumanApprovalSection(run, model) {
         <div class="v3-section-body">
           <div class="v3-edit-note">This run cannot START until a PERSON has reviewed the run(s) below. That is a stronger wait than the Dependencies section above, which only needs the work to exist. The criterion: if the target turns out to be wrong, this run has to be redone.</div>
           ${rows}
-          <div class="v3-empty-note">No approval is recorded anywhere: this console shows the edge and the target's status, and no executor enforces the wait yet.</div>
+          <div class="v3-empty-note">A positive human QA recorded in the target's progress (CONTRATO §15.c) is what satisfies an edge here; a bare completed status never does, and no executor enforces the wait yet.</div>
         </div>
       </details>
     </div>
@@ -5710,11 +5751,44 @@ function v3CloseEditModal(force) {
   v3EditRemoveChoice = null;
 }
 
+// [#46 amendment] The five SUGGESTED closeout outcomes, and the sentinel of the
+// write-your-own entry. They live HERE, in the screen, and nowhere else on purpose: the
+// obligation is the core's (a close without an outcome is refused, roadmap-core.mjs
+// setStatus) but the list is not, and a list the engine knew about would be one edit away
+// from becoming the enum CONTRATO §14 refuses. The core keeps accepting ANY non-empty
+// string; these five only make the ordinary close a confirmation instead of a piece of
+// writing, which is the whole cost this amendment removes from the operator.
+// The sentinel is not a value: it can never be stored, because the collection reads the
+// free-text box whenever it is selected.
+const V3_CLOSEOUT_SUGGESTIONS = ["done as specified", "done with deviations", "superseded", "not needed", "partially done"];
+const V3_CLOSEOUT_DEFAULT = "done as specified";
+const V3_CLOSEOUT_CUSTOM = "__write_my_own__";
+
 function v3RenderRunEditor(run, context, model) {
   const statusOptions = ["planned", "active", "completed", "blocked"]
     .map((s) => `<option value="${s}"${s === run.status ? " selected" : ""}>${escapeHtml(s)}</option>`).join("");
   const isTerminal = run.status === "completed" || run.status === "blocked";
   const closeout = "closeout_result" in run && run.closeout_result != null ? String(run.closeout_result) : "";
+  const closeoutSuggested = V3_CLOSEOUT_SUGGESTIONS.includes(closeout);
+  // [#46 amendment] A run that is ALREADY terminal with no outcome is not being closed — it was
+  // closed before the obligation existed (9 of the 45 terminal runs of this canonical). It gets
+  // the honest entry, never the preselection: otherwise editing such a run's TITLE would collect
+  // a set-status whose "changed" test (v3BatchOpChanged) sees "" -> "done as specified" and
+  // backfills an outcome nobody stated. The default belongs to the ACT of closing, and only there.
+  const closeoutUnrecorded = isTerminal && !closeout;
+  // The list is SUGGESTED, never a vocabulary: the choice below is a SCREEN aid, so anything
+  // already on disk is shown as it is. A stored outcome outside the list (this canonical holds
+  // `completed_successfully`, `delivered_by_aiw_roadmap_O2`, …) selects the write-your-own entry
+  // with the stored text in the box — read back verbatim, never rewritten into a listed value.
+  const closeoutChoice = closeout
+    ? (closeoutSuggested ? closeout : V3_CLOSEOUT_CUSTOM)
+    : (closeoutUnrecorded ? "" : V3_CLOSEOUT_DEFAULT);
+  const closeoutIsCustom = closeoutChoice === V3_CLOSEOUT_CUSTOM;
+  const closeoutOptions = (closeoutUnrecorded ? ['<option value="" selected>(no outcome recorded)</option>'] : [])
+    .concat(V3_CLOSEOUT_SUGGESTIONS
+      .map((s) => `<option value="${escapeHtml(s)}"${s === closeoutChoice ? " selected" : ""}>${escapeHtml(s)}</option>`))
+    .concat(`<option value="${V3_CLOSEOUT_CUSTOM}"${closeoutIsCustom ? " selected" : ""}>Write my own outcome…</option>`)
+    .join("");
   const total = model.allRuns.length;
   const depCandidates = model.allRuns.filter((r) => r.queue_order < run.queue_order);
   const currentDeps = Array.isArray(run.depends_on) ? run.depends_on : [];
@@ -5770,7 +5844,12 @@ ${v3RenderLaneBlock(run, model)}${v3RenderBarrierBlock(run, model)}${v3RenderCla
       <div class="v3-edit-block" data-v3edit-op="set-status">
         <div class="v3-edit-block-title">Status</div>
         <label class="v3-edit-field"><span class="v3-edit-label">Status</span><select data-v3edit-status>${statusOptions}</select></label>
-        <label class="v3-edit-field" data-v3edit-closeout-field${isTerminal ? "" : " hidden"}><span class="v3-edit-label">Closeout result</span><input type="text" data-v3edit-closeout value="${escapeHtml(closeout)}"></label>
+        <div data-v3edit-closeout-field${isTerminal ? "" : " hidden"}>
+          <label class="v3-edit-field"><span class="v3-edit-label">Closeout result — required to close</span><select data-v3edit-closeout-choice>${closeoutOptions}</select></label>
+          <label class="v3-edit-field" data-v3edit-closeout-custom${closeoutIsCustom ? "" : " hidden"}><span class="v3-edit-label">Your own outcome</span><input type="text" data-v3edit-closeout value="${escapeHtml(closeoutIsCustom ? closeout : "")}" placeholder="What was the outcome of this run?"></label>
+        </div>
+        <div class="v3-edit-note">Closing to completed or blocked REQUIRES a closeout result: the outcome of the run. The core refuses a close without one — a closed run with no recorded outcome is what History used to misread as blocked. Runs closed before this rule are not backfilled.</div>
+        <div class="v3-edit-note">The five entries are a SUGGESTION, not a vocabulary: <em>done as specified</em> comes preselected so an ordinary close is a confirmation, and <em>Write my own outcome…</em> opens a free-text box for anything the list did not foresee. The core stores whatever text arrives and enumerates nothing (CONTRATO §14). A run closed before this rule keeps <em>(no outcome recorded)</em> until you choose one yourself — nothing is filled in for it.</div>
         <div class="v3-edit-note">The core enforces status/progress coupling; if progress does not support the target status the change is refused and the exact reason is shown.</div>
       </div>
 ${clearProgressBlock}
@@ -6273,6 +6352,21 @@ function v3ModalAttachHandlers() {
       const field = modal.querySelector("[data-v3edit-closeout-field]");
       if (field) field.hidden = !(statusSel.value === "completed" || statusSel.value === "blocked");
     }
+    // [#46 amendment] The write-your-own gate. Selecting the sentinel REVEALS the free-text
+    // box; moving back to a suggested outcome hides it and does NOT clear it, so a wandering
+    // click never destroys typing the operator has not confirmed yet. Which of the two the
+    // close actually carries is decided at collection, by the select — never by the box.
+    const closeoutSel = event.target.closest("[data-v3edit-closeout-choice]");
+    if (closeoutSel) {
+      const custom = modal.querySelector("[data-v3edit-closeout-custom]");
+      const isCustom = closeoutSel.value === V3_CLOSEOUT_CUSTOM;
+      if (custom) custom.hidden = !isCustom;
+      if (isCustom) {
+        const box = modal.querySelector("[data-v3edit-closeout]");
+        if (box && box.focus) box.focus();
+      }
+      v3MarkModalDirty();
+    }
     // [D-051] The GLOBAL barrier gate. Selecting global OPENS the danger panel; leaving
     // global closes it AND clears the acknowledgement, so arming is per-selection and can
     // never be inherited from a choice the operator has since moved away from.
@@ -6547,8 +6641,16 @@ function v3EditBuildPayload(op) {
   if (op === "set-status") {
     const status = val("[data-v3edit-status]");
     const terminal = status === "completed" || status === "blocked";
+    // [#46 amendment] The preselection is a SCREEN aid and stops here: the console sends the
+    // text the operator is looking at, and the ENGINE still holds the obligation. Write-my-own
+    // with an empty box sends NOTHING — so the refusal ("closing to completed requires a
+    // closeout_result") stays reachable from the screen and this list can never become a
+    // silent default the core fills in by itself.
+    const choiceEl = q("[data-v3edit-closeout-choice]");
     const closeoutEl = q("[data-v3edit-closeout]");
-    const closeout = closeoutEl ? closeoutEl.value.trim() : "";
+    const custom = closeoutEl ? closeoutEl.value.trim() : "";
+    const choice = choiceEl ? choiceEl.value : V3_CLOSEOUT_CUSTOM;
+    const closeout = choice === V3_CLOSEOUT_CUSTOM ? custom : choice;
     const args = { run: t.id, status };
     if (terminal && closeout) args.closeoutResult = closeout;
     return { op, args };

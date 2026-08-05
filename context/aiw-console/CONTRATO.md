@@ -1371,29 +1371,60 @@ Dos notas sobre el orden y las cláusulas:
   estén `completed`), así que su orden relativo no decide nada. La precedencia
   portante es **`blocked` por encima de `in_progress`**: un objetivo con avance Y
   un run bloqueado dice `blocked` — atención requerida — antes que `in_progress`.
-- La cláusula "y hay al menos uno" de la rama 3 es redundante con el dominio
-  (§12.b) y se escribe adrede: es la guarda que neutraliza la vacuidad si alguien
-  implementa la regla sin leer §12.b.
+- La cláusula "y hay al menos uno" de la rama 3 **es PORTANTE**, no un adorno y ya
+  no una redundancia con el dominio. Desde la enmienda D-062 un contenedor con 0
+  runs es dato VÁLIDO (§12.b), así que esta lista se aplicará a colecciones vacías
+  en el mundo real y no sólo en hipótesis. La cláusula es **lo único dentro de esta
+  lista** que impide que una colección vacía derive `completed` por vacuidad —
+  `[].every() === true`, y con ella la rama 3 no dispara. Quitarla no simplifica la
+  regla: la vuelve capaz de declarar terminado lo que nunca existió. Residuo
+  declarado: la rama 5 también es vacuamente verdadera sobre lista vacía, de modo
+  que quien aplique las cinco reglas sin leer el dominio de §12.b obtendrá
+  `planned` en lugar de "ningún token" — respuesta equivocada, pero no la
+  destructiva. El dominio de §12.b sigue siendo la parte que hay que leer.
 
-### 12.b Objetivo con 0 runs: MALFORMADO
+### 12.b Objetivo con 0 runs: VÁLIDO, y no deriva nada
 
-**La derivación queda INDEFINIDA. No recibe token — ninguno.** El validador de la
-capa 3 lo rechaza como dato malformado.
+**La derivación queda INDEFINIDA. No recibe token — ninguno.** Y **el validador NO
+lo rechaza**: un objetivo sin runs es dato VÁLIDO. Las dos mitades son
+independientes, y las dos son deliberadas. No derivar no es lo mismo que ser
+inválido; este contrato afirmaba lo segundo sin que nada lo sostuviera, y la
+enmienda D-062 (2026-08-04) retira esa afirmación. El chequeo de rechazo **nunca se
+implementó**: el motor de roadmap declara lo contrario con todas sus letras — una
+fase vacía es legal en el modelo v3, sin mínimo de runs por ningún lado, y nada se
+auto-siembra porque un run de relleno inventaría una identidad que el operador no
+pidió (`tools/roadmap/roadmap-core.mjs:1881-1885`).
 
-Por qué no se inventa un token para el caso: un objetivo sin runs no es un estado
-del trabajo, es un error de datos, e inventarle un token lo haría viajar,
-renderizarse y agregarse como si fuera trabajo. Inventar un token para un estado
-inválido es peor que declararlo inválido. Y por qué no se deja a la semántica
-ingenua: la rama 3 evaluada sobre lista vacía es verdadera por vacuidad —
-`[].every() === true` en JS — de modo que un objetivo recién creado y vacío
-derivaría `completed`: **declararía terminado lo que nunca existió**. La medición
-detectó exactamente este agujero, lo neutralizó con una guarda de longitud y lo
-reportó como decisión pendiente, no como medición (MEDICION:197-204). Ésta es la
-decisión: inválido, no derivable. Tampoco `planned`: `planned` afirma "hay plan y
-nadie lo ha empezado"; un objetivo vacío no afirma nada todavía.
+Por qué NO recibe token: un contenedor vacío no afirma nada todavía sobre el
+trabajo, e inventarle un token lo haría viajar, renderizarse y agregarse como si
+fuera trabajo. Y por qué no se deja a la semántica ingenua: la rama 3 evaluada
+sobre lista vacía es verdadera por vacuidad — `[].every() === true` en JS — de modo
+que un objetivo recién creado y vacío derivaría `completed`: **declararía terminado
+lo que nunca existió**. La medición detectó exactamente este agujero, lo neutralizó
+con una guarda de longitud y lo reportó como decisión pendiente, no como medición
+(MEDICION:197-204). Ésta es la decisión: sin derivación. Tampoco `planned`:
+`planned` afirma "hay plan y nadie lo ha empezado"; un objetivo vacío no afirma
+nada todavía. La guarda que sostiene esto dentro de la lista de §12.a es PORTANTE
+por esta razón, no decorativa.
 
-Los 8 objetivos de hoy tienen ≥1 run (MEDICION:197-198), así que el caso no existe
-en disco: la regla protege el futuro, no corrige el presente.
+Por qué SÍ es válido: un objetivo o una fase planificados cuyos runs aún no se han
+escrito son un estado NORMAL de un roadmap vivo — el contenedor se abre primero y
+se llena después. Exigir contenido obligaría a inventar un run de relleno al abrir
+cada contenedor: una identidad que nadie pidió, acuñada sólo para satisfacer la
+regla. Ese run de relleno es exactamente la clase de artefacto que §2 existe para
+matar — algo escrito porque el formato lo pide, no porque describa trabajo.
+
+Lo que se pierde, declarado: un contenedor vacío OLVIDADO deja de ser distinguible
+de uno EN ESPERA. Los dos son el mismo dato y el contrato ya no los separa. Esa
+distinción queda **SIN MECANISMO** —abierta, no resuelta—, y el día que se resuelva
+se resolverá **avisando, no rechazando**: un aviso deja pasar el dato válido y
+señala al que lleva demasiado tiempo vacío, mientras que un rechazo mataría también
+al que está en espera legítima. Nada de esto se implementa hoy: D-062 no añade
+chequeo, aviso ni advertencia.
+
+En disco no hay hoy ningún objetivo vacío: **0 de 15 objetivos** en los tres
+roadmaps canónicos (recorrido propio 2026-08-04; MEDICION:197-198 midió 8 de 8 con
+≥1 run el 2026-07-23). Donde el caso SÍ existe es a nivel de fase — ver §13.
 
 ### 12.c Especificada aquí, escrita en ninguna parte
 
@@ -1485,9 +1516,20 @@ define qué token corresponde si el caso aparece.
 Una fase no almacena `status` ni contadores (§10.b). Si un consumidor necesita el
 status de una fase, aplica **la misma función de §12** sobre los runs de esa fase:
 mismo vocabulario de salida (§11.b), misma precedencia, mismo dominio — una fase
-con 0 runs es MALFORMADA exactamente como un objetivo con 0 runs (§12.b). Las 30
-fases de hoy tienen ≥1 run (recorrido propio 2026-07-23; mínimo observado: 1 run
-por fase).
+con 0 runs es **VÁLIDA y no deriva nada**, exactamente como un objetivo con 0 runs
+(§12.b). El validador tampoco la rechaza, y eso es deliberado: una fase planificada
+cuyos runs aún no se han escrito es un estado normal de un roadmap vivo, y exigirle
+contenido obligaría a inventar un run de relleno al abrirla. Lo que se pierde es lo
+mismo que declara §12.b: una fase vacía OLVIDADA no se distingue de una EN ESPERA, y
+esa distinción queda sin mecanismo.
+
+A diferencia del caso de objetivo, éste **sí existe en disco**: **3 de las 23 fases
+de este canónico están vacías** —`O4.P5`, `O4.P7` y `O4.P8` de
+`roadmap/roadmap.json`— y **4 de 84 fases** contando los tres roadmaps canónicos
+(recorrido propio 2026-08-04). La afirmación anterior —"las 30 fases de hoy tienen
+≥1 run", recorrido propio 2026-07-23— era cierta el día que se midió y hoy no lo
+es; se sustituye por la cifra medida, no se conserva. Ese hecho es la razón práctica
+de la enmienda D-062: rechazar habría puesto rojo un canónico que es correcto.
 
 No hay una segunda función. La medición señaló que la regla original saltaba el
 nivel intermedio — tres niveles en los datos, dos en la regla (MEDICION:209-214).
@@ -2096,7 +2138,7 @@ Adjudicadas por la cabina y redactadas en esta capa. Registradas en
 | e | Vocabulario de run: `planned`·`active`·`blocked`·`completed`; `blocked` se queda pese a 0/65 | §11.a | Declarado y vacío es honesto; quitarlo obligaría a re-agregarlo. |
 | f | Vocabulario de objetivo: cinco tokens, con `in_progress` y sin reusar `active` | §11.b–c | Un run `active` corre AHORA; un objetivo empezado puede llevar meses sin que nada corra. |
 | g | La derivación es normativa, con precedencia fija, y su resultado nunca se almacena | §12 | Una sola fuente, una sola lectura: ni copia que se pudra ni consumidores derivando a su gusto. |
-| h | Objetivo o fase con 0 runs: MALFORMADO, sin token | §12.b, §13 | `[].every() === true` declararía terminado lo que nunca existió. |
+| h | Objetivo o fase con 0 runs: **VÁLIDO**, y NO DERIVA NADA — sin token, y el validador no lo rechaza (enmienda **D-062**, 2026-08-04; sustituye la adjudicación original "MALFORMADO, sin token") | §12.b, §13 | Un contenedor abierto y aún sin runs es estado normal de un roadmap vivo —3 de 23 fases del canónico de hoy—, y rechazarlo obligaría a inventar un run de relleno; el token se sigue negando porque `[].every() === true` declararía terminado lo que nunca existió, y de eso responde la guarda portante de la rama 3 (§12.a). |
 | i | `closeout_result`: string opcional, sin enum, incluso en runs `completed` | §14 | Enumerar 8 valores observados sería inventar schema (§3.b); requerirlo pondría rojos 2 runs existentes. |
 | j | `progress`: opcional; su forma interna se documenta y NO se congela | §15 | 1 de 65 es evidencia débil: sería norma desde un caso único. |
 | k | `category` y `batch` quedan reservados: opcionales, ausentes por defecto, nunca requeridos | §16 | Ausencia explícita medida: nada que reciclar ni con qué chocar; nombrar hoy es gratis, migrar después son tres repos. |

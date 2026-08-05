@@ -2475,3 +2475,72 @@ absorba en un documento normativo —`CLASIFICACION-DE-RUNS.md` o
 `PROCEDIMIENTO-DE-CLASIFICACION.md`—; mientras eso no ocurra, esta entrada es su
 única sede. **Que la política se ejecute en otros hilos NO la caduca: es
 precisamente lo que prevé.**
+
+## D-062 — 2026-08-04 — Un contenedor sin runs es VÁLIDO y no deriva nada: el contrato retira un rechazo que el validador nunca hizo
+§12.b del contrato de la carpeta afirmaba dos cosas sobre un objetivo con 0 runs —y
+§13 las repetía para una fase—: que la derivación queda indefinida y no recibe token,
+y que el validador de la capa 3 lo rechaza como dato malformado. La primera es
+verdadera y se conserva íntegra. La segunda es falsa y se retira. La regla queda: **un
+contenedor sin runs es VÁLIDO y NO DERIVA NADA.** El rótulo `MALFORMADO` sale de
+§12.b, de §13 y de la fila `h` de la tabla de decisiones de la capa 2, que se
+actualiza a la nueva adjudicación conservando su forma de tabla.
+
+El chequeo **nunca se implementó**. Ningún validador, motor ni proyector rechaza hoy
+un contenedor por estar vacío: el pre-chequeo de invariantes exige que `runs` sea un
+array y nada más —una lista vacía lo satisface y el bucle sobre ella no se ejecuta—, y
+el motor de roadmap declara lo contrario con todas sus letras: una fase vacía es legal
+en el modelo v3, sin mínimo de runs por ningún lado, y no se auto-siembra nada porque
+un run de relleno inventaría una identidad que el operador no pidió. Por eso esto no
+es una regla rota que haya que arreglar: es papel que se adelantó al disco, y lo que
+se corrige es el papel. **Cero líneas de código**: no entra chequeo, ni aviso, ni
+advertencia.
+
+Por qué es válido: un objetivo o una fase planificados cuyos runs aún no se han
+escrito son un estado NORMAL de un roadmap vivo. El contenedor se abre primero y se
+llena después, y exigir contenido obligaría a inventar un run de relleno al abrir cada
+uno — exactamente la clase de artefacto escrito-porque-el-formato-lo-pide que este
+contrato existe para matar. El token, en cambio, se sigue negando: sobre lista vacía
+la rama 3 de §12.a es verdadera por vacuidad (`[].every() === true`) y declararía
+terminado lo que nunca existió. Por eso la cláusula "y hay al menos uno" de esa rama
+deja de ser redundante con el dominio y pasa a ser **PORTANTE** —es lo único dentro de
+la lista que impide esa derivación—, y §12.a se reescribe para decirlo.
+
+Lo que se pierde, declarado: un contenedor vacío OLVIDADO deja de ser distinguible de
+uno EN ESPERA. Los dos son el mismo dato y el contrato ya no los separa. Esa
+distinción queda **ABIERTA Y SIN MECANISMO**. Cuando se resuelva se resolverá
+**avisando, no rechazando**: un aviso deja pasar el dato válido y señala al que lleva
+demasiado tiempo vacío, mientras que un rechazo mataría también al que está en espera
+legítima. Hoy no se implementa ninguna de las dos cosas.
+
+Consecuencia operativa: **un roadmap conforme puede nacer sin runs.** Un proyecto
+nuevo que se registre con sus objetivos y fases planificados y ninguna run escrita es
+válido tal cual, y no necesita inventar contenido para pasar la puerta. El alcance es
+**transversal** a los tres proyectos, porque la regla es del contrato de la carpeta y
+no de un repo; esta entrada la registra y no ejecuta nada en ningún otro hilo. No se
+toca ningún roadmap: no se migra, no se borra y no se rellena ninguna fase vacía.
+
+La medición que la origina (recorrido propio 2026-08-04): **3 de las 23 fases** del
+canónico de `aiw-console` están vacías —`O4.P5`, `O4.P7` y `O4.P8`— y **4 de 84 fases**
+contando los tres canónicos; **0 de 15 objetivos** están vacíos, así que el caso vive
+hoy en el nivel de fase y no en el de objetivo. §13 afirmaba "las 30 fases de hoy
+tienen ≥1 run" con recorrido propio del 2026-07-23: era cierto el día que se midió y
+hoy no lo es, de modo que se sustituye por la cifra medida con su fecha en vez de
+dejarse en falso. Si el chequeo hubiera existido, habría puesto rojo un canónico que
+es correcto.
+
+Referencias: `context/aiw-console/CONTRATO.md` §12.a —la cláusula que pasa a
+portante—, §12.b, §13 y la fila `h` de la tabla de la capa 2, los cuatro sitios
+tocados y los únicos; `tools/roadmap/roadmap-core.mjs:1881-1885`, el comentario del
+motor que declara legal la fase vacía y explica por qué no siembra relleno, y
+`checkInvariants` del mismo archivo, que sólo exige que `runs` sea un array;
+`context/aiw-console/records/CONTENEDORES-SIN-RUNS-MANDA-EL-CODIGO.md`, el record con
+las citas verbatim de los cuatro textos viejos y los cuatro nuevos. [[D-040]] registró
+la adjudicación original que esta enmienda corrige; [[D-058]] es el precedente de
+corregir hacia adelante afirmaciones de un documento normativo que el disco desmiente,
+y de que una afirmación gana autoridad cada vez que se copia sin estar en disco.
+Criterio de borrado: la sustituye una decisión que vuelva a declarar inválido un
+contenedor sin runs, que le asigne un token de derivación, o que implemente el aviso
+que esta entrada deja sin mecanismo — ese día la distinción entre olvidado y en espera
+deja de estar abierta y esta entrada pasa a ser su historia. **NO la caduca que alguna
+fase vacía se llene, ni que aparezcan otras**: las cifras son mediciones fechadas y se
+corrigen hacia adelante; la regla no depende de su conteo.

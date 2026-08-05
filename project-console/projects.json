@@ -4,6 +4,7 @@
   "projects": [
     { "key": "aiw-console", "root": ".." },
     { "key": "cantu-studio", "root": "../../cantu-studio" },
+    { "key": "cantu-quizzes-latex", "root": "../../cantu-quizzes-latex" },
     { "key": "aiw", "root": "../../../aiw" }
   ]
 }

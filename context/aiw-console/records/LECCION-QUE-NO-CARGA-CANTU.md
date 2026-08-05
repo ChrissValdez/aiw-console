@@ -504,3 +504,491 @@ markup y los datos están; lo que un humano añadiría es el juicio de que se ve
 | `projects/cantu-studio/tools/dev/tests/contentModulesLoad.test.mjs` | **nuevo**, 4 tests (§5) |
 | `projects/cantu-studio/dist/**` | 70 `.html` reescritos por `node main.js` (§6) — salida generada |
 | este record | |
+
+---
+
+# SEGUNDA MITAD — EL OPERADOR DECIDIÓ: REPORTAR Y CONTINUAR
+
+**Fecha:** 2026-08-04
+**Continuación del mismo run.** Esta parte se escribe **hacia adelante**: nada de lo
+anterior se reescribe. Las §0–§12 quedan como estaban, incluida la parada de §1, que fue
+correcta en su momento y que esta sección resuelve.
+
+---
+
+## 13. EL RUN, RE-DERIVADO — NO HEREDADO DE §0
+
+Se volvió a derivar del canónico `projects/cantu-studio/.aiw/roadmap/roadmap.json`,
+aplanando `objectives[].phases[].runs[]` por `queue_order` **26**. `schema_version` en
+disco: `jame.roadmap_v3.v0.2-progress`. Claves de raíz:
+`schema_version, roadmap_id, title, lanes, objectives` — **sigue sin haber array `runs` en
+raíz**.
+
+| Campo | Valor en disco, hoy |
+|---|---|
+| **`run_id`** | **`RUN-CANTU-LESSON-LOAD-FAILURE-SURFACING-001`** |
+| `queue_order` | 26 (coincidencias: **exactamente 1**) |
+| objetivo / fase | `O7` / `O7.P1` |
+| `status` | `active` |
+| `depends_on` | `[]` |
+
+**Comprobación de título, VERBATIM y por comparación de bytes.** Exigido:
+`Repair the lesson that fails to load and stop the build from swallowing the failure`.
+
+```
+BYTE-EQUAL: true
+len disco= 83   len exigido= 83
+```
+
+**CASA.** No se heredó de §0: se remidió.
+
+---
+
+## 14. LA DECISIÓN DEL OPERADOR, Y POR QUÉ NO SE INVENTA POLÍTICA
+
+**§1 paró porque la elección del criterio 3 no estaba en registro. Ya lo está: el operador
+ha elegido REPORTAR Y CONTINUAR — la opción B de §4.4, que era además la recomendada en
+§4.5.** Esta sección la implementa.
+
+**No es una política nueva.** Los cuatro puntos de captura de §4.1 se reverificaron contra
+disco, y uno de ellos ya reportaba. VERBATIM, `main.js:40`, sin tocar:
+
+```js
+} catch (e) { console.error(`❌ ${file}: ${e.message}`); }
+```
+
+**Esa es la norma del archivo; el silencio de la carga de una lección era la excepción.**
+Lo implementado aplica la norma existente al punto hermano.
+
+---
+
+## 15. CRITERIO 1 — EL PUNTO DE CAPTURA DE LA CARGA YA REPORTA
+
+`main.js`, punto de carga del módulo de contenido.
+
+**ANTES**, una línea:
+
+```js
+    try { data = require(fullSrcPath); } catch (e) { return; }
+```
+
+**DESPUÉS:**
+
+```js
+    try { data = require(fullSrcPath); }
+    catch (e) {
+        console.error(`❌ ${relativePath}: ${e.message}`);
+        BUILD_REPORT.loadFailures++;
+        // El reporte de arriba conserva el mensaje íntegro; el resumen final lleva una
+        // línea por módulo, así que aquí se guarda sólo la primera.
+        return skipFile(relativePath, e.message.split('\n')[0]);
+    }
+```
+
+**La forma se derivó del hermano, no se inventó.** Las dos salidas se parecen a propósito:
+
+| Punto | Forma emitida |
+|---|---|
+| `main.js:40` (builder, ya existía) | ``console.error(`❌ ${file}: ${e.message}`)`` |
+| **carga de contenido (este run)** | ``console.error(`❌ ${relativePath}: ${e.message}`)`` |
+
+Misma función (`console.error`), mismo prefijo, mismo separador, mismo `e.message`
+íntegro. **La única diferencia es el identificador del archivo, y es obligada:**
+`loadWebBuilders` recorre un directorio plano, así que su `file` ya es identificador
+único; el contenido se recorre en árbol, así que hace falta `relativePath` para decir
+**qué archivo** — `lecciones\Aritmetica\2_operaciones_aritmeticas.js`, no
+`2_operaciones_aritmeticas.js`.
+
+**Y el build continúa:** el `return` sigue siendo un `return` de `buildFile`; el bucle
+sigue con el archivo siguiente. Nada se reordenó.
+
+### 15.1 Los cuatro puntos de captura, re-medidos DESPUÉS del cambio
+
+| Línea hoy | Qué captura | Qué hace con el error |
+|---|---|---|
+| `main.js:40` | carga de un builder Web | REPORTA — sin tocar |
+| **`main.js:106-111`** | **carga de un módulo de contenido** | **REPORTA — cambiado por este run** |
+| `main.js:131` | `renderSlides` | REPORTA en la salida — sin tocar |
+| **`main.js:144`** | **un renderer de sección Web** | **silencio — FUERA DE ALCANCE, ver §19** |
+
+---
+
+## 16. CRITERIO 2 — EL RESUMEN AL FINAL DEL BUILD
+
+Añadido tras el bucle, **sin tocar el bucle**:
+
+```js
+    // Resumen final: un fallo en medio de una salida larga se pierde; aquí, no.
+    console.log(`📊 Módulos de contenido: ${BUILD_REPORT.processed} procesados, ${BUILD_REPORT.emitted} emitieron, ${BUILD_REPORT.skipped.length} fuera.`);
+    BUILD_REPORT.skipped.forEach(s => console.log(`   – ${s.file}: ${s.reason}`));
+```
+
+El acumulador es una constante de módulo y un ayudante de una línea:
+
+```js
+const BUILD_REPORT = { processed: 0, emitted: 0, skipped: [], loadFailures: 0 };
+
+function skipFile(relativePath, reason) {
+    BUILD_REPORT.skipped.push({ file: relativePath, reason });
+}
+```
+
+**Los `return` tempranos que ya existían pasaron de `return;` a `return skipFile(...)`.**
+`skipFile` no devuelve nada, así que **el flujo de control es idéntico**; lo único que
+cambia es que cada salida deja dicho su motivo:
+
+| Salida temprana | Motivo que ahora registra |
+|---|---|
+| nombre que empieza por `_` | `nombre reservado (_)` |
+| sandbox fuera del filtro | `sandbox fuera del filtro` |
+| **fallo de carga** | **el `e.message`, primera línea** |
+| `module.exports` vacío | `module.exports vacío` |
+| ningún formato escribió | `sin secciones emitibles` |
+
+**Por qué el resumen cubre las cinco y no sólo el fallo de carga:** el criterio pide
+«cuáles se quedaron fuera, **por nombre**». Un resumen que dijera «31 procesados, 30
+emitieron» y sólo nombrara una causa dejaría huecos sin explicar. Hoy las otras cuatro
+valen 0, así que la salida es la misma; la diferencia se nota el día que no lo sea.
+
+`emitted` se cuenta con un contador local, `written`, incrementado justo después del
+`fs.writeFileSync` que ya existía. **No se movió la escritura ni se agrupó: sigue siendo
+archivo a archivo dentro del bucle.**
+
+---
+
+## 17. CRITERIO 3 — EL CÓDIGO DE SALIDA, Y LA MEDICIÓN QUE LO AUTORIZA
+
+### 17.1 Quién lo lee hoy — REMEDIDO, no heredado de §4.2
+
+| Consumidor | Cifra | Cómo se midió hoy |
+|---|---:|---|
+| Scripts `npm` que invocan el build | **0** | **no hay `package.json` en la raíz** (verificado); los **4** que existen son de `tools/`, y se volcaron sus `scripts` uno a uno: `vite`, `vite build`, `eslint .`, `vite preview`, `concurrently`, `cd compiler-api && node server.js`, `npm run dev`. **Ninguno menciona `main.js`.** |
+| Tests que ejercitan `main.js` | **0** | los 2 candidatos del grep siguen siendo falsos positivos: ambos citan la ruta `tools/author-lite/editor-ui/src/experiments/mathlive-smart-input/main.jsx` — **`main.jsx` de MathLive, no `main.js`** |
+| Pipelines CI | **0** | no existen `.github/`, `.gitlab-ci.yml`, `.circleci/`, `azure-pipelines.yml` ni `Jenkinsfile`; **cero ficheros `.yml`/`.yaml` en todo el repo** |
+| Scripts de shell | **0** | los **3** del repo (`tools/dev/lib/dev-common.ps1`, `tools/dev/start-editor.cmd`, `tools/dev/start-editor.ps1`) **no mencionan `main.js`** |
+| Ejecutores por `spawn`/`exec`/`fork` | **0** | todos los `spawnSync`/`execFileSync` del repo apuntan al **validador** o a `git`, ninguno a `main.js` |
+| **TOTAL AUTOMATIZADO** | **0** | |
+| Humano | 1 | el operador ejecutando `node main.js` a mano |
+
+**Un lector que hay que nombrar para no contarlo mal:** `generate_prompt_context.js:87`
+incluye `main.js` en `CORE_ENTRY_CANDIDATES`, pero **lee su texto fuente** para armar los
+contextos IA — **no lo ejecuta, así que no lee su código de salida.** No es consumidor.
+
+Las únicas apariciones de la cadena `node main.js` en el repo están en dossieres
+archivados que **describen** el comando; ninguno lo ejecuta, y uno de ellos
+(`docs/archive/rewrite-dossiers/WEB-ENGINE-CODE-AUDIT-DOSSIER.md:1628`) declara
+expresamente que el hueco existe.
+
+**El cero se confirma. La cifra real es 0.** No se disparó la parada del criterio 11.
+
+### 17.2 Lo implementado, y su declaración
+
+```js
+    if (BUILD_REPORT.loadFailures > 0) {
+        console.error(`❌ ${BUILD_REPORT.loadFailures} módulo(s) de contenido no cargaron: el build terminó incompleto.`);
+        process.exitCode = 1;
+    }
+```
+
+**Se usa `process.exitCode = 1`, no `process.exit(1)`**, precisamente porque la política
+elegida es *continuar*: `process.exitCode` deja que el proceso termine solo, sin abortar
+nada ni truncar salida pendiente. Precedente del propio repo:
+`tools/roadmap/roadmap-edit.mjs` usa `process.exitCode = 1` en sus cuatro caminos de error.
+
+**Se declara, tal como pide el criterio: hoy esto no rompe nada** —hay 0 consumidores
+automatizados que lo lean, y el único consumidor es una persona— **y deja el build listo
+para que una automatización futura detecte el fallo sin volver a tocar el constructor.**
+
+**El código sólo cambia por `loadFailures`, no por `skipped`.** Un archivo descartado por
+la puerta de nombre es una decisión de diseño, no una rotura: contarlo como fallo mentiría.
+
+---
+
+## 18. CRITERIO 6 — TESTS
+
+### 18.1 Qué se amplió
+
+`tools/dev/tests/contentModulesLoad.test.mjs`, el archivo que escribió la primera mitad
+(§5). **Los 4 tests previos siguen intactos.** Se añadieron **3**, y ahora son **7**.
+
+Los 4 antiguos afirman contra disco que los módulos cargan. Los 3 nuevos afirman lo que
+pide este encargo: **que un fallo de carga se reporta y nombra el archivo**.
+
+**Cómo lo hacen, y por qué así.** Copian `main.js` y `src/` a un directorio temporal,
+rompen allí **la copia** de un módulo de contenido, y ejecutan el constructor **real** por
+`spawnSync`. **El repo no se toca: ni `src/`, ni `dist/`, ni ninguna lección.** El
+temporal se borra en un `finally`. Se eligió esto en vez de afirmar sobre el texto fuente
+de `main.js` porque una aserción sobre el código no demuestra conducta; y en vez de romper
+un módulo real porque eso ensuciaría el repo y `dist/`. Medido: `src/` son **753 KB / 95
+archivos** y no hay `node_modules` en raíz, así que la copia es barata.
+
+Los tres:
+
+1. `a content module that fails to load is REPORTED with file and reason` — la salida
+   nombra el archivo, dice `Cannot find module`, y el código de salida **no** es 0.
+2. `the build CONTINUES with the other modules when one fails to load` — compara build
+   limpio contra build roto: mismo número de procesados, `0` fuera vs `1` fuera, y
+   **emitidos = limpios − 1**. Es la aserción de que el build no se detiene.
+3. `the final summary names what was left out` — el resumen del final nombra el módulo
+   descartado.
+
+### 18.2 Salida ejecutada — VERDE
+
+```
+✔ every content module main.js requires loads without throwing (28.1848ms)
+✔ content modules that load expose sections the build can emit (4.98ms)
+✔ the Aritmetica lessons both load and carry web sections (0.5941ms)
+✔ 2_operaciones_aritmeticas resolves renderIconList and emits its markup (0.2656ms)
+✔ a content module that fails to load is REPORTED with file and reason (440.4173ms)
+✔ the build CONTINUES with the other modules when one fails to load (859.0873ms)
+✔ the final summary names what was left out (429.456ms)
+ℹ tests 7
+ℹ pass 7
+ℹ fail 0
+```
+
+### 18.3 LA ASERCIÓN MUERDE — verificado rompiendo a propósito y restaurando
+
+Igual que hizo la primera mitad (§5.3), y esta vez rompiendo **lo implementado por este
+encargo**, no la lección. Se revirtió el punto de captura a su forma silenciosa original
+—`try { data = require(fullSrcPath); } catch (e) { return; }`— se corrió, y se restauró.
+
+**Salida con el reporte revertido:**
+
+```
+✔ every content module main.js requires loads without throwing
+✔ content modules that load expose sections the build can emit
+✔ the Aritmetica lessons both load and carry web sections
+✔ 2_operaciones_aritmeticas resolves renderIconList and emits its markup
+✖ a content module that fails to load is REPORTED with file and reason
+✖ the build CONTINUES with the other modules when one fails to load
+✖ the final summary names what was left out
+ℹ tests 7
+ℹ pass 4
+ℹ fail 3
+
+✖ failing tests:
+  AssertionError [ERR_ASSERTION]: the load failure does not name the file. Output:
+  AssertionError [ERR_ASSERTION]: exactly the broken module should be left out
+  AssertionError [ERR_ASSERTION]: the summary does not name the dropped module:
+```
+
+**Los 3 nuevos caen y los 4 viejos aguantan** — que es exactamente lo correcto: los viejos
+afirman que los módulos cargan, y con el reporte revertido siguen cargando. La aserción
+muerde justo donde debe.
+
+**Restaurado desde copia de seguridad y reverificado: 7/7 verde.** El reporte vuelve a
+estar en disco.
+
+### 18.4 Lo directamente relacionado — nada verde se puso rojo
+
+Los mismos 3 archivos de la suite del compilador que tocan `iconList` que corrió §5.4:
+
+```
+node --test tools/author-lite/compiler-api/tests/webIconListBadgeWidth.test.mjs \
+            tools/author-lite/compiler-api/tests/webColorSelectorCustomPicker.test.mjs \
+            tools/author-lite/compiler-api/tests/webLegacyCertifiedColorPaletteReconciliation.test.mjs
+
+ℹ tests 17
+ℹ pass 17
+ℹ fail 0
+```
+
+**17/17, idéntico a §5.4. Total ejecutado en esta mitad: 24 tests, 24 verdes, 0 rojos.**
+**No se corrió la suite completa** — el ticket lo prohíbe.
+
+---
+
+## 19. CRITERIO 4 — EL HERMANO QUE NO SE TOCA, NOMBRADO OTRA VEZ
+
+**`main.js:144`** — el punto de captura que silencia los fallos de un renderer de sección
+Web. En disco hoy, VERBATIM y **sin un solo carácter cambiado por este encargo**:
+
+```js
+                    if (r) try { bodyContent += r(sec.data); } catch (e) {}
+```
+
+Era `main.js:124` en §4.1; **se desplazó a 144 sólo porque este run añadió líneas por
+encima, no porque se editara.** Está declarado fuera de alcance en §9.3 y en §10 de la
+primera mitad, y **sigue estándolo**. Es un defecto hermano real —un renderer que revienta
+deja su sección vacía sin decirlo— y **no es de este run.**
+
+---
+
+## 20. CRITERIO 7 — VERIFICADO EN LA SALIDA, NO SÓLO EN EL CÓDIGO
+
+Se ejecutó el constructor real: `node main.js`, desde `projects/cantu-studio`.
+
+### 20.1 Camino limpio — la salida completa, VERBATIM
+
+```
+🧩 [SYSTEM] JAME v12.0 (A11y Engine) Initializing...
+✨ JAME v12.0 (A11y Engine): Built files.
+📊 Módulos de contenido: 31 procesados, 31 emitieron, 0 fuera.
+```
+
+**Código de salida real: 0.**
+
+| Medida | Valor |
+|---|---:|
+| **Módulos que siguen emitiendo** | **31 de 31** |
+| Módulos fuera | 0 |
+| `dist/` total `.html` | 76 |
+| de ellos, escritos por este build | 70 |
+
+**El 31 se verificó, no se heredó.** Censo de solo lectura antes de tocar `main.js`: 31
+archivos recorridos, 0 descartados por puerta de nombre, 31 cargan, 0 `module.exports`
+vacíos, 0 sin secciones. Desglose: `author_lite/` 13, `sandbox/` 8, `staging/` 8,
+`lecciones/` 2. **Sigue siendo 31 y ahora emiten los 31** — en la primera mitad emitían 30.
+
+Los **6** `.html` de `dist/` que este build no escribió son los huérfanos ya nombrados en
+§6.3 y §9.4. **Se nombran otra vez y no se tocan.**
+
+### 20.2 Camino de fallo — cómo se ve de verdad
+
+Para enseñar el resumen con algo fuera **sin ensuciar el repo**, se repitió el arnés de
+§18.1: copia de `main.js` + `src/` fuera del repo, un módulo roto **en la copia**,
+constructor real. Salida VERBATIM (rutas del temporal recortadas):
+
+```
+🧩 [SYSTEM] JAME v12.0 (A11y Engine) Initializing...
+❌ lecciones\Aritmetica\2_operaciones_aritmeticas.js: Cannot find module './__no_existe_este_modulo__'
+Require stack:
+- ...\src\content\lecciones\Aritmetica\2_operaciones_aritmeticas.js
+- ...\main.js
+✨ JAME v12.0 (A11y Engine): Built files.
+📊 Módulos de contenido: 31 procesados, 30 emitieron, 1 fuera.
+   – lecciones\Aritmetica\2_operaciones_aritmeticas.js: Cannot find module './__no_existe_este_modulo__'
+❌ 1 módulo(s) de contenido no cargaron: el build terminó incompleto.
+```
+
+**Código de salida: 1.** Se lee, en orden: **qué archivo**, **cuál fue el motivo**, que los
+**otros 30 se emitieron igual**, y al final la lista de lo que quedó fuera.
+
+**Un ajuste que salió de mirar esta salida y no el código.** La primera versión metía el
+`e.message` entero también en el resumen, y como el mensaje de un módulo no encontrado
+arrastra el bloque `Require stack:`, el resumen se volvía multilínea y dejaba de ser una
+lista escaneable —justo lo que el criterio 2 quiere evitar—. Se acotó **sólo la línea del
+resumen** a la primera línea del mensaje; **el reporte inmediato conserva el mensaje
+íntegro**, para seguir pareciéndose verbatim al hermano de `main.js:40`. **Este ajuste es
+la razón de ser del criterio 7: en el código no se veía.**
+
+---
+
+## 21. CRITERIO 8 — VALIDADOR, POR LA VÍA QUE NO ESCRIBE
+
+Desde `projects/cantu-studio`:
+`node tools/project-console/validate-project-console-state.mjs` — exit **0**.
+
+**Salida completa, VERBATIM:**
+
+```
+Project Console state validation passed.
+Roadmap v3 prototype: 7 objectives / 28 phases / 69 runs; queue groups needs_human_decision=0 now=1 ready_next=16 later=25 history=27
+Roadmap v3 active run derived stages: RUN-CANTU-LESSON-LOAD-FAILURE-SURFACING-001=none
+Docs indexed: 149
+Docs curated primary-visible: 60 of 149 registered
+Component statuses: 16
+Git provenance episodes: 9
+Git history snapshot: 508 commits / 1 branches (1 visible, 0 backup hidden); current=main; run-associated=3; source=local_git_autosync
+Roadmap rebase warnings (non-blocking):
+- .aiw/roadmap/roadmap.json run RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001 depends on RUN-CANTU-ROADMAP-CONTENT-AUDIT-001, which does not resolve in this roadmap. With a single roadmap loaded this cannot be decided: it may be a legal external dependency — a run that lives in another project (CONTRATO §10.d Regla 2) — or a typo in the run id. Both are possible and one loaded roadmap cannot tell them apart; resolve it against the full set of projects to distinguish external from write error.
+```
+
+**Cifras reales, medidas — el ticket no las daba a propósito:**
+
+| Medida | Valor |
+|---|---:|
+| **Total de runs** | **69** |
+| **`history=`** | **27** |
+| **`ready_next=`** | **16** |
+| `now=` | 1 |
+| `later=` | 25 |
+| `needs_human_decision=` | 0 |
+| objetivos / fases | 7 / 28 |
+
+**Idénticas a §7.** El trabajo de esta mitad no tocó el roadmap, así que era lo esperable,
+pero se remidió igualmente en vez de copiarlas.
+
+**El aviso no bloqueante es el conocido de la dependencia externa: es legal, no es
+hallazgo, y no se tocó.** El validador vuelve a confirmar por vía independiente que el run
+activo es `RUN-CANTU-LESSON-LOAD-FAILURE-SURFACING-001`.
+
+---
+
+## 22. QUÉ **NO** SE HIZO EN ESTA MITAD
+
+- **No se reescribió el constructor.** Los cambios son un acumulador, un ayudante de una
+  línea, un `console.error` en un `catch` que ya existía, un contador junto a un
+  `writeFileSync` que ya existía, y un bloque de resumen después del bucle.
+- **No se reordenó el bucle** ni se cambió el orden de recorrido.
+  `getAllFiles(...).forEach(buildFile)` está intacto.
+- **No se hizo transaccional.** Se sigue escribiendo archivo a archivo, sin área de
+  preparación. **La opción A de §4.3 sigue sin implementarse, y eso es correcto: el
+  operador eligió B.**
+- **No se tocó `main.js:144`**, el punto de captura hermano de los renderers (§19).
+- **No se tocó ninguna lección, ningún componente, ningún esquema**, ni el compilador, ni
+  los renderers, ni el editor.
+- **No se tocaron los 6 `.html` huérfanos**, ni el draft del almacén vivo que no valida
+  (`src/content/author_lite/drafts/matematicas/algebra/test5.json`), ni las evidencias
+  congeladas de `QA/temp/PASS-4D-*`. Se nombran, como en §9.
+- **No se tocó `component_status.json`** —sigue con 16 entradas frente a las 17 que
+  afirmaba el ticket original (§8)—, ni `docs_index.json`, ni los contratos, ni la
+  Definition of Done.
+- **No se tocó el roadmap canónico, ni `.project/`, ni el status de ningún run.**
+  **No se re-emitió `.project/`.**
+- No se insertaron, movieron ni renumeraron runs. **No se ejecutó Git.** No se levantaron
+  servidores. **No se corrió la suite completa.** No se clasificó ningún run.
+- **No se documentó el comando de build**, que sigue sin existir en `docs/`
+  (`docs/archive/DOCS_MISSING_BACKLOG.md:16`). El hueco es real y **no es de este run**.
+
+---
+
+## 23. CRITERIO 9 — STATUS DECLARADO Y QUÉ FALTA
+
+**No se cambió el status. Lo cierra el operador desde la consola global. No se re-emitió
+`.project/`.**
+
+**El run debe quedar en `completed`.**
+
+§11 declaró `active` y dijo por qué: faltaba la segunda mitad, la que «más importa» según
+el propio `full_description`. **Esa mitad ya está hecha y verificada en la salida.** Las
+exigencias del run están cumplidas:
+
+| Exigencia del `full_description` | Estado |
+|---|---|
+| «Repair the import so the lesson loads» | hecho en §3, verificado en la salida en §6 |
+| «MEASURE THE WHOLE SET FIRST» | hecho en §2, y remedido en §20.1 |
+| «report the measured cost of failing loudly versus reporting and continuing» | hecho en §4 |
+| «decide and implement what the builder does when a lesson fails to load» | **hecho en §15–§17, verificado en la salida en §20** |
+| «implement the one the operator chooses» | **hecho: opción B, reportar y continuar** |
+
+**Qué falta para llegar a `completed`: sólo el acto de cambiarlo.** No queda trabajo
+técnico pendiente dentro del alcance del run.
+
+### ¿Hace falta QA del operador, o basta la verificación del criterio 7?
+
+**Basta la verificación del criterio 7. No hace falta QA del operador.**
+
+Y la razón es que lo entregado **no tiene superficie visual**: es conducta de consola y un
+código de salida, y ambas cosas se comprobaron ejecutándolas, no leyéndolas —
+
+- el camino limpio da `31 procesados, 31 emitieron, 0 fuera` y exit **0**;
+- el camino de fallo nombra el archivo, da el motivo, emite los otros 30 y sale con **1**;
+- y los tres tests nuevos **caen** si se quita el reporte (§18.3).
+
+**Lo único que quedó de la primera mitad y sí admitiría una mirada humana sigue siendo
+opcional y no bloqueante**, y es la de §11: abrir
+`dist/lecciones/Aritmetica/2_operaciones_aritmeticas.WEB.html` y mirar el bloque PEMDAS.
+Eso es juicio estético sobre la lección reparada, **no verificación de esta mitad.**
+
+---
+
+## 24. ARCHIVOS ESCRITOS POR ESTA MITAD
+
+| Archivo | Qué |
+|---|---|
+| `projects/cantu-studio/main.js` | el reporte en la carga de contenido, el acumulador, el resumen final y el código de salida (§15, §16, §17) |
+| `projects/cantu-studio/tools/dev/tests/contentModulesLoad.test.mjs` | **+3 tests** (4 → 7); los 4 previos, intactos (§18) |
+| `projects/cantu-studio/dist/**` | 70 `.html` reescritos por `node main.js` (§20) — salida generada |
+| este record | sección nueva, hacia adelante; §0–§12 sin reescribir |

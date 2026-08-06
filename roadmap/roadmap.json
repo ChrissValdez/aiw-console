@@ -905,13 +905,14 @@
               "title": "One registry for the plumbing every optional run field repeats",
               "summary": "Collapse the mechanical enumeration an optional run field repeats across removal, dispatch and console op-plumbing into one registry, so the next field costs its semantics and not its wiring.",
               "full_description": "MEASURED, NOT ASSUMED, and the number comes from the run titled \"A second dependency list for edges that wait on a person\": adding depends_on_human_approved cost 17 SITES across 3 code files. The shared piece that exists — the classification module — carries VOCABULARY and DERIVATION, and this field never touched it, because it is not a closed-vocabulary token. The list of fields is enumerated BY HAND in every layer. WHAT THIS RUN ABSORBS, and it is 10 of those 17 sites: three branches of removeRun that are the SAME algorithm applied to a second field name, and that a registry of \"fields holding run references\" turns into one loop — a third reference-holding field would then cost ZERO there; three enumerations of the same op name in the plan layer, which a descriptor table of {name, fn, batchable} turns into one row; and four enumerations of the same op name in the console's op plumbing, which one descriptor per op reduces to a registry entry. WHAT THIS RUN MUST NOT TOUCH, and the boundary is not negotiable: THE RENDER LAYER. Four of the seventeen sites paint the screen, and there THE LABEL IS THE SEMANTICS — the run that added the field discarded renaming depends_on precisely so the AI/human difference would live in the screen label, and a generic renderer produces a generic label. A second reason, measured in the same run: that field must never claim an edge is \"satisfied\", because nobody stores the human approval, while depends_on may claim it. Two fields with the same data shape and different sayable truth do not share a renderer. ALSO OUT: unifying setDeps with the human-approval write op. It touches depends_on, which drags the same \"three roadmaps at rest\" window the rename needs, and there are already TWO runs waiting on that window. WHY NOW AND NOT LATER: four field additions are queued behind this — the batches run here, and the three fields aiw asked for in one run. Fixing the shared piece after its consumers have copied it means redoing them. And the precedent for generalising with TWO examples in hand rather than one is this repo's own: the classification module was born after its first field, not before. THE ACCEPTANCE MUST REPORT the real cost of the registry itself, and what a new optional run field costs after it — the two numbers this run exists to move.",
-              "status": "active",
+              "status": "completed",
               "depends_on": [],
               "correctness_model": "SPECIFIED",
               "work_type": "FUNCTIONAL",
               "blast_radius": "ADJACENT",
               "failure_surfaces": "SILENT",
-              "classified_at": "2026-08-03T06:31:16.363Z"
+              "classified_at": "2026-08-03T06:31:16.363Z",
+              "closeout_result": "done with deviations"
             },
             {
               "run_id": "RUN-CONSOLE-BATCHES-001",

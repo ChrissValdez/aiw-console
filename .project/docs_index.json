@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-06T16:55:32.825Z",
+  "generated_at": "2026-08-06T20:09:24.160Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -485,6 +485,10 @@
       "mtime": "2026-08-03T00:11:56.331Z"
     },
     {
+      "path": "context/aiw-console/records/RECUADRO-CONFIGURABLE-Y-COLOR-DE-BLOQUE-EN-FACTORIZACION-CANTU.md",
+      "mtime": "2026-08-06T19:32:30.976Z"
+    },
+    {
       "path": "context/aiw-console/records/REDACCION-O4.md",
       "mtime": "2026-08-03T00:11:56.332Z"
     },
@@ -513,6 +517,10 @@
       "mtime": "2026-08-03T00:11:56.335Z"
     },
     {
+      "path": "context/aiw-console/records/REGISTRO-DE-FONTANERIA-DE-CAMPOS-Y-CHIP-CLOSURE-MODE.md",
+      "mtime": "2026-08-06T17:25:55.738Z"
+    },
+    {
       "path": "context/aiw-console/records/REGLAS-DE-SELECCION-DEL-INSERTOR-CANTU.md",
       "mtime": "2026-08-05T06:05:26.672Z"
     },
@@ -527,6 +535,10 @@
     {
       "path": "context/aiw-console/records/REPARACION-ENUM-HEADER-Y-MEDICION-DE-CLASES-CANTU.md",
       "mtime": "2026-08-03T00:11:56.336Z"
+    },
+    {
+      "path": "context/aiw-console/records/REPARACION-FACTORIZACION-DELIMITADORES-COLOR-Y-SIGNO-CANTU.md",
+      "mtime": "2026-08-06T17:12:49.956Z"
     },
     {
       "path": "context/aiw-console/records/REPARACION-PARSEO-TICKETS-AIW.md",
@@ -653,8 +665,16 @@
       "mtime": "2026-08-03T00:11:56.348Z"
     },
     {
+      "path": "context/cantu-quizzes-latex/records/ALTA-O4-O5-Y-RUBRICA-V2.md",
+      "mtime": "2026-08-06T19:06:06.087Z"
+    },
+    {
       "path": "context/cantu-quizzes-latex/records/ANALISIS-READONLY-FORMATO-Y-CONTENIDO.md",
       "mtime": "2026-08-06T08:20:32.254Z"
+    },
+    {
+      "path": "context/cantu-quizzes-latex/records/COLA-COMPLETA-O5-Y-CLASIFICACION.md",
+      "mtime": "2026-08-06T19:26:46.622Z"
     },
     {
       "path": "context/cantu-studio/CANTU_STUDIO_CONTEXT.md",
@@ -1694,6 +1714,14 @@
       "freshness": "2026-08-03T00:11:56.331Z"
     },
     {
+      "title": "«Factorización»: retiro de «Sin color», recuadro configurable y color de bloque — `cantu-studio`, `queue_order` 33",
+      "path": "context/aiw-console/records/RECUADRO-CONFIGURABLE-Y-COLOR-DE-BLOQUE-EN-FACTORIZACION-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-06T19:32:30.976Z"
+    },
+    {
       "title": "REDACCIÓN O4 — conversión de \"Consola global\" a `roadmap_tree_v1`",
       "path": "context/aiw-console/records/REDACCION-O4.md",
       "nav_tier": "evidence",
@@ -1750,6 +1778,14 @@
       "freshness": "2026-08-03T00:11:56.335Z"
     },
     {
+      "title": "UN REGISTRO PARA LA FONTANERÍA — y el chip de `closure_mode` en la fila del run",
+      "path": "context/aiw-console/records/REGISTRO-DE-FONTANERIA-DE-CAMPOS-Y-CHIP-CLOSURE-MODE.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-06T17:25:55.738Z"
+    },
+    {
       "title": "REGLAS DE SELECCIÓN DEL INSERTOR DE FÓRMULA (cantu-studio)",
       "path": "context/aiw-console/records/REGLAS-DE-SELECCION-DEL-INSERTOR-CANTU.md",
       "nav_tier": "evidence",
@@ -1780,6 +1816,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T00:11:56.336Z"
+    },
+    {
+      "title": "Reparación de «Factorización»: delimitadores, color por paleta y signo — `cantu-studio`, `queue_order` 33",
+      "path": "context/aiw-console/records/REPARACION-FACTORIZACION-DELIMITADORES-COLOR-Y-SIGNO-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-06T17:12:49.956Z"
     },
     {
       "title": "REPARACIÓN DEL PARSEO DE LOS SEIS TICKETS DE AIW",
@@ -2030,12 +2074,28 @@
       "freshness": "2026-08-03T00:11:56.348Z"
     },
     {
+      "title": "Alta de O4 y O5, y la rúbrica de niveles v2",
+      "path": "context/cantu-quizzes-latex/records/ALTA-O4-O5-Y-RUBRICA-V2.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-quizzes-latex/records",
+      "freshness": "2026-08-06T19:06:06.087Z"
+    },
+    {
       "title": "Análisis de solo lectura — formato, invariantes y piloto editorial",
       "path": "context/cantu-quizzes-latex/records/ANALISIS-READONLY-FORMATO-Y-CONTENIDO.md",
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/cantu-quizzes-latex/records",
       "freshness": "2026-08-06T08:20:32.254Z"
+    },
+    {
+      "title": "La cola completa de O5, y la clasificación de los 42 runs",
+      "path": "context/cantu-quizzes-latex/records/COLA-COMPLETA-O5-Y-CLASIFICACION.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-quizzes-latex/records",
+      "freshness": "2026-08-06T19:26:46.622Z"
     },
     {
       "title": "Cantu Studio - Orchestration Context",

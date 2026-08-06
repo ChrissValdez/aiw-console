@@ -161,9 +161,10 @@ hoy se puede crear un run ya cerrado sin desenlace, desde la pantalla, con cero 
 **0 datos malos en 56 runs**, así que no urge.
 
 **`cantu-quizzes-latex` emitió 4 artefactos y se esperaban 6** — faltan `guardrails.json`
-y `no_claims.json`. **Hipótesis sin verificar:** derivan de `governance/`, que ese repo no
-tiene. **Si el aviso de la consola los nombra como no cargados, es defecto del emisor y es
-NUESTRO.** Está pendiente de una mirada a pantalla.
+y `no_claims.json`. **VERIFICADO EN PANTALLA el 2026-08-06: tras re-emitir, la consola NO
+muestra ningún aviso de fichero no cargado.** Luego el `snapshot.json` **no los declara**,
+no hay promesa incumplida, y **la ausencia es POR DISEÑO** — derivan de `governance/`, que
+ese repo no tiene. **No es defecto del emisor y no hay nada que hacer.**
 
 ---
 

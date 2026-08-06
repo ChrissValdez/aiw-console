@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-06T20:09:24.160Z",
+  "generated_at": "2026-08-06T20:20:54.737Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -547,6 +547,10 @@
     {
       "path": "context/aiw-console/records/REPARACION-SELECTOR-COLOR-HEADER-CANTU.md",
       "mtime": "2026-08-03T00:11:56.337Z"
+    },
+    {
+      "path": "context/aiw-console/records/REPARACION-SIGNO-IGUAL-FUERA-DEL-RECUADRO-Y-NOMBRE-DEL-OPERANDO-CANTU.md",
+      "mtime": "2026-08-06T20:16:09.795Z"
     },
     {
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
@@ -1840,6 +1844,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T00:11:56.337Z"
+    },
+    {
+      "title": "Reparación: el `=` fuera del recuadro y el nombre del operando",
+      "path": "context/aiw-console/records/REPARACION-SIGNO-IGUAL-FUERA-DEL-RECUADRO-Y-NOMBRE-DEL-OPERANDO-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-06T20:16:09.795Z"
     },
     {
       "title": "RESTITUCIÓN DE LAS 17 ARISTAS DE `#47` Y RE-ENCUADRE A AUDITORÍA AL CIERRE — CANTU",

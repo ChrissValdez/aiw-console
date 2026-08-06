@@ -1,27 +1,37 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-06T20:09:24.160Z",
+  "generated_at": "2026-08-06T20:20:54.737Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-06T19:37:40.140Z"
+      "mtime": "2026-08-06T20:20:01.286Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-06T20:09:24.090Z"
+      "mtime": "2026-08-06T20:20:54.660Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "77a9b7f365b32f07a1e66f85a47d069ec895fb1c",
+  "head": "006dacb0fb755cea7200a3c408196997b8f2937d",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 197,
+  "commit_total": 198,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "006dacb",
+      "full_sha": "006dacb0fb755cea7200a3c408196997b8f2937d",
+      "date": "2026-08-06T14:18:53-06:00",
+      "parents": "77a9b7f",
+      "subject": "47: cierra con desenlace 'done with deviations' - los dos alcances entregados y QA del operador en verde; la desviacion es V3_BATCHABLE_OPS sin absorber por un pin de texto fuente fuera de alcance, que deja el campo siguiente en 11 en vez de 10",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "77a9b7f",

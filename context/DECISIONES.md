@@ -2590,3 +2590,54 @@ de viajar en mensajes que el operador transporta:**
 Criterio de borrado: la sustituye una decisión que retire `cantu-quizzes-latex` del
 registro o le quite hilo propio, o que derogue alguno de los tres acuerdos del punto 2.
 Las cifras del estado del repo son mediciones fechadas y se corrigen hacia adelante.
+
+## D-064 — 2026-08-06 — La cabina opera la consola por defecto: status y re-emisión sin pedir permiso, estructura con ritual completo, Git nunca
+
+**Autoriza:** el operador, por escrito, en el hilo `cantu-studio`, tras el informe de
+capacidad medida del 2026-08-06. La modalidad Cowork da a la cabina lectura y escritura
+directas del workspace; esta entrada fija **qué puede escribir sin preguntar**, y con qué
+evidencia. Sin ella, la autorización viviría sólo en las instrucciones del Project, que se
+reescriben enteras en cada actualización de reglas y donde una concesión fechada del
+operador se perdería sin que nadie lo notara.
+
+**Alcance concedido, permanente y sin confirmación por acto:**
+
+1. `planned → active` y `active → completed` en la consola.
+2. Re-emisión de `.project/`. Medido el mismo día: **la re-emisión es automática dentro de
+   la propia operación de edición del roadmap** —la consola la ejecuta después de la
+   escritura y antes de responder—, así que no es un paso aparte que se pueda olvidar.
+3. Cambios estructurales del roadmap —altas, inserciones, movimientos, renumerados,
+   retiros, fases y objetivos, títulos, `full_description`, aristas, clasificación— **sólo
+   con el ritual de cinco puntos**: respaldo byte a byte en `_backups\` fuera de los dos
+   repos, guarda de título que aborta, dry-run antes de aplicar con su `remap` publicado,
+   verificación campo a campo contra el respaldo declarando qué campos debían cambiar y
+   ninguno más, y nunca con un taller corriendo.
+
+**Condiciones que no se negocian:**
+
+- **Todo acto publica el parte de consola con sus cuatro líneas de evidencia:** dry-run,
+  `md5` del canónico antes y después, `history=` y `ready_next=` del validador, y si
+  re-emitió. Son los ojos del operador, que ya no mira la pantalla de la consola.
+- **Si el `apply` falla, la cabina para** y devuelve el bloque de consola manual. No
+  reintenta, no insiste y **no edita el JSON a mano con ningún pretexto**.
+- **Nunca con un encargo en vuelo**, salvo el `active → completed` del run que acaba de
+  entregar. La superficie de escritura de la cabina cuenta como una más para las
+  colisiones entre carriles.
+- **Git sigue siendo exclusivo del operador.** Para la cabina no es una política sino una
+  pared medida: `.git` no es escribible, no hay credenciales y no hay red al remoto.
+- **La cabina no ejecuta el trabajo de un run**, aunque pueda y aunque sea rápido. Es la
+  propiedad que produjo las siete contradicciones del taller en una sola sesión, y no se
+  conserva sola: quien mide para juzgar no puede ser quien escribió la expectativa.
+
+**Primera aplicación, el mismo día:** `set-status planned → active` sobre `#32`, `#33` y
+`#34` de `cantu-studio`. La escritura del canónico —que hasta ese momento estaba declarada
+como **no probada**, porque `applyPlan` usa temporal-y-renombrado y renombrar exige borrar,
+que el entorno de la cabina prohíbe— **funcionó**: tres `apply` con compare-and-swap, tres
+re-emisiones de seis archivos, y verificación campo a campo que devolvió **exactamente tres
+campos cambiados y ninguno más**.
+
+Criterio de borrado: la sustituye una decisión que revoque la autorización, que cambie el
+reparto de quién ejecuta Git, o que retire la modalidad Cowork. Las capacidades y los
+límites del entorno son mediciones fechadas y se vuelven a probar al abrir cada sesión: si
+una prueba de arranque contradice lo declarado aquí, gana la prueba y se corrige hacia
+adelante.

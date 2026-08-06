@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-04T21:47:16.241Z",
+  "generated_at": "2026-08-06T08:07:01.603Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-04T21:47:16.234Z"
+      "mtime": "2026-08-06T08:07:01.598Z"
     },
     {
       "path": "package.json",
@@ -786,9 +786,6 @@
                   "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001",
                   "RUN-CONSOLE-UI-UX-001",
                   "RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001"
-                ],
-                "depends_on_human_approved": [
-                  "RUN-CONSOLE-DEPENDS-ON-HUMAN-APPROVED-001"
                 ],
                 "correctness_model": "JUDGED_ACCEPTS",
                 "work_type": "FOUNDATIONAL",

@@ -1,27 +1,317 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-04T21:47:16.241Z",
+  "generated_at": "2026-08-06T08:07:01.603Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-04T21:11:15.324Z"
+      "mtime": "2026-08-06T08:06:22.226Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-04T21:47:16.234Z"
+      "mtime": "2026-08-06T08:07:01.598Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "a5113aa4b825986221b11c993c1095f650b4da0a",
+  "head": "817b6b789fa7592e763c147b7813ab43738e3552",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 162,
+  "commit_total": 191,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "817b6b7",
+      "full_sha": "817b6b789fa7592e763c147b7813ab43738e3552",
+      "date": "2026-08-06T02:06:18-06:00",
+      "parents": "81e065f",
+      "subject": "handoff: relevo del 2026-08-06, ultima sesion en modalidad espejo - desbloquea el 47 con las etiquetas dentro, y retira del 53 la arista residual de una QA",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "81e065f",
+      "full_sha": "81e065f1c25b1ef87f39053f7b9a364698d3b411",
+      "date": "2026-08-06T01:41:48-06:00",
+      "parents": "ca64caf",
+      "subject": "handoff(aiw): relevo del 6-ago - compuerta CONST 4 re-adjudicada sobre los 21 (8 no detenidos / 13 si), cruce con depends_on deja solo 22 y 41 ejecutables, el tercero es 24 ya completed, dos blancos descartados con medicion, objetivo 007 escrito y validado pero NO lanzado, y la trampa de CRLF con su guarda",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "ca64caf",
+      "full_sha": "ca64cafd7cfcf5d93067275a13afe51f23ed7baa",
+      "date": "2026-08-06T01:08:55-06:00",
+      "parents": "da85fdd",
+      "subject": "handoff: abre el hilo de cantu-quizzes-latex con su relevo inaugural; D-063 registra el cuarto proyecto y tres acuerdos con aiw que dejan de viajar en mensajes",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "da85fdd",
+      "full_sha": "da85fdde8c5d9611e86ad45d5f3c535e52703983",
+      "date": "2026-08-06T00:35:18-06:00",
+      "parents": "998b0ae",
+      "subject": "handoff: relevo del hilo cantu-studio al cierre de sesion. 73 runs, history=33, cero active. Seis componentes revalidados; la formula en linea entra, se fija con tests y gana insertor; tres runs retirados; D-061 registrada; nueve decisiones abiertas del operador y la matriz de certificacion en seccion propia",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "998b0ae",
+      "full_sha": "998b0aee2d45ac20d0fe7d5e6c97cef87b22c9dc",
+      "date": "2026-08-05T18:07:16-06:00",
+      "parents": "01c8bfc",
+      "subject": "record: chore(cantu): remove the helper line beside the inline formula inserter button; the button, its spacing and the mixed-selection warning stay untouched",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "01c8bfc",
+      "full_sha": "01c8bfc0b7385090977e9813c3ed381e03202033",
+      "date": "2026-08-05T17:24:35-06:00",
+      "parents": "195bc33",
+      "subject": "record: chore(cantu): bring the component status registry up to date for the five closed revalidations, and refresh the stale test counts in the Definition of Done; five hard contradictions found in the frozen certification matrix and left untouched",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "195bc33",
+      "full_sha": "195bc334d8eef199eabc10eba8546634bb3443b5",
+      "date": "2026-08-05T14:49:46-06:00",
+      "parents": "75536fb",
+      "subject": "record: audit(cantu): revalidation of the Callout component - ten defects measured and none repaired, twelve divergences declared; the registered palette defect does not reproduce in any of its four halves",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "75536fb",
+      "full_sha": "75536fb977547679227236e49d5dc0f7eeff1b07",
+      "date": "2026-08-05T14:01:02-06:00",
+      "parents": "0afb585",
+      "subject": "record: fix(cantu): the inserter now writes through the browser insert-text path, so the field keeps its native undo - the formula comes back first, then what was typed before",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "0afb585",
+      "full_sha": "0afb585b4b6ca331d0691958308e900d005ffe32",
+      "date": "2026-08-05T13:34:18-06:00",
+      "parents": "2130794",
+      "subject": "record: roadmap(cantu): insert the two successors of the retired undo run - the minimal inserter fix at 30, and the per-field history system after the UX audit",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2130794",
+      "full_sha": "213079427cb617e0d15608aefb89780a14bf5d09",
+      "date": "2026-08-05T03:52:20-06:00",
+      "parents": "89fa324",
+      "subject": "record: retire(cantu): withdraw the editor-wide undo stack after operator QA - one document-level stack cannot tell one block's change from another's; the measurement survives in its own record",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "89fa324",
+      "full_sha": "89fa3245e877db3ef7a28bb9ceaa222971fb44e4",
+      "date": "2026-08-05T03:11:22-06:00",
+      "parents": "575497a",
+      "subject": "record: feat(cantu): give the editor its own undo and redo stack - measured that a programmatic write disables the native history for the whole field, not just its own change; 77 programmatic writers, none of them covered before",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "575497a",
+      "full_sha": "575497a11ea0c563b89b82aae158d09c83d63a5b",
+      "date": "2026-08-05T01:45:22-06:00",
+      "parents": "c72d20e",
+      "subject": "record: retire(cantu): withdraw the inline formula paragraph preview and dismantle its surface - built and passed QA, retired by operator judgement; the inserter and its selection rules stay untouched",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c72d20e",
+      "full_sha": "c72d20e7355aaa58f604cd17faa10747f89551a8",
+      "date": "2026-08-05T01:02:54-06:00",
+      "parents": "90e6e27",
+      "subject": "record: feat(cantu): render a live preview of the prose paragraph beneath the five formula-capable fields, splitting the paragraph and reusing the math engine the editor already ships",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "90e6e27",
+      "full_sha": "90e6e272059543116bc8e03037b25d41ca4bea3e",
+      "date": "2026-08-05T00:38:16-06:00",
+      "parents": "2049951",
+      "subject": "record: roadmap(cantu): insert the editor-wide undo and redo run at 29",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2049951",
+      "full_sha": "2049951130b68ac365258736157c13d6d3dabfd0",
+      "date": "2026-08-05T00:08:33-06:00",
+      "parents": "6f4837b",
+      "subject": "record: feat(cantu): replace the inserter preload with four measured selection rules - prose is left untouched, exactly one delimited formula is edited without its wrappers, mixed selections warn and insert without replacing",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6f4837b",
+      "full_sha": "6f4837bf1882768669ebeec305594e4d60f2d6e8",
+      "date": "2026-08-05T00:08:09-06:00",
+      "parents": "1a0ef8b",
+      "subject": "consola: registra cantu-quizzes-latex como cuarto proyecto - una entrada, cero sitios de codigo; su canonico estrena el roadmap sin runs de D-062",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1a0ef8b",
+      "full_sha": "1a0ef8bdfa068f056c1d0c74b1015b04f05487d4",
+      "date": "2026-08-04T23:05:38-06:00",
+      "parents": "adf09d3",
+      "subject": "record: feat(cantu): build the inline formula inserter - a control beside the five prose fields opens the existing visual editor and splices a delimited formula at the cursor; selection is preloaded and replaced",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "adf09d3",
+      "full_sha": "adf09d3bb5124f8e45d7f6cef970ff073444352d",
+      "date": "2026-08-04T22:31:31-06:00",
+      "parents": "8da7f87",
+      "subject": "record: roadmap(cantu): amend #27 with the measured truth about the inserter shell and its evaluators, and split the preview out into its own run at 28",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8da7f87",
+      "full_sha": "8da7f8773e3ef1d97969185076cd7b4f890ee617",
+      "date": "2026-08-04T22:10:25-06:00",
+      "parents": "06f2553",
+      "subject": "record: roadmap(cantu): open #27 formula inserter mount; the workshop stopped at its gates and wrote nothing in the repo",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "06f2553",
+      "full_sha": "06f25538c9d7be24811a390c5927ae160e546027",
+      "date": "2026-08-04T21:42:56-06:00",
+      "parents": "564322c",
+      "subject": "record: fix(cantu): close #26 - the content build now reports which module failed and why, lists them at the end and exits non-zero, following the sibling catch that already reported",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "564322c",
+      "full_sha": "564322cd16969084e1fe21461307173181adea42",
+      "date": "2026-08-04T21:27:43-06:00",
+      "parents": "44f69ff",
+      "subject": "record: fix(cantu): repair the broken lesson import so all 31 content modules load, and add a regression test that names the file and the reason; the silent catch stays pending an operator decision",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "44f69ff",
+      "full_sha": "44f69ff4239d6e6fab3ecf956e79c7a85cbac3fa",
+      "date": "2026-08-04T21:10:31-06:00",
+      "parents": "13f5c44",
+      "subject": "record: test(cantu): close #25 - lock the existing inline formula behaviour in the five prose fields with 13 tests; the escaping of < is escaping, not corruption, and the browser decode stays declared as a boundary",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "13f5c44",
+      "full_sha": "13f5c44462cba7eaf2765c3c09ded84bc01a342a",
+      "date": "2026-08-04T20:16:10-06:00",
+      "parents": "90d416a",
+      "subject": "record: roadmap(cantu): insert the formula inserter mount run at 27; open #25 inline formula behaviour lock",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "90d416a",
+      "full_sha": "90d416a32bbe46941ab9f9e237158b864c7abddd",
+      "date": "2026-08-04T19:35:57-06:00",
+      "parents": "24579ca",
+      "subject": "record: audit(cantu): revalidation of the Narrative component - ten defects measured, none repaired, stop-and-report on the hidden mode; plus insertion of the inline formula lock and lesson load runs at 25 and 26",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "24579ca",
+      "full_sha": "24579ca6d57037c013de3e32abff9eb6ecb2fe7a",
+      "date": "2026-08-04T18:22:15-06:00",
+      "parents": "f5f91c4",
+      "subject": "contrato: un contenedor sin runs es VALIDO y no deriva nada - el chequeo que el contrato describia nunca se implemento; la clausula de la rama 3 pasa de redundante a portante y D-062 lo registra como transversal",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f5f91c4",
+      "full_sha": "f5f91c4a575f889fe365d03ffedf9550f6a45eca",
+      "date": "2026-08-04T17:16:26-06:00",
+      "parents": "d30f65d",
+      "subject": "record: barrido diagnostico de formula en linea en cantu - el corpus ya la usa y nada la protege; cero colisiones de markdown; tres roturas de contenido reportadas (encargo sin run)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d30f65d",
+      "full_sha": "d30f65d1b9a30c780c94fc665be615abb3079b99",
+      "date": "2026-08-04T17:15:38-06:00",
+      "parents": "6ee3277",
+      "subject": "records: dos mediciones de cabina - la puerta de operaciones por lote pegado y las etiquetas de closure_mode; y el alta de un proyecto nuevo, que destapa una discrepancia viva entre el contrato y el validador sobre fases sin runs",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6ee3277",
+      "full_sha": "6ee327760ec64e3a49f340d8cbbb6e3457ed9340",
+      "date": "2026-08-04T17:15:38-06:00",
+      "parents": "0c9376c",
+      "subject": "roadmap: progress pasa a norma en el contrato - QA humana positiva satisface la arista de aprobacion y completed solo jamas; cerrar exige desenlace con lista sugerida y valor por defecto; History deja de pintar la ausencia como bloqueo; el procedimiento gana la regla de clasificar al crear",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "0c9376c",
+      "full_sha": "0c9376cd96d801b6f96df4d91a3a8bdb44127228",
+      "date": "2026-08-04T16:25:59-06:00",
+      "parents": "a5113aa",
+      "subject": "record: audit(cantu): revalidation of the Video component - eight defects measured and none repaired pending operator QA; plus a read-only measurement of inline formula support across the prose fields",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "a5113aa",

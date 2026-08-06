@@ -761,9 +761,6 @@
                 "RUN-CONSOLE-UI-UX-001",
                 "RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001"
               ],
-              "depends_on_human_approved": [
-                "RUN-CONSOLE-DEPENDS-ON-HUMAN-APPROVED-001"
-              ],
               "correctness_model": "JUDGED_ACCEPTS",
               "work_type": "FOUNDATIONAL",
               "blast_radius": "PROJECT_SHAPE",

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-04T21:47:16.241Z",
+  "generated_at": "2026-08-06T08:07:01.603Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -18,7 +18,7 @@
     },
     {
       "path": "context/DECISIONES.md",
-      "mtime": "2026-08-03T00:11:56.280Z"
+      "mtime": "2026-08-06T07:28:14.185Z"
     },
     {
       "path": "context/MIGRATION-REPORT.md",
@@ -34,7 +34,7 @@
     },
     {
       "path": "context/aiw-console/CONTRATO.md",
-      "mtime": "2026-08-04T20:57:03.985Z"
+      "mtime": "2026-08-05T00:16:44.346Z"
     },
     {
       "path": "context/aiw-console/records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md",
@@ -51,6 +51,10 @@
     {
       "path": "context/aiw-console/records/AIW-TERCER-PROYECTO.md",
       "mtime": "2026-08-03T00:11:56.285Z"
+    },
+    {
+      "path": "context/aiw-console/records/ALTA-DEL-PROYECTO-CANTU-QUIZZES-LATEX.md",
+      "mtime": "2026-08-05T06:03:59.883Z"
     },
     {
       "path": "context/aiw-console/records/ALTA-DEPENDS-ON-HUMAN-APPROVED.md",
@@ -97,6 +101,14 @@
       "mtime": "2026-08-03T00:11:56.291Z"
     },
     {
+      "path": "context/aiw-console/records/BARRIDO-DIAGNOSTICO-FORMULA-EN-LINEA-CANTU.md",
+      "mtime": "2026-08-04T22:57:50.971Z"
+    },
+    {
+      "path": "context/aiw-console/records/BLOQUEO-CONDUCTA-FORMULA-EN-LINEA-CANTU.md",
+      "mtime": "2026-08-05T02:40:10.634Z"
+    },
+    {
       "path": "context/aiw-console/records/CARRILES-Y-BARRIERS-ROADMAP.md",
       "mtime": "2026-08-03T00:11:56.291Z"
     },
@@ -137,6 +149,14 @@
       "mtime": "2026-08-03T00:11:56.295Z"
     },
     {
+      "path": "context/aiw-console/records/CONSTRUCCION-INSERTOR-FORMULA-EN-LINEA-CANTU.md",
+      "mtime": "2026-08-05T04:57:38.242Z"
+    },
+    {
+      "path": "context/aiw-console/records/CONTENEDORES-SIN-RUNS-MANDA-EL-CODIGO.md",
+      "mtime": "2026-08-05T00:18:30.699Z"
+    },
+    {
       "path": "context/aiw-console/records/CONTRATO-COLOR-Y-PALETA-CANTU.md",
       "mtime": "2026-08-03T00:11:56.297Z"
     },
@@ -173,6 +193,14 @@
       "mtime": "2026-08-03T00:11:56.301Z"
     },
     {
+      "path": "context/aiw-console/records/DESHACER-NATIVO-DEL-INSERTOR-CANTU.md",
+      "mtime": "2026-08-05T19:58:06.691Z"
+    },
+    {
+      "path": "context/aiw-console/records/DESHACER-Y-REHACER-GLOBAL-CANTU.md",
+      "mtime": "2026-08-05T08:29:54.149Z"
+    },
+    {
       "path": "context/aiw-console/records/DISCIPLINA-UN-RUN-POR-CARRIL.md",
       "mtime": "2026-08-03T00:11:56.302Z"
     },
@@ -203,6 +231,10 @@
     {
       "path": "context/aiw-console/records/ENCADENAMIENTO-CONTRATOS-7-8-A-9-CANTU.md",
       "mtime": "2026-08-03T00:11:56.305Z"
+    },
+    {
+      "path": "context/aiw-console/records/ENMIENDA-INSERTOR-Y-ALTA-PREVISUALIZACION-CANTU.md",
+      "mtime": "2026-08-05T04:28:39.928Z"
     },
     {
       "path": "context/aiw-console/records/ESCRITURA-CLASIFICACION-21-RUNS-AIW.md",
@@ -245,6 +277,18 @@
       "mtime": "2026-08-03T00:11:56.311Z"
     },
     {
+      "path": "context/aiw-console/records/INSERCION-DESHACER-GLOBAL-CANTU.md",
+      "mtime": "2026-08-05T06:27:43.844Z"
+    },
+    {
+      "path": "context/aiw-console/records/INSERCION-FORMULA-EN-LINEA-Y-LECCION-CANTU.md",
+      "mtime": "2026-08-05T00:29:45.387Z"
+    },
+    {
+      "path": "context/aiw-console/records/INSERCION-MONTAJE-INSERTOR-FORMULA-CANTU.md",
+      "mtime": "2026-08-05T02:01:56.737Z"
+    },
+    {
       "path": "context/aiw-console/records/INSERCION-REGISTRO-DE-CAMPOS.md",
       "mtime": "2026-08-03T06:23:58.356Z"
     },
@@ -253,12 +297,24 @@
       "mtime": "2026-08-03T00:11:56.311Z"
     },
     {
+      "path": "context/aiw-console/records/INSERCION-SUCESORES-DEL-DESHACER-CANTU.md",
+      "mtime": "2026-08-05T19:31:09.254Z"
+    },
+    {
       "path": "context/aiw-console/records/INSERCION-TRES-RUNS-PIEZAS-COMPARTIDAS-CANTU.md",
       "mtime": "2026-08-03T00:11:56.312Z"
     },
     {
       "path": "context/aiw-console/records/INVENTARIO-COLOR-Y-MATH-DE-COMPONENTES-WEB-CANTU.md",
       "mtime": "2026-08-03T00:11:56.312Z"
+    },
+    {
+      "path": "context/aiw-console/records/LECCION-QUE-NO-CARGA-CANTU.md",
+      "mtime": "2026-08-05T03:39:35.771Z"
+    },
+    {
+      "path": "context/aiw-console/records/MEDICION-ALTA-DE-PROYECTO-NUEVO.md",
+      "mtime": "2026-08-04T22:05:46.358Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-CARRIL-DOCUMENTATION-Y-CASCADA-CANTU.md",
@@ -275,6 +331,10 @@
     {
       "path": "context/aiw-console/records/MEDICION-ESTADO-DE-AIW.md",
       "mtime": "2026-08-03T00:11:56.315Z"
+    },
+    {
+      "path": "context/aiw-console/records/MEDICION-FORMULA-EN-LINEA-CANTU.md",
+      "mtime": "2026-08-04T21:58:12.804Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-FUENTES-CONSOLA.md",
@@ -325,6 +385,10 @@
       "mtime": "2026-08-03T09:48:10.063Z"
     },
     {
+      "path": "context/aiw-console/records/MEDICION-REPO-CANTU-QUIZZES-LATEX.md",
+      "mtime": "2026-08-04T23:49:36.830Z"
+    },
+    {
       "path": "context/aiw-console/records/MEDICION-ROADMAP-V3.md",
       "mtime": "2026-08-03T00:11:56.321Z"
     },
@@ -361,6 +425,10 @@
       "mtime": "2026-08-03T00:11:56.327Z"
     },
     {
+      "path": "context/aiw-console/records/MONTAJE-INSERTOR-FORMULA-CANTU.md",
+      "mtime": "2026-08-05T03:54:00.920Z"
+    },
+    {
       "path": "context/aiw-console/records/PALETA-DE-AUTOR-COMPILADOR-Y-MOTOR-CANTU.md",
       "mtime": "2026-08-03T00:11:56.327Z"
     },
@@ -389,6 +457,10 @@
       "mtime": "2026-08-03T00:11:56.329Z"
     },
     {
+      "path": "context/aiw-console/records/PREVISUALIZACION-PARRAFO-CON-FORMULAS-CANTU.md",
+      "mtime": "2026-08-05T06:59:43.410Z"
+    },
+    {
       "path": "context/aiw-console/records/PROGRESS-COMO-NORMA.md",
       "mtime": "2026-08-04T21:02:47.124Z"
     },
@@ -399,6 +471,10 @@
     {
       "path": "context/aiw-console/records/PUBLICACION-CLASIFICACION-DE-RUNS.md",
       "mtime": "2026-08-03T00:11:56.330Z"
+    },
+    {
+      "path": "context/aiw-console/records/PUESTA-AL-DIA-DEL-ESTADO-DE-COMPONENTES-CANTU.md",
+      "mtime": "2026-08-05T21:16:08.360Z"
     },
     {
       "path": "context/aiw-console/records/REARCHIVO-BLOQUE-RENAME.md",
@@ -437,6 +513,10 @@
       "mtime": "2026-08-03T00:11:56.335Z"
     },
     {
+      "path": "context/aiw-console/records/REGLAS-DE-SELECCION-DEL-INSERTOR-CANTU.md",
+      "mtime": "2026-08-05T06:05:26.672Z"
+    },
+    {
       "path": "context/aiw-console/records/RELEVO-AIW-AL-CIERRE-2026-08-02.md",
       "mtime": "2026-08-03T02:23:05.975Z"
     },
@@ -465,20 +545,56 @@
       "mtime": "2026-08-03T00:11:56.338Z"
     },
     {
+      "path": "context/aiw-console/records/RETIRO-PILA-DESHACER-GLOBAL-CANTU.md",
+      "mtime": "2026-08-05T09:40:52.005Z"
+    },
+    {
+      "path": "context/aiw-console/records/RETIRO-PREVISUALIZACION-PARRAFO-CANTU.md",
+      "mtime": "2026-08-05T07:31:57.310Z"
+    },
+    {
       "path": "context/aiw-console/records/RETIRO-RUN-COMPUERTAS-VARIANTE-CANTU.md",
       "mtime": "2026-08-03T04:52:37.695Z"
+    },
+    {
+      "path": "context/aiw-console/records/RETIRO-TEXTO-DE-AYUDA-DEL-INSERTOR-CANTU.md",
+      "mtime": "2026-08-05T23:53:46.476Z"
     },
     {
       "path": "context/aiw-console/records/REVALIDACION-COLUMNS-Y-VEREDICTO-DE-LA-DOD-CANTU.md",
       "mtime": "2026-08-03T00:11:56.339Z"
     },
     {
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-FACTORIZACION-CANTU.md",
+      "mtime": "2026-08-06T08:00:52.187Z"
+    },
+    {
       "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-LISTA-CON-ETIQUETAS-CANTU.md",
       "mtime": "2026-08-03T06:40:47.950Z"
     },
     {
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-NOTA-DESPLEGABLE-CANTU.md",
+      "mtime": "2026-08-06T07:56:51.918Z"
+    },
+    {
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-NOTA-DESTACADA-CANTU.md",
+      "mtime": "2026-08-05T20:37:04.752Z"
+    },
+    {
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-REGLA-MATEMATICA-CANTU.md",
+      "mtime": "2026-08-06T08:06:09.359Z"
+    },
+    {
       "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-TARJETA-CANTU.md",
       "mtime": "2026-08-03T10:03:34.943Z"
+    },
+    {
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-TEXTO-CANTU.md",
+      "mtime": "2026-08-05T00:46:31.963Z"
+    },
+    {
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-VIDEO-CANTU.md",
+      "mtime": "2026-08-04T21:54:54.993Z"
     },
     {
       "path": "context/aiw-console/records/SENAL-DE-PREVIA-INVALIDA-Y-SUPERFICIE-DEL-EDITOR-DE-FORMULAS-CANTU.md",
@@ -542,15 +658,19 @@
     },
     {
       "path": "context/handoffs/aiw-console.md",
-      "mtime": "2026-08-03T02:45:42.700Z"
+      "mtime": "2026-08-06T07:50:00.221Z"
     },
     {
       "path": "context/handoffs/aiw.md",
-      "mtime": "2026-08-03T08:53:51.799Z"
+      "mtime": "2026-08-06T07:41:08.224Z"
+    },
+    {
+      "path": "context/handoffs/cantu-quizzes-latex.md",
+      "mtime": "2026-08-06T06:46:17.770Z"
     },
     {
       "path": "context/handoffs/cantu-studio.md",
-      "mtime": "2026-08-03T00:11:56.351Z"
+      "mtime": "2026-08-06T06:33:58.017Z"
     },
     {
       "path": "docs/snapshot-schema-v1.md",
@@ -639,7 +759,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-08-03T00:11:56.280Z"
+      "freshness": "2026-08-06T07:28:14.185Z"
     },
     {
       "title": "MIGRATION-REPORT — Centralización del contexto de gobernanza en aiw-console",
@@ -671,7 +791,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw-console",
-      "freshness": "2026-08-04T20:57:03.985Z"
+      "freshness": "2026-08-05T00:16:44.346Z"
     },
     {
       "title": "ACABADO VISUAL de Docs y EMISOR de `git_history` — cierre del port de la consola",
@@ -704,6 +824,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T00:11:56.285Z"
+    },
+    {
+      "title": "ALTA DEL PROYECTO — `cantu-quizzes-latex`",
+      "path": "context/aiw-console/records/ALTA-DEL-PROYECTO-CANTU-QUIZZES-LATEX.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T06:03:59.883Z"
     },
     {
       "title": "ALTA DE `depends_on_human_approved` — el campo, y lo que cuesta darlo de alta",
@@ -794,6 +922,22 @@
       "freshness": "2026-08-03T00:11:56.291Z"
     },
     {
+      "title": "BARRIDO DIAGNÓSTICO — FÓRMULA EN LÍNEA (cantu-studio)",
+      "path": "context/aiw-console/records/BARRIDO-DIAGNOSTICO-FORMULA-EN-LINEA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-04T22:57:50.971Z"
+    },
+    {
+      "title": "BLOQUEO DE CONDUCTA — FÓRMULA EN LÍNEA EN CAMPOS DE PROSA (cantu-studio)",
+      "path": "context/aiw-console/records/BLOQUEO-CONDUCTA-FORMULA-EN-LINEA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T02:40:10.634Z"
+    },
+    {
       "title": "CARRILES Y BARRIERS — el roadmap gana líneas paralelas y puntos de sincronización (D-051)",
       "path": "context/aiw-console/records/CARRILES-Y-BARRIERS-ROADMAP.md",
       "nav_tier": "evidence",
@@ -874,6 +1018,22 @@
       "freshness": "2026-08-03T00:11:56.295Z"
     },
     {
+      "title": "CONSTRUCCIÓN DEL INSERTOR DE FÓRMULA EN LÍNEA (cantu-studio)",
+      "path": "context/aiw-console/records/CONSTRUCCION-INSERTOR-FORMULA-EN-LINEA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T04:57:38.242Z"
+    },
+    {
+      "title": "CONTENEDORES SIN RUNS — MANDA EL CÓDIGO",
+      "path": "context/aiw-console/records/CONTENEDORES-SIN-RUNS-MANDA-EL-CODIGO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T00:18:30.699Z"
+    },
+    {
       "title": "CONTRATO DE COMPATIBILIDAD DE COLOR Y PALETA — RUN `#7` EN CANTU",
       "path": "context/aiw-console/records/CONTRATO-COLOR-Y-PALETA-CANTU.md",
       "nav_tier": "evidence",
@@ -946,6 +1106,22 @@
       "freshness": "2026-08-03T00:11:56.301Z"
     },
     {
+      "title": "DESHACER NATIVO DEL INSERTOR DE FÓRMULA (cantu-studio)",
+      "path": "context/aiw-console/records/DESHACER-NATIVO-DEL-INSERTOR-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T19:58:06.691Z"
+    },
+    {
+      "title": "DESHACER Y REHACER EN TODO EL EDITOR (cantu-studio)",
+      "path": "context/aiw-console/records/DESHACER-Y-REHACER-GLOBAL-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T08:29:54.149Z"
+    },
+    {
       "title": "DISCIPLINA DE EJECUCIÓN PARALELA — «un run a la vez POR CARRIL»",
       "path": "context/aiw-console/records/DISCIPLINA-UN-RUN-POR-CARRIL.md",
       "nav_tier": "evidence",
@@ -1008,6 +1184,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T00:11:56.305Z"
+    },
+    {
+      "title": "ENMIENDA DEL RUN 27 Y ALTA DE LA PREVISUALIZACIÓN — CANTU",
+      "path": "context/aiw-console/records/ENMIENDA-INSERTOR-Y-ALTA-PREVISUALIZACION-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T04:28:39.928Z"
     },
     {
       "title": "Escritura de la clasificación aprobada en los 21 runs `planned` de `aiw`",
@@ -1090,6 +1274,30 @@
       "freshness": "2026-08-03T00:11:56.311Z"
     },
     {
+      "title": "INSERCIÓN DE UN RUN EN CANTU — DESHACER Y REHACER GLOBAL DEL EDITOR",
+      "path": "context/aiw-console/records/INSERCION-DESHACER-GLOBAL-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T06:27:43.844Z"
+    },
+    {
+      "title": "INSERCIÓN DE DOS RUNS EN CANTU — FÓRMULA EN LÍNEA Y LECCIÓN QUE NO CARGA",
+      "path": "context/aiw-console/records/INSERCION-FORMULA-EN-LINEA-Y-LECCION-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T00:29:45.387Z"
+    },
+    {
+      "title": "INSERCIÓN DE UN RUN EN CANTU — MONTAJE DEL INSERTOR DE FÓRMULA",
+      "path": "context/aiw-console/records/INSERCION-MONTAJE-INSERTOR-FORMULA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T02:01:56.737Z"
+    },
+    {
       "title": "Inserción del run del registro de campos en `queue_order` 47",
       "path": "context/aiw-console/records/INSERCION-REGISTRO-DE-CAMPOS.md",
       "nav_tier": "evidence",
@@ -1106,6 +1314,14 @@
       "freshness": "2026-08-03T00:11:56.311Z"
     },
     {
+      "title": "INSERCIÓN DE LOS DOS SUCESORES DEL DESHACER RETIRADO (cantu-studio)",
+      "path": "context/aiw-console/records/INSERCION-SUCESORES-DEL-DESHACER-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T19:31:09.254Z"
+    },
+    {
       "title": "Inserción de tres runs de piezas compartidas en el roadmap canónico de Cantu",
       "path": "context/aiw-console/records/INSERCION-TRES-RUNS-PIEZAS-COMPARTIDAS-CANTU.md",
       "nav_tier": "evidence",
@@ -1120,6 +1336,22 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T00:11:56.312Z"
+    },
+    {
+      "title": "LECCIÓN QUE NO CARGA — REPARACIÓN Y VISIBILIDAD DEL FALLO (cantu-studio)",
+      "path": "context/aiw-console/records/LECCION-QUE-NO-CARGA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T03:39:35.771Z"
+    },
+    {
+      "title": "MEDICIÓN — Alta de un proyecto NUEVO (`cantu-quizzes-latex`)",
+      "path": "context/aiw-console/records/MEDICION-ALTA-DE-PROYECTO-NUEVO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-04T22:05:46.358Z"
     },
     {
       "title": "Medición del carril DOCUMENTATION de Cantu Studio y de su cascada",
@@ -1152,6 +1384,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T00:11:56.315Z"
+    },
+    {
+      "title": "MEDICIÓN — FÓRMULA EN LÍNEA EN CAMPOS DE PROSA (cantu-studio)",
+      "path": "context/aiw-console/records/MEDICION-FORMULA-EN-LINEA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-04T21:58:12.804Z"
     },
     {
       "title": "MEDICION-FUENTES-CONSOLA — Qué datos tiene HOY aiw-console para una consola idéntica a la de Cantu",
@@ -1250,6 +1490,14 @@
       "freshness": "2026-08-03T09:48:10.063Z"
     },
     {
+      "title": "MEDICIÓN — El repo `cantu-quizzes-latex`, tal como está",
+      "path": "context/aiw-console/records/MEDICION-REPO-CANTU-QUIZZES-LATEX.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-04T23:49:36.830Z"
+    },
+    {
       "title": "MEDICIÓN — Roadmap v3 de Cantu y `taxonomy_model`",
       "path": "context/aiw-console/records/MEDICION-ROADMAP-V3.md",
       "nav_tier": "evidence",
@@ -1322,6 +1570,14 @@
       "freshness": "2026-08-03T00:11:56.327Z"
     },
     {
+      "title": "MONTAJE DEL INSERTOR DE FÓRMULA — PARADA MEDIDA (cantu-studio)",
+      "path": "context/aiw-console/records/MONTAJE-INSERTOR-FORMULA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T03:54:00.920Z"
+    },
+    {
       "title": "Paleta de autor a través del compilador y el motor Web — ejecución del run 19",
       "path": "context/aiw-console/records/PALETA-DE-AUTOR-COMPILADOR-Y-MOTOR-CANTU.md",
       "nav_tier": "evidence",
@@ -1378,6 +1634,14 @@
       "freshness": "2026-08-03T00:11:56.329Z"
     },
     {
+      "title": "PREVISUALIZACIÓN DEL PÁRRAFO CON FÓRMULAS (cantu-studio)",
+      "path": "context/aiw-console/records/PREVISUALIZACION-PARRAFO-CON-FORMULAS-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T06:59:43.410Z"
+    },
+    {
       "title": "`progress` como norma — congelado de §15, QA humana legible por máquina, y el defecto de `closeout_result`",
       "path": "context/aiw-console/records/PROGRESS-COMO-NORMA.md",
       "nav_tier": "evidence",
@@ -1400,6 +1664,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T00:11:56.330Z"
+    },
+    {
+      "title": "Puesta al día del estado de componentes — `cantu-studio` — 2026-08-05",
+      "path": "context/aiw-console/records/PUESTA-AL-DIA-DEL-ESTADO-DE-COMPONENTES-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T21:16:08.360Z"
     },
     {
       "title": "RE-ARCHIVO — El bloque de rename sale de O0 y entra en O2",
@@ -1474,6 +1746,14 @@
       "freshness": "2026-08-03T00:11:56.335Z"
     },
     {
+      "title": "REGLAS DE SELECCIÓN DEL INSERTOR DE FÓRMULA (cantu-studio)",
+      "path": "context/aiw-console/records/REGLAS-DE-SELECCION-DEL-INSERTOR-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T06:05:26.672Z"
+    },
+    {
       "title": "RELEVO DE `aiw` AL CIERRE DEL 2026-08-02",
       "path": "context/aiw-console/records/RELEVO-AIW-AL-CIERRE-2026-08-02.md",
       "nav_tier": "evidence",
@@ -1530,12 +1810,36 @@
       "freshness": "2026-08-03T00:11:56.338Z"
     },
     {
+      "title": "RETIRO DE LA PILA DE DESHACER GLOBAL (cantu-studio)",
+      "path": "context/aiw-console/records/RETIRO-PILA-DESHACER-GLOBAL-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T09:40:52.005Z"
+    },
+    {
+      "title": "RETIRO DE LA PREVISUALIZACIÓN DEL PÁRRAFO (cantu-studio)",
+      "path": "context/aiw-console/records/RETIRO-PREVISUALIZACION-PARRAFO-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T07:31:57.310Z"
+    },
+    {
       "title": "Retiro del run de las compuertas de variante del compilador",
       "path": "context/aiw-console/records/RETIRO-RUN-COMPUERTAS-VARIANTE-CANTU.md",
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T04:52:37.695Z"
+    },
+    {
+      "title": "RETIRO DEL TEXTO DE AYUDA DEL INSERTOR DE FÓRMULA (cantu-studio)",
+      "path": "context/aiw-console/records/RETIRO-TEXTO-DE-AYUDA-DEL-INSERTOR-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T23:53:46.476Z"
     },
     {
       "title": "Revalidación de Columns y veredicto sobre la DoD",
@@ -1546,6 +1850,14 @@
       "freshness": "2026-08-03T00:11:56.339Z"
     },
     {
+      "title": "Revalidación de componente — «Factorización» (`arithmetic`) — `cantu-studio`, `queue_order` 33",
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-FACTORIZACION-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-06T08:00:52.187Z"
+    },
+    {
       "title": "Revalidación de componente — «Lista con etiquetas» (`iconList`) — `cantu-studio`, `queue_order` 21",
       "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-LISTA-CON-ETIQUETAS-CANTU.md",
       "nav_tier": "evidence",
@@ -1554,12 +1866,52 @@
       "freshness": "2026-08-03T06:40:47.950Z"
     },
     {
+      "title": "Revalidación de componente — «Nota desplegable» (`details`) — `cantu-studio`, `queue_order` 32",
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-NOTA-DESPLEGABLE-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-06T07:56:51.918Z"
+    },
+    {
+      "title": "Revalidación de componente — «Nota destacada» (`callout`) — `cantu-studio`, `queue_order` 31",
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-NOTA-DESTACADA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T20:37:04.752Z"
+    },
+    {
+      "title": "Revalidación de componente — «Regla matemática» (`rule`) — `cantu-studio`, `queue_order` 34",
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-REGLA-MATEMATICA-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-06T08:06:09.359Z"
+    },
+    {
       "title": "Revalidación de componente — «Tarjeta» (`card`) — `cantu-studio`, `queue_order` 22",
       "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-TARJETA-CANTU.md",
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-03T10:03:34.943Z"
+    },
+    {
+      "title": "Revalidación de componente — «Texto» (`narrative`) — `cantu-studio`, `queue_order` 24",
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-TEXTO-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-05T00:46:31.963Z"
+    },
+    {
+      "title": "Revalidación de componente — «Video» (`video`) — `cantu-studio`, `queue_order` 23",
+      "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-VIDEO-CANTU.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-04T21:54:54.993Z"
     },
     {
       "title": "Señal de vista previa inválida, botón y tipografía del editor de fórmulas (cantu-studio)",
@@ -1687,7 +2039,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-08-03T02:45:42.700Z"
+      "freshness": "2026-08-06T07:50:00.221Z"
     },
     {
       "title": "Handoff — hilo `aiw`",
@@ -1695,7 +2047,15 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-08-03T08:53:51.799Z"
+      "freshness": "2026-08-06T07:41:08.224Z"
+    },
+    {
+      "title": "Relevo inaugural — hilo `cantu-quizzes-latex`",
+      "path": "context/handoffs/cantu-quizzes-latex.md",
+      "nav_tier": "secondary",
+      "default_visible": false,
+      "ia_bucket": "context/handoffs",
+      "freshness": "2026-08-06T06:46:17.770Z"
     },
     {
       "title": "HANDOFF — hilo `cantu-studio` (el proyecto)",
@@ -1703,7 +2063,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-08-03T00:11:56.351Z"
+      "freshness": "2026-08-06T06:33:58.017Z"
     },
     {
       "title": "Snapshot schema v1 — `project_console.snapshot.json`",

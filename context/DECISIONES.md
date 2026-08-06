@@ -2544,3 +2544,49 @@ que esta entrada deja sin mecanismo — ese día la distinción entre olvidado y
 deja de estar abierta y esta entrada pasa a ser su historia. **NO la caduca que alguna
 fase vacía se llene, ni que aparezcan otras**: las cifras son mediciones fechadas y se
 corrigen hacia adelante; la regla no depende de su conteo.
+
+## D-063 — 2026-08-06 — `cantu-quizzes-latex` entra como cuarto proyecto y cuarto hilo, y tres acuerdos con el hilo `aiw` dejan de viajar en mensajes
+**Entrada transversal.** La primera parte toca la topología del workspace; la segunda
+gobierna cómo dos hilos coordinan trabajo sobre un mismo repositorio.
+
+**1. `cantu-quizzes-latex` es el cuarto proyecto y tiene HILO PROPIO.** Repo autocontenido
+de quizzes en LaTeX, sin relación medida con `cantu-studio` ni `cantu-lessons`. Registrado
+en la consola con 1 entrada y 0 sitios de código; canónico creado por el motor con 3
+objetivos, 10 fases y **cero runs**, estrenando la forma que [[D-062]] declara válida; y
+`.project/` emitido. **Su handoff inaugural está en
+`context/handoffs/cantu-quizzes-latex.md` y lo escribió el hilo `aiw-console`, que a
+partir de aquí NO vuelve a escribir en ese repositorio.**
+
+**Por qué entra ahora y no después del corte**, que era el plan anterior: `aiw` no tenía
+ningún repositorio donde probarse. `cantu-studio` lo veta por política declarada, y el
+único blanco disponible era el repo de gobernanza donde escriben varios hilos. **Un
+compilador de LaTeX es verificación real —compila o no compila—**, que es lo que ningún
+otro candidato ofrece. Eso convirtió el proyecto nuevo de «uno más» en la respuesta
+duradera a un bloqueo medido.
+
+**Lo que NO resuelve todavía, y su condición de cierre:** no hay toolchain de LaTeX en la
+máquina del operador —0 de 8 binarios, 0 de 5 rutas—, y **no está adjudicado qué significa
+«compila»** en un repo cuyos maestros tienen 3 `\input` activos de 275. **Las dos son del
+hilo nuevo.** Hasta que existan, ese repo no puede ser blanco de AIW.
+
+**2. Tres acuerdos con el hilo `aiw`, adoptados por los dos y escritos aquí para que dejen
+de viajar en mensajes que el operador transporta:**
+
+- **Una ventana de trabajo en un repo compartido se verifica por el ÚLTIMO COMMIT QUE TOCÓ
+  LOS FICHEROS DEL ALCANCE, no por el HEAD.** En un repositorio donde escriben varios
+  hilos el HEAD se mueve constantemente por trabajo ajeno, y verificarlo produce paradas
+  en falso. **La aportó el hilo `aiw`**, corrigiendo la primera forma que este hilo
+  propuso.
+- **El criterio de un objetivo que el kernel ejecuta contra un repo ajeno es «`npm test`
+  no gana ningún fallo nuevo respecto a la línea base», nunca «la suite pasa entera».**
+  Exigir suite verde acopla cada run a la deuda de un repo que el kernel no controla, y
+  mide lo que hizo todo el mundo antes en vez de lo que hizo el run. **La línea base la
+  mide quien lanza, al arrancar, contando fallos.**
+- **Un pin de registro NO es deuda.** Un test cuyo propósito es ponerse rojo ante un
+  cambio deliberado no es una avería: es un mecanismo que pide registrar el cambio. Su
+  remedio es **actualizar el record y conservar el test**, nunca repararlo. **Y por tanto
+  un pin que se pone rojo no puede ser el gatillo de una parada por regresión.**
+
+Criterio de borrado: la sustituye una decisión que retire `cantu-quizzes-latex` del
+registro o le quite hilo propio, o que derogue alguno de los tres acuerdos del punto 2.
+Las cifras del estado del repo son mediciones fechadas y se corrigen hacia adelante.

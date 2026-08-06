@@ -169,6 +169,36 @@ export {
   HUMAN_QA_POSITIVE_RESULT,
   humanApprovalSatisfied,
 };
+// [#47] THE FIELDS THAT HOLD REFERENCES TO OTHER RUNS, as a registry rather than as a name
+// repeated once per branch.
+//
+// WHAT THIS IS FOR, and it is one thing only: REFERENTIAL INTEGRITY WHEN A RUN DISAPPEARS.
+// `removeRun` below has to find every run pointing at the one being removed, and then either
+// repoint or drop those pointers. That algorithm does not care WHICH list it is walking --
+// it cares about exactly two things per field, and both are declared here:
+//
+//   `field`           the key on the run object.
+//   `absentWhenEmpty` what an EMPTY result means on disk. `depends_on` is a REQUIRED field,
+//                     so its empty is `[]`; `depends_on_human_approved` is OPTIONAL and
+//                     ABSENT BY DEFAULT, so its empty is the key being deleted -- one shape
+//                     per meaning, the rule the write op already follows.
+//
+// The measurement this registry answers (record ALTA-DEPENDS-ON-HUMAN-APPROVED §C.4): the
+// three `removeRun` branches were "the SAME algorithm applied to a second field name", the
+// purest duplication of the seventeen sites that field cost. A THIRD reference-holding field
+// costs ZERO branches here: it costs one row.
+//
+// WHAT IT IS NOT. It is NOT a widening of `depends_on`, and it is NOT the unification of the
+// two WRITE ops -- that work needs the "three roadmaps at rest" window and is explicitly out
+// of scope. `checkInvariants` also keeps its two separate walks: the FORM is tabulable, but
+// the refusal TEXT is the operator's surface ("depends on unknown run" vs "waits on human
+// approval of unknown run"), and a table would need a wording slot per field to say the same
+// sentences. That is the boundary of this registry, drawn on purpose.
+export const RUN_REFERENCE_FIELDS = [
+  { field: "depends_on", absentWhenEmpty: false },
+  { field: "depends_on_human_approved", absentWhenEmpty: true },
+];
+
 // Canonical serialization order for a run object's keys.
 export const CANONICAL_RUN_KEY_ORDER = [...RUN_REQUIRED_FIELDS, ...RUN_OPTIONAL_FIELDS];
 export const RUN_ALLOWED_FIELDS = CANONICAL_RUN_KEY_ORDER;
@@ -970,19 +1000,22 @@ export function removeRun(obj, opts) {
   }
   if (errors.length) return { errors, warnings };
 
-  const dependents = flattenRuns(obj)
-    .map((e) => e.run)
-    .filter((r) => Array.isArray(r.depends_on) && r.depends_on.includes(run));
-  // [#45] The SECOND list's dependents, gathered SEPARATELY so the `depends_on` set above is
-  // computed exactly as it always was. A run can appear in both, and the two sets are unioned
-  // only for the refusal message and for the count the operator reads. WHY THIS BRANCH EXISTS
-  // AT ALL: without it, removing a run some other run waits on for human approval leaves a
-  // dangling entry that `checkInvariants` then refuses one stage later -- a removal that can
-  // only fail, with the reason arriving from a different layer than the gesture.
-  const humanDependents = flattenRuns(obj)
-    .map((e) => e.run)
-    .filter((r) => Array.isArray(r.depends_on_human_approved) && r.depends_on_human_approved.includes(run));
-  const allDependentIds = [...new Set([...dependents, ...humanDependents].map((r) => r.run_id))];
+  // [#45] Removing a run some other run waits on leaves a dangling entry that
+  // `checkInvariants` then refuses one stage later -- a removal that can only fail, with the
+  // reason arriving from a different layer than the gesture. So every list that can point at
+  // this run is gathered here.
+  //
+  // [#47] ONE WALK PER REGISTERED REFERENCE FIELD, in RUN_REFERENCE_FIELDS order, instead of
+  // one hand-written walk per field name. Each field keeps its OWN dependent set (a run can
+  // appear in several), and the sets are unioned only for the refusal message and for the
+  // count the operator reads -- exactly as the two hand-written walks did, in the same order.
+  const dependentsByField = RUN_REFERENCE_FIELDS.map((spec) => ({
+    ...spec,
+    runs: flattenRuns(obj)
+      .map((e) => e.run)
+      .filter((r) => Array.isArray(r[spec.field]) && r[spec.field].includes(run)),
+  }));
+  const allDependentIds = [...new Set(dependentsByField.flatMap((f) => f.runs).map((r) => r.run_id))];
 
   if (allDependentIds.length > 0 && reassignDependentsTo == null && !dropDependentEdges) {
     errors.push(
@@ -992,35 +1025,34 @@ export function removeRun(obj, opts) {
     return { errors, warnings };
   }
 
+  // [#47] The rewrite, ONCE, over every registered reference field. The two branches differ
+  // only in HOW an id is rewritten; the fields differ only in what an EMPTY result means on
+  // disk, and that is the one thing the registry declares. An edge that survives as an empty
+  // list on an OPTIONAL field would be a stored `[]` where absence is the default, so the key
+  // is deleted whole -- the same one-shape-per-meaning rule set-classification applies to
+  // `external_effects`. A REQUIRED field keeps its `[]`, because absence is not a shape it has.
+  const rewriteEdges = (rewrite) => {
+    for (const { field, absentWhenEmpty, runs } of dependentsByField) {
+      for (const dep of runs) {
+        const next = rewrite(dep[field], dep);
+        if (next.length || !absentWhenEmpty) dep[field] = next;
+        else delete dep[field];
+      }
+    }
+  };
+
   if (reassignDependentsTo != null) {
     if (reassignDependentsTo === run) errors.push("remove --reassign-dependents-to cannot be the run being removed");
     const target = findRunEntry(obj, reassignDependentsTo);
     if (!target) errors.push(`remove --reassign-dependents-to: run ${reassignDependentsTo} not found`);
     if (errors.length) return { errors, warnings };
-    for (const dep of dependents) {
-      dep.depends_on = dep.depends_on
-        .map((id) => (id === run ? reassignDependentsTo : id))
-        .filter((id, i, arr) => arr.indexOf(id) === i && id !== dep.run_id);
-    }
-    // [#45] The same rewrite on the second list. An edge that survives as an EMPTY list would
-    // be a stored `[]` where absence is the default, so the key is deleted whole -- the same
-    // one-shape-per-meaning rule set-classification applies to `external_effects`.
-    for (const dep of humanDependents) {
-      const rewritten = dep.depends_on_human_approved
-        .map((id) => (id === run ? reassignDependentsTo : id))
-        .filter((id, i, arr) => arr.indexOf(id) === i && id !== dep.run_id);
-      if (rewritten.length) dep.depends_on_human_approved = rewritten;
-      else delete dep.depends_on_human_approved;
-    }
+    // Repoint at the new target, then drop the duplicate the repoint may have created and any
+    // self-edge it would have made.
+    rewriteEdges((ids, dep) => ids
+      .map((id) => (id === run ? reassignDependentsTo : id))
+      .filter((id, i, arr) => arr.indexOf(id) === i && id !== dep.run_id));
   } else if (dropDependentEdges) {
-    for (const dep of dependents) {
-      dep.depends_on = dep.depends_on.filter((id) => id !== run);
-    }
-    for (const dep of humanDependents) {
-      const kept = dep.depends_on_human_approved.filter((id) => id !== run);
-      if (kept.length) dep.depends_on_human_approved = kept;
-      else delete dep.depends_on_human_approved;
-    }
+    rewriteEdges((ids) => ids.filter((id) => id !== run));
   }
 
   // Remove from its phase array and from the global order.

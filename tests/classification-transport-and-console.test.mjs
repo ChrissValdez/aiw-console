@@ -417,14 +417,91 @@ test("F.3: a PARTIALLY classified run shows what it has and names the input each
   assert.match(half, /absent — needs correctness model/);
 });
 
+// [#47] The classified fixture below carries `correctness_model` — WITHOUT IT THERE IS NO
+// `closure_mode` TO DERIVE and the chip assertions would pass vacuously. It did not carry one
+// when this test was written for severity alone.
+//
+// It is `SPECIFIED`, and the work type moved from FOUNDATIONAL to FUNCTIONAL to let it be:
+// SPECIFIED + FOUNDATIONAL is an ILLEGAL COMBINATION (§3, refused by checkInvariants), so a
+// fixture pairing them would be a run that can never exist on disk. FUNCTIONAL × SYSTEMIC is
+// MAJOR and the SILENT adjustment raises it one step, so the derived severity is STILL CRITICAL
+// and every assertion that was here before is unchanged — it is now reached through a legal run.
+const CLASSIFIED_ROW = {
+  run_id: "RUN-X-001", queue_order: 1,
+  correctness_model: "SPECIFIED", work_type: "FUNCTIONAL", blast_radius: "SYSTEMIC", failure_surfaces: "SILENT",
+};
+
 test("F.3: the row chip carries the DERIVED severity, and an unclassified row carries no chip", () => {
   const harness = harnessWithModel();
-  const classified = render(harness, `v3RunRowTags(v3Model(appData), ${JSON.stringify({ run_id: "RUN-X-001", queue_order: 1, work_type: "FOUNDATIONAL", blast_radius: "SYSTEMIC", failure_surfaces: "VISIBLE" })})`);
+  const classified = render(harness, `v3RunRowTags(v3Model(appData), ${JSON.stringify(CLASSIFIED_ROW)})`);
   assert.match(classified, /v3-severity-tag is-critical/);
   assert.match(classified, /CRITICAL/);
   assert.match(classified, /DERIVED from work_type, blast_radius and failure_surfaces at read time; never stored/);
   const bare = render(harness, `v3RunRowTags(v3Model(appData), ${JSON.stringify({ run_id: "RUN-X-002", queue_order: 2 })})`);
   assert.equal(/v3-severity-tag/.test(bare), false, "no chip for a run with no severity");
+});
+
+test("F.3: the row chip carries the DERIVED closure_mode too, beside the severity and never coloured", () => {
+  const harness = harnessWithModel();
+  const classified = render(harness, `v3RunRowTags(v3Model(appData), ${JSON.stringify(CLASSIFIED_ROW)})`);
+  // SPECIFIED + CRITICAL is SEMI_ATTENDED (§2.2, precedence rule 2).
+  assert.match(classified, /SEMI_ATTENDED/);
+  // Said to be derived, in the row itself, with the same words the severity chip uses.
+  assert.match(classified, /DERIVED from correctness_model \(and the severity on the SPECIFIED branch\), then the external_effects guard, at read time; never stored/);
+  // NO COLOUR: the closure chip carries the base class and NOTHING else. Colour is the row's one
+  // chromatic signal and it belongs to severity; an `is-` modifier here would either compete with
+  // it today or invite a rule tomorrow.
+  assert.match(classified, /<span class="v3-severity-tag" title="Closure mode SEMI_ATTENDED/);
+  assert.equal(/v3-severity-tag is-semi_attended|v3-closure/.test(classified), false,
+    "closure_mode must not carry a severity colour modifier, nor a class of its own");
+  // Both chips, and the severity keeps its own colour.
+  assert.equal((classified.match(/v3-severity-tag/g) || []).length, 2);
+  assert.match(classified, /v3-severity-tag is-critical/);
+});
+
+test("F.3: the two derived chips are INDEPENDENT — each appears only when its own value derives", () => {
+  const harness = harnessWithModel();
+  const tags = (run) => render(harness, `v3RunRowTags(v3Model(appData), ${JSON.stringify(run)})`);
+
+  // Severity but no closure mode: no correctness_model, so §2.2 has no input at all.
+  const severityOnly = tags({ run_id: "RUN-X-003", queue_order: 3, work_type: "FUNCTIONAL", blast_radius: "SYSTEMIC" });
+  assert.match(severityOnly, /MAJOR/);
+  assert.equal(/UNATTENDED|SEMI_ATTENDED|ATTENDED/.test(severityOnly), false,
+    "a run nobody gave a correctness model has no closure mode, and must claim none");
+  assert.equal((severityOnly.match(/v3-severity-tag/g) || []).length, 1);
+
+  // Closure mode but no severity: JUDGED_ACCEPTS does not read the severity, so it derives
+  // without work_type or blast_radius — and the severity chip must stay away.
+  const closureOnly = tags({ run_id: "RUN-X-004", queue_order: 4, correctness_model: "JUDGED_ACCEPTS" });
+  assert.match(closureOnly, /SEMI_ATTENDED/);
+  assert.equal(/MINOR|MODERATE|MAJOR|CRITICAL/.test(closureOnly), false,
+    "a run with no work_type has no severity, and must claim none");
+  assert.equal((closureOnly.match(/v3-severity-tag/g) || []).length, 1);
+
+  // And an unclassified run still carries NEITHER: a chip over a run nobody classified would be
+  // an assertion the file does not make.
+  const bare = tags({ run_id: "RUN-X-005", queue_order: 5 });
+  assert.equal(/v3-severity-tag/.test(bare), false);
+  for (const token of ["MINOR", "MODERATE", "MAJOR", "CRITICAL", "UNATTENDED", "SEMI_ATTENDED", "ATTENDED"]) {
+    assert.equal(bare.includes(token), false, `an unclassified row must not display ${token}`);
+  }
+});
+
+test("F.3: the closure_mode chip needed NO new CSS — it reuses the rule the drawer already paints", () => {
+  // The run's constraint, checked against the stylesheet rather than asserted in prose: the
+  // console declares no closure-mode rule, and the only class the chip uses is the one that
+  // was already there for severity.
+  const css = readFileSync(join(REPO_ROOT, "project-console", "assets", "project-console.css"), "utf8");
+  assert.ok(css.includes(".v3-severity-tag {"), "the base chip rule must exist — the chip leans on it");
+  assert.equal(/\.v3-closure|closure-tag|\.v3-severity-tag\.is-(un|semi_|)attended/.test(css), false,
+    "no rule may be added for closure_mode: its colour is deliberately absent");
+  // And the row chip is BOTH surfaces at once: the Roadmap tree and the Run Queue call the same
+  // function, which is why this is one code site and not two.
+  const source = readFileSync(RENDERER, "utf8");
+  const rowTags = source.slice(source.indexOf("function v3RunRowTags"));
+  assert.ok(rowTags.slice(0, rowTags.indexOf("\n}")).includes("closure_mode"), "the chip lives in v3RunRowTags");
+  assert.ok(source.includes("v3RunRowTags(model, run)}</span>"), "the Roadmap tree row calls it");
+  assert.ok(source.includes("v3RunRowTags(model, run), v3RunPosition(model, run))"), "the Run Queue row calls it");
 });
 
 test("F.3: with NO model injected the view says so and still refuses to guess", () => {

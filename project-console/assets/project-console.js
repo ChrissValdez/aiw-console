@@ -3428,9 +3428,25 @@ function v3RunRowTags(model, run) {
   // [#43] The severity chip, DERIVED at read time. It appears only when the run actually has a
   // severity — an unclassified run gets no chip at all, because a chip reading MINOR over a run
   // nobody has classified would be a claim the file does not make.
-  const severity = v3DerivedClassification(run).severity;
-  if (severity) {
-    tags.push(`<span class="v3-severity-tag is-${escapeHtml(severity.toLowerCase())}" title="Severity ${escapeHtml(severity)} — DERIVED from work_type, blast_radius and failure_surfaces at read time; never stored">${escapeHtml(severity)}</span>`);
+  //
+  // [#47] And `closure_mode` beside it. Both derived values were already computed here and one
+  // of them was being thrown away: the row said how BADLY a run can fail and stayed silent about
+  // whether closing it needs a person, which is the question the queue is actually read for.
+  //
+  // SAME DISCIPLINE, POINT FOR POINT: derived at READ time, never stored, and NO CHIP on a run
+  // that has no closure mode. The two are independent — a run with work_type and blast_radius
+  // but no correctness_model has a severity and no closure mode, and it correctly shows one chip.
+  //
+  // NO COLOUR, AND NO `is-` CLASS AT ALL. The base `.v3-severity-tag` rule is the whole chip, the
+  // same rule the run drawer already paints a closure mode with. Colour is the row's ONE chromatic
+  // signal and it belongs to severity; a coloured closure mode would compete with it, and an
+  // `is-semi_attended` class with no rule behind it would be an invitation to give it one.
+  const derived = v3DerivedClassification(run);
+  if (derived.severity) {
+    tags.push(`<span class="v3-severity-tag is-${escapeHtml(derived.severity.toLowerCase())}" title="Severity ${escapeHtml(derived.severity)} — DERIVED from work_type, blast_radius and failure_surfaces at read time; never stored">${escapeHtml(derived.severity)}</span>`);
+  }
+  if (derived.closure_mode) {
+    tags.push(`<span class="v3-severity-tag" title="Closure mode ${escapeHtml(derived.closure_mode)} — DERIVED from correctness_model (and the severity on the SPECIFIED branch), then the external_effects guard, at read time; never stored">${escapeHtml(derived.closure_mode)}</span>`);
   }
   return tags.join("");
 }
@@ -6460,83 +6476,457 @@ function v3EditBuildBatch() {
   return { ops, considered };
 }
 
+// [#47] THE OP REGISTRY of the console's edit plumbing — one entry per op, and the entry is
+// everything this file's op plumbing knows about that op.
+//
+// WHAT IT REPLACES. Registering an op here used to mean naming it in FOUR places: the
+// batchable list above, the change detector, the payload builder and the preview diff. Only
+// the first is a policy declaration; the other three were an `if (op === "...")` arm each,
+// spread over four hundred lines, and the record ALTA-DEPENDS-ON-HUMAN-APPROVED §C.4 measured
+// them as the console's share of the mechanical enumeration every new run field repeats. They
+// are now three slots of ONE entry, so everything the console does with an op is read — and
+// written — in one place.
+//
+// The entry:
+//   `targetKind`     the modal target this op applies to ("run" | "objective"), enforced by
+//                    v3EditBuildPayload. Omitted when the op decides for itself: `set-text`
+//                    serves all three kinds, and `insert` / `batch` take no kind at all.
+//   `payload`        (ctx) -> the op's ARGS, or null. The op name is stamped by the builder
+//                    from the key, so an entry names its op exactly once. NULL MEANS "the
+//                    operator did not ask for this op", and a null payload never enters a
+//                    batch — the clear-progress and unacknowledged-barrier gates both live in
+//                    that null. ctx = { t, q, val, pickerValues }.
+//   `changed`        (args, beforeNode) -> did the produced args differ from what is stored?
+//                    Only batchable ops need one; without it the op never enters a batch.
+//   `requiresBefore` the preview returns "" when there is no before-node. DECLARED PER OP
+//                    because today's set is not uniform, and this registry RECORDS that set
+//                    rather than widening it: `set-human-deps`, `swap`, `remove` and `insert`
+//                    are deliberately absent from it, exactly as the hand-written guard had
+//                    them. Changing who is in it is a behaviour change and belongs to a run
+//                    that says so.
+//   `diffRows`       (args, beforeNode, rows) -> pushes rows into the standard diff block.
+//   `diffHtml`       (args, beforeNode) -> a complete preview block, for the four ops that do
+//                    not render as rows.
+//
+// WHAT IT DOES NOT ABSORB, and the boundary is the commissioning run's own: THE LABELS. Every
+// string below is the string that was there. `depends_on_human_approved` is still named
+// verbatim and "(none — the key is removed)" is still its own sentence, because that text is
+// semantics OF THE FIELD, not of the op. A generic renderer produces a generic label, and the
+// field whose entire point is the AI/human difference is the field that lives in its label.
+//
+// AND BATCHABILITY IS NOT A COLUMN HERE. `V3_BATCHABLE_OPS` above stays the ONE declaration of
+// which ops may be batched, so this table cannot disagree with it; it is also pinned as SOURCE
+// TEXT by tests/depends-on-human-approved.test.mjs, a file outside this run's write scope. The
+// engine's own op table (tools/roadmap/roadmap-plan.mjs) carries the same flag as a column,
+// and that one is the authority — the console's list is a screen-side mirror of it.
+const V3_OP_DESCRIPTORS = {
+  batch: {
+    payload: () => {
+      const built = v3EditBuildBatch();
+      return { ops: built.ops.map((p) => ({ op: p.op, args: p.args })) };
+    },
+    diffHtml: (args, beforeNode) => {
+      const parts = (args.ops || []).map((sub, i) =>
+        `<div class="v3-edit-batch-item"><div class="v3-edit-batch-item-head">${i + 1}. ${escapeHtml(sub.op)}</div>${v3EditDiffHtml(sub.op, sub.args, beforeNode)}</div>`
+      ).join("");
+      return `<div class="v3-edit-diff v3-edit-batch">${parts}</div>`;
+    }
+  },
+
+  "set-text": {
+    // No targetKind: this is the one op that serves all three, and a phase or an objective
+    // has only a title to serve.
+    payload: ({ t, val }) => {
+      if (t.kind === "run") {
+        return { targetType: "run", targetId: t.id, title: val("[data-v3edit-title]"), summary: val("[data-v3edit-summary]"), fullDescription: val("[data-v3edit-fulldesc]") };
+      }
+      if (t.kind === "phase") {
+        return { targetType: "phase", targetId: t.id, title: val("[data-v3edit-title]") };
+      }
+      if (t.kind === "objective") {
+        return { targetType: "objective", targetId: t.id, title: val("[data-v3edit-title]") };
+      }
+      return null;
+    },
+    changed: (args, beforeNode) =>
+      (args.title !== undefined && String(args.title) !== String(beforeNode.title)) ||
+      (args.summary !== undefined && String(args.summary) !== String(beforeNode.summary)) ||
+      (args.fullDescription !== undefined && String(args.fullDescription) !== String(beforeNode.full_description)),
+    diffHtml: (args, beforeNode) => {
+      // P3: changed fields first, stacked full-width; unchanged fields collapse to one
+      // de-emphasised line. A change is never hidden -- only an UNCHANGED field is de-emphasised.
+      if (!beforeNode) return "";
+      const fields = [];
+      if (args.title !== undefined) fields.push(["Title", beforeNode.title, args.title]);
+      if (args.summary !== undefined) fields.push(["Summary", beforeNode.summary, args.summary]);
+      if (args.fullDescription !== undefined) fields.push(["Full description", beforeNode.full_description, args.fullDescription]);
+      const changed = fields.filter((f) => String(f[1]) !== String(f[2]));
+      const unchanged = fields.filter((f) => String(f[1]) === String(f[2])).map((f) => f[0]);
+      let inner = changed.length
+        ? changed.map((f) => v3EditDiffBlock(f[0], f[1], f[2])).join("")
+        : '<div class="v3-edit-diff-none">No text changes in this preview.</div>';
+      if (unchanged.length) inner += `<div class="v3-edit-diff-unchanged">Unchanged: ${escapeHtml(unchanged.join(", "))}</div>`;
+      return `<div class="v3-edit-diff v3-edit-diff-text">${inner}</div>`;
+    }
+  },
+
+  insert: {
+    payload: ({ t, val, pickerValues }) => {
+      const model = v3EditModel();
+      const args = {
+        runId: (val("[data-v3edit-newid]") || "").trim(),
+        title: val("[data-v3edit-title]") || "",
+        summary: val("[data-v3edit-summary]") || "",
+        fullDescription: val("[data-v3edit-fulldesc]") || "",
+        status: val("[data-v3edit-status]") || "planned",
+        dependsOn: pickerValues('[data-v3edit-picker="insertdeps"]')
+      };
+      const position = v3InsertCurrentPosition(model);
+      // No position, no payload. The refusal the operator sees is raised in v3EditPreview, which
+      // checks the same condition; returning null here keeps the anchor from being invented.
+      if (position == null) return null;
+      Object.assign(args, v3InsertAnchorArgs(model, t.anchorId, position));
+      return args;
+    },
+    diffRows: (args, beforeNode, rows) => {
+      rows.push(v3EditDiffRow("New run id", "(new)", args.runId || "(missing)"));
+      rows.push(v3EditDiffRow("Title", "(new)", args.title || "(empty)"));
+      const anchor = args.endOfPhase ? ("end of phase " + args.endOfPhase) : args.after ? ("after " + args.after) : args.before ? ("before " + args.before) : "(unset)";
+      rows.push(v3EditDiffRow("Anchor", "(new)", anchor));
+      rows.push(v3EditDiffRow("depends_on", "(new)", (args.dependsOn || []).join(", ") || "(none)"));
+    }
+  },
+
+  "move-objective": {
+    targetKind: "objective",
+    payload: ({ t, val }) => {
+      const raw = val("[data-v3edit-objposition]");
+      const n = parseInt(raw, 10);
+      return { objectiveId: t.id, toIndex: Number.isFinite(n) ? n : raw };
+    },
+    changed: (args, beforeNode) => {
+      const model = v3EditModel();
+      const objs = (model && model.roadmap) ? (model.roadmap.objectives || []) : [];
+      const currentIndex = objs.indexOf(beforeNode) + 1;
+      return String(args.toIndex) !== String(currentIndex);
+    },
+    diffHtml: (args, beforeNode) => {
+      const model = v3EditModel();
+      const objs = (model && model.roadmap) ? (model.roadmap.objectives || []) : [];
+      const fromPos = beforeNode ? objs.indexOf(beforeNode) + 1 : 0;
+      const toPos = args.toIndex;
+      const msg = (fromPos && String(fromPos) === String(toPos))
+        ? "Objective " + args.objectiveId + " stays at position " + toPos + ". No run changes queue_order."
+        : "Objective " + args.objectiveId + " moves from position " + (fromPos || "?") + " to position " + toPos + ". No run changes queue_order.";
+      return `<div class="v3-edit-diff"><div class="v3-edit-plain">${escapeHtml(msg)}</div></div>`;
+    }
+  },
+
+  "set-objective-archived": {
+    targetKind: "objective",
+    payload: ({ t, q }) => {
+      const el = q("[data-v3edit-archived]");
+      const archived = el ? !!el.checked : false;
+      return { objectiveId: t.id, archived };
+    },
+    changed: (args, beforeNode) => (args.archived === true) !== (beforeNode.archived === true),
+    diffHtml: (args, beforeNode) => {
+      let activeCount = 0;
+      if (beforeNode) (beforeNode.phases || []).forEach((ph) => (ph.runs || []).forEach((r) => { if (r.status === "active") activeCount += 1; }));
+      const msg = args.archived === true
+        ? "Objective " + args.objectiveId + " will be archived and moved under the Archive header. It holds " + (activeCount === 0 ? "no active runs" : activeCount + " active run(s)") + ". No run changes queue_order."
+        : "Objective " + args.objectiveId + " will be un-archived and returned to the live list. No run changes queue_order.";
+      return `<div class="v3-edit-diff"><div class="v3-edit-plain">${escapeHtml(msg)}</div></div>`;
+    }
+  },
+
+  move: {
+    targetKind: "run",
+    payload: ({ t, val }) => {
+      const raw = val("[data-v3edit-order]");
+      const n = parseInt(raw, 10);
+      return { run: t.id, toOrder: Number.isFinite(n) ? n : raw };
+    },
+    changed: (args, beforeNode) => String(args.toOrder) !== String(beforeNode.queue_order),
+    requiresBefore: true,
+    diffRows: (args, beforeNode, rows) => {
+      rows.push(v3EditDiffRow("Position", "#" + beforeNode.queue_order, "#" + args.toOrder));
+    }
+  },
+
+  "set-deps": {
+    targetKind: "run",
+    payload: ({ t, pickerValues }) => ({ run: t.id, dependsOn: pickerValues('[data-v3edit-picker="deps"]') }),
+    changed: (args, beforeNode) => {
+      const before = Array.isArray(beforeNode.depends_on) ? beforeNode.depends_on : [];
+      const after = Array.isArray(args.dependsOn) ? args.dependsOn : [];
+      return before.length !== after.length || before.some((id, i) => id !== after[i]);
+    },
+    requiresBefore: true,
+    diffRows: (args, beforeNode, rows) => {
+      rows.push(v3EditDiffRow("depends_on", (beforeNode.depends_on || []).join(", ") || "(none)", (args.dependsOn || []).join(", ") || "(none)"));
+    }
+  },
+
+  "set-human-deps": {
+    targetKind: "run",
+    // [#45] Its OWN picker key, so the two lists can never read each other's chips. An empty
+    // list travels as `[]` and the engine turns it into ABSENCE — the clearing gesture.
+    payload: ({ t, pickerValues }) => ({ run: t.id, dependsOnHumanApproved: pickerValues('[data-v3edit-picker="humandeps"]') }),
+    changed: (args, beforeNode) => {
+      // [#45] Absent key and empty list are the SAME state on the before side, so opening the
+      // modal on a run with no human-approval edges and closing it is correctly not a change.
+      const before = Array.isArray(beforeNode.depends_on_human_approved) ? beforeNode.depends_on_human_approved : [];
+      const after = Array.isArray(args.dependsOnHumanApproved) ? args.dependsOnHumanApproved : [];
+      return before.length !== after.length || before.some((id, i) => id !== after[i]);
+    },
+    diffRows: (args, beforeNode, rows) => {
+      // [#45] The key is named VERBATIM, like depends_on above: the preview reports what will be
+      // written to disk. "(none)" on the after side means the KEY IS REMOVED, not stored empty.
+      const after = (args.dependsOnHumanApproved || []).join(", ");
+      rows.push(v3EditDiffRow(
+        "depends_on_human_approved",
+        (beforeNode.depends_on_human_approved || []).join(", ") || "(none)",
+        after || "(none — the key is removed)"
+      ));
+    }
+  },
+
+  "set-status": {
+    targetKind: "run",
+    payload: ({ t, q, val }) => {
+      const status = val("[data-v3edit-status]");
+      const terminal = status === "completed" || status === "blocked";
+      // [#46 amendment] The preselection is a SCREEN aid and stops here: the console sends the
+      // text the operator is looking at, and the ENGINE still holds the obligation. Write-my-own
+      // with an empty box sends NOTHING — so the refusal ("closing to completed requires a
+      // closeout_result") stays reachable from the screen and this list can never become a
+      // silent default the core fills in by itself.
+      const choiceEl = q("[data-v3edit-closeout-choice]");
+      const closeoutEl = q("[data-v3edit-closeout]");
+      const custom = closeoutEl ? closeoutEl.value.trim() : "";
+      const choice = choiceEl ? choiceEl.value : V3_CLOSEOUT_CUSTOM;
+      const closeout = choice === V3_CLOSEOUT_CUSTOM ? custom : choice;
+      const args = { run: t.id, status };
+      if (terminal && closeout) args.closeoutResult = closeout;
+      return args;
+    },
+    changed: (args, beforeNode) => {
+      if (args.status !== beforeNode.status) return true;
+      const beforeCo = "closeout_result" in beforeNode && beforeNode.closeout_result != null ? String(beforeNode.closeout_result) : "";
+      const afterCo = args.closeoutResult != null ? String(args.closeoutResult) : "";
+      return beforeCo !== afterCo;
+    },
+    requiresBefore: true,
+    diffRows: (args, beforeNode, rows) => {
+      rows.push(v3EditDiffRow("Status", beforeNode.status, args.status));
+      const beforeCo = "closeout_result" in beforeNode && beforeNode.closeout_result != null ? String(beforeNode.closeout_result) : "(none)";
+      rows.push(v3EditDiffRow("Closeout result", beforeCo, args.closeoutResult != null ? args.closeoutResult : "(none)"));
+    }
+  },
+
+  "set-lane": {
+    targetKind: "run",
+    payload: ({ t, q }) => {
+      const el = q("[data-v3edit-lane]");
+      if (!el) return null;
+      // "" (the project-default option) travels as null: the engine's clearing gesture.
+      return { run: t.id, lane: el.value || null };
+    },
+    changed: (args, beforeNode) => {
+      // Stored key vs chosen key; "" stands for "no stored lane" (the project default) on
+      // both sides, so picking the default over an absent lane is correctly a no-op.
+      const beforeLane = typeof beforeNode.lane === "string" && beforeNode.lane ? beforeNode.lane : "";
+      const afterLane = args.lane != null ? String(args.lane) : "";
+      return beforeLane !== afterLane;
+    },
+    requiresBefore: true,
+    diffRows: (args, beforeNode, rows) => {
+      const beforeLane = typeof beforeNode.lane === "string" && beforeNode.lane ? beforeNode.lane : "(project default)";
+      rows.push(v3EditDiffRow("Lane", beforeLane, args.lane != null && args.lane !== "" ? args.lane : "(project default)"));
+    }
+  },
+
+  "set-barrier": {
+    targetKind: "run",
+    payload: ({ t, q }) => {
+      const el = q("[data-v3edit-barrier]");
+      if (!el) return null;
+      const scope = el.value || "";
+      // The GLOBAL gate, enforced where it cannot be walked around: an unacknowledged global
+      // produces NO payload, so it never enters the batch and cannot even be previewed. The
+      // clear-progress precedent — the checkbox is the op's existence condition, not a hint.
+      // Only "global" is gated: "lane" is ordinary planning and "" (clearing) is the safe
+      // direction, and neither is asked to justify itself.
+      if (scope === "global" && !v3BarrierGlobalAcknowledged()) return null;
+      // "" (the no-barrier option) travels as null: the engine's clearing gesture.
+      return { run: t.id, barrier: scope || null };
+    },
+    changed: (args, beforeNode) => {
+      // Stored scope vs chosen scope; "" stands for "no barrier" on both sides, so picking
+      // "(no barrier)" on a run that has none is correctly a no-op. An unacknowledged global
+      // never reaches here at all — the payload builder returns null for it.
+      const beforeBarrier = beforeNode.barrier === "lane" || beforeNode.barrier === "global" ? beforeNode.barrier : "";
+      const afterBarrier = args.barrier != null ? String(args.barrier) : "";
+      return beforeBarrier !== afterBarrier;
+    },
+    requiresBefore: true,
+    diffRows: (args, beforeNode, rows) => {
+      // Name the SCOPE and, for a scope that bars anything, the count it bars — read from the
+      // model exactly as the barred set is derived, so the preview and the rendered roadmap
+      // can never disagree about what this one field does.
+      const model = v3EditModel();
+      const scopeText = (scope) => {
+        if (scope !== "lane" && scope !== "global") return "(no barrier)";
+        if (!model) return scope === "global" ? "GLOBAL" : "lane";
+        const later = model.allRuns.filter((r) => r.queue_order > beforeNode.queue_order);
+        const n = scope === "global" ? later.length : later.filter((r) => model.laneOf(r) === model.laneOf(beforeNode)).length;
+        return scope === "global"
+          ? `GLOBAL — bars all ${n} later run(s), in every lane`
+          : `lane — bars the ${n} later run(s) on ${model.laneOf(beforeNode)}`;
+      };
+      const beforeScope = beforeNode.barrier === "lane" || beforeNode.barrier === "global" ? beforeNode.barrier : "";
+      rows.push(v3EditDiffRow("Barrier", scopeText(beforeScope), scopeText(args.barrier != null ? args.barrier : "")));
+    }
+  },
+
+  "set-classification": {
+    targetKind: "run",
+    payload: ({ t, q }) => {
+      // [#43] The four measured fields plus the guard list. "" (the "(not classified)" option and
+      // an empty text box) travels as null: the engine's clearing gesture, the same one set-lane
+      // and set-barrier use. `classified_at` is NOT collected — the engine writes the mark, so
+      // there is no field here to read and no way for a request body to carry an instant.
+      const sel = q("[data-v3edit-correctnessmodel]");
+      if (!sel) return null;
+      const pick = (selector) => { const el = q(selector); return el && el.value ? el.value : null; };
+      const effectsEl = q("[data-v3edit-externaleffects]");
+      const effectsRaw = effectsEl ? String(effectsEl.value || "") : "";
+      const effects = effectsRaw.split(",").map((part) => part.trim()).filter(Boolean);
+      return {
+        run: t.id,
+        correctnessModel: pick("[data-v3edit-correctnessmodel]"),
+        workType: pick("[data-v3edit-worktype]"),
+        blastRadius: pick("[data-v3edit-blastradius]"),
+        failureSurfaces: pick("[data-v3edit-failuresurfaces]"),
+        externalEffects: effects.length ? effects : null
+      };
+    },
+    changed: (args, beforeNode) => {
+      // [#43] Stored value vs chosen value, field by field; "" stands for "not classified" on
+      // both sides, so re-picking what is already there is correctly a no-op and the mark is not
+      // rewritten. `classified_at` is NOT compared: the engine sets it as a consequence of a real
+      // change, so treating it as an input would make every open-and-close of the modal a write.
+      const changedToken = ["correctness_model", "work_type", "blast_radius", "failure_surfaces"].some((field) => {
+        const option = { correctness_model: "correctnessModel", work_type: "workType", blast_radius: "blastRadius", failure_surfaces: "failureSurfaces" }[field];
+        const before = typeof beforeNode[field] === "string" ? beforeNode[field] : "";
+        const after = args[option] != null ? String(args[option]) : "";
+        return before !== after;
+      });
+      const beforeEffects = Array.isArray(beforeNode.external_effects) ? beforeNode.external_effects : [];
+      const afterEffects = Array.isArray(args.externalEffects) ? args.externalEffects : [];
+      const changedEffects = beforeEffects.length !== afterEffects.length ||
+        beforeEffects.some((value, i) => value !== afterEffects[i]);
+      return changedToken || changedEffects;
+    },
+    requiresBefore: true,
+    diffRows: (args, beforeNode, rows) => {
+      // [#43] Field by field, then the two DERIVED values before and after — because the point
+      // of the four selects is what they derive to, and an operator confirming a write should see
+      // that consequence in the same preview, not discover it in the drawer afterwards.
+      const map = { correctness_model: "correctnessModel", work_type: "workType", blast_radius: "blastRadius", failure_surfaces: "failureSurfaces" };
+      const after = {};
+      Object.entries(map).forEach(([field, option]) => {
+        const value = args[option] != null && args[option] !== "" ? String(args[option]) : null;
+        rows.push(v3EditDiffRow(field, typeof beforeNode[field] === "string" ? beforeNode[field] : "(not classified)", value || "(not classified)"));
+        if (value) after[field] = value;
+      });
+      const afterEffects = Array.isArray(args.externalEffects) ? args.externalEffects : [];
+      if (afterEffects.length) after.external_effects = afterEffects;
+      rows.push(v3EditDiffRow(
+        "external_effects",
+        (Array.isArray(beforeNode.external_effects) ? beforeNode.external_effects : []).join(", ") || "(none)",
+        afterEffects.join(", ") || "(none)"
+      ));
+      const beforeDerived = v3DerivedClassification(beforeNode);
+      const afterDerived = v3DerivedClassification(after);
+      rows.push(v3EditDiffRow("severity (derived)", beforeDerived.severity || "(absent)", afterDerived.severity || "(absent)"));
+      rows.push(v3EditDiffRow("closure_mode (derived)", beforeDerived.closure_mode || "(absent)", afterDerived.closure_mode || "(absent)"));
+      rows.push(v3EditDiffRow(
+        "classified_at",
+        typeof beforeNode.classified_at === "string" ? beforeNode.classified_at : "(none)",
+        Object.keys(after).length ? "(written by the engine — ISO-8601 UTC instant)" : "(cleared with the classification)"
+      ));
+    }
+  },
+
+  "clear-progress": {
+    targetKind: "run",
+    payload: ({ t, q }) => {
+      // An UNTICKED box produces no payload at all, so the op is simply absent from the batch
+      // (v3EditBuildBatch skips a null payload). Retiring a record is never the default.
+      const el = q("[data-v3edit-clearprogress]");
+      if (!el || !el.checked) return null;
+      return { run: t.id };
+    },
+    changed: (args, beforeNode) =>
+      // The payload builder returns null unless the box is ticked, so a payload reaching here
+      // already means the operator asked for it. The remaining test is that there is really a
+      // record to retire, so a no-op never enters the batch.
+      Array.isArray(beforeNode.progress) && beforeNode.progress.length > 0,
+    requiresBefore: true,
+    diffRows: (args, beforeNode, rows) => {
+      // Name the record being retired entry by entry. The whole reason this is a separate op is
+      // that the loss should be READ before it is confirmed, not buried in a status change.
+      const entries = Array.isArray(beforeNode.progress) ? beforeNode.progress : [];
+      const lines = entries.map((e) => `Round ${e.cycle} / ${e.stage} / attempt ${e.attempt} / ${e.state}${e.result ? " / " + e.result : ""}`);
+      rows.push(v3EditDiffRow("Progress record", lines.length ? lines.join(" | ") : "(none)", "(retired -- key removed)"));
+      rows.push(v3EditDiffRow("Status", beforeNode.status, beforeNode.status + " (unchanged by this op)"));
+    }
+  },
+
+  swap: {
+    targetKind: "run",
+    payload: ({ t, pickerValues }) => {
+      const vals = pickerValues('[data-v3edit-picker="swap"]');
+      return { run: t.id, withRun: vals[0] || "" };
+    },
+    diffRows: (args, beforeNode, rows) => {
+      rows.push(v3EditDiffRow("Swap with", "(this run)", args.withRun || "(none selected)"));
+    }
+  },
+
+  remove: {
+    targetKind: "run",
+    payload: ({ t }) => {
+      const args = { run: t.id };
+      if (v3EditRemoveChoice === "drop") args.dropDependentEdges = true;
+      else if (v3EditRemoveChoice && v3EditRemoveChoice.reassignTo) args.reassignDependentsTo = v3EditRemoveChoice.reassignTo;
+      return args;
+    },
+    diffRows: (args, beforeNode, rows) => {
+      rows.push(v3EditDiffRow("Remove run", args.run, "(removed)"));
+      if (args.reassignDependentsTo) rows.push(v3EditDiffRow("Dependents", "reassign to " + args.reassignDependentsTo, "reassigned"));
+      if (args.dropDependentEdges) rows.push(v3EditDiffRow("Dependents", "drop links", "dropped"));
+    }
+  }
+};
+
+// Own-property lookup, never `V3_OP_DESCRIPTORS[op]` bare: an op name is a string off the DOM
+// or off a request body, and a bare index would answer "constructor" or "toString" with an
+// Object.prototype member. An UNREGISTERED op is inert in all three consumers below — null
+// payload, unchanged, empty diff — exactly as the if-chains they replaced fell through to.
+function v3OpDescriptor(op) {
+  return Object.prototype.hasOwnProperty.call(V3_OP_DESCRIPTORS, op) ? V3_OP_DESCRIPTORS[op] : null;
+}
+
 function v3BatchOpChanged(op, args, beforeNode) {
   // True only when the produced args differ from the before-node's current values.
+  // [#47] The comparison itself lives on the op's registry entry; an op with no `changed`
+  // slot answers false, which is what a non-batchable op has always answered here.
   if (!beforeNode) return false;
-  if (op === "set-text") {
-    return (args.title !== undefined && String(args.title) !== String(beforeNode.title)) ||
-      (args.summary !== undefined && String(args.summary) !== String(beforeNode.summary)) ||
-      (args.fullDescription !== undefined && String(args.fullDescription) !== String(beforeNode.full_description));
-  }
-  if (op === "set-deps") {
-    const before = Array.isArray(beforeNode.depends_on) ? beforeNode.depends_on : [];
-    const after = Array.isArray(args.dependsOn) ? args.dependsOn : [];
-    return before.length !== after.length || before.some((id, i) => id !== after[i]);
-  }
-  if (op === "set-human-deps") {
-    // [#45] Absent key and empty list are the SAME state on the before side, so opening the
-    // modal on a run with no human-approval edges and closing it is correctly not a change.
-    const before = Array.isArray(beforeNode.depends_on_human_approved) ? beforeNode.depends_on_human_approved : [];
-    const after = Array.isArray(args.dependsOnHumanApproved) ? args.dependsOnHumanApproved : [];
-    return before.length !== after.length || before.some((id, i) => id !== after[i]);
-  }
-  if (op === "set-status") {
-    if (args.status !== beforeNode.status) return true;
-    const beforeCo = "closeout_result" in beforeNode && beforeNode.closeout_result != null ? String(beforeNode.closeout_result) : "";
-    const afterCo = args.closeoutResult != null ? String(args.closeoutResult) : "";
-    return beforeCo !== afterCo;
-  }
-  if (op === "set-lane") {
-    // Stored key vs chosen key; "" stands for "no stored lane" (the project default) on
-    // both sides, so picking the default over an absent lane is correctly a no-op.
-    const beforeLane = typeof beforeNode.lane === "string" && beforeNode.lane ? beforeNode.lane : "";
-    const afterLane = args.lane != null ? String(args.lane) : "";
-    return beforeLane !== afterLane;
-  }
-  if (op === "set-barrier") {
-    // Stored scope vs chosen scope; "" stands for "no barrier" on both sides, so picking
-    // "(no barrier)" on a run that has none is correctly a no-op. An unacknowledged global
-    // never reaches here at all — v3EditBuildPayload returns null for it.
-    const beforeBarrier = beforeNode.barrier === "lane" || beforeNode.barrier === "global" ? beforeNode.barrier : "";
-    const afterBarrier = args.barrier != null ? String(args.barrier) : "";
-    return beforeBarrier !== afterBarrier;
-  }
-  if (op === "set-classification") {
-    // [#43] Stored value vs chosen value, field by field; "" stands for "not classified" on
-    // both sides, so re-picking what is already there is correctly a no-op and the mark is not
-    // rewritten. `classified_at` is NOT compared: the engine sets it as a consequence of a real
-    // change, so treating it as an input would make every open-and-close of the modal a write.
-    const changedToken = ["correctness_model", "work_type", "blast_radius", "failure_surfaces"].some((field) => {
-      const option = { correctness_model: "correctnessModel", work_type: "workType", blast_radius: "blastRadius", failure_surfaces: "failureSurfaces" }[field];
-      const before = typeof beforeNode[field] === "string" ? beforeNode[field] : "";
-      const after = args[option] != null ? String(args[option]) : "";
-      return before !== after;
-    });
-    const beforeEffects = Array.isArray(beforeNode.external_effects) ? beforeNode.external_effects : [];
-    const afterEffects = Array.isArray(args.externalEffects) ? args.externalEffects : [];
-    const changedEffects = beforeEffects.length !== afterEffects.length ||
-      beforeEffects.some((value, i) => value !== afterEffects[i]);
-    return changedToken || changedEffects;
-  }
-  if (op === "clear-progress") {
-    // v3EditBuildPayload returns null unless the box is ticked, so a payload reaching here
-    // already means the operator asked for it. The remaining test is that there is really a
-    // record to retire, so a no-op never enters the batch.
-    return Array.isArray(beforeNode.progress) && beforeNode.progress.length > 0;
-  }
-  if (op === "move") {
-    return String(args.toOrder) !== String(beforeNode.queue_order);
-  }
-  if (op === "move-objective") {
-    const model = v3EditModel();
-    const objs = (model && model.roadmap) ? (model.roadmap.objectives || []) : [];
-    const currentIndex = objs.indexOf(beforeNode) + 1;
-    return String(args.toIndex) !== String(currentIndex);
-  }
-  if (op === "set-objective-archived") {
-    return (args.archived === true) !== (beforeNode.archived === true);
-  }
-  return false;
+  const descriptor = v3OpDescriptor(op);
+  return descriptor && descriptor.changed ? descriptor.changed(args, beforeNode) : false;
 }
 
 // [D-051] Is the GLOBAL barrier acknowledged right now? Read straight off the modal, so
@@ -6571,151 +6961,29 @@ async function v3EditPreviewAllChanges() {
 }
 
 function v3EditBuildPayload(op) {
+  // [#47] Reads the modal ONCE into a context, then hands it to the op's registry entry.
+  // The kind guard that used to sit as a bare `if (t.kind !== "run") return null;` between
+  // two halves of the chain is now `targetKind` on the entries that need it, so an op's
+  // target is declared beside its payload instead of by its position in a list.
   const t = v3EditModalTarget;
   const modal = byId("edit-modal-body");
   if (!t || !modal) return null;
+  const descriptor = v3OpDescriptor(op);
+  if (!descriptor) return null;
+  if (descriptor.targetKind && t.kind !== descriptor.targetKind) return null;
   const q = (sel) => modal.querySelector(sel);
   const val = (sel) => { const el = q(sel); return el ? el.value : undefined; };
-  if (op === "batch") {
-    const built = v3EditBuildBatch();
-    return { op, args: { ops: built.ops.map((p) => ({ op: p.op, args: p.args })) } };
-  }
-  if (op === "set-text") {
-    if (t.kind === "run") {
-      return { op, args: { targetType: "run", targetId: t.id, title: val("[data-v3edit-title]"), summary: val("[data-v3edit-summary]"), fullDescription: val("[data-v3edit-fulldesc]") } };
-    }
-    if (t.kind === "phase") {
-      return { op, args: { targetType: "phase", targetId: t.id, title: val("[data-v3edit-title]") } };
-    }
-    if (t.kind === "objective") {
-      return { op, args: { targetType: "objective", targetId: t.id, title: val("[data-v3edit-title]") } };
-    }
-    return null;
-  }
-  if (op === "insert") {
-    const model = v3EditModel();
-    const depsPicker = modal.querySelector('[data-v3edit-picker="insertdeps"]');
-    const args = {
-      runId: (val("[data-v3edit-newid]") || "").trim(),
-      title: val("[data-v3edit-title]") || "",
-      summary: val("[data-v3edit-summary]") || "",
-      fullDescription: val("[data-v3edit-fulldesc]") || "",
-      status: val("[data-v3edit-status]") || "planned",
-      dependsOn: depsPicker ? v3EditPickerValues(depsPicker) : []
-    };
-    const position = v3InsertCurrentPosition(model);
-    // No position, no payload. The refusal the operator sees is raised in v3EditPreview, which
-    // checks the same condition; returning null here keeps the anchor from being invented.
-    if (position == null) return null;
-    Object.assign(args, v3InsertAnchorArgs(model, t.anchorId, position));
-    return { op, args };
-  }
-  if (op === "move-objective") {
-    if (t.kind !== "objective") return null;
-    const raw = val("[data-v3edit-objposition]");
-    const n = parseInt(raw, 10);
-    return { op, args: { objectiveId: t.id, toIndex: Number.isFinite(n) ? n : raw } };
-  }
-  if (op === "set-objective-archived") {
-    if (t.kind !== "objective") return null;
-    const el = q("[data-v3edit-archived]");
-    const archived = el ? !!el.checked : false;
-    return { op, args: { objectiveId: t.id, archived } };
-  }
-  if (t.kind !== "run") return null;
-  if (op === "move") {
-    const raw = val("[data-v3edit-order]");
-    const n = parseInt(raw, 10);
-    return { op, args: { run: t.id, toOrder: Number.isFinite(n) ? n : raw } };
-  }
-  if (op === "set-deps") {
-    const picker = modal.querySelector('[data-v3edit-picker="deps"]');
-    return { op, args: { run: t.id, dependsOn: picker ? v3EditPickerValues(picker) : [] } };
-  }
-  if (op === "set-human-deps") {
-    // [#45] Its OWN picker key, so the two lists can never read each other's chips. An empty
-    // list travels as `[]` and the engine turns it into ABSENCE — the clearing gesture.
-    const picker = modal.querySelector('[data-v3edit-picker="humandeps"]');
-    return { op, args: { run: t.id, dependsOnHumanApproved: picker ? v3EditPickerValues(picker) : [] } };
-  }
-  if (op === "set-status") {
-    const status = val("[data-v3edit-status]");
-    const terminal = status === "completed" || status === "blocked";
-    // [#46 amendment] The preselection is a SCREEN aid and stops here: the console sends the
-    // text the operator is looking at, and the ENGINE still holds the obligation. Write-my-own
-    // with an empty box sends NOTHING — so the refusal ("closing to completed requires a
-    // closeout_result") stays reachable from the screen and this list can never become a
-    // silent default the core fills in by itself.
-    const choiceEl = q("[data-v3edit-closeout-choice]");
-    const closeoutEl = q("[data-v3edit-closeout]");
-    const custom = closeoutEl ? closeoutEl.value.trim() : "";
-    const choice = choiceEl ? choiceEl.value : V3_CLOSEOUT_CUSTOM;
-    const closeout = choice === V3_CLOSEOUT_CUSTOM ? custom : choice;
-    const args = { run: t.id, status };
-    if (terminal && closeout) args.closeoutResult = closeout;
-    return { op, args };
-  }
-  if (op === "set-lane") {
-    const el = q("[data-v3edit-lane]");
-    if (!el) return null;
-    // "" (the project-default option) travels as null: the engine's clearing gesture.
-    return { op, args: { run: t.id, lane: el.value || null } };
-  }
-  if (op === "set-barrier") {
-    const el = q("[data-v3edit-barrier]");
-    if (!el) return null;
-    const scope = el.value || "";
-    // The GLOBAL gate, enforced where it cannot be walked around: an unacknowledged global
-    // produces NO payload, so it never enters the batch and cannot even be previewed. The
-    // clear-progress precedent — the checkbox is the op's existence condition, not a hint.
-    // Only "global" is gated: "lane" is ordinary planning and "" (clearing) is the safe
-    // direction, and neither is asked to justify itself.
-    if (scope === "global" && !v3BarrierGlobalAcknowledged()) return null;
-    // "" (the no-barrier option) travels as null: the engine's clearing gesture.
-    return { op, args: { run: t.id, barrier: scope || null } };
-  }
-  if (op === "set-classification") {
-    // [#43] The four measured fields plus the guard list. "" (the "(not classified)" option and
-    // an empty text box) travels as null: the engine's clearing gesture, the same one set-lane
-    // and set-barrier use. `classified_at` is NOT collected — the engine writes the mark, so
-    // there is no field here to read and no way for a request body to carry an instant.
-    const sel = q("[data-v3edit-correctnessmodel]");
-    if (!sel) return null;
-    const pick = (selector) => { const el = q(selector); return el && el.value ? el.value : null; };
-    const effectsEl = q("[data-v3edit-externaleffects]");
-    const effectsRaw = effectsEl ? String(effectsEl.value || "") : "";
-    const effects = effectsRaw.split(",").map((part) => part.trim()).filter(Boolean);
-    return {
-      op,
-      args: {
-        run: t.id,
-        correctnessModel: pick("[data-v3edit-correctnessmodel]"),
-        workType: pick("[data-v3edit-worktype]"),
-        blastRadius: pick("[data-v3edit-blastradius]"),
-        failureSurfaces: pick("[data-v3edit-failuresurfaces]"),
-        externalEffects: effects.length ? effects : null
-      }
-    };
-  }
-  if (op === "clear-progress") {
-    // An UNTICKED box produces no payload at all, so the op is simply absent from the batch
-    // (v3EditBuildBatch skips a null payload). Retiring a record is never the default.
-    const el = q("[data-v3edit-clearprogress]");
-    if (!el || !el.checked) return null;
-    return { op, args: { run: t.id } };
-  }
-  if (op === "swap") {
-    const picker = modal.querySelector('[data-v3edit-picker="swap"]');
-    const vals = picker ? v3EditPickerValues(picker) : [];
-    return { op, args: { run: t.id, withRun: vals[0] || "" } };
-  }
-  if (op === "remove") {
-    const args = { run: t.id };
-    if (v3EditRemoveChoice === "drop") args.dropDependentEdges = true;
-    else if (v3EditRemoveChoice && v3EditRemoveChoice.reassignTo) args.reassignDependentsTo = v3EditRemoveChoice.reassignTo;
-    return { op, args };
-  }
-  return null;
+  // The SELECTOR, not a key: each op names its own picker, so the two dependency pickers
+  // can never be read through one another's chips and the selector stays greppable.
+  const pickerValues = (selector) => {
+    const picker = modal.querySelector(selector);
+    return picker ? v3EditPickerValues(picker) : [];
+  };
+  // The entry produces ARGS; the op name is stamped here, from the key it is registered under.
+  // An entry therefore names its op EXACTLY ONCE — as its key — and cannot be filed under one
+  // name while sending another.
+  const args = descriptor.payload({ t, q, val, pickerValues });
+  return args ? { op, args } : null;
 }
 
 async function v3EditPost(body) {
@@ -6800,133 +7068,16 @@ function v3EditDiffBlock(label, before, after) {
 }
 
 function v3EditDiffHtml(op, args, beforeNode) {
-  if (op === "batch") {
-    const parts = (args.ops || []).map((sub, i) =>
-      `<div class="v3-edit-batch-item"><div class="v3-edit-batch-item-head">${i + 1}. ${escapeHtml(sub.op)}</div>${v3EditDiffHtml(sub.op, sub.args, beforeNode)}</div>`
-    ).join("");
-    return `<div class="v3-edit-diff v3-edit-batch">${parts}</div>`;
-  }
-  if (op === "set-text") {
-    // P3: changed fields first, stacked full-width; unchanged fields collapse to one
-    // de-emphasised line. A change is never hidden -- only an UNCHANGED field is de-emphasised.
-    if (!beforeNode) return "";
-    const fields = [];
-    if (args.title !== undefined) fields.push(["Title", beforeNode.title, args.title]);
-    if (args.summary !== undefined) fields.push(["Summary", beforeNode.summary, args.summary]);
-    if (args.fullDescription !== undefined) fields.push(["Full description", beforeNode.full_description, args.fullDescription]);
-    const changed = fields.filter((f) => String(f[1]) !== String(f[2]));
-    const unchanged = fields.filter((f) => String(f[1]) === String(f[2])).map((f) => f[0]);
-    let inner = changed.length
-      ? changed.map((f) => v3EditDiffBlock(f[0], f[1], f[2])).join("")
-      : '<div class="v3-edit-diff-none">No text changes in this preview.</div>';
-    if (unchanged.length) inner += `<div class="v3-edit-diff-unchanged">Unchanged: ${escapeHtml(unchanged.join(", "))}</div>`;
-    return `<div class="v3-edit-diff v3-edit-diff-text">${inner}</div>`;
-  }
+  // [#47] Two shapes, both declared on the op's registry entry: `diffHtml` for the ops that
+  // render a block of their own (batch, set-text and the two objective ops), `diffRows` for
+  // everything that renders as before/after rows in the standard block. `requiresBefore`
+  // carries, per op, the guard that used to be one hand-written list of seven op names.
+  const descriptor = v3OpDescriptor(op);
+  if (!descriptor) return "";
+  if (descriptor.requiresBefore && !beforeNode) return "";
+  if (descriptor.diffHtml) return descriptor.diffHtml(args, beforeNode);
   const rows = [];
-  if ((op === "set-deps" || op === "set-status" || op === "set-lane" || op === "set-barrier" || op === "set-classification" || op === "move" || op === "clear-progress") && !beforeNode) return "";
-  if (op === "set-classification") {
-    // [#43] Field by field, then the two DERIVED values before and after — because the point
-    // of the four selects is what they derive to, and an operator confirming a write should see
-    // that consequence in the same preview, not discover it in the drawer afterwards.
-    const map = { correctness_model: "correctnessModel", work_type: "workType", blast_radius: "blastRadius", failure_surfaces: "failureSurfaces" };
-    const after = {};
-    Object.entries(map).forEach(([field, option]) => {
-      const value = args[option] != null && args[option] !== "" ? String(args[option]) : null;
-      rows.push(v3EditDiffRow(field, typeof beforeNode[field] === "string" ? beforeNode[field] : "(not classified)", value || "(not classified)"));
-      if (value) after[field] = value;
-    });
-    const afterEffects = Array.isArray(args.externalEffects) ? args.externalEffects : [];
-    if (afterEffects.length) after.external_effects = afterEffects;
-    rows.push(v3EditDiffRow(
-      "external_effects",
-      (Array.isArray(beforeNode.external_effects) ? beforeNode.external_effects : []).join(", ") || "(none)",
-      afterEffects.join(", ") || "(none)"
-    ));
-    const beforeDerived = v3DerivedClassification(beforeNode);
-    const afterDerived = v3DerivedClassification(after);
-    rows.push(v3EditDiffRow("severity (derived)", beforeDerived.severity || "(absent)", afterDerived.severity || "(absent)"));
-    rows.push(v3EditDiffRow("closure_mode (derived)", beforeDerived.closure_mode || "(absent)", afterDerived.closure_mode || "(absent)"));
-    rows.push(v3EditDiffRow(
-      "classified_at",
-      typeof beforeNode.classified_at === "string" ? beforeNode.classified_at : "(none)",
-      Object.keys(after).length ? "(written by the engine — ISO-8601 UTC instant)" : "(cleared with the classification)"
-    ));
-  }
-  if (op === "clear-progress") {
-    // Name the record being retired entry by entry. The whole reason this is a separate op is
-    // that the loss should be READ before it is confirmed, not buried in a status change.
-    const entries = Array.isArray(beforeNode.progress) ? beforeNode.progress : [];
-    const lines = entries.map((e) => `Round ${e.cycle} / ${e.stage} / attempt ${e.attempt} / ${e.state}${e.result ? " / " + e.result : ""}`);
-    rows.push(v3EditDiffRow("Progress record", lines.length ? lines.join(" | ") : "(none)", "(retired -- key removed)"));
-    rows.push(v3EditDiffRow("Status", beforeNode.status, beforeNode.status + " (unchanged by this op)"));
-  }
-  if (op === "set-deps") {
-    rows.push(v3EditDiffRow("depends_on", (beforeNode.depends_on || []).join(", ") || "(none)", (args.dependsOn || []).join(", ") || "(none)"));
-  } else if (op === "set-human-deps") {
-    // [#45] The key is named VERBATIM, like depends_on above: the preview reports what will be
-    // written to disk. "(none)" on the after side means the KEY IS REMOVED, not stored empty.
-    const after = (args.dependsOnHumanApproved || []).join(", ");
-    rows.push(v3EditDiffRow(
-      "depends_on_human_approved",
-      (beforeNode.depends_on_human_approved || []).join(", ") || "(none)",
-      after || "(none — the key is removed)"
-    ));
-  } else if (op === "set-lane") {
-    const beforeLane = typeof beforeNode.lane === "string" && beforeNode.lane ? beforeNode.lane : "(project default)";
-    rows.push(v3EditDiffRow("Lane", beforeLane, args.lane != null && args.lane !== "" ? args.lane : "(project default)"));
-  } else if (op === "set-barrier") {
-    // Name the SCOPE and, for a scope that bars anything, the count it bars — read from the
-    // model exactly as the barred set is derived, so the preview and the rendered roadmap
-    // can never disagree about what this one field does.
-    const model = v3EditModel();
-    const scopeText = (scope) => {
-      if (scope !== "lane" && scope !== "global") return "(no barrier)";
-      if (!model) return scope === "global" ? "GLOBAL" : "lane";
-      const later = model.allRuns.filter((r) => r.queue_order > beforeNode.queue_order);
-      const n = scope === "global" ? later.length : later.filter((r) => model.laneOf(r) === model.laneOf(beforeNode)).length;
-      return scope === "global"
-        ? `GLOBAL — bars all ${n} later run(s), in every lane`
-        : `lane — bars the ${n} later run(s) on ${model.laneOf(beforeNode)}`;
-    };
-    const beforeScope = beforeNode.barrier === "lane" || beforeNode.barrier === "global" ? beforeNode.barrier : "";
-    rows.push(v3EditDiffRow("Barrier", scopeText(beforeScope), scopeText(args.barrier != null ? args.barrier : "")));
-  } else if (op === "set-status") {
-    rows.push(v3EditDiffRow("Status", beforeNode.status, args.status));
-    const beforeCo = "closeout_result" in beforeNode && beforeNode.closeout_result != null ? String(beforeNode.closeout_result) : "(none)";
-    rows.push(v3EditDiffRow("Closeout result", beforeCo, args.closeoutResult != null ? args.closeoutResult : "(none)"));
-  } else if (op === "move") {
-    rows.push(v3EditDiffRow("Position", "#" + beforeNode.queue_order, "#" + args.toOrder));
-  } else if (op === "swap") {
-    rows.push(v3EditDiffRow("Swap with", "(this run)", args.withRun || "(none selected)"));
-  } else if (op === "remove") {
-    rows.push(v3EditDiffRow("Remove run", args.run, "(removed)"));
-    if (args.reassignDependentsTo) rows.push(v3EditDiffRow("Dependents", "reassign to " + args.reassignDependentsTo, "reassigned"));
-    if (args.dropDependentEdges) rows.push(v3EditDiffRow("Dependents", "drop links", "dropped"));
-  } else if (op === "insert") {
-    rows.push(v3EditDiffRow("New run id", "(new)", args.runId || "(missing)"));
-    rows.push(v3EditDiffRow("Title", "(new)", args.title || "(empty)"));
-    const anchor = args.endOfPhase ? ("end of phase " + args.endOfPhase) : args.after ? ("after " + args.after) : args.before ? ("before " + args.before) : "(unset)";
-    rows.push(v3EditDiffRow("Anchor", "(new)", anchor));
-    rows.push(v3EditDiffRow("depends_on", "(new)", (args.dependsOn || []).join(", ") || "(none)"));
-  }
-  if (op === "move-objective") {
-    const model = v3EditModel();
-    const objs = (model && model.roadmap) ? (model.roadmap.objectives || []) : [];
-    const fromPos = beforeNode ? objs.indexOf(beforeNode) + 1 : 0;
-    const toPos = args.toIndex;
-    const msg = (fromPos && String(fromPos) === String(toPos))
-      ? "Objective " + args.objectiveId + " stays at position " + toPos + ". No run changes queue_order."
-      : "Objective " + args.objectiveId + " moves from position " + (fromPos || "?") + " to position " + toPos + ". No run changes queue_order.";
-    return `<div class="v3-edit-diff"><div class="v3-edit-plain">${escapeHtml(msg)}</div></div>`;
-  }
-  if (op === "set-objective-archived") {
-    let activeCount = 0;
-    if (beforeNode) (beforeNode.phases || []).forEach((ph) => (ph.runs || []).forEach((r) => { if (r.status === "active") activeCount += 1; }));
-    const msg = args.archived === true
-      ? "Objective " + args.objectiveId + " will be archived and moved under the Archive header. It holds " + (activeCount === 0 ? "no active runs" : activeCount + " active run(s)") + ". No run changes queue_order."
-      : "Objective " + args.objectiveId + " will be un-archived and returned to the live list. No run changes queue_order.";
-    return `<div class="v3-edit-diff"><div class="v3-edit-plain">${escapeHtml(msg)}</div></div>`;
-  }
+  if (descriptor.diffRows) descriptor.diffRows(args, beforeNode, rows);
   return rows.length ? `<div class="v3-edit-diff">${rows.join("")}</div>` : "";
 }
 

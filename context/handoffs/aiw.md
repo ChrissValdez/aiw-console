@@ -195,7 +195,20 @@ taller trabajando y no lo hay. `D-064` concede a la cabina `planned → active` 
 `active → completed`, **no** el sentido contrario: revertirlo exige palabra del operador.
 
 **El objetivo sigue intacto:** `aiw/objectives/pending/007-console-closure-mode-row-tag.md`,
-**7 080 bytes, md5 `fb2aabbe6897c8de4f1a19637ce0ec76`**, trackeado por git.
+trackeado por git.
+
+⚠ **Su md5 depende del EOL, y en la laptop nueva NO va a ser el mismo. No es manipulación.**
+Medido el 2026-08-06 al empujar: git avisó *«in the working copy of
+'objectives/pending/007-console-closure-mode-row-tag.md', LF will be replaced by CRLF the next
+time Git touches it»*, porque `aiw` no tiene `.gitattributes` (§1, trampa 1).
+
+| lectura | bytes | md5 |
+|---|---|---|
+| LF (como estaba en esta máquina) | **7 080** | `fb2aabbe6897c8de4f1a19637ce0ec76` |
+| **CRLF (lo esperable tras un clon en Windows)** | **7 189** | **`9bda267a92b72530cbc91aa0dfc3c0d0`** |
+
+**Si sale el segundo, el fichero está bien.** Si no sale ninguno de los dos, entonces sí
+cambió y hay que parar y mirarlo.
 
 **El trabajo que ordena SIGUE PENDIENTE — medido, no supuesto.** `v3RunRowTags` vive en
 `project-console/assets/project-console.js:3419`; empuja la etiqueta de `severity` en

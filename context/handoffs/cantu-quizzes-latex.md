@@ -34,7 +34,18 @@ no existe**.
 
 ## 2. El estado del canónico — medido al cierre
 
-`roadmap/roadmap.json`, md5 **`f2797026b691ed252f1919fbbd7c6c0e`**.
+`roadmap/roadmap.json` — **el md5 se declara en sus DOS lecturas**, porque el repo tiene
+`.gitattributes` con `* text=auto` y el fichero se normaliza a LF dentro de git pero se saca a
+CRLF en un clon de Windows:
+
+- **`f2797026b691ed252f1919fbbd7c6c0e`** — árbol de trabajo en Windows (CRLF, 714 líneas). **Es
+  el que verá la sesión siguiente en la laptop nueva.**
+- `1e1a287471721a64d9e695a07fd169e7` — el blob normalizado dentro de git (LF). Aparecería en un
+  clon sobre Linux o WSL.
+
+**Si el md5 no coincide con ninguno de los dos, el canónico cambió y hay que averiguar por qué
+antes de tocar nada.**
+
 **5 objetivos · 16 fases · 42 runs · `checkInvariants` 0 errores · 0 sin clasificar.**
 
 | | |

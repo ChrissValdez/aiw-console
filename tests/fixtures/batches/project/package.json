@@ -1,0 +1,5 @@
+{
+  "name": "fixture-batches",
+  "private": true,
+  "description": "Synthetic roadmap_tree project declaring batches (#48, D-030 model). Batch keys and branches are arbitrary on purpose: any code that recognises one of them by name is baked identity."
+}

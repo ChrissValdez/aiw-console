@@ -1,7 +1,8 @@
 # Relevo — hilo `aiw-console`
 
-**Fecha:** 2026-08-06 · **Sustituye** al relevo del 2026-08-02.
-**Última sesión en modalidad ESPEJO. La siguiente arranca en Cowork.**
+**Fecha:** 2026-08-06 (cierre de tarde) · **Sustituye** al relevo del 2026-08-06 (mañana).
+**Primera sesión en modalidad COWORK CONECTADO.** La siguiente arranca **en una laptop
+nueva**: lee «§9 MIGRACIÓN» ANTES que nada.
 
 La sustancia va DENTRO. Los punteros a records son procedencia, no respuesta.
 
@@ -9,280 +10,293 @@ La sustancia va DENTRO. Los punteros a records son procedencia, no respuesta.
 
 ## 1. DÓNDE ESTAMOS
 
-**Cabeza de cola: `#47` «One registry for the plumbing every optional run field
-repeats»**, `planned`, sin abrir, **desbloqueado**.
+**El `#48` «Batches in the roadmap schema, with the branch they determine» está `active`,
+ENTREGADO por el taller y SIN QA.** `CRITICAL` · `SEMI_ATTENDED`.
 
-Estuvo parado porque el hilo `aiw` iba a correr su kernel sobre
-`project-console/assets/project-console.js`. **No llegaron a lanzar**, la rama
-`aiw/007-console-closure-mode-row-tag` nunca existió, y ese fichero sigue en `6ee3277`.
-**Su objetivo se retira: lo pinta nuestro run.**
+**Su trabajo está en disco y NO COMMITEADO al cerrar esta sesión** (a menos que el bloque
+de Git de §9 se haya corrido; verifícalo midiendo, no lo supongas). Cinco ficheros
+modificados y siete sin rastrear — la lista exacta en §9.
 
-**DECIDIDO Y NO REABRIR — el `#47` lleva DOS cosas:**
+**Lo que falta para cerrarlo son 3 pasos de QA de NO-REGRESIÓN**, y hay una trampa que
+cuesta una vuelta entera si no se sabe:
 
-1. **El registro de fontanería**, su alcance original: colapsar la enumeración mecánica
-   que repite cada campo opcional. **10 de 17 sitios son absorbibles** —3 ramas del mismo
-   algoritmo en el borrado, 3 enumeraciones de la misma op en el plan, 4 en la consola—.
-   **7 NO entran, y el render es intocable**: ahí la etiqueta ES la semántica, y el run
-   que añadió `depends_on_human_approved` descartó el rename para que la diferencia
-   IA/humano viviera en la etiqueta de pantalla.
-2. **Pintar `closure_mode` junto a `severity`** en la fila del árbol y en la de la Run
-   Queue. **1 sitio de código + 1 de test.** Las dos superficies comparten una función,
-   `v3RunRowTags`, **anclar al NOMBRE y no a la línea**; la llamada ya devuelve el valor
-   y lo descarta. **Sin CSS**: el cajón ya pinta un `closure_mode` con la regla base, y
-   el color queda reservado a la severidad. Extender las aserciones de
-   `tests/classification-transport-and-console.test.mjs`, cuyo fixture «con
-   clasificación» **necesita `correctness_model: "SPECIFIED"`** — sin él no hay
-   `closure_mode` que derivar y la prueba no demuestra nada.
+> **El selector de lotes NO se dibuja en `aiw-console`, y ESO ES LO CORRECTO.**
+> `renderBatchSelector` elimina su slot si el proyecto no declara lotes, y este canónico
+> no declara ninguno porque el ticket prohibió poblarlo. Pedir «revisa el selector» manda
+> al operador a mirar algo que por construcción no está.
 
-**NO entra en el `#47`:** unificar la escritura de las dos listas de dependencias. Toca
-`depends_on` y arrastra la ventana de «tres roadmaps en reposo» que también necesita el
-renombrado. **Son DOS runs esperando esa ventana, no uno.**
+**Los 3 pasos, ejecutables tal cual.** Reiniciar el proceso (`start-console.cmd`), no
+recargar el navegador:
+
+1. **PARADA.** Barra superior del árbol del Roadmap: **un solo** desplegable, el de
+   carriles («Lane»). **Ningún** «Batch». Si aparece un «Batch», el selector se pinta sin
+   vocabulario: defecto del `#48`.
+2. Usar el desplegable de carriles (elegir uno, volver a «All»). Debe filtrar igual que
+   siempre. Si falla, el filtro compuesto del `#48` rompió el de carriles.
+3. Run Queue y árbol: `#48` en `active` con chips `CRITICAL` + `SEMI_ATTENDED`; el `#47`
+   cerrado. Regresión de render si no.
+
+**Con `PASA` en los tres, el cierre es `set-status active → completed`** con
+`closeout_result` a decidir según los veredictos.
+
+**Nadie ha visto NUNCA el selector de lotes en un navegador.** Está probado contra el
+renderer real en `node:vm` —opciones, conteos, filtro en las dos superficies, reset— pero
+eso no es un browser. Layout y CSS quedan pendientes. **Decisión tomada esta sesión: NO se
+declara un lote de prueba en el canónico solo para mirarlo** —deja rastro en un fichero que
+tres hilos leen— y se deja que lo cubra el `#50`, que ya trae QA visual de consola.
 
 ---
 
-## 2. ⚠ TOPOLOGÍA — y una trampa NUEVA que la modalidad trae
+## 2. LO QUE ESTA SESIÓN ENTREGÓ
 
-**El sync del Project está RECORTADO.** No llegan: `context/aiw-console/records/`,
-`tools/`, `tests/`, `project-console/`, `.project/`. **Sí llegan:**
-`roadmap/roadmap.json`, `context/DECISIONES.md`, `context/handoffs/`,
-`context/CLASIFICACION-DE-RUNS.md`, `context/PROCEDIMIENTO-DE-CLASIFICACION.md`,
-`context/aiw-console/CONTRATO.md`. **Confirmado por dos hilos con sondas independientes.**
+**El `#47` cerró con `closeout_result: "done with deviations"`.** Registro de fontanería de
+campos opcionales de run + chip de `closure_mode` junto a `severity` en la fila.
+**Absorbió 9 sitios de 17, no los 10 previstos:** `V3_BATCHABLE_OPS` no entra porque
+`tests/depends-on-human-approved.test.mjs:341` lo pinea como TEXTO FUENTE y ese fichero
+estaba fuera de alcance. **Cuesta UNA edición** y es trabajo de un run que lo tenga dentro.
 
-**⚠ TRAMPA DE LA MODALIDAD, medida por el hilo `cantu-studio`:** la cabina de Cowork corre
-en **Linux** y **no aplica la conversión CRLF** del Git de Windows. **`aiw-console` NO
-tiene `.gitattributes`**, así que **su `git status` desde la cabina MIENTE: reporta del
-orden de 279 ficheros y 134 804 «inserciones» que en la máquina del operador son CERO.**
+**El `#48` construyó los lotes**: vocabulario `root.batches` con entradas
+`{batch_id, title, branch}`, clave opcional `batch` en el run, ops `declare-batches` (no
+batchable) y `set-batch` (batchable), transporte verbatim en el proyector, y desplegable en
+la consola junto al de carriles. El invariante del interbloqueo vive en `checkInvariants` y
+se prueba en LAS DOS direcciones sobre `tests/fixtures/batches/`.
 
-**Consecuencia dura: TODA guarda de árbol limpio de esta sesión es inservible sin
-corregir.** Antes de reportar cualquier `git status`, pasarlo por `--ignore-cr-at-eol` y
-**declarar cuál de las dos lecturas se está dando**.
+**La frontera con `aiw` quedó escrita**, con seis puntos de aquel lado: leer el
+vocabulario, resolver la rama del lote, apilar commits, el merge humano único al final,
+dónde parar el dispatch, y dónde registrar la aprobación. **Nada de lo entregado ejecuta la
+rama: la transporta.**
 
-**⚠ Este repo contiene el fork de consola DESCARTADO por `D-035`**, en
-`docs/project-console/`, y `console/` es un prototipo retirado. **Ese aviso pesa MÁS en
-Cowork**: la cabina puede abrir ese código y leerlo entero, lo que lo hace más creíble sin
-hacerlo menos falso. **Y el validador `tools/project-console/validate-project-console-state.mjs`
-lee ESE fork, no la consola viva: sale ROJO y es correcto que salga rojo.** La validación
-real de escritura es `checkInvariants` del motor.
+---
+
+## 3. CIFRAS MEDIDAS, con su unidad
+
+**Un campo opcional de run de la clase `lane` —vocabulario en raíz + clave + selector—
+cuesta 23 SITIOS en 4 archivos.** La predicción del `#47` era **11**, y no era falsa: era
+para la clase «lista de referencias con op propia», que es otra. El registro absorbió
+**2 filas de ops donde la forma pre-registro cobraba 6 sitios**; los otros 21 no los cubre
+ningún registro. **El registro NO estorbó en ningún punto** — medido y reportado, que es la
+mitad del valor de haberlo estrenado.
+
+**El precedente de los carriles, re-medido hoy: 8 archivos de código, 375 sitios `lane`,
+488 con `barrier`, 29 de test.** Creció desde los 333/430/25 del relevo anterior porque el
+código creció; el método reproduce. **Este canónico no guarda ni una clave `lane`, y
+`aiw/kernel.mjs` tiene CERO apariciones de `lane`, `barrier` y `batch`.** Coste pagado en
+los dos lados, consumidores cero. Es el precedente que el `#48` existe para no repetir.
+
+**`depends_on_human_approved`: CERO runs lo llevan como campo.** Las 6 apariciones del
+literal son prosa, en 4 runs — **5 en `full_description` y 1 en un `summary`**.
+
+**Suite: 529 tests, 527 pasan, 2 fallan** al cierre del `#48` (era 497/495/2 al abrir la
+sesión). **Los DOS son PINES DE REGISTRO DELIBERADOS, no deuda:**
+`tests/roadmap-engine.test.mjs:93` —su mensaje instruye «update the record, keep the
+test»— y `tests/classification-care-budget.test.mjs:153`. **Nunca se reparan y NUNCA son
+gatillo de una parada por regresión.** El criterio es no ganar fallos NUEVOS.
+
+---
+
+## 4. ⚠ CORRECCIÓN AL RELEVO ANTERIOR — hacia adelante, no hacia atrás
+
+**El §8 del relevo del 2026-08-06 (mañana) afirmaba: «1 arista `depends_on_human_approved`
+— `#53` → `RUN-CONSOLE-DEPENDS-ON-HUMAN-APPROVED-001`, no colgante y única en todo el
+canónico».**
+
+**ES FALSO. Medido en disco: esa arista NO EXISTE.** Las claves del `#53` son
+`run_id, queue_order, title, summary, full_description, status, depends_on,
+correctness_model, work_type, blast_radius, failure_surfaces, external_effects,
+classified_at`. Ninguna es `depends_on_human_approved`.
+
+El §4 de aquel mismo relevo decía lo contrario y correcto («nada en este repo obedece esa
+lista todavía»). **El relevo se contradecía consigo mismo y la mitad que coincidía con el
+disco era la otra.** No se reescribe hacia atrás: se corrige aquí.
+
+---
+
+## 5. LA MODALIDAD COWORK, medida — y lo que la tabla heredada tenía mal
+
+**Capacidades PROBADAS esta sesión, no supuestas:**
+
+| Capacidad | Resultado |
+|---|---|
+| Leer cualquier fichero del workspace | **SÍ** |
+| Comandos de solo lectura (node, validador, suite) | **SÍ** |
+| Leer estado de Git en los cinco repos | **SÍ** |
+| Crear y sobrescribir ficheros | **SÍ** |
+| **ESCRIBIR EL CANÓNICO por el motor** | **SÍ — probado 3 veces** |
+| Re-emitir `.project/` | **SÍ — 6 ficheros, layout `repo_root`** |
+| **BORRAR** | **NO — `Operation not permitted`** |
+| Commit / push | **NO** |
+
+**Tres correcciones medidas a la tabla heredada:**
+
+1. **HAY RED Y LECTURA DEL REMOTO.** `git ls-remote origin` devolvió EXIT 0. D-064 afirma
+   «no hay credenciales y no hay red al remoto» y hoy es falso. No cambia nada operativo
+   —Git sigue siendo del operador— pero deja de ser una pared medida.
+2. **`.git` SÍ es escribible, solo no borrable.** `touch .git/loquesea` funciona. Es peor
+   que «no escribible»: se puede ensuciar `.git` sin poder limpiarlo.
+3. **`fs.renameSync` sobre el canónico funciona.** La escritura estaba declarada como NO
+   PROBADA por si el temporal-y-renombrado chocaba con la prohibición de borrar. No choca.
+
+**D-064 dice la VERDAD sobre la re-emisión automática, CON UN MATIZ:** `serve.mjs` llama a
+`writeProjectFolder` tras un `applyPlan` exitoso — pero **`applyPlan` a pelo NO re-emite**.
+Conducir el motor directamente y conducir la consola no son lo mismo. **Quien conduzca el
+motor debe re-emitir explícitamente, dentro del camino de éxito.**
+
+**Y `applyWrite` llama a `validate()` SIN argumentos y exige `result.code === 0`.** Inyectar
+un validador de otra firma produce un rollback silencioso que parece un fallo del motor y es
+un fallo de quien lo conduce. **La autoridad correcta es `writtenFileValidator` de
+`serve.mjs`: `checkInvariants` + `hasRoadmapTreeShape`, devolviendo `{code, output}`.**
+
+---
+
+## 6. ⚠⚠ EL CANDADO — propiedad de este repo, y su solución
+
+**`git status` y `git diff` REFRESCAN EL ÍNDICE, y para eso toman `.git/index.lock`.** La
+cabina puede crearlo y no puede borrarlo. **Resultado: cada lectura de git de la cabina deja
+un candado que BLOQUEA el siguiente `git add` del operador.** Costó dos bloques de Git
+fallidos en esta sesión antes de encontrar la causa.
+
+**LA SOLUCIÓN, probada con el candado puesto:**
+
+```
+git --no-optional-locks status ...
+git --no-optional-locks diff --numstat --ignore-cr-at-eol
+```
+
+Devuelven exactamente lo mismo sin tocar el índice. **La opción va ANTES del subcomando.**
+
+**NO ES INFALIBLE:** un barrido de los cinco repos que agotó su tiempo dejó candados nuevos
+en `aiw`, `aiw-console` y `cantu-studio` pese a usarla. **Un comando que se corta a mitad
+puede dejarlos igual.** Comprobar candados es parte de cerrar sesión.
+
+**Protocolo ante un candado, y el orden importa:** NO borrarlo de entrada. Primero
+antigüedad y tamaño, después procesos `git` vivos —**eso lo mira el operador, la cabina no
+ve procesos de Windows**—, y sólo con las dos cosas se quita. Borrarlo mientras otro escribe
+corrompe el índice.
+
+---
+
+## 7. CRLF — y la corrección que el relevo anterior tenía a medias
+
+**`aiw-console` NO tiene `.gitattributes`.** La cabina corre en Linux y no aplica la
+conversión del Git de Windows: su lectura cruda reporta ~279 ficheros y ~134 800
+«inserciones» que en la máquina del operador son CERO.
+
+**`--ignore-cr-at-eol` es opción de `git diff`, NUNCA de `git status`.** Y hay un segundo
+matiz que costó una lectura falsa: **tampoco sirve con `--name-only`**, que sigue listando
+los 277. **La única lectura fiable es `--stat` o `--numstat`:**
+
+```
+git --no-optional-locks diff --numstat --ignore-cr-at-eol
+```
+
+**Toda guarda de árbol limpio se construye sobre `diff`, y se declara cuál de las dos
+lecturas se está dando.**
+
+**El validador `tools/project-console/validate-project-console-state.mjs` NO EMITE
+`history=` NI `ready_next=`** — lee la topología del fork de D-035 y sale EXIT 1 con 25
+`Missing JSON file: .aiw/...`. **Es CORRECTO que salga rojo.** Consecuencia dura: **la guarda
+`if ($v -notmatch "history=$esperado")` que prescriben las reglas de cabina es INSERVIBLE en
+este repo.** Aquí la guarda se construye sobre el canónico —contar runs, contar `active`,
+comprobar el `run_id` esperado— o sobre `checkInvariants`.
+
+---
+
+## 8. ⚠ LA FALSA CONSOLA
+
+`docs/project-console/` es el fork **DESCARTADO por D-035**; `console/` es un prototipo
+retirado. **La consola viva es `project-console/`.** En Cowork este aviso pesa MÁS: la
+cabina puede abrir ese código y leerlo entero, **lo que lo hace más creíble sin hacerlo
+menos falso**.
 
 **En este repo escriben CUATRO hilos.** El `git add` va **siempre dirigido por nombre de
-fichero, nunca `-A`**.
+fichero, nunca `-A`**, y la cabina declara por nombre cada fichero que escribe.
 
 ---
 
-## 3. LOS DOS PINES QUE PARECEN DEUDA Y NO LO SON
+## 9. MIGRACIÓN A LA LAPTOP NUEVA — estado medido el 2026-08-06 ~22:50
 
-`node --test` da **497 tests, 495 pasan, 2 fallan**. **Los dos son PINES DE REGISTRO
-DELIBERADOS, no deuda:**
+**Lo que falta por commitear en ESTE repo** (HEAD `b2a5079` = `origin/main`):
 
-- `tests/roadmap-engine.test.mjs:93` — descubrió que **los dos canónicos reales ya
-  comparten EOL**, luego el parámetro que toleraba la divergencia dejó de ser portante.
-  Su propio mensaje instruye: **«update the record, keep the test»**.
-- `tests/classification-care-budget.test.mjs:153`.
+Modificados — trabajo del taller del `#48`:
+`tools/roadmap/roadmap-core.mjs` · `tools/roadmap/roadmap-plan.mjs` ·
+`project-console/assets/project-console.js` · `tools/projector/project.mjs` ·
+`tests/roadmap-engine.test.mjs`
 
-**Su remedio es actualizar el record y conservar el test, nunca repararlo.** Y de ahí sale
-una regla: **un test cuyo propósito es dispararse ante un cambio deliberado NO puede ser
-el gatillo de una parada por regresión.** Ya costó una parada de taller en esta sesión.
+Sin rastrear:
+`context/aiw-console/records/LOTES-EN-EL-SCHEMA-Y-LA-RAMA-QUE-DETERMINAN.md` ·
+`tests/roadmap-batches.test.mjs` · `tests/fixtures/batches/project/package.json` ·
+`tests/fixtures/batches/project/roadmap/roadmap.json` ·
+`tests/fixtures/batches/project/.project/roadmap.json` ·
+`tests/fixtures/batches/project/.project/snapshot.json` ·
+`tests/fixtures/batches/project/.project/docs_index.json`
 
----
+Más este relevo: `context/handoffs/aiw-console.md`.
 
-## 4. LO QUE ESTA SESIÓN ENTREGÓ
+**LOS OTROS REPOS — NO son de este hilo, se NOMBRAN y no se tocan:**
 
-**El piloto de clasificación cerró.** Los doce runs vivos clasificados, y el procedimiento
-escrito en `context/PROCEDIMIENTO-DE-CLASIFICACION.md`. Reparto: **6 CRITICAL · 3 MAJOR ·
-3 MODERATE · 0 MINOR** y **4 `ATTENDED` · 6 `SEMI_ATTENDED` · 2 `UNATTENDED`**. **Esta
-cola no produce ningún MINOR**, y es dato de calibración, no defecto.
+| repo | estado medido | riesgo para la migración |
+|---|---|---|
+| `cantu-studio` | limpio, HEAD = `origin/main` = `0ff12d5` | ninguno |
+| `aiw` | 5 ficheros de `.project/` (+1/-1, timestamps) y `objectives/pending/_probe.md` sin rastrear | bajo; el `_probe.md` huele a sonda que nadie borró |
+| `cantu-quizzes-latex` | **9 modificados sin commitear** | **se pierden si no se empujan** |
+| `cantu-lessons` | 1 modificado y **SIN REF REMOTA `origin/main`** | **ALTO — si no está en GitHub, NO VIAJA** |
 
-**`progress` es norma** en `CONTRATO.md` §15: una **QA humana con resultado positivo
-satisface** una arista `depends_on_human_approved`; **`completed` solo, jamás**. Cerrar un
-run **exige desenlace**, con lista sugerida —`done as specified` por defecto, más
-`done with deviations`, `superseded`, `not needed`, `partially done`— y texto libre. **La
-lista es SUGERIDA, no vocabulario cerrado.** History dejó de pintar la ausencia como
-bloqueo, y **los 9 runs terminales sin desenlace NO se rellenaron**: inventar un desenlace
-que nadie declaró sería afirmar un hecho falso sobre trabajo pasado.
+**`cantu-lessons` es el que puede costar trabajo de verdad.** No tiene ref remota; hay que
+comprobar si tiene remoto configurado y si su rama se ha empujado alguna vez, **antes** de
+apagar la máquina vieja.
 
-**`depends_on_human_approved` existe**: campo opcional de run con seis invariantes,
-transporte verificado y superficie propia. **La frontera con `aiw` está fijada por dos
-tests que se ponen rojos si alguien la cruza a medias.** **Nada en este repo obedece esa
-lista todavía, y es correcto.**
+**`.gitattributes` sigue sin existir en `aiw` ni en `aiw-console`.** En la laptop nueva, si
+`core.autocrlf` difiere, el clon puede salir con el árbol entero modificado.
+**RECOMENDACIÓN TOMADA: NO meterlo durante la migración** — su renormalizado toca el árbol
+completo y mezclarlo con trabajo pendiente hace ilegible el diff. **Es su propio run, y
+conviene hacerlo en la máquina nueva con los tres roadmaps en reposo.**
 
-**Cuatro entradas nuevas de decisión.** `D-062`: un contenedor sin runs es **VÁLIDO y no
-deriva nada** — el chequeo que el contrato describía **nunca se implementó**. `D-063`: el
-cuarto proyecto y los tres acuerdos con `aiw`.
-
-**`cantu-quizzes-latex` es el cuarto proyecto y tiene hilo propio** desde el 6-ago.
-Registrado, canónico de 3 objetivos y 10 fases **sin runs** —estrenando `D-062`— y
-`.project/` emitido. **Este hilo ya no escribe en ese repo.**
-
----
-
-## 5. CIFRAS MEDIDAS, con su unidad, porque no se pueden ir a buscar
-
-**Dar de alta un campo opcional de run cuesta 17 SITIOS en 3 archivos de código**, más
-**1 sitio en 1 archivo de test existente**. La pieza compartida existe pero **el campo no
-pasa por ella**. **Y el coste depende de QUÉ CLASE de cosa guarda el campo:** un token de
-vocabulario cerrado ~2 sitios; una lista de forma propia +2; **una lista de REFERENCIAS a
-otros runs +3 más**, por la integridad referencial al borrar.
-
-**El precedente de los carriles, entero:** 8 archivos de código, **333 sitios** —430 con
-`barrier`— y 25 de test, **sin módulo compartido**. **Este canónico no guarda ni una clave
-`lane`**, y `kernel.mjs` de `aiw` no contiene ni `lane` ni `barrier`. **Coste pagado en
-los dos lados, consumidores cero.**
-
-**La puerta de operaciones por lote pegado está medida y sin emitir. DOS runs, y el corte
-es de invariante, no de tamaño:** el primero son **12 sitios** —8 de la puerta, 3 de la
-guarda de identidad por `queue_order`+título, 1 del respaldo con nombre único— sobre las
-**11 ops agrupables**; el segundo son **4 sitios** y **afloja `checkIdentityPreserved`**,
-que hoy sanciona un id por tipo. **El motor ya acepta un lote sobre runs distintos**,
-medido con `planEdit`; lo impide el cliente. **Y hay un defecto real ya destapado:** la
-previa pasa **el mismo nodo «antes»** a todas las sub-ops, así que un lote multi-run
-pintaría cada diff contra el run equivocado.
+**Primer acto en la laptop nueva:** el arranque de sesión completo —derivar la ruta de
+montaje, PROBAR las capacidades una por una, localizar el canónico midiendo, leer este
+relevo y contrastar sus cifras contra el disco—. **La ruta de montaje CAMBIA entre sesiones
+y entre máquinas: se deriva, nunca se hereda.**
 
 ---
 
-## 6. LO QUE QUEDA ABIERTO, CON SU CONDICIÓN DE CIERRE
+## 10. LO QUE QUEDA ABIERTO, CON SU CONDICIÓN DE CIERRE
 
-**Las tres reglas mecánicas de runs mixtos** — hueco de `CLASIFICACION-DE-RUNS.md` §7.
-**La población real es la nuestra sola: de los 21 runs de `aiw`, NINGUNO resultó mixto.**
+**La QA del `#48`** — §1. Es lo único que bloquea su cierre.
 
-**La calibración de los `completed`** — sin un solo caso.
+**El selector de lotes sin ver nunca en un browser** — lo cubre el `#50`.
 
-**La irreversibilidad sin eje propio** — hueco declarado **sin testigo**.
+**`V3_BATCHABLE_OPS` sin absorber** — una edición en
+`tests/depends-on-human-approved.test.mjs:341`, en un run que tenga ese fichero en su
+alcance. Llevaría el coste del campo siguiente de 11 a 10.
 
-**Un `.gitattributes` para este repo y para `aiw`** — sin él, toda guarda de árbol limpio
-desde la cabina es inservible (§2). **Un cambio de una línea con un renormalizado detrás
-que toca el árbol entero en un commit.** Sirve a tres repos; conviene medir qué necesita
-cada uno antes de emitirlo.
+**Un `.gitattributes` para `aiw-console` y para `aiw`** — §9.
 
-**Distinguir una fase vacía OLVIDADA de una en espera** — `D-062` lo deja sin mecanismo;
-se resolvería avisando, no rechazando.
+**La mitad de `aiw` en los lotes** — seis puntos escritos en el record del `#48`. **Es del
+hilo `aiw`; este hilo lo NOMBRA y no lo lleva.**
 
-**El `insert` de un run nacido terminal no tiene canal de `closeout_result`** — medido:
-hoy se puede crear un run ya cerrado sin desenlace, desde la pantalla, con cero avisos.
-**0 datos malos en 56 runs**, así que no urge.
+**Unificar `setDeps` con la op de aprobación humana, y el rename de `depends_on`** — las dos
+quieren la ventana de «tres roadmaps en reposo». **Son DOS runs esperándola.**
 
-**`cantu-quizzes-latex` emitió 4 artefactos y se esperaban 6** — faltan `guardrails.json`
-y `no_claims.json`. **VERIFICADO EN PANTALLA el 2026-08-06: tras re-emitir, la consola NO
-muestra ningún aviso de fichero no cargado.** Luego el `snapshot.json` **no los declara**,
-no hay promesa incumplida, y **la ausencia es POR DISEÑO** — derivan de `governance/`, que
-ese repo no tiene. **No es defecto del emisor y no hay nada que hacer.**
+**Los 9 runs terminales sin `closeout_result`** — no se rellenan: inventar un desenlace que
+nadie declaró sería afirmar un hecho falso sobre trabajo pasado.
 
 ---
 
-## 7. LOS DEFECTOS DE MÉTODO DE LA CABINA — seis, todos medidos aquí
+## 11. DEFECTOS DE MÉTODO DE LA CABINA, medidos en esta sesión
 
-1. **Una tabla terminada solo admite sí o no.** Aísla la pregunta que decide los valores
-   y preséntala antes que la tabla.
-2. **Antes de declarar que el modelo falla, relee la definición y busca el caso.** Se
-   emitieron tres «huecos del modelo» y **dos eran lectura**. El peor: confundir
-   `closure_mode` con una escala de riesgo. **No lo es: mide PRESENCIA** —cuánta persona
-   hace falta DENTRO del run— mientras `severity` mide DAÑO. Se cruzan.
-3. **Cuenta `blast_radius`, no lo razones — y guarda la RAZÓN junto al valor.** Hubo dos
-   runs con valor correcto y razón falsa.
-4. **Una cifra marcada «por verificar» no puede ser el gatillo de una parada.** Ni un pin
-   de registro tampoco (§3).
-5. **Si quieres confirmar una predicción de derivación, déjala FUERA del ticket.** Escrita
-   en el criterio, el taller verifica la aritmética de quien la escribió, no la del motor.
-6. **Un bloque de Git que depende de una re-emisión debe verificarla antes de commitear.**
-   Costó dos turnos y un `.project/` desfasado en disco.
+1. **Escribir un paso de QA sin comprobar que la superficie puede mostrarlo.** Ocurrió DOS
+   veces: pedir un run sin clasificar en la Run Queue —donde sólo hay runs vivos y los 43
+   sin clasificar están todos `completed`— y estar a punto de pedir el selector de lotes en
+   un proyecto sin lotes. **Antes de escribir «mira X», medir que X es visible ahí.**
+2. **Presentar un grep literal como una medición.** «5 sitios de op en la consola» incluía
+   un sitio de RENDER; el texto del run decía 4 y decía bien. La cifra era correcta y la
+   unidad estaba mal.
+3. **Inyectar una función con firma inventada en vez de leer la que el código usa.** Produjo
+   un rollback que parecía del motor y era mío.
+4. **Ejecutar la re-emisión fuera del camino de éxito.** Re-emitió `.project/` tras un apply
+   fallido, ensuciando seis ficheros que nadie pidió.
+5. **Correr un barrido de cinco repos en un solo comando.** Agotó su tiempo y dejó tres
+   candados. Las mediciones pesadas van repo a repo.
 
-**Seis paradas de taller atraparon errores reales de la cabina en esta sesión.** Entre
-ellas: una cifra caducada usada como gatillo; una `severity` derivada mal a mano
-—`COSMETIC`×`LOCAL` = MINOR, y `SILENT` suma un paso → **MODERATE**—; una entrada de
-decisión escrita en una forma que el log no usa; y un alcance de contrato que no cabía en
-las dos secciones autorizadas. **La cláusula «para y reporta» se gana su sitio en todos
-los tickets.**
-
----
-
-## 8. ESTADO MEDIDO EN DISCO
-
-Medido el 2026-08-06 desde la raíz del repo, **en la máquina del operador** (Windows,
-`core.autocrlf=true`, **sin `.gitattributes`**), no desde la cabina. Cada valor lleva el
-comando que lo produjo. Los comandos de canónico llevan delante este prólogo, que lo
-aplana:
-
-```
-$j = Get-Content roadmap\roadmap.json -Raw | ConvertFrom-Json
-$runs = @($j.objectives | ForEach-Object { $_.phases } | ForEach-Object { $_.runs })
-```
-
-**HEAD y limpieza del árbol.** Rama `main`, HEAD en **`81e065f`** — *«handoff(aiw):
-relevo del 6-ago - compuerta CONST 4 re-adjudicada sobre los 21 (8 no detenidos / 13 si),
-cruce con depends_on deja solo 22 y 41 ejecutables, el tercero es 24 ya completed, dos
-blancos descartados con medicion, objetivo 007 escrito y validado pero NO lanzado, y la
-trampa de CRLF con su guarda»*. **El árbol NO está limpio:** un solo fichero rastreado
-modificado, `context/DECISIONES.md`, y **cero sin rastrear**.
-Comandos: `git log -1 --format="%h %s"` · `git branch --show-current` ·
-`git status --porcelain -uall`.
-
-**⚠ Declaración de lectura, exigida por §2.** Este `git` **no acepta
-`--ignore-cr-at-eol` en `git status`** —es opción de `git diff`—, así que la lectura
-tolerante a CR se da con `git diff --stat --ignore-cr-at-eol`. **Las dos lecturas
-coinciden en el fichero** y difieren solo en el volumen: la cruda dice *52 insertions(+),
-1 deletion(-)*; la tolerante a CR dice *51 insertions(+)*. **La lectura que se está dando
-aquí es la TOLERANTE A CR**, y el modificado es real, no ruido de fin de línea.
-
-**Total de runs y desglose por `status`.** **56 runs** en total: **46 `completed`** y
-**10 `planned`**. No existe ningún otro valor de `status` en el canónico.
-Comando: `$runs.Count` · `$runs | Group-Object status`.
-
-**Densidad y unicidad de `queue_order`.** **Es denso y único de 1..56**: 56 valores
-distintos, mínimo 1, máximo 56, sin huecos ni repetidos.
-Comando: `$qo = @($runs | ForEach-Object { $_.queue_order })` ·
-`(@($qo | Select-Object -Unique)).Count` · `($qo | Measure-Object -Min -Max)` ·
-`1..56 | Where-Object { $qo -notcontains $_ }`.
-
-**Los diez runs `planned`, por `queue_order`, con título verbatim y `depends_on`.**
-Comando: `$runs | Where-Object status -eq 'planned' | Sort-Object queue_order`,
-imprimiendo `queue_order`, `run_id`, `title` y `depends_on`.
-
-- **47** · `RUN-CONSOLE-FIELD-PLUMBING-REGISTRY-001` ·
-  *«One registry for the plumbing every optional run field repeats»* ·
-  `depends_on: []`
-- **48** · `RUN-CONSOLE-BATCHES-001` ·
-  *«Batches in the roadmap schema, with the branch they determine»* ·
-  `depends_on: ["RUN-CONSOLE-DEPENDS-ON-HUMAN-APPROVED-001",
-  "RUN-CONSOLE-PROGRESS-NORMATIVE-001", "RUN-CONSOLE-FIELD-PLUMBING-REGISTRY-001"]`
-- **49** · `RUN-CONSOLE-DIGEST-CABINA-001` ·
-  *«Digest for the cockpit»* ·
-  `depends_on: []`
-- **50** · `RUN-CONSOLE-PARIDAD-RENDER-CANTU-001` ·
-  *«Global console renders Cantu (parity, operator QA)»* ·
-  `depends_on: ["RUN-CANTU-PROJECT-CONSOLE-LATENT-DEFECTS-001"]`
-- **51** · `RUN-CONSOLE-UI-UX-001` ·
-  *«UI/UX of the global console»* ·
-  `depends_on: ["RUN-CONSOLE-PARIDAD-RENDER-CANTU-001"]`
-- **52** · `RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001` ·
-  *«Move cantu-studio's canonical roadmap out of .aiw before the cutover can delete
-  it»* · `depends_on: []`
-- **53** · `RUN-CONSOLE-CORTE-RETIRO-LOCAL-001` ·
-  *«Cutover: retirement of Cantu's local console and deletion of .aiw»* ·
-  `depends_on: ["RUN-CONSOLE-PARIDAD-RENDER-CANTU-001", "RUN-CONSOLE-UI-UX-001",
-  "RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001"]`
-- **54** · `RUN-CONSOLE-STALE-TEXTS-REPAIR-001` ·
-  *«Repair the five texts that describe this repo falsely»* ·
-  `depends_on: []`
-- **55** · `RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001` ·
-  *«Expose the four container operations in the console frontend»* ·
-  `depends_on: []`
-- **56** · `RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001` ·
-  *«Deep visual audit of the console, led by the operator»* ·
-  `depends_on: []`
-
-**Conteo de campos de clasificación.** **13 runs con `correctness_model`**, **13 con
-`classified_at`**, **4 con `external_effects`**. Los trece son `queue_order` 44..56: los
-diez `planned` de arriba más 44, 45 y 46, ya `completed`, que conservan su clasificación.
-Doce llevan `classified_at` del 2026-08-02T07:27Z —los del piloto— y el `#47`, insertado
-después, lo lleva del 2026-08-03T06:31Z.
-Comando: `@($runs | Where-Object { $null -ne $_.<campo> }).Count` para cada uno de los
-tres campos.
-
-**Aristas que salen de runs vivos, y colgantes.** Runs vivos = los 10 `planned` (no hay
-ningún otro `status` sin cerrar). Salen de ellos **8 aristas `depends_on`**, y **0 son
-colgantes**: los 8 destinos existen como `run_id` en el canónico. Aparte, **1 arista
-`depends_on_human_approved`** —`#53` → `RUN-CONSOLE-DEPENDS-ON-HUMAN-APPROVED-001`—,
-también no colgante y única en todo el canónico. En el grafo completo `depends_on`
-—incluidos los `completed`— hay **30 aristas** y **0 colgantes**.
-Comando: `$ids = @($runs | ForEach-Object { $_.run_id })` · recorrer
-`$runs | Where-Object status -eq 'planned'` sumando `@($_.depends_on)` y contando las que
-cumplen `$ids -notcontains $d`.
+**El taller contradijo a la cabina en dos puntos sustantivos y en los dos tenía razón**
+—el sitio de render mal contado y los 9 sitios absorbidos en vez de 10—, y paró en la
+frontera del alcance en vez de ampliarla. **La separación adversaria sigue pagando.**

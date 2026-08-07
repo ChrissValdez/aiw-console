@@ -1125,6 +1125,10 @@ function roadmapTreeBlock(tree) {
     // would be two truths waiting to drift. Absent lanes emit nothing (§7's discipline:
     // a key with no honest content is omitted, never invented).
     ...(Array.isArray(tree.lanes) && tree.lanes.length ? { lanes: tree.lanes } : {}),
+    // [#48] The batch vocabulary travels the same way, for the same reasons, one line down:
+    // verbatim, one copy, absent emits nothing. The `branch` each batch carries is data to
+    // this emitter like a lane's title — transported, never interpreted, never obeyed here.
+    ...(Array.isArray(tree.batches) && tree.batches.length ? { batches: tree.batches } : {}),
     objectives: tree.objectives
   };
 }

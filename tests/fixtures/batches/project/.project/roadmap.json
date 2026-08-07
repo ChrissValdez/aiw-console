@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "project_id": "fixture_batches",
+  "generated_at": "2026-08-06T00:00:00.000Z",
+  "generated_from": "aiw-projector@0.12.0",
+  "sources": [
+    {
+      "path": "roadmap/roadmap.json",
+      "mtime": "2026-08-06T21:57:13.009Z"
+    }
+  ],
+  "model": "fixture.batches.v1",
+  "roadmap_id": "FIXTURE-BATCHES",
+  "title": "Batches and the branch they determine — fixture",
+  "batches": [
+    {
+      "batch_id": "NIGHT-A",
+      "title": "First unattended night",
+      "branch": "aiw/batch/night-a"
+    },
+    {
+      "batch_id": "NIGHT-B",
+      "title": "Second unattended night",
+      "branch": "aiw/batch/night-b"
+    }
+  ],
+  "objectives": [
+    {
+      "objective_id": "OB1",
+      "title": "Ship the product in unattended windows",
+      "phases": [
+        {
+          "phase_id": "OB1.P1",
+          "title": "Groundwork",
+          "runs": [
+            {
+              "run_id": "RUN-FIX-SEED-001",
+              "queue_order": 1,
+              "title": "Seed work, before any batch",
+              "summary": "Completed before batches were declared; belongs to none.",
+              "full_description": "NO batch key: membership is optional, and this run proves a batch-less run is legal in a roadmap that declares batches.",
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "completed_successfully"
+            },
+            {
+              "run_id": "RUN-FIX-ALPHA-001",
+              "queue_order": 2,
+              "title": "Alpha: risky piece of night A",
+              "summary": "Sits in NIGHT-A; its consumers in other batches wait for a person.",
+              "full_description": "In batch NIGHT-A. Work that needs human review before anything DOWNSTREAM of it is trusted — but no run of ITS OWN batch waits on that review, which is exactly the grouping rule.",
+              "status": "planned",
+              "depends_on": [],
+              "batch": "NIGHT-A"
+            },
+            {
+              "run_id": "RUN-FIX-BETA-001",
+              "queue_order": 3,
+              "title": "Beta: builds on alpha inside night A",
+              "summary": "Same batch as alpha, plain depends_on edge.",
+              "full_description": "In batch NIGHT-A with a PLAIN depends_on edge on alpha: inside one batch, waiting for work to EXIST is legal — only waiting for its human approval deadlocks.",
+              "status": "planned",
+              "depends_on": [
+                "RUN-FIX-ALPHA-001"
+              ],
+              "batch": "NIGHT-A"
+            },
+            {
+              "run_id": "RUN-FIX-GAMMA-001",
+              "queue_order": 4,
+              "title": "Gamma: second reviewed piece of night A",
+              "summary": "Second approval-needing run in the SAME batch, no internal approval edge.",
+              "full_description": "In batch NIGHT-A. Several runs needing human approval MAY share a batch — the approval happens once, over the whole batch, at its end. What none of them may do is wait on EACH OTHER’s approval.",
+              "status": "planned",
+              "depends_on": [],
+              "batch": "NIGHT-A"
+            }
+          ]
+        },
+        {
+          "phase_id": "OB1.P2",
+          "title": "The second night",
+          "runs": [
+            {
+              "run_id": "RUN-FIX-DELTA-001",
+              "queue_order": 5,
+              "title": "Delta: night B consumes reviewed alpha",
+              "summary": "Cross-batch human-approval edge: legal, and the point of the model.",
+              "full_description": "In batch NIGHT-B, waiting on the HUMAN APPROVAL of alpha (NIGHT-A). A cross-batch approval edge marks where an unattended window ends: night A must be approved before this run of night B is dispatched.",
+              "status": "planned",
+              "depends_on": [],
+              "depends_on_human_approved": [
+                "RUN-FIX-ALPHA-001"
+              ],
+              "batch": "NIGHT-B"
+            },
+            {
+              "run_id": "RUN-FIX-OMEGA-001",
+              "queue_order": 6,
+              "title": "Omega: unbatched consumer of gamma",
+              "summary": "A batch-less run may wait on the approval of a batched one.",
+              "full_description": "NO batch key, waiting on the human approval of gamma (NIGHT-A): the consumer sits outside every batch, so no shared-batch deadlock is possible.",
+              "status": "planned",
+              "depends_on": [],
+              "depends_on_human_approved": [
+                "RUN-FIX-GAMMA-001"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

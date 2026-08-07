@@ -1,203 +1,174 @@
-# Relevo inaugural — hilo `cantu-quizzes-latex`
+# Relevo — hilo `cantu-quizzes-latex`
 
-**Fecha:** 2026-08-04. **Es el primer relevo de este hilo: no hay sesión anterior.**
+**Fecha: 2026-08-06, 14:40 CST.** Sustituye al relevo inaugural del 2026-08-04, que escribió el
+hilo `aiw-console`. **Este lo escribe el propio hilo, al cierre de su primera sesión.**
 
-Lo escribió el hilo `aiw-console`, que dio de alta el proyecto. **A partir de aquí este
-repositorio es tuyo**, y `aiw-console` no vuelve a escribir en él.
-
----
-
-## 1. QUÉ ES ESTE PROYECTO
-
-`projects/cantu-quizzes-latex` — quizzes y exámenes de Método Cantu en LaTeX, para la
-Prueba de Aptitud Académica. **Autocontenidos: nadie los compila desde fuera.** No hay
-relación con `cantu-studio` ni con `cantu-lessons`, y está medido: **0 ficheros del repo
-referencian nada fuera de su propia unidad.**
-
-**Por qué existe este proyecto y no otro:** su verificación natural es **la compilación
-de LaTeX** — compila o no compila. Es la clase de verificación real que el sistema
-necesita y que hoy no tiene ningún otro candidato. **Pero esa verificación aún no
-existe**: ver §4.
+**Motivo del cierre:** el operador va a configurar una laptop nueva y continúa allí. Todo lo que
+no esté commiteado no viaja.
 
 ---
 
-## 2. ⚠ TOPOLOGÍA — lo que este hilo no puede leer
+## 0. LO PRIMERO AL ABRIR
 
-**El sync del Project está RECORTADO.** No llegan al knowledge:
-`context/aiw-console/records/`, `tools/`, `tests/`, `project-console/`, `.project/`.
-**Pedir sync no los trae.**
+**Estamos en `#2` «Review ARI-FA-Fracciones against the rubric, as the pilot», `active`,
+esperando QA humana.** Es el único run `ATTENDED` del roadmap: **el juicio del operador es la
+ENTRADA, no el sello**, y sin él no cierra.
 
-**Sí llegan:** `roadmap/roadmap.json`, `context/DECISIONES.md`, `context/handoffs/`,
-`context/CLASIFICACION-DE-RUNS.md`, `context/PROCEDIMIENTO-DE-CLASIFICACION.md`,
-`context/aiw-console/CONTRATO.md`.
+**La QA está redactada y entregada en el chat de la sesión anterior, en 5 pasos.** Si el operador
+no la conserva, se vuelve a redactar desde el record
+`context/cantu-quizzes-latex/records/PILOTO-FRACCIONES-Y-QA-PENDIENTE.md`, que la contiene entera.
 
-**COROLARIO:** un handoff que apunta a un record **no resuelve para el hilo que lo lee**.
-Una cifra que la sesión siguiente vaya a usar **viaja dentro del relevo, con su unidad**.
-Lo que solo exista en un record se trae con **encargo de taller**, nunca pidiendo sync.
-
-**La medición completa de este repo está en
-`context/aiw-console/records/MEDICION-REPO-CANTU-QUIZZES-LATEX.md`** — 600 líneas, en el
-repo `aiw-console`, **fuera del espejo**. Lo esencial está aquí dentro; el detalle se
-pide con encargo.
+**Su Paso 1 es de parada:** si el operador no está de acuerdo con los dos movimientos de nivel,
+el criterio no sirve y hay que reescribir la rúbrica antes de los otros 39 runs. Los otros cuatro
+pasos no importan si el primero falla.
 
 ---
 
-## 3. EL ESTADO MEDIDO DEL REPO — cifras con su unidad
+## 1. Qué es este proyecto, en una línea
 
-Medido el 2026-08-04, antes de que existiera este hilo.
-
-**Volumen:** 1 393 ficheros, 275,4 MiB de contenido. Repo propio con remoto, rama `main`.
-
-**Extensiones que importan:** **281 `.tex`** (4 maestros + 277 fragmentos), 726 `.png`,
-194 `.txt`, 145 `.ipynb`, 4 `.pdf`, 4 `.xml`.
-
-**Un solo fichero de configuración: `.gitattributes`**, el que GitHub crea por defecto.
-**No hay `package.json`, `Makefile`, `.gitignore`, README ni documentación de ningún
-tipo.**
-
-**Estructura: hay CUATRO unidades, no tres.** Todo cuelga de `PAA/`:
-`Banco de Preguntas/Español`, `Banco de Preguntas/Matematicas`, `Examen Diagnostico`,
-`Examen Simulador`. `Banco de Preguntas/` **no es una unidad**: es un contenedor con dos
-dentro. La prueba: exactamente en esos 4 directorios, y solo ahí, hay un `.tex` con
-`\documentclass`.
-
-**La unidad autocontenida es la CARPETA DE UNIDAD, no el fragmento.** Los 277 fragmentos
-tienen **0 `\usepackage`** y **0 `\documentclass`**: el preámbulo lo da el maestro. Y las
-**508 referencias a imagen resuelven desde la raíz de la unidad**, no desde el fichero —
-las 508 resuelven, 0 fallan. **Un fragmento suelto no compila: le falta el preámbulo y el
-directorio base.**
-
-**Piezas compartidas: 3 ficheros replicados 4 veces, byte a byte idénticos** — un `md5`
-por nombre, cuatro rutas cada uno. 3 996 líneas en disco, 999 únicas.
-
-**Cuántos quizzes hay: depende de qué cuente como uno, y las tres cuentas son legítimas.**
-**4** documentos compilables · **276** fragmentos, con correspondencia 1:1 exacta con
-`\begin{quiz}` · **5 727** preguntas `multi`.
-
-**⚠ LOS MAESTROS ESTÁN CASI ENTERAMENTE COMENTADOS: 3 `\input` activos de 275.**
-`Español.tex` tiene **cero**. **Compilar el repo tal como está en `main` produce PDF con
-1 fragmento cada uno, y `Español` con ninguno.** No es un fallo: el maestro es la consola
-de trabajo del autor, que descomenta lo que edita. **Pero significa que el estado
-comprometido no describe ningún examen completo.**
-
-**Y los PDF comprometidos no son producto de sus fuentes:** `Español.pdf` tiene 39
-páginas y salió de **2 fragmentos que hoy están comentados**.
-
-**No hay toolchain de LaTeX en la máquina del operador: 0 de 8 binarios en PATH, 0 de 5
-rutas de instalación típicas.** No es suposición: son 13 comprobaciones.
-
-**⚠ 26 artefactos de compilación y 120 ficheros de `.ipynb_checkpoints` están
-COMMITEADOS en `main`**, incluidos 2 `.synctex(busy).gz`, que son basura por definición.
-**El árbol parece limpio solo porque todo está rastreado: la primera compilación lo
-ensucia.**
+Quizzes y exámenes de Método Cantu para la PAA, en LaTeX. **5 727 preguntas** en cuatro unidades
+autocontenidas bajo `PAA/`. Su verificación natural es la compilación, y **esa verificación aún
+no existe**.
 
 ---
 
-## 4. LAS TRES ADJUDICACIONES QUE ESTE HILO DEBE TOMAR
+## 2. El estado del canónico — medido al cierre
 
-Ninguna está decidida. **Las tres son de este hilo y de su operador.**
+`roadmap/roadmap.json`, md5 **`f2797026b691ed252f1919fbbd7c6c0e`**.
+**5 objetivos · 16 fases · 42 runs · `checkInvariants` 0 errores · 0 sin clasificar.**
 
-**A — Qué significa «compila».** Es la que gobierna todo lo demás. Tres lecturas
-incompatibles, medidas:
+| | |
+|---|---|
+| `O1` The repository stands on its own | 3 fases, 0 runs |
+| `O2` A green or a red exists | 4 fases, 0 runs |
+| `O3` The content is legible from outside | 3 fases, 0 runs |
+| `O4` The content can be trusted | 1 fase, **1 run — `#1`, `completed`** |
+| `O5` Mathematics is reviewed, subtopic by subtopic | 5 fases (`Arithmetic` 7 · `Algebra` 14 · `Functions` 8 · `Statistics and probability` 5 · `Geometry` 7), **41 runs** |
 
-- **Los 4 maestros tal como están:** 4 invocaciones, barato. Cobertura **1,1 %** — 3
-  fragmentos de 276.
-- **Descomentar los 275 `\input`:** cobertura 100 %, pero **destruye la consola de
-  trabajo del autor**, y un fallo enrojece la unidad entera sin decir qué fragmento.
-- **Envolver cada fragmento:** 100 % **con culpable identificado**, pero son 276
-  invocaciones y hay un techo de 600 000 ms en el kernel.
+**`#2` es BARRERA GLOBAL:** nada de la cola arranca hasta que cierre.
+**Clasificación:** 41 `SEMI_ATTENDED` y 1 `ATTENDED` (el piloto). `SILENT` en todos, y no es
+adorno: una pregunta mal clasificada no anuncia nada al fallar.
 
-*El hilo `aiw-console` recomendó la tercera con la primera como escalón previo. **Es una
-recomendación, no una adjudicación: decide este hilo.***
+## 3. La rúbrica es el criterio de aceptación de los 40 runs
 
-**B — Si el verde incluye el XML de Moodle.** `Matematicas.log` registra **46 errores** y
-aun así emitió su PDF de 27 páginas: **PDF emitido ≠ sin errores.** Los 46 son fallos de
-conversión Base64 del paquete `moodle` — ese log dice `restricted \write18`, los otros
-tres dicen `\write18 enabled`. **Producir el XML exige `-shell-escape` sin restringir**
-sobre un árbol de 1 393 ficheros.
+**`docs/RUBRICA-DE-NIVELES.md`, v2**, primer y único `.md` del repositorio. El emisor ya la
+indexa (`docs_index.json` pasó de 0 a 1 entrada).
 
-**C — La higiene del árbol.** Los 26 artefactos, los 120 checkpoints, el `.gitignore` que
-no existe. **Es la única de las diez fases del roadmap que no depende de ninguna
-adjudicación pendiente**, y conviene resolverla **antes** de la primera compilación.
+**Los runs la REFERENCIAN, no la repiten.** Cambiarla no obliga a tocar el roadmap. Y funciona
+hoy sin ninguna función nueva de la consola, porque **el `# Scope` de `aiw` restringe escritura,
+no lectura** (`kernel.mjs`, `evaluateGuards` compara contra `git status --porcelain`).
 
-## 5. EL ROADMAP: 3 objetivos, 10 fases, CERO runs
+### Su §2, el ancla, es lo que el piloto está probando
 
-**Cero runs es deliberado y está autorizado por `D-062`**, que adjudica que un
-contenedor sin runs es VÁLIDO y no deriva nada. **Este canónico estrena esa forma.**
+La v1 definía el ancla como «las preguntas del Banco que aparecen en los exámenes», calculada
+como intersección de códigos. **Era falsa: el código es un espacio de nombres LOCAL.**
+`ARI-FA-Fracciones-Medio-001` designa tres preguntas distintas en Banco, Diagnóstico y Simulador
+— verificado en texto crudo. La intersección medía colisión de nombres.
 
-- **`The repository stands on its own`** — `Tree hygiene: what is source and what is
-  product` · `Document how this compiles` · `One copy of the shared pieces`
-- **`A green or a red exists`** — `Settle what "it compiles" means` · `A reproducible
-  toolchain` · `The verification command` · `The Moodle XML branch`
-- **`The content is legible from outside`** — `The document index` · `Reconcile product
-  and source` · `An inventory of the question bank`
+**La v2 la reconstruye como CORPUS DE REFERENCIA:** se compara contra las preguntas de examen del
+mismo subtema, sin exigir identidad. Cobertura medida: mín 10, mediana 20, máx 50. Fracciones
+tiene 40.
 
-**Cada fase sale de una medición, no de una idea.** Escribir los runs es trabajo de este
-hilo, y **dos de sus insumos son las adjudicaciones A y B del §4**.
+**El error lo escribió la cabina; lo encontró el taller.** Es la separación adversaria
+funcionando, y es la razón de que la cabina NO ejecute los runs que ella misma especifica.
 
-**Orden que la medición sugiere:** la higiene del árbol y el canónico son independientes
-de todo. **`Settle what "it compiles" means` gobierna `The verification command` y `The
-Moodle XML branch`**, y el comando es prerrequisito del campo `verification` del kernel.
-`Reconcile product and source` depende de la adjudicación A: no significa nada hasta que
-esté dicho qué es un producto válido.
+### Lo que la v3 tiene que arreglar, ya identificado por el piloto
 
-## 6. LO QUE YA ESTÁ HECHO, Y NO HAY QUE REHACER
+1. **§6.4 cita «88 de 90» y esa cifra no es reproducible** — el taller obtiene 1 en lectura
+   estricta y 5 en amplia, porque **la §6.4 no define qué cuenta como explicar una distractora**.
+   La conclusión se sostiene; la cifra no debe citarse como medición.
+2. **§5, la prueba de INFLADA, es inejecutable como está**: dice «más pasos que cualquier pregunta
+   del ancla», y la que sí estaba inflada no supera ese techo. Lo que la delata es la §3.4.
+   Reescribir la viñeta en términos de las cinco dimensiones, no de pasos.
+3. **§7.2 + cantidades fijas obligan a reclasificar POR PAREJAS.** En Fracciones hubo suerte: una
+   inflada y una desinflada se cancelaron. Un subtema con tres infladas y ninguna desinflada deja
+   al run sin jugada legal, y la rúbrica no dice qué hacer.
+4. **§8.4 pide «antes y después del texto» y en un movimiento no cambia texto**, cambia el código.
+5. **§8.7 (retroalimentaciones sobre el p90) es casi ruido**: el filtro útil sería longitud
+   relativa al número de pasos, no absoluta.
+6. **§2 no dice qué hacer con ancla pequeña.** «Preséntalo como más débil» no es un procedimiento.
+7. **Falta la política de numeración al mover** — el taller la inventó y va al Paso 4 de la QA.
+8. **Falta el criterio «dos opciones con el mismo valor»** — lo inventó el taller y encontró 3 de
+   sus 5 correcciones. Va al Paso 2 de la QA.
 
-- **Registrado** en `project-console/projects.json` del repo `aiw-console`: 1 entrada, 0
-  sitios de código.
-- **Canónico creado** por el motor: 3 objetivos y 10 fases en 13 operaciones, con
-  dry-run y validador post-escritura. `checkInvariants` en 0 errores.
-- **`.project/` emitido** desde la consola, y la consola pinta el proyecto.
-- **Layout: `repo_root`.** `project_id` cae a `cantu-quizzes-latex` sin `package.json`.
+**Aviso del piloto que vale para los 39:** el ancla dice si una OPERACIÓN es de nivel PAA, no si
+una PRESENTACIÓN lo es. **Sobrepromociona el nivel Fácil sistemáticamente.** Y sus veredictos se
+apoyan en los EXTREMOS del ancla, no en su centro: con 40 el juicio es firme, **con 10 se degrada
+más rápido de lo que sugiere el recuento**.
 
-**Un defecto abierto, nombrado y sin dueño:** la primera emisión produjo **4 artefactos**
-—`docs_index.json`, `git_history.json`, `roadmap.json`, `snapshot.json`— y la medición
-previa esperaba **6**. Faltan `guardrails.json` y `no_claims.json`. **La hipótesis sin
-verificar es que derivan de `governance/`, que este repo no tiene, y que su ausencia es
-por diseño.** Si el aviso de la consola los nombra como no cargados, es defecto del
-emisor y pertenece a `aiw-console`; si no los nombra, no hay nada que arreglar. **Este
-hilo lo comprueba y lo devuelve si es ajeno.**
+## 4. Lo cerrado y lo abierto
 
-**Y una predicción que conviene verificar en pantalla:** el escáner de documentos solo
-recoge `.md`, y este repo tiene **0 ficheros `.md`** sobre 281 `.tex`. **Su índice de
-documentos sale literalmente vacío.** La salida existe y no cuesta código: si el repo
-cura su propio `docs/docs_index.json`, el emisor lo transporta sin filtrar por extensión.
+**`#1` `completed`** — dos familias de código reparadas: `ARI-PI-Interteres` (15 comentarios) y
+`GEO-GP-Triangulo` (104 sitios: 45 comentarios, 45 ids de `multi`, 14 rutas de figura) más **14
+PNG renombrados**. Las 21 figuras siguen resolviendo, 0 fallan. Recuentos intactos.
 
-## 7. REGLAS DE CABINA QUE ESTE HILO NO PUEDE DEDUCIR
+**Tres hallazgos suyos SIN DUEÑO, y el operador aprobó run propio para los tres:**
 
-- **Un hilo por proyecto.** Este hilo escribe en `cantu-quizzes-latex`. Un hallazgo sobre
-  otro repo **se NOMBRA, no se corrige**.
-- **En `aiw-console` escriben varios hilos.** El `git add` sobre ese repo va **siempre
-  dirigido a ficheros por su nombre, nunca `-A`**. Este hilo escribe ahí sus records y su
-  handoff, y nada más.
-- **El taller no corre Git.** Todo comando de Git lo ejecuta el operador.
-- **Papel ≠ disco.** Un record es una medición **fechada**, no el estado de hoy. Un hecho
-  que va a entrar en un artefacto **se verifica contra disco aunque un record lo afirme**,
-  y si discrepan **gana el disco**. Los records **no se reescriben hacia atrás**: se
-  corrige hacia adelante.
-- **Una cifra se cita con su unidad y su alcance**, o no se cita.
-- **`git checkout` NO se usa para deshacer en este workspace**: reescribe finales de
-  línea. Se usa **respaldo byte a byte fuera del repo** antes de escribir.
-- **Todo ticket declara en qué condiciones el taller debe PARAR** en vez de seguir, y qué
-  entregar en su lugar. **Un encargo que para no es un encargo fallido.**
-- **Los runs se clasifican.** El procedimiento está en
-  `context/PROCEDIMIENTO-DE-CLASIFICACION.md` y el normativo en
-  `context/CLASIFICACION-DE-RUNS.md`, **que gana si discrepan**. Los dos están en el
-  espejo. **Un run que se CREA se clasifica en el mismo acto**, o su ticket declara por
-  escrito por qué no y cuándo.
+1. **`\end{m}` en `GEO-GP-Triangulos-Facil-005`** — rompe el fichero entero al compilar. Es un
+   carácter. Está latente porque el 100 % de los `\input` de los maestros está comentado.
+2. **Dos cuadernos generadores siguen emitiendo los nombres de PNG antiguos.** Si alguien los
+   reejecuta, los retoques de figura dejan de verse.
+3. **8 PNG huérfanos** sin referencia en ningún `.tex`.
 
-## 8. LOS OTROS HILOS
+**`#2` `active`** — el piloto entregó. Cambios ya en disco y commiteados: dos reclasificaciones
+(`Dificil-001`→`Medio-046` desinflada, `Medio-033`→`Dificil-021` inflada) y cinco correcciones,
+la mayor de ellas `Facil-014`, que tenía **tres respuestas correctas**. Recuentos **25/45/20**
+antes y después, **cero bajas**. Falta solo el veredicto humano.
 
-**`aiw-console`** — la consola y el contrato. **Le pertenece todo lo que pinte o emita
-este proyecto**: si algo se ve mal en pantalla, es suyo. Le pertenece también el defecto
-de los artefactos del §6 si resulta serlo.
+## 5. Adjudicaciones tomadas en esta sesión, que no hay que reabrir
 
-**`aiw`** — el kernel que ejecutará runs. **Le pertenece el comando de verificación como
-CAMPO**: su `config.json` espera `verification` como **una sola cadena de shell**, hoy
-`"npm test"` en los dos proyectos que declara. **Que admita una compilación de LaTeX es
-trabajo de `aiw`, no de este hilo** — pero **qué compila esa cadena lo decide este hilo**.
-Restricción medida que hay que devolverles: el kernel ejecuta sin cwd propio, y **las
-rutas de imagen de este repo exigen cwd en la raíz de cada unidad**, así que el cambio de
-directorio tendrá que ir dentro de la cadena, cuatro veces.
+- **El Reto se queda en todos los subtemas.** El operador lo habilita o deshabilita por alumno.
+  Ningún run propone eliminarlo. Con eso **desaparece del roadmap la deliberación
+  esencial/complementario**: sigue siendo criterio pedagógico, no entrada de un run.
+- **La revisión es de clasificación y calidad, no de reestructuración.**
+- **El orden de fases es de temario, no de coste.** Geometría queda last y es la más cara
+  (189 figuras); Álgebra es 14 subtemas con **cero** figuras y queda segunda. Reordenar es `move`
+  y es barato, si el piloto muestra que el coste manda.
+- **Adjudicación C (higiene del árbol) va primero** entre las tres del relevo inaugural.
 
-**`cantu-studio`** — sin relación con este proyecto. Medido.
+## 6. Lo que sigue bloqueando a `aiw`, medido en solo lectura
+
+- **El puente roadmap→ticket NO EXISTE.** Es el run **#31** de `aiw`, `planned`:
+  *«Build the bridge that does not exist»*. Hoy `aiw` lee `objectives/pending/*.md`.
+- **La verificación es obligatoria:** `kernel.mjs:279` aborta sin comando. El de este repo sería
+  `O2.P3`, y el taller lo midió en **~1,2 s** sobre 12,9 MB — el 0,25 % del presupuesto de
+  600 000 ms. **`O2.P3` es la llave, y es de este hilo.**
+- **`cantu-quizzes-latex` no está en `aiw/config.json`** — solo `sandbox` y `console`.
+- **`push: false`** en ambos; activarlo es el run #30 de `aiw`, `planned`.
+- **Los 41 `SEMI_ATTENDED` están listos en FORMA, no en VÍA.**
+- **Convergencia NOMBRADA, no tocada:** el run **#22 de `aiw` está `active`** y pide *«un
+  repositorio grande con red de pruebas real»*, con la medición como entregable.
+
+## 7. Defectos de la CABINA medidos en esta sesión — leer antes de repetirlos
+
+1. **Cada `git status` que corre la cabina deja un `.git/index.lock` que la cabina NO PUEDE
+   BORRAR.** El de este repo, creado a la 01:15, bloqueó las escrituras de git del operador
+   durante **12 horas y media** sin que nadie lo viera: leer sigue funcionando, y solo se rompe al
+   commitear. Al cierre había locks en tres de cinco repos. **Es transversal y pertenece a las
+   reglas de cabina; se NOMBRA desde aquí y no se corrige.**
+2. **`git status` NO acepta `--ignore-cr-at-eol`** en el git de la cabina: devuelve
+   `error: unknown option` y `exit=129`. Con `2>/dev/null` eso se convierte en «0 modificados»,
+   que es justo la mentira que la regla quería evitar. **La forma que funciona es
+   `git diff --ignore-cr-at-eol`**, y con `--numstat`, nunca con `--name-only` — este último
+   lista el árbol entero en un repo sin `.gitattributes`.
+3. **Tres extractores de la cabina produjeron artefactos en una sola sesión** —el emparejador por
+   conjunto de opciones, el resolutor de `\includegraphics` y el lector de bloques `multi`—. Los
+   tres se atraparon mirando el texto **en crudo** antes de publicar. **Ninguna cifra derivada de
+   un parser propio se publica sin verla cruda primero.**
+4. **La cabina escribió el canónico mientras el operador ejecutaba un bloque de git**, dejando su
+   guarda describiendo un estado que ya no existía. La superficie de escritura de la cabina cuenta
+   como una más.
+5. **Una cifra se cita con su unidad y su alcance, o no se cita.** La cabina publicó «989
+   preguntas que elegiste para el examen» cuando eran 989 **códigos coincidentes**, y sobre esa
+   frase construyó la rúbrica v1 entera.
+
+## 8. Notas de topología para la laptop nueva
+
+- **`aiw/config.json` lleva rutas absolutas de Windows** (`C:\Users\chris\Documents\AIW_Workspace\…`)
+  para `sandbox` y `console`. Si la laptop nueva usa otro usuario o ruta, `aiw` no arranca.
+  **Es de `aiw`; se nombra aquí porque bloquea la puesta en marcha.**
+- **`_backups/` y `_scratch/` están fuera de todo repo y NO VIAJAN.** Es correcto: son
+  desechables.
+- **Los cuatro repos y `cantu-lessons` estaban sincronizados al cierre.** `aiw-console` tenía
+  trabajo real en vuelo de otro hilo (+279 en `roadmap-core.mjs`, +119 en `project-console.js`,
+  y tres ficheros sin rastrear) — **eso es suyo, no de este hilo.**

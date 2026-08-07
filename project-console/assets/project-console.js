@@ -230,6 +230,10 @@ let v3DetailOrigin = "";
 // subviews in place, so the active subview is preserved — the point of the selector is
 // comparing the same view across lanes.
 let v3SelectedLane = null;
+// [#48] Selected batch filter (a declared batch_id, or null for all batches) — the lane
+// filter's sibling, same lifecycle: UI-only, never persisted, reset on project switch.
+// The two compose (a run must pass both), because lane and batch are independent claims.
+let v3SelectedBatch = null;
 // Roadmap editing (Run B). Edit mode is OFF by default and only reachable from the Roadmap
 // tab; it never appears on Overview/History/Docs/Status. v3EditPending holds the operation
 // whose dry-run preview is on screen, awaiting an explicit confirm before any write.
@@ -3121,6 +3125,14 @@ function v3Model(data) {
       });
     });
   }
+  // [#48] Batches. Same source discipline as lanes: the vocabulary comes from the TREE
+  // ITSELF (root.batches, transported by the emitter); this renderer executes it and knows
+  // no batch by name. The one asymmetry with lanes is meaning, not plumbing: there is NO
+  // default batch, so batchOf returns null for a run without the key — that run belongs to
+  // no batch, and no batch surface below invents one for it.
+  const batches = Array.isArray(roadmap.batches) && roadmap.batches.length ? roadmap.batches : null;
+  const batchById = new Map((batches || []).map((batch) => [batch.batch_id, batch]));
+  const batchOf = (run) => (run && typeof run.batch === "string" && run.batch ? run.batch : null);
   // [D-051] Barriers. A run marked barrier bars, while it is not completed, every LATER
   // run (by the global queue_order) in its scope: its own resolved lane ("lane") or all
   // lanes ("global"). The barred set is DERIVED here at read time — the file stores the
@@ -3139,7 +3151,7 @@ function v3Model(data) {
       if (blockers.length) barrierBlockersByRunId.set(run.run_id, blockers);
     });
   }
-  return { roadmap, runsById, contextByRunId, allRuns, lanes, defaultLane, laneById, laneOf, laneInfoByRunId, barrierBlockersByRunId };
+  return { roadmap, runsById, contextByRunId, allRuns, lanes, defaultLane, laneById, laneOf, laneInfoByRunId, batches, batchById, batchOf, barrierBlockersByRunId };
 }
 
 // [D-051] The incomplete barriers barring a run's START. Only a planned run can still be
@@ -3584,9 +3596,25 @@ function v3LaneFilterActive(model) {
   return !!(model && model.lanes && v3SelectedLane && model.laneById.has(v3SelectedLane));
 }
 
+// [#48] The batch filter's own predicate, the lane one copied onto the sibling state.
+function v3BatchFilterActive(model) {
+  return !!(model && model.batches && v3SelectedBatch && model.batchById.has(v3SelectedBatch));
+}
+
+// [#48] Either filter narrows the visible subset; both surfaces read through here, so the
+// two compose by construction (a run must pass both). With neither active this returns its
+// input untouched, exactly as before batches existed.
+function v3AnyRunFilterActive(model) {
+  return v3LaneFilterActive(model) || v3BatchFilterActive(model);
+}
+
 function v3VisibleRuns(model, runs) {
-  if (!v3LaneFilterActive(model)) return runs;
-  return runs.filter((run) => model.laneOf(run) === v3SelectedLane);
+  let visible = runs;
+  if (v3LaneFilterActive(model)) visible = visible.filter((run) => model.laneOf(run) === v3SelectedLane);
+  // [#48] The batch filter has no default to resolve through: batchOf is the run's own
+  // stored key or null, so only runs genuinely IN the selected batch survive it.
+  if (v3BatchFilterActive(model)) visible = visible.filter((run) => model.batchOf(run) === v3SelectedBatch);
+  return visible;
 }
 
 function renderLaneSelector(model) {
@@ -3624,6 +3652,72 @@ function renderLaneSelector(model) {
       v3SelectedLane = select.value || null;
       // Re-render both Roadmap subviews in place; the active subview (and the whole
       // chrome) stays exactly where it was — only the rows change.
+      if (appData) {
+        renderRunQueueV3(appData);
+        renderRoadmapV3(appData);
+        if (v3EditMode) v3DecorateTreeEditAffordances();
+      }
+    });
+  }
+}
+
+// ---------------------------------------------------------------------------
+// [#48] Batch selector — the lane selector copied onto the sibling vocabulary: a dropdown
+// in the same toolbar row showing batches instead of lanes, filtering whichever Roadmap
+// subview is active without switching it. State is v3SelectedBatch, reset per project.
+// The options are the DECLARED batches, verbatim: no key is known here.
+//
+// Two deliberate divergences from renderLaneSelector, each with its reason:
+//   - it renders whenever the project declares ANY batch (lanes hide below two because a
+//     one-lane project puts every run in that lane and the filter cannot narrow anything;
+//     one declared batch still splits the runs into in-it and outside-it, so the filter
+//     already means something);
+//   - its slot is CREATED here, beside the lane slot, instead of living in index.html —
+//     that file is outside this run's write scope, and an empty div is presentation, not
+//     data. The slot is removed when the project declares no batches, so a batch-less
+//     project renders byte-identical toolbar markup to what it rendered before batches
+//     existed.
+// ---------------------------------------------------------------------------
+
+function renderBatchSelector(model) {
+  const laneSlot = byId("roadmap-lane-slot");
+  let slot = byId("roadmap-batch-slot");
+  if (!model || !model.batches) {
+    if (slot) slot.remove();
+    return;
+  }
+  if (!slot) {
+    if (!laneSlot || !laneSlot.parentNode) return;
+    slot = document.createElement("div");
+    slot.className = "roadmap-lane-slot";
+    slot.id = "roadmap-batch-slot";
+    laneSlot.parentNode.insertBefore(slot, laneSlot.nextSibling);
+  }
+  // A selected batch that the (re)loaded tree no longer declares falls back to all batches.
+  if (v3SelectedBatch && !model.batchById.has(v3SelectedBatch)) v3SelectedBatch = null;
+  const counts = new Map();
+  model.allRuns.forEach((run) => {
+    const batchId = model.batchOf(run);
+    if (batchId) counts.set(batchId, (counts.get(batchId) || 0) + 1);
+  });
+  const options = [
+    `<option value=""${v3SelectedBatch ? "" : " selected"}>All batches (${model.allRuns.length})</option>`,
+    ...model.batches.map((batch) =>
+      `<option value="${escapeHtml(batch.batch_id)}"${v3SelectedBatch === batch.batch_id ? " selected" : ""}>${escapeHtml(batch.batch_id)} — ${escapeHtml(batch.title)} (${counts.get(batch.batch_id) || 0})</option>`)
+  ].join("");
+  slot.innerHTML = `
+    <label class="v3-lane-picker">
+      <span class="v3-lane-picker-label">Batch</span>
+      <select id="v3-batch-select" class="v3-lane-select" aria-label="Filter roadmap by batch">${options}</select>
+    </label>
+  `;
+  if (slot.dataset.batchWired !== "true") {
+    slot.dataset.batchWired = "true";
+    slot.addEventListener("change", (event) => {
+      const select = event.target.closest("#v3-batch-select");
+      if (!select) return;
+      v3SelectedBatch = select.value || null;
+      // Re-render both Roadmap subviews in place, the lane selector's own gesture.
       if (appData) {
         renderRunQueueV3(appData);
         renderRoadmapV3(appData);
@@ -3713,7 +3807,11 @@ function renderRoadmapV3(data) {
   }
   roadmapV3ModelCache = model;
   renderLaneSelector(model);
-  const filtering = v3LaneFilterActive(model);
+  renderBatchSelector(model);
+  // [#48] Either filter (lane or batch) switches the tree into filtered display: empty
+  // phases/objectives are omitted and stats derive from the visible subset, exactly as
+  // the lane filter alone always did.
+  const filtering = v3AnyRunFilterActive(model);
   const objectiveCard = (objective) => {
     const phases = objective.phases || [];
     const objectiveRuns = [];
@@ -3753,8 +3851,12 @@ function renderRoadmapV3(data) {
     ? `<div class="v3-archive-section"><button class="v3-archive-toggle" type="button" data-v3-archive-toggle aria-expanded="false" aria-controls="v3-archive-body"><span class="v3-caret">${v3Chevron(11)}</span><span class="v3-archive-title">Archive</span></button><div class="v3-archive-body" id="v3-archive-body" hidden>${archivedCards}</div></div>`
     : "";
   const cards = liveObjectives.map(objectiveCard).join("") + archiveHtml;
+  // [#48] The empty note names the filter that emptied the view: lane, batch, or both.
+  const emptyNote = v3LaneFilterActive(model) && v3BatchFilterActive(model)
+    ? "No runs on this lane in this batch yet."
+    : v3BatchFilterActive(model) ? "No runs in this batch yet." : "No runs on this lane yet.";
   container.innerHTML = cards || (filtering
-    ? `<div class="v3-empty-note">No runs on this lane yet.</div>`
+    ? `<div class="v3-empty-note">${emptyNote}</div>`
     : cards);
   v3AttachHandlers(container, { origin: "Roadmap" });
   v3AttachArchiveToggle(container);
@@ -3765,11 +3867,13 @@ function renderRoadmapV3(data) {
 // segment buttons at render time; the index.html markup itself stays unchanged.
 // [D-051] Counts derive from the lane-filtered visible subset — with no lane selected
 // (every project today) that subset IS model.allRuns and nothing changes.
+// [#48] The batch filter narrows the same way, through the same predicate the rows use
+// (v3VisibleRuns), so the objective count always matches the cards actually painted.
 function v3UpdateSubtabCounts(model, visibleRuns, historyCount) {
   const pending = visibleRuns.length - historyCount;
-  const objectiveCount = v3LaneFilterActive(model)
+  const objectiveCount = v3AnyRunFilterActive(model)
     ? (model.roadmap.objectives || []).filter((objective) =>
-        (objective.phases || []).some((phase) => (phase.runs || []).some((run) => model.laneOf(run) === v3SelectedLane))).length
+        (objective.phases || []).some((phase) => v3VisibleRuns(model, phase.runs || []).length > 0)).length
     : model.roadmap.objectives.length;
   [["v3queue", pending], ["v3roadmap", objectiveCount]].forEach(([subview, value]) => {
     const segment = document.querySelector(`[data-subview="${subview}"]`);
@@ -4504,9 +4608,10 @@ function renderRunQueueV3(data) {
   }
   roadmapV3ModelCache = model;
   renderLaneSelector(model);
+  renderBatchSelector(model);
   // [D-051] The lane filter narrows which runs the queue lists; grouping semantics are
   // untouched. Sub-tab counts follow the same visible subset: the surface counts what
-  // it shows.
+  // it shows. [#48] The batch filter rides the same subset.
   const visibleRuns = v3VisibleRuns(model, model.allRuns);
   const grouped = new Map(ROADMAP_V3_QUEUE_GROUPS.map((group) => [group.key, []]));
   visibleRuns.forEach((run) => {
@@ -5211,6 +5316,12 @@ function resetProjectScopedState() {
   v3SelectedLane = null;
   const laneSlot = byId("roadmap-lane-slot");
   if (laneSlot) laneSlot.innerHTML = "";
+  // [#48] The batch filter follows the same per-project lifecycle; its slot is REMOVED
+  // (not blanked) because renderBatchSelector creates it — the next project starts from
+  // the same markup a batch-less project always had.
+  v3SelectedBatch = null;
+  const batchSlot = byId("roadmap-batch-slot");
+  if (batchSlot) batchSlot.remove();
   v3EditMode = false;
   v3EndpointReachable = null;
   v3EditPending = null;

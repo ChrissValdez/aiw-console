@@ -170,6 +170,16 @@ const OP_DESCRIPTORS = [
     apply: (obj, args) => core.setBarrier(obj, { run: args.run, barrier: args.barrier != null ? args.barrier : null }),
   },
   {
+    name: "set-batch",
+    batchable: true,
+    // [#48] batch is a declared batch_id to assign, or null/"" to clear the key — the
+    // set-lane relay on the sibling key. The core refuses an undeclared batch, naming the
+    // vocabulary; the batch/human-approval deadlock is checkInvariants' rule, caught at
+    // postcheck. (The name collides with the `batch` op below only in prose: one is a run
+    // FIELD, the other a bundle of edits.)
+    apply: (obj, args) => core.setBatch(obj, { run: args.run, batch: args.batch != null ? args.batch : null }),
+  },
+  {
     name: "set-classification",
     batchable: true,
     // [#43] The six STORED classification fields of context/CLASIFICACION-DE-RUNS.md §1 on
@@ -201,6 +211,15 @@ const OP_DESCRIPTORS = [
     // and there is no run it could take. The core refuses a malformed table, naming the level
     // and the key; it refuses NOTHING about the values, because §5 lets a project fix its own.
     apply: (obj, args) => core.setCareBudget(obj, { careBudget: args.careBudget != null ? args.careBudget : null }),
+  },
+  {
+    name: "declare-batches",
+    // [#48] The root batch vocabulary of D-030, replaced WHOLE (or cleared with null / []) —
+    // the declare-lanes relay on the sibling vocabulary, and NOT batchable for declare-lanes'
+    // own reason: a root-level vocabulary change is not a per-run edit. The core refuses a
+    // malformed entry (batch_id, title AND branch are all required — the branch is what a
+    // batch determines) and any declaration that would orphan a batch runs still carry.
+    apply: (obj, args) => core.declareBatches(obj, { batches: args.batches != null ? args.batches : null }),
   },
   {
     name: "clear-progress",

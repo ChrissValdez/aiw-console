@@ -291,8 +291,18 @@ test("the op vocabulary is the transplanted one plus the three lane ops (D-051) 
   // would be hand-editing the canonical. It sits IMMEDIATELY AFTER set-deps because it is the
   // same kind of act on the sibling list — and it is a SEPARATE op, not a widening of set-deps,
   // because `depends_on` was explicitly out of scope for the run that added the field.
+  //
+  // [#48] REGISTERED, not absorbed, TWO ops — the batch model of D-030, built by copying the
+  // lane pair above op for op: set-batch (which batch a run belongs to; sits after set-barrier
+  // because it is the same kind of act — an optional planning key on ONE run, batchable with
+  // its siblings) and declare-batches (the root vocabulary itself; sits after the other two
+  // root-configuration ops, NOT batchable for declare-lanes' own reason). They arrive for the
+  // reason set-barrier and declare-lanes did: without them a batch could only be declared or
+  // assigned by hand-editing the canonical. What the batch vocabulary carries that the lane one
+  // does not is `branch` — the branch the kernel commits the batch's runs to; STORING it is
+  // this engine's work, OBEYING it is aiw's.
   assert.deepEqual(
     KNOWN_OPS,
-    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-human-deps", "set-status", "set-lane", "set-barrier", "set-classification", "declare-lanes", "declare-care-budget", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
+    ["insert", "move", "remove", "swap", "set-text", "set-deps", "set-human-deps", "set-status", "set-lane", "set-barrier", "set-batch", "set-classification", "declare-lanes", "declare-care-budget", "declare-batches", "clear-progress", "move-objective", "set-objective-archived", "create-phase", "delete-phase", "create-objective", "delete-objective", "batch"]
   );
 });

@@ -66,7 +66,13 @@ import {
 // OPTIONAL configuration OF THE PROJECT, declared once at the root, absent by default. It is
 // explicitly NOT a run field — §5 puts a run's deviation in its ticket, never in a key — so it
 // appears here and nowhere in RUN_OPTIONAL_FIELDS.
-export const ROOT_ALLOWED_FIELDS = ["schema_version", "roadmap_id", "title", "objectives", "lanes", "care_budget"];
+// [#48] `batches` joins it the same way, COPYING LANES (D-030 designed the model; the run's
+// order is "copy lanes, do not invent"): the OPTIONAL per-project batch vocabulary, declared
+// once at the root, absent by default, no batch known here by name. What a batch has that a
+// lane does not: `branch` — the branch the kernel commits the batch's runs to. THIS ENGINE
+// only stores and validates that parameter; obeying it is aiw's work (the kernel), not this
+// module's.
+export const ROOT_ALLOWED_FIELDS = ["schema_version", "roadmap_id", "title", "objectives", "lanes", "care_budget", "batches"];
 // Canonical serialization order for the ROOT object's keys. Deliberately NOT the same
 // array as ROOT_ALLOWED_FIELDS: membership and layout are different questions, and
 // ROOT_ALLOWED_FIELDS appends `lanes` last because that is the order its error message
@@ -74,10 +80,19 @@ export const ROOT_ALLOWED_FIELDS = ["schema_version", "roadmap_id", "title", "ob
 // so `objectives` -- effectively the whole file -- stays the last key.
 // [#43] `care_budget` sits beside `lanes`, for the identical reason: both are small root-level
 // project configuration, and `objectives` -- effectively the whole file -- stays the last key.
-export const CANONICAL_ROOT_KEY_ORDER = ["schema_version", "roadmap_id", "title", "lanes", "care_budget", "objectives"];
+// [#48] `batches` sits directly after `lanes`: vocabulary beside vocabulary.
+export const CANONICAL_ROOT_KEY_ORDER = ["schema_version", "roadmap_id", "title", "lanes", "batches", "care_budget", "objectives"];
 // [D-051] A lane entry: stable key + human name, plus the single stored exception
 // `default: true` (the archived discipline: stored only as true, exactly one entry).
 export const LANE_ALLOWED_FIELDS = ["lane_id", "title", "default"];
+// [#48] A batch entry: stable key + human name + THE BRANCH IT DETERMINES (D-030: the branch
+// is a PARAMETER of the batch, set by the operator, never derived). All three are REQUIRED —
+// a batch that names no branch determines nothing, and determining the branch is the one
+// thing a batch has that a lane does not. Deliberately NO `default` slot: a lane-less run
+// resolves to the default lane, but batch membership is OPTIONAL BY MEANING — a run outside
+// every batch is simply not batched, and a stored default would silently make membership
+// mandatory.
+export const BATCH_ALLOWED_FIELDS = ["batch_id", "title", "branch"];
 export const OBJECTIVE_REQUIRED_FIELDS = ["objective_id", "title", "phases"];
 export const OBJECTIVE_OPTIONAL_FIELDS = ["archived"];
 export const OBJECTIVE_ALLOWED_FIELDS = [...OBJECTIVE_REQUIRED_FIELDS, ...OBJECTIVE_OPTIONAL_FIELDS];
@@ -119,10 +134,16 @@ export const RUN_REQUIRED_FIELDS = ["run_id", "queue_order", "title", "summary",
 // something that names the AI side was considered by the aiw thread and DISCARDED as a
 // live-data migration across three canonicals; the AI/human difference is carried in the
 // SCREEN LABEL, not in a second key name here.
+// [#48] `batch` (a declared batch_id; absent -> the run belongs to NO batch — there is no
+// default batch to resolve to, unlike `lane` above, because membership itself is optional).
+// It sits beside `lane` and `barrier` because it is the same kind of statement: a planning
+// key about where the work rides, not about its outcome. What the batch DETERMINES — the
+// branch the kernel commits to — is stored on the batch entry (root.batches), never here.
 export const RUN_OPTIONAL_FIELDS = [
   "depends_on_human_approved",
   "lane",
   "barrier",
+  "batch",
   "correctness_model",
   "work_type",
   "blast_radius",
@@ -329,6 +350,14 @@ export function resolveRunLane(obj, run) {
   return defaultLaneId(obj);
 }
 
+// [#48] Batch reading, the lanes gesture minus resolution: there is deliberately no
+// defaultBatchId and no resolveRunBatch, because a run without the key belongs to NO
+// batch (membership is optional by meaning, not satisfied by reading). The one helper
+// mirrors declaredLanes so the ops can name the declared vocabulary in their refusals.
+export function declaredBatches(obj) {
+  return obj && Array.isArray(obj.batches) && obj.batches.length ? obj.batches : null;
+}
+
 // Rebuild a run's keys in canonical order in place (so an added optional field
 // such as closeout_result lands before progress, matching the file style).
 export function normalizeRunKeyOrder(run) {
@@ -452,6 +481,44 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
     }
   }
 
+  // [#48] Batch vocabulary form — the root.lanes block above, copied, with two deliberate
+  // differences and no other: `branch` is a REQUIRED third field (the branch the kernel
+  // commits the batch to is the one thing a batch has that a lane does not), and there is
+  // NO default rule (batch membership is optional; no batch-less run resolves anywhere).
+  // Absent is the normal case: a project with no batches omits the key entirely.
+  const batchIds = new Set();
+  if ("batches" in obj) {
+    if (!Array.isArray(obj.batches) || obj.batches.length === 0) {
+      errors.push("root.batches must be a non-empty array when present; a project with no batches omits the key entirely");
+    } else {
+      for (const batch of obj.batches) {
+        const batchLabel = `batch ${batch && batch.batch_id ? batch.batch_id : "UNKNOWN"}`;
+        if (!batch || typeof batch !== "object" || Array.isArray(batch)) {
+          errors.push(`${batchLabel} is not an object`);
+          continue;
+        }
+        for (const key of Object.keys(batch)) {
+          if (!BATCH_ALLOWED_FIELDS.includes(key)) {
+            errors.push(`${batchLabel} carries unexpected field ${key}; only ${BATCH_ALLOWED_FIELDS.join(", ")} are allowed`);
+          }
+        }
+        if (typeof batch.batch_id !== "string" || !batch.batch_id) {
+          errors.push(`${batchLabel} missing string batch_id`);
+        } else if (batchIds.has(batch.batch_id)) {
+          errors.push(`duplicate batch_id ${batch.batch_id}`);
+        } else {
+          batchIds.add(batch.batch_id);
+        }
+        if (typeof batch.title !== "string" || !batch.title) {
+          errors.push(`${batchLabel} missing string title`);
+        }
+        if (typeof batch.branch !== "string" || !batch.branch) {
+          errors.push(`${batchLabel} missing string branch; the branch is what a batch determines, so a batch cannot omit it`);
+        }
+      }
+    }
+  }
+
   // [#43] §5 `care_budget` — A FORM INVARIANT AND NOTHING ELSE, and the distinction is the
   // whole point of the field. ABSENT IS THE NORMAL CASE and is never reported: a project with
   // no care budget is valid, and all three canonicals are in that state today.
@@ -540,6 +607,16 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
         // [D-051] Barrier scope is a closed two-token vocabulary.
         if ("barrier" in run && !BARRIER_SCOPES.includes(run.barrier)) {
           errors.push(`${runLabel} barrier must be one of ${BARRIER_SCOPES.join(", ")}; found ${JSON.stringify(run.barrier)}`);
+        }
+        // [#48] Every batch USED must be DECLARED — the run.lane rule above, applied to the
+        // sibling key. A batch on a run in a roadmap that declares no batches is equally
+        // undeclared.
+        if ("batch" in run) {
+          if (typeof run.batch !== "string" || !run.batch) {
+            errors.push(`${runLabel} batch must be a non-empty string when present; a run in no batch omits the key`);
+          } else if (!batchIds.has(run.batch)) {
+            errors.push(`${runLabel} uses batch ${run.batch}, which root.batches does not declare${batchIds.size ? ` (declared: ${[...batchIds].join(", ")})` : " (the roadmap declares no batches)"}`);
+          }
         }
         // [#43] Classification, §1. ABSENT IS ALWAYS LEGAL -- every check below is gated on
         // `in`, so an unclassified run raises nothing at all. What is NOT legal is a key
@@ -660,6 +737,35 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
         }
       } else if (!(dep.queue_order < run.queue_order)) {
         errors.push(`${runLabel} (queue_order ${run.queue_order}) must wait on human approval only of earlier runs; ${depId} has queue_order ${dep.queue_order}`);
+      }
+    }
+  }
+
+  // [#48] THE BATCH / HUMAN-APPROVAL DEADLOCK — the invariant batches exist to make
+  // machine-checkable. Several runs needing human approval MAY share a batch. But human
+  // approval happens ONCE, over the WHOLE batch, at its end — so an edge that waits on the
+  // human approval of an EARLIER run of the SAME batch can never be satisfied: the approval
+  // it waits for cannot arrive before the batch ends, and the batch cannot end before the
+  // edge is satisfied. Not a style rule; an interlock. Each such edge is refused by name.
+  //
+  // "Share a batch" means BOTH runs STORE the same key: there is no default batch, so a run
+  // without the key is outside every batch and creates no such edge. The strict-precedence
+  // rule above already guarantees the target is the EARLIER run, so origin-and-target-share-
+  // a-batch is the whole condition. An external target (another project's tree) is skipped:
+  // it cannot share this file's batch. The legitimate cross-batch edge is exactly what the
+  // model is FOR — each depends_on_human_approved edge marks where an unattended window
+  // ends, and a batch boundary is where a person can actually appear.
+  for (const run of allRuns) {
+    if (!(typeof run.batch === "string" && run.batch)) continue;
+    if (!Array.isArray(run.depends_on_human_approved)) continue;
+    for (const depId of run.depends_on_human_approved) {
+      const dep = runsById.get(depId);
+      if (dep && typeof dep.batch === "string" && dep.batch && dep.batch === run.batch) {
+        errors.push(
+          `run ${run.run_id} waits on human approval of ${depId}, and both sit in batch ${run.batch}: ` +
+          `human approval happens once, over the whole batch, at its end, so this edge can never be satisfied — ` +
+          `move one of the two runs out of the batch, or drop the edge`
+        );
       }
     }
   }
@@ -1425,6 +1531,61 @@ export function setBarrier(obj, opts) {
 }
 
 // ---------------------------------------------------------------------------
+// [#48] Batch assignment. set-batch is setLane copied onto the sibling key: it sets or
+// clears the OPTIONAL `batch` key of ONE run and does nothing else — no queue_order, no
+// depends_on, no status, no lane, no barrier. Clearing deletes the key whole; here that
+// reads "this run belongs to no batch" rather than "back to the default", because batches
+// have no default to fall back to. Setting requires the key to be DECLARED in root.batches:
+// the mutation refuses what checkInvariants would reject one stage later, naming the
+// declared vocabulary.
+//
+// It does NOT re-check the batch/human-approval deadlock itself: checkInvariants owns that
+// rule and runs on the mutated object one stage later, which is exactly where an assignment
+// that would trap an unsatisfiable edge inside the batch gets caught (setBarrier's own
+// discipline — duplicating the rule here would be the drift debt the core comments warn
+// about). It changes no *_id, so it needs no identity sanction and is BATCHABLE alongside
+// set-lane / set-barrier / set-status.
+// ---------------------------------------------------------------------------
+
+export function setBatch(obj, opts) {
+  const errors = [];
+  const warnings = [];
+  const { run, batch } = opts;
+
+  if (!run) errors.push("set-batch requires --run");
+  const entry = run ? findRunEntry(obj, run) : null;
+  if (run && !entry) errors.push(`set-batch: run ${run} not found`);
+
+  const clearing = batch == null || batch === "";
+  if (!clearing) {
+    if (typeof batch !== "string") {
+      errors.push("set-batch: --batch must be a batch_id string (or empty to clear)");
+    } else {
+      const batches = declaredBatches(obj);
+      if (!batches) {
+        errors.push(`set-batch: the roadmap declares no batches, so no batch can be assigned; declare root.batches first`);
+      } else if (!batches.some((b) => b && b.batch_id === batch)) {
+        errors.push(`set-batch: batch ${batch} is not declared in root.batches (declared: ${batches.map((b) => b && b.batch_id).join(", ")})`);
+      }
+    }
+  }
+  if (errors.length) return { errors, warnings };
+
+  const before = "batch" in entry.run ? entry.run.batch : null;
+  if (clearing) {
+    if (!("batch" in entry.run)) {
+      warnings.push(`set-batch: run ${run} carries no batch (it belongs to no batch); nothing to clear`);
+    }
+    delete entry.run.batch;
+  } else {
+    entry.run.batch = batch;
+  }
+  normalizeRunKeyOrder(entry.run);
+  const after = "batch" in entry.run ? entry.run.batch : null;
+  return { errors, warnings, run, before, after };
+}
+
+// ---------------------------------------------------------------------------
 // [#43] CLASSIFICATION. set-classification writes the SIX STORED fields of
 // context/CLASIFICACION-DE-RUNS.md §1 on ONE run and does nothing else: no queue_order,
 // no depends_on, no status, no lane, no barrier.
@@ -1696,6 +1857,122 @@ export function declareLanes(obj, opts) {
   // the tree that uses it, and the tree stays the last (largest) key of the file.
   normalizeRootKeyOrder(obj);
   return { errors, warnings, before, after: obj.lanes.map((l) => l.lane_id), defaultLane: defaultLaneId(obj) };
+}
+
+// ---------------------------------------------------------------------------
+// [#48] Batch vocabulary declaration. declare-batches writes root.batches and is
+// declareLanes copied onto the sibling vocabulary, guard for guard:
+//
+//   - replaced WHOLE, never one batch at a time (a project has A vocabulary);
+//   - G1 -- the shape checkInvariants demands, refused here by field: a non-empty array
+//     of {batch_id, title, branch}, all three required non-empty strings. `branch` is
+//     the field lanes do not have and the reason batches exist: the branch the kernel
+//     commits the batch's runs to (D-030). WHICH branch is not judged — it is the
+//     operator's parameter, like a lane's title.
+//   - G2 -- clearing (batches null/[]) with any run still CARRYING a batch is refused,
+//     naming the runs. Clear the runs first (set-batch with no batch).
+//   - G3 -- REDECLARING away a batch that runs still use is refused, naming batch and runs.
+//   - G4 -- a duplicate batch_id.
+//
+// What declareLanes has that this op does NOT copy: the single-default invariant. Lanes
+// need a default because every lane-less run resolves to it; batch membership is optional
+// by meaning, so there is nothing for a batch-less run to resolve to and a default would
+// silently make membership mandatory. No other divergence.
+//
+// It never touches a run (re-homing is set-batch's job, one explicit act per run), changes
+// no *_id (batch_id is not in collectIds — batches are a vocabulary, not nodes), and is NOT
+// batchable: it is a root-level vocabulary change, and the batch set is deliberately
+// per-run edits.
+// ---------------------------------------------------------------------------
+
+export function declareBatches(obj, opts) {
+  const errors = [];
+  const warnings = [];
+  const { batches } = opts;
+
+  const clearing = batches == null || (Array.isArray(batches) && batches.length === 0);
+
+  // Which batches are in USE right now (stored explicitly on a run). Needed by G2/G3.
+  const usedBy = new Map();
+  for (const { run } of flattenRuns(obj)) {
+    if (typeof run.batch === "string" && run.batch) {
+      if (!usedBy.has(run.batch)) usedBy.set(run.batch, []);
+      usedBy.get(run.batch).push(run.run_id);
+    }
+  }
+
+  if (clearing) {
+    // G2 -- never leave the file using a vocabulary it does not declare.
+    if (usedBy.size) {
+      const detail = [...usedBy.entries()]
+        .map(([batchId, ids]) => `${batchId} (${ids.length}: ${ids.join(", ")})`)
+        .join("; ");
+      errors.push(
+        `declare-batches: cannot clear root.batches while ${usedBy.size} batch(es) are still stored on runs -- ${detail}; ` +
+        "clear those runs first (set-batch with no batch) so nothing is left pointing at an undeclared vocabulary"
+      );
+    }
+    if (errors.length) return { errors, warnings };
+    const before = declaredBatches(obj) ? declaredBatches(obj).map((b) => b.batch_id) : null;
+    if (!("batches" in obj)) {
+      warnings.push("declare-batches: the roadmap declares no batches; nothing to clear");
+    }
+    delete obj.batches;
+    return { errors, warnings, before, after: null };
+  }
+
+  // G1 -- the shape, checked entry by entry so the message names the offender.
+  if (!Array.isArray(batches)) {
+    errors.push("declare-batches: --batches must be an array of {batch_id, title, branch} objects (or empty to clear)");
+    return { errors, warnings };
+  }
+  const seen = new Set();
+  batches.forEach((batch, index) => {
+    const label = `declare-batches: batch[${index}]`;
+    if (!batch || typeof batch !== "object" || Array.isArray(batch)) {
+      errors.push(`${label} is not an object`);
+      return;
+    }
+    for (const key of Object.keys(batch)) {
+      if (!BATCH_ALLOWED_FIELDS.includes(key)) {
+        errors.push(`${label} carries unexpected field ${key}; only ${BATCH_ALLOWED_FIELDS.join(", ")} are allowed`);
+      }
+    }
+    if (typeof batch.batch_id !== "string" || !batch.batch_id) {
+      errors.push(`${label} missing string batch_id`);
+    } else if (seen.has(batch.batch_id)) {
+      errors.push(`${label} duplicate batch_id ${batch.batch_id}`); // G4
+    } else {
+      seen.add(batch.batch_id);
+    }
+    if (typeof batch.title !== "string" || !batch.title) {
+      errors.push(`${label} missing string title`);
+    }
+    if (typeof batch.branch !== "string" || !batch.branch) {
+      errors.push(`${label} missing string branch; the branch is what a batch determines, so a batch cannot omit it`);
+    }
+  });
+  // G3 -- a redeclaration must not orphan a batch that runs still carry.
+  if (!errors.length) {
+    for (const [batchId, ids] of usedBy) {
+      if (!seen.has(batchId)) {
+        errors.push(
+          `declare-batches: batch ${batchId} is still stored on ${ids.length} run(s) (${ids.join(", ")}) but the new ` +
+          "declaration does not include it; move those runs first (set-batch) so no run is left in an undeclared batch"
+        );
+      }
+    }
+  }
+  if (errors.length) return { errors, warnings };
+
+  const before = declaredBatches(obj) ? declaredBatches(obj).map((b) => b.batch_id) : null;
+  // Rebuild each entry through the allowed key order so the stored shape is the
+  // canonical one regardless of how the caller ordered the keys.
+  obj.batches = batches.map((batch) => ({ batch_id: batch.batch_id, title: batch.title, branch: batch.branch }));
+  // root.batches sits beside root.lanes, before `objectives`: vocabulary before the
+  // tree that uses it, and the tree stays the last (largest) key of the file.
+  normalizeRootKeyOrder(obj);
+  return { errors, warnings, before, after: obj.batches.map((b) => b.batch_id) };
 }
 
 // ---------------------------------------------------------------------------

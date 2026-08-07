@@ -1,0 +1,537 @@
+{
+  "schema_version": 1,
+  "project_id": "fixture_batches",
+  "generated_at": "2026-08-06T00:00:00.000Z",
+  "generated_from": "aiw-projector@0.12.0",
+  "sources": [
+    {
+      "path": "roadmap/roadmap.json",
+      "mtime": "2026-08-06T21:57:13.009Z"
+    },
+    {
+      "path": "package.json",
+      "mtime": "2026-08-06T21:57:13.010Z"
+    }
+  ],
+  "operational_status": "idle",
+  "project_summary": "Batches and the branch they determine — fixture: 1 objectives, 2 phases, 6 runs.",
+  "current_status_summary": "No active run; 1 of 6 runs completed.",
+  "roadmap_tree": {
+    "model": "fixture.batches.v1",
+    "roadmap_id": "FIXTURE-BATCHES",
+    "title": "Batches and the branch they determine — fixture",
+    "batches": [
+      {
+        "batch_id": "NIGHT-A",
+        "title": "First unattended night",
+        "branch": "aiw/batch/night-a"
+      },
+      {
+        "batch_id": "NIGHT-B",
+        "title": "Second unattended night",
+        "branch": "aiw/batch/night-b"
+      }
+    ],
+    "objectives": [
+      {
+        "objective_id": "OB1",
+        "title": "Ship the product in unattended windows",
+        "phases": [
+          {
+            "phase_id": "OB1.P1",
+            "title": "Groundwork",
+            "runs": [
+              {
+                "run_id": "RUN-FIX-SEED-001",
+                "queue_order": 1,
+                "title": "Seed work, before any batch",
+                "summary": "Completed before batches were declared; belongs to none.",
+                "full_description": "NO batch key: membership is optional, and this run proves a batch-less run is legal in a roadmap that declares batches.",
+                "status": "completed",
+                "depends_on": [],
+                "closeout_result": "completed_successfully"
+              },
+              {
+                "run_id": "RUN-FIX-ALPHA-001",
+                "queue_order": 2,
+                "title": "Alpha: risky piece of night A",
+                "summary": "Sits in NIGHT-A; its consumers in other batches wait for a person.",
+                "full_description": "In batch NIGHT-A. Work that needs human review before anything DOWNSTREAM of it is trusted — but no run of ITS OWN batch waits on that review, which is exactly the grouping rule.",
+                "status": "planned",
+                "depends_on": [],
+                "batch": "NIGHT-A"
+              },
+              {
+                "run_id": "RUN-FIX-BETA-001",
+                "queue_order": 3,
+                "title": "Beta: builds on alpha inside night A",
+                "summary": "Same batch as alpha, plain depends_on edge.",
+                "full_description": "In batch NIGHT-A with a PLAIN depends_on edge on alpha: inside one batch, waiting for work to EXIST is legal — only waiting for its human approval deadlocks.",
+                "status": "planned",
+                "depends_on": [
+                  "RUN-FIX-ALPHA-001"
+                ],
+                "batch": "NIGHT-A"
+              },
+              {
+                "run_id": "RUN-FIX-GAMMA-001",
+                "queue_order": 4,
+                "title": "Gamma: second reviewed piece of night A",
+                "summary": "Second approval-needing run in the SAME batch, no internal approval edge.",
+                "full_description": "In batch NIGHT-A. Several runs needing human approval MAY share a batch — the approval happens once, over the whole batch, at its end. What none of them may do is wait on EACH OTHER’s approval.",
+                "status": "planned",
+                "depends_on": [],
+                "batch": "NIGHT-A"
+              }
+            ]
+          },
+          {
+            "phase_id": "OB1.P2",
+            "title": "The second night",
+            "runs": [
+              {
+                "run_id": "RUN-FIX-DELTA-001",
+                "queue_order": 5,
+                "title": "Delta: night B consumes reviewed alpha",
+                "summary": "Cross-batch human-approval edge: legal, and the point of the model.",
+                "full_description": "In batch NIGHT-B, waiting on the HUMAN APPROVAL of alpha (NIGHT-A). A cross-batch approval edge marks where an unattended window ends: night A must be approved before this run of night B is dispatched.",
+                "status": "planned",
+                "depends_on": [],
+                "depends_on_human_approved": [
+                  "RUN-FIX-ALPHA-001"
+                ],
+                "batch": "NIGHT-B"
+              },
+              {
+                "run_id": "RUN-FIX-OMEGA-001",
+                "queue_order": 6,
+                "title": "Omega: unbatched consumer of gamma",
+                "summary": "A batch-less run may wait on the approval of a batched one.",
+                "full_description": "NO batch key, waiting on the human approval of gamma (NIGHT-A): the consumer sits outside every batch, so no shared-batch deadlock is possible.",
+                "status": "planned",
+                "depends_on": [],
+                "depends_on_human_approved": [
+                  "RUN-FIX-GAMMA-001"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "blockers": [],
+  "followups": [],
+  "no_claims_summary": {},
+  "validation_summary": {
+    "reports": [
+      {
+        "report": "unclassified_live_runs",
+        "kind": "information",
+        "rule": "a run whose status is not terminal and which carries no classified_at is UNCLASSIFIED; it is LISTED, never refused",
+        "specified_by": "context/CLASIFICACION-DE-RUNS.md#1",
+        "terminal_statuses": [
+          "completed",
+          "blocked"
+        ],
+        "total": 5,
+        "runs": [
+          {
+            "run_id": "RUN-FIX-ALPHA-001",
+            "queue_order": 2,
+            "status": "planned",
+            "title": "Alpha: risky piece of night A",
+            "objective_id": "OB1",
+            "phase_id": "OB1.P1",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-FIX-BETA-001",
+            "queue_order": 3,
+            "status": "planned",
+            "title": "Beta: builds on alpha inside night A",
+            "objective_id": "OB1",
+            "phase_id": "OB1.P1",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-FIX-GAMMA-001",
+            "queue_order": 4,
+            "status": "planned",
+            "title": "Gamma: second reviewed piece of night A",
+            "objective_id": "OB1",
+            "phase_id": "OB1.P1",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-FIX-DELTA-001",
+            "queue_order": 5,
+            "status": "planned",
+            "title": "Delta: night B consumes reviewed alpha",
+            "objective_id": "OB1",
+            "phase_id": "OB1.P2",
+            "stored_fields": []
+          },
+          {
+            "run_id": "RUN-FIX-OMEGA-001",
+            "queue_order": 6,
+            "status": "planned",
+            "title": "Omega: unbatched consumer of gamma",
+            "objective_id": "OB1",
+            "phase_id": "OB1.P2",
+            "stored_fields": []
+          }
+        ]
+      }
+    ]
+  },
+  "taxonomy_model": {
+    "model": "fixture.batches.v1",
+    "vocabularies": {
+      "project.operational_status": {
+        "axis": "project",
+        "stored": true,
+        "tokens": [
+          "active",
+          "blocked",
+          "idle"
+        ]
+      },
+      "run.status": {
+        "axis": "run",
+        "stored": true,
+        "tokens": [
+          "planned",
+          "active",
+          "blocked",
+          "completed"
+        ]
+      },
+      "objective.status": {
+        "axis": "objective",
+        "stored": false,
+        "derived_by": "collection_status_from_runs",
+        "tokens": [
+          "planned",
+          "in_progress",
+          "active",
+          "blocked",
+          "completed"
+        ]
+      },
+      "phase.status": {
+        "axis": "phase",
+        "stored": false,
+        "derived_by": "collection_status_from_runs",
+        "tokens": [
+          "planned",
+          "in_progress",
+          "active",
+          "blocked",
+          "completed"
+        ]
+      },
+      "run.correctness_model": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "tokens": [
+          "SPECIFIED",
+          "JUDGED_ACCEPTS",
+          "JUDGED_DEFINES"
+        ]
+      },
+      "run.work_type": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "tokens": [
+          "COSMETIC",
+          "FUNCTIONAL",
+          "FOUNDATIONAL"
+        ]
+      },
+      "run.blast_radius": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "tokens": [
+          "LOCAL",
+          "ADJACENT",
+          "SYSTEMIC",
+          "PROJECT_SHAPE"
+        ]
+      },
+      "run.failure_surfaces": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "tokens": [
+          "LOUD",
+          "VISIBLE",
+          "SILENT"
+        ]
+      },
+      "run.external_effects": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "form": "array_of_non_empty_strings",
+        "empty_by_default": true
+      },
+      "run.classified_at": {
+        "axis": "run",
+        "stored": true,
+        "optional": true,
+        "form": "iso_8601_utc_instant"
+      },
+      "run.severity": {
+        "axis": "run",
+        "stored": false,
+        "derived_by": "severity_from_work_type_and_blast_radius",
+        "tokens": [
+          "MINOR",
+          "MODERATE",
+          "MAJOR",
+          "CRITICAL"
+        ]
+      },
+      "run.closure_mode": {
+        "axis": "run",
+        "stored": false,
+        "derived_by": "closure_mode_from_correctness_model_and_severity",
+        "tokens": [
+          "UNATTENDED",
+          "SEMI_ATTENDED",
+          "ATTENDED"
+        ]
+      }
+    },
+    "derivations": {
+      "collection_status_from_runs": {
+        "applies_to": [
+          "objective",
+          "phase"
+        ],
+        "input": "run.status",
+        "precedence": [
+          {
+            "token": "active",
+            "quantifier": "any",
+            "run_status": "active"
+          },
+          {
+            "token": "blocked",
+            "quantifier": "any",
+            "run_status": "blocked"
+          },
+          {
+            "token": "completed",
+            "quantifier": "all",
+            "run_status": "completed"
+          },
+          {
+            "token": "in_progress",
+            "quantifier": "any",
+            "run_status": "completed"
+          },
+          {
+            "token": "planned",
+            "quantifier": "otherwise"
+          }
+        ],
+        "empty_input": "malformed"
+      },
+      "project_operational_status_from_runs": {
+        "applies_to": [
+          "project"
+        ],
+        "input": "run.status",
+        "precedence": [
+          {
+            "token": "active",
+            "quantifier": "any",
+            "run_status": "active"
+          },
+          {
+            "token": "blocked",
+            "quantifier": "any",
+            "run_status": "blocked"
+          },
+          {
+            "token": "idle",
+            "quantifier": "otherwise"
+          }
+        ],
+        "empty_input": "idle"
+      },
+      "severity_from_work_type_and_blast_radius": {
+        "applies_to": [
+          "run"
+        ],
+        "input": [
+          "run.work_type",
+          "run.blast_radius"
+        ],
+        "scale": [
+          "MINOR",
+          "MODERATE",
+          "MAJOR",
+          "CRITICAL"
+        ],
+        "table": {
+          "COSMETIC": {
+            "LOCAL": "MINOR",
+            "ADJACENT": "MINOR",
+            "SYSTEMIC": "MODERATE",
+            "PROJECT_SHAPE": "MODERATE"
+          },
+          "FUNCTIONAL": {
+            "LOCAL": "MODERATE",
+            "ADJACENT": "MODERATE",
+            "SYSTEMIC": "MAJOR",
+            "PROJECT_SHAPE": "MAJOR"
+          },
+          "FOUNDATIONAL": {
+            "LOCAL": "MAJOR",
+            "ADJACENT": "MAJOR",
+            "SYSTEMIC": "CRITICAL",
+            "PROJECT_SHAPE": "CRITICAL"
+          }
+        },
+        "adjustment": {
+          "input": "run.failure_surfaces",
+          "steps": {
+            "LOUD": -1,
+            "VISIBLE": 0,
+            "SILENT": 1
+          },
+          "saturating": true,
+          "absent_input": "no_adjustment"
+        },
+        "missing_input": "absent"
+      },
+      "closure_mode_from_correctness_model_and_severity": {
+        "applies_to": [
+          "run"
+        ],
+        "input": [
+          "run.correctness_model",
+          "run.severity"
+        ],
+        "scale": [
+          "UNATTENDED",
+          "SEMI_ATTENDED",
+          "ATTENDED"
+        ],
+        "precedence": [
+          {
+            "token": "UNATTENDED",
+            "correctness_model": "SPECIFIED",
+            "severity_in": [
+              "MINOR",
+              "MODERATE"
+            ]
+          },
+          {
+            "token": "SEMI_ATTENDED",
+            "correctness_model": "SPECIFIED",
+            "severity_in": [
+              "MAJOR",
+              "CRITICAL"
+            ]
+          },
+          {
+            "token": "SEMI_ATTENDED",
+            "correctness_model": "JUDGED_ACCEPTS"
+          },
+          {
+            "token": "ATTENDED",
+            "correctness_model": "JUDGED_DEFINES"
+          }
+        ],
+        "guard": {
+          "input": "run.external_effects",
+          "when": "non_empty",
+          "minimum": "SEMI_ATTENDED",
+          "direction": "raise_only",
+          "absent_input": "empty"
+        },
+        "missing_input": "absent"
+      }
+    },
+    "illegal_combinations": [
+      {
+        "fields": [
+          "correctness_model",
+          "work_type"
+        ],
+        "values": [
+          "SPECIFIED",
+          "FOUNDATIONAL"
+        ],
+        "enforced_by": "stored_field_invariant"
+      },
+      {
+        "fields": [
+          "work_type",
+          "failure_surfaces"
+        ],
+        "values": [
+          "FOUNDATIONAL",
+          "LOUD"
+        ],
+        "enforced_by": "stored_field_invariant"
+      },
+      {
+        "fields": [
+          "correctness_model",
+          "closure_mode"
+        ],
+        "values": [
+          "JUDGED_*",
+          "UNATTENDED"
+        ],
+        "enforced_by": "derivation_property"
+      }
+    ],
+    "care_budget": {
+      "applies_to": [
+        "project"
+      ],
+      "keyed_by": "run.severity",
+      "levels": [
+        "MINOR",
+        "MODERATE",
+        "MAJOR",
+        "CRITICAL"
+      ],
+      "entry_form": {
+        "model": "non_empty_string",
+        "effort": "non_empty_string"
+      },
+      "binding": "advice",
+      "binding_note": "Advice, not a hard rule: it blocks nothing, it gates no run's closure, and a project may fix its own. A run may deviate in either direction, and the deviation travels in the run's ticket, never in a field.",
+      "published_defaults": {
+        "MINOR": {
+          "model": "Opus",
+          "effort": "Alto"
+        },
+        "MODERATE": {
+          "model": "Opus",
+          "effort": "Extra"
+        },
+        "MAJOR": {
+          "model": "Opus",
+          "effort": "Max"
+        },
+        "CRITICAL": {
+          "model": "Fable",
+          "effort": "Max"
+        }
+      },
+      "declared": null,
+      "declared_reason": "this project declares no root.care_budget; the key is optional and absent by default, and nothing is blocked, refused or defaulted by its absence"
+    }
+  }
+}

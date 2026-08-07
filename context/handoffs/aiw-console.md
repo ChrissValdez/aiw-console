@@ -215,22 +215,21 @@ fichero, nunca `-A`**, y la cabina declara por nombre cada fichero que escribe.
 
 ## 9. MIGRACIÓN A LA LAPTOP NUEVA — estado medido el 2026-08-06 ~22:50
 
-**Lo que falta por commitear en ESTE repo** (HEAD `b2a5079` = `origin/main`):
+**ESTE REPO ESTÁ EMPUJADO Y LIMPIO.** `HEAD` = `origin/main` = `5d052aa`, árbol limpio
+según el Git de Windows (la lectura autoritativa; la cruda desde la cabina miente por CRLF).
 
-Modificados — trabajo del taller del `#48`:
-`tools/roadmap/roadmap-core.mjs` · `tools/roadmap/roadmap-plan.mjs` ·
-`project-console/assets/project-console.js` · `tools/projector/project.mjs` ·
-`tests/roadmap-engine.test.mjs`
+**El trabajo del `#48` viajó en `742bc7e`** — *«wip(roadmap): trabajo EN CURSO del hilo
+aiw-console sobre el motor de roadmap y la operación batch, commiteado sin terminar»—,
+commiteado **por otro hilo con `git add -A`** durante su propio cierre de migración.
+Verificado fichero a fichero: los 13 están íntegros, incluido este relevo.
 
-Sin rastrear:
-`context/aiw-console/records/LOTES-EN-EL-SCHEMA-Y-LA-RAMA-QUE-DETERMINAN.md` ·
-`tests/roadmap-batches.test.mjs` · `tests/fixtures/batches/project/package.json` ·
-`tests/fixtures/batches/project/roadmap/roadmap.json` ·
-`tests/fixtures/batches/project/.project/roadmap.json` ·
-`tests/fixtures/batches/project/.project/snapshot.json` ·
-`tests/fixtures/batches/project/.project/docs_index.json`
+**Lo que eso significa para quien lea esto:** el commit NO cierra el `#48`. El run sigue
+`active` y su QA sigue pendiente (§1). El mensaje del commit es honesto y por eso no hizo
+daño; si hubiera dicho «cierra el 48», el roadmap afirmaría algo falso.
 
-Más este relevo: `context/handoffs/aiw-console.md`.
+**Y deja una lección para este repo de cuatro hilos:** `git add -A` en `aiw-console`
+arrastra el trabajo de los demás. Salió bien una vez. La regla de `add` dirigido por nombre
+no se relaja por esto.
 
 **LOS OTROS REPOS — NO son de este hilo, se NOMBRAN y no se tocan:**
 

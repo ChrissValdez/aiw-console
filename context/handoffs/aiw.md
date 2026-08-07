@@ -1,355 +1,446 @@
 # Handoff — hilo `aiw`
 
-> **Reescrito el 2026-08-06.** Sustituye al del 2026-08-03. Última sesión corrida en
-> modo ESPEJO (cabina sin workspace montado); **la siguiente abre en Cowork, modo
-> CONECTADO**. Toda cifra de aquí lleva su fecha de medición: es una medición fechada,
-> no el estado de hoy. Se re-mide en el punto de uso.
+> **Reescrito el 2026-08-06 (sesión de Cowork, modo CONECTADO).** Sustituye al del mismo
+> día escrito en modo ESPEJO. **La sesión siguiente abre en una LAPTOP NUEVA**, así que
+> §1 es una sección de mudanza y es lo primero que hay que leer después de §0.
 >
-> **La sustancia va DENTRO.** `context/aiw-console/records/` no llega al knowledge del
-> Project, así que un puntero a un record no resuelve para quien lee esto.
+> Toda cifra lleva su hora de medición. Se re-mide en el punto de uso, no al abrir.
+> **La sustancia va DENTRO**: `context/aiw-console/records/` no llega al knowledge.
 
 ---
 
-## 0. LO PRIMERO QUE LA CABINA NUEVA NECESITA SABER
+## 0. LO PRIMERO — y el handoff anterior se equivocaba aquí
 
-**El `git status` de `aiw` MIENTE desde una cabina Linux.** `aiw` **no tiene
-`.gitattributes`**; la cabina de Cowork corre en Linux y no aplica la conversión CRLF
-del Git de Windows. Medido por el hilo `aiw-console` el 2026-08-06: reporta del orden
-de **119 ficheros «modificados» que en la máquina del operador son cero**.
-
-**Consecuencia operativa, y es dura:** cualquier guarda de «árbol limpio» que la cabina
-escriba **saltará siempre** si no pasa el `status` por `--ignore-cr-at-eol`. La forma:
+**El comando que el handoff anterior prescribía NO EXISTE.** Medido con git 2.34.1:
 
 ```
 git status --porcelain --ignore-cr-at-eol
+→ error: unknown option `ignore-cr-at-eol'
 ```
 
-Y al reportar un `git status` de `aiw`, la cabina **declara cuál de las dos lecturas
-está dando**. Si no puede, pide el `git status` de Windows y lo dice.
+`--ignore-cr-at-eol` es opción de `git diff`, **no de `git status`**. La guarda que el
+relevo anterior mandaba escribir habría fallado siempre, y por error de sintaxis, no por
+árbol sucio — que es peor, porque parece un fallo real.
 
-**Que `aiw` gane un `.gitattributes` es hallazgo de otros hilos** (`aiw-console` lo tiene
-como run con dueño). Se NOMBRA aquí y no se corrige desde este hilo.
+**La forma que sí funciona, medida sobre `aiw` el 2026-08-06:**
 
-**Corolario relacionado, medido y vigente:** `git checkout` **no se usa para deshacer en
-este workspace**, porque reescribe finales de línea. Respaldo byte a byte fuera del repo
-antes de escribir, y restaurar de ahí.
+| lectura | resultado |
+|---|---|
+| `git status --porcelain` (ingenua, desde Linux) | **119** ficheros — MIENTE |
+| **`git -c core.autocrlf=true status --porcelain`** | **0** — limpio, coincide con Windows |
+| `git diff --ignore-cr-at-eol --stat` | vacío — correcto |
+| `git diff --ignore-cr-at-eol --name-only` | **119 — TAMBIÉN MIENTE** |
+
+**Trampa nueva y no obvia: `--name-only` no respeta los flags de whitespace.** Una guarda
+construida sobre él engaña igual que la ingenua.
+
+**Regla: toda lectura de `git status` de `aiw` o `aiw-console` va con
+`-c core.autocrlf=true`, y la cabina declara cuál de las dos lecturas está dando.**
+
+### Dos capacidades que la tabla fechada declara MAL
+
+Probadas el 2026-08-06 en Cowork. **Gana la prueba, no la tabla.**
+
+| lo que dice `D-064` | lo que midió la prueba |
+|---|---|
+| «`.git` no es escribible» | **SÍ es escribible.** `touch aiw/.git/_probe` funcionó; `git commit` solo falló por identidad de autor sin configurar |
+| (no lo declara) | **el CLI `claude` está presente** — 2.1.221. El kernel podría invocar executor y reviewer desde la cabina |
+
+**Sigue confirmado que la cabina NO puede BORRAR:** `rm` devuelve *«Operation not
+permitted»* dentro y fuera de los repos. Esta sesión dejó tres ficheros por eso; ver §10.
+
+**Consecuencia dura: la cabina NO sondea dentro de un repo.** Esta sesión lo hizo y dejó
+`objectives/pending/_probe.md`, que `queue.mjs` habría levantado e intentado ejecutar como
+objetivo. Los sondeos van a `_scratch\`.
+
+### ⚠ UN `git status` DE LA CABINA PUEDE DEJAR UN `index.lock` HUÉRFANO
+
+**Medido el 2026-08-06, y costó una tanda entera de commits.** La cabina corrió un bucle de
+`git status --porcelain` sobre los cinco repos en una sola llamada; la llamada **se pasó del
+límite de tiempo y la mataron a media operación**. `git status` refresca el índice y para eso
+toma `.git/index.lock`; al morir el proceso, **los cinco repos quedaron con un `index.lock`
+de 0 bytes**, y todo `git add` y `git commit` del operador falló con
+*«Another git process seems to be running»*.
+
+**Y la cabina NO PUEDE BORRARLOS.** Los tuvo que quitar el operador.
+
+**Reglas que salen de esto, las tres:**
+
+1. **Un `git status` sobre los cinco repos NO va en una sola llamada.** Se parte, y
+   `cantu-quizzes-latex` va solo — son 322 MB y 1 398 ficheros trackeados; es el lento.
+2. **Todo `git` de la cabina va con `timeout` explícito por repo**, más corto que el límite
+   de la llamada, para que muera limpio en vez de que lo maten.
+3. **Antes de entregar cualquier bloque de Git, la cabina comprueba que no hay
+   `.git/index.lock` en ningún repo que el bloque toque**, y si lo hay lo lista con ruta
+   completa para que el operador lo borre **dentro del mismo bloque, antes del `add`**.
 
 ---
 
-## 1. DÓNDE ESTÁ TODO — medido el 2026-08-06
+## 1. LA MUDANZA — lo que la laptop nueva necesita, medido
+
+**Al 2026-08-06 los cinco repos están empujados: `ahead=0` en todos.** Lo único que no
+viaja es lo que esté sucio o sin trackear, más lo que vive fuera de los repos.
+
+### Remotos (todo clonable)
+
+    aiw                    https://github.com/ChrissValdez/aiw.git
+    aiw-console            https://github.com/ChrissValdez/aiw-console.git
+    cantu-studio           https://github.com/ChrissValdez/cantu-studio.git
+    cantu-lessons          https://github.com/ChrissValdez/cantu-lessons.git
+    cantu-quizzes-latex    https://github.com/ChrissValdez/cantu-quizzes-latex.git
+
+### ⚠ TRAMPA 1 — `aiw` y `aiw-console` NO tienen `.gitattributes`
+
+Los otros tres sí (`* text=auto`). **Un clon fresco de `aiw` o `aiw-console` en una máquina
+con otro `core.autocrlf` produce bytes distintos en el árbol de trabajo.**
+
+**Y está medido que esto ya rompió algo real:** el commit `5ce887a` de `aiw-console`
+documenta que un `git checkout` con `core.autocrlf` activo y sin `.gitattributes` reescribió
+el canónico a CRLF y puso rojo el pin de fines de línea de `tests/roadmap-engine.test.mjs`,
+que exige que los dos canónicos difieran en EOL. **En la laptop nueva esto muerde el primer
+día.** Que ambos repos ganen `.gitattributes` es run con dueño en `aiw-console`; se NOMBRA
+aquí y no se corrige desde este hilo.
+
+**Corolario permanente: `git checkout` no se usa para deshacer en este workspace.** Respaldo
+byte a byte fuera del repo antes de escribir, y restaurar de ahí.
+
+### ⚠ TRAMPA 2 — `aiw/config.json` tiene rutas ABSOLUTAS de Windows
+
+    "sandbox": "C:\\Users\\chris\\Documents\\AIW_Workspace\\aiw\\sandbox"
+    "console": "C:\\Users\\chris\\Documents\\AIW_Workspace\\projects\\aiw-console"
+
+**Si en la laptop nueva el usuario o la ruta del workspace cambian, el kernel aborta** en
+`kernel.mjs:286` con *«Target repo path does not exist»*. Hay que editarlo a mano allá.
+
+**Y el `path` de `sandbox` YA no existe en disco ni en esta máquina** — abortaría hoy si
+alguien lo apuntara.
+
+*(La clave es `path`, no `root`. El kernel la lee como `project.path` en `kernel.mjs:276`.
+Un ticket viejo de esta cabina la llamó `root` por copiarla de un audit en vez de medirla.)*
+
+### ⚠ TRAMPA 3 — el toolchain que el kernel necesita
+
+- **`claude` CLI** — el kernel lo invoca para executor y reviewer (`invokeClaude`).
+- **LaTeX, si CQL va a ser blanco.** Medido: los documentos de `cantu-quizzes-latex` exigen
+  **32 paquetes**, de los cuales **5 no están en una instalación base**: `fontawesome`,
+  `montserrat`, `eulervm`, `newpxmath`, `newpxtext`. En la máquina del operador están —
+  compila y tiene los PDFs. **En un TeX Live recién instalado, probablemente no.**
+  Sin ellos, `D-012` (`kernel.mjs:328`) aborta con *«red baseline: human intervention
+  required»* y el contenido estará perfecto. `latexmk` medido en Windows: **4.88**.
+- **La dependencia de paquetes NO está declarada en ningún sitio del repo de CQL.** Es
+  hallazgo que le corresponde a su hilo; se nombra aquí porque es prerequisito de `aiw`.
+
+### ⚠ TRAMPA 4 — lo que NO viaja por git
+
+**`_scratch\` y `_backups\` están fuera de todos los repos.** Al 2026-08-06:
+
+- `_scratch\` — 12 ficheros, entre ellos `AIW-22-PREFLIGHT.md` (52 KB),
+  `AIW-CONST4-HECHOS.md` (88 KB), `AIW-21-CORPUS.md` (los 21 textos verbatim) y los scripts
+  de consola de otros hilos (`abrir-47.mjs`, `abrir-48.mjs`, `cerrar-47.mjs`).
+- `_backups\` — 8 respaldos de canónico más `_backups\aiw-console\` con 6 más.
+
+**Si valen algo, se copian a mano. Git no los lleva.**
+
+### ⚠ TRAMPA 5 — trabajo SIN COMMITEAR que se perdería
+
+Medido el 2026-08-06 con la lectura `autocrlf`:
+
+| repo | sucio | qué es |
+|---|---|---|
+| `aiw` | 6 | 5 de `.project/` (re-emisión) + `_probe.md` de esta cabina |
+| `aiw-console` | 8 | **motor de LOTES a medio hacer**: `roadmap-core.mjs`, `roadmap-plan.mjs`, `project-console.js`, `projector/project.mjs`, `roadmap-engine.test.mjs`, más un record y `tests/fixtures/batches/` **sin trackear** |
+| `cantu-studio` | 0 | limpio |
+| `cantu-lessons` | 1 | `drafts/web/test/test/test.web.draft.json` |
+| `cantu-quizzes-latex` | 10 | **el piloto de fracciones EN CURSO** (`ARI-FA-Fracciones-01/02/03`) + `.project/` + artefactos de build |
+
+**Dos repos tienen trabajo EN VUELO.** Commitear a ciegas commitea trabajo a medias. La
+decisión es de cada hilo, no de éste.
+
+---
+
+## 2. ESTADO DE `aiw` — medido el 2026-08-06
 
 | | |
 |---|---|
-| `aiw` HEAD | **`5d2c9ef`**, empujado a `origin/main` |
-| árbol de `aiw` | **limpio** (medido en Windows) |
-| runs | **46** — 25 `completed`, **21 `planned`**, **0 `active` en el canónico** |
-| `queue_order` | denso, único y contiguo **1..46** |
+| HEAD | **`5d2c9ef`** = `origin/main`, `ahead=0` |
+| árbol | limpio salvo `.project/` y `_probe.md` (lectura `autocrlf`) |
+| runs | **46 — 25 `completed`, 20 `planned`, 1 `active`** |
+| `queue_order` | denso, único, `1..46` |
 | aristas `depends_on` | 21, **0 colgantes** |
-| objetivos / fases | 6 objetivos (**no hay `O4`**), 33 fases, una vacía |
-| canónico | `aiw/roadmap/roadmap.json` — **derivado ejecutando el resolvedor de la consola**, no tecleado |
-| md5 del canónico | `5c7cf8bd9dc10f0f2657b693f9bf143b` (2026-08-03; **re-medir**) |
+| canónico | `aiw/roadmap/roadmap.json`, **CRLF en disco** |
+| md5 canónico | `ce7a9f7b0feed3651ddb0bd18f2680e1` (bytes CRLF) · normalizado a LF: `a57601a710b591dc0484577393163f9b` |
+| último commit del canónico | `6383e51` (2026-08-04) |
 
-**El canónico se localiza por procedencia, no por preferencia:** `.project/roadmap.json`
-declara `sources: [{path: "roadmap/roadmap.json"}]`. La consola prueba dos layouts de
-`ROOT_LAYOUTS` y solo `repo_root` existe y conforma. **Deriva la ruta midiendo; no la
-heredes de este documento.**
+**Corrección al relevo anterior:** decía «21 `planned`, 0 `active` en el canónico» y se
+contradecía con su propia §2. **El 21 es el conteo de VIVOS** (20 `planned` + 1 `active`).
+Su md5 estaba vencido.
 
-**El instrumento está certificado dos veces:** `aiw/.project/roadmap.json` y el canónico
-coinciden en **126/126 comparaciones** (21 runs × 6 campos) al 2026-08-03. La proyección
-no miente sobre los vivos; su límite es leerla por fragmentos, no su contenido.
+**El md5 del canónico depende del EOL.** Un md5 pelado no es comparable entre una cabina
+Linux y Windows. **Declarar siempre cuál se da.**
 
 ---
 
-## 2. EL ESTADO DE `#22` — y es lo primero que la sesión nueva atiende
+## 3. `#22` — sigue `active` y sigue sin correr
 
-**`#22` «Run the first real objective against a large repository with a test net» está
-`active` en el canónico y NUNCA CORRIÓ.** Se abrió al principio de la sesión y la ventana
-se perdió por agotamiento de turnos, no por un fallo.
+**`#22` «Run the first real objective against a large repository with a test net»**
+(`RUN-AIW-REAL-LOAD-MEASUREMENT-001`, `deps=0`, `correctness_model=SPECIFIED`, **sin `lane`
+declarado en el canónico** — el campo no existe en ese run).
 
-**Verificado el 2026-08-06 en disco:** `locks/` vacío, `logs/007*` vacío, y la rama
-`aiw/007-console-closure-mode-row-tag` **no existe** en `aiw-console`. **No se lanzó.**
+**Verificado el 2026-08-06:** `locks/` **no existe** como directorio (el relevo anterior
+decía «vacío»), no hay `logs/007*`, y **no hay ninguna rama `aiw/007*`** en `aiw-console`
+— solo `main`. **No se lanzó.**
 
-**Lo que SÍ está hecho y commiteado:**
+**El operador decidió DEJARLO `active`.** Queda anotado que el canónico afirma que hay un
+taller trabajando y no lo hay. `D-064` concede a la cabina `planned → active` y
+`active → completed`, **no** el sentido contrario: revertirlo exige palabra del operador.
 
-- El objetivo vive en `aiw/objectives/pending/007-console-closure-mode-row-tag.md`,
-  **7 080 bytes, md5 `fb2aabbe6897c8de4f1a19637ce0ec76`**, LF, sin BOM, **trackeado por
-  git** (importa: `D-024` dice que la cola archiva objetivos trackeados con `git mv`, y
-  un `git mv` sobre un fichero sin trackear falla).
-- Validado contra los parsers del propio kernel (importados, sin invocar `main()`):
-  `project=console`, `maxRounds=3`, dos globs de scope, y `evaluateGuards` bloqueando
-  CSS, `roadmap/`, `context/`, `.project/` y el derivador — **con contraprueba** de que
-  los dos ficheros en scope pasan.
+**El objetivo sigue intacto:** `aiw/objectives/pending/007-console-closure-mode-row-tag.md`,
+**7 080 bytes, md5 `fb2aabbe6897c8de4f1a19637ce0ec76`**, trackeado por git.
 
-**El trabajo que ordena**, dictado por el hilo `aiw-console` y no rediseñado por nosotros:
-pintar la etiqueta de `closure_mode` junto a la de `severity` añadiendo un segundo
-`tags.push(...)` en **`v3RunRowTags`** de `project-console/assets/project-console.js`, con
-la misma guarda de ausencia que ya usa `severity`; y añadir
-**`correctness_model: "SPECIFIED"`** al fixture con clasificación de
-`tests/classification-transport-and-console.test.mjs`.
+**El trabajo que ordena SIGUE PENDIENTE — medido, no supuesto.** `v3RunRowTags` vive en
+`project-console/assets/project-console.js:3419`; empuja la etiqueta de `severity` en
+`:3433`; **no hay ningún `tags.push` de `closure_mode`**. `closure_mode` aparece 8 veces en
+el fichero, ninguna dentro de esa función. Coordenadas al 2026-08-06: función `3419`,
+llamadas `3449` y `4521`, y el comentario en `3169` que no es llamada.
+**La función se ancla por NOMBRE, nunca por línea.**
 
-**La función se ancla por NOMBRE, nunca por línea.** Medido dos veces que sus coordenadas
-se mueven: el otro hilo la situó en `3409-3412` y estaba en `3419-3436`; sus llamadas en
-`:3427`/`:4491` y estaban en `:3449` y `:4521`. Hay una **cuarta aparición** del nombre en
-`:3169` que es **un comentario**, no una llamada — nos paró una vez; no vuelve a hacerlo.
+**⚠ AVISO: `project-console.js` está SUCIO ahora mismo** por el motor de lotes de otro hilo.
+Cuando se relance el `007`, **estas coordenadas hay que volver a derivarlas**, y el último
+commit que tocó el fichero ya no será `6ee3277`.
 
-**Verificación del objetivo, tras dos enmiendas:** «**`npm test` no gana ningún fallo
-nuevo respecto a la línea base**», nunca «suite verde». La línea base son **exactamente
-dos** fallos pre-existentes de `aiw-console`, medidos contando `AssertionError` sobre el
-log entero el 2026-08-06:
+**Las cuatro condiciones para relanzar, y ninguna se cree, se miden:** `aiw` limpio,
+`aiw-console` limpio, sin rama `aiw/007*`, y ventana concedida. **Al 2026-08-06 fallan dos:**
+`aiw-console` está sucio y no hay ventana. Por `D-063(a)` la ventana se verifica por el
+**último commit que tocó los ficheros del alcance**, no por el HEAD.
 
-- `tests/roadmap-engine.test.mjs:93`
-- `tests/classification-care-budget.test.mjs:153`
-
-Ambos ficheros, más `.gitattributes`, quedan **PROHIBIDOS al ejecutor**. Razón de fondo,
-que es del taller y mejora la nuestra: `roadmap-engine.test.mjs` mide normalización de
-EOL, así que dejarlo abierto permitiría **fabricar un verde cambiando la normalización en
-vez del test**.
-
-**El primero de esos dos no es deuda: es un pin de registro deliberado.** Su propio
-mensaje instruye *«update the record, keep the test»*. Está diseñado para ponerse rojo
-cuando la realidad cambia, y lo que descubrió es un cambio real en los datos de
-`aiw-console`. Llamarlo «suite roja» fue vocabulario nuestro y era incorrecto.
-
-**Para relanzar hacen falta cuatro condiciones, y todas se re-miden:** `aiw` limpio,
-`aiw-console` limpio, sin rama `aiw/007*`, y **ventana concedida por el hilo
-`aiw-console`**. La ventana se verifica por el **último commit que tocó los ficheros del
-alcance**, no por el HEAD (`D-063`): en `aiw-console` escriben tres hilos y sus records de
-Cantu mueven el HEAD sin tocar código. Al ceder la ventana, `project-console.js` estaba en
-`6ee3277` (2026-08-04).
-
-**Antes de relanzar hay que preguntar una cosa:** el run siguiente de `aiw-console` toca
-ese mismo fichero y quedó liberado. **Si lo ejecutan y pinta las etiquetas, el `007` se
-queda sin trabajo** y hay que retirarlo, no relanzarlo.
+**Verificación del objetivo, tras dos enmiendas:** «`npm test` no gana ningún fallo nuevo
+respecto a la línea base», nunca «suite verde». La línea base son **dos** fallos
+preexistentes: `tests/roadmap-engine.test.mjs:93` y
+`tests/classification-care-budget.test.mjs:153`. Ambos ficheros, más `.gitattributes`,
+**PROHIBIDOS al ejecutor** — `roadmap-engine.test.mjs` mide normalización de EOL, así que
+dejarlo abierto permitiría fabricar un verde cambiando la normalización en vez del test.
+**El primero no es deuda: es un pin de registro deliberado** (`D-063(c)`).
 
 ---
 
-## 3. LA COMPUERTA `CONST §4` SOBRE LOS 21 — re-adjudicada el 2026-08-03
+## 4. EL HALLAZGO GRANDE DE ESTA SESIÓN: el kernel no conoce ningún roadmap
 
-`CONST §4` (`aiw/CONSTITUCION.md:29-33`) exige, para todo run que **añada mecanismo**
-—código o paso nuevo en kernel, cola, lanzadores o guards, según `D-055`—: incidente
-documentado con cuatro campos, criterio de borrado en forma «se elimina si X», y
-presupuesto de líneas contra el techo.
+**Medido:** `grep` de `roadmap`, `run_id`, `queue_order`, `depends_on`, `closure_mode` y
+`correctness_model` sobre `kernel.mjs` **y** `queue.mjs` → **cero apariciones**. Lo único que
+el kernel lee de configuración es `config.json`, por la clave que el objetivo declara en
+`# Project` (`kernel.mjs:274`).
 
-**El techo, verbatim de `aiw/CONSTITUCION.md:29`:** *«Techo duro del kernel: ~500 líneas.
-Para añadir, se borra.»* **`kernel.mjs` tiene 478 líneas** (medido 2026-08-03, termina en
-salto de línea) → **22 líneas de holgura**, que es la cifra que los propios runs citan.
-El enforcement es **humano y documental**: ningún test, hook o check verifica el techo.
+**Lo que el kernel come es un `.md` escrito a mano.** `parseObjective` entiende siete
+secciones y ninguna es `run_id`: `# Project`, `# Objective`, `# Acceptance criteria`,
+`# Scope`, `# Out of scope`, `# Max rounds`, `# Verification`. Plantilla en
+`aiw/templates/objective.md`.
 
-**Reparto: 8 runs NO detenidos por la compuerta, 13 sí.** Confirma el reparto heredado del
-record del 2026-08-02, ahora medido contra disco.
+**`queue.mjs` son 69 líneas.** `readdirSync(pending).filter(.md).sort()` — **ordena NOMBRES
+DE FICHERO**, secuencialmente. Un fallo NO detiene la cola. Archiva a
+`processed/<ESTADO>-<nombre>.md`, con `git mv` si el objetivo está trackeado (`D-024`).
+Historia real: 13 objetivos procesados, 10 `APPROVED`, 2 `HUMAN_REVIEW`, 1 `ERROR`.
 
-**Los 8, con su declaración verbatim:**
+**Consecuencia operativa: el orden de ejecución lo fija el NOMBRE que la cabina elige.**
+Con relleno de tres dígitos (`cql-003-…`, `cql-042-…`) el orden alfabético **es** el
+`queue_order`. **Sin relleno se rompe: `cql-10` va antes que `cql-9`.**
 
-| `#N` | título | por qué no lo detiene |
-|---|---|---|
-| 22 | Run the first real objective against a large repository with a test net | «this run measures, it does not add code or a new step» |
-| 30 | Turn on push per project | «the push path already exists in the kernel and reports itself as not configured» |
-| 34 | Write one manifest of identity and outcome per run | **tres criterios completos** (`D-055` caso 1) |
-| 37 | Document what a run writes and where | «documentation is paper» |
-| 40 | Document categories and batches | «documentation is paper» |
-| 41 | Make the queue survive the terminal that launched it | **tres criterios completos** (`D-055` caso 2) |
-| 45 | Run real long unattended sessions and count them honestly | «this run EXERCISES the mechanisms and measures the result; it adds none of its own» |
-| 46 | Document how to run and audit an unattended window | «documentation is paper» |
+### El kernel NUNCA cierra nada — todo es ya semi-atendido
 
-**Salvedad sobre `#30`:** de los seis no-mecanismo, cinco caen en categorías que `D-055`
-excluye por escrito (papel y medición). `#30` no: su exclusión descansa en un argumento
-propio. Es el único cuya exclusión es argumental y no categórica.
+- **No mergea.** Deja el trabajo en la rama `aiw/<id>` y devuelve el árbol a la base
+  (`:450-458`), y solo si está limpio.
+- Emite `APPROVED`(0), `BLOCKED`(3), `HUMAN_REVIEW`(2 y 4). Nada más.
+- En `BLOCKED`/`HUMAN_REVIEW` escribe `proposed_followup.md`, cuya última línea es literal:
+  *«(Draft generated by the kernel; the human decides.)»*
+- Y no toca ningún roadmap, porque no sabe que existen.
 
-**Los 13 detenidos:**
+**Entonces hoy no existe la distinción unattended / semi-attended en el kernel: TODO es
+semi-attended.** Lo que falta no es cómo frenar los semi-atendidos antes de cerrar — eso ya
+pasa siempre. Lo que falta es cómo **cerrar** los desatendidos.
 
-- **Diez declaran «MECHANISM, INCIDENT PENDING»** en su propio texto: `#23`, `#28`, `#29`,
-  `#32`, `#35`, `#36`, `#38`, `#39`, `#43`, `#44`.
-- **Dos declaran «ITS INCIDENT IS DOCUMENTED; ITS DELETION CRITERION IS NOT»:** `#33`
-  «Give every run an identity its log folder cannot silently overwrite» y `#42`.
-- **`#31` «The intake»** lleva su adjudicación abierta, verbatim: *«Whether section 4
-  reaches a new component that translates roadmap into contract […] IS AN OPEN QUESTION
-  THAT MUST BE SETTLED IN DECISIONES.md BEFORE THIS RUN EXECUTES.»* Su propio texto añade
-  el argumento a favor: *«D-055 defines mechanism as code or a new step in aiw — kernel,
-  queue, launchers, guards — AND AN INTAKE IS NONE OF THOSE FOUR.»* **No se resolvió.**
+### Lo que falta tiene nombre y es `#31`
 
-**`#41` queda dentro pese a un hueco de la fuente.** `D-055` declara presupuesto de líneas
-en tres lugares —la norma (`DECISIONES.md:1823`), el caso 1 (`:1857`) y el caso 4
-(`:1936`)— y **no en el caso 2** (`:1860-1886`, que sí trae los cuatro campos y criterio de
-borrado). La compuerta exige que **el run** lo declare, y `#41` lo declara en su texto
-(`3. LINE BUDGET`). Es deuda documental de `DECISIONES.md`, no compuerta cerrada.
+**`#31` «The intake: turn a roadmap run into an executable contract»** es exactamente «que
+el kernel ejecute los runs de un roadmap ajeno». Está detenido por `CONST §4` con
+adjudicación **abierta desde el 2026-07-28**, verbatim:
+
+> *«Whether section 4 reaches a new component that translates roadmap into contract […] IS
+> AN OPEN QUESTION THAT MUST BE SETTLED IN DECISIONES.md BEFORE THIS RUN EXECUTES.»*
+
+Y su propio texto trae el argumento a favor: *«D-055 defines mechanism as code or a new step
+in aiw — kernel, queue, launchers, guards — AND AN INTAKE IS NONE OF THOSE FOUR.»*
+
+**Solo el operador puede cerrarla.** Es la razón de fondo de que `aiw` parezca parado.
 
 ---
 
-## 4. EL CRUCE QUE DECIDE QUÉ SE PUEDE ABRIR — medido el 2026-08-06
+## 5. CQL COMO BLANCO — el plan acordado con el operador el 2026-08-06
 
-Cruzando la compuerta con `depends_on` (elegible = todas sus dependencias `completed`):
+### Su roadmap, medido a las 13:24 CST
 
-**Solo DOS runs son ejecutables: `#22` y `#41`.** Los dos con `deps=0`.
+**42 runs, los 42 clasificados completos.** Corriendo su módulo de derivación
+(`aiw-console/tools/classification/classification.mjs`) sobre los 42:
+**41 `SEMI_ATTENDED` · 1 `ATTENDED`** (el `#2`, piloto de fracciones, `JUDGED_DEFINES` +
+`CRITICAL`). Los 40 de revisión son `JUDGED_ACCEPTS` + `FUNCTIONAL` + `LOCAL` + `SILENT`.
 
-Los otros seis que `§4` no detiene están esperando aristas: `#30`→`#29`; `#34`→`#33`;
-`#37`→`#33`,`#34`; `#40`→`#38`,`#39`; `#45`→ seis; `#46`→`#41`. Y de los once elegibles por
-aristas, nueve están detenidos por la compuerta.
+**Solo dos aristas:** `#7` y `#37`, ambas de `#1` («Repair the two misspelled code
+families»). Todos los demás `deps=0` — lote limpio.
 
-**El desbloqueo más barato del roadmap:** `#34` tiene sus tres criterios completos y está
-bloqueado detrás de `#33`, al que la compuerta detiene **solo por el criterio de borrado
-que falta**. Su incidente ya está documentado. **Una entrada de papel en `DECISIONES.md`
-abre dos runs.** No se propuso; queda nombrado.
+`SEMI_ATTENDED` **NO se puede declarar: es derivado y nunca se almacena**
+(`project-console.js:79`; el test `classification-transport-and-console.test.mjs:182` aborta
+si un run lo transporta). Sale de `correctness_model` + `severity`.
 
-**AVISO QUE INVALIDA ESTE CRUCE, y hay que re-medirlo:** el hilo `aiw-console` adjudicó
-que **un ciclo con `human_qa` positivo satisface una arista `depends_on_human_approved`, y
-que `completed` a secas NO la satisface** — los cuatro estados no distinguen un run que
-cerró una IA de uno que revisó una persona. Está en su `CONTRATO.md` §15 y entró en su
-repo con el commit `6ee3277`. **La medición de arriba cuenta `depends_on` contra `status`,
-que es la semántica vieja.** Cuando eso llegue por `DECISIONES.md`, **la elegibilidad de
-los 21 se re-mide entera**. Hoy no cambia nada: los dos ejecutables no tienen aristas.
+### El reparto que el operador aprobó
 
----
+| paso | quién |
+|---|---|
+| Registrar CQL en `aiw/config.json` | **este hilo** — una línea, sin mecanismo, sin `CONST §4` |
+| Escribir un `.md` de objetivo por run, derivado del canónico de CQL | **este hilo** |
+| Correr `node queue.mjs` | **el operador**, en su máquina |
+| Leer logs, ramas y diffs; medir y reportar | **este hilo**, desde disco |
+| QA y cerrar los runs en la consola de CQL | el operador + **el hilo de CQL** |
 
-## 5. «EL TERCERO» — cerrado, no queda pendiente
+**Por qué `queue.mjs` corre en la máquina del operador y no en la cabina: es una medición,
+no una regla.** El TeX Live de la cabina está incompleto (le faltan los 5 paquetes de §1),
+así que `D-012` abortaría con baseline roja siempre. En la del operador, verde.
 
-El texto de dos runs vivos dice *«One of only three runs in this roadmap that can execute
-on the strength of an incident that is already documented»*, y la sesión anterior solo
-encontró dos. **El tercero es `#24` `RUN-AIW-TICKET-PARSE-REGRESSION-TEST-001`, ya
-`completed`** — barrido sobre los 46, no sobre los vivos. Los tres:
+**`verification` NO está limitado a `npm test`.** El relevo anterior lo afirmaba y era
+demasiado fuerte. Medido: `execProc` hace `spawn(..., { shell: true })` (`kernel.mjs:100`),
+así que es **una cadena de shell cualquiera**; y `kernel.mjs:278` lee
+`obj.verification || project.verification`, o sea **un objetivo puede traer la suya**. Que
+`aiw` acepte una compilación de LaTeX **no es mecanismo y no cuesta una línea de kernel.**
 
-| `#N` | `status` | caso de `D-055` |
-|---|---|---|
-| 24 | `completed` | caso 4, corregido por `D-056` |
-| 34 | `planned` | caso 1 |
-| 41 | `planned` | caso 2 |
+### Lo que dispara el trabajo de este hilo
 
-La frase dice «in this roadmap», no «entre los vivos». **Entre los 21 vivos son dos.**
-Los `completed` no son un prefijo contiguo: `#24`–`#27` están intercalados entre vivos.
+**Una sola cosa: `O2` de CQL cerrado, con el comando de verificación VERDE en la máquina del
+operador.** Sin eso no se registra CQL: registrarlo sin verificación solo cambia un error
+por otro. Y hacen falta dos datos de su hilo:
 
----
+1. **el comando exacto**, tal cual se teclea — va literal en el `# Verification`;
+2. **qué queda en el `.gitignore`** — de ahí salen los globs del `# Scope`.
 
-## 6. LOS DOS BLANCOS DESCARTADOS — con la medición que los descartó
+**Bloqueo medido que su hilo debe cerrar antes:** CQL **no tiene `.gitignore`** y tiene
+**24 artefactos de build trackeados** (4 cada uno de `.aux`, `.log`, `.out`, `.synctex.gz`,
+`.pdf`, `.auxlock`). El acto de verificar reescribe ficheros versionados, el guard de
+alcance los ve fuera de scope y mata el run con `BLOCKED_SCOPE` **en la ronda 1, siempre**.
 
-`#22` pide, verbatim, *«a measurement of what the kernel actually did against a large
-surface with a real test net»*. **Ningún run del roadmap nombra contra qué repositorio
-corre** — comprobado leyendo los 21 textos verbatim.
+### Y el piloto no se salta
 
-**`cantu-studio` — DESCARTADO.** Tres obstáculos, el tercero decisivo:
-1. **No está registrado** en `aiw/config.json` (`kernel.mjs:275` mata antes de tocar disco).
-2. **No existe comando de verificación que funcione:** no tiene `package.json` en la raíz y
-   ninguno de sus cuatro declara script `test`. Copiar `"npm test"` daría baseline rojo.
-3. **Declara `aiw_managed: false`, `mode: external_manual_readonly`, «No hagas commits» y
-   un guardarraíl `ACTIVE`** contra tocar el checkout monitoreado. El kernel commitea cada
-   ronda. **Es política declarada por otro hilo y no se levanta desde aquí.**
+**`#3` va SOLO.** Es el primer objetivo que traduce un run de otro repo a un contrato del
+kernel, y lo que se le pide no es la revisión de Operaciones Aritméticas sino **un veredicto
+sobre la plantilla**: qué campo no se supo derivar, qué alcance quedó ambiguo, qué le faltó.
+Después, lotes, heredando sus resoluciones y reportando solo huecos NUEVOS.
 
-*(Cifra corregida de paso: el audit del 2026-07-24 citaba «~262 casos» de test; el número
-real medido son **350 en 32 archivos**.)*
-
-**`cantu-quizzes-latex` — NO DISPONIBLE TODAVÍA.** Existe desde el 2026-08-06 como cuarto
-proyecto con hilo propio, repo con contenido real, canónico de 3 objetivos y 10 fases sin
-runs, y `.project/` emitido. **Pero no tiene comando de verificación y la máquina no tiene
-toolchain de LaTeX — 0 de 8 binarios.** Su hilo avisará. Su sitio natural es como blanco de
-`#45`, no de `#22`.
-
-**`aiw-console` — EL BLANCO ELEGIDO.** Registrado como `console`, `verification: "npm test"`
-ejecutable (`package.json:7-9` declara `"test": "node --test"`), `base_branch: "main"`.
-Coste de habilitación **cero**. **No declara ningún guardarraíl** equivalente al de
-`cantu-studio` y confirmaron que no lo declararán.
-
-**Tamaño medido el 2026-08-06:** 297 ficheros trackeados, **8 623 486 bytes ≈ 8,6 MB** —
-`.md` 174 ficheros/4,41 MB, `.json` 59/2,08 MB, `.mjs`+`.js` 51/**1,66 MB de código**.
-No es un sandbox. **La comparación contra «los repos pequeños» anteriores NO es medible:**
-el `path` de `sandbox` en `config.json` ya no existe en disco.
-
-**Restricción propia que se conserva en cualquier blanco:** el alcance queda **fuera de
-`context/`**. Ahí viven los records de los tres hilos y los handoffs.
+**Y el trabajo manual de escribir esos 40 ficheros es el incidente con sus cuatro campos que
+desbloquea `#31`.** No hay que inventarlo: sale de correr el camino manual una vez.
 
 ---
 
-## 7. LA MEDICIÓN QUE `#22` PROMETE: SALEN 4 DE 5
+## 6. LA COMPUERTA `CONST §4` — re-confirmada contra disco el 2026-08-06
 
-Su texto promete medir cinco cosas. Medido con `ruta:línea` el 2026-08-06:
+`CONST §4` (`aiw/CONSTITUCION.md:29-33`) exige, para todo run que añada mecanismo: incidente
+con cuatro campos, criterio de borrado en forma «se elimina si X», y presupuesto de líneas.
+**Techo verbatim: *«Techo duro del kernel: ~500 líneas. Para añadir, se borra.»*
+`kernel.mjs` = 478 líneas → 22 de holgura.** El enforcement es humano y documental: ningún
+test lo verifica.
 
-- **Rondas consumidas** — sale del log.
-- **En qué bloqueó el reviewer** — sale del log.
-- **Dónde se fue el tiempo del executor** — exige unir `STAGE.txt` con `config.json` a
-  mano; el kernel **no congela los límites vigentes en el log**.
-- **Si los timeouts están bien dimensionados** — igual que el anterior.
-- **Si el tope de diff truncó algo que el reviewer necesitaba — NO SE PUEDE MEDIR.** El
-  marcador de truncamiento (`kernel.mjs:394`) entra solo en el prompt del reviewer, el
-  prompt **no se escribe nunca a disco** (`:402-403` guarda solo la respuesta), la longitud
-  del diff no se mide, y `prompts/reviewer.md` no pide denunciarlo.
+**El reparto 8 no detenidos / 13 detenidos SE CONFIRMA.**
 
-**Adjudicado por cabina, y se mantiene:** `#22` entrega cuatro de cinco y **declara la
-quinta como hueco medido**. **No se añade código para cerrarla** — sería mecanismo nuevo
-bajo `CONST §4`, y el propio texto de `#22` declara *«No mechanism under CONST §4»*.
-**El hueco tiene destino:** si una ventana contra repo grande muestra que el reviewer
-bloqueó por diff truncado, **eso es el incidente con sus cuatro campos**, y el mecanismo
-entra por la puerta.
+⚠ **Cuidado al re-medirlo con `grep`: casi lo reporto mal.** Un patrón sobre
+«MECHANISM, INCIDENT PENDING» da **9/12**, porque **`#23` redacta su declaración distinto**
+—*«THIS RUN ADDS MECHANISM AND ITS INCIDENT IS PENDING»*—. Leído verbatim, `#23` **sí** está
+detenido. **La compuerta se lee verbatim, no por patrón.**
+
+**Los 8 libres:** `#22`, `#30`, `#34`, `#37`, `#40`, `#41`, `#45`, `#46`.
+**Los 13 detenidos:** `#23`, `#28`, `#29`, `#31`, `#32`, `#33`, `#35`, `#36`, `#38`, `#39`,
+`#42`, `#43`, `#44`.
+
+**Cruzando con `depends_on`: solo DOS ejecutables, `#22` y `#41`,** los dos con `deps=0`.
+Once son elegibles por aristas y nueve de ellos los detiene la compuerta.
+
+**El desbloqueo más barato del roadmap sigue en pie:** `#34` tiene sus tres criterios
+completos y está detrás de `#33`, al que la compuerta detiene **solo por el criterio de
+borrado que falta**; su incidente ya está documentado. **Una entrada de papel abre dos runs.**
+
+**La regla de `human_qa` NO entró en `DECISIONES.md`** — la última entrada es `D-064`. Y es
+discutible por una razón más fuerte: **el canónico de `aiw` tiene CERO
+`depends_on_human_approved`**. Aunque entre, la elegibilidad de los 21 no se mueve.
 
 ---
 
-## 8. HALLAZGOS SUELTOS — nombrados, sin ticket, todos de `aiw`
+## 7. HALLAZGOS SUELTOS DE `aiw` — nombrados, sin ticket
 
-Ninguno se corrigió: no eran alcance de `#22`.
-
-1. **`config.json` usa la clave `path`, no `root`.** El kernel la lee como `project.path`
-   (`kernel.mjs:276`). Un ticket de esta cabina la llamó `root` por copiarla de un audit
-   viejo en vez de medirla.
-2. **El proyecto `sandbox` de `config.json` tiene un `path` que no existe en disco.**
-   Abortaría hoy si alguien lo apuntara.
+1. **`config.json` usa la clave `path`, no `root`** (`kernel.mjs:276`).
+2. **El proyecto `sandbox` tiene un `path` que no existe en disco.** Abortaría hoy.
 3. **`base_branch` no tiene ninguna validación** y se usa a ciegas en seis sitios
    (`kernel.mjs:312, 318, 333, 393, 435, 457`).
-4. **`verification` solo admite `"npm test"` en la práctica**, y los dos proyectos que
-   `config.json` declara lo tienen así. **Que admita otra cosa —una compilación de LaTeX—
-   es trabajo de `aiw`, y es prerequisito de que `cantu-quizzes-latex` sea blanco.**
-   Probablemente mecanismo bajo `CONST §4`. Lo pidió el hilo `aiw-console`.
-5. **`aiw` no tiene `.gitattributes`** — ver §0.
-6. **`git_history.json` NO aparece en el `git status` de `aiw`**: está ignorado. Es
-   `D-053` adjudicación 4 **ya ejecutada aquí**, y `aiw` es el único de los tres donde lo
-   está. Si la consola pinta un banner de artefacto no cargado sobre `aiw`, **no es
-   avería: es pulsar Sync History**. Deuda §8.3 del handoff anterior: **CERRADA**, sin
-   nada que reparar en `aiw`.
+4. **`verification` acepta cualquier cadena de shell** — corrige el §8.4 del relevo anterior,
+   que decía lo contrario. **No hace falta trabajo de `aiw` para que CQL sea blanco.**
+5. **`aiw` no tiene `.gitattributes`** — ver §0 y §1.
+6. **`git_history.json` está ignorado en `aiw`** — `D-053` adjudicación 4 ya ejecutada aquí.
+   Si la consola pinta banner de artefacto no cargado, es pulsar Sync History, no avería.
+7. **Del `#22`, cuatro de cinco mediciones salen; la quinta no se puede medir.** El marcador
+   de truncamiento de diff (`kernel.mjs:394`) entra solo en el prompt del reviewer, y el
+   prompt no se escribe nunca a disco (`:402-403` guarda solo la respuesta). **`#22` entrega
+   cuatro y declara la quinta como hueco medido. No se añade código para cerrarla** — sería
+   mecanismo, y el propio `#22` declara «No mechanism under CONST §4». **El hueco tiene
+   destino:** si una ventana real muestra al reviewer bloqueando por diff truncado, eso es el
+   incidente con sus cuatro campos.
 
 ---
 
-## 9. LOS OTROS HILOS — estado al 2026-08-06, según ellos
+## 8. LOS OTROS HILOS — al 2026-08-06
 
-**`aiw-console`** en **`ca64caf`**, árbol limpio, **56 runs, 0 `active`**. Su run que toca
-`project-console.js` quedó **liberado** al confirmarles que no lanzamos.
+- **`aiw-console`** en `b2a5079`, **sucio con el motor de LOTES a medio hacer** más
+  `tests/fixtures/batches/` sin trackear. Su run que toca `project-console.js` sigue en
+  vuelo. En este repo escriben **CUATRO** hilos: **el `git add` va SIEMPRE dirigido a
+  ficheros por su nombre, nunca `-A`.**
+- **`cantu-studio`** en `0ff12d5`, **limpio**.
+- **`cantu-quizzes-latex`** en `23fa94d`, sucio con el **piloto de fracciones en curso**.
+- **`cantu-lessons`** en `27f8cdc`, un fichero sucio.
 
-**Dos entradas nuevas de `DECISIONES.md` que obligan a este hilo:**
-- **`D-062`** — un contenedor sin runs es válido y no deriva nada.
-- **`D-063`** — registra el cuarto hilo y **los tres acuerdos** que se intercambiaron por
-  mensajes: (a) la ventana se verifica por el **último commit que tocó los ficheros del
-  alcance**, no por el HEAD; (b) el criterio de un objetivo ajeno es **«no gana fallos
-  nuevos»** y nunca «suite verde»; (c) **un pin de registro no es deuda**.
+**Decisiones que obligan a este hilo:** `D-062` (contenedor sin runs es válido), `D-063`
+(cuarto hilo + los tres acuerdos: ventana por último commit del alcance, criterio «no gana
+fallos nuevos», un pin de registro no es deuda) y **`D-064`** (la cabina opera la consola por
+defecto; `planned → active` y `active → completed` sin preguntar; estructura con ritual de
+cinco puntos; Git nunca).
 
-**`cantu-quizzes-latex`** — cuarto proyecto, hilo propio desde el 2026-08-06. Ver §6.
-
-**Recordatorio permanente:** en `aiw-console` escriben ahora **cuatro** hilos. El `git add`
-sobre ese repo va **SIEMPRE dirigido a ficheros por su nombre**, nunca `-A`.
-
----
-
-## 10. LO QUE HACE LA SESIÓN NUEVA, EN ORDEN
-
-1. **Arranque de Cowork:** declarar hilo, derivar la ruta de montaje, probar capacidad, y
-   **leer este handoff desde disco contrastando sus cifras contra el canónico**. Gana el
-   disco.
-2. **Re-medir el árbol de `aiw` con `--ignore-cr-at-eol`** y declarar cuál lectura da.
-3. **Decidir el destino de `#22`.** Está `active` sin haber corrido. Antes de relanzar,
-   preguntar al hilo `aiw-console` si su run ya pintó las etiquetas: si lo hizo, el `007`
-   se retira; si no, se pide ventana nueva y se relanza con las cuatro condiciones.
-4. **Si `#22` no puede relanzarse pronto**, el otro ejecutable es **`#41` «Make the queue
-   survive the terminal that launched it»** — `deps=0`, tres criterios de `§4` completos,
-   sin blanco externo. `#22` **no se mueve de su posición**: su sitio delante del manifest,
-   las señales de media ejecución, los worktrees y las noches desatendidas es correcto.
-5. **Pendiente de decisión del operador, sin resolver:** qué hacer con la rama del `007`
-   **no aplica** — nunca existió.
+**Acuerdo pendiente de registrar en `DECISIONES.md`:** el reparto de §5 —quién escribe el
+canónico de CQL y quién el de `aiw`—. No se escribió porque `DECISIONES.md` tenía trabajo de
+otro hilo sin commitear. **Se registra en cuanto el árbol lo permita.**
 
 ---
 
-## 11. RASTRO DE LA SESIÓN — ficheros en `_scratch\` (fuera de todos los repos)
+## 9. LO QUE HACE LA SESIÓN NUEVA, EN ORDEN
 
-Los produjo esta sesión. **La cabina no puede borrar; los borra el operador.**
+1. **Arranque:** declarar hilo, derivar la ruta de montaje —**cambia entre sesiones y con la
+   máquina; no se hereda de nada**—, probar capacidad y leer este handoff desde disco
+   contrastando cifras contra el canónico. **Gana el disco.**
+2. **Recorrer la §1 entera antes de tocar nada.** Es una máquina nueva: las rutas de
+   `config.json`, el `.gitattributes` que falta y los paquetes de TeX son fallos de arranque,
+   no de trabajo.
+3. **Re-medir el árbol de los cinco repos con `-c core.autocrlf=true`** y declarar la lectura.
+4. **Comprobar si `O2` de CQL está cerrado y verde.** Si lo está: registrar CQL en
+   `config.json`, dar el parte, y emitir el objetivo de `#3` **solo**, como piloto.
+5. **Si `O2` no está listo**, el otro ejecutable de `aiw` es **`#41` «Make the queue survive
+   the terminal that launched it»** — `deps=0`, tres criterios de `§4` completos, sin blanco
+   externo. **`#22` no se mueve de su posición:** su sitio delante del manifest, las señales
+   de media ejecución, los worktrees y las noches desatendidas es correcto.
+6. **Adjudicación de `#31` pendiente del operador.** Es el run que más devuelve.
 
-Desechables ya: `elegibles.mjs`, `baseline-console.txt`, `_cowork_write_test.txt`,
-`AIW-22-ENMIENDA.md`, `AIW-22-ENMIENDA-2.md`.
+---
 
-Vale la pena conservar hasta que `#22` cierre: `AIW-22-PREFLIGHT.md` (52 KB, la medición de
-superficie de arranque), `AIW-22-OBJETIVO.md` (copia byte a byte del objetivo),
-`AIW-CONST4-HECHOS.md` (88 KB, la tabla de la compuerta), `AIW-21-CORPUS.md` (los 21 textos
-verbatim, 48 788 caracteres), `AIW-TERCERO.md`.
+## 10. RASTRO DE LA SESIÓN — la cabina no puede borrar
 
-**Nada de esto entró en ningún repo, y así debe seguir.**
+**Dentro de repos (error de esta cabina; sondeó donde no debía):**
+
+    AIW_Workspace\aiw\objectives\pending\_probe.md      ← BORRAR ANTES DE CORRER queue.mjs
+    AIW_Workspace\aiw\.git\_probe
+
+**Fuera de repos:**
+
+    AIW_Workspace\_scratch\_cowork_probe_aiw.txt
+
+**El primero urge:** termina en `.md` y está en `objectives/pending/`, así que `queue.mjs`
+lo levantaría e intentaría ejecutarlo como objetivo.
+
+Esta sesión **no escribió ningún canónico y no tocó la consola.**

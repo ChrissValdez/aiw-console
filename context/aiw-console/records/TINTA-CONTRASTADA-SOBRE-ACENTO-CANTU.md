@@ -3,40 +3,80 @@
 Run canónico: `RUN-CANTU-ACCENT-INK-CONTRAST-ROLE-001`, `queue_order` 34, `status: active`.
 Título verificado contra `.aiw/roadmap/roadmap.json` en la primera ronda: coincide.
 
-Dos rondas. La primera **paró** ante dos guardas del propio ticket; ambas paradas
-resultaron correctas. La segunda las desbloqueó con autorización explícita del operador y
-ejecutó el run. **Queda una tercera parada abierta**, al final de este documento.
+Cuatro rondas. La primera **paró** ante dos guardas del propio ticket; ambas paradas
+resultaron correctas. La segunda las desbloqueó y ejecutó el run. La tercera cerró una
+octava aserción. **La cuarta sustituyó la regla de derivación tras la QA del operador**, que
+es lo que este documento describe como estado final.
 
 ---
 
-## 1. La regla y sus tres decisiones
+## 1. Dos reglas: la que se probó y la que quedó
+
+### 1.1 Lo que se implementó primero — derivación por mezcla
 
 ```js
-// existente, colorSystem.js
-surface: mixWithWhite(rgb, 0.92)
-border:  mixWithWhite(rgb, 0.65)
-
-// nuevo
 accentText = mixWithBlack(rgb, 0.62)
              // si contraste(accent, esa tinta) < 3.0:
              mixWithWhite(rgb, 0.86)
 ```
 
-Es deliberadamente **la misma familia** que ya produce `surface` y `border`, con el extremo
-contrario. La simetría es la razón de la elección, no un detalle de implementación.
+Era deliberadamente la misma familia que produce `surface` y `border`, con el extremo
+contrario. Cumplía todos sus números: cero tintas puras, cuatro tokens en rama clara, peor
+contraste 3.25, y ninguna prueba en rojo.
 
-1. **Ratio fijo, nunca resuelto por token.** Resolverlo daba resultados erráticos: dos
-   azules casi idénticos recibían tintas opuestas. Con ratio fijo eso desaparece —
-   `#5E81AC` y `#4F75A8` son vecinos y **sí** caen en ramas distintas (3.28 oscura vs 3.97
-   clara), pero por una diferencia de luminancia real y estable, no por búsqueda.
-2. **Ni blanco ni negro puros en ninguna rama.** Medido sobre los dieciocho: **cero tintas
-   puras**. Es consecuencia de que ambos ratios sean menores que 1.
-3. **Un solo rol para todas las superficies.** No se derivan dos tintas, una para texto
-   grande y otra para pequeño. El umbral **3.0** es el de texto grande porque la superficie
-   de referencia es la franja de título de «Regla matemática», en mayúsculas y negrita.
+### 1.2 Por qué el operador la rechazó
 
-Umbral y ratios viven como constantes con nombre en `colorSystem.js`:
-`ACCENT_TEXT_CONTRAST_THRESHOLD`, `ACCENT_TEXT_DARK_RATIO`, `ACCENT_TEXT_LIGHT_RATIO`.
+**No por ilegible: por cómo combina.** El operador la ejecutó en QA sobre los dieciocho
+tokens, probó cuatro fórmulas más en comparadores visuales y la descartó.
+
+El diagnóstico que salió de ahí, y que es la razón real del cambio: **la paleta es Nord.**
+Siete de los dieciocho acentos son colores Nord literales y el resto están en su idioma.
+**Nord no deriva tintas.** Su armonía está construida sobre dos neutros fijos, `#2E3440` y
+`#ECEFF4`, y **este motor ya los usa emparejados** — verificado en
+`src/builders/web/partials/commons.js`, **línea 67**:
+
+```js
+code:   { color: '#ECEFF4', bg: '#2E3440' }  // Snippets
+```
+
+Una tinta derivada por mezcla es un color **cromático**: hereda el matiz del acento y mete un
+segundo color en la composición, que compite con él. Un neutro no compite: deja que el
+acento sea el único color de la pieza. Eso es lo que el operador vio en el comparador y lo
+que ninguna métrica de contraste capturaba.
+
+**Y sale mejor también en número:** peor contraste **3.50** frente al **3.25** de la regla
+derivada.
+
+### 1.3 La regla final
+
+```js
+accentText = L*(accent) > 55 ? '#2E3440' : '#ECEFF4'
+```
+
+Nada más. Sin ratio, sin mezcla, sin rama por luminancia relativa.
+
+`L*` es la claridad perceptual de CIE, derivada de la luminancia relativa que el módulo ya
+calculaba: `Y > 0.008856 ? 116·∛Y − 16 : 903.3·Y`. Vive en `colorSystem.js` como
+`getPerceptualLightness`, junto a las otras tres funciones de color. Sin dependencias nuevas.
+
+No es lo mismo que la luminancia relativa: `L*` reparte la escala como la ve el ojo, y por
+eso una frontera única sobre `L*` separa bien claros de oscuros, cosa que una frontera sobre
+`Y` no hace.
+
+Las dos anclas y el umbral son constantes con nombre, no literales dentro de la función:
+`ACCENT_TEXT_DARK`, `ACCENT_TEXT_LIGHT`, `ACCENT_TEXT_LIGHTNESS_THRESHOLD`.
+
+**`mixWithBlack` se retiró.** Lo había añadido este mismo run y quedó sin uso; verificado que
+nada más en el repositorio lo llamaba. `mixWithWhite`, `surface`, `border` y `text` no se
+tocaron.
+
+### 1.4 La tercera opción, evaluada y descartada
+
+Se evaluó también una **cabecera de fondo pálido**, estilo «Nota destacada»: resolvía el
+contraste con holgura. **Se descartó por decisión de diseño del operador**: duplicaba la
+forma de un componente ya existente y le costaba identidad visual a «Regla matemática», que
+dejaría de distinguirse de un callout. No es un problema de contraste, es de repertorio de
+formas.
 
 ---
 
@@ -60,54 +100,71 @@ Umbral y ratios viven como constantes con nombre en `colorSystem.js`:
 
 ---
 
-## 3. La tabla de dieciocho
+## 3. La tabla de dieciocho, con la regla final
 
-Recalculada de cero con `mixWithBlack` como espejo literal de `mixWithWhite` y la fórmula
-WCAG. **Coincide con la de la cabina en las dieciocho filas: mismo hex, misma rama, mismo
-contraste a dos decimales. Cero discrepancias, ni de redondeo.**
+Recalculada de cero y re-medida al final a través del módulo real ya modificado.
+**Coincide con la de la cabina en las dieciocho filas.**
 
-| acento | tinta | rama | contraste |
+| acento | L\* | tinta | contraste |
 |---|---|---|---|
-| `#B48EAD` | `#443642` | oscura | 4.00 |
-| `#5E81AC` | `#243141` | oscura | 3.28 |
-| `#88C0D0` | `#34494F` | oscura | 4.75 |
-| `#C2B280` | `#4A4431` | oscura | 4.61 |
-| `#D6CFC2` | `#514F4A` | oscura | 5.28 |
-| `#A3BE8C` | `#3E4835` | oscura | 4.72 |
-| `#D08770` | `#4F332B` | oscura | 4.01 |
-| `#BF616A` | `#492528` | oscura | 3.25 |
-| `#4C566A` | `#E6E7EA` | **clara** | 5.97 |
-| `#9B6FA5` | `#3B2A3F` | oscura | 3.28 |
-| `#4F75A8` | `#E6ECF3` | **clara** | 3.97 |
-| `#6EB4C7` | `#2A444C` | oscura | 4.44 |
-| `#B69F58` | `#453C21` | oscura | 4.21 |
-| `#C9BFAE` | `#4C4942` | oscura | 4.94 |
-| `#87A96B` | `#334029` | oscura | 4.15 |
-| `#C97353` | `#4C2C20` | oscura | 3.59 |
-| `#B24B5A` | `#F4E6E8` | **clara** | 4.28 |
-| `#3F4A5D` | `#E4E6E8` | **clara** | 7.14 |
+| `#D6CFC2` | 83.35 | `#2E3440` | 8.07 |
+| `#C9BFAE` | 77.72 | `#2E3440` | 6.87 |
+| `#88C0D0` | 74.50 | `#2E3440` | 6.24 |
+| `#A3BE8C` | 73.87 | `#2E3440` | 6.13 |
+| `#C2B280` | 72.81 | `#2E3440` | 5.93 |
+| `#6EB4C7` | 69.53 | `#2E3440` | 5.36 |
+| `#B69F58` | 66.09 | `#2E3440` | 4.81 |
+| `#87A96B` | 65.43 | `#2E3440` | 4.71 |
+| `#B48EAD` | 63.40 | `#2E3440` | 4.41 |
+| `#D08770` | 63.27 | `#2E3440` | 4.39 |
+| `#C97353` | **57.37** | `#2E3440` | 3.60 |
+| `#5E81AC` | **53.01** | `#ECEFF4` | **3.50** |
+| `#9B6FA5` | **53.01** | `#ECEFF4` | **3.50** |
+| `#BF616A` | 52.58 | `#ECEFF4` | 3.55 |
+| `#4F75A8` | 48.53 | `#ECEFF4` | 4.10 |
+| `#B24B5A` | 45.95 | `#ECEFF4` | 4.50 |
+| `#4C566A` | 36.43 | `#ECEFF4` | 6.40 |
+| `#3F4A5D` | 31.22 | `#ECEFF4` | 7.76 |
 
-Invariantes, re-medidas al final a través del módulo real ya modificado:
+Ordenada por `L*` para que la frontera se vea: **`#C97353` (57.37) es el último oscuro y
+`#5E81AC` (53.01) el primer claro.** Entre ambos hay 4.4 puntos de `L*`, así que el umbral 55
+no está pegado a ningún token de la paleta.
 
-- **Tintas puras `#FFFFFF` o `#000000`: 0.**
-- **Rama clara: exactamente 4** — `#4C566A`, `#4F75A8`, `#B24B5A`, `#3F4A5D`.
-- **Peor contraste real: 3.2519**, en `#BF616A` → `#492528`. Es el token más apretado de la
-  paleta y el primero que se caería si alguien moviera el ratio 0.62.
+Invariantes, medidas por el módulo real:
+
+- **Once `#2E3440`, siete `#ECEFF4`.** Coincide con la tabla del ticket token a token.
+- **Solo dos valores distintos** en los dieciocho. No hay tinta derivada.
+- **Peor contraste real: 3.4959**, en `#5E81AC`. `#9B6FA5` queda a 3.4965, empatado a dos
+  decimales. Ambos redondean al **3.50** que midió la cabina, y ambos superan 3.0.
+
+### Comprobación cruzada obligatoria: cero discrepancias
+
+Para los dieciocho, el umbral `L* > 55` y la comparación «gana el ancla que más contraste
+dé» **coinciden en los dieciocho. Discrepancias: 0.** El umbral está bien colocado: no hay
+ningún token al que el umbral asigne un ancla y la métrica de contraste prefiera la otra.
+
+### El caso al filo
+
+**`#FF007F` → `L*` = 54.86.** A 0.14 de la frontera, por debajo, así que recibe `#ECEFF4`.
+Coincide con el 54.9 de la cabina; la diferencia es de presentación, no de cálculo. Es el
+valor que usa `webAuthorPaletteDerivedRolesAndCustomHex.test.mjs:108`, y por eso se verificó
+antes de escribir nada: una implementación de `L*` con otro redondeo lo habría volteado a
+`#2E3440` y la prueba habría quedado escrita sobre un valor equivocado.
 
 ### El hex libre recorre el mismo camino
 
 Sin trato especial: `resolveAuthorColorToken` esparce `deriveColorRolesFromAccent` para
 cualquier `#RRGGBB` fuera de la paleta.
 
-| hex libre | tinta | rama | contraste |
-|---|---|---|---|
-| `#EBCB8B` (claro) | `#594D35` | oscura | 5.30 |
-| `#2E3440` (oscuro) | `#E2E3E4` | **clara** | 9.72 |
-| `#FF007F` | `#610030` | oscura | 3.58 |
-| `#123456` | `#DEE3E7` | **clara** | 9.84 |
+| hex libre | L\* | tinta |
+|---|---|---|
+| `#EBCB8B` (claro) | 83.04 | `#2E3440` |
+| `#C97353` (al filo, arriba) | 57.37 | `#2E3440` |
+| `#FF007F` (al filo, abajo) | 54.86 | `#ECEFF4` |
+| `#123456` (oscuro) | 21.04 | `#ECEFF4` |
 
 Comprobado de extremo a extremo: compilar un bloque `rule` con `variant: '#EBCB8B'` emite
-`accentTextColor: '#594D35'` y `renderRule` lo pinta. Con `#2E3440`, `#E2E3E4`.
+`accentTextColor: '#2E3440'` y `renderRule` lo pinta; con `#5E81AC`, `#ECEFF4`.
 
 ---
 
@@ -202,8 +259,10 @@ token**, así que un color personalizado deja de recibir trato distinto de un to
 misma compensación a mano atada al nombre. Verificado que no queda `border-bottom` residual
 en ninguna variante. Declarado en el packet como cambio visible, no como defecto.
 
-Comprobado de extremo a extremo: `str` pasa de `#6B6352` a `#514F4A`, `focus` de `#8C7B50` a
-`#4A4431`, `ex` de `#4C566A` a `#34494F`.
+Comprobado de extremo a extremo con la regla final: los tres casos que tenían excepción
+escrita a mano convergen ahora en el mismo ancla — `str` pasa de `#6B6352` a `#2E3440`,
+`focus` de `#8C7B50` a `#2E3440`, y `ex` de `#4C566A` a `#2E3440`. Es exactamente el efecto
+buscado: dejan de recibir trato distinto por su nombre.
 
 ---
 
@@ -224,16 +283,20 @@ subconjunto, y a ninguna se le borró una clave antes de comparar. **Cada una ga
 nueva con su valor esperado escrito**, de modo que sigue fallando mañana si aparece una
 clave que nadie espera. Eso era todo su valor y se conserva intacto.
 
-| # | Archivo | Línea original | Gana |
-|---|---|---|---|
-| 1 | `authorLiteColorSystem.test.mjs` | 59 | `accentText: '#DEE3E7'` |
-| 2 | `authorLiteColorSystem.test.mjs` | 73 | `accentText: '#4F332B'` |
-| 3 | `authorLiteColorSystem.test.mjs` | 121 | `accentText: '#594D35'` |
-| 4 | `webAuthorPaletteDerivedRolesAndCustomHex.test.mjs` | 108 | `accentText: '#610030'` |
-| 5 | `webTableSafety.test.mjs` | 63 | `accentTextColor: '#243141'` |
-| 6 | `webTablesParitySchemaCompiler.test.mjs` | 148 | `accentTextColor: '#243141'` |
-| 7 | `webColumnsChildExpansionSafety.test.mjs` | 518 | `accentTextColor: '#243141'` |
-| 8 | `webConceptGridSafety.test.mjs` | 78 | `accentTextColor: '#443642'` **y** `'#4A4431'` |
+| # | Archivo | Acento | Regla 1 (retirada) | **Regla final** |
+|---|---|---|---|---|
+| 1 | `authorLiteColorSystem.test.mjs` | `#123456` | `#DEE3E7` | **`#ECEFF4`** |
+| 2 | `authorLiteColorSystem.test.mjs` | `#D08770` | `#4F332B` | **`#2E3440`** |
+| 3 | `authorLiteColorSystem.test.mjs` | `#EBCB8B` | `#594D35` | **`#2E3440`** |
+| 4 | `webAuthorPaletteDerivedRolesAndCustomHex.test.mjs` | `#FF007F` | `#610030` | **`#ECEFF4`** |
+| 5 | `webTableSafety.test.mjs` | `#5E81AC` | `#243141` | **`#ECEFF4`** |
+| 6 | `webTablesParitySchemaCompiler.test.mjs` | `#5E81AC` | `#243141` | **`#ECEFF4`** |
+| 7 | `webColumnsChildExpansionSafety.test.mjs` | `#5E81AC` | `#243141` | **`#ECEFF4`** |
+| 8 | `webConceptGridSafety.test.mjs` | `#B48EAD`, `#C2B280` | `#443642`, `#4A4431` | **`#2E3440`** en las dos |
+
+Las cinco primeras usan la clave `accentText` (rol); las cuatro últimas `accentTextColor`
+(salida compilada). El valor de la fila 1 no venía dado en el ticket: se derivó del acento
+`#123456` de ese token, `L*` 21.04 → `#ECEFF4`.
 
 La octava es la única que gana **dos** líneas, porque su `deepEqual` cubre dos ítems en una
 sola aserción. Sus dos valores son las filas 1 y 4 de la tabla de dieciocho.
@@ -283,6 +346,24 @@ Corrección menor de coordenadas, ya aceptada: la cita de `renderBadge` era **`:
 
 ---
 
+---
+
+## 9. Los seis renderers no cambiaron de código
+
+La ronda 4 sustituyó **solo la regla**. Los seis renderers ya consumían `accentTextColor` con
+respaldo, así que únicamente cambió el valor que reciben. **Ninguno necesitó un cambio de
+código**, y se verificó renderizando: `def` → `#2E3440`, `str` → `#2E3440`,
+`focus` → `#2E3440`, `#5E81AC` → `#ECEFF4`, cada uno coincidiendo con lo que emite el
+compilador. `compiler.js` y `ComponentGuide.jsx` tampoco se tocaron.
+
+Se conservan íntegros de las rondas anteriores: el movimiento de las tres funciones de
+contraste a `colorSystem.js`, la emisión desde `buildColorRolesOutput`, el consumo en los
+seis renderers, la retirada de la tabla de excepciones y de `headerBorder` en `renderRule.js`,
+y el nombre `accentText` / `accentTextColor`.
+
+---
+
 *Ronda 1: parada correcta ×2. Ronda 2: ejecutado, con una parada abierta.
-Ronda 3: octava aserción autorizada y actualizada; suite en 436/436.
+Ronda 3: octava aserción autorizada y actualizada.
+Ronda 4: regla sustituida tras la QA del operador; `mixWithBlack` retirado; suite en 436/436.
 El `status` del run lo cierra la cabina.*

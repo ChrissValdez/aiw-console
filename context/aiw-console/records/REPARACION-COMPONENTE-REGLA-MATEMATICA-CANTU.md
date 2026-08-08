@@ -5,10 +5,17 @@ Run canónico: `RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001`, `queue_order
 con `Audit and implement the Rule component`. El aviso de coordenadas del ticket es correcto:
 este run era `#34` y hoy `#34` es `RUN-CANTU-ACCENT-INK-CONTRAST-ROLE-001`.
 
-**Tres reparaciones pedidas, las tres entregadas, en dos pasadas.** La primera cerró el
+**Tres reparaciones pedidas, las tres entregadas, en cuatro pasadas.** La primera cerró el
 centrado del título y la retirada de «Placement avanzado», y **paró** en el color del título
-por una guarda del propio ticket. La parada resultó correcta: el operador cambió la forma
-—de tres estados a dos— y la segunda pasada la implementó.
+por una guarda del propio ticket. La parada resultó correcta: el operador cambió la forma —de
+tres estados a dos— y la segunda pasada la implementó. **La QA humana aprobó el control y
+rechazó su lista de opciones**; la tercera la sustituyó por una lista fija de cuatro. **La QA
+volvió a mirar y echó de menos «Automático» en el desplegable**; la cuarta lo convirtió en
+entrada real.
+
+**Las dos correcciones de la QA fueron a órdenes de la cabina, no a defectos del taller**, y
+las dos venían de la misma raíz: reglas escritas cuando la lista salía de la paleta, que
+dejaron de valer al hacerla fija.
 
 Packet del operador:
 `docs/_historical_run_record/RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001-OPERATOR-QA-PACKET-ROUND-2.md`
@@ -157,13 +164,21 @@ dieciocho tokens**. La cabina lo había especificado por analogía con «Nota de
 comprobarlo. **No era una opción, era un defecto**, y con él fuera el problema pasó de tres
 estados a dos.
 
-**La forma elegida: «Automático» como estado de VISUALIZACIÓN más un botón de retorno.**
+**La forma que el operador eligió entonces: «Automático» como estado de VISUALIZACIÓN más un
+botón de retorno.** La QA la rechazó después y hoy la forma es otra —entrada real más botón,
+ver 4.3—, pero la tabla se conserva porque explica las dos que siguen descartadas y por qué:
 
 | Descartada | Por qué |
 |---|---|
-| **Una opción «Automático» en la lista** | Habría que reservar un sentinel que el desplegable escribe en el campo. `COLOR_TOKEN_ID_PATTERN` es `/^[a-z][a-z0-9_-]{1,31}$/`, así que un token de autor etiquetado «Automático» produce el id `automatico` y colisiona; `createColorTokenId` solo evita chocar con ids existentes y con los del set por defecto, no con un sentinel inventado. Reservarlo obligaba a tocar `colorSystem.js`, pieza de todo el sistema de color. |
-| **Dos campos: modo + color** | No toca la pieza compartida, pero pone dos controles donde el autor entiende uno, y deja estados imposibles que alguien tiene que impedir (modo «automático» con color puesto). |
-| **La elegida: display + botón** | El campo guarda **solo colores**; su ausencia *es* «Automático». Nada que reservar, ningún estado imposible, y un único control. El sentinel `__empty` vive dentro del componente y **nunca se escribe en el campo**. |
+| **Dos campos: modo + color** | No toca la pieza compartida, pero pone dos controles donde el autor entiende uno, y deja estados imposibles que alguien tiene que impedir (modo «automático» con color puesto). **Sigue descartada.** |
+| **Reservar un sentinel de autor** | Si el desplegable **escribiera** el sentinel en el campo habría colisión real: `COLOR_TOKEN_ID_PATTERN` es `/^[a-z][a-z0-9_-]{1,31}$/`, un token etiquetado «Automático» produce el id `automatico`, y `createColorTokenId` no sabe de sentinels inventados. Reservarlo obligaba a tocar `colorSystem.js`. **Sigue descartada** — y no hizo falta. |
+
+**Lo que se aprendió al rehacerlo:** la objeción de la segunda fila daba por supuesto que una
+opción en la lista tiene que escribir su propio valor en el campo. **No es cierto.** La
+entrada «Automático» tiene un `value` de presentación, `__empty`, que el manejador intercepta
+para emitir `undefined`. **El sentinel nunca llega al dato**, así que no hay nada que reservar
+y `colorSystem.js` no se tocó por este motivo. Con eso, «una opción Automático en la lista»
+dejó de tener coste — y era lo que el autor esperaba ver.
 
 ### 4.1 La corrección del criterio 7, verificada — el ticket tiene razón
 
@@ -197,21 +212,52 @@ capa vive. No se confunde con `variant`, que es la franja y va sin prefijo, ni c
 misma disciplina de nombres que el propio compilador se impuso en `#34` al renombrar el rol
 `text` a `textColor` para no chocar con el cuerpo de `renderCard`.
 
-### 4.3 La prop nueva del selector compartido
+### 4.3 Las dos props opt-in del selector compartido
 
-`ColorTokenOrCustomField` gana **una sola prop opcional, `emptyStateLabel`, con valor por
-defecto `null`**. Encendida, un campo vacío deja de mostrarse como el token de respaldo y pasa
-a mostrar ese rótulo, pintado por una opción **`hidden` y `disabled`**: se ve como valor
-seleccionado pero no es una entrada de la lista, así que **no se puede elegir y el sentinel
-nunca llega al campo**. El sentinel es `__empty`, que no puede colisionar con un id de autor
-porque empieza por `_` y el patrón exige letra minúscula inicial — la misma guarda que ya
-usaba `__custom`.
+`ColorTokenOrCustomField` gana **dos props opcionales, las dos apagadas por defecto**.
 
-**Apagada, que es como la consumen los cuatro sitios previos, no cambia nada.** Se comprobó de
-tres formas: barrido (ninguno de los cuatro la pasa), equivalencia de la lógica de decisión
-ejecutada vieja contra nueva sobre **10 entradas** con **cero diferencias**, y las **8 pruebas
-de `webSharedColorSelectorUnification.test.mjs`** que ya bloqueaban esta pieza y siguen en
-verde sin tocarlas.
+**`emptyStateLabel = null`** — la entrada «Automático». Encendida, la lista gana una **primera
+entrada real y elegible** con ese rótulo, y un campo vacío se muestra en ella. Elegirla emite
+`undefined`: borra el campo. El sentinel `__empty` es solo el `value` del `<option>` y lo
+intercepta el manejador antes de escribir nada — **esa** es la guarda; que además empiece por
+`_` cuando el patrón de ids exige minúscula inicial es la segunda.
+
+> **Esta prop nació con otra forma, por una orden de la cabina que resultó equivocada.** El
+> ticket que la pidió decía literalmente que «Automático» era «un estado de VISUALIZACIÓN, no
+> una entrada del desplegable» y ordenaba no añadirlo a la lista; se implementó así, con
+> `hidden` y `disabled`. **La QA humana lo rechazó:** el autor veía tres opciones donde
+> esperaba cuatro. La cabina retiró la orden — tenía sentido cuando la lista salía de la
+> paleta y pegarle una entrada ajena era raro, y dejó de tenerlo con una lista fija de cuatro.
+> **Lo demás de esa entrega se conservó íntegro**, incluida la segunda prop y la decisión de
+> no tocar `getColorFieldSelection`.
+
+**`optionsAreColors = false`** — la añadió la tercera pasada. Encendida, la lista guarda
+**colores** en vez de ids de token, y un valor que sea exactamente uno de esos colores se
+muestra con **su nombre** en vez de como «Personalizado». Sin ella, «Blanco» se leería
+«Personalizado».
+
+**`getColorFieldSelection` quedó literalmente intacta**, y eso importa: la regla de la sección
+7 del contrato de color —un hex es «Personalizado»— sigue escrita en un solo sitio y sigue
+mandando en las cuatro colocaciones que consumen la paleta, donde un `option.value` es un id
+de token y la rama nueva **no puede activarse**.
+
+**Cómo se llegó a esa forma.** El primer intento metía el casado por color **dentro** de
+`getColorFieldSelection`. Puso en rojo `webColorSelectorCustomPicker.test.mjs` → *«a custom
+colour is stored as a hex and reads back as Personalizado»*, cuya parte de conducta seguía
+verde pero que afirma sobre el fuente que esa regla vive **en un solo sitio** y con esa forma
+exacta. **En vez de tocar la prueba se rehízo el cambio** como prop opt-in fuera de la
+función. Cero pruebas modificadas. La prueba hizo exactamente su trabajo.
+
+**Apagadas, que es como las consumen los cuatro sitios previos, no cambia nada.** Comprobado
+de tres formas: barrido (ninguno de los cuatro las pasa), equivalencia de **conducta y
+marcado** ejecutada vieja contra nueva sobre **12 entradas** —incluidos `undefined`, `null`,
+`''`, `0`, `false`, un token desconocido y un hex que es el acento real de un token— con
+**cero diferencias**, y las pruebas que ya bloqueaban esta pieza, en verde sin tocarlas.
+
+**Hay dos caminos al estado automático y es deliberado:** la entrada del desplegable y el
+botón «Volver a automático». Medido: los dos escriben `undefined`, idénticos por `Object.is`,
+y ninguno escribe el sentinel ni una cadena vacía. El botón se queda porque la QA lo aprobó y
+porque es la salida visible mientras hay color.
 
 ### 4.4 Las cuatro capas, cerradas y verificadas
 
@@ -226,9 +272,54 @@ La guarda de `undefined` en el compilador **no es adorno**: `normalizeVariant(un
 devuelve `'ctx'`, así que llamar sin ella habría emitido un color para todo borrador que no
 elige ninguno — y ese silencio es justo lo que deja mandar a `accentTextColor`.
 
-El campo **sigue a la paleta** cuando es token y **queda congelado** cuando es hex, medido en
-los dos sentidos moviendo el acento de `wrn` de `#EBCB8B` a `#AA5500`. No se escribió ninguna
-regla nueva para eso: es la misma función que ya resuelve `variant`.
+### 4.6 La lista que rechazó la QA, y la que la sustituye
+
+**La QA humana aprobó el control y rechazó la lista.** Alimentarla de la paleta global era el
+error, y por la misma razón que retiró el tercer estado: los dieciocho acentos son colores
+apagados de tono medio y, usados como tinta **sobre la propia franja**, dan contrastes de 1 a
+2 en la mayoría. Ofrecerlos allí era ofrecer dieciocho formas de no verse el título.
+
+La lista pasa a ser **fija, de cuatro entradas, y no depende de la paleta**:
+
+| Opción | Valor guardado | Qué pinta |
+|---|---|---|
+| **Automático** | ninguno — campo vacío | `accentTextColor`, el derivado de `#34` |
+| **Blanco** | `#ECEFF4` | el ancla clara, forzada |
+| **Negro** | `#2E3440` | el ancla oscura, forzada |
+| **Personalizado** | el `#RRGGBB` del autor | el suyo |
+
+Las tres primeras quedan siendo «decide tú por mí», «fuerzo la clara» y «fuerzo la oscura».
+**Blanco y Negro no son `#FFFFFF` ni `#000000`**: son las dos anclas Nord de `accentText`, y
+el blanco puro es exactamente lo que `#34` retiró por duro sobre estos acentos. Las etiquetas
+que ve el autor sí dicen «Blanco» y «Negro».
+
+**Nada nuevo que mantener:** las dos anclas guardan su hex **en el mismo campo**. No hay
+tokens inventados ni segundo campo, y **el esquema no cambió** — ya aceptaba hex. Consecuencia
+querida: elegir «Blanco» y elegir «Personalizado» con `#ECEFF4` producen **el mismo dato**, y
+el desplegable muestra «Blanco» en los dos casos. No hay que distinguirlos porque no son cosas
+distintas.
+
+**«El campo sigue a la paleta» queda retirado.** Fue cierto mientras la lista salía de la
+paleta; con la lista fija, los cuatro valores son fijos o del autor y **ninguno sigue a un
+token**. Medido antes de darlo por bueno: **cero** de los 87 bloques `rule` del disco guarda
+un token id en ese campo, así que el cambio no toca ningún dato existente.
+
+**Queda una vía declarada y no cerrada:** el esquema sigue aceptando un token id en
+`titleVariant`, porque no se tocó, y la UI ya no lo ofrece. Por «Insertar JSON» todavía podría
+entrar uno; el control lo mostraría como «Blanco» y el compilador lo resolvería contra la
+paleta. Estrecharlo a solo-hex es otro run.
+
+### 4.7 Una desviación de scope que hay que declarar
+
+Las dos anclas existían en `colorSystem.js` con los nombres exactos que decía el ticket,
+`ACCENT_TEXT_DARK` y `ACCENT_TEXT_LIGHT`, **pero no estaban exportadas**. La orden de
+importarlas y no teclearlas no se podía cumplir sin añadir `export`, y ese archivo no figuraba
+en el scope.
+
+**Se añadió: dos palabras.** Cero valores tocados, cero usos internos tocados, ni el umbral ni
+la derivación de `#34`. Se dice aquí en vez de pasarlo por alto. Si la cabina prefiere ese
+archivo intacto, la alternativa es derivarlas con `deriveColorRolesFromAccent('#FFFFFF')` y
+`('#000000')`, que da las mismas dos y tampoco las teclea.
 
 ### 4.5 La medición que retiró el tercer estado
 
@@ -254,9 +345,12 @@ del disco, **0 llevan `titleVariant`** y **los 87 renderizan byte a byte igual**
 precedencia anterior a C. Con control positivo: un `rule` construido *con* el campo sí difiere,
 así que la comparación mide algo.
 
-**Archivos tocados: 6.** `renderRule.js`, `WebBlockEditor.jsx`, `VariantSelect.jsx`, los dos
-`draftSchema.js` y `compiler.js`. Ningún otro renderer, ningún otro esquema de bloque y
-ninguna otra salida del compilador.
+**Archivos tocados en total: 7.** `renderRule.js`, `WebBlockEditor.jsx`, `VariantSelect.jsx`,
+los dos `draftSchema.js`, `compiler.js` y —solo dos `export`— `colorSystem.js`. Ningún otro
+renderer, ningún otro esquema de bloque y ninguna otra salida del compilador.
+
+Las dos primeras pasadas están **commiteadas** (`4341581`). La tercera deja pendientes tres
+archivos: `WebBlockEditor.jsx`, `VariantSelect.jsx` y `colorSystem.js`.
 
 **Queda enrutado:**
 
@@ -268,7 +362,12 @@ ninguna otra salida del compilador.
   muerto, y ahora hay al lado un campo vivo que hace lo mismo bien, por si algún día se
   repara: la diferencia es que el de «Regla matemática» recorre las cuatro capas y está en un
   esquema con `.strict()`.
-- La QA humana del packet ROUND-2, **16 checks**.
+- La QA humana del packet ROUND-2, **19 checks**.
+- **Estrechar `titleVariant` a solo-hex** en los dos esquemas. Hoy sigue aceptando un token id
+  que la UI ya no ofrece; por «Insertar JSON» es alcanzable. Cero casos en disco, pero la vía
+  existe. Toca esquema, fuera del scope de la tercera pasada.
+- **Si la cabina quiere `colorSystem.js` intacto**, revertir los dos `export` y derivar las
+  anclas con `deriveColorRolesFromAccent`. Ver 4.7.
 - El commit. Lo hace el operador desde GitHub Desktop.
 
 **El `status` del run lo cierra la cabina.** Este documento no lo toca.

@@ -1,27 +1,48 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-08T08:39:23.535Z",
+  "generated_at": "2026-08-08T09:28:57.036Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-08T08:25:30.184Z"
+      "mtime": "2026-08-08T09:27:48.930Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-08T08:39:23.493Z"
+      "mtime": "2026-08-08T09:28:56.999Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "ad70fce7b8cdb375a87ce85bbf0807aa48a01357",
+  "head": "9b2668c663cf4603184dfa66332217baee1a02c5",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 208,
+  "commit_total": 210,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "9b2668c",
+      "full_sha": "9b2668c663cf4603184dfa66332217baee1a02c5",
+      "date": "2026-08-08T03:26:27-06:00",
+      "parents": "4a07b87",
+      "subject": "record: tinta contrastada sobre acento (queue_order 34)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4a07b87",
+      "full_sha": "4a07b87be7483e319d342d316a5b53eb546c152b",
+      "date": "2026-08-08T02:51:02-06:00",
+      "parents": "ad70fce",
+      "subject": "cierra #48 RUN-CONSOLE-BATCHES-001 con closeout_result done tras QA de no-regresion del operador; re-emite .project/; y normaliza el canonico a LF - cero cambio de dato, el motor conservaba el CRLF del clon",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-BATCHES-001"
+    },
     {
       "branch": "main",
       "sha": "ad70fce",

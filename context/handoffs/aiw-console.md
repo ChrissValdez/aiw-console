@@ -1,8 +1,8 @@
 # Relevo — hilo `aiw-console`
 
-**Fecha:** 2026-08-06 (cierre de tarde) · **Sustituye** al relevo del 2026-08-06 (mañana).
-**Primera sesión en modalidad COWORK CONECTADO.** La siguiente arranca **en una laptop
-nueva**: lee «§9 MIGRACIÓN» ANTES que nada.
+**Fecha:** 2026-08-08 · **Sustituye** al relevo del 2026-08-06 (cierre de tarde).
+**Primera sesión en la laptop nueva.** El §9 «MIGRACIÓN» de aquel relevo está cumplido y
+no hay que releerlo.
 
 La sustancia va DENTRO. Los punteros a records son procedencia, no respuesta.
 
@@ -10,292 +10,299 @@ La sustancia va DENTRO. Los punteros a records son procedencia, no respuesta.
 
 ## 1. DÓNDE ESTAMOS
 
-**El `#48` «Batches in the roadmap schema, with the branch they determine» está `active`,
-ENTREGADO por el taller y SIN QA.** `CRITICAL` · `SEMI_ATTENDED`.
+**NO hay ningún run `active`.** Se cerraron dos en esta sesión y no se abrió otro.
 
-**Su trabajo está en disco y NO COMMITEADO al cerrar esta sesión** (a menos que el bloque
-de Git de §9 se haya corrido; verifícalo midiendo, no lo supongas). Cinco ficheros
-modificados y siete sin rastrear — la lista exacta en §9.
+**Canónico medido al cerrar (2026-08-08, 09:41 UTC):**
+`projects/aiw-console/roadmap/roadmap.json` · md5 **`5b05984726abd3f3f5226a67ea87e20f`** ·
+**57 runs** · `completed 49 · planned 8` · densidad `1..57` · ids únicos · 0 aristas
+colgantes · **0 CR** (LF puro).
 
-**Lo que falta para cerrarlo son 3 pasos de QA de NO-REGRESIÓN**, y hay una trampa que
-cuesta una vuelta entera si no se sabe:
+`HEAD` = `origin/main` = **`2f71ffb`** (más el commit del relevo que cierra esta sesión).
 
-> **El selector de lotes NO se dibuja en `aiw-console`, y ESO ES LO CORRECTO.**
-> `renderBatchSelector` elimina su slot si el proyecto no declara lotes, y este canónico
-> no declara ninguno porque el ticket prohibió poblarlo. Pedir «revisa el selector» manda
-> al operador a mirar algo que por construcción no está.
+**Elegibles, medidos al cerrar. Vuelve a medirlos: cambian con cada cierre.**
 
-**Los 3 pasos, ejecutables tal cual.** Reiniciar el proceso (`start-console.cmd`), no
-recargar el navegador:
+| | run | título |
+|---|---|---|
+| **#50** | `RUN-CONSOLE-DIGEST-CABINA-001` | Digest for the cockpit |
+| #51 | `RUN-CONSOLE-PARIDAD-RENDER-CANTU-001` | Global console renders Cantu (parity, operator QA) |
+| #53 | `RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001` | Move cantu-studio's canonical roadmap out of .aiw before the cutover can delete it |
+| #55 | `RUN-CONSOLE-STALE-TEXTS-REPAIR-001` | Repair the five texts that describe this repo falsely |
+| #56 | `RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001` | Expose the four container operations in the console frontend |
+| #57 | `RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001` | Deep visual audit of the console, led by the operator |
 
-1. **PARADA.** Barra superior del árbol del Roadmap: **un solo** desplegable, el de
-   carriles («Lane»). **Ningún** «Batch». Si aparece un «Batch», el selector se pinta sin
-   vocabulario: defecto del `#48`.
-2. Usar el desplegable de carriles (elegir uno, volver a «All»). Debe filtrar igual que
-   siempre. Si falla, el filtro compuesto del `#48` rompió el de carriles.
-3. Run Queue y árbol: `#48` en `active` con chips `CRITICAL` + `SEMI_ATTENDED`; el `#47`
-   cerrado. Regresión de render si no.
+Bloqueados: **#52** espera a `#51`; **#54** espera a `#51`, `#52` y `#53`.
 
-**Con `PASA` en los tres, el cierre es `set-status active → completed`** con
-`closeout_result` a decidir según los veredictos.
-
-**Nadie ha visto NUNCA el selector de lotes en un navegador.** Está probado contra el
-renderer real en `node:vm` —opciones, conteos, filtro en las dos superficies, reset— pero
-eso no es un browser. Layout y CSS quedan pendientes. **Decisión tomada esta sesión: NO se
-declara un lote de prueba en el canónico solo para mirarlo** —deja rastro en un fichero que
-tres hilos leen— y se deja que lo cubra el `#50`, que ya trae QA visual de consola.
+**Sin razón medida para saltarse el #50**, que es el siguiente de la cola.
 
 ---
 
 ## 2. LO QUE ESTA SESIÓN ENTREGÓ
 
-**El `#47` cerró con `closeout_result: "done with deviations"`.** Registro de fontanería de
-campos opcionales de run + chip de `closure_mode` junto a `severity` en la fila.
-**Absorbió 9 sitios de 17, no los 10 previstos:** `V3_BATCHABLE_OPS` no entra porque
-`tests/depends-on-human-approved.test.mjs:341` lo pinea como TEXTO FUENTE y ese fichero
-estaba fuera de alcance. **Cuesta UNA edición** y es trabajo de un run que lo tenga dentro.
+**`#48` «Batches in the roadmap schema, with the branch they determine» → `completed`,
+`closeout_result: "done"`.** QA de no-regresión pasada por el operador en los cuatro pasos.
 
-**El `#48` construyó los lotes**: vocabulario `root.batches` con entradas
-`{batch_id, title, branch}`, clave opcional `batch` en el run, ops `declare-batches` (no
-batchable) y `set-batch` (batchable), transporte verbatim en el proyector, y desplegable en
-la consola junto al de carriles. El invariante del interbloqueo vive en `checkInvariants` y
-se prueba en LAS DOS direcciones sobre `tests/fixtures/batches/`.
+**`#49` «Line endings: pin them with .gitattributes and renormalise the working tree once»
+— creado, insertado, abierto, ejecutado y cerrado `done` en la misma sesión.** Desplazó 8
+runs (los antiguos 49–56 a 50–57) y vive en `O4.P9` «Prior and cross-cutting work».
 
-**La frontera con `aiw` quedó escrita**, con seis puntos de aquel lado: leer el
-vocabulario, resolver la rama del lote, apilar commits, el merge humano único al final,
-dónde parar el dispatch, y dónde registrar la aprobación. **Nada de lo entregado ejecuta la
-rama: la transporta.**
+**El problema de CRLF de este repo está RESUELTO.** Ver §4.
 
 ---
 
-## 3. CIFRAS MEDIDAS, con su unidad
+## 3. LA MÁQUINA NUEVA — capacidades medidas, y dos que corrigen la tabla heredada
 
-**Un campo opcional de run de la clase `lane` —vocabulario en raíz + clave + selector—
-cuesta 23 SITIOS en 4 archivos.** La predicción del `#47` era **11**, y no era falsa: era
-para la clase «lista de referencias con op propia», que es otra. El registro absorbió
-**2 filas de ops donde la forma pre-registro cobraba 6 sitios**; los otros 21 no los cubre
-ningún registro. **El registro NO estorbó en ningún punto** — medido y reportado, que es la
-mitad del valor de haberlo estrenado.
+Modo **COWORK CONECTADO**. La ruta de montaje **se deriva cada sesión y nunca se hereda**.
+Los **cinco** repos están clonados; los cinco remotos apuntan a `ChrissValdez`.
 
-**El precedente de los carriles, re-medido hoy: 8 archivos de código, 375 sitios `lane`,
-488 con `barrier`, 29 de test.** Creció desde los 333/430/25 del relevo anterior porque el
-código creció; el método reproduce. **Este canónico no guarda ni una clave `lane`, y
-`aiw/kernel.mjs` tiene CERO apariciones de `lane`, `barrier` y `batch`.** Coste pagado en
-los dos lados, consumidores cero. Es el precedente que el `#48` existe para no repetir.
-
-**`depends_on_human_approved`: CERO runs lo llevan como campo.** Las 6 apariciones del
-literal son prosa, en 4 runs — **5 en `full_description` y 1 en un `summary`**.
-
-**Suite: 529 tests, 527 pasan, 2 fallan** al cierre del `#48` (era 497/495/2 al abrir la
-sesión). **Los DOS son PINES DE REGISTRO DELIBERADOS, no deuda:**
-`tests/roadmap-engine.test.mjs:93` —su mensaje instruye «update the record, keep the
-test»— y `tests/classification-care-budget.test.mjs:153`. **Nunca se reparan y NUNCA son
-gatillo de una parada por regresión.** El criterio es no ganar fallos NUEVOS.
-
----
-
-## 4. ⚠ CORRECCIÓN AL RELEVO ANTERIOR — hacia adelante, no hacia atrás
-
-**El §8 del relevo del 2026-08-06 (mañana) afirmaba: «1 arista `depends_on_human_approved`
-— `#53` → `RUN-CONSOLE-DEPENDS-ON-HUMAN-APPROVED-001`, no colgante y única en todo el
-canónico».**
-
-**ES FALSO. Medido en disco: esa arista NO EXISTE.** Las claves del `#53` son
-`run_id, queue_order, title, summary, full_description, status, depends_on,
-correctness_model, work_type, blast_radius, failure_surfaces, external_effects,
-classified_at`. Ninguna es `depends_on_human_approved`.
-
-El §4 de aquel mismo relevo decía lo contrario y correcto («nada en este repo obedece esa
-lista todavía»). **El relevo se contradecía consigo mismo y la mitad que coincidía con el
-disco era la otra.** No se reescribe hacia atrás: se corrige aquí.
-
----
-
-## 5. LA MODALIDAD COWORK, medida — y lo que la tabla heredada tenía mal
-
-**Capacidades PROBADAS esta sesión, no supuestas:**
-
-| Capacidad | Resultado |
+| Capacidad | Medido |
 |---|---|
-| Leer cualquier fichero del workspace | **SÍ** |
-| Comandos de solo lectura (node, validador, suite) | **SÍ** |
-| Leer estado de Git en los cinco repos | **SÍ** |
+| Leer cualquier fichero, correr solo-lectura, leer Git en los 5 repos | **SÍ** |
 | Crear y sobrescribir ficheros | **SÍ** |
-| **ESCRIBIR EL CANÓNICO por el motor** | **SÍ — probado 3 veces** |
+| **Escribir el canónico por el motor** | **SÍ — probado 4 veces esta sesión** |
 | Re-emitir `.project/` | **SÍ — 6 ficheros, layout `repo_root`** |
-| **BORRAR** | **NO — `Operation not permitted`** |
-| Commit / push | **NO** |
+| Borrar con `rm` | **NO** — `Operation not permitted` |
+| **`fs.renameSync`, incluso SOBRE fichero existente** | **SÍ** |
+| Commit / push | **NO** (y sigue siendo política, no pared) |
 
-**Tres correcciones medidas a la tabla heredada:**
+**Dos correcciones nuevas:**
 
-1. **HAY RED Y LECTURA DEL REMOTO.** `git ls-remote origin` devolvió EXIT 0. D-064 afirma
-   «no hay credenciales y no hay red al remoto» y hoy es falso. No cambia nada operativo
-   —Git sigue siendo del operador— pero deja de ser una pared medida.
-2. **`.git` SÍ es escribible, solo no borrable.** `touch .git/loquesea` funciona. Es peor
-   que «no escribible»: se puede ensuciar `.git` sin poder limpiarlo.
-3. **`fs.renameSync` sobre el canónico funciona.** La escritura estaba declarada como NO
-   PROBADA por si el temporal-y-renombrado chocaba con la prohibición de borrar. No choca.
+1. **«No puedo borrar» es cierto solo de `rm`.** `renameSync` hace desaparecer una ruta.
+   **La cabina puede limpiar su propia basura moviéndola** — esta sesión sacó así un
+   fichero de prueba de dentro de `.git`. Lo que se declara al operador ya no es «lo que no
+   puedo borrar» sino **lo que dejo a propósito**.
+2. **`.git` es escribible.** Se puede ensuciar; ahora también limpiar, por rename.
 
-**D-064 dice la VERDAD sobre la re-emisión automática, CON UN MATIZ:** `serve.mjs` llama a
-`writeProjectFolder` tras un `applyPlan` exitoso — pero **`applyPlan` a pelo NO re-emite**.
-Conducir el motor directamente y conducir la consola no son lo mismo. **Quien conduzca el
-motor debe re-emitir explícitamente, dentro del camino de éxito.**
-
-**Y `applyWrite` llama a `validate()` SIN argumentos y exige `result.code === 0`.** Inyectar
-un validador de otra firma produce un rollback silencioso que parece un fallo del motor y es
-un fallo de quien lo conduce. **La autoridad correcta es `writtenFileValidator` de
-`serve.mjs`: `checkInvariants` + `hasRoadmapTreeShape`, devolviendo `{code, output}`.**
+**Correcciones a documentos de la migración, medidas:** `core.autocrlf=false` **SÍ está
+puesto** en `C:/Users/chris/.gitconfig` —el `PARADA-MONTAJE-MAQUINA-NUEVA.md` lo daba por
+bloqueado—; `cantu-quizzes-latex` **está clonado** —la configuración lo daba por directorio
+vacío—; y `cantu-lessons` **SÍ tiene `origin/main`**, en `packed-refs` en vez de como ref
+suelta —el relevo anterior lo daba por ausente y en riesgo ALTO—. **Los tres últimos son de
+otros hilos: se NOMBRAN y no se tocan.**
 
 ---
 
-## 6. ⚠⚠ EL CANDADO — propiedad de este repo, y su solución
+## 4. EL CRLF — resuelto, y la regla vieja está MUERTA
 
-**`git status` y `git diff` REFRESCAN EL ÍNDICE, y para eso toman `.git/index.lock`.** La
-cabina puede crearlo y no puede borrarlo. **Resultado: cada lectura de git de la cabina deja
-un candado que BLOQUEA el siguiente `git add` del operador.** Costó dos bloques de Git
-fallidos en esta sesión antes de encontrar la causa.
+**`aiw-console` ya tiene `.gitattributes`**, con sha1 `dfe0770424b2a19faf507a501ebfc23be8f54e7b`
+— **el mismo blob que los tres repos hermanos**. El árbol entero se reescribió desde sus
+propios blobs: **0 ficheros con CR de 356**, y **0 divergentes** entre disco y blob.
 
-**LA SOLUCIÓN, probada con el candado puesto:**
+**LA REGLA «el `git status` de la cabina MIENTE en `aiw-console` por CRLF» ESTÁ MUERTA. No
+la revivas.** Nunca fue cierta en esta máquina: `core.autocrlf=false` da a la cabina Linux y
+al Windows del operador el mismo comportamiento, y los dos leían **346** cuando había ruido.
+Ahora los dos leen cero.
+
+La causa fue el orden de la migración: se clonó con el `autocrlf=true` por defecto de
+Windows —que escribió CRLF al árbol— y `false` se puso después. El `PARADA` §5.3 lo predijo.
+
+**Lo que queda:** **`aiw` tiene el mismo defecto y sigue sin `.gitattributes`.** Es el único
+de los cinco. **Es de su hilo: NÓMBRALO y no lo toques.**
+
+**El hallazgo que abarató el run, y que sirve para `aiw`:** medido sobre `cantu-studio`
+—1068 rastreados, **1043 divergentes en bruto, 21 reportados por git y los 21 contenido
+real**— **`* text=auto` por sí solo absorbe la divergencia entera**. La reescritura del árbol
+es higiene, no requisito. El taller lo confirmó: **346 → 7 modificados con el
+`.gitattributes` solo**, antes de tocar un fichero.
+
+---
+
+## 5. ⚠⚠ EL ÍNDICE Y LOS CANDADOS — lo más importante que aprendió esta sesión
+
+Costó cuatro vueltas con el operador al final de la sesión. **Léelo entero antes de dar
+ningún bloque de Git.**
+
+### 5.1 GitHub Desktop sondea el repo y toma el candado
+
+**Ninguna regla contemplaba esto.** El operador tenía **4 procesos de GitHub Desktop vivos
+desde hacía dos horas**, corriendo `git status` en bucle sobre este repo. Un `index.lock` de
+0 bytes bloqueó su comando, y la cabina lo atribuyó a sus propias lecturas **sin tener con
+qué sostenerlo**.
+
+**Antes de cualquier bloque que escriba el índice, el bloque comprueba procesos vivos
+primero y para si los hay.** Y el operador **cierra GitHub Desktop** antes de correrlo. La
+comprobación que funciona:
+
+```powershell
+$procs = @(Get-Process git,git-remote-https,GitHubDesktop -ErrorAction SilentlyContinue)
+```
+
+### 5.2 `--no-optional-locks` NO basta, y hay que comprobar en el turno que entrega
+
+Está medido que un `git diff` con `-c` **reescribió `.git/index` pese a la opción**. Y esta
+sesión añadió el agravante: **la cabina comprobó candados a las 09:30, siguió midiendo hasta
+las 09:35, y entregó el bloque sin volver a mirar.** El bloque falló por un candado nacido a
+las 09:33.
+
+**Regla: los candados se comprueban en el MISMO turno en que se entrega el bloque, después
+de la última medición.** Comprobar con `find`, no con git.
+
+**Y la cabina evita `git diff` y `git status` en este repo cuando puede.** Para saber si hay
+trabajo vivo usa la comparación que no toma el índice:
 
 ```
-git --no-optional-locks status ...
-git --no-optional-locks diff --numstat --ignore-cr-at-eol
+git --no-optional-locks ls-files -s          # blob de cada fichero
+git --no-optional-locks hash-object --no-filters -- <ruta>   # contenido en bruto
 ```
 
-Devuelven exactamente lo mismo sin tocar el índice. **La opción va ANTES del subcomando.**
+### 5.3 Un índice con `stat` viejo NO se arregla refrescando — se RECONSTRUYE
 
-**NO ES INFALIBLE:** un barrido de los cinco repos que agotó su tiempo dejó candados nuevos
-en `aiw`, `aiw-console` y `cantu-studio` pese a usarla. **Un comando que se corta a mitad
-puede dejarlos igual.** Comprobar candados es parte de cerrar sesión.
+Tras renormalizar, `git status` seguía diciendo **339** mientras `git diff HEAD`,
+`git diff` y la comparación de sha1 decían **0**. El índice guardaba los tamaños de la era
+CRLF (`README.md`: 1311 cacheado contra 1292 reales) y `status` decidía por ese número.
 
-**Protocolo ante un candado, y el orden importa:** NO borrarlo de entrada. Primero
-antigüedad y tamaño, después procesos `git` vivos —**eso lo mira el operador, la cabina no
-ve procesos de Windows**—, y sólo con las dos cosas se quita. Borrarlo mientras otro escribe
-corrompe el índice.
+**Probado sobre copias del índice, sin tocar el real:**
+
+| Intento | Resultado |
+|---|---|
+| `git update-index --refresh` | **339** — no lo arregla |
+| `git update-index --really-refresh` | **339** — tampoco |
+| `git status` dos veces seguidas | **339** — tampoco |
+| **`git read-tree HEAD`** | **0** ✔ |
+
+**El arreglo es `git read-tree HEAD`**, y es seguro **solo** con las cuatro precondiciones
+verificadas antes: nada en stage, nada sin rastrear, `HEAD` == `origin/main`, y cero cambios
+reales. Reconstruye el índice desde el commit; no toca ni un fichero del árbol.
+
+**CORRECCIÓN A DOS RECORDS YA COMMITEADOS, hacia adelante:**
+`FINALES-DE-LINEA-…` y `DEFECTOS-DEL-TICKET-49-…` afirman que el artefacto **«se disuelve al
+primer `add`»**. **Es FALSO, medido.** Sobrevivió a un `add` de 10 ficheros, a un `commit` y
+a un `push`. Los records no se reescriben hacia atrás; la corrección vive aquí.
 
 ---
 
-## 7. CRLF — y la corrección que el relevo anterior tenía a medias
+## 6. DEFECTOS DE MÉTODO DE LA CABINA, medidos en esta sesión
 
-**`aiw-console` NO tiene `.gitattributes`.** La cabina corre en Linux y no aplica la
-conversión del Git de Windows: su lectura cruda reporta ~279 ficheros y ~134 800
-«inserciones» que en la máquina del operador son CERO.
+**Cinco en un solo ticket** (el del `#49`), y el taller los encontró todos:
 
-**`--ignore-cr-at-eol` es opción de `git diff`, NUNCA de `git status`.** Y hay un segundo
-matiz que costó una lectura falsa: **tampoco sirve con `--name-only`**, que sigue listando
-los 277. **La única lectura fiable es `--stat` o `--numstat`:**
+1. **La cuarta forma, otra vez: `339` era una cifra propia envejecida** — medida a las 08:53
+   y puesta en un criterio de aceptación después de que la propia cabina escribiera el
+   canónico tres veces. El real era 346. **La regla que lo prohíbe está escrita.**
+2. **«Fichero mixto»** — `grep -c ''` contra `grep -c $'\r$'`; la diferencia era la última
+   línea **sin salto final**, no una línea sin CR. Unidad mal.
+3. **«Hay binarios»** — era `.gitkeep`, de 0 bytes; `grep -qI .` devuelve falso en ficheros
+   vacíos y la cabina lo leyó como binario. Unidad mal.
+4. **Suite base 529/527/2** — heredada de un record sin verificar. La real era **529/528/1**:
+   el pin de `roadmap-engine.test.mjs:93` está verde.
+5. **Criterios 2 y 6 mutuamente imposibles** — se escribió una guarda de árbol limpio **sobre
+   un árbol que la propia cabina acababa de ensuciar**, sin exceptuarse.
 
+**Y dos más, operativos:** no comprobar candados en el turno de entrega (§5.2), y atribuirse
+un candado sin evidencia teniendo GitHub Desktop vivo (§5.1).
+
+### La lectura de guarda que queda fijada
+
+**Una guarda de árbol limpio se evalúa sobre los ficheros EN ALCANCE.** Si el ticket declara
+un conjunto fuera de alcance, ese conjunto queda excluido **de la operación y de la guarda**.
+Forma: *«G debe ser CERO sobre los ficheros en alcance; los N del criterio X quedan excluidos.
+Si dispara con exactamente ese conjunto, la guarda está satisfecha; con cualquier otro
+fichero, para y reporta.»*
+
+### La separación adversaria pagó, y con margen
+
+**El taller contradijo a la cabina en cuatro puntos medidos y en los cuatro tenía razón**, y
+paró en la guarda en vez de interpretarla. **La cabina PODÍA haber ejecutado ese run** —sabe
+escribir ficheros y tenía el diagnóstico hecho— y ninguna de las cuatro correcciones habría
+aparecido.
+
+---
+
+## 7. LA QA — el defecto de método que reapareció DENTRO de un relevo
+
+El relevo anterior pedía ver en `aiw-console` *«un solo desplegable, el de carriles»*.
+**Medido: `aiw-console` declara CERO carriles**, y `renderLaneSelector` exige **dos o más**
+(`model.lanes.length < 2` → `slot.innerHTML = ""`). **La barra correcta de `aiw-console` no
+tiene NINGÚN desplegable.**
+
+Es la tercera vez que se mide el mismo defecto —escribir un paso de QA sin comprobar que la
+superficie puede mostrarlo— y **la primera dentro de un relevo**, donde lo hereda la sesión
+siguiente entera.
+
+**Antes de escribir «mira X», medir que X es visible ahí.** Y los pasos de filtro de
+carriles se hacen en `cantu-studio` (2 carriles declarados, 12 runs) o en `aiw` (2 y 6),
+**solo mirando y sin escribir en ellos**.
+
+**Los chips se derivan, no se copian:** `deriveClassification` de
+`tools/classification/classification.mjs` sobre el run real.
+
+---
+
+## 8. ⚠ LA FALSA CONSOLA, y los cuatro hilos
+
+`docs/project-console/` es el fork **descartado por D-035**; `console/` es un prototipo
+retirado. **La consola viva es `project-console/`.**
+
+**El validador `tools/project-console/validate-project-console-state.mjs` SALE ROJO Y ES
+CORRECTO** — lee la topología del fork, `EXIT 1` con 25 `Missing JSON file: .aiw/…`. **NO
+emite `history=` ni `ready_next=`**, así que la guarda que prescriben las reglas de cabina es
+**inservible aquí**. Se construye sobre el canónico —contar runs, contar `active`, comprobar
+el `run_id` esperado— o sobre `checkInvariants`.
+
+**En este repo escriben CUATRO hilos.** `git add` **siempre dirigido por nombre, nunca `-A`**,
+y la cabina declara por nombre cada fichero que escribe. Esta sesión otro hilo commiteó dos
+veces en mitad del trabajo, sin colisión.
+
+---
+
+## 9. CONDUCIR EL MOTOR — la receta que funcionó cuatro veces
+
+```js
+planEdit({ filePath, op, args })            // tools/roadmap/roadmap-plan.mjs
+applyPlan({ filePath, serialized, validate })
+writeProjectFolder(process.cwd())           // tools/projector/project.mjs
 ```
-git --no-optional-locks diff --numstat --ignore-cr-at-eol
-```
 
-**Toda guarda de árbol limpio se construye sobre `diff`, y se declara cuál de las dos
-lecturas se está dando.**
-
-**El validador `tools/project-console/validate-project-console-state.mjs` NO EMITE
-`history=` NI `ready_next=`** — lee la topología del fork de D-035 y sale EXIT 1 con 25
-`Missing JSON file: .aiw/...`. **Es CORRECTO que salga rojo.** Consecuencia dura: **la guarda
-`if ($v -notmatch "history=$esperado")` que prescriben las reglas de cabina es INSERVIBLE en
-este repo.** Aquí la guarda se construye sobre el canónico —contar runs, contar `active`,
-comprobar el `run_id` esperado— o sobre `checkInvariants`.
-
----
-
-## 8. ⚠ LA FALSA CONSOLA
-
-`docs/project-console/` es el fork **DESCARTADO por D-035**; `console/` es un prototipo
-retirado. **La consola viva es `project-console/`.** En Cowork este aviso pesa MÁS: la
-cabina puede abrir ese código y leerlo entero, **lo que lo hace más creíble sin hacerlo
-menos falso**.
-
-**En este repo escriben CUATRO hilos.** El `git add` va **siempre dirigido por nombre de
-fichero, nunca `-A`**, y la cabina declara por nombre cada fichero que escribe.
+- **`applyPlan` a pelo NO re-emite `.project/`.** La re-emisión vive en `serve.mjs`. **Quien
+  conduzca el motor re-emite explícitamente, dentro del camino de éxito.**
+- **`applyWrite` llama a `validate()` SIN argumentos y exige `result.code === 0`.** La
+  autoridad correcta es `checkInvariants` (`tools/roadmap/roadmap-core.mjs:423`) +
+  `hasRoadmapTreeShape`, devolviendo `{code, output}`. Una firma inventada produce un
+  rollback silencioso que parece del motor.
+- **`insert` fija fase Y posición desde su ancla** (`before`/`after`). Para poner un run en
+  otra fase hacen falta **dos ops**: `insert` y luego `move` con `toOrder` + `toPhase`.
+  `move` exige exactamente uno de `after`/`before`/`toOrder`.
+- **El motor CONSERVA los finales de línea de lo que lee.** El canónico está en LF, así que
+  seguirá saliendo en LF. **Si alguna vez sale en CRLF, no lo commitees: normalízalo antes**
+  — un canónico en CRLF hace ilegible su diff para siempre.
 
 ---
 
-## 9. MIGRACIÓN A LA LAPTOP NUEVA — estado medido el 2026-08-06 ~22:50
+## 10. LA SUITE
 
-**ESTE REPO ESTÁ EMPUJADO Y LIMPIO.** `HEAD` = `origin/main` = `5d052aa`, árbol limpio
-según el Git de Windows (la lectura autoritativa; la cruda desde la cabina miente por CRLF).
+**529 tests, 528 pasan, 1 falla** — medido por el taller antes y después de su trabajo, sin
+cambio. El único fallo es `tests/classification-care-budget.test.mjs:153`, **pin de registro
+deliberado que nunca se repara y nunca es gatillo de parada**. El otro pin histórico,
+`tests/roadmap-engine.test.mjs:93`, **está verde**; se NOMBRA, no se persigue.
 
-**El trabajo del `#48` viajó en `742bc7e`** — *«wip(roadmap): trabajo EN CURSO del hilo
-aiw-console sobre el motor de roadmap y la operación batch, commiteado sin terminar»—,
-commiteado **por otro hilo con `git add -A`** durante su propio cierre de migración.
-Verificado fichero a fichero: los 13 están íntegros, incluido este relevo.
-
-**Lo que eso significa para quien lea esto:** el commit NO cierra el `#48`. El run sigue
-`active` y su QA sigue pendiente (§1). El mensaje del commit es honesto y por eso no hizo
-daño; si hubiera dicho «cierra el 48», el roadmap afirmaría algo falso.
-
-**Y deja una lección para este repo de cuatro hilos:** `git add -A` en `aiw-console`
-arrastra el trabajo de los demás. Salió bien una vez. La regla de `add` dirigido por nombre
-no se relaja por esto.
-
-**LOS OTROS REPOS — NO son de este hilo, se NOMBRAN y no se tocan:**
-
-| repo | estado medido | riesgo para la migración |
-|---|---|---|
-| `cantu-studio` | limpio, HEAD = `origin/main` = `0ff12d5` | ninguno |
-| `aiw` | 5 ficheros de `.project/` (+1/-1, timestamps) y `objectives/pending/_probe.md` sin rastrear | bajo; el `_probe.md` huele a sonda que nadie borró |
-| `cantu-quizzes-latex` | **9 modificados sin commitear** | **se pierden si no se empujan** |
-| `cantu-lessons` | 1 modificado y **SIN REF REMOTA `origin/main`** | **ALTO — si no está en GitHub, NO VIAJA** |
-
-**`cantu-lessons` es el que puede costar trabajo de verdad.** No tiene ref remota; hay que
-comprobar si tiene remoto configurado y si su rama se ha empujado alguna vez, **antes** de
-apagar la máquina vieja.
-
-**`.gitattributes` sigue sin existir en `aiw` ni en `aiw-console`.** En la laptop nueva, si
-`core.autocrlf` difiere, el clon puede salir con el árbol entero modificado.
-**RECOMENDACIÓN TOMADA: NO meterlo durante la migración** — su renormalizado toca el árbol
-completo y mezclarlo con trabajo pendiente hace ilegible el diff. **Es su propio run, y
-conviene hacerlo en la máquina nueva con los tres roadmaps en reposo.**
-
-**Primer acto en la laptop nueva:** el arranque de sesión completo —derivar la ruta de
-montaje, PROBAR las capacidades una por una, localizar el canónico midiendo, leer este
-relevo y contrastar sus cifras contra el disco—. **La ruta de montaje CAMBIA entre sesiones
-y entre máquinas: se deriva, nunca se hereda.**
+**La cabina NO corre la suite:** su entorno añade un fallo espurio por EPERM al limpiar
+fixtures. La corre el taller.
 
 ---
 
-## 10. LO QUE QUEDA ABIERTO, CON SU CONDICIÓN DE CIERRE
+## 11. LO QUE QUEDA ABIERTO, CON SU CONDICIÓN DE CIERRE
 
-**La QA del `#48`** — §1. Es lo único que bloquea su cierre.
+**Un `.gitattributes` para `aiw`** — el último de los cinco. **Es del hilo `aiw`**; este hilo
+lo NOMBRA. La receta está en §4 y es barata: el fichero solo ya resuelve el síntoma.
 
-**El selector de lotes sin ver nunca en un browser** — lo cubre el `#50`.
+**El selector de lotes sin ver nunca en un navegador** — ningún proyecto declara lotes. Lo
+cubre el **#51** `RUN-CONSOLE-PARIDAD-RENDER-CANTU-001`, que trae QA visual. **Decisión
+mantenida: NO se declara un lote de prueba solo para mirarlo.**
 
 **`V3_BATCHABLE_OPS` sin absorber** — una edición en
-`tests/depends-on-human-approved.test.mjs:341`, en un run que tenga ese fichero en su
-alcance. Llevaría el coste del campo siguiente de 11 a 10.
+`tests/depends-on-human-approved.test.mjs:341`, en un run que tenga ese fichero en alcance.
 
-**Un `.gitattributes` para `aiw-console` y para `aiw`** — §9.
+**La mitad de `aiw` en los lotes** — seis puntos en el record del `#48`. **Del hilo `aiw`.**
 
-**La mitad de `aiw` en los lotes** — seis puntos escritos en el record del `#48`. **Es del
-hilo `aiw`; este hilo lo NOMBRA y no lo lleva.**
+**Unificar `setDeps` con la op de aprobación humana, y el rename de `depends_on`** — dos runs
+esperando la ventana de «tres roadmaps en reposo».
 
-**Unificar `setDeps` con la op de aprobación humana, y el rename de `depends_on`** — las dos
-quieren la ventana de «tres roadmaps en reposo». **Son DOS runs esperándola.**
-
-**Los 9 runs terminales sin `closeout_result`** — no se rellenan: inventar un desenlace que
-nadie declaró sería afirmar un hecho falso sobre trabajo pasado.
+**Los 9 runs terminales sin `closeout_result`** — no se rellenan.
 
 ---
 
-## 11. DEFECTOS DE MÉTODO DE LA CABINA, medidos en esta sesión
+## 12. RECORDS DE ESTA SESIÓN
 
-1. **Escribir un paso de QA sin comprobar que la superficie puede mostrarlo.** Ocurrió DOS
-   veces: pedir un run sin clasificar en la Run Queue —donde sólo hay runs vivos y los 43
-   sin clasificar están todos `completed`— y estar a punto de pedir el selector de lotes en
-   un proyecto sin lotes. **Antes de escribir «mira X», medir que X es visible ahí.**
-2. **Presentar un grep literal como una medición.** «5 sitios de op en la consola» incluía
-   un sitio de RENDER; el texto del run decía 4 y decía bien. La cifra era correcta y la
-   unidad estaba mal.
-3. **Inyectar una función con firma inventada en vez de leer la que el código usa.** Produjo
-   un rollback que parecía del motor y era mío.
-4. **Ejecutar la re-emisión fuera del camino de éxito.** Re-emitió `.project/` tras un apply
-   fallido, ensuciando seis ficheros que nadie pidió.
-5. **Correr un barrido de cinco repos en un solo comando.** Agotó su tiempo y dejó tres
-   candados. Las mediciones pesadas van repo a repo.
+- `context/aiw-console/records/CIERRE-48-LOTES-Y-CRLF-DEL-CANONICO.md`
+- `context/aiw-console/records/FINALES-DE-LINEA-GITATTRIBUTES-Y-RENORMALIZADO-DEL-ARBOL.md` (taller)
+- `context/aiw-console/records/DEFECTOS-DEL-TICKET-49-Y-LA-LECTURA-DE-LA-GUARDA.md`
 
-**El taller contradijo a la cabina en dos puntos sustantivos y en los dos tenía razón**
-—el sitio de render mal contado y los 9 sitios absorbidos en vez de 10—, y paró en la
-frontera del alcance en vez de ampliarla. **La separación adversaria sigue pagando.**
+Los dos últimos llevan la afirmación corregida en §5.3. **Gana este relevo.**

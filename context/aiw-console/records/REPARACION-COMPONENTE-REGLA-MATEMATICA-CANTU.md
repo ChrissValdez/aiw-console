@@ -5,17 +5,20 @@ Run canónico: `RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001`, `queue_order
 con `Audit and implement the Rule component`. El aviso de coordenadas del ticket es correcto:
 este run era `#34` y hoy `#34` es `RUN-CANTU-ACCENT-INK-CONTRAST-ROLE-001`.
 
-**Tres reparaciones pedidas, las tres entregadas, en cuatro pasadas.** La primera cerró el
-centrado del título y la retirada de «Placement avanzado», y **paró** en el color del título
-por una guarda del propio ticket. La parada resultó correcta: el operador cambió la forma —de
-tres estados a dos— y la segunda pasada la implementó. **La QA humana aprobó el control y
-rechazó su lista de opciones**; la tercera la sustituyó por una lista fija de cuatro. **La QA
-volvió a mirar y echó de menos «Automático» en el desplegable**; la cuarta lo convirtió en
-entrada real.
+**Tres reparaciones pedidas, las tres entregadas, en cinco pasadas.**
 
-**Las dos correcciones de la QA fueron a órdenes de la cabina, no a defectos del taller**, y
-las dos venían de la misma raíz: reglas escritas cuando la lista salía de la paleta, que
-dejaron de valer al hacerla fija.
+| Pasada | Qué cerró |
+|---|---|
+| 1 | Centrado del título y retirada de «Placement avanzado». **Paró** en el color del título por una guarda del propio ticket, y la parada resultó correcta |
+| 2 | El color del título, con la forma que eligió el operador tras la parada: de tres estados a dos |
+| 3 | **QA:** la lista de opciones era la equivocada. Se sustituyó la paleta por una lista fija de cuatro |
+| 4 | **QA:** faltaba «Automático» en el desplegable. Pasó de estado de visualización a entrada real |
+| 5 | **QA, PASS con detalle:** en «Automático» la muestra pintaba blanco fijo. Ahora pinta la tinta real |
+
+**Las tres correcciones de la QA fueron a órdenes de la cabina, no a defectos del taller.**
+Las dos primeras venían de la misma raíz —reglas escritas cuando la lista salía de la paleta,
+que dejaron de valer al hacerla fija—; la tercera, de que la pieza compartida no podía conocer
+un contexto que nadie le pasaba.
 
 Packet del operador:
 `docs/_historical_run_record/RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001-OPERATOR-QA-PACKET-ROUND-2.md`
@@ -159,7 +162,7 @@ encargo: de tres estados a dos.
 ### 4.0 Lo que decidió el operador, y por qué se descartaron las otras dos formas
 
 **El tercer estado se retiró del encargo.** «El título toma el color del acento» dejó de ser
-una opción tras la medición de 4.5: mismo color sobre mismo color da contraste **1:1 en los
+una opción tras la medición de 4.7: mismo color sobre mismo color da contraste **1:1 en los
 dieciocho tokens**. La cabina lo había especificado por analogía con «Nota destacada» sin
 comprobarlo. **No era una opción, era un defecto**, y con él fuera el problema pasó de tres
 estados a dos.
@@ -236,6 +239,13 @@ intercepta el manejador antes de escribir nada — **esa** es la guarda; que ade
 muestra con **su nombre** en vez de como «Personalizado». Sin ella, «Blanco» se leería
 «Personalizado».
 
+**`emptyStateAccent = null`** — la añadió la quinta. Es el color que pinta la muestra
+**mientras se muestra el estado vacío, y solo entonces**. Existe porque la pieza compartida no
+conoce el contexto del que ese estado depende —en «Regla matemática», el color de la franja—:
+quien coloca el control sí lo conoce y se lo pasa ya resuelto. Sin ella la muestra cae a
+blanco, que es la conducta que tenía y la de cualquier consumidor que no tenga nada mejor que
+decir. Ver 4.8.
+
 **`getColorFieldSelection` quedó literalmente intacta**, y eso importa: la regla de la sección
 7 del contrato de color —un hex es «Personalizado»— sigue escrita en un solo sitio y sigue
 mandando en las cuatro colocaciones que consumen la paleta, donde un `option.value` es un id
@@ -272,7 +282,7 @@ La guarda de `undefined` en el compilador **no es adorno**: `normalizeVariant(un
 devuelve `'ctx'`, así que llamar sin ella habría emitido un color para todo borrador que no
 elige ninguno — y ese silencio es justo lo que deja mandar a `accentTextColor`.
 
-### 4.6 La lista que rechazó la QA, y la que la sustituye
+### 4.5 La lista que rechazó la QA, y la que la sustituye
 
 **La QA humana aprobó el control y rechazó la lista.** Alimentarla de la paleta global era el
 error, y por la misma razón que retiró el tercer estado: los dieciocho acentos son colores
@@ -309,7 +319,7 @@ un token id en ese campo, así que el cambio no toca ningún dato existente.
 entrar uno; el control lo mostraría como «Blanco» y el compilador lo resolvería contra la
 paleta. Estrecharlo a solo-hex es otro run.
 
-### 4.7 Una desviación de scope que hay que declarar
+### 4.6 Una desviación de scope que hay que declarar
 
 Las dos anclas existían en `colorSystem.js` con los nombres exactos que decía el ticket,
 `ACCENT_TEXT_DARK` y `ACCENT_TEXT_LIGHT`, **pero no estaban exportadas**. La orden de
@@ -321,7 +331,7 @@ la derivación de `#34`. Se dice aquí en vez de pasarlo por alto. Si la cabina 
 archivo intacto, la alternativa es derivarlas con `deriveColorRolesFromAccent('#FFFFFF')` y
 `('#000000')`, que da las mismas dos y tampoco las teclea.
 
-### 4.5 La medición que retiró el tercer estado
+### 4.7 La medición que retiró el tercer estado
 
 El encargo anterior pedía reportar si «el acento» era legible, y la cabina esperaba que no lo
 fuera «en la mayoría de tokens». **No lo es en la mayoría: no lo es en ninguno, por
@@ -332,13 +342,46 @@ en los dieciocho tokens sin excepción.
 **El operador retiró el estado a partir de esta medición.** Es la cuarta corrección de este
 run que la cabina incorporó.
 
+### 4.8 La muestra que mentía en «Automático»
+
+**Detalle que dejó la QA tras dar PASS a los 19 checks.** El control decía «Automático» y el
+recuadro de al lado se quedaba en blanco fijo aunque la vista previa pintara el título de otro
+color. **El control mentía sobre el estado del componente.**
+
+La causa: la pieza compartida calculaba la muestra desde el valor del **propio campo**, que en
+«Automático» está vacío. Y no podía hacer otra cosa —**no conoce el color de la franja**—, así
+que la solución fue pasárselo, no que lo adivinara. `RuleTitleColorField` observa el campo
+hermano `${baseName}.variant` con `useWatch`, la misma mecánica con la que
+`RegisteredColorSwatch` mueve en vivo la muestra del campo «Color».
+
+**La cadena de resolución espeja la del compilador y el renderer, medida contra ellos: cero
+discrepancias** en siete casos —ausente, dos tokens, un token con `accentText` propio, dos
+hex, y un token que la paleta no define—. Ese último es el único indeterminable: el compilador
+no emite color ni tinta y el renderer cae a su mapa fijo de JAME Core, que el editor no
+conoce. Se deja la muestra en blanco, la conducta anterior — y acierta, porque sin
+`accentTextColor` el renderer pinta blanco.
+
+**Una corrección a la vía que proponía el ticket.** Mandaba resolver la tinta con
+`resolveAccentTextInk(accent)` y autorizaba exportarla. **Medido: eso habría mentido.** Un
+token de la paleta con `accentText` escrito a mano —que `#34` conserva a propósito— emite ese
+valor por el compilador; derivarlo del acento habría devuelto otro. Se lee `token.accentText`,
+que es **la misma clave** que el compilador emite como `accentTextColor`, así que muestra y
+vista previa no pueden separarse. **Consecuencia: `colorSystem.js` no se tocó y la desviación
+de scope que el ticket autorizaba no hizo falta consumirla.**
+
+**Una conducta declarada, no descubierta:** pulsar el picker desde «Automático» congela la
+tinta derivada como color explícito y saca el campo de «Automático». Es razonable —el autor
+parte del color real en vez de partir de blanco, que era justo la queja— y queda como está,
+pero va al packet como check para que el operador la vea a propósito.
+
 ---
 
 ## 5. Estado
 
 **Suite: 436/436.** Línea base verificada a mano antes de tocar nada, no heredada del ticket:
-436/436. Cero pruebas modificadas, añadidas o en rojo. No hubo que clasificar ninguna como
-aditiva o de conducta porque ninguna se movió. Lint y build limpios en las dos pasadas.
+436/436. **Cero pruebas modificadas o añadidas en las cinco pasadas.** Solo una se puso en
+rojo, en la tercera, y se rehizo el cambio en vez de tocarla — ver 4.3. Lint y build limpios
+en todas.
 
 **Ningún borrador viejo cambia, medido contra el código nuevo:** de los **87 bloques `rule`**
 del disco, **0 llevan `titleVariant`** y **los 87 renderizan byte a byte igual** que con la
@@ -349,8 +392,11 @@ así que la comparación mide algo.
 los dos `draftSchema.js`, `compiler.js` y —solo dos `export`— `colorSystem.js`. Ningún otro
 renderer, ningún otro esquema de bloque y ninguna otra salida del compilador.
 
-Las dos primeras pasadas están **commiteadas** (`4341581`). La tercera deja pendientes tres
-archivos: `WebBlockEditor.jsx`, `VariantSelect.jsx` y `colorSystem.js`.
+Las pasadas 1-2 están commiteadas en `4341581` y las 3-4 en `f99f7d4`. **La quinta deja
+pendientes dos archivos:** `VariantSelect.jsx` y `WebBlockEditor.jsx`. En ella
+`colorSystem.js` **no se tocó**: la desviación de scope que el ticket autorizaba —exportar
+`resolveAccentTextInk`— no hizo falta, porque la tinta se lee de `token.accentText`, que es
+más fiel. Ver 4.8.
 
 **Queda enrutado:**
 
@@ -362,12 +408,12 @@ archivos: `WebBlockEditor.jsx`, `VariantSelect.jsx` y `colorSystem.js`.
   muerto, y ahora hay al lado un campo vivo que hace lo mismo bien, por si algún día se
   repara: la diferencia es que el de «Regla matemática» recorre las cuatro capas y está en un
   esquema con `.strict()`.
-- La QA humana del packet ROUND-2, **19 checks**.
+- La QA humana del packet ROUND-2, **21 checks**.
 - **Estrechar `titleVariant` a solo-hex** en los dos esquemas. Hoy sigue aceptando un token id
   que la UI ya no ofrece; por «Insertar JSON» es alcanzable. Cero casos en disco, pero la vía
   existe. Toca esquema, fuera del scope de la tercera pasada.
 - **Si la cabina quiere `colorSystem.js` intacto**, revertir los dos `export` y derivar las
-  anclas con `deriveColorRolesFromAccent`. Ver 4.7.
+  anclas con `deriveColorRolesFromAccent`. Ver 4.6.
 - El commit. Lo hace el operador desde GitHub Desktop.
 
 **El `status` del run lo cierra la cabina.** Este documento no lo toca.

@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-06T20:20:54.737Z",
+  "generated_at": "2026-08-08T08:39:23.535Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-06T20:20:54.660Z"
+      "mtime": "2026-08-08T08:39:23.493Z"
     },
     {
       "path": "package.json",
-      "mtime": "2026-08-03T00:11:56.360Z"
+      "mtime": "2026-08-07T05:54:03.854Z"
     }
   ],
   "emitted_artifacts": [
@@ -39,9 +39,9 @@
       "path": ".project/snapshot.json"
     }
   ],
-  "operational_status": "active",
+  "operational_status": "idle",
   "project_summary": "AIW Console Roadmap: 2 objectives, 23 phases, 56 runs.",
-  "current_status_summary": "Active run: RUN-CONSOLE-BATCHES-001 (O4/O4.P19, queue 48).",
+  "current_status_summary": "No active run; 48 of 56 runs completed.",
   "roadmap_tree": {
     "model": "roadmap_tree_v1",
     "roadmap_id": "roadmap",
@@ -946,7 +946,7 @@
                 "title": "Batches in the roadmap schema, with the branch they determine",
                 "summary": "A run declares which batch it belongs to and the batch determines the branch, following the exact shape of lanes; the validator refuses the deadlock a human-approval edge creates inside one batch.",
                 "full_description": "WHY IT EXISTS, measured in aiw's own code: every run checks out the base branch and creates its branch from there, so run two never sees run one's work. A queue of seven runs needs seven human merges in between, which makes the unattended window that is the project's purpose impossible. D-030 already designed batches; what is missing is that they exist. THE SHAPE IS ALREADY BUILT AND PROVEN — copy lanes, do not invent: the vocabulary is declared at the ROOT of the project's canonical, exactly as lanes are, and a run carries an optional key pointing at one. Belonging to a batch is NOT mandatory. In the console it reads like the lane selector: a dropdown at the top showing batches instead of lanes. WHAT BATCHES HAVE THAT LANES DO NOT: the batch determines the branch the kernel commits to. THE GROUPING RULE, and it is machine-checkable: several runs needing human approval may sit in the same batch, but a run needing human approval may NOT be the dependency of a later run of the SAME batch. This is not a style constraint but a deadlock — human approval happens once, over the whole batch, at the end, so such an edge can never be satisfied. The validator fails when it finds a depends_on_human_approved edge whose origin and target share a batch. THE HIGHEST VALUE OF THE SET, and worth building for deliberately: each depends_on_human_approved edge marks WHERE AN UNATTENDED WINDOW ENDS. Reading the roadmap tells you how far a night reaches before a person is needed. It stops being a restriction and becomes planning. THE HALF THIS RUN DOES NOT BUILD: the schema, the invariants, the transport and the console surface are here; MAKING THE KERNEL COMMIT TO THE BATCH BRANCH IS aiw's WORK. This run's acceptance must state that boundary in writing. This is the most expensive of the three and the only one that is not purely additive.",
-                "status": "active",
+                "status": "completed",
                 "depends_on": [
                   "RUN-CONSOLE-DEPENDS-ON-HUMAN-APPROVED-001",
                   "RUN-CONSOLE-PROGRESS-NORMATIVE-001",
@@ -956,7 +956,8 @@
                 "work_type": "FUNCTIONAL",
                 "blast_radius": "SYSTEMIC",
                 "failure_surfaces": "SILENT",
-                "classified_at": "2026-08-02T07:27:15.853Z"
+                "classified_at": "2026-08-02T07:27:15.853Z",
+                "closeout_result": "done"
               }
             ]
           }

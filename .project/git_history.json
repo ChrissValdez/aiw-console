@@ -1,27 +1,127 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-06T20:20:54.737Z",
+  "generated_at": "2026-08-08T08:39:23.535Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-06T20:20:01.286Z"
+      "mtime": "2026-08-08T08:25:30.184Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-06T20:20:54.660Z"
+      "mtime": "2026-08-08T08:39:23.493Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "006dacb0fb755cea7200a3c408196997b8f2937d",
+  "head": "ad70fce7b8cdb375a87ce85bbf0807aa48a01357",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 198,
+  "commit_total": 208,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "ad70fce",
+      "full_sha": "ad70fce7b8cdb375a87ce85bbf0807aa48a01357",
+      "date": "2026-08-08T01:13:13-06:00",
+      "parents": "5198ca3",
+      "subject": "records: selector de icono y retiro del icono derivado del color en Nota desplegable (queue_order 32)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "5198ca3",
+      "full_sha": "5198ca38e485504b8ff2d974267d6fd4a71fb3b4",
+      "date": "2026-08-08T01:13:04-06:00",
+      "parents": "57f68f5",
+      "subject": "record: reparacion del selector de icono de Nota desplegable (queue_order 32)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "57f68f5",
+      "full_sha": "57f68f5c96c906ce54657045ded4eb891a3b26ba",
+      "date": "2026-08-07T00:01:08-06:00",
+      "parents": "7d65439",
+      "subject": "handoff(cantu-quizzes-latex): el md5 del canonico se declara en sus dos lecturas, CRLF f2797026 y LF 1e1a2874, porque el repo normaliza con text=auto y un clon en la laptop nueva daria el primero",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7d65439",
+      "full_sha": "7d65439affdcd674180fcd2b2a079478e79978ad",
+      "date": "2026-08-07T00:00:32-06:00",
+      "parents": "5d052aa",
+      "subject": "handoff(aiw-console): corrige el estado de Git del relevo - el trabajo del 48 viajo en 742bc7e commiteado por otro hilo con -A; el run sigue active y su QA pendiente",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "5d052aa",
+      "full_sha": "5d052aa315c9817393c5cfedf7dfb6d67b25f813",
+      "date": "2026-08-06T23:47:28-06:00",
+      "parents": "742bc7e",
+      "subject": "handoff: relevo del hilo cantu-studio al migrar de maquina. 73 runs, history=34, dos runs active esperando QA humana; queue_order 33 cerrado tras tres vueltas y dos ampliaciones D-061; cinco inserciones pendientes y las lecciones de la primera sesion en modalidad Cowork",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "742bc7e",
+      "full_sha": "742bc7e3fa6b8adf8d19a7912f524c71e73a2a6e",
+      "date": "2026-08-06T23:43:21-06:00",
+      "parents": "4181fc8",
+      "subject": "wip(roadmap): trabajo EN CURSO del hilo aiw-console sobre el motor de roadmap y la operacion batch, commiteado sin terminar para migrar de maquina. NO es un estado cerrado: el hilo aiw-console lo continua.",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4181fc8",
+      "full_sha": "4181fc89a7f135ebdbf1bcbbd1f52cab07d1b2c4",
+      "date": "2026-08-06T23:26:23-06:00",
+      "parents": "2cfbe2c",
+      "subject": "handoff(aiw): el md5 del objetivo 007 se declara en sus dos lecturas (LF 7080 y CRLF 7189) porque aiw no tiene gitattributes y un clon en la laptop nueva daria el segundo",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2cfbe2c",
+      "full_sha": "2cfbe2c12a81429d2b29484a5fd1314ec3b9f534",
+      "date": "2026-08-06T23:18:33-06:00",
+      "parents": "b2a5079",
+      "subject": "handoff(aiw)+record: el kernel no conoce ningun roadmap y 31 es la pieza que falta; cuatro correcciones medidas (git status no admite --ignore-cr-at-eol, 20 planned + 1 active, md5 del canonico, verification acepta cualquier shell); CQL pasa a blanco viable con 42 runs clasificados y el reparto acordado; la seccion de mudanza a la laptop nueva; y la trampa del index.lock huerfano",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b2a5079",
+      "full_sha": "b2a5079c2218d9cd44721b59166e465e6d312712",
+      "date": "2026-08-06T16:06:16-06:00",
+      "parents": "925ca13",
+      "subject": "48: abre los lotes en el schema del roadmap - primer consumidor del registro de fontaneria, con la frontera del kernel declarada por escrito",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "925ca13",
+      "full_sha": "925ca13c0fabbf0322fc46c1ac4632ff6ff3a60f",
+      "date": "2026-08-06T15:51:18-06:00",
+      "parents": "006dacb",
+      "subject": "record: D-064 autoriza a la cabina a operar la consola; y los seis records del lote 1 de componentes, con las tres vueltas de Factorizacion",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "006dacb",

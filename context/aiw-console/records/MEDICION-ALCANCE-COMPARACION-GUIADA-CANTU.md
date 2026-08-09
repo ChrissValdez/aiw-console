@@ -7,16 +7,17 @@
 | Título canónico | `Decide scope and enable the Split component` |
 | Status al abrir | `active` |
 | Fecha | 2026-08-09 |
-| Tipo de run | **Dos rondas.** Ronda 1: medición y propuesta. Ronda 2: habilitación según la decisión del operador |
-| Entregable | `docs/_historical_run_record/RUN-JAME-WEB-SPLIT-SCOPE-AND-REPAIR-001-OPERATOR-QA-PACKET.md` — informe de opciones **ampliado con packet de QA de 18 checks** |
-| Código modificado | Ronda 1: **ninguno**. Ronda 2: **dos archivos**, los dos del editor (§8) |
-| Suite | Ronda 1: **437/437**. Ronda 2: **437/437**, sin modificar ninguna prueba. Lint `exit 0`, build `exit 0` en las dos |
-| Veredicto | Ronda 1: `BLOCKED_ON_OPEN_DECISION`. **Ronda 2: `READY_FOR_OPERATOR_QA`** |
+| Tipo de run | **Tres rondas.** 1: medición y propuesta. 2: habilitación en «Dos columnas». **3: FAIL del operador con tres peticiones — mitad A (fórmula por paso) y mitad B (ancho completo), con parada obligatoria entre ellas, levantada por adenda** |
+| Entregable | `docs/_historical_run_record/RUN-JAME-WEB-SPLIT-SCOPE-AND-REPAIR-001-OPERATOR-QA-PACKET.md` — informe de opciones **ampliado a 38 checks** |
+| Código modificado | Ronda 1: **ninguno**. Ronda 2: **dos archivos** del editor (§8). **Ronda 3: doce** — cinco en la mitad A (§10), siete más en la B (§11) |
+| Suite | Ronda 1: **437/437**. Ronda 2: **437/437**. Mitad A: **437/437**, un censo re-anclado (§10.5). **Mitad B: 438/438**, las dos pruebas del alcance reescritas (§11.5). Lint `exit 0`, build `exit 0` en todas |
+| Veredicto | Ronda 1: `BLOCKED_ON_OPEN_DECISION`. Ronda 2: `READY_FOR_OPERATOR_QA`. **Ronda 3: `READY_FOR_OPERATOR_QA`** |
 
-> **Este record tiene dos rondas y las dos siguen vigentes.** Las secciones 1 a 7 son la
+> **Este record tiene tres rondas y las tres siguen vigentes.** Las secciones 1 a 7 son la
 > medición de la ronda 1 y **se conservan enteras**: son la medida del estado *antes* de
 > habilitar y la razón por la que se eligió esta salida. La **sección 8** registra la decisión
-> del operador y lo que la ronda 2 ejecutó.
+> del operador y lo que la ronda 2 ejecutó. La **sección 10** registra el cambio de alcance y la
+> **mitad A**; la **sección 11**, la **mitad B**.
 
 ## Guarda de coordenadas
 
@@ -405,5 +406,272 @@ run y no tiene relación con `split`.**
 - **Enrutados, sin tocar:** el renombrado del componente, la familia de fallos silenciosos
   (§2.1), los punteros vencidos (§6), la divergencia entre las dos fábricas (§8.2) y el borrador
   de evidencia que ya no valida (§8.4).
+- **No se tocó `.project/`, ni el `status` del run, ni git, ni el orden de la cola.** La cabina
+  cierra.
+
+---
+
+## 10. Ronda 3 — el operador cambió su propia decisión de alcance
+
+### 10.1 La decisión, y que es exactamente para lo que existe este run
+
+El operador dio **FAIL con tres peticiones** sobre la ronda 2, y la tercera **revierte su propia
+elección de la ronda 2**: quiere que «Comparación guiada» **también funcione a ancho completo**,
+como cualquier otro componente. Es decir, la **opción B** de §5, la que la ronda 1 midió como la
+cara.
+
+**Esto no es una contradicción del run: es su función.** El título canónico es *«Decide scope
+and enable the Split component»*. Un run que decide alcance existe precisamente para que el
+alcance pueda cambiar de opinión mientras está abierto.
+
+**Se le declaró el coste medido antes de ejecutarlo** —nueve capas, dos pruebas, entrada en JAME
+Core y el rediseño de dos de los tres modos— **y respondió «ahora»**. La medición de §5 de que
+la opción B era «imposible bajo el encargo de la ronda 1» **sigue siendo correcta para aquel
+encargo**: lo que cambió no es la medida, es el encargo.
+
+**El encargo de la ronda 3 tiene dos mitades con una parada obligatoria entre ellas.** Esta
+sección registra la **mitad A**. La mitad B no ha empezado.
+
+### 10.2 Mitad A — el campo inteligente frente al insertor en línea
+
+El defecto: **el autor no podía insertar fórmulas en los pasos.** Los tres campos de math
+—`steps[].math`, `gridSteps[].math` y `result`— eran cajas de texto donde había que teclear
+LaTeX a mano.
+
+**El aviso del operador llegó antes del defecto y era correcto.** Verificado en disco:
+
+| | Insertor en línea | **Campo de fórmula inteligente** |
+|---|---|---|
+| Qué escribe | `\( … \)` **dentro de un texto** | **LaTeX pelado, sin delimitadores** |
+| Para qué campos | Los cinco de prosa fijados por prueba | Campos que son *solo* fórmula |
+| ¿Alguno es de `split`? | **Ninguno** | **Los tres lo son** |
+
+`renderSplitCard.js` ya envuelve en `\[ … \]` en **`:91`, `:105`, `:130`, `:145`** —las cuatro
+coordenadas del ticket, exactas— y el esquema ya rechazaba `\[` y `\]` en **`:248`** y **`:257`**
+de los **dos** gemelos, pero **no** `\(` ni `\)`. Montar el insertor en línea habría producido
+`\[ \(x\) \]`. **Es lo mismo que le pasó a «Factorización».**
+
+El campo inteligente **lo hace imposible por construcción**, que es mejor que taparlo con otra
+validación — aunque la validación también se puso, como cinturón (§10.4).
+
+### 10.3 Por qué un adaptador hermano y no una generalización
+
+El criterio 2 pedía medir si `normalizeRuleMathForRender` servía tal cual, si hacía falta un
+hermano, o si convenía generalizarlo. **Medido: hermano.**
+
+| | `rule` | `split` |
+|---|---|---|
+| Qué guarda en el Draft | **Objeto** — `mathBlockGroup` o `mathNode` (`ruleSmartFormulaPilot.js:17`) | **String** — `z.string()` en los dos esquemas (`:245`, `:251`) |
+| Qué espera el motor | `renderRule` lee la forma normalizada | `renderSplitCard` **interpola el valor crudo** en el HTML |
+| Formas que acepta al leer | string, `MathNodeV1`, `MathBlockGroupV1`, `RichTextV1` | string y nada más |
+
+Un objeto en `steps[].math` **ni valida ni renderiza**. Y **generalizar
+`normalizeRuleMathForRender` habría cambiado la conducta de «Regla matemática»** —aplica
+`wrapRuleRenderLatex` y su fallback textual propio—, **cuya QA está cerrada**: el ticket ordenaba
+parar en ese caso, y no se llegó a ese caso porque la salida correcta era otra.
+
+Alta: **`smartFormulaField/splitSmartFormulaPilot.js`**. Mismo mecanismo que el de `rule` —previa
+visual, botón «Insertar fórmula»/«Editar fórmula», modal, desplegable «LaTeX textual avanzado»—
+pero devolviendo **siempre string de LaTeX pelado**. **No importa nada de
+`ruleMathAdapter.js`**: solo primitivas puras compartidas (`getMathBlockGroupRenderLatex`,
+`resolveSmartFormulaRenderLatex`). **Cero líneas de «Regla matemática» tocadas.**
+
+**Un hallazgo que obligó a poner guarda propia:** `validateLatexPayload`, el sanitizador
+compartido, **no rechaza delimitadores** — acepta `\[ x \]` y `\( x \)` como texto LaTeX válido,
+medido por ejecución. Por eso `rule` lleva su comprobación propia en `ruleMathAdapter.js:45`. El
+hermano lleva la suya, ampliada al par en línea.
+
+**Multilínea, decidido y declarado:** si el autor añade líneas, se guarda la forma de render
+(`\begin{aligned} … \end{aligned}`), no el join plano con `\\`. Misma política que `rule` y por
+la misma razón: dentro de `\[ … \]` un `\\` de nivel superior sale «pelado». Coste conocido: el
+round-trip devuelve esa fórmula como **una** línea con su entorno, no como N líneas separadas.
+Es consecuencia del esquema `z.string()`, no del control.
+
+### 10.4 Cero delimitadores duplicados, y el corpus
+
+Ejecutado de punta a punta. **Guardada:** `\frac{5}{7}` — cero delimitadores. **Compilada:**
+`\[ \frac{5}{7} \]` — **un solo par**. Contado sobre los cuatro campos de math de la lección de
+prueba: 4 aperturas / 4 cierres → **1 par por campo**. No aparecieron dos pares.
+
+Cinturón puesto en los **dos** `draftSchema.js`, mismo patrón que «Factorización» (`:448-449` en
+`compiler-api`, `:445-446` en `editor-ui`): `\(` y `\)` rechazados junto a `\[` y `\]`, tanto en
+el validador obligatorio como en el opcional. Verificado en los dos gemelos, incluido el caso
+parcial `a \(b\)` que antes se colaba.
+
+**Corpus, barrido programáticamente antes de blindar:** 173 JSON, **72 bloques `split`**, **204
+campos de math**, **0** con `\( \)` y **0** con `\[ \]`. **Ningún borrador existente se rompe.**
+No hizo falta parar.
+
+### 10.5 La prueba re-anclada — AUTORIZADA por el operador, con la cita de git
+
+`mathAuthoringFormulaEditorSurfaceState.test.mjs:254` se puso roja. **Clasificada como censo de
+texto fuente, no como conducta.** El operador **verificó la clasificación de forma
+independiente y la autorizó**, con una condición: que el record deje la cita de git, para que
+el próximo que lea esa prueba no herede el error. Es esta:
+
+```
+git show HEAD:tools/author-lite/editor-ui/src/features/editor/components/web/WebBlockEditor.jsx
+  | grep -n 'COLUMN_TEXTAREA_CLASS} font-mono'
+1622:                    className={`${COLUMN_TEXTAREA_CLASS} font-mono`}
+1724:                  className={`${COLUMN_TEXTAREA_CLASS} font-mono`}
+```
+
+Con `HEAD` en `43a2d85`, las **únicas dos** ocurrencias del patrón estaban en `:1622`
+—`SplitStepsFields`— y `:1724` —`SplitGridStepsFields`—, **los dos textarea de fórmula de
+`split`**, justo los que este encargo convierte al campo inteligente.
+
+> **El comentario de la prueba, que atribuía esas dos ocurrencias a *arithmetic* y *timeline*,
+> era FALSO ANTES de este run.** Esos dos componentes escriben su clase literal propia, con su
+> `font-mono text-sm` en línea, y no se tocaron. Quien lea esa prueba en el futuro debe saber
+> que la cifra nunca midió lo que su comentario decía.
+
+Lo que la prueba protege de verdad —que la clase compartida no se lleve `font-mono` ni
+`text-base` pegados— lo siguen fijando sus dos `assert.match` anteriores, que no cambian. Cifra
+re-anclada a **0**, comentario corregido en el propio archivo, censo vivo: si alguien vuelve a
+colgar un campo de ese patrón sobre la clase compartida, salta otra vez.
+
+### 10.6 Estado al llegar a la parada
+
+- **Cinco archivos**: alta del hermano, `WebBlockEditor.jsx`, los dos `draftSchema.js`, el censo.
+- **Suite 437/437**, lint `exit 0`, build `exit 0`.
+- **Nada del nivel superior tocado**: ni compilador, ni renderer, ni `allowSplit`, ni catálogo,
+  ni fábricas, ni el despachador de Core, ni las dos pruebas del criterio 7.
+- **Referencia del criterio 9 capturada**: los tres `columns` con `split` del borrador de
+  evidencia —`webBlocks[4]`, `[7]`, `[9]`— compilan hoy idénticos byte a byte, 723 / 944 / 909
+  bytes. Es contra esos hashes que se medirá la mitad B.
+- **Una decisión de alcance pendiente para la mitad B, planteada y no ejecutada:** el despachador
+  vive **duplicado**. `buildSingleWebLesson.js` es el que el ticket nombra, pero
+  `compiler-api/services/previewRenderer.js:227-245` tiene **una copia literal** de
+  `findWebComponent`, y es la que pinta «Vista previa». Si solo se da de alta `split` en el
+  primero, «Compilar Web» funcionará a nivel superior y **«Vista previa» mostrará el recuadro
+  rojo «Builder no encontrado»** — que es justamente donde el operador tiene que juzgar los tres
+  modos con los ojos. `previewRenderer.js` **no está en el alcance declarado**. Se pide permiso
+  para añadir ahí la misma entrada de una línea. **Concedido por adenda**, y solo para eso.
+- **No se tocó `.project/`, ni el `status` del run, ni git, ni el orden de la cola.**
+
+---
+
+## 11. Mitad B — ancho completo
+
+### 11.1 Lo que se midió antes de tocar nada
+
+Renderizado con el motor y el CSS reales a 1000px, con KaTeX ya compuesto y el script de
+auto-ajuste asentado:
+
+| Modo | Medida a ancho completo | |
+|---|---|:---:|
+| **Pasos en lista** | contenedor 948px, fórmula 24–90px → **91–98% de banda vacía**; la fórmula a **453–486px de su propia insignia** | roto |
+| **Filas** | hueco etiqueta↔valor **670–696px**, contra 158–184px en columna | roto |
+| **Pasos en rejilla** | celdas de **443px**, casi el ancho aprobado de columna (488px) | **aguanta** |
+
+El ticket decía que la rejilla aguanta. Confirmado, **y con la razón**: su `1fr 1fr` reparte el
+ancho, así que cada celda cae en el ancho que ya está aprobado. Lo único suyo que fallaba era su
+«Resultado final», que ocupa fila entera (945px, 97% vacío).
+
+**Ningún modo hubo que partirlo en dos componentes. No hizo falta parar.**
+
+### 11.2 Por qué consultas de contenedor y no de viewport
+
+Una consulta de viewport habría disparado también en columna estrecha —el viewport es ancho en
+los dos casos— y habría roto el criterio 9 en el primer intento. La de contenedor dispara solo
+cuando **ese** elemento tiene sitio.
+
+Y trae un regalo medido: **la rejilla se autoexcluye sin regla especial**, porque sus celdas
+miden 443px a ancho completo y 187px en columna y **nunca** llegan al umbral de 560px. El modo
+que aguantaba se queda intacto por construcción, no por una excepción escrita a mano.
+
+Dos contenedores anidados: `.j-split-body` (950/438px) gobierna la maqueta de «Filas»;
+`.j-split-fit` gobierna la alineación de la fórmula **tarjeta por tarjeta** (948/436px en paso y
+resultado, 443/187px en celda de rejilla).
+
+### 11.3 Qué se rediseñó de cada modo, y por qué
+
+- **Pasos en lista** — la fórmula deja de centrarse en la banda y **se ancla junto a su
+  insignia**: margen izquierdo **453–486px → 64px**. La razón es que el defecto no era el hueco
+  en sí, sino que el número y su fórmula dejaban de leerse como una sola cosa. El escudo de
+  `padding-left` que evita el número ya existía, así que no hubo que inventar espacio.
+- **Filas** — **dos por renglón**: hueco **670–696px → 190–216px**, el mismo orden que los
+  158–184px ya aprobados en columna. Se eligió la rejilla en vez de un `max-width` centrado
+  porque el patrón ya está validado *dentro del propio componente*: es lo que hace el modo que
+  aguanta. El **pie se dejó fuera del envoltorio** a propósito, para conservar su
+  `margin-top: auto`.
+- **Pasos en rejilla** — **sin tocar**. Solo su «Resultado final», que tenía el mismo defecto
+  que «Pasos en lista» por ocupar fila entera: **475px → 44px**.
+
+Si un navegador no soporta consultas de contenedor, ignora el bloque entero y **todo se comporta
+como hoy**. No hay estado intermedio roto.
+
+### 11.4 El criterio 9, demostrado dos veces
+
+**Por el compilador:** `webBlocks[4]`, `[7]` y `[9]` compilan idénticos byte a byte, con los
+mismos hashes que la mitad A —`841af5395755f57b`, `ea0af205fe05dc86`, `063d70f944c04ea2`— y los
+mismos 723 / 944 / 909 bytes.
+
+**Y por geometría renderizada**, que es lo que el operador ve: posición y tamaño de **todos** los
+nodos visibles de las dos secciones en columna. Huellas **idénticas**: `3a6fa040` (283 nodos) y
+`487d2e59` (241 nodos). Alturas 658 → 658 y 540 → 540.
+
+> **Nota de método, declarada porque afectó a la medición.** La primera línea base se tomó **en
+> vuelo**: el script de sincronización de alturas del propio componente corre con temporizadores
+> a 100ms, 500ms y 2000ms y da valores distintos hasta asentar. Daba `.j-split-top` de 173px
+> donde lo asentado son 101px, y eso hacía parecer que el rediseño había encogido la tarjeta
+> 74px. **Se descartó y se rehízo forzando el asentamiento en las dos páginas.** Es el tipo de
+> error que habría producido un falso positivo de regresión.
+
+### 11.5 Las dos pruebas del criterio 7: reescritas, no borradas
+
+**Conteo: 437 → 438.** La primera se partió en dos porque fijaba dos cosas y ahora una es la
+negativa.
+
+1. *«…only as Columns children»* → *«…**in both placements**»*: los tres modos arriba, dentro, y
+   mezclados con otros bloques.
+2. **Negativa nueva**, *«opening the placement does not open the bounded split contract at top
+   level»*: nueve formas rechazadas **arriba**, donde ya no hay un `columns` alrededor que
+   proteja — exclusividad de modo, `result`/`footer` fuera de sitio, campo desconocido, HTML,
+   **los dos pares de delimitadores** y el tope de cantidad.
+3. *«compiler **rejects** top-level split»* → *«compiler **emits** top-level split **and still
+   rejects** unsafe direct payloads without schema parse»*: comprueba que emite los tres modos
+   sin campos de Draft y **conserva enteras** las negativas de seguridad, movidas a la
+   colocación recién abierta y repetidas dentro de columna.
+
+Es el mismo patrón que ya funcionó en `#38`: la conducta cambia, el lado inseguro no se abre.
+
+### 11.6 Lo que se declaró y no se reparó
+
+**El despachador se calla justo en el camino que llega al alumno.** Medido por ejecución con un
+tipo inventado:
+
+| Camino | Ante un tipo desconocido |
+|---|---|
+| «Vista previa» (`previewRenderer.js:287-294`) | **avisa**: recuadro rojo «Builder no encontrado para: X» |
+| «Compilar Web» (`buildSingleWebLesson.js:143-152`) | **se calla**: sin `else`, el bloque desaparece; y su `catch` de errores del renderer está **vacío** |
+
+**«Vista previa» es para el autor; «Compilar Web» produce la lección que se publica.** El que
+avisa es el que menos falta hace; el que se calla es el que llega al alumno. Declarado, **no
+reparado**: es la familia de fallos silenciosos, ya enrutada.
+
+**Segundo hallazgo declarado:** el bloque `<style>` del componente se emite **una vez por
+tarjeta**, no una por lección — ya era así (la regla de KaTeX se duplicaba igual), y las reglas
+nuevas lo engordan de ~80 bytes a **3.153 bytes por tarjeta**. Son reglas idénticas, así que el
+resultado visual es correcto. No se toca: cambiar cómo se emite pondría en riesgo la igualdad
+byte a byte del criterio 9.
+
+**Tercero, ahora visible:** la divergencia entre las dos fábricas quedó enrutada en §8.2 y sigue
+sin tocarse, pero al abrirse el nivel superior **ya se nota**: suelta, la tarjeta arranca en
+«Filas»; dentro de columna, en «Pasos en lista».
+
+### 11.7 Sin reclamos de la mitad B
+
+- **Siete archivos más**: el motor, los dos despachadores, los dos esquemas, el compilador, el
+  catálogo y el editor. Más las dos pruebas del alcance, reescritas.
+- **`ComponentPicker.jsx`, `blockFactory.js` y `renderColumns.js`: ni una línea.** El menú leía
+  `item.disabled` del catálogo, así que retirar la bandera bastó; la fábrica de nivel superior ya
+  tenía su `case 'split'` y valida contra el esquema nuevo, verificado por ejecución.
+- **De `previewRenderer.js` solo la entrada de `split`**, como autorizaba la adenda.
+- Suite **438/438**, lint `exit 0`, build `exit 0`.
+- Evidencia visual reproducible en
+  `QA/temp/RUN-JAME-WEB-SPLIT-SCOPE-AND-REPAIR-001-R3/`, con las dos páginas y el generador.
+- **Este record no certifica nada.** `READY_FOR_OPERATOR_QA` significa que el packet está
+  preparado, no que la pieza esté aprobada.
 - **No se tocó `.project/`, ni el `status` del run, ni git, ni el orden de la cola.** La cabina
   cierra.

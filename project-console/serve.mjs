@@ -23,7 +23,7 @@
 //   POST /projects/<key>/__project-console/history/sync    re-emits `.project/git_history.json`
 //        of that project from its own repository (read-only Git), so the History tab refreshes
 //        without restarting the server.
-//   POST /projects/<key>/__project-console/project/emit    re-emits ALL SIX artifacts of that
+//   POST /projects/<key>/__project-console/project/emit    re-emits ALL SEVEN artifacts of that
 //        project's `.project/` folder from its canonical roadmap (O4.P14). The same gesture the
 //        route above already performs for ONE derived artifact, extended to the whole folder.
 //
@@ -102,6 +102,7 @@ import {
   PROJECT_GUARDRAILS_RELATIVE_PATH,
   PROJECT_NO_CLAIMS_RELATIVE_PATH,
   PROJECT_DOCS_INDEX_RELATIVE_PATH,
+  PROJECT_REPORTS_INDEX_RELATIVE_PATH,
   PROJECT_ROADMAP_RELATIVE_PATH,
   PROJECT_GIT_HISTORY_RELATIVE_PATH,
   PROJECT_SNAPSHOT_RELATIVE_PATH
@@ -126,16 +127,28 @@ const HISTORY_SYNC_SUFFIX = "__project-console/history/sync";
 const PROJECT_EMIT_SUFFIX = "__project-console/project/emit";
 const ROADMAP_EDIT_MAX_BODY = 1000000; // 1 MB cap on the request body
 
-// THE SIX ARTIFACTS a full emission writes, in the emitter's own order (O4.P14). This list is
-// not a second opinion about what `writeProjectFolder` emits: it is the set of destinations the
-// boundary guard checks BEFORE the emitter runs, taken from the projector's own exported route
-// constants so it cannot drift from them. `git_history` is written only when the root is its own
-// repository — the emitter skips a null artifact — so a successful emission reports between five
-// and six files and never pretends a skipped one was written.
+// THE SEVEN ARTIFACTS a full emission writes, in the emitter's own order (O4.P14; the seventh
+// added by O4.P17). This list is not a second opinion about what `writeProjectFolder` emits: it
+// is the set of destinations the boundary guard checks BEFORE the emitter runs, taken from the
+// projector's own exported route constants so it cannot drift from them. `git_history` is written
+// only when the root is its own repository — the emitter skips a null artifact — so a successful
+// emission reports between four and seven files and never pretends a skipped one was written.
+//
+// AN ENTRY MISSING HERE IS NOT A REFUSAL, it is a hole. The emitter carries its own
+// `resolveInsideProject` guard, so an unlisted destination is still written — it simply stops
+// being pre-checked, and the "on all destinations" claim below quietly becomes false without any
+// test going red. That is measured, not assumed (O4.P17), and it is why
+// tests/projector-reports-index.test.mjs asserts this list against what an emission actually
+// writes rather than against a number.
+//
+// `reports_index` is the first entry here that can never appear in `skipped`: the emitter never
+// returns null for it, because an absent `reports/` is something it reports rather than a source
+// it lacks.
 const PROJECT_EMIT_ARTIFACT_PATHS = [
   ["guardrails", PROJECT_GUARDRAILS_RELATIVE_PATH],
   ["no_claims", PROJECT_NO_CLAIMS_RELATIVE_PATH],
   ["docs_index", PROJECT_DOCS_INDEX_RELATIVE_PATH],
+  ["reports_index", PROJECT_REPORTS_INDEX_RELATIVE_PATH],
   ["roadmap", PROJECT_ROADMAP_RELATIVE_PATH],
   ["git_history", PROJECT_GIT_HISTORY_RELATIVE_PATH],
   ["snapshot", PROJECT_SNAPSHOT_RELATIVE_PATH]
@@ -724,11 +737,11 @@ function inspectCanonicalForEmission(root, canonicalPath, externalRunIds) {
 
 // Serialise emissions the way applies are serialised. The projector's atomic writer names its
 // temp file `<destination>.tmp` with no pid in it, so two concurrent emissions of the SAME
-// project would race on the same six temp names. Under the lock each emission is a clean
+// project would race on the same seven temp names. Under the lock each emission is a clean
 // temp+rename per artifact and no `.tmp` survives it.
 let projectEmitting = false;
 
-// THE RE-EMISSION BUTTON'S ENDPOINT (O4.P14). A POST re-emits ALL SIX artifacts of ONE
+// THE RE-EMISSION BUTTON'S ENDPOINT (O4.P14). A POST re-emits ALL SEVEN artifacts of ONE
 // registered project's `.project/` folder from its canonical roadmap, through the projector's
 // own `writeProjectFolder` — the same builder, the same guard and the same atomic writes the
 // emission phase has always used. Nothing about WHICH project or WHERE its canonical lives is
@@ -767,7 +780,7 @@ async function handleProjectEmit(req, res, key) {
     return;
   }
 
-  // THE BOUNDARY GUARD, on all six destinations, before anything is opened. Composing them
+  // THE BOUNDARY GUARD, on all seven destinations, before anything is opened. Composing them
   // here (rather than trusting the emitter) is what makes a registry entry that points at a
   // root the emission could escape a REFUSAL instead of a write.
   const destinations = [];
@@ -818,7 +831,7 @@ async function handleProjectEmit(req, res, key) {
 
   // What the emission ACTUALLY wrote — never the list it could have written. `git_history` is
   // absent from a root that is not its own repository, and the answer reports that honestly
-  // rather than claiming six files every time.
+  // rather than claiming seven files every time.
   const files = emitted.files.map((file) => ({
     artifact: file.artifact,
     path: file.relative_path,

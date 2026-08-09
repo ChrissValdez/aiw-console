@@ -1,27 +1,48 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-09T17:11:38.005Z",
+  "generated_at": "2026-08-09T18:28:09.004Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-09T07:46:36.104Z"
+      "mtime": "2026-08-09T17:46:58.121Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-09T17:11:37.911Z"
+      "mtime": "2026-08-09T18:28:08.903Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "4f733c5d8fe1f2798f907018f6ed84b681404777",
+  "head": "231a1512bb573e4a09ecd44fea099ca751a302c2",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 221,
+  "commit_total": 223,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "231a151",
+      "full_sha": "231a1512bb573e4a09ecd44fea099ca751a302c2",
+      "date": "2026-08-09T11:46:58-06:00",
+      "parents": "b01b952",
+      "subject": "record: Comparacion guiada a ancho completo y formula por paso (queue_order 40)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b01b952",
+      "full_sha": "b01b952d6cf0e7e09d2bff9f4b2c3da83900cacc",
+      "date": "2026-08-09T11:14:39-06:00",
+      "parents": "4f733c5",
+      "subject": "cierra #50 RUN-CONSOLE-DIGEST-CABINA-001 con closeout_result done with deviations: el digest cubre los cuatro proyectos del registro y vive en project-console/projects.digest.json, fuera de .project/ porque esa carpeta es por proyecto y esta pineada en seis",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-DIGEST-CABINA-001"
+    },
     {
       "branch": "main",
       "sha": "4f733c5",

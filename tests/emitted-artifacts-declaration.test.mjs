@@ -22,6 +22,7 @@ import {
   writeProjectFolder
 } from "../tools/projector/project.mjs";
 import { AIW_CONSOLE_FIXTURE, CANTU_FIXTURE } from "./helpers/neighbours.mjs";
+import { makeRealLikeProject } from "./helpers/real-like-project.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
@@ -88,10 +89,18 @@ test("a root with no Git repository declares no git_history — an absence nobod
       "a file that was never written is being declared as emitted");
     assert.equal(existsSync(join(root, PROJECT_DIR, "git_history.json")), false);
     // What IS declared is what this root could produce, and nothing more. This fixture has no
-    // Git and no governance files either, so three artifacts is the whole truth about it —
+    // Git and no governance files either, so four artifacts is the whole truth about it —
     // the declaration narrows to what happened, never to what the emitter can write in general.
+    //
+    // `reports_index` is in that four for a DIFFERENT reason than the other three, and the
+    // difference is the point of listing names here instead of counting (O4.P17). The others are
+    // present because this root has the source each derives from; the reports index is present
+    // because it is UNCONDITIONAL — this fixture has no `reports/` at all, and what landed is a
+    // declared empty index (§20), not an artifact that found something to say. An artifact that
+    // is never skipped still has to be declared, and this is where that is proved.
     assert.deepEqual(paths.sort(), [
       `${PROJECT_DIR}/docs_index.json`,
+      `${PROJECT_DIR}/reports_index.json`,
       `${PROJECT_DIR}/roadmap.json`,
       `${PROJECT_DIR}/snapshot.json`
     ]);
@@ -135,9 +144,9 @@ test("the declaration is additive: everything the snapshot carried before is sti
 });
 
 // The two FROZEN emitted folders (tests/helpers/neighbours.mjs). Read live, this test asserted a
-// neighbour's artifact count: a project that stops keeping governance files emits five, and the
-// pin would break here for a reason that has nothing to do with the declaration being correct.
-// That the REAL projects' declarations still resolve on disk is checked in
+// neighbour's artifact count: a project that stops keeping a governance file emits one fewer,
+// and the pin would break here for a reason that has nothing to do with the declaration being
+// correct. That the REAL projects' declarations still resolve on disk is checked in
 // tests/real-projects-smoke.test.mjs, without a count.
 const FROZEN = [AIW_CONSOLE_FIXTURE, CANTU_FIXTURE];
 
@@ -146,6 +155,16 @@ test("both frozen projects declare six artifacts, and all six are on disk", () =
     const snapshot = JSON.parse(readFileSync(join(root, ".project", "snapshot.json"), "utf8"));
     const declared = snapshot.emitted_artifacts;
     assert.ok(Array.isArray(declared), `${root} transports no declaration`);
+    // SIX, AND IT STAYS AT SIX — the seventh artifact of O4.P17 did not move this number and
+    // must not. These two `.project/` folders were FROZEN ON 2026-07-30 and nothing in the suite
+    // regenerates them (tests/helpers/neighbours.mjs), so what is counted here is a July emission
+    // recorded in July. Raising it to seven would assert that that emission wrote a file which
+    // did not exist yet, which is false about the only thing this line can see.
+    //
+    // WHAT THIS PIN THEREFORE DOES NOT COVER, measured and not deduced: with seven artifacts live
+    // in the emitter, this assertion stayed green. A pin over frozen data cannot notice the live
+    // set growing, so it never guarded the live set — the guarantee people read into it was not
+    // here. It is in the test immediately below, which emits and then counts.
     assert.equal(declared.length, 6);
     for (const entry of declared) {
       assert.ok(existsSync(join(root, entry.path)), `${root}: declared but absent: ${entry.path}`);
@@ -155,5 +174,39 @@ test("both frozen projects declare six artifacts, and all six are on disk", () =
     for (const never of ["project.json", "state/project_status.json", "ledgers/change_ledger.jsonl", "guardrails/project_memory.jsonl"]) {
       assert.ok(!names.some((path) => path.endsWith(never)), `${root} declares a file no emitter writes: ${never}`);
     }
+  }
+});
+
+// THE LIVE COUNT (O4.P17). New, not restored: the pin above counts July, and the set it counts
+// cannot grow, so nothing in this suite ever asserted the size of the set an emission writes
+// TODAY. That gap was invisible for exactly as long as the two numbers happened to agree.
+//
+// This test closes it the only way a count can be honest — it EMITS, then reads the declaration
+// out of the file that emission wrote. The root is a disposable copy of this repository, which is
+// the one fixture that carries every source a full emission consumes, so the number below is the
+// whole set and not a subset. When the eighth artifact arrives, this line goes red and the pin
+// above does not; that asymmetry is the point of having both.
+test("a LIVE full emission declares SEVEN artifacts, and every one of them is on disk", () => {
+  const project = makeRealLikeProject("declared-live-seven-");
+  try {
+    const result = writeProjectFolder(project.root, { now: FIXED_NOW });
+    const snapshot = JSON.parse(readFileSync(join(project.root, PROJECT_SNAPSHOT_RELATIVE_PATH), "utf8"));
+    const declared = snapshot.emitted_artifacts;
+
+    assert.equal(declared.length, 7, `declared: ${declared.map((entry) => entry.artifact).join(", ")}`);
+    assert.equal(result.files.length, declared.length, "the write log and the declaration count the same emission");
+    // The names, not just the size: a count cannot tell a renamed artifact from the same set.
+    assert.deepEqual(declared.map((entry) => entry.artifact).sort(), [
+      "docs_index", "git_history", "guardrails", "no_claims", "reports_index", "roadmap", "snapshot"
+    ]);
+    for (const entry of declared) {
+      assert.ok(existsSync(join(project.root, entry.path)), `declared but absent: ${entry.path}`);
+    }
+    // And the seventh is there on a root with NO `reports/` — the unconditional artifact is part
+    // of the live set whether or not the project has filed a report (§20).
+    assert.equal(existsSync(join(project.root, "reports")), false, "the copy carries no reports/ — see COPIED");
+    assert.ok(declared.some((entry) => entry.path === `${PROJECT_DIR}/reports_index.json`));
+  } finally {
+    project.cleanup();
   }
 });

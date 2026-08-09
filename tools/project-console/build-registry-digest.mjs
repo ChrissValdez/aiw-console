@@ -6,13 +6,19 @@
 //   project-console/projects.digest.json     (schema aiw_registry_digest_v1)
 //
 // WHY IT IS NOT IN `.project/`. `.project/` is the per-project contract folder of
-// CONTRATO §1: each registered root has its OWN, and the cabin's emission writes exactly
-// six files into it. This digest is the other axis — it is ONE file ABOUT ALL of them,
-// derived from the REGISTRY, so no single project's folder is its home. A seventh file
-// there would also be a claim about that project that this artifact does not make, and it
-// would break the pins that count those six (tests/emitted-artifacts-declaration.test.mjs,
-// tests/serve-project-emit.test.mjs, and `PROJECT_EMIT_ARTIFACT_PATHS` in
-// project-console/serve.mjs). It lives beside the registry it derives from instead:
+// CONTRATO §1: each registered root has its OWN, and the cabin's emission writes into it
+// only files that speak about THAT project. This digest is the other axis — it is ONE file
+// ABOUT ALL of them, derived from the REGISTRY, so no single project's folder is its home:
+// filed under one project's `.project/` it would be that project making claims about the
+// others, which is exactly what it is not.
+//
+// THE ARGUMENT IS THE AXIS, NEVER THE COUNT. This comment used to add that a further file
+// "would break the pins that count those six", and that reason has since been read as though
+// the number were the objection. It was not, and O4.P17 settled it in the other direction: a
+// reports index IS per project — `reports/` is a folder of that repository — so it became the
+// seventh artifact of `.project/`, pins and all. What still rules this file out is that it is
+// cross-project, and that has nothing to do with how many files sit beside it. It lives
+// beside the registry it derives from instead:
 // `projects.json` decides which projects exist, `projects.digest.json` reports on them,
 // and the two sort next to each other so the derivation is legible at `ls` time.
 //

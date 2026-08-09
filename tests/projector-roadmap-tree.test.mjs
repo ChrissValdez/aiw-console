@@ -18,6 +18,7 @@ import {
   PROJECT_DOCS_INDEX_RELATIVE_PATH,
   PROJECT_GUARDRAILS_RELATIVE_PATH,
   PROJECT_NO_CLAIMS_RELATIVE_PATH,
+  PROJECT_REPORTS_INDEX_RELATIVE_PATH,
   PROJECT_ROADMAP_RELATIVE_PATH,
   PROJECT_SNAPSHOT_RELATIVE_PATH,
   ROADMAP_TREE_MODEL,
@@ -224,20 +225,25 @@ test("the docs index covers the repo's real Markdown, in the shape the reader co
   }
 });
 
-test("writeProjectFolder lands exactly five files under .project/ and touches no .aiw/", () => {
+test("writeProjectFolder lands exactly six files under .project/ and touches no .aiw/", () => {
   const root = makeTreeRoot();
   try {
     const result = writeProjectFolder(root, { now: FIXED_NOW });
     assert.equal(result.ok, true);
     assert.equal(result.mode, "roadmap_tree");
+    // Six for this root, not seven: it has governance and a docs corpus but is not a Git work
+    // tree, so `git_history` is skipped. `reports_index` is here without a `reports/` folder
+    // because it is the one artifact the emission never skips (O4.P17) — see the declared empty
+    // index in tests/projector-reports-index.test.mjs.
     assert.deepEqual(
       result.files.map((file) => file.artifact).sort(),
-      ["docs_index", "guardrails", "no_claims", "roadmap", "snapshot"]
+      ["docs_index", "guardrails", "no_claims", "reports_index", "roadmap", "snapshot"]
     );
     for (const relativePath of [
       PROJECT_SNAPSHOT_RELATIVE_PATH,
       PROJECT_ROADMAP_RELATIVE_PATH,
       PROJECT_DOCS_INDEX_RELATIVE_PATH,
+      PROJECT_REPORTS_INDEX_RELATIVE_PATH,
       PROJECT_GUARDRAILS_RELATIVE_PATH,
       PROJECT_NO_CLAIMS_RELATIVE_PATH
     ]) {
@@ -313,7 +319,13 @@ test("a missing governance source is fail-soft: the file is not emitted, and not
   try {
     rmSync(join(root, "governance"), { recursive: true, force: true });
     const result = writeProjectFolder(root, { now: FIXED_NOW });
-    assert.deepEqual(result.files.map((file) => file.artifact).sort(), ["docs_index", "roadmap", "snapshot"]);
+    // The two governance artifacts are gone from the list and nothing threw: that is the
+    // fail-soft claim. `reports_index` sits in the same list WITHOUT a `reports/` folder, and
+    // the contrast is worth reading rather than stepping over: a missing governance source means
+    // a missing FILE, a missing `reports/` means a file that says "none" (§18 vs §20). The two
+    // absences are not the same shape, and this list is where both are visible at once.
+    assert.deepEqual(result.files.map((file) => file.artifact).sort(), ["docs_index", "reports_index", "roadmap", "snapshot"]);
+    assert.equal(existsSync(join(root, "reports")), false);
     assert.equal(existsSync(join(root, PROJECT_GUARDRAILS_RELATIVE_PATH)), false);
     // The snapshot does not cite a file that is not there (§7).
     const snapshot = JSON.parse(readFileSync(join(root, PROJECT_SNAPSHOT_RELATIVE_PATH), "utf8"));

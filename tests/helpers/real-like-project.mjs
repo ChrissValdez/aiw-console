@@ -2,12 +2,12 @@
 //
 // Why this exists. Two write-route tests used to register this repository itself (`self`) and
 // then POST the emit / history-sync route at it. That is what those routes do, so the tests were
-// honest — but the effect was that running the suite REWROTE the six real artifacts under
+// honest — but the effect was that running the suite REWROTE the real artifacts under
 // `.project/` and left the working tree dirty every time. Under parallel lanes that is not a
 // nuisance, it is a hazard: the suite could not be run while another workshop had the tree open,
 // and a `git status` after a test run no longer told the operator what they had changed.
 //
-// The copy carries everything a full six-artifact emission needs and nothing else:
+// The copy carries every SOURCE a full emission reads, and nothing else:
 //
 //   roadmap/roadmap.json        the canonical -> snapshot + roadmap
 //   governance/*.json           -> guardrails + no_claims (absent, they are SKIPPED)
@@ -15,9 +15,16 @@
 //   package.json                identity
 //   .git                        a real work tree -> git_history
 //
+// SEVEN ARTIFACTS FROM SIX SOURCES, and the mismatch is deliberate (O4.P17). `reports_index`
+// derives from a `reports/` folder, and `reports/` is NOT copied — for the plain reason that
+// this repository has none, so copying it would copy nothing. The emission writes the index
+// anyway, empty and declared, because that artifact is unconditional. A project WITH reports is
+// therefore not testable through this helper at all; it needs a fixture of its own, which is
+// what tests/projector-reports-index.test.mjs builds.
+//
 // `.git` is COPIED as bytes; no Git command is run to produce it, and nothing here writes to the
-// original. What the tests then assert is unchanged: a real project with all six sources emits
-// six artifacts, skips none, and leaves its canonical byte-identical.
+// original. What the tests then assert is unchanged in kind: a real project with all its sources
+// emits the full set, skips none, and leaves its canonical byte-identical.
 
 import { cpSync, existsSync, mkdtempSync, rmSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";

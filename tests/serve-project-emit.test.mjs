@@ -22,7 +22,7 @@
 //             is proved byte-identical by md5 before and after.
 //
 // `self` used to be this repository BY ABSOLUTE ROOT, and the pass below therefore re-emitted the
-// six real artifacts under `.project/` for real: running the suite left the working tree dirty,
+// real artifacts under `.project/` for real: running the suite left the working tree dirty,
 // every time. It is now a byte copy in a temp dir carrying the same six sources (see
 // tests/helpers/real-like-project.mjs), so the test still emits over a genuine repo_root project
 // with a real Git work tree, and the repository it runs in is left alone. Running this suite is a
@@ -227,14 +227,23 @@ test("the acknowledgement carries NUMBERS: artifacts written, resulting runs and
   assert.equal(payload.layout, "repo_root");
   assert.equal(payload.roadmap_model, "roadmap_tree_v1");
   assert.equal(payload.committed, false, "the route states it committed nothing");
-  // Three artifacts here, and that is the honest number: this bare fixture keeps no governance
+  // Four artifacts here, and that is the honest number: this bare fixture keeps no governance
   // files and is not its own Git repository, so guardrails, no_claims and git_history have
   // nothing to derive from. They are reported as SKIPPED rather than counted as written — the
-  // route never claims six files just because six are possible. (The real project below, which
-  // has all three sources, emits six.)
+  // route never claims seven files just because seven are possible. (The real project below,
+  // which has all three sources, emits seven.)
+  //
+  // The fourth is `reports_index`, and it belongs to a category this route had not met before
+  // O4.P17: an artifact that is OPTIONAL BY CONTRACT and UNCONDITIONAL IN THE EMISSION. Every
+  // other optional artifact here is written when its source exists and skipped when it does not;
+  // this one is written either way, because its whole subject is what `reports/` contains and
+  // "nothing" is an answer it can give (§20 — a declared empty index, not a missing file). So it
+  // can never appear in `skipped`, and the split below is 4 written / 3 skipped rather than the
+  // 3/4 a reader used to counting sources would expect.
   const written = payload.files.map((file) => file.artifact).sort();
-  assert.deepEqual(written, ["docs_index", "roadmap", "snapshot"]);
+  assert.deepEqual(written, ["docs_index", "reports_index", "roadmap", "snapshot"]);
   assert.deepEqual(payload.skipped.sort(), ["git_history", "guardrails", "no_claims"]);
+  assert.ok(!payload.skipped.includes("reports_index"), "the unconditional artifact is never skipped");
   payload.files.forEach((file) => {
     assert.ok(file.path.startsWith(".project/"), `every written path is inside .project/: ${file.path}`);
     assert.ok(file.bytes > 0);
@@ -318,7 +327,7 @@ test("an unregistered project key is refused before anything is resolved", async
 
 // ------------------------------------------------- the boundary guard
 
-test("boundary guard unit: an emission destination outside the root, in .git, or outside the derived .project/ throws; the six artifacts pass", () => {
+test("boundary guard unit: an emission destination outside the root, in .git, or outside the derived .project/ throws; every declared artifact passes", () => {
   const root = desfaseRoot;
   assert.throws(() => resolveEmissionWritePath(root, join("..", "roto", ".project", "snapshot.json")), /escapes the registered project root/);
   assert.throws(() => resolveEmissionWritePath(root, resolve(workDir, "absolute.json")), /escapes the registered project root/);
@@ -447,11 +456,16 @@ test("the button's acknowledgement says what happened, WITH numbers, and the vie
   assert.equal(state.className, "roadmap-emit-state is-ok");
   // NUMBERS on screen: how many artifacts were written and the resulting run count. A mute
   // "done" is exactly what this button must not be.
-  assert.match(state.textContent, /^3 artifacts · 12 runs$/);
+  //
+  // FOUR, where this said three before O4.P17. The screen is not being adjusted to fit a new
+  // constant — the emission genuinely writes one more file into this fixture than it used to,
+  // and the button's contract is to report what was written. Reporting three would now be the
+  // change of behaviour; reporting four is the same promise, kept about a different fact.
+  assert.match(state.textContent, /^4 artifacts · 12 runs$/);
   // And the whole sentence — the canonical it read, the artifacts it skipped, and the fact that
   // nothing was committed — is carried on the element, not lost.
   const full = state.getAttribute("title");
-  assert.match(full, /Re-emitted 3 artifacts from roadmap\/roadmap\.json/);
+  assert.match(full, /Re-emitted 4 artifacts from roadmap\/roadmap\.json/);
   assert.match(full, /12 runs, 1 objective\b/);
   assert.match(full, /Not committed: review and commit yourself\./);
   // The views followed, in place: no reload, no server restart.
@@ -519,8 +533,11 @@ test("a REAL project: the derived .project/ is re-emitted (its function) and the
   assert.equal(emit.status, 200, JSON.stringify(emit.payload));
   assert.equal(emit.payload.ok, true);
   // A real project has all six sources — governance files, a docs corpus and its own Git
-  // repository — so a full emission writes all SIX artifacts and skips none.
-  assert.equal(emit.payload.artifacts, 6, JSON.stringify(emit.payload.skipped));
+  // repository — so a full emission writes SEVEN artifacts and skips none. Seven from six
+  // sources is not a miscount: `reports_index` derives from a `reports/` folder this copy does
+  // not carry (see COPIED in tests/helpers/real-like-project.mjs) and is emitted anyway, empty
+  // and declared (O4.P17).
+  assert.equal(emit.payload.artifacts, 7, JSON.stringify(emit.payload.skipped));
   assert.deepEqual(emit.payload.skipped, []);
   assert.equal(emit.payload.runs, flattenRoadmapTree(layout.tree).length, "the reported count is the canonical's");
   assert.equal(emit.payload.committed, false);

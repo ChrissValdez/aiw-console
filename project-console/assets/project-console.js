@@ -42,7 +42,7 @@ function setActiveProjectBase(repoBase) {
     roadmapEdit: `${REPO_BASE}__project-console/roadmap/edit`,
     // [O4.P14] Re-emit the ACTIVE project's whole `.project/` folder from its canonical. The
     // same gesture `historySync` already performs for ONE derived artifact, extended to all
-    // six — and fired only by the operator's click, never on a timer.
+    // seven — and fired only by the operator's click, never on a timer.
     projectEmit: `${REPO_BASE}__project-console/project/emit`
   };
 }
@@ -5243,10 +5243,17 @@ function showFetchFallback(error) {
 // §20's announcement, fired against WHAT THE PROJECT DECLARED (O4.P13).
 //
 // The transplanted version fired on `failedSources.length`, and the renderer fetches the fifteen
-// legacy routes while this emitter declares six. The nine that were never promised (§18.a: no
-// emitter, deliberately out of `.project/`) fail on every load of every project, so the banner
-// was ON permanently — and a notice that never goes off announces nothing. That is the failure
-// §20 exists to prevent, arrived at from the other side: not a silence, a permanent noise.
+// legacy routes while only six of them have an emitter behind them. The nine that were never
+// promised (§18.a: no emitter, deliberately out of `.project/`) fail on every load of every
+// project, so the banner was ON permanently — and a notice that never goes off announces
+// nothing. That is the failure §20 exists to prevent, arrived at from the other side: not a
+// silence, a permanent noise.
+//
+// SIX OF FIFTEEN, not "everything the emitter writes": since O4.P17 the emitter declares SEVEN
+// artifacts, and `reports_index.json` is the one it declares that this renderer does not fetch —
+// nothing here reads it yet, by design (that run indexes; it adds no surface). The nine above is
+// therefore unchanged, and it is fifteen-minus-six for the fetch list, never a subtraction from
+// the emitted set. Wiring a surface to the reports index is what would move it.
 //
 // So the gate is the DECLARATION, not the fetch list. The banner is NOT suppressed and NOT
 // conditioned on anything cosmetic: a file the project declares emitting and that does not load

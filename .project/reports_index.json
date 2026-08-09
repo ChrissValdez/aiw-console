@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "project_id": "aiw_console",
+  "generated_at": "2026-08-09T18:28:09.004Z",
+  "generated_from": "aiw-projector@0.12.0",
+  "sources": [],
+  "reports_source": {
+    "mode": "scanned",
+    "reports_dir": "reports",
+    "directory_present": false,
+    "run_directories": 0,
+    "indexed": 0,
+    "unreadable": 0,
+    "selection": "every immediate subdirectory of reports/ that holds a report.json, by folder name, sorted",
+    "field_rules": {
+      "run_id": "the name of the folder the report was filed under (reports/<run_id>/), never a field read from inside the report",
+      "report_path": "reports/<run_id>/report.json, repo-relative and POSIX",
+      "emitted_at": "the report's own `emitted_at`, verbatim, when it carries one; OMITTED when it does not — no mtime is substituted",
+      "verdict_present": "whether verdict.json exists beside report.json, measured on disk; the file is never opened",
+      "read_error": "present ONLY when report.json could not be parsed; the entry stays, annotated"
+    },
+    "validation_policy": "This index does not validate a report against the report contract.",
+    "unresolved_policy": "A directory under reports/ with no report.json, and any loose file directly under reports/, produce no entry and are listed in `unresolved`.",
+    "unresolved": []
+  },
+  "reports": []
+}

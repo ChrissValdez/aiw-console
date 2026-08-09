@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-09T17:11:38.005Z",
+  "generated_at": "2026-08-09T18:28:09.004Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -293,6 +293,18 @@
       "mtime": "2026-08-08T09:13:17.639Z"
     },
     {
+      "path": "context/aiw-console/records/INDICE-DE-REPORTES-PARADA-O4-P17.md",
+      "mtime": "2026-08-09T17:28:25.766Z"
+    },
+    {
+      "path": "context/aiw-console/records/INDICE-DE-REPORTES-RESOLUCION-O4-P17.md",
+      "mtime": "2026-08-09T18:23:26.411Z"
+    },
+    {
+      "path": "context/aiw-console/records/INDICE-DE-REPORTES-SEGUNDA-PARADA-O4-P17.md",
+      "mtime": "2026-08-09T17:49:32.322Z"
+    },
+    {
       "path": "context/aiw-console/records/INDICE-DOCS-CURADO-AIW.md",
       "mtime": "2026-08-08T09:13:17.639Z"
     },
@@ -338,7 +350,7 @@
     },
     {
       "path": "context/aiw-console/records/MEDICION-ALCANCE-COMPARACION-GUIADA-CANTU.md",
-      "mtime": "2026-08-09T17:06:19.873Z"
+      "mtime": "2026-08-09T17:38:19.686Z"
     },
     {
       "path": "context/aiw-console/records/MEDICION-ALTA-DE-PROYECTO-NUEVO.md",
@@ -1398,6 +1410,30 @@
       "freshness": "2026-08-08T09:13:17.639Z"
     },
     {
+      "title": "Record — Índice de reportes (`O4.P17`) — PARADA MEDIDA antes de escribir código",
+      "path": "context/aiw-console/records/INDICE-DE-REPORTES-PARADA-O4-P17.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-09T17:28:25.766Z"
+    },
+    {
+      "title": "Record — Índice de reportes (`O4.P17`) — RESOLUCIÓN: el séptimo artefacto, implementado",
+      "path": "context/aiw-console/records/INDICE-DE-REPORTES-RESOLUCION-O4-P17.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-09T18:23:26.411Z"
+    },
+    {
+      "title": "Record — Índice de reportes (`O4.P17`) — SEGUNDA PARADA: el pin está en OCHO sitios, no en cuatro",
+      "path": "context/aiw-console/records/INDICE-DE-REPORTES-SEGUNDA-PARADA-O4-P17.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-09T17:49:32.322Z"
+    },
+    {
       "title": "ÍNDICE DE DOCUMENTACIÓN DE AIW, CURADO A MANO",
       "path": "context/aiw-console/records/INDICE-DOCS-CURADO-AIW.md",
       "nav_tier": "evidence",
@@ -1491,7 +1527,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-08-09T17:06:19.873Z"
+      "freshness": "2026-08-09T17:38:19.686Z"
     },
     {
       "title": "MEDICIÓN — Alta de un proyecto NUEVO (`cantu-quizzes-latex`)",

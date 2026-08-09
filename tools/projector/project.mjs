@@ -753,6 +753,7 @@ export const PROJECT_GIT_HISTORY_RELATIVE_PATH = join(PROJECT_DIR, "git_history.
 export const PROJECT_DOCS_INDEX_RELATIVE_PATH = join(PROJECT_DIR, "docs_index.json");
 export const PROJECT_GUARDRAILS_RELATIVE_PATH = join(PROJECT_DIR, "guardrails.json");
 export const PROJECT_NO_CLAIMS_RELATIVE_PATH = join(PROJECT_DIR, "no_claims.json");
+export const PROJECT_REPORTS_INDEX_RELATIVE_PATH = join(PROJECT_DIR, "reports_index.json");
 
 // ROOT LAYOUTS (O4.P4) — WHERE this mode's inputs live inside a project root.
 //
@@ -797,6 +798,11 @@ export const ROOT_LAYOUTS = [
 export const ROADMAP_TREE_SOURCE_PATH = ROOT_LAYOUTS[0].roadmap;
 // Layout-independent: identity is a property of the repo, not of where its plan lives.
 const PACKAGE_SOURCE_PATH = "package.json";
+// Where a repository files its run reports (O4.P17). Layout-independent for the same reason
+// PACKAGE_SOURCE_PATH is: a report belongs to the repo, not to where that repo keeps its plan.
+const REPORTS_SOURCE_DIR = "reports";
+const REPORT_FILE_NAME = "report.json";
+const VERDICT_FILE_NAME = "verdict.json";
 
 // CONTRATO §10.c — the tree identifies its own model. This is the identifier of the model THIS
 // CONTRACT specifies; it is what a tree that declares nothing is credited with, and the name the
@@ -1494,6 +1500,126 @@ function scanDocsIndex(root, opts = {}) {
   };
 }
 
+// THE REPORTS INDEX (O4.P17). Run reports are AUTHORED artefacts and live at
+// <repo>/reports/<run_id>/report.json. The console cannot walk four repositories looking for
+// them and must not: the pattern this project already proved is authored source plus a derived
+// index, and `docs/` -> `.project/docs_index.json` is the same relation one axis over. It holds
+// here for the same reason it holds there: `reports/` is a folder OF THIS REPOSITORY, so an
+// index that enumerates it only ever states things about the project emitting it (CONTRATO §1).
+//
+// WHAT IT DOES NOT DO. It does not render a report, it does not open `verdict.json`, and it does
+// NOT validate a report against the report contract. The only judgement it passes on a
+// `report.json` is whether it PARSES — a fact about reading the file, not about its contents —
+// and `validation_policy` says so inside the artifact so no reader has to infer it.
+//
+// IT IS UNCONDITIONAL, and that is a new category in this folder. A root with no `reports/`
+// emits `reports: []` with `directory_present: false`: an announced absence (§20), never a
+// skipped artifact. Every other optional artifact here returns null when its source is missing
+// and `write` skips it; this one never returns null, so it can never appear in an emission's
+// `skipped` list.
+export function buildReportsIndex(root, opts = {}) {
+  const reportsDir = resolve(root, REPORTS_SOURCE_DIR);
+  const directoryPresent = existsSync(reportsDir) && statSync(reportsDir).isDirectory();
+  const reports = [];
+  const unresolved = [];
+  // The folder itself is a source: its mtime moves when a run is filed or removed, which is how
+  // a reader detects that this index is behind (§6). Each report read joins it below.
+  const sourcePaths = directoryPresent ? [REPORTS_SOURCE_DIR] : [];
+  let runDirectories = 0;
+  let unreadable = 0;
+
+  if (directoryPresent) {
+    const entries = readdirSync(reportsDir, { withFileTypes: true }).sort((a, b) =>
+      a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+    );
+    for (const entry of entries) {
+      // A loose file directly under `reports/` is not a report: a report is a FOLDER named for
+      // the run it belongs to. It produces no entry, and the absence is declared rather than
+      // left silent (§20) — the same treatment `docs_source.unresolved` gives a curated pointer.
+      if (!entry.isDirectory()) {
+        unresolved.push({ path: `${REPORTS_SOURCE_DIR}/${entry.name}`, reason: "not a run directory" });
+        continue;
+      }
+      runDirectories += 1;
+      const reportRelative = `${REPORTS_SOURCE_DIR}/${entry.name}/${REPORT_FILE_NAME}`;
+      const reportAbsolute = resolve(reportsDir, entry.name, REPORT_FILE_NAME);
+      if (!existsSync(reportAbsolute)) {
+        unresolved.push({ path: `${REPORTS_SOURCE_DIR}/${entry.name}`, reason: "no report.json" });
+        continue;
+      }
+      sourcePaths.push(reportRelative);
+
+      // Read attempted, never trusted. `safeReadJson` would collapse "unparseable" into the same
+      // null it returns for "absent", and those two are not the same statement: existence was
+      // proved a line ago, so a failure here is a parse failure and travels WITH ITS REASON.
+      let parsed = null;
+      let readError = null;
+      try {
+        parsed = JSON.parse(readFileSync(reportAbsolute, "utf8"));
+      } catch (error) {
+        readError = error.message;
+      }
+
+      const record = {
+        // The run_id is the NAME OF THE FOLDER the report was filed under — what
+        // `reports/<run_id>/` means — and never a field read from inside the file. It is the
+        // only identity that survives a `report.json` that does not parse, which is exactly the
+        // case where an entry must still appear.
+        run_id: entry.name,
+        report_path: reportRelative
+      };
+      // The report's own `emitted_at`, verbatim, and OMITTED when it carries none. No mtime is
+      // substituted: an mtime is a fact about the disk, not about when the report was emitted,
+      // and filling one in here would be this emitter answering for the report. The mtime is not
+      // lost — `sources` records it for every report read (§6).
+      if (parsed && typeof parsed === "object" && typeof parsed.emitted_at === "string" && parsed.emitted_at.trim()) {
+        record.emitted_at = parsed.emitted_at;
+      }
+      // Measured on disk, beside the report. The file is never opened: whether a verdict EXISTS
+      // is all this index claims, and reading it would be validating a report (see above).
+      record.verdict_present = existsSync(resolve(reportsDir, entry.name, VERDICT_FILE_NAME));
+      if (readError) {
+        record.read_error = readError;
+        unreadable += 1;
+      }
+      reports.push(record);
+    }
+  }
+
+  return {
+    ...projectFileEnvelope(root, opts, sourcePaths),
+    // How this file was built, declared IN the file — the same doctrine `docs_source`,
+    // `nav_tier_model` and `taxonomy_model` follow: a reader never has to know this emitter's
+    // conventions in advance.
+    reports_source: {
+      mode: "scanned",
+      reports_dir: REPORTS_SOURCE_DIR,
+      directory_present: directoryPresent,
+      run_directories: runDirectories,
+      indexed: reports.length,
+      unreadable,
+      selection:
+        "every immediate subdirectory of reports/ that holds a report.json, by folder name, sorted",
+      field_rules: {
+        run_id:
+          "the name of the folder the report was filed under (reports/<run_id>/), never a field read from inside the report",
+        report_path: "reports/<run_id>/report.json, repo-relative and POSIX",
+        emitted_at:
+          "the report's own `emitted_at`, verbatim, when it carries one; OMITTED when it does not — no mtime is substituted",
+        verdict_present:
+          "whether verdict.json exists beside report.json, measured on disk; the file is never opened",
+        read_error: "present ONLY when report.json could not be parsed; the entry stays, annotated"
+      },
+      validation_policy: "This index does not validate a report against the report contract.",
+      unresolved_policy:
+        "A directory under reports/ with no report.json, and any loose file directly under " +
+        "reports/, produce no entry and are listed in `unresolved`.",
+      unresolved
+    },
+    reports
+  };
+}
+
 // Guardrails and no-claims are TRANSPORTED, not authored here: the project declares them in
 // governance/*.json and this emitter republishes them under the contract envelope. An absent
 // or malformed source yields null and the file is simply not emitted — §18/§20: better an
@@ -1837,6 +1963,14 @@ export function writeProjectFolder(root, opts = {}) {
   const docsIndex = buildDocsIndex(root, { now });
   write("docs_index", PROJECT_DOCS_INDEX_RELATIVE_PATH, docsIndex, {
     entries: docsIndex.docs.length
+  });
+
+  // The seventh artefact (O4.P17), beside the other derived index. `buildReportsIndex` never
+  // returns null, so `write` never skips it: a root with no `reports/` emits a declared empty
+  // index rather than one fewer file.
+  const reportsIndex = buildReportsIndex(root, { now });
+  write("reports_index", PROJECT_REPORTS_INDEX_RELATIVE_PATH, reportsIndex, {
+    entries: reportsIndex.reports.length
   });
 
   const roadmap = buildProjectRoadmap(root, { now });

@@ -1,27 +1,38 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-09T18:28:09.004Z",
+  "generated_at": "2026-08-09T20:42:09.897Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-09T17:46:58.121Z"
+      "mtime": "2026-08-09T18:32:46.194Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-09T18:28:08.903Z"
+      "mtime": "2026-08-09T20:42:09.839Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "231a1512bb573e4a09ecd44fea099ca751a302c2",
+  "head": "95d930e3202f4a43681c7b828e69ecd646724c68",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 223,
+  "commit_total": 224,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "95d930e",
+      "full_sha": "95d930e3202f4a43681c7b828e69ecd646724c68",
+      "date": "2026-08-09T12:32:46-06:00",
+      "parents": "231a151",
+      "subject": "cierra #51 RUN-CONSOLE-REPORTS-INDEX-001: septimo artefacto .project/reports_index.json, con los ocho sitios del pin tratados por sus meritos, el pin congelado intacto en seis con su razon escrita, y una asercion viva que fija siete y que nunca habia existido; mas los cuatro runs de reportes insertados y las dos enmiendas del run",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORTS-INDEX-001"
+    },
     {
       "branch": "main",
       "sha": "231a151",

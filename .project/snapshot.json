@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-09T18:28:09.004Z",
+  "generated_at": "2026-08-09T20:42:09.897Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-09T18:28:08.903Z"
+      "mtime": "2026-08-09T20:42:09.839Z"
     },
     {
       "path": "package.json",
@@ -45,7 +45,7 @@
   ],
   "operational_status": "idle",
   "project_summary": "AIW Console Roadmap: 2 objectives, 23 phases, 61 runs.",
-  "current_status_summary": "No active run; 51 of 61 runs completed.",
+  "current_status_summary": "No active run; 52 of 61 runs completed.",
   "roadmap_tree": {
     "model": "roadmap_tree_v1",
     "roadmap_id": "roadmap",
@@ -832,8 +832,14 @@
                 "title": "One renderer for every project's run report",
                 "summary": "A single renderer that turns any conformant report.json into a review view, written once and used by the five projects, with the operator's verdict as its output.",
                 "full_description": "THIS RUN IS A PILOT AND GOES ALONE. It is the first application of a procedure that four other projects will inherit, and a new procedure is never premiered in a batch: a gap found here costs one session, the same gap found across three costs three and produces verdicts that cannot be compared. Its ticket must ask for a verdict ON THE PROCEDURE as well as on the work. WHAT IT BUILDS: the renderer that consumes a report.json conforming to the contract at projects/cantu-quizzes-latex/docs/CONTRATO-REPORTE-DE-CAMBIOS-v1.md and produces the review surface. It lives ONCE, here, and is executed from the console; no project takes a copy. THE RULE THAT MANDA OVER EVERY OTHER: the renderer knows NOTHING about any domain. A branch on project name, or a fixed label naming a question or a lesson, is a defect. Everything specific arrives in the data. THE FOUR CASES IT MUST SURVIVE, and they are real files, not hypotheses: an audit of content with nine items; a development run with twenty-two check items and five decision items that carry no before and no after; the creation of a lesson where before is null, the subject carries TWO renderable previews that must be compared against each other, and items nest parent to child with a stop among the children; and a run with ZERO check items whose gate is mechanical. WHAT THE OPERATOR JUDGES, and it decides the layout: in creation the rendered artefact IS the subject and is read whole, not sampled. VERDICT VOCABULARY IS CLOSED: APPROVED, CHANGES_REQUIRED, BLOCKED, the same three the kernel already parses at aiw/kernel.mjs:213. When it is CHANGES_REQUIRED a disposition is chosen as a second step. There is no approve-all, ever. EMPTY IS NOT ABSENT: an empty list means it was enumerated and there was nothing; a missing key means nobody looked, and the view must say which. The person who signs is never a constant in the code.",
-                "status": "planned",
-                "depends_on": []
+                "status": "completed",
+                "depends_on": [],
+                "correctness_model": "JUDGED_ACCEPTS",
+                "work_type": "FUNCTIONAL",
+                "blast_radius": "SYSTEMIC",
+                "failure_surfaces": "SILENT",
+                "classified_at": "2026-08-09T19:59:15.376Z",
+                "closeout_result": "done"
               },
               {
                 "run_id": "RUN-CONSOLE-REPORTS-SURFACE-001",
@@ -1039,17 +1045,8 @@
           "completed",
           "blocked"
         ],
-        "total": 3,
+        "total": 2,
         "runs": [
-          {
-            "run_id": "RUN-CONSOLE-REPORT-RENDERER-001",
-            "queue_order": 52,
-            "status": "planned",
-            "title": "One renderer for every project's run report",
-            "objective_id": "O4",
-            "phase_id": "O4.P17",
-            "stored_fields": []
-          },
           {
             "run_id": "RUN-CONSOLE-REPORTS-SURFACE-001",
             "queue_order": 53,

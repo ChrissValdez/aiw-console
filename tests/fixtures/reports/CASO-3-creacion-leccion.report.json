@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "kind": "content",
+  "mode": "create",
+  "project": "cantu-lessons",
+  "run_id": "RUN-LESSONS-FRACCIONES-EQUIVALENTES-001",
+  "run_title": "Generar la lección de fracciones equivalentes",
+  "queue_order": 7,
+  "profile": "cantu-lessons/authoring-policy@1",
+  "execution_path": "taller",
+  "emitted_by": "encargo",
+  "emitted_when": "veredicto",
+  "emitted_at": "2026-08-09T10:00:00Z",
+  "source_commit": "eeb2551",
+  "source_branch": "aiw/RUN-LESSONS-FRACCIONES-EQUIVALENTES-001",
+  "log_dir": "logs/007-fracciones-equivalentes",
+  "gate": "human_judgment",
+  "gate_reason": "La calidad de una lección no la mide ninguna prueba. Se ve.",
+  "verification": { "command": "npm run compile -- --draft fracciones_equivalentes", "result": "web OK · slide OK", "exit": 0 },
+  "verification_note": "La compilación verde dice que RENDERIZA, no que esté bien. La compuerta sigue siendo humana.",
+  "counts": { "bloques_web": { "before": 0, "after": 14 }, "bloques_slide": { "before": 0, "after": 9 } },
+  "counts_note": "Lección nueva: todo before es cero por construcción.",
+  "locations": [
+    { "label": "Borrador", "path": "drafts/web/matematicas/fracciones_equivalentes.web.draft.json", "lines": 412 }
+  ],
+  "items": [
+    { "item_id": "L1", "type": "creation", "stop": false,
+      "subject": {
+        "id": "fracciones_equivalentes",
+        "label": "Fracciones equivalentes",
+        "previews": [
+          { "target": "web", "path": "reports/RUN-LESSONS-FRACCIONES-EQUIVALENTES-001/assets/leccion-web.html", "label": "Versión web" },
+          { "target": "slide", "path": "reports/RUN-LESSONS-FRACCIONES-EQUIVALENTES-001/assets/leccion-slide.html", "label": "Versión diapositiva" }
+        ]
+      },
+      "headline": "Lección nueva de 14 bloques web y 9 de diapositiva",
+      "before": null,
+      "after": "14 bloques web · 9 bloques diapositiva · 3 ejemplos resueltos · 1 regla matemática",
+      "why": "Sigue el orden que la política de autoría pide: intuición con material concreto, luego la regla, luego los casos límite. Los tres ejemplos van de mitades a tercios a un caso no obvio.",
+      "authority": { "source": "docs/AUTHORING_POLICY.md", "section": "§3 secuencia y §5 ejemplos" },
+      "if_rejected": "REQUERIDO en modo create: no hay versión anterior a la que volver. Si se rechaza, el borrador se retira y el planteamiento se rehace desde el objetivo de la lección, no desde este texto.",
+      "verdict_disposition_options": ["new_run", "operator_fixed", "discard"],
+      "children": ["K1", "K2", "K3"] },
+    { "item_id": "K1", "type": "check", "stop": false, "parent": "L1",
+      "subject": { "id": "check-secuencia", "label": "Secuencia intuición → regla → casos límite" },
+      "headline": "Comprueba que la regla no aparece antes que el material concreto",
+      "expected": "Los bloques 1 a 4 son concretos. La regla matemática no aparece antes del bloque 5.",
+      "authority": { "source": "docs/AUTHORING_POLICY.md", "section": "§3" } },
+    { "item_id": "K2", "type": "check", "stop": false, "parent": "L1",
+      "subject": { "id": "check-paridad", "label": "Paridad web / diapositiva" },
+      "headline": "Compara las dos versiones: ¿la de diapositiva pierde algo que la web sí explica?",
+      "expected": "La diapositiva puede resumir, no puede omitir la regla ni un ejemplo resuelto.",
+      "authority": { "source": "docs/AIW_AUTHORING_CONTRACTS.md", "section": "§2" } },
+    { "item_id": "K3", "type": "check", "stop": true, "parent": "L1",
+      "subject": { "id": "check-correccion", "label": "Corrección matemática" },
+      "headline": "PARADA — comprueba que ninguna afirmación matemática es falsa",
+      "expected": "Las tres equivalencias del ejemplo 3 se verifican a mano. Si una falla, la lección no se publica.",
+      "authority": { "source": "docs/AUTHORING_POLICY.md", "section": "§7" },
+      "if_rejected": "La lección se retira entera. Un error matemático no se parchea en una lección publicada." }
+  ],
+  "blind_spots": [
+    { "what": "Cómo se ve en un teléfono",
+      "why_not": "El compilador emite web y diapositiva; no hay destino móvil todavía.",
+      "who_could": "El run que añada el destino móvil",
+      "affects": ["K2"] }
+  ],
+  "self_decisions": [
+    { "what": "Usar pizza y no una barra de chocolate en el primer ejemplo",
+      "why": "La política pide material concreto y no nombra cuál. La pizza divide en sectores iguales sin ambigüedad.",
+      "scope_if_rejected": "Se cambia el ejemplo 1 y los bloques 2 y 3 que lo referencian." }
+  ],
+  "alternatives": [
+    { "what": "Empezar por la regla y luego ejemplificar",
+      "why_discarded": "La política §3 lo prohíbe explícitamente para primer contacto con un concepto.",
+      "authored_by": "encargo",
+      "evidence": [] }
+  ],
+  "unreviewed": []
+}

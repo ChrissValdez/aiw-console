@@ -1,27 +1,138 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-08T09:28:57.036Z",
+  "generated_at": "2026-08-09T17:11:38.005Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-08T09:27:48.930Z"
+      "mtime": "2026-08-09T07:46:36.104Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-08T09:28:56.999Z"
+      "mtime": "2026-08-09T17:11:37.911Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "9b2668c663cf4603184dfa66332217baee1a02c5",
+  "head": "4f733c5d8fe1f2798f907018f6ed84b681404777",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 210,
+  "commit_total": 221,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "4f733c5",
+      "full_sha": "4f733c5d8fe1f2798f907018f6ed84b681404777",
+      "date": "2026-08-09T01:46:36-06:00",
+      "parents": "8aadfcd",
+      "subject": "record: alcance y habilitacion de Comparacion guiada (queue_order 40)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8aadfcd",
+      "full_sha": "8aadfcdd1a2645ee2adb593d5682b8b8d18b1a6c",
+      "date": "2026-08-09T00:09:25-06:00",
+      "parents": "673e28b",
+      "subject": "record: puesta al dia de las dos fuentes de revalidacion (queue_order 39)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "673e28b",
+      "full_sha": "673e28b7976ee309d6ebffc7fa000dffb4af10f5",
+      "date": "2026-08-08T23:30:41-06:00",
+      "parents": "26028e9",
+      "subject": "record: auditoria y reparacion de Recurso visual (queue_order 38)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "26028e9",
+      "full_sha": "26028e9864d876f79119eca97f2c6d88c23496b8",
+      "date": "2026-08-08T21:04:06-06:00",
+      "parents": "7760d4a",
+      "subject": "record: controles anclados al borde derecho de la ventana (queue_order 37)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7760d4a",
+      "full_sha": "7760d4a52a7a6e537a6d6ff6dc6eb13156935673",
+      "date": "2026-08-08T20:14:06-06:00",
+      "parents": "18142b7",
+      "subject": "record: panel lateral colapsable del editor (queue_order 37)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "18142b7",
+      "full_sha": "18142b757840920acd01696260da51808bcc5b85",
+      "date": "2026-08-08T17:04:33-06:00",
+      "parents": "c9eb17f",
+      "subject": "record: la muestra sigue la tinta real en Automatico (queue_order 35)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c9eb17f",
+      "full_sha": "c9eb17f0214a9f171b7636bf2fc7874dbf68ae5f",
+      "date": "2026-08-08T16:45:31-06:00",
+      "parents": "77f4d48",
+      "subject": "record: lista fija de color de titulo en Regla matematica (queue_order 35)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "77f4d48",
+      "full_sha": "77f4d48462bd55ba8aacc4b8ae98611fd871a597",
+      "date": "2026-08-08T16:01:48-06:00",
+      "parents": "bb7e518",
+      "subject": "record: reparacion de Regla matematica (queue_order 35)",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "bb7e518",
+      "full_sha": "bb7e51817c2fd025700ed15c71ed460f47596229",
+      "date": "2026-08-08T14:27:46-06:00",
+      "parents": "102e06b",
+      "subject": "record: la tinta sobre acento pasa a dos anclas fijas tras el veredicto estetico del operador",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "102e06b",
+      "full_sha": "102e06b77b43d171ea3bc8e2b6bf36f59e84f939",
+      "date": "2026-08-08T03:45:49-06:00",
+      "parents": "2f71ffb",
+      "subject": "handoff(aiw-console): cierra 48 y 49; el CRLF de este repo esta resuelto con gitattributes y el arbol renormalizado a LF; y queda medido que un indice con stat viejo NO se arregla refrescando sino con read-tree, y que GitHub Desktop sondeando el repo toma el candado",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2f71ffb",
+      "full_sha": "2f71ffbe75fef9017555ea7d1130f3c1c37d04dd",
+      "date": "2026-08-08T03:31:07-06:00",
+      "parents": "9b2668c",
+      "subject": "cierra #49 RUN-CONSOLE-LINE-ENDINGS-001 con closeout_result done: gitattributes identico al de los tres repos hermanos y arbol renormalizado a LF desde sus propios blobs, cero ficheros con CR de 353; mas los dos records del run",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-LINE-ENDINGS-001"
+    },
     {
       "branch": "main",
       "sha": "9b2668c",

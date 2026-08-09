@@ -1,0 +1,385 @@
+{
+  "schema": "aiw_registry_digest_v1",
+  "generated_at": "2026-08-08T21:13:22.679Z",
+  "generated_from": "aiw-registry-digest@1.0.0",
+  "derived": true,
+  "do_not_edit": "DERIVED FILE — DO NOT EDIT BY HAND. Regenerate with `node tools/project-console/build-registry-digest.mjs`. Every field below is measured from the registry and from each registered project's own canonical sources; a hand edit is overwritten by the next run and, until then, is a claim no measurement supports.",
+  "emitted_to": "project-console/projects.digest.json",
+  "emitter": "tools/project-console/build-registry-digest.mjs",
+  "registry": {
+    "path": "project-console/projects.json",
+    "registry_model": "project_registry_v1",
+    "title": "AIW Console",
+    "sha1": "27d0379442fb09d5f25002ce07b99beedeaa1ef0",
+    "project_count": 4,
+    "keys": [
+      "aiw-console",
+      "cantu-studio",
+      "cantu-quizzes-latex",
+      "aiw"
+    ]
+  },
+  "dirty_reading": {
+    "reading": "content_vs_head",
+    "tracked": {
+      "argv": [
+        "diff",
+        "HEAD",
+        "--numstat"
+      ],
+      "reports": "tracked files whose CONTENT differs from HEAD"
+    },
+    "untracked": {
+      "argv": [
+        "ls-files",
+        "--others",
+        "--exclude-standard"
+      ],
+      "reports": "files present in the worktree that Git neither tracks nor ignores"
+    },
+    "not_used": "git status",
+    "why": "`git status` was measured on this repository reporting 339 modified files with zero real changes, from a stale `stat` cache in the index. Both commands above compare CONTENT (or walk the directory) instead of trusting cached `stat` data, and `diff` applies the same clean filters Git applies, so a root with `core.autocrlf=true` is not reported wholly dirty the way a raw `hash-object --no-filters` comparison would report it.",
+    "no_optional_locks": "every invocation passes `--no-optional-locks` BEFORE the subcommand, so no reading can leave a `.git/index.lock` behind and block the operator."
+  },
+  "staleness": {
+    "how": "Every `sha1` in this file is a Git blob hash of the bytes that were read. Recompute one with `git --no-optional-locks hash-object --no-filters -- <path>` inside that project: if it differs, this entry is stale. A project's `git.head` moving means the same.",
+    "generated_at_is": "the instant this file was built, in UTC (ISO 8601)"
+  },
+  "no_claims": [
+    "It reports the projects the registry LISTS, and nothing about any project the registry does not list. The count is whatever the registry holds — it is derived, never typed.",
+    "`next_step` executes the projector's `roadmapQueueGroup` WITHOUT a barrier model, because the only thing that builds one is the console in the browser. A run held by a barrier alone can therefore appear as ready here. The console is authoritative on the queue.",
+    "`git.dirty.untracked` uses `--exclude-standard`, so a file the project's own ignore rules exclude is not reported. It is a reading of what Git would show, not of the filesystem.",
+    "`project-console/projects.digest.json` — this file — is excluded from its own dirty reading, because writing it would otherwise make every regeneration report a change it caused itself.",
+    "It reads each project's CANONICAL sources. It says nothing about whether that project's `.project/` folder has been re-emitted from them, which is the cabin's act, not this one's.",
+    "It writes into no registered project. The other roots are read, and only this repository receives a file."
+  ],
+  "projects": [
+    {
+      "key": "aiw-console",
+      "root_declared": "..",
+      "measured": true,
+      "canonical": {
+        "layout": "repo_root",
+        "roadmap": "roadmap/roadmap.json",
+        "no_claims": "governance/no_claims.json",
+        "declared_model": "roadmap_tree_v1"
+      },
+      "git": {
+        "available": true,
+        "head": "bb7e51817c2fd025700ed15c71ed460f47596229",
+        "branch": "main",
+        "dirty": {
+          "is_dirty": true,
+          "tracked_changed": [
+            ".project/docs_index.json",
+            ".project/git_history.json",
+            ".project/guardrails.json",
+            ".project/no_claims.json",
+            ".project/roadmap.json",
+            ".project/snapshot.json",
+            "roadmap/roadmap.json"
+          ],
+          "untracked": [
+            "context/aiw-console/records/DIGEST-DE-CABINA-O4-P18.md",
+            "context/aiw-console/records/REPARACION-COMPONENTE-REGLA-MATEMATICA-CANTU.md",
+            "context/aiw/records/2026-08-08-RUN-41-PARADA-Y-INFORME-DE-OPCIONES.md",
+            "tests/registry-digest.test.mjs",
+            "tools/project-console/build-registry-digest.mjs"
+          ],
+          "counts": {
+            "tracked_changed": 7,
+            "untracked": 5
+          },
+          "self_excluded": [
+            "project-console/projects.digest.json"
+          ]
+        }
+      },
+      "operational_status": "active",
+      "runs": {
+        "total": 57,
+        "by_status": {
+          "active": 1,
+          "completed": 49,
+          "planned": 7
+        }
+      },
+      "active_runs": [
+        {
+          "run_id": "RUN-CONSOLE-DIGEST-CABINA-001",
+          "title": "Digest for the cockpit",
+          "queue_order": 50,
+          "objective_id": "O4",
+          "phase_id": "O4.P18"
+        }
+      ],
+      "next_step": {
+        "present": true,
+        "run_id": "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001",
+        "title": "Global console renders Cantu (parity, operator QA)",
+        "queue_order": 51,
+        "objective_id": "O4",
+        "phase_id": "O4.P16",
+        "queue_group": "ready_next"
+      },
+      "no_claims": {
+        "present": true,
+        "source": {
+          "path": "governance/no_claims.json",
+          "sha1": "8830489ab7ba9455ab9add805e5b8e820b5664df",
+          "bytes": 2905
+        },
+        "total": 5
+      },
+      "sources": [
+        {
+          "path": "roadmap/roadmap.json",
+          "sha1": "01416af70f0e015b4eb1cae081309ba108af2776",
+          "bytes": 140641
+        },
+        {
+          "path": "governance/no_claims.json",
+          "sha1": "8830489ab7ba9455ab9add805e5b8e820b5664df",
+          "bytes": 2905
+        }
+      ]
+    },
+    {
+      "key": "cantu-studio",
+      "root_declared": "../../cantu-studio",
+      "measured": true,
+      "canonical": {
+        "layout": "project_local_aiw",
+        "roadmap": ".aiw/roadmap/roadmap.json",
+        "no_claims": ".aiw/guardrails/no_claims.json",
+        "declared_model": "jame.roadmap_v3.v0.2-progress"
+      },
+      "git": {
+        "available": true,
+        "head": "e0a4033e35c7a3e808492fbe91ee070bb4999f82",
+        "branch": "main",
+        "dirty": {
+          "is_dirty": true,
+          "tracked_changed": [
+            "src/builders/web/partials/renderRule.js",
+            "tools/author-lite/editor-ui/src/features/editor/components/web/WebBlockEditor.jsx"
+          ],
+          "untracked": [
+            "QA/temp/RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001/rule_header_centering_evidence.html",
+            "docs/_historical_run_record/RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001-OPERATOR-QA-PACKET-ROUND-2.md"
+          ],
+          "counts": {
+            "tracked_changed": 2,
+            "untracked": 2
+          },
+          "self_excluded": []
+        }
+      },
+      "operational_status": "active",
+      "runs": {
+        "total": 75,
+        "by_status": {
+          "active": 1,
+          "completed": 36,
+          "planned": 38
+        }
+      },
+      "active_runs": [
+        {
+          "run_id": "RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001",
+          "title": "Audit and implement the Rule component",
+          "queue_order": 35,
+          "objective_id": "O1",
+          "phase_id": "O1.P2"
+        }
+      ],
+      "next_step": {
+        "present": true,
+        "run_id": "RUN-CANTU-EDITOR-SIDE-PANEL-COLLAPSE-001",
+        "title": "Let the author collapse and restore the editor side panel",
+        "queue_order": 37,
+        "objective_id": "O4",
+        "phase_id": "O4.P5",
+        "queue_group": "ready_next"
+      },
+      "no_claims": {
+        "present": true,
+        "source": {
+          "path": ".aiw/guardrails/no_claims.json",
+          "sha1": "bf55b7e25eeef827a7ec8ca0b989ae4d8d9499be",
+          "bytes": 503
+        },
+        "total": 1
+      },
+      "sources": [
+        {
+          "path": ".aiw/roadmap/roadmap.json",
+          "sha1": "67588079ec032adb77428a97668b7aca21a2bc3f",
+          "bytes": 157720
+        },
+        {
+          "path": ".aiw/guardrails/no_claims.json",
+          "sha1": "bf55b7e25eeef827a7ec8ca0b989ae4d8d9499be",
+          "bytes": 503
+        }
+      ]
+    },
+    {
+      "key": "cantu-quizzes-latex",
+      "root_declared": "../../cantu-quizzes-latex",
+      "measured": true,
+      "canonical": {
+        "layout": "repo_root",
+        "roadmap": "roadmap/roadmap.json",
+        "no_claims": "governance/no_claims.json",
+        "declared_model": "roadmap_tree_v1"
+      },
+      "git": {
+        "available": true,
+        "head": "02893a5552ff6244bf78f8b35dd9033a46519cde",
+        "branch": "main",
+        "dirty": {
+          "is_dirty": true,
+          "tracked_changed": [
+            "PAA/Examen Diagnostico/Examen_Diagnostico-moodle.xml",
+            "PAA/Examen Diagnostico/Examen_Diagnostico.log",
+            "PAA/Examen Diagnostico/Examen_Diagnostico.pdf",
+            "PAA/Examen Diagnostico/Examen_Diagnostico.synctex.gz"
+          ],
+          "untracked": [],
+          "counts": {
+            "tracked_changed": 4,
+            "untracked": 0
+          },
+          "self_excluded": []
+        }
+      },
+      "operational_status": "active",
+      "runs": {
+        "total": 42,
+        "by_status": {
+          "active": 1,
+          "completed": 1,
+          "planned": 40
+        }
+      },
+      "active_runs": [
+        {
+          "run_id": "RUN-QUIZZES-FRACTIONS-REVIEW-PILOT-001",
+          "title": "Review ARI-FA-Fracciones against the rubric, as the pilot",
+          "queue_order": 2,
+          "objective_id": "O5",
+          "phase_id": "O5.P1"
+        }
+      ],
+      "next_step": {
+        "present": true,
+        "run_id": "RUN-QUIZZES-REVIEW-ARI-FA-OPERACIONES-001",
+        "title": "Review ARI-FA-Operaciones against the rubric",
+        "queue_order": 3,
+        "objective_id": "O5",
+        "phase_id": "O5.P1",
+        "queue_group": "ready_next"
+      },
+      "no_claims": {
+        "present": false,
+        "absent_reason": "no file at the layout's no_claims path (governance/no_claims.json)"
+      },
+      "sources": [
+        {
+          "path": "roadmap/roadmap.json",
+          "sha1": "c8aca1d4b920e5458e1f0ba0936017ae7b78fad5",
+          "bytes": 97673
+        }
+      ]
+    },
+    {
+      "key": "aiw",
+      "root_declared": "../../../aiw",
+      "measured": true,
+      "canonical": {
+        "layout": "repo_root",
+        "roadmap": "roadmap/roadmap.json",
+        "no_claims": "governance/no_claims.json",
+        "declared_model": "roadmap_tree_v1"
+      },
+      "git": {
+        "available": true,
+        "head": "38bb00bb07e1a27a7981b28ff1c7e584213f40db",
+        "branch": "main",
+        "dirty": {
+          "is_dirty": true,
+          "tracked_changed": [
+            ".project/docs_index.json",
+            ".project/guardrails.json",
+            ".project/no_claims.json",
+            ".project/roadmap.json",
+            ".project/snapshot.json",
+            "roadmap/roadmap.json"
+          ],
+          "untracked": [],
+          "counts": {
+            "tracked_changed": 6,
+            "untracked": 0
+          },
+          "self_excluded": []
+        }
+      },
+      "operational_status": "active",
+      "runs": {
+        "total": 46,
+        "by_status": {
+          "active": 2,
+          "completed": 25,
+          "planned": 19
+        }
+      },
+      "active_runs": [
+        {
+          "run_id": "RUN-AIW-REAL-LOAD-MEASUREMENT-001",
+          "title": "Run the first real objective against a large repository with a test net",
+          "queue_order": 22,
+          "objective_id": "O3",
+          "phase_id": "O3.P2"
+        },
+        {
+          "run_id": "RUN-AIW-DECOUPLED-QUEUE-LAUNCHER-001",
+          "title": "Make the queue survive the terminal that launched it",
+          "queue_order": 41,
+          "objective_id": "O7",
+          "phase_id": "O7.P1"
+        }
+      ],
+      "next_step": {
+        "present": true,
+        "run_id": "RUN-AIW-SHARED-WORKING-BRANCH-001",
+        "title": "Let consecutive runs share one working branch so their work chains",
+        "queue_order": 28,
+        "objective_id": "O3",
+        "phase_id": "O3.P7",
+        "queue_group": "ready_next"
+      },
+      "no_claims": {
+        "present": true,
+        "source": {
+          "path": "governance/no_claims.json",
+          "sha1": "ee1a31aeec6ca77e225836d925441c09683ca2d1",
+          "bytes": 5391
+        },
+        "total": 4
+      },
+      "sources": [
+        {
+          "path": "roadmap/roadmap.json",
+          "sha1": "40aed7f75a36d8c2a037fa392883b2b63814254c",
+          "bytes": 124020
+        },
+        {
+          "path": "governance/no_claims.json",
+          "sha1": "ee1a31aeec6ca77e225836d925441c09683ca2d1",
+          "bytes": 5391
+        }
+      ]
+    }
+  ]
+}

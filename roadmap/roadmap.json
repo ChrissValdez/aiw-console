@@ -846,13 +846,14 @@
               "title": "Digest for the cockpit",
               "summary": "One more view of the projector: one file with the state of the three projects, dated and with SHA, to detect obsolescence.",
               "full_description": "One more view of the projector: ONE file with the state of the three projects (HEAD+branch+dirty, counts by state, active runs, next step, no-claims), dated and with SHA to detect obsolescence. Small, derived, never edited by hand. The source itself downgrades it from prerequisite to optimization: with the sync of the repo it is no longer a prerequisite, it is context optimization (RM-AIW:148). Downgraded is not dead. Cross-cutting: it does not map to a single stage.",
-              "status": "planned",
+              "status": "completed",
               "depends_on": [],
               "correctness_model": "SPECIFIED",
               "work_type": "FUNCTIONAL",
               "blast_radius": "ADJACENT",
               "failure_surfaces": "SILENT",
-              "classified_at": "2026-08-02T07:27:15.861Z"
+              "classified_at": "2026-08-02T07:27:15.861Z",
+              "closeout_result": "done with deviations"
             },
             {
               "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-001",

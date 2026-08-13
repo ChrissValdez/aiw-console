@@ -223,6 +223,30 @@ export function snapshotUrlForKey(key) {
   return `${projectBaseForKey(key)}.project/snapshot.json`;
 }
 
+// [#53] The derived reports index of one project, at the route its emitter declares.
+export function reportsIndexUrlForKey(key) {
+  return `${projectBaseForKey(key)}.project/reports_index.json`;
+}
+
+// [#53] AGGREGATION ACROSS THE REGISTERED PROJECTS — permitted precisely because their indexes
+// already share one shape, so counting them adapts nothing (ticket criterion 3).
+//
+// The counting itself is NOT implemented here. "Waiting for a person" is one question with one
+// answer, and that answer lives with the index model in run-report-surface.js, which the run
+// detail reads too; a second copy here would be two truths the moment either moved. This
+// function is the seam: it finds that model wherever the page put it and hands over the data.
+// The `api` argument exists so the suite can hand it the same module explicitly.
+//
+// NOT LOADED IS NOT ZERO. With the mount absent this returns "" and the Portfolio simply shows
+// no such panel — it never prints a total nothing measured.
+export function verdictPanelHtml(indexEntries, api) {
+  const scope = api || (typeof window !== "undefined" ? window : globalThis);
+  if (!scope) return "";
+  if (typeof scope.pendingVerdictAcrossProjects !== "function") return "";
+  if (typeof scope.pendingVerdictPanelHtml !== "function") return "";
+  return scope.pendingVerdictPanelHtml(scope.pendingVerdictAcrossProjects(indexEntries));
+}
+
 // Contract §20 at shell level: the announcement names the file that failed.
 export function projectAbsenceMessage(record) {
   const path = snapshotUrlForKey(record.key).replace(/^\//, "");
@@ -347,7 +371,10 @@ const shellState = {
   records: [],
   recordsByKey: new Map(),
   activeKey: null,
-  view: "portfolio"
+  view: "portfolio",
+  // [#53] One parsed reports index per registered project, or null where none could be read.
+  // Boot-time and read-only: the shell counts them and never opens a report from here.
+  reportIndexes: []
 };
 
 function rendererGlobals() {
@@ -391,6 +418,26 @@ async function fetchSnapshotRecord(entry) {
   return record;
 }
 
+// One project's reports index, fetched the same fail-soft way its snapshot is: an unreadable or
+// absent index yields `index: null`, which the aggregation reports as "no reports index" — a
+// different sentence from "nothing awaiting a verdict", and the difference is the point.
+async function fetchReportsIndexEntry(record) {
+  const entry = { key: record.key, label: record.summary?.label || record.key, index: null };
+  let response;
+  try {
+    response = await fetch(reportsIndexUrlForKey(record.key), { cache: "no-store" });
+  } catch {
+    return entry;
+  }
+  if (!response.ok) return entry;
+  try {
+    entry.index = await response.json();
+  } catch {
+    entry.index = null;
+  }
+  return entry;
+}
+
 function shellRegistryNotice() {
   const registryPath = "project-console/projects.json";
   if (shellState.registryFailed) {
@@ -414,6 +461,8 @@ function renderShellChrome() {
   if (board) {
     board.innerHTML = shellRegistryNotice() + portfolioBoardHtml(shellState.records);
   }
+  const verdicts = shellById("shell-verdicts");
+  if (verdicts) verdicts.innerHTML = verdictPanelHtml(shellState.reportIndexes);
   const brand = shellById("shell-brand-title");
   if (brand) brand.textContent = shellState.registryTitle || "Project Console";
   const portfolioTitle = shellById("shell-portfolio-title");
@@ -518,6 +567,11 @@ async function shellBoot() {
   const records = await Promise.all(projects.map((entry) => fetchSnapshotRecord(entry)));
   shellState.records = records;
   shellState.recordsByKey = new Map(records.map((record) => [record.key, record]));
+  // [#53] One more small file per project, at boot, for the same reason the snapshot is fetched
+  // at boot: the Portfolio states what is waiting for a person across every registered project,
+  // and it cannot state it from a project it has not read. It is an index, not a report — no
+  // report is fetched here, and none can be opened from this view.
+  shellState.reportIndexes = await Promise.all(records.map((record) => fetchReportsIndexEntry(record)));
   renderShellChrome();
   shellShowView("portfolio");
 }

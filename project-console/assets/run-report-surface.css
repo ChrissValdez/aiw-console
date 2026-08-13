@@ -1,0 +1,223 @@
+/* RUN-CONSOLE-REPORTS-SURFACE-001 — the console chrome of the report surface, and nothing else.
+
+   It is a file of its own for the same reason its script is: what the REPORT looks like lives in
+   run-report-renderer.css, under .rr-root, and is not touched here. Keeping the mount separate
+   from project-console.css also keeps it inside the mechanical veto of criterion 4 — every class
+   below is .run-report-* or .rrs-*, and no word of any project reaches this file.
+
+   Layer order: this surface sits at z-index 60, above the run drawer (50), because the run it
+   belongs to stays open underneath it and Back has to have somewhere to land. */
+
+/* The layer. Full viewport and above the drawer (z-index 50), because the renderer paints a
+   surface with its own sticky topbar and an 880-1180px column: a 560px drawer cannot hold it,
+   and the run stays open underneath so Back has somewhere to land. */
+.run-report-view {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: none;
+  flex-direction: column;
+  background: var(--bg-body);
+}
+
+.run-report-view.open {
+  display: flex;
+}
+
+.run-report-bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-subtle);
+  padding: 10px 20px;
+}
+
+.run-report-ref {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.run-report-ref-title {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.run-report-ref-id {
+  color: var(--text-tertiary);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+/* The scroller, and the renderer's scroll ancestor: `.rr-topbar` is sticky and sticks to the
+   top of THIS box. `.rr-root` asks for min-height 100vh and gets a viewport-sized box. */
+.run-report-scroll {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.rrs-loading,
+.rrs-fetch-error {
+  padding: 40px 28px;
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
+
+.rrs-fetch-error-title {
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.rrs-fetch-error-path {
+  margin-bottom: 6px;
+  overflow-wrap: anywhere;
+}
+
+.rrs-fetch-error-detail {
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.rrs-fetch-error-note {
+  max-width: 62ch;
+  line-height: 1.6;
+}
+
+/* The section in the run detail — the only door into a report. */
+.rrs-present,
+.rrs-absence {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  padding: 14px 16px;
+}
+
+.rrs-absence-line {
+  color: var(--text-primary);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.rrs-absence-path {
+  margin-top: 6px;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+/* A started emission and a broken one are not the same absence, and they do not look the same. */
+.rrs-absence.is-partial {
+  border-left: 3px solid var(--text-tertiary);
+}
+
+.rrs-absence.is-broken {
+  border-left: 3px solid var(--accent);
+}
+
+.rrs-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+
+.rrs-meta-item {
+  overflow-wrap: anywhere;
+}
+
+.rrs-verdict-chip {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  padding: 1px 10px;
+  font-size: 11.5px;
+}
+
+.rrs-verdict-chip.is-pending {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--accent);
+}
+
+.rrs-actions {
+  margin-top: 12px;
+}
+
+/* The Portfolio's count. A count and never a list of links: the door into a report is the run. */
+.portfolio-verdicts:empty {
+  display: none;
+}
+
+.rrs-verdict-panel {
+  margin-bottom: 20px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-panel);
+  padding: 18px 20px;
+}
+
+.rrs-verdict-title {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.rrs-verdict-subtitle {
+  margin-top: 2px;
+  color: var(--text-tertiary);
+  font-size: 12.5px;
+}
+
+.rrs-verdict-rows {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rrs-verdict-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 2fr);
+  align-items: baseline;
+  gap: 12px;
+  border-top: 1px solid var(--border-default);
+  padding: 8px 2px;
+}
+
+.rrs-verdict-row.is-unavailable {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+.rrs-verdict-project {
+  color: var(--text-primary);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rrs-verdict-count {
+  color: var(--text-tertiary);
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.rrs-verdict-row.is-pending .rrs-verdict-count {
+  color: var(--accent);
+}
+
+.rrs-verdict-note {
+  color: var(--text-tertiary);
+  font-size: 12px;
+}

@@ -1,27 +1,58 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-09T20:42:09.897Z",
+  "generated_at": "2026-08-13T20:43:47.984Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-09T18:32:46.194Z"
+      "mtime": "2026-08-12T03:41:13.799Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-09T20:42:09.839Z"
+      "mtime": "2026-08-13T20:43:47.841Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "95d930e3202f4a43681c7b828e69ecd646724c68",
+  "head": "34b00f2c03eb4d1eeba8970d12e254df57af9a63",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 224,
+  "commit_total": 227,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "34b00f2",
+      "full_sha": "34b00f2c03eb4d1eeba8970d12e254df57af9a63",
+      "date": "2026-08-11T21:32:12-06:00",
+      "parents": "f21b814",
+      "subject": "handoff(cantu-studio): cierre de la sesion que llevo #55 a #60; corrige dos afirmaciones falsas del relevo anterior",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f21b814",
+      "full_sha": "f21b8145c8e97fcc33203dd6557ba5ded7dfc21c",
+      "date": "2026-08-11T03:26:48-06:00",
+      "parents": "cef248b",
+      "subject": "handoff(cantu-studio): cierre de la serie de cinco componentes y el cambio de roadmap",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "cef248b",
+      "full_sha": "cef248b788f734f2b8fdb1f9bec758fde3954ec6",
+      "date": "2026-08-09T14:43:43-06:00",
+      "parents": "95d930e",
+      "subject": "cierra #52 RUN-CONSOLE-REPORT-RENDERER-001: renderizador unico de reportes en vanilla, ciego al dominio y probado contra los cuatro casos reales versionados como fixtures; mas el prototipo que le sirve de especificacion y la clasificacion del run",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORT-RENDERER-001"
+    },
     {
       "branch": "main",
       "sha": "95d930e",

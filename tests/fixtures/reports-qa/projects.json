@@ -1,0 +1,30 @@
+{
+  "registry_model": "project_registry_v1",
+  "title": "AIW Console — reports QA",
+  "projects": [
+    {
+      "key": "reports-qa",
+      "root": "."
+    },
+    {
+      "key": "reports-empty",
+      "root": "../reports-empty"
+    },
+    {
+      "key": "aiw-console",
+      "root": "../../.."
+    },
+    {
+      "key": "cantu-studio",
+      "root": "../../../../cantu-studio"
+    },
+    {
+      "key": "cantu-quizzes-latex",
+      "root": "../../../../cantu-quizzes-latex"
+    },
+    {
+      "key": "aiw",
+      "root": "../../../../../aiw"
+    }
+  ]
+}

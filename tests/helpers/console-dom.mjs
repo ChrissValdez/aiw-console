@@ -41,6 +41,10 @@ class StubElement {
     this.scrollTop = 0;
     this.attributes = new Map();
     this.children = [];
+    // Selector -> element, for the few structural children the renderer resolves by CSS rather
+    // than by id (the drawer header it injects the Back control into). Empty by default, so
+    // querySelector keeps answering null everywhere it always did.
+    this.stubQuery = null;
   }
   addEventListener() {}
   removeEventListener() {}
@@ -51,7 +55,10 @@ class StubElement {
   appendChild(child) { this.children.push(child); return child; }
   insertAdjacentHTML() {}
   remove() {}
-  querySelector() { return null; }
+  querySelector(selector) {
+    if (this.stubQuery && Object.prototype.hasOwnProperty.call(this.stubQuery, selector)) return this.stubQuery[selector];
+    return null;
+  }
   querySelectorAll() { return []; }
   closest() { return null; }
   focus() {}
@@ -97,12 +104,21 @@ function makeFetch(rootsByKey) {
   };
 }
 
-export function createConsoleHarness({ rendererPath, rootsByKey }) {
+// `alsoLoad` runs further classic scripts into the SAME context, in the order given, before the
+// renderer — which is what index.html does with `defer`. It is how the report surface (#53) is
+// exercised: the mount and the report renderer are separate shipped files whose top-level
+// functions the console renderer calls, so a harness that loads only one of the three would be
+// testing a page that does not exist.
+export function createConsoleHarness({ rendererPath, rootsByKey, alsoLoad = [] }) {
   const elements = new Map();
   const byId = (id) => {
     if (!elements.has(id)) elements.set(id, new StubElement(id));
     return elements.get(id);
   };
+  // The run drawer's header is the one node the renderer reaches by CSS and then writes into
+  // (it injects the Back pill there before painting a run detail). Registering it keeps that
+  // path from throwing on a stub whose querySelector answers null for everything.
+  byId("run-drawer").stubQuery = { ".drawer-header": byId("(drawer-header)") };
   const documentStub = {
     title: "Project Console",
     hidden: false,
@@ -126,6 +142,9 @@ export function createConsoleHarness({ rendererPath, rootsByKey }) {
   };
   sandbox.window = sandbox; // window.confirm is never reached (modal close is forced)
   vm.createContext(sandbox);
+  for (const extra of alsoLoad) {
+    vm.runInContext(readFileSync(extra, "utf8"), sandbox, { filename: extra });
+  }
   const source = readFileSync(rendererPath, "utf8");
   vm.runInContext(source, sandbox, { filename: rendererPath });
   return {

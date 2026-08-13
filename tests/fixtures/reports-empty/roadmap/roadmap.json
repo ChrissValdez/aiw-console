@@ -1,0 +1,37 @@
+{
+  "schema_version": "roadmap_tree_v1",
+  "roadmap_id": "reports-empty",
+  "title": "Reports Empty Fixture",
+  "objectives": [
+    {
+      "objective_id": "NE",
+      "title": "A project that has emitted no report yet",
+      "phases": [
+        {
+          "phase_id": "NE.P1",
+          "title": "Runs with nothing filed for them",
+          "runs": [
+            {
+              "run_id": "RUN-EMPTY-INDEX-ONE-001",
+              "queue_order": 1,
+              "title": "A run in a project with an empty reports index",
+              "summary": "Its project emits the index and has filed no report in it.",
+              "full_description": "The state every real repository of this workspace is in today: the index is readable, present, and lists nothing. That is a measurement, not a silence.",
+              "status": "active",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-EMPTY-INDEX-TWO-001",
+              "queue_order": 2,
+              "title": "A second run in the same project",
+              "summary": "Same state, and the surface must say the same thing about it.",
+              "full_description": "Two runs so the operator can see that the answer is a property of the project and not of one run.",
+              "status": "active",
+              "depends_on": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

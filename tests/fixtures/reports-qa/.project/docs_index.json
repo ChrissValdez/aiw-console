@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "project_id": "reports_qa_fixture",
+  "generated_at": "2026-08-10T00:00:00.000Z",
+  "generated_from": "aiw-projector@0.12.0",
+  "sources": [
+    {
+      "path": "README.md",
+      "mtime": "2026-08-10T21:54:42.321Z"
+    },
+    {
+      "path": "reports/RUN-QA-REPORT-EMPTY-001/NOTE.md",
+      "mtime": "2026-08-10T21:54:42.339Z"
+    }
+  ],
+  "nav_tier_model": {
+    "tiers": [
+      "primary",
+      "secondary",
+      "advanced",
+      "evidence",
+      "history",
+      "proposal"
+    ],
+    "derived_by": "repo_path_prefix",
+    "rules": [
+      {
+        "match": "^context/[^/]+/records/",
+        "tier": "evidence"
+      },
+      {
+        "match": "^context/handoffs/",
+        "tier": "secondary"
+      },
+      {
+        "match": "^console/",
+        "tier": "secondary"
+      },
+      {
+        "match": "^docs/",
+        "tier": "secondary"
+      },
+      {
+        "match": "^[^/]+$",
+        "tier": "primary"
+      },
+      {
+        "match": "^context/",
+        "tier": "primary"
+      },
+      {
+        "match": ".",
+        "tier": "secondary"
+      }
+    ],
+    "default_visible": "nav_tier === 'primary'",
+    "purpose": "Docs navigation visibility only. Assigns no authority, freshness or approval."
+  },
+  "docs": [
+    {
+      "title": "Reports QA fixture",
+      "path": "README.md",
+      "nav_tier": "primary",
+      "default_visible": true,
+      "ia_bucket": "root",
+      "freshness": "2026-08-10T21:54:42.321Z"
+    },
+    {
+      "title": "NOTE.md",
+      "path": "reports/RUN-QA-REPORT-EMPTY-001/NOTE.md",
+      "nav_tier": "secondary",
+      "default_visible": false,
+      "ia_bucket": "reports/RUN-QA-REPORT-EMPTY-001",
+      "freshness": "2026-08-10T21:54:42.339Z"
+    }
+  ]
+}

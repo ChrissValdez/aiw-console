@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "project_id": "reports_qa_fixture",
+  "generated_at": "2026-08-10T00:00:00.000Z",
+  "generated_from": "aiw-projector@0.12.0",
+  "sources": [
+    {
+      "path": "reports",
+      "mtime": "2026-08-10T21:54:42.339Z"
+    },
+    {
+      "path": "reports/RUN-QA-REPORT-AUDIT-001/report.json",
+      "mtime": "2026-08-09T20:12:50.593Z"
+    },
+    {
+      "path": "reports/RUN-QA-REPORT-BROKEN-001/report.json",
+      "mtime": "2026-08-10T21:54:42.338Z"
+    },
+    {
+      "path": "reports/RUN-QA-REPORT-DEVELOPMENT-001/report.json",
+      "mtime": "2026-08-09T20:12:50.621Z"
+    },
+    {
+      "path": "reports/RUN-QA-REPORT-LESSON-001/report.json",
+      "mtime": "2026-08-09T20:12:50.642Z"
+    },
+    {
+      "path": "reports/RUN-QA-REPORT-MECHANICAL-001/report.json",
+      "mtime": "2026-08-09T20:12:50.670Z"
+    },
+    {
+      "path": "reports/RUN-QA-REPORT-VOLUME-001/report.json",
+      "mtime": "2026-08-10T21:52:08.078Z"
+    }
+  ],
+  "reports_source": {
+    "mode": "scanned",
+    "reports_dir": "reports",
+    "directory_present": true,
+    "run_directories": 7,
+    "indexed": 6,
+    "unreadable": 1,
+    "selection": "every immediate subdirectory of reports/ that holds a report.json, by folder name, sorted",
+    "field_rules": {
+      "run_id": "the name of the folder the report was filed under (reports/<run_id>/), never a field read from inside the report",
+      "report_path": "reports/<run_id>/report.json, repo-relative and POSIX",
+      "emitted_at": "the report's own `emitted_at`, verbatim, when it carries one; OMITTED when it does not — no mtime is substituted",
+      "verdict_present": "whether verdict.json exists beside report.json, measured on disk; the file is never opened",
+      "read_error": "present ONLY when report.json could not be parsed; the entry stays, annotated"
+    },
+    "validation_policy": "This index does not validate a report against the report contract.",
+    "unresolved_policy": "A directory under reports/ with no report.json, and any loose file directly under reports/, produce no entry and are listed in `unresolved`.",
+    "unresolved": [
+      {
+        "path": "reports/RUN-QA-REPORT-EMPTY-001",
+        "reason": "no report.json"
+      }
+    ]
+  },
+  "reports": [
+    {
+      "run_id": "RUN-QA-REPORT-AUDIT-001",
+      "report_path": "reports/RUN-QA-REPORT-AUDIT-001/report.json",
+      "emitted_at": "2026-08-08T22:40:00Z",
+      "verdict_present": false
+    },
+    {
+      "run_id": "RUN-QA-REPORT-BROKEN-001",
+      "report_path": "reports/RUN-QA-REPORT-BROKEN-001/report.json",
+      "verdict_present": false,
+      "read_error": "Unexpected end of JSON input"
+    },
+    {
+      "run_id": "RUN-QA-REPORT-DEVELOPMENT-001",
+      "report_path": "reports/RUN-QA-REPORT-DEVELOPMENT-001/report.json",
+      "emitted_at": "2026-08-06T18:20:00Z",
+      "verdict_present": false
+    },
+    {
+      "run_id": "RUN-QA-REPORT-LESSON-001",
+      "report_path": "reports/RUN-QA-REPORT-LESSON-001/report.json",
+      "emitted_at": "2026-08-09T10:00:00Z",
+      "verdict_present": false
+    },
+    {
+      "run_id": "RUN-QA-REPORT-MECHANICAL-001",
+      "report_path": "reports/RUN-QA-REPORT-MECHANICAL-001/report.json",
+      "emitted_at": "2026-08-09T02:00:00Z",
+      "verdict_present": false
+    },
+    {
+      "run_id": "RUN-QA-REPORT-VOLUME-001",
+      "report_path": "reports/RUN-QA-REPORT-VOLUME-001/report.json",
+      "emitted_at": "2026-08-06T18:20:00Z",
+      "verdict_present": false
+    }
+  ]
+}

@@ -6,6 +6,13 @@
     <!-- Neutral until the data loads: the renderer sets the real project name from the snapshot. -->
     <title>Project Console</title>
     <link rel="stylesheet" href="assets/project-console.css">
+    <!-- The report renderer's own stylesheet, scoped entirely under `.rr-root` (the mount
+         container below). It is loaded, never edited: the tokens in it are the prototype's. -->
+    <link rel="stylesheet" href="assets/run-report-renderer.css">
+    <!-- The console chrome AROUND that report: the layer it opens in, the way back to the run,
+         the section a run detail shows about its own report. Its own file so the mechanical
+         domain-blindness veto of #52 covers the mount as well as the renderer. -->
+    <link rel="stylesheet" href="assets/run-report-surface.css">
   </head>
   <body>
     <!-- MULTI-PROJECT SHELL (O4.P3). The sidebar and the Portfolio view are NEW chrome, styled
@@ -44,6 +51,12 @@
           </div>
           <div class="content">
             <div class="portfolio-shell">
+              <!-- [#53] AGGREGATION, NOT TRANSLATION (ticket criterion 3). The shell reads every
+                   registered project's reports index — they already share one shape — and states
+                   how much is waiting for a person. It is a COUNT and never a list of links: a
+                   door into a report from here would be the global report browser this run does
+                   not deliver, and the door into a report is the run. -->
+              <div class="portfolio-verdicts" id="shell-verdicts"></div>
               <div class="portfolio-board" id="shell-portfolio-board"></div>
             </div>
           </div>
@@ -245,6 +258,28 @@
       <div id="drawer-body" class="drawer-body"></div>
     </aside>
 
+    <!-- [#53] THE REPORT SURFACE. A full-viewport layer and not a panel inside the run drawer:
+         the renderer paints a review surface with its own sticky topbar, an index rail and an
+         880-1180px column, and a 560px drawer cannot hold it. It sits ABOVE the drawer, so the
+         run the operator came from is still open underneath and the way back is a single
+         gesture. The layer is inert until a run's report is opened; no report and no case list
+         is ever pre-loaded here. -->
+    <div id="run-report-view" class="run-report-view" role="dialog" aria-modal="true" aria-label="Run report" aria-hidden="true">
+      <div class="run-report-bar">
+        <button id="run-report-back" class="v3-back rrs-back" type="button" data-run-report-back="true" aria-label="Back to the run">
+          <span class="v3-back-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 5 8 12 15 19"></polyline></svg></span>
+          <span class="v3-back-label rrs-back-label">Back to the run</span>
+        </button>
+        <div class="run-report-ref">
+          <span id="run-report-ref-title" class="run-report-ref-title"></span>
+          <span id="run-report-ref-id" class="run-report-ref-id mono"></span>
+        </div>
+      </div>
+      <div id="run-report-scroll" class="run-report-scroll">
+        <div id="run-report-mount"></div>
+      </div>
+    </div>
+
     <div id="edit-modal-overlay" class="drawer-overlay edit-modal-overlay"></div>
     <aside id="edit-modal" class="edit-modal" role="dialog" aria-modal="true" aria-label="Edit roadmap item" aria-hidden="true">
       <div class="drawer-header">
@@ -257,6 +292,11 @@
       <div id="edit-modal-body" class="drawer-body edit-modal-body"></div>
     </aside>
 
+    <!-- The ONE report renderer (#52), shipped whole and executed here for the first time, and
+         the mount that stands between it and this console (#53). Both are classic scripts with
+         `defer`, so they run in document order before the console renderer that calls them. -->
+    <script src="assets/run-report-renderer.js" defer></script>
+    <script src="assets/run-report-surface.js" defer></script>
     <script src="assets/project-console.js" defer></script>
     <!-- The shell module runs after the deferred renderer script, so the renderer's globals
          (setActiveProjectBase / resetProjectScopedState / loadActiveProject) exist when it boots. -->

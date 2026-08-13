@@ -97,9 +97,13 @@ test("criterion 4 corollaries: the drift field is dead, the vocabulary is the ke
     "verdict_options is not even read — ignoring it is structural, not conditional");
   assert.ok(source.includes("verdict_disposition_options"),
     "the disposition options, which ARE per-item data, keep working");
-  // The three verdicts the kernel parses at aiw/kernel.mjs:213, and no fourth.
-  assert.ok(/RR_VERDICTS\s*=\s*\["APPROVED",\s*"CHANGES_REQUIRED",\s*"BLOCKED"\]/.test(source),
-    "the closed verdict set, verbatim");
+  // Two closed sets since RUN-CONSOLE-VERDICT-MODEL-001: an item takes two tokens (halting
+  // is the emitter's `stop`, derived into `stopped`, never a token the operator picks), and
+  // the run takes the three the kernel parses at aiw/kernel.mjs:213 — no fourth on either.
+  assert.ok(/RR_ITEM_VERDICTS\s*=\s*\["APPROVED",\s*"CHANGES_REQUIRED"\]/.test(source),
+    "the item's closed verdict set, verbatim");
+  assert.ok(/RR_RUN_VERDICTS\s*=\s*\["APPROVED",\s*"CHANGES_REQUIRED",\s*"BLOCKED"\]/.test(source),
+    "the run's closed verdict set, verbatim");
   // No approve-all, in any spelling, in either language, code or copy.
   assert.ok(!/approve[\s_-]*all|aprobar[\s_-]*todo/i.test(source), "no approve-all anywhere");
   // The signer arrives from typing alone: the reviewer state is born empty.

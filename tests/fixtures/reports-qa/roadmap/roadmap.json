@@ -1,0 +1,97 @@
+{
+  "schema_version": "roadmap_tree_v1",
+  "roadmap_id": "reports-qa",
+  "title": "Reports QA Fixture",
+  "objectives": [
+    {
+      "objective_id": "QA",
+      "title": "The report surface, one run per state",
+      "phases": [
+        {
+          "phase_id": "QA.P1",
+          "title": "Runs that have a report",
+          "runs": [
+            {
+              "run_id": "RUN-QA-REPORT-AUDIT-001",
+              "queue_order": 1,
+              "title": "A run whose report is a content audit",
+              "summary": "Nine items, two of them stops, with previews and a pilot deviation.",
+              "full_description": "Opens the four-case corpus: the largest of the real reports, the one with children-less items, two stop points and a null verification.",
+              "status": "active",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-QA-REPORT-DEVELOPMENT-001",
+              "queue_order": 2,
+              "title": "A run whose report declares more items than it carries",
+              "summary": "Four items and an items_note that declares twenty-two checks and five decisions.",
+              "full_description": "The case that made the volume criterion exist: the file says, in its own note, that it is a sample of a larger run.",
+              "status": "active",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-QA-REPORT-LESSON-001",
+              "queue_order": 3,
+              "title": "A run whose report has an item with children",
+              "summary": "One parent item with three children, one of them a stop, and two previews that open side by side.",
+              "full_description": "The N+1 index case: a parent and its children are four separate signatures, and the parent wears the attenuated stop mark.",
+              "status": "active",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-QA-REPORT-MECHANICAL-001",
+              "queue_order": 4,
+              "title": "A run whose report has no checks at all",
+              "summary": "Two items, one decision and a gate that is mechanical.",
+              "full_description": "The empty-versus-absent case: three blocks are empty lists and none of them is undeclared, so the surface says none six times and not declared zero times.",
+              "status": "active",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-QA-REPORT-VOLUME-001",
+              "queue_order": 5,
+              "title": "A run whose report carries all twenty-eight of its items",
+              "summary": "The volume fixture: the twenty-eight items the development case declares, replicas marked.",
+              "full_description": "The size the renderer had never been driven at before this run measured it.",
+              "status": "active",
+              "depends_on": []
+            }
+          ]
+        },
+        {
+          "phase_id": "QA.P2",
+          "title": "Runs whose report is absent, incomplete or unreadable",
+          "runs": [
+            {
+              "run_id": "RUN-QA-REPORT-BROKEN-001",
+              "queue_order": 6,
+              "title": "A run whose report does not parse",
+              "summary": "A report.json that is not JSON.",
+              "full_description": "The index keeps the entry and annotates it; the surface opens it and shows the parser's own message rather than an empty screen.",
+              "status": "active",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-QA-REPORT-EMPTY-001",
+              "queue_order": 7,
+              "title": "A run with a report folder and no report in it",
+              "summary": "reports/<run_id>/ exists and holds no report.json.",
+              "full_description": "A started emission is not a missing one, and the index files it under unresolved rather than dropping it.",
+              "status": "active",
+              "depends_on": []
+            },
+            {
+              "run_id": "RUN-QA-REPORT-ABSENT-001",
+              "queue_order": 8,
+              "title": "A run for which no report was ever emitted",
+              "summary": "No entry and no folder.",
+              "full_description": "The honest absence: nobody ever filed one, and the surface says so instead of staying silent.",
+              "status": "active",
+              "depends_on": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

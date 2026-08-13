@@ -348,12 +348,21 @@
 .rr-if-rejected { flex-direction: column; gap: 5px; }
 .rr-if-rejected-hard { box-shadow: inset 0 0 0 1px var(--rr-accent-600); }
 
-/* — the verdict bar: three closed verdicts, then the disposition as a second step — */
+/* — the verdict bar: the step's closed verdicts, then the disposition as a second step — */
 .rr-verdict-bar {
   display: flex; flex-direction: column; gap: 12px;
   border-top: 1px solid color-mix(in srgb, var(--rr-text) 8%, transparent);
   padding-top: 11px;
 }
+/* The guard's written reason: an APPROVED withheld from the run is never silent. */
+.rr-guard-reason {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 10px 14px; border-radius: var(--rr-radius-sm);
+  font-size: 12.5px; color: color-mix(in srgb, var(--rr-text) 82%, transparent);
+  background: color-mix(in srgb, var(--rr-accent) 8%, transparent);
+  box-shadow: inset 0 0 0 1px var(--rr-accent-600);
+}
+.rr-guard-reason .rr-ic { color: var(--rr-accent-300); position: relative; top: 2px; flex: none; }
 .rr-verdict-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .rr-question { font-size: 12.5px; color: color-mix(in srgb, var(--rr-text) 60%, transparent); }
 .rr-verdict-btns, .rr-disposition-btns { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }

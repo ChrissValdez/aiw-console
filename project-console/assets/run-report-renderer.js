@@ -11,19 +11,31 @@
 // the four shipped fixtures — including that no word of theirs appears in this file.
 //
 // What it deliberately does NOT do (ticket #52): it does not write verdict.json to the repo
-// (#54 adds the endpoint — the sign button downloads to the operator's machine, exactly as the
+// (#55 adds the endpoint — the sign button downloads to the operator's machine, exactly as the
 // prototype does), it does not add the console tab or the route from the run (#53), and it
 // does not validate the report against the contract. A report that does not parse produces an
 // honest message, never a blank surface; a missing optional block paints as "not declared",
 // which is a different fact from an empty one ("none").
 
 // ---------------------------------------------------------------------------
-// Closed vocabularies. The verdict set is the SAME three the kernel already
-// parses at aiw/kernel.mjs:213 — never per-report, never per-item. Any custom
-// per-item verdict vocabulary a report carries is drift and is ignored.
+// Closed vocabularies — never per-report, never per-item; any custom verdict
+// vocabulary a report carries is drift and is ignored. An ITEM asks whether a
+// change is accepted, and that takes two tokens. Whether something halts
+// everything is not a verdict at all: the EMITTER declares it (`stop: true`)
+// and the consequence is derived (`stopped`, below), so a third item token
+// would be redundant by construction. Only the RUN asks whether it is done,
+// and its three are the SAME three the kernel already parses at
+// aiw/kernel.mjs:213 — on the run, BLOCKED means this run cannot close.
+//
+// The dispositions name where a CHANGES_REQUIRED fix travels, nearest first:
+// this run, a new run, the operator's own hands, nowhere. The first one is the
+// only one that says the run still owes work to ITSELF — the guard below
+// refuses to let a run be APPROVED while any step carries it.
 // ---------------------------------------------------------------------------
-const RR_VERDICTS = ["APPROVED", "CHANGES_REQUIRED", "BLOCKED"];
-const RR_DEFAULT_DISPOSITIONS = ["new_run", "operator_fixed", "discard"];
+const RR_ITEM_VERDICTS = ["APPROVED", "CHANGES_REQUIRED"];
+const RR_RUN_VERDICTS = ["APPROVED", "CHANGES_REQUIRED", "BLOCKED"];
+const RR_FIX_HERE = "this_run";
+const RR_DEFAULT_DISPOSITIONS = [RR_FIX_HERE, "new_run", "operator_fixed", "discard"];
 
 // Chrome strings only — never the report's own content. Both languages come from the
 // prototype verbatim; the report's text renders as-is in whatever language it was written.
@@ -56,7 +68,10 @@ const RR_STRINGS = {
     parseErrorHint: "The file on disk is the authority. Nothing below is rendered because nothing could be parsed:",
     pendingLeft: (n) => n + " still without a verdict. The run verdict does not replace them.",
     missingVerdicts: (n) => n + (n === 1 ? " verdict" : " verdicts"), missingSignature: "the signature",
-    missingPrefix: "Missing ", complete: "Complete. It downloads to your machine.", and: " and "
+    missingPrefix: "Missing ", complete: "Complete. It downloads to your machine.", and: " and ",
+    guardHeld: "APPROVED is not available for the run: ",
+    guardNoDisposition: (n) => n + (n === 1 ? " change still carries no disposition" : " changes still carry no disposition"),
+    guardOwedHere: (n) => (n === 1 ? "1 fix is owed" : n + " fixes are owed") + " to this run itself"
   },
   es: {
     appTitle: "Revisión de run", gate: "compuerta", prev: "Anterior (←)", next: "Siguiente (→)",
@@ -86,12 +101,15 @@ const RR_STRINGS = {
     parseErrorHint: "El fichero en disco es la autoridad. Abajo no se pinta nada porque nada se pudo parsear:",
     pendingLeft: (n) => "Quedan " + n + " sin veredicto. El del run no los sustituye.",
     missingVerdicts: (n) => n + (n === 1 ? " veredicto" : " veredictos"), missingSignature: "la firma",
-    missingPrefix: "Faltan ", complete: "Completo. Se descarga en tu equipo.", and: " y "
+    missingPrefix: "Faltan ", complete: "Completo. Se descarga en tu equipo.", and: " y ",
+    guardHeld: "APPROVED no está disponible para el run: ",
+    guardNoDisposition: (n) => n + (n === 1 ? " cambio sigue sin disposición" : " cambios siguen sin disposición"),
+    guardOwedHere: (n) => (n === 1 ? "1 arreglo se debe" : n + " arreglos se deben") + " a este mismo run"
   }
 };
 const RR_DISPOSITION_GLOSS = {
-  en: { new_run: "another run fixes it", operator_fixed: "I fix it myself", discard: "discard it" },
-  es: { new_run: "otro run lo arregla", operator_fixed: "lo arreglo yo", discard: "se descarta" }
+  en: { this_run: "this run fixes it", new_run: "another run fixes it", operator_fixed: "I fix it myself", discard: "discard it" },
+  es: { this_run: "este run lo arregla", new_run: "otro run lo arregla", operator_fixed: "lo arreglo yo", discard: "se descarta" }
 };
 
 function rrT(lang) {
@@ -279,19 +297,40 @@ function rrSetRec(state, id, patch) {
   state.v[id] = Object.assign({}, state.v[id] || {}, patch);
 }
 
+// The disposition the output would carry: the picked token, or the operator's own typed
+// one — trimmed, and whitespace alone is NO disposition. The guard reads this same value,
+// so a fix-here token typed by hand into "or write another…" holds APPROVED exactly as
+// the button does.
+function rrEffectiveDisposition(r) {
+  if (r.disposition) return r.disposition;
+  const typed = r.dispOther ? r.dispOther.trim() : "";
+  return typed || null;
+}
+
 function rrRecOut(state, id) {
   const r = rrRec(state, id);
   return {
     verdict: r.verdict || null,
-    disposition: r.verdict === "CHANGES_REQUIRED" ? (r.disposition || (r.dispOther ? r.dispOther.trim() : null)) : null,
+    disposition: r.verdict === "CHANGES_REQUIRED" ? rrEffectiveDisposition(r) : null,
     chosen_option: r.chosenOption || null,
     note: r.note || null
   };
 }
 
-// What #54's endpoint will receive. `verdict_by` is whatever the operator TYPED — the
+// What #55's endpoint will receive. `verdict_by` is whatever the operator TYPED — the
 // signer's name is never a constant in this code, and an empty box signs nothing.
 // `decided_at` stays null here: the writer stamps it, not the view.
+//
+// `stopped` is DERIVED, never chosen — no control on the surface sets it. The emitter
+// declared which items halt everything (`stop: true`); rejecting one of those is what
+// halts the run (CONTRATO §7), and this field only states that consequence. An item
+// takes two tokens, so "rejected" is exactly CHANGES_REQUIRED; a stop item still
+// pending has not been rejected, and `stopped` stays false until one actually is.
+function rrStopped(report, state) {
+  return rrItems(report).some((it) =>
+    it && it.stop && rrRec(state, it.item_id).verdict === "CHANGES_REQUIRED");
+}
+
 function rrVerdictOutput(report, state) {
   const R = report || {};
   const decisions = Array.isArray(R.self_decisions) ? R.self_decisions : [];
@@ -303,6 +342,7 @@ function rrVerdictOutput(report, state) {
     gate: R.gate != null ? R.gate : null,
     verdict_by: (state.reviewer || "").trim() || null,
     decided_at: null,
+    stopped: rrStopped(R, state),
     run: rrRecOut(state, "__run__"),
     items: rrItems(R).map((it) => Object.assign({ item_id: it.item_id }, rrRecOut(state, it.item_id))),
     self_decisions: decisions.map((dec, n) =>
@@ -326,6 +366,43 @@ function rrMissing(report, state, T) {
   return missing;
 }
 
+// THE GUARD, and it is a guard, not an aggregation: the run verdict is NEVER computed
+// from the step verdicts — the operator decides it, and this function only says whether
+// APPROVED would sign a contradiction, and why. A step in CHANGES_REQUIRED is compatible
+// with an approved run only when its fix travels somewhere else: a disposition is
+// present AND it is not the fix-here one. Otherwise the work is still owed to this run
+// (or nobody said where it goes), approving would close a run that has not closed, and
+// the reason comes back WRITTEN — an option that vanished in silence would be the
+// interface deciding; one that says why is the interface refusing a contradiction.
+function rrRunApprovedGuard(report, state, T) {
+  let noDisposition = 0, owedHere = 0;
+  rrSteps(report, T).forEach((s) => {
+    if (s.kind === "run") return;
+    const r = rrRec(state, s.id);
+    if (r.verdict !== "CHANGES_REQUIRED") return;
+    const disposition = rrEffectiveDisposition(r);
+    if (disposition == null) noDisposition += 1;
+    else if (disposition === RR_FIX_HERE) owedHere += 1;
+  });
+  const parts = [];
+  if (noDisposition) parts.push(T.guardNoDisposition(noDisposition));
+  if (owedHere) parts.push(T.guardOwedHere(owedHere));
+  return {
+    available: parts.length === 0,
+    reason: parts.length ? T.guardHeld + parts.join(T.and) + "." : null
+  };
+}
+
+// Everything that stands between the operator and the sign button, in one answer: the
+// per-step gate (rrMissing) and the guard's second tooth — a run already APPROVED whose
+// steps later came to owe it work must not sign either.
+function rrSignBlocks(report, state, T) {
+  const missing = rrMissing(report, state, T);
+  const guard = rrRunApprovedGuard(report, state, T);
+  const contradiction = rrRec(state, "__run__").verdict === "APPROVED" && !guard.available ? guard.reason : null;
+  return { missing, contradiction, ready: missing.length === 0 && !contradiction };
+}
+
 // ---------------------------------------------------------------------------
 // HTML templates. Strings in, strings out; every report value passes rrEsc.
 // ---------------------------------------------------------------------------
@@ -338,12 +415,19 @@ function rrTagHtml(text, cls) {
   return '<span class="rr-tag ' + (cls || "") + '">' + rrEsc(text) + "</span>";
 }
 
-function rrVerdictBarHtml(id, rec, question, dispositionOptions, T, lang) {
+// One bar, two vocabularies: `verdicts` says which tokens this step takes — an item's
+// two, the run's three. `held` travels only with the run, and only the guard writes it:
+// when APPROVED is not available, the button stays on screen but refuses (disabled), and
+// the reason paints next to it in words. It never disables a SELECTED APPROVED — taking
+// it back is how the operator resolves the contradiction, and that path must stay open.
+function rrVerdictBarHtml(id, rec, question, dispositionOptions, T, lang, verdicts, held) {
   const gloss = RR_DISPOSITION_GLOSS[lang] || RR_DISPOSITION_GLOSS.en;
   const disp = (Array.isArray(dispositionOptions) && dispositionOptions.length) ? dispositionOptions : RR_DEFAULT_DISPOSITIONS;
-  const buttons = RR_VERDICTS.map((v) =>
+  const holds = held && !held.available;
+  const buttons = verdicts.map((v) =>
     '<button type="button" class="rr-btn rr-btn-mono ' + (rec.verdict === v ? "rr-btn-primary" : "rr-btn-secondary") +
-    '" data-rr-act="verdict" data-rr-id="' + rrEsc(id) + '" data-rr-value="' + rrEsc(v) + '">' + rrEsc(v) + "</button>").join("");
+    '" data-rr-act="verdict" data-rr-id="' + rrEsc(id) + '" data-rr-value="' + rrEsc(v) + '"' +
+    (holds && v === "APPROVED" && rec.verdict !== "APPROVED" ? " disabled" : "") + '>' + rrEsc(v) + "</button>").join("");
   const needsDisposition = rec.verdict === "CHANGES_REQUIRED";
   const dispButtons = disp.map((d) =>
     '<button type="button" class="rr-btn ' + (rec.disposition === d ? "rr-btn-primary" : "rr-btn-secondary") +
@@ -352,6 +436,7 @@ function rrVerdictBarHtml(id, rec, question, dispositionOptions, T, lang) {
   return '<div class="rr-verdict-bar">' +
     '<div class="rr-verdict-row"><span class="rr-question">' + rrEsc(question) + '</span>' +
     '<div class="rr-verdict-btns">' + buttons + "</div></div>" +
+    (holds ? '<div class="rr-guard-reason">' + rrIcon("warning") + "<span>" + rrEsc(held.reason) + "</span></div>" : "") +
     (needsDisposition
       ? '<div class="rr-disposition"><span class="rr-and-then">' + rrEsc(T.andThen) + "</span>" +
         '<div class="rr-disposition-btns">' + dispButtons +
@@ -523,7 +608,7 @@ function rrCardForItemHtml(report, item, state, T) {
 
   // The disposition options may travel with the item (`verdict_disposition_options`); the
   // VERDICT vocabulary never does.
-  sections.push(rrVerdictBarHtml(id, rec, T.questionItem, item.verdict_disposition_options, T, state.lang));
+  sections.push(rrVerdictBarHtml(id, rec, T.questionItem, item.verdict_disposition_options, T, state.lang, RR_ITEM_VERDICTS, null));
 
   const cardCls = "rr-card" + (item.stop ? " rr-card-stop" : "") + (inherits ? " rr-card-inherit" : "");
   return '<div class="' + cardCls + '" id="rr-it-' + rrEsc(id) + '">' +
@@ -578,7 +663,7 @@ function rrCardForDecisionHtml(decision, id, state, T) {
     sections.push('<div class="rr-if-rejected"><div class="rr-kicker rr-kicker-accent">' + rrIcon("arrow-u-left") +
       rrEsc(T.ifRejected) + '</div><p class="rr-prose">' + rrEsc(decision.if_rejected) + "</p></div>");
   }
-  sections.push(rrVerdictBarHtml(id, rec, T.questionDecision, decision.verdict_disposition_options, T, state.lang));
+  sections.push(rrVerdictBarHtml(id, rec, T.questionDecision, decision.verdict_disposition_options, T, state.lang, RR_ITEM_VERDICTS, null));
 
   return '<div class="rr-card" id="rr-it-' + rrEsc(id) + '">' +
     '<div class="rr-card-head"><div class="rr-card-head-main">' +
@@ -601,7 +686,7 @@ function rrCardForRunHtml(report, state, T) {
     const v = rrRec(state, s.id).verdict || T.pendingTag;
     tally[v] = (tally[v] || 0) + 1;
   });
-  const recapRows = RR_VERDICTS.concat([T.pendingTag]).filter((k) => tally[k]).map((k) =>
+  const recapRows = RR_ITEM_VERDICTS.concat([T.pendingTag]).filter((k) => tally[k]).map((k) =>
     '<div class="rr-recap-row">' + rrDotHtml(k !== T.pendingTag) +
     '<span class="rr-recap-label">' + rrEsc(k) + '</span>' +
     '<span class="rr-recap-value">' + tally[k] + " / " + decided.length + "</span></div>").join("");
@@ -617,11 +702,14 @@ function rrCardForRunHtml(report, state, T) {
       '<p class="rr-prose">' + rrEsc(T.pendingLeft(pending)) + "</p></div>");
   }
   const question = R.gate === "mechanical" ? T.questionRunMechanical : T.questionRun;
-  sections.push(rrVerdictBarHtml("__run__", rec, question, null, T, state.lang));
+  sections.push(rrVerdictBarHtml("__run__", rec, question, null, T, state.lang, RR_RUN_VERDICTS,
+    rrRunApprovedGuard(report, state, T)));
 
-  const missing = rrMissing(report, state, T);
-  const ready = missing.length === 0;
-  const signHint = ready ? T.complete : T.missingPrefix + missing.join(T.and) + ".";
+  const blocks = rrSignBlocks(report, state, T);
+  const ready = blocks.ready;
+  const signHint = ready ? T.complete
+    : [blocks.missing.length ? T.missingPrefix + blocks.missing.join(T.and) + "." : "", blocks.contradiction || ""]
+      .filter(Boolean).join(" ");
   const sign = '<div class="rr-sign' + (ready ? " rr-sign-ready" : "") + '">' +
     '<div class="rr-sign-row">' +
     '<div class="rr-field"><label>' + rrEsc(T.signLabel) + "</label>" +
@@ -959,7 +1047,13 @@ function renderRunReport(container, input, opts) {
     const value = target.getAttribute("data-rr-value");
     if (act === "verdict") {
       const current = rrRec(state, id).verdict;
-      rrSetRec(state, id, { verdict: current === value ? null : value, disposition: null });
+      const next = current === value ? null : value;
+      // The guard's mechanical tooth: SETTING the run to APPROVED while steps owe it
+      // work is refused here in the model, not just dimmed in the paint. Taking an
+      // APPROVED back (next === null) always goes through.
+      if (id === "__run__" && next === "APPROVED" &&
+          !rrRunApprovedGuard(state.report, state, rrT(state.lang)).available) return;
+      rrSetRec(state, id, { verdict: next, disposition: null });
       draw();
     } else if (act === "disposition") {
       const current = rrRec(state, id).disposition;
@@ -986,7 +1080,7 @@ function renderRunReport(container, input, opts) {
       rrLsSet("theme", state.theme);
       draw();
     } else if (act === "sign") {
-      if (rrMissing(state.report, state, rrT(state.lang)).length) return;
+      if (!rrSignBlocks(state.report, state, rrT(state.lang)).ready) return;
       rrDownloadVerdict(JSON.stringify(rrVerdictOutput(state.report, state), null, 2));
     }
   });
@@ -1004,9 +1098,9 @@ function renderRunReport(container, input, opts) {
     } else if (act === "disp-other") {
       rrSetRec(state, id, { dispOther: target.value, disposition: null });
     } else if (act === "reviewer") {
-      const wasReady = rrMissing(state.report, state, rrT(state.lang)).length === 0;
+      const wasReady = rrSignBlocks(state.report, state, rrT(state.lang)).ready;
       state.reviewer = target.value;
-      const isReady = rrMissing(state.report, state, rrT(state.lang)).length === 0;
+      const isReady = rrSignBlocks(state.report, state, rrT(state.lang)).ready;
       if (wasReady !== isReady) {
         draw();
         const again = container.querySelector ? container.querySelector('[data-rr-act="reviewer"]') : null;

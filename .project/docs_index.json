@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-09T20:42:09.897Z",
+  "generated_at": "2026-08-13T20:43:47.984Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -465,6 +465,10 @@
       "mtime": "2026-08-08T09:13:17.687Z"
     },
     {
+      "path": "context/aiw-console/records/MODELO-DE-VEREDICTO-DOS-EN-EL-ITEM-TRES-EN-EL-RUN.md",
+      "mtime": "2026-08-11T19:11:36.160Z"
+    },
+    {
       "path": "context/aiw-console/records/MONTAJE-INSERTOR-FORMULA-CANTU.md",
       "mtime": "2026-08-08T09:13:17.687Z"
     },
@@ -693,6 +697,10 @@
       "mtime": "2026-08-08T09:13:17.735Z"
     },
     {
+      "path": "context/aiw-console/records/SUPERFICIE-DE-REPORTES-EN-LA-CONSOLA.md",
+      "mtime": "2026-08-10T22:11:44.983Z"
+    },
+    {
       "path": "context/aiw-console/records/TINTA-CONTRASTADA-SOBRE-ACENTO-CANTU.md",
       "mtime": "2026-08-08T20:14:17.026Z"
     },
@@ -778,7 +786,7 @@
     },
     {
       "path": "context/handoffs/cantu-studio.md",
-      "mtime": "2026-08-08T09:13:17.750Z"
+      "mtime": "2026-08-12T03:30:37.008Z"
     },
     {
       "path": "docs/snapshot-schema-v1.md",
@@ -1758,6 +1766,14 @@
       "freshness": "2026-08-08T09:13:17.687Z"
     },
     {
+      "title": "MODELO DE VEREDICTO — DOS EN EL ÍTEM, TRES EN EL RUN",
+      "path": "context/aiw-console/records/MODELO-DE-VEREDICTO-DOS-EN-EL-ITEM-TRES-EN-EL-RUN.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-11T19:11:36.160Z"
+    },
+    {
       "title": "MONTAJE DEL INSERTOR DE FÓRMULA — PARADA MEDIDA (cantu-studio)",
       "path": "context/aiw-console/records/MONTAJE-INSERTOR-FORMULA-CANTU.md",
       "nav_tier": "evidence",
@@ -2214,6 +2230,14 @@
       "freshness": "2026-08-08T09:13:17.735Z"
     },
     {
+      "title": "SUPERFICIE DE REPORTES EN LA CONSOLA",
+      "path": "context/aiw-console/records/SUPERFICIE-DE-REPORTES-EN-LA-CONSOLA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-10T22:11:44.983Z"
+    },
+    {
       "title": "Tinta contrastada sobre el acento del autor — `accentText`",
       "path": "context/aiw-console/records/TINTA-CONTRASTADA-SOBRE-ACENTO-CANTU.md",
       "nav_tier": "evidence",
@@ -2387,7 +2411,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-08-08T09:13:17.750Z"
+      "freshness": "2026-08-12T03:30:37.008Z"
     },
     {
       "title": "Snapshot schema v1 — `project_console.snapshot.json`",

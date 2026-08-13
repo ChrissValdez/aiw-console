@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-09T20:42:09.897Z",
+  "generated_at": "2026-08-13T20:43:47.984Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-09T20:42:09.839Z"
+      "mtime": "2026-08-13T20:43:47.841Z"
     },
     {
       "path": "package.json",
@@ -44,8 +44,8 @@
     }
   ],
   "operational_status": "idle",
-  "project_summary": "AIW Console Roadmap: 2 objectives, 23 phases, 61 runs.",
-  "current_status_summary": "No active run; 52 of 61 runs completed.",
+  "project_summary": "AIW Console Roadmap: 2 objectives, 23 phases, 62 runs.",
+  "current_status_summary": "No active run; 54 of 62 runs completed.",
   "roadmap_tree": {
     "model": "roadmap_tree_v1",
     "roadmap_id": "roadmap",
@@ -742,7 +742,7 @@
             "runs": [
               {
                 "run_id": "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001",
-                "queue_order": 55,
+                "queue_order": 56,
                 "title": "Global console renders Cantu (parity, operator QA)",
                 "summary": "Bring the global console up over Cantu in read-only and reach parity with the local console, with operator QA.",
                 "full_description": "REFRAMED 2026-07-30 by the cabin's human audit. The construction this run was written to do has already happened: the identical port, the multi-project shell, Cantu's own .project/ emission and the parity finishing all delivered. What has never happened is the operator walking a QA pass over the result, and that is what remains. This is now a VERIFICATION run, not a construction one. SCOPE: THREE projects, not one. The console registers aiw-console, cantu-studio and aiw. Cantu is the parity case — does the global console render it as well as its local console does, surface by surface: Overview, Roadmap and Run Queue, run detail, History, Docs, Governance State. AIW's render has never been confirmed visually at all and is marked [NO VERIFICADO] by the thread that brought it in; its 19-point checklist lives in records/AIW-TERCER-PROYECTO.md §5 and is ABSORBED here. That absorption is why RUN-CONSOLE-AIW-TERCER-PROYECTO-001 closes as delivered rather than being executed. It repairs only what the QA finds. A finding that is not a parity defect is NAMED and passed to the run that owns it, not fixed here. GATE: one of the two compuertas of the cutover, which is irreversible. Parity is DECLARED reached by the operator; it is not derived from a test. DEPENDS ON the console defects being repaired first: a QA pass run against known defects cannot tell a parity regression from something that was already broken.",
@@ -758,7 +758,7 @@
               },
               {
                 "run_id": "RUN-CONSOLE-UI-UX-001",
-                "queue_order": 56,
+                "queue_order": 57,
                 "title": "UI/UX of the global console",
                 "summary": "Editing and UX of the global console, which the source explicitly defers to after read-only parity.",
                 "full_description": "REFRAMED 2026-07-30 by the cabin's human audit. This run was a gate of UNDEFINED SCOPE holding back an irreversible act: \"review of use\" named no surface and had no condition that could ever be declared satisfied. This text writes that scope. THE QUESTION IT ANSWERS: is the global console good enough to be the ONLY console? Not whether it is beautiful — whether anything in daily operation is worse than what the local console gives today. THE SURFACES IT REVIEWS, and they are the ones the operator actually touches: reading the roadmap tree and the run queue; opening a run and reading its detail; editing a run through dry-run then confirm; closing a run; re-emitting .project/. For each, the operator either accepts it or records a finding. DONE MEANS: every finding is either repaired or ACCEPTED IN WRITING as a known limitation. An accepted limitation is not a failure — it is a decision recorded so the cutover happens with it in view instead of by surprise. WHAT IT IS NOT: not a redesign, and it does not open the cosmetic parity phase that D-048 deferred and did not schedule. GATE: the second compuerta of the cutover. Requires explicit operator approval. DEPENDS ON parity: reviewing the use of a console not yet confirmed to render correctly would review the wrong thing.",
@@ -774,7 +774,7 @@
               },
               {
                 "run_id": "RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001",
-                "queue_order": 57,
+                "queue_order": 58,
                 "title": "Move cantu-studio's canonical roadmap out of .aiw before the cutover can delete it",
                 "summary": "Move Cantu's canonical roadmap out of the folder the cutover deletes, and resolve its layout at the new path.",
                 "full_description": "MEASURED BY THE CABIN ON 2026-07-30, from two independent sources, and it is the finding that made this run exist. Cantu-studio's CANONICAL roadmap lives at .aiw/roadmap/roadmap.json — verified on disk, and how many runs it holds is measured when this run executes, because that project is restructuring its roadmap right now — and this roadmap's own write-paths run states the same thing in writing, that in aiw-console the canonical is roadmap/roadmap.json while in cantu-studio it is .aiw/roadmap/roadmap.json. The cutover run declares that it deletes .aiw. AS WRITTEN, THE CUTOVER WOULD DELETE THAT PROJECT'S ENTIRE PLAN — not a derived copy, the source. Nothing anywhere in the three roadmaps moves that file first. THE HISTORICAL REASON THE TRAP EXISTS: .aiw/ was AIW's projection delivery area, and Cantu's roadmap was written into it before the folder contract separated canonical from derived. The contract now says .project/ is derived and is never a write destination, and that the canonical is written and re-emitted — but Cantu's canonical was left inside the folder that the additive coexistence was always going to end by removing. SCOPE: move that canonical out of .aiw to a path outside it, make the project's layout resolve it at the new path so the global console keeps reading and WRITING it, and verify the three write routes still reach it. THE SECOND HALF, and it belongs here because it is the same movement: that canonical declares schema_version jame.roadmap_v3.v0.2-progress while the other two declare roadmap_tree_v1. Whether it migrates here or the engine accepts both is decided with the measurement in hand. CROSS-REPOSITORY WRITE: this run writes in cantu-studio. There is precedent for runs of this roadmap doing so — that project's migration to lanes and the split of its packed runs both did — and the window is coordinated with that project's thread; it does not run while a workshop is live there. It executes BEFORE the cutover, and the cutover depends on it.",
@@ -791,7 +791,7 @@
               },
               {
                 "run_id": "RUN-CONSOLE-CORTE-RETIRO-LOCAL-001",
-                "queue_order": 58,
+                "queue_order": 59,
                 "title": "Cutover: retirement of Cantu's local console and deletion of .aiw",
                 "summary": "When the global one renders and edits the same as the local one, retire the local one as a deliberate and recorded act, and delete .aiw.",
                 "full_description": "Unchanged in intent: when the global console renders and edits the same as the local one, the local one is retired as a deliberate and recorded act, and .aiw is deleted. New features go only to the global one. Both gates are real depends_on edges and both require explicit operator approval: parity and the review of use. The cutover is IRREVERSIBLE. MEASURED PRECONDITION ADDED 2026-07-30, and it is the one that can destroy work: CANTU-STUDIO'S CANONICAL ROADMAP LIVES INSIDE .aiw — at .aiw/roadmap/roadmap.json, measured on disk, and how many runs it holds is measured when this run executes, because that project is restructuring its roadmap right now. Deleting .aiw as this run was written would delete the CANONICAL, not a derived copy. Moving it out is now a run of its own, immediately before this one, and this run depends on it. MEASURED COST, unchanged: the day .aiw is deleted, 10 paths of Cantu's validator go red (CANTU-VALID:153-166). CROSS-REPOSITORY WRITE: this run writes in cantu-studio — it retires that project's console and deletes that folder. Its main write surface is another repository, so the window is coordinated with that project's thread and it does not run while a workshop is live there.",
@@ -847,15 +847,36 @@
                 "title": "The reports surface in the console, reached from the run it belongs to",
                 "summary": "The console reads the derived index and offers each run its report, opened from the run's own detail rather than from a list of cases.",
                 "full_description": "WHY IT EXISTS: a report belongs to a run, and that is how the operator looks for it. There is no case picker and no global report browser: from the run's detail there is a way into its report, and from the report a way back. A dropdown listing cases is a prototype scaffold and must not ship. WHAT IT CONSUMES: the derived index of the first run of this phase, never a walk of anybody's folders. It also shows the honest absence — a run with no report says so, because a report that was never emitted and a report that failed to emit are different facts. AGGREGATION IS ALLOWED, TRANSLATION IS NOT: the console may read the four indexes and show what is pending a verdict across projects, because those indexes already share one shape. What it may never do is adapt a project's report to the view; a report that does not conform fails in the project that emitted it, where its owner can fix it. THE LANGUAGE RULE THIS SURFACE INTRODUCES: the chrome of the view is translatable and the content is NEVER translated. A report is evidence, and a before and after are a literal quotation of what is on disk; a verdict given over a translation says nothing about the file.",
-                "status": "planned",
+                "status": "completed",
                 "depends_on": [
                   "RUN-CONSOLE-REPORTS-INDEX-001",
                   "RUN-CONSOLE-REPORT-RENDERER-001"
-                ]
+                ],
+                "correctness_model": "JUDGED_ACCEPTS",
+                "work_type": "FUNCTIONAL",
+                "blast_radius": "ADJACENT",
+                "failure_surfaces": "VISIBLE",
+                "classified_at": "2026-08-10T00:18:45.713Z",
+                "closeout_result": "done"
+              },
+              {
+                "run_id": "RUN-CONSOLE-VERDICT-MODEL-001",
+                "queue_order": 54,
+                "title": "The verdict model: two tokens on an item, three on the run, and the disposition that says it is fixed here",
+                "summary": "An item is accepted or needs changes; only the run can be blocked. A fourth disposition says the fix belongs to this run, and a guard makes it impossible to approve a run that still owes work to itself.",
+                "full_description": "WHY IT EXISTS, and it comes from the operator using the surface: today ONE list serves two different questions. RR_VERDICTS at run-report-renderer.js:25 offers APPROVED, CHANGES_REQUIRED and BLOCKED both for an item and for the run, and the two ask different things — an item asks whether a change is accepted, the run asks whether it is done. THE FIRST CORRECTION: BLOCKED is redundant on an item, and redundant BY CONSTRUCTION. Whether something halts everything is declared by the emitter as stop:true — four such items exist in the fixtures — and the halting consequence is DERIVED, never chosen. An item therefore takes two tokens, APPROVED and CHANGES_REQUIRED. BLOCKED survives only on the run, where it means something of its own: this run cannot close. THE SECOND CORRECTION, and it removes a contradiction the operator felt while reviewing: the three dispositions that exist today are new_run, operator_fixed and discard, and ALL THREE send the fix somewhere else. With any of them, approving the run is coherent — the work is accepted and the correction travels forward. What is missing is the fourth, the one that says the fix belongs HERE. Without it the interface lets a run be approved while it still owes work to itself, and that is the incoherence the operator could see but could not name. THE GUARD THAT FOLLOWS, and it is mechanical rather than a judgement: a run may be APPROVED with items in CHANGES_REQUIRED only when every one of them carries a disposition AND none of those dispositions says the fix belongs to this run. Otherwise APPROVED is not available for the run. The operator still decides; the interface only refuses to let him sign a contradiction. This is a guard, not an aggregation: the run verdict is never computed from the item verdicts. WHY THE SHAPE IS RIGHT: it maps with no translation onto the closeout vocabulary this roadmap already uses. Everything approved is done; items corrected forward is done with deviations; a fix owed here means the run does not close. AND A MEASURED DEFECT REPAIRED IN PASSING: the contract declares that a verdict carries stopped:true when a stop item is not approved. Measured 2026-08-10: ZERO occurrences of stopped in the renderer and in the mount, against twenty uses of stop. The verdict produced today cannot say whether the run was halted, and the endpoint that will persist it is the run immediately after this one.",
+                "status": "completed",
+                "depends_on": [],
+                "correctness_model": "SPECIFIED",
+                "work_type": "FUNCTIONAL",
+                "blast_radius": "SYSTEMIC",
+                "failure_surfaces": "SILENT",
+                "classified_at": "2026-08-11T18:43:45.269Z",
+                "closeout_result": "done"
               },
               {
                 "run_id": "RUN-CONSOLE-VERDICT-POST-001",
-                "queue_order": 54,
+                "queue_order": 55,
                 "title": "The verdict endpoint, so signing a report stops being copy and paste",
                 "summary": "The console writes verdict.json where the report lives, through the same guarded POST route and atomic write it already uses for the canonical.",
                 "full_description": "WHY IT EXISTS: the operator's verdict is irreproducible — no measurement recreates it — and today it would travel by copy and paste, which is where verdicts get lost and mistyped. THE MACHINERY ALREADY EXISTS AND WAS MEASURED: this console already serves POST routes with an origin guard and already writes files by temporary-and-rename. What is missing is the endpoint, not the plumbing. WHAT IT WRITES: verdict.json beside the report it answers, carrying the closed verdict per item, the disposition when the verdict is CHANGES_REQUIRED, the free note in whatever language the operator wrote it, and stopped true when a stop item was not approved. THE NAME OF WHO SIGNS IS NEVER A CONSTANT. It is measured that a discarded prototype carried the operator's name hardcoded, so a verdict asserted a signature nobody had typed. The identity arrives at run time or the person types it. WHAT IT DOES NOT DO: it does not close runs. The cabin closes runs from the console, and the guard that a completed run must have a report that exists and validates lives in the set-status path, declared per project, not here.",
@@ -866,7 +887,7 @@
               },
               {
                 "run_id": "RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001",
-                "queue_order": 60,
+                "queue_order": 61,
                 "title": "Expose the four container operations in the console frontend",
                 "summary": "The core, the shared plan and the CLI already implement create and delete for phases and objectives; what is missing is the console surface, so every structural correction still has to go through the CLI.",
                 "full_description": "REWRITTEN ON 2026-07-31 BY THE ROADMAP AUDIT, WHICH MEASURED THAT THIS RUN'S ORIGINAL TEXT DESCRIBED WORK ALREADY DONE. The previous text said the tool \"has no operation to create or delete a phase or an objective\", that the two ghost phases could not be deleted, that the identity guard still had to be extended, and that the operator had not yet decided between refusing and cascading on deletion. ALL FOUR ARE FALSE ON DISK. Measured: roadmap-core.mjs exports createPhase, deletePhase, createObjective and deleteObjective; roadmap-plan.mjs carries the four verbs in KNOWN_OPS with their four dispatch branches and declares them identity ops alongside insert and remove; this roadmap holds zero empty phases; and deletion REFUSES a non-empty container rather than cascading, which is the precedent the original text itself proposed. The implementation landed twenty-eight queue positions before this run's own position, and nobody updated the text. WHAT IS ACTUALLY LEFT is one thing: the operations are CLI and endpoint only. A search for the four verbs across the console's frontend assets returns nothing, so a structural correction that the console can already authorize still has to be typed at the command line — which is the gap this run now closes. SCOPE: a console surface for the four operations over the same core the CLI calls, so both paths behave identically because both run the same code. THREE CONSTRAINTS THE SURFACE MUST RESPECT, EACH TO BE VERIFIED AGAINST THE CODE RATHER THAN ASSUMED FROM THIS TEXT: they are identity operations and are refused inside a batch, so the surface cannot fold them into a multi-edit; both create verbs make a legal EMPTY container and seed nothing; and the delete verbs refuse rather than cascade, with delete-objective additionally refusing to remove the last objective because the validator requires at least one, while delete-phase carries no last-phase guard since an objective with zero phases is legal. THE ORIGINAL MOTIVATION SURVIVES AND IS WORTH RE-MEASURING AT EXECUTION: the Project Console objective was said to lack a phase for meta-work, which is why the dev launchers landed in Roadmap Maintenance for want of a better home. Whether that is still true, and whether it should be fixed with this surface, is the operator's judgement and not this run's to assume. WHAT THIS RUN DOES NOT DO: it does not change the core, the plan layer or the CLI, all of which are implemented and tested; it does not decide the cascade question, which is already decided in code; and it makes no claim about the phases of any other project's roadmap.",
@@ -880,7 +901,7 @@
               },
               {
                 "run_id": "RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001",
-                "queue_order": 61,
+                "queue_order": 62,
                 "title": "Deep visual audit of the console, led by the operator",
                 "summary": "The operator walks the whole console surface and reports what should improve; each finding becomes its own run. Deliberately last: it opens work rather than closing it.",
                 "full_description": "REFRAMED 2026-08-01 BY THE OPERATOR'S HUMAN AUDIT OF THIS ROADMAP. The previous text deferred this run until Cantu Studio was further developed and the console had accumulated real operational use. THAT MOMENT HAS ARRIVED and the operator declares it: the console now renders three projects, edits the canonical through three write routes, and has been operated daily for weeks. WHAT IT IS: the operator walks the console surface by surface and reports what should improve — not a defect list, an accumulated backlog of use. Each finding becomes its own run, sized and placed on its own. Repairs that are small and unambiguous may be resolved inside a single workshop session under this run; anything that needs a verdict or does not fit becomes a run. WHY IT IS DELIBERATELY LAST: it OPENS work rather than closing it, and the operator wants the outstanding queue cleared before adding a long list of improvements. That is a scheduling decision, not a judgement about its value. HOW IT DIFFERS FROM THE UI/UX GATE OF THE CUTOVER, and confusing them is expensive: that run is a GATE, and it asks only whether anything is WORSE than the local console gives today — a deliberately narrow question guarding an irreversible act, which is why desirable improvements must not be poured into it. This run asks the opposite: what could be BETTER. IT DEPENDS ON NOTHING, and that is kept: what decides when it runs is the operator, not an edge. SIX FINDINGS ALREADY MEASURED BY THE CABIN ON 2026-07-31, to be verified rather than trusted from this text: the classification counter shows a bare zero with no unit, where zero of six would read; an active run displays \"Current stage: Not started\", correct but reading as a contradiction; the list of live unclassified runs travels in validation_summary but was not found anywhere on screen; the modal's confirm fires when cancelling; a run deriving CRITICAL does not show its care_budget advice in its own detail even though the table travels in the same envelope, which the cabin judged the most valuable of the six; and the phases of an objective read out of order against queue_order, which is opaque identity and must NOT be renumbered, though the console could make it evident.",
@@ -935,7 +956,7 @@
               },
               {
                 "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-001",
-                "queue_order": 59,
+                "queue_order": 60,
                 "title": "Repair the five texts that describe this repo falsely",
                 "summary": "Repair the five texts in this repo that describe it falsely, including the README that says it has no roadmap of its own.",
                 "full_description": "FIVE TEXTS, all measured on disk with their line, all in this repository, none of them touched by the runs that made them false. This is not hygiene: two of the five live in the document that describes the system's topology to every session that opens, and one of them contradicts the file this run is written in. (1) context/README.md says of this repository \"Todavía sin roadmap propio: O4 vive hoy en el roadmap de AIW y migra aquí en el tramo 1\". This roadmap has 51 runs. (2) context/README.md carries the discarded-fork warning saying that \"la consola viva está en projects/cantu-studio\". Measured: this repository holds THREE console trees — the fork discarded by D-035 at docs/project-console/, the retired prototype at console/, and the LIVE one at project-console/, which is the one the launcher starts and the only one with a project registry. The warning names neither which of the three is the fork nor that the console rendering three projects now lives here. (3) project-console/README.md states that edit mode \"refuses honestly where no layout claims a roadmap (today: aiw, until O4.P6)\". Measured: that layout resolves and the edit button is enabled for aiw; the parenthesis describes no project. (4) project-console/README.md shows a project registry example listing TWO projects, while the real registry declares three, the third being aiw. (5) package.json describes the package as a \"verbatim fork of the JAME project console\", which D-035 already declared false of the bytes and which four later runs of modification make falser. WHAT THIS RUN DOES NOT DO: it does not touch any run's full_description, and it does not rewrite history. A stale premise inside a CLOSED run is corrected by APPENDING a dated note, never by rewriting the paragraph — which is the form three closed runs of this roadmap already use — and the seven dated premises reported by an earlier closeout stay as they are for exactly that reason.",
@@ -1045,20 +1066,11 @@
           "completed",
           "blocked"
         ],
-        "total": 2,
+        "total": 1,
         "runs": [
           {
-            "run_id": "RUN-CONSOLE-REPORTS-SURFACE-001",
-            "queue_order": 53,
-            "status": "planned",
-            "title": "The reports surface in the console, reached from the run it belongs to",
-            "objective_id": "O4",
-            "phase_id": "O4.P17",
-            "stored_fields": []
-          },
-          {
             "run_id": "RUN-CONSOLE-VERDICT-POST-001",
-            "queue_order": 54,
+            "queue_order": 55,
             "status": "planned",
             "title": "The verdict endpoint, so signing a report stops being copy and paste",
             "objective_id": "O4",

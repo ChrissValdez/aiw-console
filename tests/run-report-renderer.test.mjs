@@ -90,12 +90,23 @@ test("CASO-1: one card at a time — the first surface is the stop item, expande
   assert.ok(html.includes("1 / 12"), "the position counter squares with the step count");
 });
 
-test("CASO-1: the verdict vocabulary is the closed three; the report's own verdict_options never paint", () => {
+test("CASO-1: an item takes two verdicts and only the run takes three; the report's own verdict_options never paint", () => {
   const rr = loadRenderer();
-  const { container } = mount(rr, CASE_1);
-  const html = container.innerHTML;
+  const { container, handle } = mount(rr, CASE_1);
+  let html = container.innerHTML;
+  // The first card is an ITEM (a stop item, even): it asks whether the change is accepted,
+  // and that takes two tokens. BLOCKED is not one of them — whether something halts
+  // everything is the emitter's `stop: true`, and the consequence is derived, not chosen.
+  for (const v of ["APPROVED", "CHANGES_REQUIRED"]) {
+    assert.ok(html.includes('data-rr-value="' + v + '"'), v + " is offered on an item");
+  }
+  assert.ok(!html.includes('data-rr-value="BLOCKED"'), "BLOCKED is not an item verdict");
+  // The run asks whether it is done, and there BLOCKED means its own thing: this run
+  // cannot close. Its three are the same three the kernel parses.
+  handle.goStep("__run__");
+  html = container.innerHTML;
   for (const v of ["APPROVED", "CHANGES_REQUIRED", "BLOCKED"]) {
-    assert.ok(html.includes('data-rr-value="' + v + '"'), v + " is offered");
+    assert.ok(html.includes('data-rr-value="' + v + '"'), v + " is offered on the run");
   }
   // CASO-1 carries per-item vocabularies ("De acuerdo", "Correcto", …). They are the drift
   // this renderer exists to close, and they must not reach the surface.
@@ -201,7 +212,7 @@ test("CASO-2: a decision item offers its considered paths, and the pick is a dat
   const out = rr.rrVerdictOutput(handle.state.report, handle.state);
   const d1 = out.items.find((i) => i.item_id === "D1");
   assert.equal(d1.chosen_option, "Acordeón: abrir una cierra la anterior");
-  assert.equal(d1.verdict, null, "choosing a path is NOT a verdict — there are exactly three of those");
+  assert.equal(d1.verdict, null, "choosing a path is NOT a verdict — the verdict vocabularies are closed and this is not in them");
 });
 
 test("CASO-2: a check paints its expectation; a scalar before/after pairs both sides changed", () => {

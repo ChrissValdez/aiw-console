@@ -18,6 +18,10 @@ function setActiveProjectBase(repoBase) {
     docsIndex: `${PROJECT_BASE}docs_index.json`,
     guardrails: `${PROJECT_BASE}guardrails.json`,
     noClaims: `${PROJECT_BASE}no_claims.json`,
+    // [#53] The seventh emitted artifact, fetched for the first time. Until this run nothing
+    // read it, because indexing added no surface; the report surface IS that surface, and it
+    // reads the index and never walks a `reports/` folder.
+    reportsIndex: `${PROJECT_BASE}reports_index.json`,
     // Optional and NOT emitted today. They keep the routes the emitter declared for them so a
     // future emitter has nowhere new to invent: each one degrades fail-soft, and no file is
     // stubbed or simulated to hide its absence (§20 — an invented file lies; an absent one does not).
@@ -109,6 +113,19 @@ let progressModel = null;
 
 function setProgressModel(model) {
   progressModel = model || null;
+}
+
+// [#53] THE REPORT INDEX MODEL of the ACTIVE project, derived once per load by the mount
+// (run-report-surface.js) and never by this file. It is per-project state and is cleared on
+// every switch, like every other cache below: one project's reports say nothing about another's.
+//
+// UNBUILT IS NOT EMPTY. Before a load — and after a load whose index did not arrive — the model
+// is null, and the run detail says the index could not be read rather than "no report": a run
+// whose report nobody could look for is not a run without a report.
+let reportsIndexModelCache = null;
+
+function v3ReportsIndexModel() {
+  return reportsIndexModelCache;
 }
 
 // §15.c through the injected model, fail-closed: no model, no progress, or no positive
@@ -3044,7 +3061,8 @@ function renderSources(data) {
     row("Git provenance", displaySourcePath(PATHS.gitProvenance), "mono"),
     row("Human QA", displaySourcePath(PATHS.humanQa), "mono"),
     row("AI reviews", displaySourcePath(PATHS.aiReviews), "mono"),
-    row("Docs index", displaySourcePath(PATHS.docsIndex), "mono")
+    row("Docs index", displaySourcePath(PATHS.docsIndex), "mono"),
+    row("Reports index", displaySourcePath(PATHS.reportsIndex), "mono")
   ].join("");
   const v3Objectives = Array.isArray(data.roadmapV3?.objectives) ? data.roadmapV3.objectives : [];
   const v3PhaseCount = v3Objectives.reduce((total, objective) => total + (objective.phases?.length || 0), 0);
@@ -3750,6 +3768,13 @@ function v3AttachHandlers(container, options) {
     const backTrigger = event.target.closest("[data-v3-back]");
     if (backTrigger && container.contains(backTrigger)) {
       v3BackRunDetail();
+      return;
+    }
+    // [#53] The run's own report. Handled here and only here: the trigger exists only inside a
+    // run detail, so there is no surface from which a report opens without a run.
+    const reportTrigger = event.target.closest("[data-run-report-open]");
+    if (reportTrigger && container.contains(reportTrigger)) {
+      v3OpenRunReport(reportTrigger.getAttribute("data-run-report-open"));
       return;
     }
     const trigger = event.target.closest("[data-v3-run]");
@@ -4968,6 +4993,7 @@ function v3OpenRunDetail(runId, mode) {
         </div>
       </details>
     </div>
+    ${v3RunReportSection(run)}
     ${v3HumanApprovalSection(run, model)}
     ${v3ClassificationSection(run)}
     ${v3ProgressTimeline(run)}
@@ -4977,6 +5003,41 @@ function v3OpenRunDetail(runId, mode) {
   byId("drawer-overlay").classList.add("open");
   byId("run-drawer").classList.add("open");
   byId("run-drawer").setAttribute("aria-hidden", "false");
+}
+
+// [#53] THE DOOR INTO THE REPORT, and there is no other one. It is a section of the run's own
+// detail: the report belongs to the run, and that is how the operator looks for it. The section
+// is built by the mount from the index alone — this function passes an identifier and a file
+// path to name in an absence, and receives finished markup.
+function v3RunReportSection(run) {
+  if (typeof runReportSectionHtml !== "function") return "";
+  return runReportSectionHtml(v3ReportsIndexModel(), run.run_id, {
+    indexPath: PATHS ? displaySourcePath(PATHS.reportsIndex) : ""
+  });
+}
+
+// Open the report of the run whose detail is on screen. The URL is composed from the INDEX's
+// own `report_path` against this project's base — never from the run id — so only a report the
+// index actually listed can be opened. Back closes the layer and re-opens the same run detail,
+// which is still on the stack underneath.
+function v3OpenRunReport(runId) {
+  if (typeof openRunReport !== "function" || typeof reportStateForRun !== "function") return;
+  const info = reportStateForRun(v3ReportsIndexModel(), runId);
+  if (!info.reportPath) return;
+  const model = roadmapV3ModelCache || v3Model(appData);
+  const run = model ? model.runsById.get(runId) : null;
+  openRunReport({
+    runId,
+    reportUrl: `${REPO_BASE}${info.reportPath}`,
+    // Preview paths inside a report are relative to the repo that emitted it, and this console
+    // serves that repo under its project base. Resolving them anywhere else would probe the
+    // console's own files (#52 left this decision to this run — record §F).
+    previewBase: REPO_BASE,
+    title: run ? run.title : "",
+    subtitle: runId,
+    backLabel: run ? `Back to Run #${run.queue_order}` : "Back to the run",
+    onBack: () => v3OpenRunDetail(runId, "back")
+  });
 }
 
 function v3BackRunDetail() {
@@ -5000,6 +5061,16 @@ function applyProjectIdentity(data) {
 
 function renderAll(data) {
   applyProjectIdentity(data);
+  // [#53] Derive the report index model BEFORE any surface paints, because the run detail reads
+  // it. The derivation lives in the mount, not here: this file hands over the parsed artifact
+  // and receives a lookup, and never learns a field of a report on the way. With the mount
+  // absent (a page that did not load it) the model stays null and every run detail says the
+  // index could not be read — the honest sentence, not a silent surface.
+  try {
+    reportsIndexModelCache = typeof reportsIndexModel === "function" ? reportsIndexModel(data.reportsIndex) : null;
+  } catch (error) {
+    reportsIndexModelCache = null;
+  }
   // Overview renders from the v3 model (target screenshot); the legacy renderOverview
   // stays in source, dormant, like the other retired legacy renderers.
   try {
@@ -5249,11 +5320,13 @@ function showFetchFallback(error) {
 // nothing. That is the failure §20 exists to prevent, arrived at from the other side: not a
 // silence, a permanent noise.
 //
-// SIX OF FIFTEEN, not "everything the emitter writes": since O4.P17 the emitter declares SEVEN
-// artifacts, and `reports_index.json` is the one it declares that this renderer does not fetch —
-// nothing here reads it yet, by design (that run indexes; it adds no surface). The nine above is
-// therefore unchanged, and it is fifteen-minus-six for the fetch list, never a subtraction from
-// the emitted set. Wiring a surface to the reports index is what would move it.
+// SEVEN OF SIXTEEN since #53, and the move is recorded here because the previous number was
+// recorded here. O4.P17 made the emitter declare SEVEN artifacts while this renderer fetched
+// six: `reports_index.json` was declared and unread, because indexing added no surface and a
+// fetch with no reader is noise. #53 IS that surface, so the index is now fetched and the fetch
+// list is sixteen. The nine of §18.a are untouched by all of it: they have no emitter, so they
+// are not absences, and the subtraction has always been from the FETCH list and never from the
+// emitted set.
 //
 // So the gate is the DECLARATION, not the fetch list. The banner is NOT suppressed and NOT
 // conditioned on anything cosmetic: a file the project declares emitting and that does not load
@@ -5315,6 +5388,11 @@ function resetProjectScopedState() {
   // would judge one project's failures against another project's promises.
   declaredArtifactPaths = [];
   roadmapV3ModelCache = null;
+  // [#53] The report layer and the index model are per-project like everything else here. The
+  // layer is torn down WITHOUT its back callback firing (that callback would re-open a run
+  // detail of the project being left), and the model returns to null — unbuilt, not empty.
+  reportsIndexModelCache = null;
+  if (typeof runReportIsOpen === "function" && runReportIsOpen()) closeRunReport({ silent: true });
   v3DetailStack = [];
   v3DetailOrigin = "";
   // [D-051] The lane filter is per-project state: a lane key selected in one project
@@ -7401,7 +7479,15 @@ function setupTabs() {
   byId("drawer-close").addEventListener("click", closeDrawer);
   byId("drawer-overlay").addEventListener("click", closeDrawer);
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeDrawer();
+    if (event.key !== "Escape") return;
+    // [#53] The report layer sits above the drawer, so Escape closes the report FIRST and lands
+    // the operator back on the run they came from. Closing the run underneath it instead would
+    // throw away the judgement in progress on screen and leave nothing to come back to.
+    if (typeof runReportIsOpen === "function" && runReportIsOpen()) {
+      closeRunReport();
+      return;
+    }
+    closeDrawer();
   });
 }
 
@@ -7426,7 +7512,8 @@ async function loadData() {
     guardrails,
     noClaims,
     memory,
-    gitHistory
+    gitHistory,
+    reportsIndex
   ] = await Promise.all([
     fetchJson(PATHS.project),
     fetchJson(PATHS.projectStatus),
@@ -7441,7 +7528,8 @@ async function loadData() {
     fetchJson(PATHS.guardrails),
     fetchJson(PATHS.noClaims),
     fetchJsonl(PATHS.memory),
-    fetchJson(PATHS.gitHistory)
+    fetchJson(PATHS.gitHistory),
+    fetchJson(PATHS.reportsIndex)
   ]);
 
   return {
@@ -7459,7 +7547,8 @@ async function loadData() {
     guardrails,
     noClaims,
     memory,
-    gitHistory
+    gitHistory,
+    reportsIndex
   };
 }
 

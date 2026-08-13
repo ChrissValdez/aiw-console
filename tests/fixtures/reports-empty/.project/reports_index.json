@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "project_id": "aiw_console",
-  "generated_at": "2026-08-13T20:43:47.984Z",
+  "project_id": "reports_empty_fixture",
+  "generated_at": "2026-08-10T00:00:00.000Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [],
   "reports_source": {

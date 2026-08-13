@@ -224,7 +224,7 @@
       "authority": { "source": "docs/RUBRICA-DE-NIVELES.md", "section": "§6.4" },
       "comparisons": [],
       "evidence": ["No es defecto. Es información para decidir qué deben hacer los 39 runs restantes."],
-      "verdict_options": ["Que lo reporten", "Reportar y corregir", "Ignorar por ahora"]
+      "requires_verdict": false
     }
   ],
 

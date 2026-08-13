@@ -149,7 +149,12 @@ test("CASO-1: the pilot's declared deviation and the null verification render as
   const html = container.innerHTML;
   assert.ok(html.includes("The emitter declares a deviation"), "pilot_deviation gets its section");
   assert.ok(html.includes("no verification"), "verification null shows in the gate chip");
-  assert.ok(html.includes("verification_reason"), "and the declared reason renders next to it");
+  // RUN-CONSOLE-REPORT-QA-REPAIRS-001, defect 2: this used to assert the operator read the
+  // raw key `verification_reason`. The row is what matters and it is still there — under
+  // the words a person uses for it, and the declared reason itself is untouched.
+  assert.ok(!html.includes("verification_reason"), "the JSON key never reaches the screen");
+  assert.ok(html.includes("Why no verification"), "the row wears its written label");
+  assert.ok(html.includes("Ningún run ha compilado este subtema"), "and the declared reason renders next to it");
 });
 
 test("CASO-1: a declared gap with before:null renders as what-exists-now; an item with neither side renders no diff", () => {
@@ -181,7 +186,10 @@ test("CASO-1: the signature is typed, never prefilled, and the sign gate names w
   handle.goStep("__run__");
   let html = container.innerHTML;
   assert.ok(html.includes('data-rr-act="reviewer"') && html.includes('value=""'), "the name box is born empty");
-  assert.ok(html.includes("Missing 12 verdicts and the signature."), "the gate names every miss");
+  // ELEVEN, not twelve: this report's `info` item declares it needs no verdict, so it is
+  // not a debt the gate can hold the operator to (defect 3). Twelve steps are still walked;
+  // eleven are signed. The two numbers stopped being the same number, deliberately.
+  assert.ok(html.includes("Missing 11 verdicts and the signature."), "the gate names every miss");
   assert.ok(/data-rr-act="sign"[^>]*disabled/.test(html), "the sign button waits");
   let out = rr.rrVerdictOutput(handle.state.report, handle.state);
   assert.equal(out.verdict_by, null);
@@ -248,7 +256,8 @@ test("CASO-2: the items_note and the verification travel to the gate section", (
   const { container } = mount(rr, CASE_2);
   const html = container.innerHTML;
   assert.ok(html.includes("npm test · 436/436"), "the verification chip carries command and result");
-  assert.ok(html.includes("items_note"), "the sampling note is declared, not hidden");
+  assert.ok(!html.includes("items_note"), "the JSON key never reaches the screen");
+  assert.ok(html.includes("Note on the items"), "the sampling note is declared, not hidden");
 });
 
 // ---------------------------------------------------------------------------
@@ -328,9 +337,12 @@ test("CASO-4: enumerated-and-empty blocks read none, a failing verification rend
   // The three block badges paint twice each: once in the rail links, once on the sections.
   assert.equal((html.match(/rr-badge-empty">none</g) || []).length, 6, "blind_spots, alternatives and unreviewed all say none");
   assert.ok(!html.includes("not declared"), "nothing in this report is undeclared");
-  assert.ok(html.includes("verification.exit") && html.includes("541/540"), "a red verification is shown, not smoothed");
+  // The verification's OWN sub-fields are the emitter's vocabulary: the head is labelled,
+  // the tail is humanised, and neither is printed as a dotted identifier.
+  assert.ok(!html.includes("verification.exit"), "no dotted JSON key on screen");
+  assert.ok(html.includes("Verification · exit") && html.includes("541/540"), "a red verification is shown, not smoothed");
   assert.ok(html.includes("null — Este proyecto no declara perfil de dominio"), "profile:null travels with its reason");
-  assert.ok(html.includes("items_note"), "the zero-checks note is declared");
+  assert.ok(html.includes("Note on the items"), "the zero-checks note is declared");
 });
 
 // ---------------------------------------------------------------------------
@@ -371,8 +383,9 @@ test("a verdict click touches exactly one step — there is no gesture that fill
   assert.ok(!container.innerHTML.includes("still without a verdict"),
     "the warning lives on the run card only");
   handle.goStep("__run__");
-  // Ten of the eleven are steps the run card tallies; the eleventh is the run itself.
-  assert.ok(container.innerHTML.includes("10 still without a verdict. The run verdict does not replace them."),
+  // Nine of the eleven are steps the run card tallies; the tenth is the run itself, and the
+  // eleventh is the `info` item, which is walked past but never counted (defect 3).
+  assert.ok(container.innerHTML.includes("9 still without a verdict. The run verdict does not replace them."),
     "and there it names the ten");
 });
 

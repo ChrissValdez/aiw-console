@@ -29,8 +29,8 @@
         "id": "fracciones_equivalentes",
         "label": "Fracciones equivalentes",
         "previews": [
-          { "target": "web", "path": "reports/RUN-LESSONS-FRACCIONES-EQUIVALENTES-001/assets/leccion-web.html", "label": "Versión web" },
-          { "target": "slide", "path": "reports/RUN-LESSONS-FRACCIONES-EQUIVALENTES-001/assets/leccion-slide.html", "label": "Versión diapositiva" }
+          { "target": "web", "path": "reports/RUN-QA-REPORT-LESSON-001/assets/leccion-web.html", "label": "Versión web" },
+          { "target": "slide", "path": "reports/RUN-QA-REPORT-LESSON-001/assets/leccion-slide.html", "label": "Versión diapositiva" }
         ]
       },
       "headline": "Lección nueva de 14 bloques web y 9 de diapositiva",

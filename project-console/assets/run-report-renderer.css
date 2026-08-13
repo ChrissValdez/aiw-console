@@ -137,6 +137,11 @@
   background: transparent; border: 1px solid color-mix(in srgb, var(--rr-text) 35%, transparent);
 }
 .rr-dot-on { background: var(--rr-accent); border-color: var(--rr-accent); }
+/* A step that asks for no verdict: not filled (nothing was signed) and not hollow-pending
+   either (nothing is owed). It reads as a step that is simply not in the count. */
+.rr-dot-na { border-style: dashed; opacity: .5; background: none; }
+.rr-rail-row-na .rr-rail-label { color: color-mix(in srgb, var(--rr-text) 60%, transparent); }
+.rr-status-na { opacity: .75; }
 
 /* — badges for the three declared blocks: a count, "none", or "not declared" — */
 .rr-badge { font-size: 11px; white-space: nowrap; }
@@ -345,7 +350,13 @@
   background: color-mix(in srgb, var(--rr-accent) 8%, transparent);
 }
 .rr-warning .rr-ic { color: var(--rr-accent-300); position: relative; top: 2px; }
-.rr-if-rejected { flex-direction: column; gap: 5px; }
+/* It FOLDS like the reasoning above it: a `<details>`, open on arrival, closable once read.
+   The block keeps its own padding, so the summary sits flush inside it rather than growing
+   the vertical rhythm the card already has. */
+.rr-if-rejected { display: block; }
+.rr-if-rejected > summary { display: flex; align-items: center; gap: 8px; }
+.rr-if-rejected > summary .rr-kicker { display: flex; align-items: center; gap: 8px; margin: 0; }
+.rr-if-rejected > .rr-prose { padding-top: 6px; }
 .rr-if-rejected-hard { box-shadow: inset 0 0 0 1px var(--rr-accent-600); }
 
 /* — the verdict bar: the step's closed verdicts, then the disposition as a second step — */

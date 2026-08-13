@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-13T20:43:47.984Z",
+  "generated_at": "2026-08-13T22:45:17.326Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -617,6 +617,10 @@
       "mtime": "2026-08-08T09:13:17.719Z"
     },
     {
+      "path": "context/aiw-console/records/REPARACIONES-QA-DEL-REPORTE-CINCO-HALLAZGOS-DEL-OPERADOR.md",
+      "mtime": "2026-08-13T21:31:05.219Z"
+    },
+    {
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "mtime": "2026-08-08T09:13:17.719Z"
     },
@@ -683,6 +687,10 @@
     {
       "path": "context/aiw-console/records/REVALIDACION-COMPONENTE-VIDEO-CANTU.md",
       "mtime": "2026-08-08T09:13:17.735Z"
+    },
+    {
+      "path": "context/aiw-console/records/SANDBOX-DEL-MARCO-DE-PREVISUALIZACION.md",
+      "mtime": "2026-08-13T22:13:46.477Z"
     },
     {
       "path": "context/aiw-console/records/SENAL-DE-PREVIA-INVALIDA-Y-SUPERFICIE-DEL-EDITOR-DE-FORMULAS-CANTU.md",
@@ -2070,6 +2078,14 @@
       "freshness": "2026-08-08T09:13:17.719Z"
     },
     {
+      "title": "REPARACIONES QA DEL REPORTE — LOS CINCO HALLAZGOS DEL OPERADOR",
+      "path": "context/aiw-console/records/REPARACIONES-QA-DEL-REPORTE-CINCO-HALLAZGOS-DEL-OPERADOR.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-13T21:31:05.219Z"
+    },
+    {
       "title": "RESTITUCIÓN DE LAS 17 ARISTAS DE `#47` Y RE-ENCUADRE A AUDITORÍA AL CIERRE — CANTU",
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "nav_tier": "evidence",
@@ -2204,6 +2220,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-08T09:13:17.735Z"
+    },
+    {
+      "title": "SANDBOX DEL MARCO DE PREVISUALIZACIÓN",
+      "path": "context/aiw-console/records/SANDBOX-DEL-MARCO-DE-PREVISUALIZACION.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-13T22:13:46.477Z"
     },
     {
       "title": "Señal de vista previa inválida, botón y tipografía del editor de fórmulas (cantu-studio)",

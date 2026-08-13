@@ -41,6 +41,7 @@ const RR_DEFAULT_DISPOSITIONS = [RR_FIX_HERE, "new_run", "operator_fixed", "disc
 // prototype verbatim; the report's text renders as-is in whatever language it was written.
 const RR_STRINGS = {
   en: {
+    lang: "en",
     appTitle: "Run review", gate: "gate", prev: "Previous (←)", next: "Next (→)",
     langTitle: "Interface language", themeTitle: "Switch theme", index: "Index",
     all: "All", pending: "Pending", stops: "Stops",
@@ -71,9 +72,11 @@ const RR_STRINGS = {
     missingPrefix: "Missing ", complete: "Complete. It downloads to your machine.", and: " and ",
     guardHeld: "APPROVED is not available for the run: ",
     guardNoDisposition: (n) => n + (n === 1 ? " change still carries no disposition" : " changes still carry no disposition"),
-    guardOwedHere: (n) => (n === 1 ? "1 fix is owed" : n + " fixes are owed") + " to this run itself"
+    guardOwedHere: (n) => (n === 1 ? "1 fix is owed" : n + " fixes are owed") + " to this run itself",
+    noVerdictNeeded: "no verdict needed"
   },
   es: {
+    lang: "es",
     appTitle: "Revisión de run", gate: "compuerta", prev: "Anterior (←)", next: "Siguiente (→)",
     langTitle: "Idioma de la interfaz", themeTitle: "Cambiar tema", index: "Índice",
     all: "Todos", pending: "Pendientes", stops: "Paradas",
@@ -104,13 +107,102 @@ const RR_STRINGS = {
     missingPrefix: "Faltan ", complete: "Completo. Se descarga en tu equipo.", and: " y ",
     guardHeld: "APPROVED no está disponible para el run: ",
     guardNoDisposition: (n) => n + (n === 1 ? " cambio sigue sin disposición" : " cambios siguen sin disposición"),
-    guardOwedHere: (n) => (n === 1 ? "1 arreglo se debe" : n + " arreglos se deben") + " a este mismo run"
+    guardOwedHere: (n) => (n === 1 ? "1 arreglo se debe" : n + " arreglos se deben") + " a este mismo run",
+    noVerdictNeeded: "no pide veredicto"
   }
 };
 const RR_DISPOSITION_GLOSS = {
   en: { this_run: "this run fixes it", new_run: "another run fixes it", operator_fixed: "I fix it myself", discard: "discard it" },
   es: { this_run: "este run lo arregla", new_run: "otro run lo arregla", operator_fixed: "lo arreglo yo", discard: "se descarta" }
 };
+
+// ---------------------------------------------------------------------------
+// WRITTEN LABELS — the operator is shown the name they read on screen, never
+// the internal identifier. This project already carries that rule in writing,
+// and the reason is measured: a failed mental translation produces an
+// INCOMPLETE review that reads as a complete one.
+//
+// THE BOUNDARY, and it is the whole design of this table: it covers exactly the
+// keys THIS FILE names itself — the envelope's own closed vocabulary, listed in
+// `metaKeys` and pushed into `gateRows` right here, plus the item fields the
+// contract fixes. A key the REPORT invents (what a count is called, what a
+// deviation declares, what an entry inside a context block carries, the object
+// keys of a before/after pair) CANNOT get a written label here without this
+// renderer coming to know a domain, which is the rule that governs every other
+// one. Those are HUMANISED instead — `rrHumanKey` — so the operator reads words
+// rather than an identifier, and never a raw key.
+//
+// THE OTHER HALF IS NOT REPAIRED HERE: `unchanged` arrives from the emitter
+// mixing identifiers with prose in the same array. This table translates the
+// identifiers it can name and passes prose through untouched; making the
+// emitter write only what a person calls it is a change to the ENVELOPE and
+// belongs to the thread that owns it.
+// ---------------------------------------------------------------------------
+const RR_FIELD_LABELS = {
+  en: {
+    project: "Project", kind: "Kind", mode: "Mode", schema_version: "Schema version",
+    run_id: "Run id", queue_order: "Queue order", profile: "Profile",
+    profile_reason: "Why this profile", execution_path: "Execution path",
+    emitted_by: "Emitted by", emitted_when: "Emitted when", emitted_at: "Emitted at",
+    source_commit: "Source commit", source_branch: "Source branch", log_dir: "Log folder",
+    gate: "Gate", gate_reason: "Why this gate", verification: "Verification",
+    verification_note: "Note on the verification", verification_reason: "Why no verification",
+    items_note: "Note on the items", counts_note: "Note on the counts",
+    statement: "Statement", options: "Options", feedback: "Feedback",
+    before: "Before", after: "After", why: "Reasoning", authority: "Authority",
+    evidence: "Evidence", comparisons: "Reference cases", headline: "Headline",
+    expected: "What to expect", location: "Location", subject: "Subject",
+    if_rejected: "If rejected", options_considered: "Paths considered"
+  },
+  es: {
+    project: "Proyecto", kind: "Tipo", mode: "Modo", schema_version: "Versión de esquema",
+    run_id: "Id del run", queue_order: "Orden en la cola", profile: "Perfil",
+    profile_reason: "Por qué este perfil", execution_path: "Vía de ejecución",
+    emitted_by: "Emitido por", emitted_when: "Emitido cuando", emitted_at: "Emitido el",
+    source_commit: "Commit de origen", source_branch: "Rama de origen", log_dir: "Carpeta de registro",
+    gate: "Compuerta", gate_reason: "Por qué esta compuerta", verification: "Verificación",
+    verification_note: "Nota sobre la verificación", verification_reason: "Por qué no hay verificación",
+    items_note: "Nota sobre los ítems", counts_note: "Nota sobre los recuentos",
+    statement: "Enunciado", options: "Opciones", feedback: "Retroalimentación",
+    before: "Antes", after: "Después", why: "Razonamiento", authority: "Autoridad",
+    evidence: "Evidencia", comparisons: "Casos de referencia", headline: "Titular",
+    expected: "Qué se espera ver", location: "Ubicación", subject: "Sujeto",
+    if_rejected: "Si se rechaza", options_considered: "Caminos considerados"
+  }
+};
+
+// A key this renderer does not name is never printed raw: separators become
+// spaces, so what reaches the operator is words. It is not a translation and
+// does not pretend to be one — it is the honest floor under one.
+function rrHumanKey(key) {
+  return String(key == null ? "" : key).replace(/[_.]+/g, " ").trim();
+}
+
+// The written label for a key, or the humanised key when this renderer cannot
+// name it. A DOTTED key labels its head from the table and humanises its tail,
+// which is how a verification's own sub-fields stay readable without the
+// renderer pretending to know what the emitter measured.
+function rrLabelForKey(key, lang) {
+  const table = RR_FIELD_LABELS[lang] || RR_FIELD_LABELS.en;
+  const raw = String(key == null ? "" : key);
+  if (table[raw]) return table[raw];
+  const dot = raw.indexOf(".");
+  if (dot > 0 && table[raw.slice(0, dot)]) {
+    return table[raw.slice(0, dot)] + " · " + rrHumanKey(raw.slice(dot + 1));
+  }
+  return rrHumanKey(raw);
+}
+
+// `unchanged` is DATA, not a key list: the emitter writes identifiers and prose
+// into the same array. An entry the table names is translated; anything else is
+// the emitter's own sentence and travels VERBATIM — humanising prose would
+// mangle it, and inventing a translation for it would be this view making up
+// what the run said.
+function rrUnchangedLabel(entry, lang) {
+  const table = RR_FIELD_LABELS[lang] || RR_FIELD_LABELS.en;
+  const raw = String(entry == null ? "" : entry);
+  return table[raw] || raw;
+}
 
 function rrT(lang) {
   return RR_STRINGS[lang] || RR_STRINGS.en;
@@ -191,33 +283,54 @@ function rrHasStopInside(report, item) {
   return rrChildrenOf(report, item).some((child) => child && child.stop);
 }
 
-// ONE STEP = one thing that asks for a verdict: every item (a parent AND each child — an
-// item with children is N+1 entries, because each one is signed apart and the counter has
-// to add up), every self-decision of the executor, and, last, the run itself. Stop items
-// go first; a parent whose child is a stop travels with them.
+// AN ITEM THAT NEEDS NO DECISION MUST NOT ASK FOR ONE. The emitter declares it —
+// `requires_verdict: false` — and this view derives every consequence, exactly as it
+// already does with `stop`. It is declared by FIELD, never by an item's `type`: branching
+// on the type value is the rule this renderer is built to not break, and a view that knew
+// which type needs no signature would know a domain.
+//
+// Three consequences, and they are the three the operator asked for: the item IS SHOWN
+// (it keeps its step, its card and its row in the index), it IS NOT SIGNED (no verdict
+// bar), and it DOES NOT COUNT (the progress total, the gate and the guard all skip it).
+function rrSignsVerdict(data) {
+  return !(data && data.requires_verdict === false);
+}
+
+// ONE STEP = one thing the operator walks through. Every item (a parent AND each child —
+// an item with children is N+1 entries, because each one is signed apart and the counter
+// has to add up), every self-decision of the executor, and, last, the run itself. Stop
+// items go first; a parent whose child is a stop travels with them. `signs` says whether
+// the step is one of the ones that asks for a verdict — the COUNTER reads that, not the
+// length of this list, because being shown and being signable are two different facts.
 function rrSteps(report, T) {
   const tops = rrItems(report).filter((it) => it && !it.parent);
   const stopish = (it) => !!it.stop || rrHasStopInside(report, it);
   const ordered = tops.filter(stopish).concat(tops.filter((it) => !stopish(it)));
   const out = [];
   ordered.forEach((top) => {
-    out.push({ kind: "item", id: top.item_id, data: top, group: top.type || T.itemType, depth: 0 });
+    out.push({ kind: "item", id: top.item_id, data: top, group: top.type || T.itemType, depth: 0, signs: rrSignsVerdict(top) });
     rrChildrenOf(report, top).forEach((child) => {
-      out.push({ kind: "item", id: child.item_id, data: child, group: top.type || T.itemType, depth: 1 });
+      out.push({ kind: "item", id: child.item_id, data: child, group: top.type || T.itemType, depth: 1, signs: rrSignsVerdict(child) });
     });
   });
   const decisions = Array.isArray(report && report.self_decisions) ? report.self_decisions : [];
   decisions.forEach((dec, n) => {
-    out.push({ kind: "decision", id: dec.decision_id || "SD" + (n + 1), data: dec, group: T.decisionsGroup, depth: 0 });
+    out.push({ kind: "decision", id: dec.decision_id || "SD" + (n + 1), data: dec, group: T.decisionsGroup, depth: 0, signs: rrSignsVerdict(dec) });
   });
-  out.push({ kind: "run", id: "__run__", data: null, group: T.runGroup, depth: 0 });
+  out.push({ kind: "run", id: "__run__", data: null, group: T.runGroup, depth: 0, signs: true });
   return out;
+}
+
+// The steps that actually ask for a signature — the denominator of every count on screen.
+function rrSigningSteps(report, T) {
+  return rrSteps(report, T).filter((s) => s.signs);
 }
 
 function rrLines(value) {
   if (value == null) return [];
   if (Array.isArray(value)) return value.map((x) => (typeof x === "object" && x !== null ? JSON.stringify(x) : String(x)));
-  if (typeof value === "object") return Object.entries(value).map(([k, x]) => k + ": " + x);
+  // Object keys reaching a diff line are the report's own: humanised, never raw.
+  if (typeof value === "object") return Object.entries(value).map(([k, x]) => rrHumanKey(k) + ": " + x);
   return [String(value)];
 }
 
@@ -260,14 +373,16 @@ function rrBuildDiff(before, after) {
 
 // Authority has exactly two declared forms (a prior document, or an invented criterion that
 // names its decision item); anything else prints its own keys rather than being guessed at.
-function rrAuthorityText(authority) {
+function rrAuthorityText(authority, lang) {
   if (!authority) return "";
   if (authority.source) return authority.source + (authority.section ? " · " + authority.section : "");
   if (authority.invented_by) {
     return authority.invented_by + " — " + (authority.why_invented || "") +
       (authority.decision_item ? " · " + authority.decision_item : "");
   }
-  return Object.entries(authority).map(([k, v]) => k + ": " + v).join(" · ");
+  // A third form nobody declared: its keys are the report's own, so they are humanised
+  // rather than printed as identifiers.
+  return Object.entries(authority).map(([k, v]) => rrLabelForKey(k, lang) + ": " + v).join(" · ");
 }
 
 // EMPTY IS NOT ABSENT. `[]` was enumerated and there was nothing — "none". A missing key
@@ -278,11 +393,14 @@ function rrEmptyBadge(present, count, T) {
   return { badge: String(count), cls: "rr-badge-count" };
 }
 
-function rrKvEntries(arr) {
+// The entries inside a declared block carry whatever fields the REPORT chose to write, so
+// their keys are humanised: this view cannot name them without knowing the domain, but it
+// can refuse to hand the operator an identifier.
+function rrKvEntries(arr, lang) {
   return (Array.isArray(arr) ? arr : []).map((entry) => ({
     rows: Object.entries(entry || {})
       .filter(([, v]) => v != null && !(Array.isArray(v) && v.length === 0))
-      .map(([k, v]) => ({ k, v: typeof v === "object" ? JSON.stringify(v) : String(v) }))
+      .map(([k, v]) => ({ k: rrLabelForKey(k, lang), v: typeof v === "object" ? JSON.stringify(v) : String(v) }))
   }));
 }
 
@@ -350,8 +468,10 @@ function rrVerdictOutput(report, state) {
   };
 }
 
+// The tally counts SIGNABLE steps only. An item that declares it needs no verdict is on
+// screen and in the index, but it is not part of what the operator still owes.
 function rrProgress(report, state, T) {
-  const steps = rrSteps(report, T);
+  const steps = rrSigningSteps(report, T);
   const done = steps.filter((s) => rrRec(state, s.id).verdict).length;
   return { done, total: steps.length };
 }
@@ -376,7 +496,7 @@ function rrMissing(report, state, T) {
 // interface deciding; one that says why is the interface refusing a contradiction.
 function rrRunApprovedGuard(report, state, T) {
   let noDisposition = 0, owedHere = 0;
-  rrSteps(report, T).forEach((s) => {
+  rrSigningSteps(report, T).forEach((s) => {
     if (s.kind === "run") return;
     const r = rrRec(state, s.id);
     if (r.verdict !== "CHANGES_REQUIRED") return;
@@ -454,7 +574,7 @@ function rrDiffLinesHtml(entries) {
     rrEsc(line.t) + "</div>").join("");
 }
 
-function rrPreviewsHtml(id, previews, tab, previewStatus, T) {
+function rrPreviewsHtml(id, previews, tab, previewStatus, base, T) {
   const compareIdx = previews.length;
   const comparing = tab === compareIdx && previews.length > 1;
   const start = Math.min(tab, Math.max(0, previews.length - 1));
@@ -466,6 +586,17 @@ function rrPreviewsHtml(id, previews, tab, previewStatus, T) {
       ? ['<label class="rr-seg-opt"><input type="radio" name="rr-prev-' + rrEsc(id) + '"' + (comparing ? " checked" : "") +
          ' data-rr-act="preview-tab" data-rr-id="' + rrEsc(id) + '" data-rr-value="' + compareIdx + '">' + rrEsc(T.compare) + "</label>"]
       : []).join("");
+  // THE FRAME IS PROJECT-AUTHORED HTML, served on this console's own origin next to its three
+  // write routes, so it carries `sandbox` with the EMPTY token set. Without `allow-same-origin`
+  // the framed document is an opaque origin: it cannot reach this console's DOM (or the name the
+  // operator types into the verdict), and any request it makes carries `Origin: null`, which the
+  // server's origin gate refuses. No other token is granted: a preview is a document to READ,
+  // and every token added here widens what EVERY project's HTML may do inside this console —
+  // that is a decision to write down, not a default (RUN-CONSOLE-PREVIEW-SANDBOX-001).
+  //
+  // The src is the URL THE PROBE VERIFIED — `state.previewBase` + the declared path. The bare
+  // declared path resolves against this DOCUMENT's URL, which is a different namespace than the
+  // probe's, so a pane framed that way painted the server's "not found" instead of the asset.
   const panes = shown.map((p) => {
     const ok = previewStatus[p.path] === "ok";
     const frameCls = comparing ? "rr-frame rr-frame-compare" : "rr-frame";
@@ -473,7 +604,7 @@ function rrPreviewsHtml(id, previews, tab, previewStatus, T) {
       '<div class="rr-pane-head"><span class="rr-pane-label">' + rrEsc(p.label || p.target || "") + "</span>" +
       '<span class="rr-pane-path" title="' + rrEsc(p.path || "") + '">' + rrEsc(p.path || "") + "</span></div>" +
       (ok
-        ? '<iframe class="' + frameCls + '" src="' + rrEsc(p.src || p.path || "") + '" title="' + rrEsc(p.label || p.target || "") + '"></iframe>'
+        ? '<iframe class="' + frameCls + '" sandbox="" src="' + rrEsc((base || "") + (p.src || p.path || "")) + '" title="' + rrEsc(p.label || p.target || "") + '"></iframe>'
         : '<div class="' + frameCls + ' rr-frame-missing">' + rrIcon("file-dashed") +
           '<span class="rr-pane-missing-path">' + rrEsc(p.path || "") + "</span></div>") +
       "</div>";
@@ -513,9 +644,14 @@ function rrCardForItemHtml(report, item, state, T) {
     tags.push('<span class="rr-loc" title="' + rrEsc(loc.path) + '">' + rrEsc(seg) + "</span>");
   }
 
-  const statusChip = rec.verdict
-    ? '<span class="rr-tag rr-tag-accent rr-status rr-status-set">' + rrEsc(rec.verdict) + "</span>"
-    : '<span class="rr-tag rr-tag-neutral rr-status">' + rrEsc(T.pendingTag) + "</span>";
+  // An item that asks for no verdict is never "pending": pending is a debt, and this one
+  // owes nothing. It says so in words instead of wearing a status it can never leave.
+  const signs = rrSignsVerdict(item);
+  const statusChip = !signs
+    ? '<span class="rr-tag rr-tag-outline rr-status rr-status-na">' + rrEsc(T.noVerdictNeeded) + "</span>"
+    : rec.verdict
+      ? '<span class="rr-tag rr-tag-accent rr-status rr-status-set">' + rrEsc(rec.verdict) + "</span>"
+      : '<span class="rr-tag rr-tag-neutral rr-status">' + rrEsc(T.pendingTag) + "</span>";
 
   const subjectLine = (subj.label || subj.id)
     ? '<div class="rr-subject-line"><span class="rr-subject-label">' + rrEsc(subj.label || subj.id || id) + "</span>" +
@@ -524,7 +660,7 @@ function rrCardForItemHtml(report, item, state, T) {
     : "";
 
   const sections = [];
-  if (previews.length > 0) sections.push(rrPreviewsHtml(id, previews, tab, state.previewStatus, T));
+  if (previews.length > 0) sections.push(rrPreviewsHtml(id, previews, tab, state.previewStatus, state.previewBase, T));
   if (item.expected) {
     sections.push('<div class="rr-expected"><span class="rr-kicker">' + rrEsc(T.expected) + "</span>" +
       '<p class="rr-prose">' + rrEsc(item.expected) + "</p></div>");
@@ -550,7 +686,7 @@ function rrCardForItemHtml(report, item, state, T) {
   if (diff.pair) {
     const rows = diff.rows.map((row) =>
       '<div class="rr-diff-row">' +
-      (row.showKey ? '<div class="rr-diff-key">' + rrEsc(row.key) + "</div>" : "") +
+      (row.showKey ? '<div class="rr-diff-key">' + rrEsc(rrLabelForKey(row.key, T.lang)) + "</div>" : "") +
       '<div class="rr-diff-pair"><div class="rr-diff-side">' + rrDiffLinesHtml(row.B) + "</div>" +
       '<div class="rr-diff-side">' + rrDiffLinesHtml(row.A) + "</div></div></div>").join("");
     sections.push('<div class="rr-diff"><div class="rr-diff-heads"><span class="rr-kicker">' + rrEsc(T.before) +
@@ -559,7 +695,7 @@ function rrCardForItemHtml(report, item, state, T) {
   if (diff.onlyAfter) {
     const rows = diff.rows.map((row) =>
       '<div class="rr-diff-row">' +
-      (row.showKey ? '<div class="rr-diff-key">' + rrEsc(row.key) + "</div>" : "") +
+      (row.showKey ? '<div class="rr-diff-key">' + rrEsc(rrLabelForKey(row.key, T.lang)) + "</div>" : "") +
       '<div class="rr-diff-side">' + rrDiffLinesHtml(row.A) + "</div></div>").join("");
     sections.push('<div class="rr-diff"><div class="rr-diff-heads-single"><span class="rr-kicker rr-kicker-accent">' +
       rrEsc(T.whatExistsNow) + "</span>" +
@@ -568,14 +704,14 @@ function rrCardForItemHtml(report, item, state, T) {
   }
   if (Array.isArray(item.unchanged) && item.unchanged.length > 0) {
     sections.push('<div class="rr-unchanged"><span class="rr-unchanged-label">' + rrIcon("equals") + rrEsc(T.unchanged) + "</span>" +
-      item.unchanged.map((u) => rrTagHtml(u, "rr-tag-neutral")).join("") + "</div>");
+      item.unchanged.map((u) => rrTagHtml(rrUnchangedLabel(u, T.lang), "rr-tag-neutral")).join("") + "</div>");
   }
 
   const reasoningParts = [];
   if (item.why) reasoningParts.push('<p class="rr-why">' + rrEsc(item.why) + "</p>");
   if (item.authority) {
     reasoningParts.push('<div class="rr-authority">' + rrIcon("seal-check") +
-      "<span>" + rrEsc(rrAuthorityText(item.authority)) + "</span></div>");
+      "<span>" + rrEsc(rrAuthorityText(item.authority, T.lang)) + "</span></div>");
   }
   if (Array.isArray(item.evidence) && item.evidence.length > 0) {
     reasoningParts.push('<ul class="rr-evidence">' +
@@ -600,15 +736,22 @@ function rrCardForItemHtml(report, item, state, T) {
     sections.push('<details class="rr-reasoning" open><summary>' + rrIcon("caret") + rrEsc(T.reasoning) + "</summary>" +
       '<div class="rr-reasoning-body">' + reasoningParts.join("") + "</div></details>");
   }
+  // It FOLDS, like every other section that carries prose (the reasoning above it is the
+  // same `<details open>`): the operator opens the card with it in view and can put it away
+  // once read, instead of scrolling past a block that never closes.
   if (item.if_rejected) {
-    sections.push('<div class="rr-if-rejected' + (noBefore ? " rr-if-rejected-hard" : "") + '">' +
-      '<div class="rr-kicker rr-kicker-accent">' + rrIcon("arrow-u-left") + rrEsc(T.ifRejected) + "</div>" +
-      '<p class="rr-prose">' + rrEsc(item.if_rejected) + "</p></div>");
+    sections.push('<details class="rr-if-rejected' + (noBefore ? " rr-if-rejected-hard" : "") + '" open>' +
+      '<summary><span class="rr-kicker rr-kicker-accent">' + rrIcon("caret") + rrIcon("arrow-u-left") +
+      rrEsc(T.ifRejected) + "</span></summary>" +
+      '<p class="rr-prose">' + rrEsc(item.if_rejected) + "</p></details>");
   }
 
   // The disposition options may travel with the item (`verdict_disposition_options`); the
-  // VERDICT vocabulary never does.
-  sections.push(rrVerdictBarHtml(id, rec, T.questionItem, item.verdict_disposition_options, T, state.lang, RR_ITEM_VERDICTS, null));
+  // VERDICT vocabulary never does. An item that declares it needs no verdict gets no bar:
+  // there is nothing to ask, so nothing is asked.
+  if (signs) {
+    sections.push(rrVerdictBarHtml(id, rec, T.questionItem, item.verdict_disposition_options, T, state.lang, RR_ITEM_VERDICTS, null));
+  }
 
   const cardCls = "rr-card" + (item.stop ? " rr-card-stop" : "") + (inherits ? " rr-card-inherit" : "");
   return '<div class="' + cardCls + '" id="rr-it-' + rrEsc(id) + '">' +
@@ -626,7 +769,7 @@ function rrCardForDecisionHtml(decision, id, state, T) {
   const scopeRows = Object.entries(decision)
     .filter(([k]) => k.indexOf("scope_") === 0)
     .map(([k, v]) => ({
-      k: k === "scope_if_accepted" ? T.ifAccepted : k === "scope_if_rejected" ? T.ifRejectedScope : k.replace(/_/g, " "),
+      k: k === "scope_if_accepted" ? T.ifAccepted : k === "scope_if_rejected" ? T.ifRejectedScope : rrLabelForKey(k, T.lang),
       v: String(v)
     }));
   const statusChip = rec.verdict
@@ -653,15 +796,16 @@ function rrCardForDecisionHtml(decision, id, state, T) {
   }
   if (decision.authority) {
     reasoningParts.push('<div class="rr-authority">' + rrIcon("seal-check") +
-      "<span>" + rrEsc(rrAuthorityText(decision.authority)) + "</span></div>");
+      "<span>" + rrEsc(rrAuthorityText(decision.authority, T.lang)) + "</span></div>");
   }
   if (reasoningParts.length) {
     sections.push('<details class="rr-reasoning" open><summary>' + rrIcon("caret") + rrEsc(T.reasoning) + "</summary>" +
       '<div class="rr-reasoning-body">' + reasoningParts.join("") + "</div></details>");
   }
   if (decision.if_rejected) {
-    sections.push('<div class="rr-if-rejected"><div class="rr-kicker rr-kicker-accent">' + rrIcon("arrow-u-left") +
-      rrEsc(T.ifRejected) + '</div><p class="rr-prose">' + rrEsc(decision.if_rejected) + "</p></div>");
+    sections.push('<details class="rr-if-rejected" open><summary><span class="rr-kicker rr-kicker-accent">' +
+      rrIcon("caret") + rrIcon("arrow-u-left") + rrEsc(T.ifRejected) + "</span></summary>" +
+      '<p class="rr-prose">' + rrEsc(decision.if_rejected) + "</p></details>");
   }
   sections.push(rrVerdictBarHtml(id, rec, T.questionDecision, decision.verdict_disposition_options, T, state.lang, RR_ITEM_VERDICTS, null));
 
@@ -680,7 +824,9 @@ function rrCardForRunHtml(report, state, T) {
   const R = report || {};
   const rec = rrRec(state, "__run__");
   const steps = rrSteps(report, T);
-  const decided = steps.filter((s) => s.kind !== "run");
+  // The recap tallies what can be signed. An item that needs no verdict is not a pending
+  // one and must not swell the denominator the operator is judged against.
+  const decided = steps.filter((s) => s.kind !== "run" && s.signs);
   const tally = {};
   decided.forEach((s) => {
     const v = rrRec(state, s.id).verdict || T.pendingTag;
@@ -739,7 +885,9 @@ function rrRailHtml(report, state, T) {
   const filter = state.filter;
   const keep = (s) => {
     if (s.kind === "run") return true;
-    if (filter === "pending") return !rrRec(state, s.id).verdict;
+    // "Pending" is what is still OWED. A step that asks for no verdict owes nothing and
+    // never appears there, however long the operator leaves it unsigned.
+    if (filter === "pending") return s.signs && !rrRec(state, s.id).verdict;
     if (filter === "stops") return s.kind === "item" && (!!s.data.stop || rrHasStopInside(report, s.data));
     return true;
   };
@@ -759,9 +907,10 @@ function rrRailHtml(report, state, T) {
     const stop = s.kind === "item" && !!s.data.stop;
     const inherits = s.kind === "item" && !s.data.stop && rrHasStopInside(report, s.data);
     rows.push('<div class="rr-rail-row' + (i === state.cardIdx ? " rr-rail-row-active" : "") +
-      (s.depth > 0 ? " rr-rail-row-child" : "") + '" data-rr-act="goto" data-rr-id="' + rrEsc(s.id) +
-      '" title="' + rrEsc(title) + '">' +
-      rrDotHtml(!!rrRec(state, s.id).verdict) +
+      (s.depth > 0 ? " rr-rail-row-child" : "") + (s.signs ? "" : " rr-rail-row-na") +
+      '" data-rr-act="goto" data-rr-id="' + rrEsc(s.id) +
+      '" title="' + rrEsc(s.signs ? title : (title ? title + " · " + T.noVerdictNeeded : T.noVerdictNeeded)) + '">' +
+      (s.signs ? rrDotHtml(!!rrRec(state, s.id).verdict) : '<span class="rr-dot rr-dot-na"></span>') +
       (stop ? '<span class="rr-rail-stop">' + rrIcon("hand-palm") + "</span>" : "") +
       (inherits ? '<span class="rr-rail-stop rr-rail-stop-dim" title="' + rrEsc(T.containsStop) + '">' + rrIcon("hand-palm") + "</span>" : "") +
       '<span class="rr-rail-label">' + rrEsc(label) + "</span></div>");
@@ -807,7 +956,7 @@ function rrContextBlocks(report, T) {
     return {
       domId: b.domId, key: b.key, title: b.title,
       badge: badge.badge, badgeCls: badge.cls,
-      absent: !present, entries: rrKvEntries(arr)
+      absent: !present, entries: rrKvEntries(arr, T.lang)
     };
   });
 }
@@ -824,18 +973,23 @@ function rrContextHtml(report, T) {
   const metaKeys = ["project", "kind", "mode", "schema_version", "run_id", "queue_order", "profile",
     "profile_reason", "execution_path", "emitted_by", "emitted_when", "emitted_at",
     "source_commit", "source_branch", "log_dir"];
-  const metaRows = metaKeys.filter((k) => R[k] != null).map((k) => ({ k, v: String(R[k]) }));
+  const metaRows = metaKeys.filter((k) => R[k] != null).map((k) => ({ k: rrLabelForKey(k, T.lang), v: String(R[k]) }));
   // `profile: null` with a reason is a declared fact, not a hole — it leads the list.
-  if (R.profile === null && R.profile_reason) metaRows.unshift({ k: "profile", v: "null — " + R.profile_reason });
+  if (R.profile === null && R.profile_reason) {
+    metaRows.unshift({ k: rrLabelForKey("profile", T.lang), v: "null — " + R.profile_reason });
+  }
 
   const dev = R.pilot_deviation;
-  const devRows = dev ? Object.entries(dev).map(([k, v]) => ({ k, v: String(v) })) : [];
+  // A deviation's fields are the EMITTER's own: humanised, never printed as identifiers.
+  const devRows = dev ? Object.entries(dev).map(([k, v]) => ({ k: rrLabelForKey(k, T.lang), v: String(v) })) : [];
 
+  // What a report COUNTS is named by the report; this view humanises that name and can
+  // never translate it, because knowing it is knowing the domain.
   const countRows = Object.entries(R.counts || {}).map(([k, v]) => {
     const before = v && typeof v === "object" ? v.before : null;
     const after = v && typeof v === "object" ? v.after : null;
     const delta = (after != null ? after : 0) - (before != null ? before : 0);
-    return { label: k, before: String(before != null ? before : "—"), after: String(after != null ? after : "—"),
+    return { label: rrHumanKey(k), before: String(before != null ? before : "—"), after: String(after != null ? after : "—"),
       delta: delta === 0 ? "—" : (delta > 0 ? "+" : "") + delta };
   });
   const locs = (Array.isArray(R.locations) ? R.locations : []).map((L) => ({
@@ -844,13 +998,18 @@ function rrContextHtml(report, T) {
 
   const ver = R.verification;
   const verifChip = ver ? [ver.command, ver.result].filter(Boolean).join(" · ") : T.noVerification;
-  const gateRows = [{ k: "gate", v: R.gate || "—" }];
-  if (R.gate_reason) gateRows.push({ k: "gate_reason", v: R.gate_reason });
-  if (ver) Object.entries(ver).forEach(([k, v]) => gateRows.push({ k: "verification." + k, v: String(v) }));
-  else gateRows.push({ k: "verification", v: "null" });
-  if (R.verification_note) gateRows.push({ k: "verification_note", v: R.verification_note });
-  if (R.verification_reason) gateRows.push({ k: "verification_reason", v: R.verification_reason });
-  if (R.items_note) gateRows.push({ k: "items_note", v: R.items_note });
+  // THE ROW LABELS ARE WRITTEN, not pushed. This block used to hand the operator its own
+  // JSON keys — `gate`, `verification`, `verification_reason` — and the literal string
+  // "null" for a verification nobody ran. Each one now carries the words it is called on
+  // screen, in both languages, and the missing verification says so in prose.
+  const L = (key) => rrLabelForKey(key, T.lang);
+  const gateRows = [{ k: L("gate"), v: R.gate || "—" }];
+  if (R.gate_reason) gateRows.push({ k: L("gate_reason"), v: R.gate_reason });
+  if (ver) Object.entries(ver).forEach(([k, v]) => gateRows.push({ k: L("verification." + k), v: String(v) }));
+  else gateRows.push({ k: L("verification"), v: T.noVerification });
+  if (R.verification_note) gateRows.push({ k: L("verification_note"), v: R.verification_note });
+  if (R.verification_reason) gateRows.push({ k: L("verification_reason"), v: R.verification_reason });
+  if (R.items_note) gateRows.push({ k: L("items_note"), v: R.items_note });
 
   const details = [];
   details.push('<details class="rr-sec" id="rr-sec-meta"><summary>' + rrIcon("caret") +
@@ -898,7 +1057,11 @@ function rrTopbarHtml(report, state, T) {
   const R = report || {};
   const steps = report ? rrSteps(report, T) : [];
   const { done, total } = report ? rrProgress(report, state, T) : { done: 0, total: 0 };
-  const idx = Math.min(state.cardIdx, Math.max(0, steps.length - 1));
+  // TWO DIFFERENT NUMBERS, and they stopped being the same one the moment a step could be
+  // shown without being signable: the POSITION counts cards the operator walks through
+  // (every step), the PROGRESS counts verdicts owed (only the signable ones).
+  const cards = steps.length;
+  const idx = Math.min(state.cardIdx, Math.max(0, cards - 1));
   return '<span class="rr-app-title">' + rrEsc(T.appTitle) + "</span>" +
     '<span class="rr-tag rr-tag-outline rr-gate-chip" title="' + rrEsc(R.gate_reason || "") + '">' +
     rrEsc(T.gate) + " · " + rrEsc(R.gate || "—") + "</span>" +
@@ -907,9 +1070,9 @@ function rrTopbarHtml(report, state, T) {
     '<div class="rr-nav">' +
     '<button type="button" class="rr-btn rr-btn-icon rr-btn-secondary" data-rr-act="prev" title="' + rrEsc(T.prev) + '"' +
     (idx <= 0 ? " disabled" : "") + ">" + rrIcon("arrow-left") + "</button>" +
-    '<span class="rr-card-pos">' + (total ? (idx + 1) + " / " + total : "—") + "</span>" +
+    '<span class="rr-card-pos">' + (cards ? (idx + 1) + " / " + cards : "—") + "</span>" +
     '<button type="button" class="rr-btn rr-btn-icon rr-btn-secondary" data-rr-act="next" title="' + rrEsc(T.next) + '"' +
-    (idx >= total - 1 ? " disabled" : "") + ">" + rrIcon("arrow-right") + "</button></div>" +
+    (idx >= cards - 1 ? " disabled" : "") + ">" + rrIcon("arrow-right") + "</button></div>" +
     '<button type="button" class="rr-btn rr-btn-secondary rr-lang-btn" data-rr-act="lang" title="' + rrEsc(T.langTitle) + '">' +
     (state.lang === "es" ? "ES" : "EN") + "</button>" +
     '<button type="button" class="rr-btn rr-btn-icon rr-btn-secondary" data-rr-act="theme" title="' + rrEsc(T.themeTitle) + '">' +
@@ -973,21 +1136,23 @@ function rrInitialState(input) {
   return {
     report: parsed.report, error: parsed.error,
     cardIdx: 0, filter: "all",
-    v: {}, reviewer: "", previewTab: {}, previewStatus: {},
+    v: {}, reviewer: "", previewTab: {}, previewStatus: {}, previewBase: "",
     lang: rrLsGet("lang", "en"), theme: rrLsGet("theme", "dark")
   };
 }
 
 // Every preview path is probed ONCE per mount; a pane only becomes an iframe after the
-// probe answers ok, and shows the path it could not reach otherwise.
-function rrCheckPreviews(state, redraw, previewBase) {
+// probe answers ok, and shows the path it could not reach otherwise. The probe reads the base
+// from STATE — the same field the pane builder reads — so the URL that is framed is always the
+// URL that was verified, and the two cannot drift apart again.
+function rrCheckPreviews(state, redraw) {
   if (typeof fetch !== "function" || !state.report) return;
   rrItems(state.report).forEach((item) => {
     const previews = (item.subject && item.subject.previews) || [];
     previews.forEach((p) => {
       if (!p.path || state.previewStatus[p.path]) return;
       state.previewStatus[p.path] = "checking";
-      fetch((previewBase || "") + p.path, { method: "GET" })
+      fetch((state.previewBase || "") + p.path, { method: "GET" })
         .then((res) => { state.previewStatus[p.path] = res.ok ? "ok" : "missing"; redraw(); })
         .catch(() => { state.previewStatus[p.path] = "missing"; redraw(); });
     });
@@ -1007,6 +1172,7 @@ function rrDownloadVerdict(json) {
 function renderRunReport(container, input, opts) {
   const options = opts || {};
   const state = rrInitialState(input);
+  state.previewBase = String(options.previewBase || "");
 
   function draw() {
     container.setAttribute("data-theme", state.theme);
@@ -1132,7 +1298,7 @@ function renderRunReport(container, input, opts) {
   });
 
   draw();
-  rrCheckPreviews(state, draw, options.previewBase);
+  rrCheckPreviews(state, draw);
   return {
     // The console (#53) holds this handle; the suite drives the same paths headlessly.
     state,

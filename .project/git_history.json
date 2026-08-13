@@ -1,27 +1,37 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-13T20:43:47.984Z",
+  "generated_at": "2026-08-13T22:45:17.326Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-12T03:41:13.799Z"
+      "mtime": "2026-08-13T22:14:08.969Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-13T20:43:47.841Z"
+      "mtime": "2026-08-13T22:45:17.280Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "34b00f2c03eb4d1eeba8970d12e254df57af9a63",
+  "head": "2a5e905ebd871f8528857367b041e998cdac841e",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 227,
+  "commit_total": 228,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "2a5e905",
+      "full_sha": "2a5e905ebd871f8528857367b041e998cdac841e",
+      "date": "2026-08-13T14:47:52-06:00",
+      "parents": "34b00f2",
+      "subject": "cierra #53 RUN-CONSOLE-REPORTS-SURFACE-001 y #54 RUN-CONSOLE-VERDICT-MODEL-001: el reporte se abre desde el run al que pertenece y vuelve a el; y el veredicto pasa a dos tokens en el item, tres en el run, con la disposicion this_run y la guarda que impide aprobar un run que aun se debe trabajo a si mismo",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "34b00f2",

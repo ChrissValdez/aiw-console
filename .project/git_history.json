@@ -1,27 +1,47 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-13T22:45:17.326Z",
+  "generated_at": "2026-08-13T23:54:42.815Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-13T22:14:08.969Z"
+      "mtime": "2026-08-13T23:41:00.481Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-13T22:45:17.280Z"
+      "mtime": "2026-08-13T23:54:42.801Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "2a5e905ebd871f8528857367b041e998cdac841e",
+  "head": "657a9d1f397aad5b16d8d0e5430c17b712f07a19",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 228,
+  "commit_total": 230,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "657a9d1",
+      "full_sha": "657a9d1f397aad5b16d8d0e5430c17b712f07a19",
+      "date": "2026-08-13T16:58:40-06:00",
+      "parents": "2d7f7d2",
+      "subject": "handoff(aiw-console): el subsistema de reportes construido en seis runs -indice derivado, renderizador unico ciego al dominio, superficie desde el run, modelo de veredicto con su guarda, las cinco reparaciones de la QA del operador y el sandbox del marco-; mas la leccion de que grep no es una medicion, con seis casos",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2d7f7d2",
+      "full_sha": "2d7f7d20c890ffb74035574865f9eb9a8abaef6b",
+      "date": "2026-08-13T16:47:03-06:00",
+      "parents": "2a5e905",
+      "subject": "cierra #55 RUN-CONSOLE-REPORT-QA-REPAIRS-001 y #56 RUN-CONSOLE-PREVIEW-SANDBOX-001: los cinco hallazgos de la QA del operador reparados -doce sitios que usaban la clave del JSON como etiqueta, el info que ya no pide veredicto, y el bloque que ahora pliega-; y el marco de previsualizacion pasa a origen opaco con sandbox vacio, medido contra las tres rutas de escritura",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "2a5e905",

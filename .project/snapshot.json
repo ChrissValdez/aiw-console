@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-13T22:45:17.326Z",
+  "generated_at": "2026-08-13T23:54:42.815Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-13T22:45:17.280Z"
+      "mtime": "2026-08-13T23:54:42.801Z"
     },
     {
       "path": "package.json",
@@ -43,9 +43,9 @@
       "path": ".project/snapshot.json"
     }
   ],
-  "operational_status": "idle",
+  "operational_status": "active",
   "project_summary": "AIW Console Roadmap: 2 objectives, 23 phases, 64 runs.",
-  "current_status_summary": "No active run; 56 of 64 runs completed.",
+  "current_status_summary": "Active run: RUN-CONSOLE-VERDICT-POST-001 (O4/O4.P17, queue 57).",
   "roadmap_tree": {
     "model": "roadmap_tree_v1",
     "roadmap_id": "roadmap",
@@ -910,7 +910,7 @@
                 "title": "The verdict endpoint, so signing a report stops being copy and paste",
                 "summary": "The console writes verdict.json where the report lives, through the same guarded POST route and atomic write it already uses for the canonical.",
                 "full_description": "WHY IT EXISTS: the operator's verdict is irreproducible — no measurement recreates it — and today it would travel by copy and paste, which is where verdicts get lost and mistyped. THE MACHINERY ALREADY EXISTS AND WAS MEASURED: this console already serves POST routes with an origin guard and already writes files by temporary-and-rename. What is missing is the endpoint, not the plumbing. WHAT IT WRITES: verdict.json beside the report it answers, carrying the closed verdict per item, the disposition when the verdict is CHANGES_REQUIRED, the free note in whatever language the operator wrote it, and stopped true when a stop item was not approved. THE NAME OF WHO SIGNS IS NEVER A CONSTANT. It is measured that a discarded prototype carried the operator's name hardcoded, so a verdict asserted a signature nobody had typed. The identity arrives at run time or the person types it. WHAT IT DOES NOT DO: it does not close runs. The cabin closes runs from the console, and the guard that a completed run must have a report that exists and validates lives in the set-status path, declared per project, not here.",
-                "status": "planned",
+                "status": "active",
                 "depends_on": [
                   "RUN-CONSOLE-REPORTS-SURFACE-001"
                 ]
@@ -1101,7 +1101,7 @@
           {
             "run_id": "RUN-CONSOLE-VERDICT-POST-001",
             "queue_order": 57,
-            "status": "planned",
+            "status": "active",
             "title": "The verdict endpoint, so signing a report stops being copy and paste",
             "objective_id": "O4",
             "phase_id": "O4.P17",

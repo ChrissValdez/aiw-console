@@ -5036,6 +5036,12 @@ function v3OpenRunReport(runId) {
     // serves that repo under its project base. Resolving them anywhere else would probe the
     // console's own files (#52 left this decision to this run — record §F).
     previewBase: REPO_BASE,
+    // [#58] The verdict sits BESIDE the report, so its URL is the report's own path with the
+    // last segment replaced — composed HERE, in the one file that owns routes, from the path
+    // the index listed and never from a run id. The write route already resolves the same
+    // pair the same way; this is its read side, and it is a plain GET of a file the console
+    // already serves, so no route was added and none was touched.
+    verdictUrl: `${REPO_BASE}${info.reportPath.replace(/[^/]+$/, "verdict.json")}`,
     title: run ? run.title : "",
     subtitle: runId,
     backLabel: run ? `Back to Run #${run.queue_order}` : "Back to the run",

@@ -308,6 +308,73 @@
 .rr-recap-row .rr-dot { width: 8px; height: 8px; }
 .rr-recap-label { font-size: 13.5px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rr-recap-value { font-size: 12px; font-family: var(--rr-mono); color: color-mix(in srgb, var(--rr-text) 60%, transparent); white-space: nowrap; }
+/* [#58] The denominator, said ONCE and large, with the reason it is that number under the
+   rows. The per-row values are plain counts now, so nothing on this card reads as a total
+   of something else. */
+.rr-recap-head { display: flex; align-items: baseline; gap: 9px; }
+.rr-recap-total { font-size: 26px; font-family: var(--rr-mono); line-height: 1; }
+.rr-recap-total-label { font-size: 12.5px; color: color-mix(in srgb, var(--rr-text) 62%, transparent); }
+.rr-recap-rows { display: flex; flex-direction: column; }
+.rr-recap-why { font-size: 11.5px; color: color-mix(in srgb, var(--rr-text) 48%, transparent); max-width: 74ch; margin: 0; }
+
+/* [#58] The named, reachable list — under the recap and under the guard alike. Closed by
+   default in the markup; every row is a link to its own step. */
+.rr-blockers > summary {
+  display: flex; align-items: center; gap: 8px; padding: 9px 0;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--rr-text) 55%, transparent);
+}
+.rr-blockers[open] > summary .rr-ic-caret { transform: rotate(90deg); }
+.rr-blockers-n { font-family: var(--rr-mono); font-size: 11px; letter-spacing: 0; }
+.rr-blockers-body { display: flex; flex-direction: column; gap: 2px; padding-bottom: 4px; }
+.rr-blocker-row {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  padding: 7px 10px; border-radius: var(--rr-radius-sm);
+  background: color-mix(in srgb, var(--rr-text) 4%, transparent);
+}
+.rr-blocker-row:hover { background: color-mix(in srgb, var(--rr-accent) 12%, transparent); }
+.rr-blocker-label { font-size: 13px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rr-blocker-why { font-size: 11.5px; color: color-mix(in srgb, var(--rr-text) 52%, transparent); white-space: nowrap; }
+.rr-blocker-row .rr-ic { flex: none; color: color-mix(in srgb, var(--rr-text) 45%, transparent); }
+
+/* [#58] The verdict already on disk: named on the run card, and chipped in the topbar so it
+   is on screen from the first step and not only from the last. */
+.rr-filed {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 11px 14px; border-radius: var(--rr-radius-sm);
+  background: color-mix(in srgb, var(--rr-accent) 8%, transparent);
+  box-shadow: inset 0 0 0 1px var(--rr-accent-600);
+}
+.rr-filed .rr-ic { color: var(--rr-accent-300); position: relative; top: 3px; flex: none; }
+.rr-filed-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.rr-filed-title { font-size: 13px; }
+.rr-filed-meta { font-size: 11.5px; font-family: var(--rr-mono); color: color-mix(in srgb, var(--rr-text) 62%, transparent); }
+.rr-filed-note { font-size: 11.5px; color: color-mix(in srgb, var(--rr-text) 55%, transparent); max-width: 74ch; }
+.rr-filed-chip { gap: 5px; }
+
+/* [#58] D-066 — the panel that stands between the sign button and the write. */
+.rr-confirm {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 14px; border-radius: var(--rr-radius-sm);
+  background: color-mix(in srgb, var(--rr-accent) 10%, transparent);
+  box-shadow: inset 0 0 0 1px var(--rr-accent-600);
+}
+.rr-confirm-title { display: flex; align-items: baseline; gap: 8px; font-size: 13.5px; }
+.rr-confirm-title .rr-ic { color: var(--rr-accent-300); position: relative; top: 2px; flex: none; }
+.rr-confirm-same { font-size: 12.5px; margin: 0; color: color-mix(in srgb, var(--rr-text) 78%, transparent); }
+.rr-confirm-changes { display: flex; flex-direction: column; gap: 9px; }
+.rr-confirm-actions { display: flex; gap: 8px; justify-content: flex-end; }
+.rr-delta-step { display: flex; flex-direction: column; gap: 4px; }
+.rr-delta-label { font-size: 12.5px; }
+.rr-delta-lines { display: flex; flex-direction: column; gap: 3px; padding-left: 12px; }
+.rr-delta-line { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 11.5px; }
+.rr-delta-field {
+  font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--rr-text) 50%, transparent); min-width: 9ch;
+}
+.rr-delta-from { font-family: var(--rr-mono); color: color-mix(in srgb, var(--rr-text) 55%, transparent); text-decoration: line-through; }
+.rr-delta-to { font-family: var(--rr-mono); }
+.rr-delta-arrow .rr-ic, .rr-delta-line > .rr-ic { color: color-mix(in srgb, var(--rr-text) 40%, transparent); }
 
 /* — reasoning, open by default — */
 .rr-reasoning { border-top: 1px solid color-mix(in srgb, var(--rr-text) 8%, transparent); }

@@ -357,6 +357,24 @@ function rrsFetchFailureHtml(url, detail) {
   `;
 }
 
+// [#58] The verdict already filed, brought over from the URL the CONSOLE composed. Same rule
+// as everything else here: this file is handed a URL and fetches it, and composes nothing —
+// no folder name and no file name of a verdict is written anywhere in this file.
+//
+// ABSENCE IS THE ORDINARY ANSWER. Most reports carry no verdict yet, so a 404 is a null and
+// never an error panel; and a verdict that cannot be fetched must not stop the report from
+// opening, because the report is what the operator came to read.
+async function rrsFetchFiledVerdict(url) {
+  if (!url || typeof fetch !== "function") return null;
+  try {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response || !response.ok) return null;
+    return await response.text();
+  } catch (error) {
+    return null;
+  }
+}
+
 // Open one report. `reportUrl` is composed by the caller from the index's own `report_path`;
 // this function never builds a path from a run id, so a report can only be opened from
 // something the index actually listed.
@@ -401,12 +419,18 @@ async function openRunReport(options) {
     rrsOpen = { runId: opts.runId || "", url, handle: null, failed: true };
     return { ok: false, reason: "no_renderer" };
   }
+  // [#58] Fetched AFTER the report is in hand, so a verdict that is slow or gone delays
+  // nothing the operator needs first, and relayed as bytes exactly like the report's.
+  const filed = await rrsFetchFiledVerdict(String(opts.verdictUrl || ""));
   const handle = render(mount, body, {
     previewBase: opts.previewBase || "",
     // The console's writer callback (#57), relayed verbatim. This file neither composes the
     // route nor reads the verdict travelling through it; with none given, the renderer's sign
     // button downloads and says so.
-    writeVerdict: typeof opts.writeVerdict === "function" ? opts.writeVerdict : null
+    writeVerdict: typeof opts.writeVerdict === "function" ? opts.writeVerdict : null,
+    // [#58] And the verdict already on disk, relayed the same way: untouched bytes. This file
+    // does not parse it, so there is no field of a verdict it could come to know either.
+    existingVerdict: filed
   });
   rrsOpen = { runId: opts.runId || "", url, handle, failed: false };
   return { ok: true, handle };

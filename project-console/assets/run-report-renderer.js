@@ -81,7 +81,24 @@ const RR_STRINGS = {
     guardHeld: "APPROVED is not available for the run: ",
     guardNoDisposition: (n) => n + (n === 1 ? " change still carries no disposition" : " changes still carry no disposition"),
     guardOwedHere: (n) => (n === 1 ? "1 fix is owed" : n + " fixes are owed") + " to this run itself",
-    noVerdictNeeded: "no verdict needed"
+    noVerdictNeeded: "no verdict needed",
+    // [#58] The verdict already on disk, read when the report opens.
+    filedChip: "verdict filed",
+    filedTitle: "A verdict is already filed beside this report",
+    filedSigned: "signed by", filedWhen: "stamped",
+    filedRestored: "On screen is what you typed here before; the filed one is named above, and signing compares against it.",
+    // [#58] The recap: the denominator is stated ONCE, with the reason it is that number.
+    recapDenominator: (n) => (n === 1 ? "step asks for a verdict" : "steps ask for a verdict"),
+    recapWhy: "The run does not count itself, and a step that asks for no verdict does not swell this number.",
+    whichOnes: "Which ones",
+    blockerNoDisposition: "no disposition", blockerOwedHere: "owed to this run",
+    // [#58] D-066: signing over an existing verdict warns, summarises and waits.
+    overwriteTitle: "This overwrites the verdict already filed beside the report.",
+    overwriteSame: "It is overwritten with the same data: nothing changes.",
+    overwriteChanges: "What changes against the filed verdict",
+    overwriteConfirm: "Overwrite it", overwriteCancel: "Cancel",
+    changeVerdict: "verdict", changeDisposition: "disposition", changeNote: "note",
+    changeSigner: "who signs", changeEmpty: "—"
   },
   es: {
     lang: "es",
@@ -119,7 +136,24 @@ const RR_STRINGS = {
     guardHeld: "APPROVED no está disponible para el run: ",
     guardNoDisposition: (n) => n + (n === 1 ? " cambio sigue sin disposición" : " cambios siguen sin disposición"),
     guardOwedHere: (n) => (n === 1 ? "1 arreglo se debe" : n + " arreglos se deben") + " a este mismo run",
-    noVerdictNeeded: "no pide veredicto"
+    noVerdictNeeded: "no pide veredicto",
+    // [#58] El veredicto que ya está en disco, leído al abrir el reporte.
+    filedChip: "veredicto archivado",
+    filedTitle: "Ya hay un veredicto archivado junto a este reporte",
+    filedSigned: "firmado por", filedWhen: "sellado",
+    filedRestored: "En pantalla está lo que tecleaste aquí antes; el archivado queda nombrado arriba, y firmar compara contra él.",
+    // [#58] El recuento: el denominador se dice UNA vez, con la razón de que sea ese número.
+    recapDenominator: (n) => (n === 1 ? "paso pide veredicto" : "pasos piden veredicto"),
+    recapWhy: "El run no se cuenta a sí mismo, y un paso que no pide veredicto no engorda este número.",
+    whichOnes: "Cuáles",
+    blockerNoDisposition: "sin disposición", blockerOwedHere: "se debe a este run",
+    // [#58] D-066: firmar sobre un veredicto existente avisa, resume y espera.
+    overwriteTitle: "Esto sobrescribe el veredicto ya archivado junto al reporte.",
+    overwriteSame: "Se sobrescribe con los mismos datos: no cambia nada.",
+    overwriteChanges: "Qué cambia respecto del veredicto archivado",
+    overwriteConfirm: "Sobrescribirlo", overwriteCancel: "Cancelar",
+    changeVerdict: "veredicto", changeDisposition: "disposición", changeNote: "nota",
+    changeSigner: "quién firma", changeEmpty: "—"
   }
 };
 const RR_DISPOSITION_GLOSS = {
@@ -337,6 +371,20 @@ function rrSigningSteps(report, T) {
   return rrSteps(report, T).filter((s) => s.signs);
 }
 
+// What a step is CALLED on screen. One function, so the rail, the blocker lists and the
+// overwrite summary name the same step with the same words — a list that named a step
+// differently from the rail would be a second vocabulary for the operator to learn.
+function rrStepLabel(step, T) {
+  if (!step) return "";
+  if (step.kind === "run") return T.runVerdict;
+  if (step.kind === "decision") {
+    const what = (step.data && step.data.what) || "";
+    const declared = step.data && step.data.decision_id;
+    return declared ? declared + " · " + what : (what || step.id);
+  }
+  return (step.data && step.data.subject && step.data.subject.label) || step.id;
+}
+
 function rrLines(value) {
   if (value == null) return [];
   if (Array.isArray(value)) return value.map((x) => (typeof x === "object" && x !== null ? JSON.stringify(x) : String(x)));
@@ -480,6 +528,150 @@ function rrVerdictOutput(report, state) {
   };
 }
 
+// ---------------------------------------------------------------------------
+// [#58] READING A VERDICT BACK. The write route landed one run ago and nothing ever read
+// what it wrote, so a report the operator had signed opened blank and signing again replaced
+// the first file in silence. These functions are the inverse of `rrVerdictOutput`: they take
+// the SAME shape, straight off disk, and put it back into the state the view paints from.
+//
+// The file arrives as DATA. This renderer composes no path and knows no folder — whoever
+// opened the report hands the bytes over, exactly as the writer arrives by injection.
+// ---------------------------------------------------------------------------
+
+// One record per step id, out of a verdict file. The step ids are resolved the way
+// `rrVerdictOutput` writes them: items by `item_id`, a self-decision by its declared
+// `decision_id` else its position, and the run under its own fixed key.
+function rrVerdictRecords(report, verdict) {
+  const out = {};
+  if (!verdict || typeof verdict !== "object") return out;
+  const put = (id, source) => {
+    if (!id || !source || typeof source !== "object") return;
+    const text = (value) => (value == null ? null : String(value));
+    out[id] = {
+      verdict: text(source.verdict),
+      disposition: text(source.disposition),
+      note: text(source.note),
+      chosenOption: text(source.chosen_option)
+    };
+  };
+  put("__run__", verdict.run);
+  (Array.isArray(verdict.items) ? verdict.items : []).forEach((entry) => {
+    if (entry && typeof entry.item_id === "string") put(entry.item_id, entry);
+  });
+  const declared = Array.isArray(report && report.self_decisions) ? report.self_decisions : [];
+  (Array.isArray(verdict.self_decisions) ? verdict.self_decisions : []).forEach((entry, n) => {
+    if (!entry) return;
+    const at = Number.isInteger(entry.index) ? entry.index : n;
+    const here = declared[at];
+    put(entry.decision_id || (here && here.decision_id) || "SD" + (at + 1), entry);
+  });
+  return out;
+}
+
+// The dispositions a step OFFERS as buttons: its own when it declares them, the default four
+// otherwise. Read on the way back in, so a token the step offers lands on its button and a
+// token the operator typed by hand lands back in the box they typed it into.
+function rrDispositionOptionsFor(report, id) {
+  let data = rrItemById(report, id) || null;
+  if (!data) {
+    const declared = Array.isArray(report && report.self_decisions) ? report.self_decisions : [];
+    data = declared.find((entry, n) => (entry && entry.decision_id ? entry.decision_id : "SD" + (n + 1)) === id) || null;
+  }
+  const own = data && Array.isArray(data.verdict_disposition_options) && data.verdict_disposition_options.length
+    ? data.verdict_disposition_options : null;
+  return own || RR_DEFAULT_DISPOSITIONS;
+}
+
+// Fill the state from a verdict file. Nothing here decides WHETHER it should be filled — the
+// mount decides that, because the precedence between a filed verdict and what the operator
+// typed is a promise, not a detail this function may make up.
+function rrApplyVerdictToState(state, verdict) {
+  const report = state.report;
+  const records = rrVerdictRecords(report, verdict);
+  Object.keys(records).forEach((id) => {
+    const record = records[id];
+    const patch = { verdict: record.verdict, note: record.note, chosenOption: record.chosenOption };
+    if (record.disposition != null) {
+      if (rrDispositionOptionsFor(report, id).indexOf(record.disposition) >= 0) patch.disposition = record.disposition;
+      else patch.dispOther = record.disposition;
+    }
+    rrSetRec(state, id, patch);
+  });
+  if (typeof verdict.verdict_by === "string") state.reviewer = verdict.verdict_by;
+}
+
+// D-066, AND THE SUMMARY IS DERIVED — nobody writes it. Two verdict files go in and what comes
+// out is the comparison of the two: which steps change verdict, which change disposition,
+// which change note, and whether the signer changed. `identical` is a MEASURED answer and not
+// an absence of one: when it is true the warning still appears and says so in those words,
+// because a warning that only shows up on a difference teaches the operator to click without
+// reading, and then the next silent overwrite is the interface's fault.
+function rrVerdictDelta(report, previous, next, T) {
+  const before = rrVerdictRecords(report, previous);
+  const after = rrVerdictRecords(report, next);
+  const fields = [["verdict", T.changeVerdict], ["disposition", T.changeDisposition], ["note", T.changeNote]];
+  const steps = [];
+  rrSteps(report, T).forEach((step) => {
+    const was = before[step.id] || {};
+    const now = after[step.id] || {};
+    const changes = [];
+    fields.forEach((pair) => {
+      const from = was[pair[0]] == null ? null : was[pair[0]];
+      const to = now[pair[0]] == null ? null : now[pair[0]];
+      if (from !== to) changes.push({ field: pair[1], from, to });
+    });
+    if (changes.length) steps.push({ id: step.id, label: rrStepLabel(step, T), changes });
+  });
+  const wasSigner = previous && previous.verdict_by != null ? String(previous.verdict_by) : null;
+  const nowSigner = next && next.verdict_by != null ? String(next.verdict_by) : null;
+  const signer = wasSigner === nowSigner ? null : { field: T.changeSigner, from: wasSigner, to: nowSigner };
+  return { steps, signer, identical: steps.length === 0 && !signer };
+}
+
+// ---------------------------------------------------------------------------
+// [#58] WHAT IS TYPED SURVIVES A RELOAD. Not a new mechanism: the browser already remembers
+// two things for this view — the interface language and the theme — through the two helpers
+// at the foot of this file, and this is the third. Measured before choosing: `localStorage`
+// is the ONLY persistence the console has, so putting the typed judgement anywhere else
+// would be inventing a promise about where the operator's work lives.
+//
+// The key is the report's own run identifier, so two reports never overwrite each other's
+// typing. A report that carries none is not persisted rather than persisted under a name
+// this file made up.
+// ---------------------------------------------------------------------------
+
+function rrDraftKey(report) {
+  const id = report && typeof report.run_id === "string" ? report.run_id : "";
+  return id ? "draft." + id : "";
+}
+
+function rrSaveDraft(state) {
+  const key = rrDraftKey(state.report);
+  if (!key) return;
+  try { rrLsSet(key, JSON.stringify({ v: state.v, reviewer: state.reviewer })); }
+  catch (err) { /* a state that will not serialise is nothing the operator can act on */ }
+}
+
+function rrLoadDraft(state) {
+  const key = rrDraftKey(state.report);
+  if (!key) return false;
+  const raw = rrLsGet(key, "");
+  if (!raw) return false;
+  let parsed = null;
+  try { parsed = JSON.parse(raw); } catch (err) { return false; }
+  if (!parsed || typeof parsed !== "object" || !parsed.v || typeof parsed.v !== "object") return false;
+  state.v = parsed.v;
+  state.reviewer = typeof parsed.reviewer === "string" ? parsed.reviewer : "";
+  return true;
+}
+
+function rrClearDraft(state) {
+  const key = rrDraftKey(state.report);
+  if (!key) return;
+  try { if (typeof localStorage !== "undefined") localStorage.removeItem("rr." + key); }
+  catch (err) { /* storage denied is not an error the operator can act on */ }
+}
+
 // The tally counts SIGNABLE steps only. An item that declares it needs no verdict is on
 // screen and in the index, but it is not part of what the operator still owes.
 function rrProgress(report, state, T) {
@@ -506,22 +698,33 @@ function rrMissing(report, state, T) {
 // (or nobody said where it goes), approving would close a run that has not closed, and
 // the reason comes back WRITTEN — an option that vanished in silence would be the
 // interface deciding; one that says why is the interface refusing a contradiction.
+// [#58] It also NAMES them. Counting was all it ever did, so "one step still owes this run"
+// left the operator to find that one step among however many cards the report carries. The
+// count is unchanged and the sentence is unchanged; `blockers` is the same measurement said
+// with identifiers instead of only with a number.
 function rrRunApprovedGuard(report, state, T) {
   let noDisposition = 0, owedHere = 0;
+  const blockers = [];
   rrSigningSteps(report, T).forEach((s) => {
     if (s.kind === "run") return;
     const r = rrRec(state, s.id);
     if (r.verdict !== "CHANGES_REQUIRED") return;
     const disposition = rrEffectiveDisposition(r);
-    if (disposition == null) noDisposition += 1;
-    else if (disposition === RR_FIX_HERE) owedHere += 1;
+    if (disposition == null) {
+      noDisposition += 1;
+      blockers.push({ id: s.id, label: rrStepLabel(s, T), why: T.blockerNoDisposition });
+    } else if (disposition === RR_FIX_HERE) {
+      owedHere += 1;
+      blockers.push({ id: s.id, label: rrStepLabel(s, T), why: T.blockerOwedHere });
+    }
   });
   const parts = [];
   if (noDisposition) parts.push(T.guardNoDisposition(noDisposition));
   if (owedHere) parts.push(T.guardOwedHere(owedHere));
   return {
     available: parts.length === 0,
-    reason: parts.length ? T.guardHeld + parts.join(T.and) + "." : null
+    reason: parts.length ? T.guardHeld + parts.join(T.and) + "." : null,
+    blockers
   };
 }
 
@@ -547,6 +750,22 @@ function rrTagHtml(text, cls) {
   return '<span class="rr-tag ' + (cls || "") + '">' + rrEsc(text) + "</span>";
 }
 
+// [#58] A list that names steps, CLOSED BY DEFAULT — no `open` attribute, which is what the
+// operator asked for — and every row is a way IN. The rows carry the rail's own `goto`, so
+// the same click that tells the operator which step it is takes them to it; a list that only
+// named them would still leave the hunt through the cards to do by hand.
+function rrStepListHtml(entries, label, T) {
+  if (!entries || !entries.length) return "";
+  const rows = entries.map((entry) =>
+    '<div class="rr-blocker-row" data-rr-act="goto" data-rr-id="' + rrEsc(entry.id) + '" title="' + rrEsc(entry.label) + '">' +
+    '<span class="rr-blocker-label">' + rrEsc(entry.label) + "</span>" +
+    (entry.why ? '<span class="rr-blocker-why">' + rrEsc(entry.why) + "</span>" : "") +
+    rrIcon("arrow-right") + "</div>").join("");
+  return '<details class="rr-blockers"><summary>' + rrIcon("caret") + rrEsc(label) +
+    '<span class="rr-blockers-n">' + entries.length + "</span></summary>" +
+    '<div class="rr-blockers-body">' + rows + "</div></details>";
+}
+
 // One bar, two vocabularies: `verdicts` says which tokens this step takes — an item's
 // two, the run's three. `held` travels only with the run, and only the guard writes it:
 // when APPROVED is not available, the button stays on screen but refuses (disabled), and
@@ -568,7 +787,10 @@ function rrVerdictBarHtml(id, rec, question, dispositionOptions, T, lang, verdic
   return '<div class="rr-verdict-bar">' +
     '<div class="rr-verdict-row"><span class="rr-question">' + rrEsc(question) + '</span>' +
     '<div class="rr-verdict-btns">' + buttons + "</div></div>" +
-    (holds ? '<div class="rr-guard-reason">' + rrIcon("warning") + "<span>" + rrEsc(held.reason) + "</span></div>" : "") +
+    (holds
+      ? '<div class="rr-guard-reason">' + rrIcon("warning") + "<span>" + rrEsc(held.reason) + "</span></div>" +
+        rrStepListHtml(held.blockers, T.whichOnes, T)
+      : "") +
     (needsDisposition
       ? '<div class="rr-disposition"><span class="rr-and-then">' + rrEsc(T.andThen) + "</span>" +
         '<div class="rr-disposition-btns">' + dispButtons +
@@ -829,6 +1051,51 @@ function rrCardForDecisionHtml(decision, id, state, T) {
     '<div class="rr-card-body">' + sections.join("") + "</div></div>";
 }
 
+// [#58] The verdict that was read off disk when the report opened, said in words. Everything
+// in it is the FILE's own — who signed it, when it was stamped, what it said about the run —
+// so a report that carries one cannot come back looking as though nobody had ever judged it.
+function rrFiledHtml(state, T) {
+  const filed = state.filed;
+  if (!filed) return "";
+  const bits = [];
+  if (filed.run && filed.run.verdict) bits.push(String(filed.run.verdict));
+  if (filed.verdict_by) bits.push(T.filedSigned + " " + String(filed.verdict_by));
+  if (filed.decided_at) bits.push(T.filedWhen + " " + String(filed.decided_at));
+  return '<div class="rr-filed">' + rrIcon("seal-check") +
+    '<div class="rr-filed-body">' +
+    '<span class="rr-filed-title">' + rrEsc(T.filedTitle) + "</span>" +
+    (bits.length ? '<span class="rr-filed-meta">' + rrEsc(bits.join(" · ")) + "</span>" : "") +
+    (state.restored ? '<span class="rr-filed-note">' + rrEsc(T.filedRestored) + "</span>" : "") +
+    "</div></div>";
+}
+
+// [#58] D-066 ON SCREEN. The gate the sign button passes through when a verdict already sits
+// beside the report: it states the overwrite, it shows the DERIVED comparison, and it waits.
+// The two buttons are the only way out, and one of them writes nothing.
+function rrConfirmHtml(delta, T) {
+  const lineHtml = (change) =>
+    '<div class="rr-delta-line">' +
+    '<span class="rr-delta-field">' + rrEsc(change.field) + "</span>" +
+    '<span class="rr-delta-from">' + rrEsc(change.from == null ? T.changeEmpty : change.from) + "</span>" +
+    '<span class="rr-delta-arrow">' + rrIcon("arrow-right") + "</span>" +
+    '<span class="rr-delta-to">' + rrEsc(change.to == null ? T.changeEmpty : change.to) + "</span></div>";
+  const stepRows = delta.steps.map((step) =>
+    '<div class="rr-delta-step">' +
+    '<span class="rr-delta-label">' + rrEsc(step.label) + "</span>" +
+    '<div class="rr-delta-lines">' + step.changes.map(lineHtml).join("") + "</div></div>").join("");
+  const signerRow = delta.signer ? '<div class="rr-delta-step"><div class="rr-delta-lines">' + lineHtml(delta.signer) + "</div></div>" : "";
+  return '<div class="rr-confirm">' +
+    '<div class="rr-confirm-title">' + rrIcon("warning") + rrEsc(T.overwriteTitle) + "</div>" +
+    (delta.identical
+      ? '<p class="rr-confirm-same">' + rrEsc(T.overwriteSame) + "</p>"
+      : '<div class="rr-confirm-changes"><span class="rr-kicker">' + rrEsc(T.overwriteChanges) + "</span>" +
+        stepRows + signerRow + "</div>") +
+    '<div class="rr-confirm-actions">' +
+    '<button type="button" class="rr-btn rr-btn-secondary" data-rr-act="cancel-write">' + rrEsc(T.overwriteCancel) + "</button>" +
+    '<button type="button" class="rr-btn rr-btn-primary" data-rr-act="confirm-write">' + rrEsc(T.overwriteConfirm) + "</button>" +
+    "</div></div>";
+}
+
 // The LAST card: the run itself. It recaps the per-step tally and warns while steps are
 // pending — the run verdict never replaces them. With a mechanical gate the question
 // changes wording, exactly as the prototype words it.
@@ -844,17 +1111,38 @@ function rrCardForRunHtml(report, state, T) {
     const v = rrRec(state, s.id).verdict || T.pendingTag;
     tally[v] = (tally[v] || 0) + 1;
   });
+  // [#58] THE NUMBER DOES NOT CHANGE — HOW IT READS DOES. Every row used to print the same
+  // `n / decided.length`, three rows deep, which reads as three separate totals of three
+  // different things instead of three parts of one. So the denominator is stated ONCE, above
+  // the rows, with the reason it is that number written next to it: the run does not count
+  // itself (`s.kind !== "run"`) and a step that asks for no verdict does not swell it
+  // (`s.signs`), which are exactly the two filters `decided` is built from.
   const recapRows = RR_ITEM_VERDICTS.concat([T.pendingTag]).filter((k) => tally[k]).map((k) =>
     '<div class="rr-recap-row">' + rrDotHtml(k !== T.pendingTag) +
     '<span class="rr-recap-label">' + rrEsc(k) + '</span>' +
-    '<span class="rr-recap-value">' + tally[k] + " / " + decided.length + "</span></div>").join("");
+    '<span class="rr-recap-value">' + tally[k] + "</span></div>").join("");
   const pending = tally[T.pendingTag] || 0;
+  // The pending steps, by name and reachable — the recap counted them and named nobody.
+  const pendingSteps = decided.filter((s) => !rrRec(state, s.id).verdict)
+    .map((s) => ({ id: s.id, label: rrStepLabel(s, T), why: "" }));
   const statusChip = rec.verdict
     ? '<span class="rr-tag rr-tag-accent rr-status rr-status-set">' + rrEsc(rec.verdict) + "</span>"
     : '<span class="rr-tag rr-tag-neutral rr-status">' + rrEsc(T.pendingTag) + "</span>";
 
   const sections = [];
-  if (recapRows) sections.push('<div class="rr-recap">' + recapRows + "</div>");
+  // [#58] The verdict already on disk, named where it cannot be missed. Read on open, it also
+  // fills every card and every rail dot below — this block is the one that says so in words.
+  const filedBlock = rrFiledHtml(state, T);
+  if (filedBlock) sections.push(filedBlock);
+  if (recapRows) {
+    sections.push('<div class="rr-recap">' +
+      '<div class="rr-recap-head"><span class="rr-recap-total">' + decided.length + "</span>" +
+      '<span class="rr-recap-total-label">' + rrEsc(T.recapDenominator(decided.length)) + "</span></div>" +
+      '<div class="rr-recap-rows">' + recapRows + "</div>" +
+      '<p class="rr-recap-why">' + rrEsc(T.recapWhy) + "</p>" +
+      rrStepListHtml(pendingSteps, T.whichOnes, T) +
+      "</div>");
+  }
   if (pending > 0) {
     sections.push('<div class="rr-warning">' + rrIcon("warning") +
       '<p class="rr-prose">' + rrEsc(T.pendingLeft(pending)) + "</p></div>");
@@ -886,6 +1174,9 @@ function rrCardForRunHtml(report, state, T) {
     '<button type="button" class="rr-btn rr-btn-primary rr-sign-btn" data-rr-act="sign"' + (ready ? "" : " disabled") + ">" +
     rrIcon(writeMode ? "seal-check" : "download") + rrEsc(writeMode ? T.writeVerdict : T.downloadVerdict) + "</button></div>" +
     '<span class="rr-sign-hint">' + rrEsc(signHint) + "</span>" +
+    // [#58] D-066: while a confirmation is pending the panel stands between the button and
+    // the write, and nothing has been written yet.
+    (state.confirm ? rrConfirmHtml(state.confirm.delta, T) : "") +
     '<details class="rr-sign-preview"><summary>' + rrIcon("caret") + rrEsc(T.previewOutput) + "</summary>" +
     '<pre class="rr-verdict-json">' + rrEsc(JSON.stringify(rrVerdictOutput(report, state), null, 2)) + "</pre></details></div>";
 
@@ -922,9 +1213,7 @@ function rrRailHtml(report, state, T) {
       const count = steps.filter((x) => x.group === s.group).length;
       rows.push('<div class="rr-rail-group"><span>' + rrEsc(s.group) + '</span><span class="rr-rail-group-n">' + count + "</span></div>");
     }
-    const label = s.kind === "run" ? T.runVerdict
-      : s.kind === "decision" ? (s.data.decision_id ? s.data.decision_id + " · " + (s.data.what || "") : (s.data.what || ""))
-        : ((s.data.subject && s.data.subject.label) || s.id);
+    const label = rrStepLabel(s, T);
     const title = s.kind === "item" ? (s.data.headline || "") : label;
     const stop = s.kind === "item" && !!s.data.stop;
     const inherits = s.kind === "item" && !s.data.stop && rrHasStopInside(report, s.data);
@@ -1087,6 +1376,13 @@ function rrTopbarHtml(report, state, T) {
   return '<span class="rr-app-title">' + rrEsc(T.appTitle) + "</span>" +
     '<span class="rr-tag rr-tag-outline rr-gate-chip" title="' + rrEsc(R.gate_reason || "") + '">' +
     rrEsc(T.gate) + " · " + rrEsc(R.gate || "—") + "</span>" +
+    // [#58] The chip rides the topbar, which is on screen from the FIRST card — the run card
+    // that spells the filed verdict out is the last one, and a fact only visible at the end
+    // is a fact the operator signs without.
+    (state.filed
+      ? '<span class="rr-tag rr-tag-outline rr-filed-chip" title="' + rrEsc(T.filedTitle) + '">' +
+        rrIcon("seal-check") + rrEsc(T.filedChip) + "</span>"
+      : "") +
     '<span class="rr-topbar-spacer"></span>' +
     '<span class="rr-progress-text">' + done + " / " + total + "</span>" +
     '<div class="rr-nav">' +
@@ -1162,6 +1458,9 @@ function rrInitialState(input) {
     // The writer the console injects (#57), and what became of the last write. With no writer
     // the sign button downloads, and says so — two different verbs for two different acts.
     writer: null, write: { status: "idle", detail: "", path: "" },
+    // [#58] The verdict read off disk when the report opened (null when there is none),
+    // whether what is on screen came back from a reload, and the pending D-066 confirmation.
+    filed: null, restored: false, confirm: null,
     lang: rrLsGet("lang", "en"), theme: rrLsGet("theme", "dark")
   };
 }
@@ -1169,6 +1468,10 @@ function rrInitialState(input) {
 // Any change to what would be signed makes the last write's outcome stale: the hint must not
 // keep claiming "written" over a state that no longer is what was written.
 function rrResetWrite(state) {
+  // [#58] And it makes a PENDING CONFIRMATION stale too. That panel asks about one specific
+  // comparison; change what would be signed and the question is no longer the one the
+  // operator was answering, so it is withdrawn rather than left to confirm something else.
+  state.confirm = null;
   if (state.write && state.write.status !== "idle" && state.write.status !== "writing") {
     state.write = { status: "idle", detail: "", path: "" };
   }
@@ -1209,6 +1512,21 @@ function renderRunReport(container, input, opts) {
   // The writer arrives by INJECTION (#57) — a callback, never a URL composed here, so this
   // file stays blind to where a verdict lands and to whose project the report belongs.
   state.writer = typeof options.writeVerdict === "function" ? options.writeVerdict : null;
+
+  // [#58] THE VERDICT ALREADY ON DISK, and the same rule as the writer: it arrives as DATA
+  // (`existingVerdict`, bytes or object), fetched by whoever knows where a verdict lives. A
+  // file that does not parse is treated as no file — a report must still open and still be
+  // signable when the thing beside it is damaged.
+  const filed = rrParseReport(options.existingVerdict == null ? null : options.existingVerdict);
+  state.filed = filed.error ? null : filed.report;
+  if (state.filed) rrApplyVerdictToState(state, state.filed);
+
+  // ...AND WHAT WAS TYPED WINS OVER IT. Both can exist at once and disagree, and which one
+  // the form shows is a promise rather than a detail: the operator's own typing is never
+  // thrown away by a reload, and the filed verdict does not vanish for it — it stays named on
+  // the run card and in the topbar, and it is the baseline the D-066 comparison measures
+  // against when the sign button is pressed.
+  state.restored = rrLoadDraft(state);
 
   function draw() {
     container.setAttribute("data-theme", state.theme);
@@ -1257,16 +1575,19 @@ function renderRunReport(container, input, opts) {
           !rrRunApprovedGuard(state.report, state, rrT(state.lang)).available) return;
       rrSetRec(state, id, { verdict: next, disposition: null });
       rrResetWrite(state);
+      rrSaveDraft(state);
       draw();
     } else if (act === "disposition") {
       const current = rrRec(state, id).disposition;
       rrSetRec(state, id, { disposition: current === value ? null : value, dispOther: "" });
       rrResetWrite(state);
+      rrSaveDraft(state);
       draw();
     } else if (act === "chosen-option") {
       const current = rrRec(state, id).chosenOption;
       rrSetRec(state, id, { chosenOption: current === value ? null : value });
       rrResetWrite(state);
+      rrSaveDraft(state);
       draw();
     } else if (act === "goto") {
       goStep(id);
@@ -1291,25 +1612,62 @@ function renderRunReport(container, input, opts) {
         rrDownloadVerdict(JSON.stringify(rrVerdictOutput(state.report, state), null, 2));
         return;
       }
-      // Writer injected: the button said "Write", and the outcome — the path written, or the
-      // refusal — comes back worded from whoever actually wrote. One write at a time.
       if (state.write.status === "writing") return;
-      state.write = { status: "writing", detail: "", path: "" };
+      // [#58] D-066, AND IT IS THE LAW OF THIS RUN. Signing over a verdict that already
+      // exists is NEVER a direct write. The first press raises the warning, carrying the
+      // comparison of the two files, and stops there — nothing is posted. Only the explicit
+      // confirmation below writes. When the two are identical the warning still comes, and
+      // says so in those words, so the gesture never becomes one the operator can learn to
+      // make blind.
+      if (state.filed && !state.confirm) {
+        state.confirm = {
+          delta: rrVerdictDelta(state.report, state.filed, rrVerdictOutput(state.report, state), rrT(state.lang))
+        };
+        draw();
+        return;
+      }
+      performWrite();
+    } else if (act === "confirm-write") {
+      if (!state.confirm) return;
+      state.confirm = null;
+      performWrite();
+    } else if (act === "cancel-write") {
+      // Nothing was written, and nothing is: that is the whole of what the gate promises.
+      state.confirm = null;
       draw();
-      Promise.resolve()
-        .then(() => state.writer(rrVerdictOutput(state.report, state)))
-        .then((result) => {
-          state.write = result && result.ok
-            ? { status: "written", detail: "", path: String(result.path || "") }
-            : { status: "failed", detail: String((result && (result.reason || result.detail)) || ""), path: "" };
-          draw();
-        })
-        .catch((error) => {
-          state.write = { status: "failed", detail: String((error && error.message) || error), path: "" };
-          draw();
-        });
     }
   });
+
+  // The write itself, once whatever had to be asked has been asked. The button said "Write",
+  // and the outcome — the path written, or the refusal — comes back worded from whoever
+  // actually wrote. One write at a time.
+  function performWrite() {
+    if (state.write.status === "writing") return;
+    state.write = { status: "writing", detail: "", path: "" };
+    draw();
+    Promise.resolve()
+      .then(() => state.writer(rrVerdictOutput(state.report, state)))
+      .then((result) => {
+        if (result && result.ok) {
+          state.write = { status: "written", detail: "", path: String(result.path || "") };
+          // [#58] What was typed IS what is filed now. The saved copy has no separate life
+          // left to lead, and what was just written becomes the baseline the NEXT signature
+          // is compared against — so a second press warns about the second change, not
+          // about the first one all over again. `decided_at` is the writer's stamp and is
+          // not invented here; the block simply shows no date until the file is re-read.
+          state.filed = rrVerdictOutput(state.report, state);
+          state.restored = false;
+          rrClearDraft(state);
+        } else {
+          state.write = { status: "failed", detail: String((result && (result.reason || result.detail)) || ""), path: "" };
+        }
+        draw();
+      })
+      .catch((error) => {
+        state.write = { status: "failed", detail: String((error && error.message) || error), path: "" };
+        draw();
+      });
+  }
 
   // Typing mutates state only; the redraw happens on the next acted change so the caret
   // never jumps. The sign row is the exception: its readiness must follow the name live,
@@ -1322,13 +1680,16 @@ function renderRunReport(container, input, opts) {
     if (act === "note") {
       rrSetRec(state, id, { note: target.value });
       rrResetWrite(state);
+      rrSaveDraft(state);
     } else if (act === "disp-other") {
       rrSetRec(state, id, { dispOther: target.value, disposition: null });
       rrResetWrite(state);
+      rrSaveDraft(state);
     } else if (act === "reviewer") {
       const wasReady = rrSignBlocks(state.report, state, rrT(state.lang)).ready;
       state.reviewer = target.value;
       rrResetWrite(state);
+      rrSaveDraft(state);
       const isReady = rrSignBlocks(state.report, state, rrT(state.lang)).ready;
       if (wasReady !== isReady) {
         draw();

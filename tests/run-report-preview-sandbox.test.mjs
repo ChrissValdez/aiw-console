@@ -180,7 +180,8 @@ test("the two lesson assets use nothing the empty token set denies, so they pain
 
 // ---------------------------------------------------------------------------
 // PROOF (c), server half — the gate the opaque origin runs into. A sandboxed frame's requests
-// carry `Origin: null`; the real server must refuse that at 403 on ALL THREE write routes,
+// carry `Origin: null`; the real server must refuse that at 403 on ALL FOUR write routes
+// (three when this was measured; #57's verdict write joined the sweep the day it opened),
 // before any route logic, writing nothing. The same-origin control proves the refusal is the
 // GATE and not a broken route behind it.
 // ---------------------------------------------------------------------------
@@ -232,7 +233,8 @@ test.after(async () => {
 const WRITE_ROUTES = [
   "__project-console/roadmap/edit",
   "__project-console/history/sync",
-  "__project-console/project/emit"
+  "__project-console/project/emit",
+  "__project-console/verdict/write"
 ];
 
 async function post(route, origin) {
@@ -246,7 +248,7 @@ async function post(route, origin) {
   return { status: response.status, payload };
 }
 
-test("Origin: null — what a sandboxed frame is forced to send — is refused at 403 on all three write routes, and nothing is written", async () => {
+test("Origin: null — what a sandboxed frame is forced to send — is refused at 403 on all four write routes, and nothing is written", async () => {
   const before = readFileSync(roadmapPath, "utf8");
   const beforeMtime = statSync(roadmapPath).mtimeMs;
   for (const route of WRITE_ROUTES) {

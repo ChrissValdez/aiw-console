@@ -150,12 +150,15 @@ test("C.2: care_budget is NOT a run field, in all four places a run field would 
     `a run-level care_budget must still be refused; got: ${errors.join(" | ")}`);
 });
 
-test("C.3: absent is VALID and is today's state — this repo's canonical passes and round-trips byte-identical", () => {
-  // Measured on the live canonical, READ ONLY. It carries no root care_budget, and both facts
-  // that matter about that are asserted: it validates, and reading + writing it changes nothing.
+test("C.3: this repo's canonical passes and round-trips byte-identical — with or without a root care budget", () => {
+  // Measured on the live canonical, READ ONLY. When this pin was written the canonical carried
+  // no root care_budget and asserted that absence as "today's state"; the operator has since
+  // declared one through the sanctioned op (C.1), which is exactly what the feature is for, so
+  // the absence pin went stale and was retired (#57). What was always invariant stays pinned:
+  // the live file validates and reading + writing it changes nothing. That ABSENT is VALID is
+  // proven on the fixture in the next test, which cannot go stale when an operator configures.
   const raw = core.loadRaw(join(REPO_ROOT, "roadmap", "roadmap.json"));
   const obj = core.parseRoadmap(raw);
-  assert.equal("care_budget" in obj, false, "this repo declares no care budget, and that is valid");
   assert.deepEqual(core.checkInvariants(obj, { externalRunIds: null }), []);
   assert.equal(core.serialize(obj, core.detectEol(raw)), raw, "read + write must be byte-identical");
 });

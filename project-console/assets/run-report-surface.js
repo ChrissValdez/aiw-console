@@ -25,7 +25,9 @@
 // `renderRunReport` untouched, so there is no field of a report this file could come to know.
 // It does not validate, adapt, repair or translate: a report that does not conform fails in the
 // project that emitted it, where its owner can fix it (ticket criterion 3). And it writes
-// nothing — the verdict is #54.
+// nothing ITSELF: the write is #57's endpoint, reached through the writer callback the console
+// composes and this file only RELAYS to the renderer — no field of a verdict and no route to
+// anywhere is composed here.
 //
 // THE LANGUAGE RULE (the run's own full_description): the chrome of the view is translatable,
 // the content NEVER is. Every string in this file is chrome. The report's own text is quoted
@@ -399,7 +401,13 @@ async function openRunReport(options) {
     rrsOpen = { runId: opts.runId || "", url, handle: null, failed: true };
     return { ok: false, reason: "no_renderer" };
   }
-  const handle = render(mount, body, { previewBase: opts.previewBase || "" });
+  const handle = render(mount, body, {
+    previewBase: opts.previewBase || "",
+    // The console's writer callback (#57), relayed verbatim. This file neither composes the
+    // route nor reads the verdict travelling through it; with none given, the renderer's sign
+    // button downloads and says so.
+    writeVerdict: typeof opts.writeVerdict === "function" ? opts.writeVerdict : null
+  });
   rrsOpen = { runId: opts.runId || "", url, handle, failed: false };
   return { ok: true, handle };
 }

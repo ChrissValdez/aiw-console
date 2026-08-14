@@ -1,5 +1,6 @@
-// Project Console — local server for N projects: read-only static serving plus EXACTLY THREE
-// write routes (O4.P12 opened two; O4.P14 adds the third).
+// Project Console — local server for N projects: read-only static serving plus EXACTLY FOUR
+// write routes (O4.P12 opened two; O4.P14 added the third; #57 — RUN-CONSOLE-VERDICT-POST-001 —
+// adds the fourth).
 //
 // Serves two namespaces:
 //
@@ -12,7 +13,7 @@
 //      is the only door out of the repo: a root that is not registered is not reachable,
 //      and a registered root is readable only inside itself (no traversal, never .git).
 //
-// THE THREE WRITE ROUTES (D-050 — this console stops being read-only, deliberately and only here):
+// THE FOUR WRITE ROUTES (D-050 — this console stops being read-only, deliberately and only here):
 //
 //   POST /projects/<key>/__project-console/roadmap/edit    dry-run (apply:false) previews a
 //        bounded roadmap edit and writes nothing; apply (apply:true, with the dry-run baseline
@@ -26,6 +27,15 @@
 //   POST /projects/<key>/__project-console/project/emit    re-emits ALL SEVEN artifacts of that
 //        project's `.project/` folder from its canonical roadmap (O4.P14). The same gesture the
 //        route above already performs for ONE derived artifact, extended to the whole folder.
+//   POST /projects/<key>/__project-console/verdict/write   writes `verdict.json` BESIDE the
+//        `report.json` it answers, in the repo of the project that filed the report (#57). The
+//        verdict model is the RENDERER'S OWN — the file is loaded and asked, never re-implemented
+//        here — so what the endpoint refuses is exactly what the view refuses: the closed verdict
+//        vocabularies, the completeness gate, the run-APPROVED guard, and `stopped` DERIVED from
+//        the emitter's `stop` declaration and the operator's rejection, never chosen. The signer
+//        is whatever the request carried from the person's own typing — no name lives here. It
+//        writes that ONE file and touches nothing else: no re-emission (the derived reports index
+//        catches up on the operator's next emission), no status change, no Git.
 //
 // WHY THE THIRD ROUTE EXISTS. `.project/` is a PROJECTION of a canonical the console does not
 // own. Two of the ways it gets re-emitted are already here — after a confirmed roadmap edit, and
@@ -42,20 +52,20 @@
 // the operator's feet and dirty their Git working tree without an action of theirs. The console
 // writes on request, visibly, and never on a timer. Nothing here polls, watches or schedules.
 //
-// All three routes go through the same funnel: the project must be REGISTERED (the key resolves
+// All four routes go through the same funnel: the project must be REGISTERED (the key resolves
 // in the registry), its root must be claimed by a known layout (detectRootLayout — admission by
 // tree SHAPE, never by a schema-name string), and every write destination is verified INSIDE
 // that registered root after full path resolution. The two path guards are MIRROR IMAGES of one
 // another and neither can write where the other does:
 //   resolveCanonicalWritePath   inside the root, and NEVER inside the derived `.project/`
-//                               (canonical territory — the roadmap edit route).
+//                               (canonical territory — the roadmap edit and verdict write routes).
 //   resolveEmissionWritePath    inside the root, and ONLY inside the derived `.project/`
 //                               (emitter territory — the emission routes).
 // A registry entry whose root composes a destination anywhere else is refused and reported,
 // not executed.
 //
 // Everything else stays read-only by construction: any method other than GET/HEAD on any path
-// that is not one of the three routes above answers 405 read_only_console; `.git` is never
+// that is not one of the four routes above answers 405 read_only_console; `.git` is never
 // served or written in any namespace; escaping a root answers 403.
 //
 // NO GIT THAT WRITES, EVER. The emission reads Git to derive `git_history.json` (the same
@@ -70,10 +80,10 @@
 //
 // Boundaries:
 //   - Node built-ins only. No dependencies, no package install.
-//   - Writes ONLY through the three routes above: the canonical roadmap of a registered project
-//     (via the transplanted roadmap engine's atomic temp+rename with tmpdir backup) and that
-//     project's `.project/` folder (via the projector's atomic emitters). No other code path
-//     in this file opens a file for writing.
+//   - Writes ONLY through the four routes above: the canonical roadmap of a registered project
+//     and the verdict beside one of its reports (via the transplanted roadmap engine's atomic
+//     temp+rename with tmpdir backup) and that project's `.project/` folder (via the projector's
+//     atomic emitters). No other code path in this file opens a file for writing.
 //   - Loopback only: the server binds 127.0.0.1, and the write routes additionally verify the
 //     peer is loopback and any browser Origin is a localhost origin (defense in depth).
 //   - Never serves any .git/ directory — in this repo or in any registered project root.
@@ -86,9 +96,10 @@
 
 import http from "node:http";
 import { readFile } from "node:fs/promises";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, unlinkSync } from "node:fs";
 import { extname, join, normalize, resolve, relative, sep, dirname, isAbsolute } from "node:path";
 import { fileURLToPath } from "node:url";
+import vm from "node:vm";
 import { planEdit, applyPlan, loadCurrent, KNOWN_OPS } from "../tools/roadmap/roadmap-plan.mjs";
 import { checkInvariants } from "../tools/roadmap/roadmap-core.mjs";
 import {
@@ -99,6 +110,9 @@ import {
   writeGitHistoryFile,
   ROOT_LAYOUTS,
   PROJECT_DIR,
+  REPORTS_SOURCE_DIR,
+  REPORT_FILE_NAME,
+  VERDICT_FILE_NAME,
   PROJECT_GUARDRAILS_RELATIVE_PATH,
   PROJECT_NO_CLAIMS_RELATIVE_PATH,
   PROJECT_DOCS_INDEX_RELATIVE_PATH,
@@ -118,14 +132,15 @@ const REGISTRY_URL_PATH = "/project-console/projects.json";
 const REGISTRY_DEFAULT_PATH = join(HERE, "projects.json");
 // URL prefix of the virtual per-project namespace.
 const PROJECTS_URL_PREFIX = "/projects/";
-// The three write routes, as suffixes under /projects/<key>/. The client composes them from its
+// The four write routes, as suffixes under /projects/<key>/. The client composes them from its
 // active-project base, so the same constant shape serves every registered project. They are
 // intercepted BEFORE static file resolution (like the source console's /__project-console/*),
 // so a real file at any of these paths inside a project is shadowed, never served.
 const ROADMAP_EDIT_SUFFIX = "__project-console/roadmap/edit";
 const HISTORY_SYNC_SUFFIX = "__project-console/history/sync";
 const PROJECT_EMIT_SUFFIX = "__project-console/project/emit";
-const ROADMAP_EDIT_MAX_BODY = 1000000; // 1 MB cap on the request body
+const VERDICT_WRITE_SUFFIX = "__project-console/verdict/write";
+const ROADMAP_EDIT_MAX_BODY = 1000000; // 1 MB cap on the request body (the verdict route shares it)
 
 // THE SEVEN ARTIFACTS a full emission writes, in the emitter's own order (O4.P14; the seventh
 // added by O4.P17). This list is not a second opinion about what `writeProjectFolder` emits: it
@@ -248,7 +263,7 @@ async function resolveVirtualPath(urlPath) {
 
 // ---------------------------------------------------------------- write routes (O4.P12 / O4.P14)
 
-// Match /projects/<key>/<one of the three write suffixes>. Returns { key, endpoint } or null.
+// Match /projects/<key>/<one of the four write suffixes>. Returns { key, endpoint } or null.
 // Routing happens on the DECODED path, so an encoded form of the same URL matches too.
 function matchWriteRoute(urlPath) {
   if (!urlPath.startsWith(PROJECTS_URL_PREFIX)) return null;
@@ -260,6 +275,7 @@ function matchWriteRoute(urlPath) {
   if (suffix === ROADMAP_EDIT_SUFFIX) return { key, endpoint: "roadmap_edit" };
   if (suffix === HISTORY_SYNC_SUFFIX) return { key, endpoint: "history_sync" };
   if (suffix === PROJECT_EMIT_SUFFIX) return { key, endpoint: "project_emit" };
+  if (suffix === VERDICT_WRITE_SUFFIX) return { key, endpoint: "verdict_write" };
   return null;
 }
 
@@ -863,6 +879,336 @@ async function handleProjectEmit(req, res, key) {
   });
 }
 
+// ---------------------------------------------------------------- verdict write (#57)
+
+// THE VERDICT MODEL IS THE RENDERER'S OWN, loaded once and asked — never re-implemented.
+// This is the same mechanical loading the verdict-model suite uses, and it is the point:
+// the closed vocabularies, the `requires_verdict === false` derivation (by field presence,
+// never by an item's `type`), the completeness gate, the run-APPROVED guard and the derived
+// `stopped` all come from the ONE file the view executes, so the endpoint cannot come to
+// disagree with the screen the operator signed on.
+const VERDICT_MODEL_PATH = join(HERE, "assets", "run-report-renderer.js");
+let verdictModelSandbox = null;
+function verdictModel() {
+  if (verdictModelSandbox) return verdictModelSandbox;
+  const context = vm.createContext({ console });
+  vm.runInContext(readFileSync(VERDICT_MODEL_PATH, "utf8"), context, { filename: VERDICT_MODEL_PATH });
+  // The renderer's top-level `const`s are lexical bindings of the context, not properties of
+  // its global object, so the exact bindings this endpoint asks for are captured from INSIDE
+  // the context — the vocabularies stay the renderer's own, never copies typed here.
+  verdictModelSandbox = vm.runInContext(
+    "({ RR_ITEM_VERDICTS, RR_RUN_VERDICTS, rrT, rrItems, rrSteps, rrMissing, rrSignBlocks, rrVerdictOutput })",
+    context
+  );
+  return verdictModelSandbox;
+}
+
+// A report folder name is a single path segment, same charset as a registry key: it can never
+// smuggle a separator, a traversal or a `.git` into the compose below. The boundary guard
+// re-verifies containment after full resolution anyway — this is the first tooth, not the only one.
+const REPORT_RUN_DIR_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
+
+// Rebuild the renderer's own state from the wire payload. The record fields are the four the
+// model writes (`verdict`, `disposition`, `note`, `chosen_option`); anything else in a payload
+// entry is dropped by construction because rrVerdictOutput never reads it. Every refusal is
+// NAMED — an entry naming a step the report does not declare is an error, never silently lost.
+function buildVerdictState(model, report, payload) {
+  const errors = [];
+  const state = { report, v: {}, reviewer: "", lang: "en" };
+  if (typeof payload.verdict_by === "string") state.reviewer = payload.verdict_by;
+  else if (payload.verdict_by != null) errors.push("verdict_by must be the string the person signing typed");
+
+  const setRecord = (id, source, where) => {
+    const rec = {};
+    for (const [from, to] of [["verdict", "verdict"], ["disposition", "disposition"], ["note", "note"], ["chosen_option", "chosenOption"]]) {
+      const value = source[from];
+      if (value == null) continue;
+      if (typeof value !== "string") { errors.push(`${where}: ${from} must be a string or null`); continue; }
+      rec[to] = value;
+    }
+    state.v[id] = rec;
+  };
+
+  const itemIds = new Set(model.rrItems(report).map((it) => it && it.item_id).filter(Boolean));
+  const items = payload.items == null ? [] : payload.items;
+  if (!Array.isArray(items)) errors.push("items must be an array");
+  else items.forEach((entry, n) => {
+    if (!entry || typeof entry !== "object" || typeof entry.item_id !== "string" || !entry.item_id) {
+      errors.push(`items[${n}] carries no item_id`);
+      return;
+    }
+    if (!itemIds.has(entry.item_id)) { errors.push(`items[${n}] names ${entry.item_id}, which the report does not declare`); return; }
+    if (state.v[entry.item_id]) { errors.push(`items[${n}] repeats ${entry.item_id}`); return; }
+    setRecord(entry.item_id, entry, `items[${n}] (${entry.item_id})`);
+  });
+
+  // A decision's step id is the renderer's own resolution: its declared decision_id, else its
+  // position (`SD<n+1>`) — the same two identifiers rrVerdictOutput writes back out.
+  const decisions = Array.isArray(report.self_decisions) ? report.self_decisions : [];
+  const decisionIdAt = (i) => (decisions[i] && decisions[i].decision_id ? decisions[i].decision_id : "SD" + (i + 1));
+  const payloadDecisions = payload.self_decisions == null ? [] : payload.self_decisions;
+  if (!Array.isArray(payloadDecisions)) errors.push("self_decisions must be an array");
+  else payloadDecisions.forEach((entry, n) => {
+    if (!entry || typeof entry !== "object") { errors.push(`self_decisions[${n}] is not an object`); return; }
+    let id = null;
+    if (typeof entry.decision_id === "string" && entry.decision_id) {
+      for (let i = 0; i < decisions.length; i++) if (decisionIdAt(i) === entry.decision_id) { id = decisionIdAt(i); break; }
+    } else if (Number.isInteger(entry.index) && entry.index >= 0 && entry.index < decisions.length) {
+      id = decisionIdAt(entry.index);
+    }
+    if (!id) { errors.push(`self_decisions[${n}] names no decision the report declares`); return; }
+    if (state.v[id]) { errors.push(`self_decisions[${n}] repeats ${id}`); return; }
+    setRecord(id, entry, `self_decisions[${n}] (${id})`);
+  });
+
+  if (payload.run != null) {
+    if (typeof payload.run !== "object" || Array.isArray(payload.run)) errors.push("run must be an object");
+    else setRecord("__run__", payload.run, "run");
+  }
+  return { state, errors };
+}
+
+// Everything the MODEL refuses, asked of the model. The vocabularies are the renderer's own
+// constants; completeness and the contradiction come back in the guard's own written words —
+// the same sentence the operator read next to the sign button.
+function verdictValidationErrors(model, report, state, payload) {
+  const T = model.rrT("en");
+  const errors = [];
+  for (const step of model.rrSteps(report, T)) {
+    const rec = state.v[step.id] || {};
+    const closed = step.kind === "run" ? model.RR_RUN_VERDICTS : model.RR_ITEM_VERDICTS;
+    if (rec.verdict != null && closed.indexOf(rec.verdict) < 0) {
+      errors.push(`${step.id}: verdict ${JSON.stringify(rec.verdict)} is outside the closed set ${closed.join(", ")}`);
+    }
+    if (!step.signs && rec.verdict != null) {
+      errors.push(`${step.id}: declares requires_verdict false — it asks for no verdict and cannot carry one`);
+    }
+    if (rec.disposition != null && rec.verdict !== "CHANGES_REQUIRED") {
+      errors.push(`${step.id}: a disposition travels only with CHANGES_REQUIRED`);
+    }
+  }
+  const missing = model.rrMissing(report, state, T);
+  if (missing.length) errors.push(`missing ${missing.join(" and ")}`);
+  const contradiction = model.rrSignBlocks(report, state, T).contradiction;
+  if (contradiction) errors.push(contradiction);
+  // `stopped` is DERIVED, never chosen: a payload that carries a different value is trying to
+  // choose it, and the refusal says so instead of silently correcting the file.
+  if (payload.stopped != null) {
+    const derived = model.rrVerdictOutput(report, state).stopped;
+    if (payload.stopped !== derived) {
+      errors.push(`stopped is derived from the emitter's stop declaration and the verdicts (${derived} here), never chosen`);
+    }
+  }
+  return errors;
+}
+
+// The post-write authority for a verdict: re-read the file that was just renamed into place
+// and verify it parses and is byte-identical to what was signed. A failure restores the
+// previous verdict from backup — and when there was none, the handler removes the bad file,
+// because a half-written verdict.json would flip `verdict_present` to a lie.
+function writtenVerdictValidator(verdictPath, expected) {
+  return () => {
+    try {
+      const raw = readFileSync(verdictPath, "utf8");
+      JSON.parse(raw);
+      return raw === expected
+        ? { code: 0, output: "re-read OK: the written verdict parses and matches what was signed" }
+        : { code: 1, output: "the written file does not match what was signed" };
+    } catch (error) {
+      return { code: 1, output: `could not re-read the written verdict: ${String(error && error.message || error)}` };
+    }
+  };
+}
+
+// Serialise verdict writes for the same reason applies are serialised: the engine names its
+// backup/temp files with process.pid, so two concurrent writes in this one process could collide.
+let verdictWriting = false;
+
+// THE VERDICT ENDPOINT (#57). A POST writes `verdict.json` beside the `report.json` it answers,
+// in the registered root of the project that filed the report. The order of the gates is the
+// contract, same as every other write route: method, locality, body, project, boundary, report,
+// model, lock, write. Nothing is written on any refusal path, and every refusal names its reason.
+//
+// WHAT IT WRITES is not the wire payload: the payload is rebuilt into the renderer's own state
+// and the file is `rrVerdictOutput` of that state — the exact object the view previews — plus
+// `decided_at`, stamped HERE because the writer stamps the instant, not the view. The free note
+// travels verbatim in whatever language the operator wrote it; the signer is whatever they typed.
+//
+// WHAT IT DOES NOT DO: it does not close runs (set-status is the cabin's, per project), it does
+// not re-emit `.project/` (the derived index's `verdict_present` catches up on the operator's
+// next emission — writing a sibling repo's derived folder is not this route's to do), and it
+// runs no Git command of any kind.
+async function handleVerdictWrite(req, res, key) {
+  if (req.method !== "POST") {
+    sendJson(res, 405, { ok: false, reason: "method_not_allowed" });
+    return;
+  }
+  if (!isLoopbackPeer(req)) {
+    sendJson(res, 403, { ok: false, reason: "forbidden_nonlocal" });
+    return;
+  }
+  if (!isLocalOrigin(req)) {
+    sendJson(res, 403, { ok: false, reason: "forbidden_origin" });
+    return;
+  }
+
+  let body = "";
+  let aborted = false;
+  req.on("data", (chunk) => {
+    if (aborted) return;
+    body += chunk;
+    if (body.length > ROADMAP_EDIT_MAX_BODY) {
+      aborted = true;
+      sendJson(res, 413, { ok: false, reason: "payload_too_large" });
+      req.destroy();
+    }
+  });
+  req.on("error", () => {
+    if (!aborted) {
+      aborted = true;
+      try { sendJson(res, 400, { ok: false, reason: "bad_request" }); } catch { /* socket gone */ }
+    }
+  });
+  req.on("end", async () => {
+    if (aborted) return;
+    let parsed;
+    try {
+      parsed = JSON.parse(body || "");
+    } catch {
+      sendJson(res, 400, { ok: false, reason: "bad_request" });
+      return;
+    }
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      sendJson(res, 400, { ok: false, reason: "bad_request" });
+      return;
+    }
+    const runDir = parsed.run_id;
+    const payload = parsed.verdict;
+    if (typeof runDir !== "string" || !REPORT_RUN_DIR_PATTERN.test(runDir)) {
+      sendJson(res, 400, { ok: false, reason: "bad_request", detail: "run_id must be the report's folder name, a single path segment" });
+      return;
+    }
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+      sendJson(res, 400, { ok: false, reason: "bad_request", detail: "verdict must be an object" });
+      return;
+    }
+
+    // Registered key -> root -> layout. Same funnel as the other three routes.
+    const project = await resolveEditableProject(key);
+    if (project.status) {
+      sendJson(res, project.status, { ok: false, reason: project.reason, ...(project.detail ? { detail: project.detail } : {}) });
+      return;
+    }
+
+    // THE BOUNDARY GUARD, before anything is opened: the destination must sit inside the
+    // registered root, outside `.git` and outside the derived `.project/`. The report path is
+    // the sibling of the guarded destination by construction, so it is contained by the same
+    // verification.
+    let verdictPath;
+    try {
+      verdictPath = resolveCanonicalWritePath(project.root, join(REPORTS_SOURCE_DIR, runDir, VERDICT_FILE_NAME));
+    } catch (error) {
+      sendJson(res, 403, { ok: false, reason: "write_destination_out_of_bounds", detail: String(error && error.message || error) });
+      return;
+    }
+    const reportPath = join(dirname(verdictPath), REPORT_FILE_NAME);
+    const reportFile = relativePosix(project.root, reportPath);
+
+    // THE REPORT GATE. A verdict answers a report; without one on disk — or with one that does
+    // not read — there is nothing to answer and nothing is written.
+    let reportRaw;
+    try {
+      reportRaw = readFileSync(reportPath, "utf8");
+    } catch (error) {
+      sendJson(res, 409, { ok: false, reason: "report_missing", file: reportFile, detail: String(error && error.message || error).slice(0, 200) });
+      return;
+    }
+    let report;
+    try {
+      report = JSON.parse(reportRaw);
+    } catch (error) {
+      sendJson(res, 409, { ok: false, reason: "report_unparsable", file: reportFile, detail: String(error && error.message || error).slice(0, 200) });
+      return;
+    }
+    if (report == null || typeof report !== "object" || Array.isArray(report)) {
+      sendJson(res, 409, { ok: false, reason: "report_unparsable", file: reportFile, detail: "the JSON root is not an object" });
+      return;
+    }
+    // The payload's own run_id, when it carries one, must be the report's: a mismatch means the
+    // client signed one report and posted at another's folder, and nothing should land.
+    if (payload.run_id != null && report.run_id != null && payload.run_id !== report.run_id) {
+      sendJson(res, 409, { ok: false, reason: "report_mismatch", file: reportFile, detail: `the payload signs ${JSON.stringify(payload.run_id)} and the report on disk is ${JSON.stringify(report.run_id)}` });
+      return;
+    }
+
+    // THE MODEL GATE — the renderer's own. Rebuild the state, then ask the same functions the
+    // view asks; a refusal carries every named error at once.
+    const model = verdictModel();
+    const built = buildVerdictState(model, report, payload);
+    const errors = built.errors.concat(verdictValidationErrors(model, report, built.state, payload));
+    if (errors.length) {
+      sendJson(res, 422, { ok: false, reason: "verdict_refused", file: reportFile, errors });
+      return;
+    }
+
+    if (verdictWriting) {
+      sendJson(res, 409, { ok: false, reason: "write_in_progress" });
+      return;
+    }
+    verdictWriting = true;
+    try {
+      // What the file holds is what the model derives — `stopped` included — never the wire
+      // payload; and `decided_at` is stamped by this writer, the one thing the view leaves null.
+      const output = model.rrVerdictOutput(report, built.state);
+      output.decided_at = new Date().toISOString();
+      const serialized = JSON.stringify(output, null, 2) + "\n";
+      const overwrote = existsSync(verdictPath);
+      let applyResult;
+      try {
+        applyResult = applyPlan({
+          filePath: verdictPath,
+          serialized,
+          validate: writtenVerdictValidator(verdictPath, serialized)
+        });
+      } catch (error) {
+        sendJson(res, 500, { ok: false, reason: `unexpected: ${String(error && error.message || error).slice(0, 200)}` });
+        return;
+      }
+      if (applyResult.rolledBack) {
+        logLine(`verdict write REJECTED on re-check (project=${key} run=${runDir}); restored from backup ${applyResult.backupPath}`);
+        sendJson(res, 409, { ok: false, applied: false, rolledBack: true, reason: "validator_rejected", validatorOutput: applyResult.validatorOutput, backupPath: applyResult.backupPath });
+        return;
+      }
+      if (!applyResult.written) {
+        // No backup existed (a first signature), so the engine could not roll back. The bad
+        // file is removed rather than left standing: a verdict.json that failed its re-read
+        // must not make the next index emission measure `verdict_present: true`.
+        try { unlinkSync(verdictPath); } catch { /* already gone */ }
+        sendJson(res, 500, { ok: false, applied: false, reason: "write_failed", validatorOutput: applyResult.validatorOutput });
+        return;
+      }
+      const file = relativePosix(project.root, verdictPath);
+      logLine(`verdict write: project=${key} run=${runDir}; ${applyResult.bytes} bytes; run verdict ${output.run.verdict}; stopped=${output.stopped}; ${overwrote ? `replaced the previous verdict (backup ${applyResult.backupPath})` : "first signature"}`);
+      sendJson(res, 200, {
+        ok: true,
+        path: file,
+        bytes: applyResult.bytes,
+        verdict: output.run.verdict,
+        stopped: output.stopped,
+        decided_at: output.decided_at,
+        overwrote,
+        ...(overwrote ? { backupPath: applyResult.backupPath } : {}),
+        // Stated, not implied: ONE file was written. The derived reports index is not touched
+        // (its `verdict_present` catches up on the operator's next emission), and no Git ran.
+        reemitted: false,
+        committed: false
+      });
+    } finally {
+      verdictWriting = false;
+    }
+  });
+}
+
 // ---------------------------------------------------------------- request funnel
 
 const server = http.createServer(async (req, res) => {
@@ -885,7 +1231,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // The three write routes are matched BEFORE the read-only method gate and before any static
+  // The four write routes are matched BEFORE the read-only method gate and before any static
   // resolution. Each handler gates its own method (GET on the edit route is the client's
   // availability probe and answers 405 method_not_allowed / 404, never a file).
   const writeRoute = matchWriteRoute(urlPath);
@@ -894,13 +1240,15 @@ const server = http.createServer(async (req, res) => {
       await handleRoadmapEdit(req, res, writeRoute.key);
     } else if (writeRoute.endpoint === "history_sync") {
       await handleHistorySync(req, res, writeRoute.key);
-    } else {
+    } else if (writeRoute.endpoint === "project_emit") {
       await handleProjectEmit(req, res, writeRoute.key);
+    } else {
+      await handleVerdictWrite(req, res, writeRoute.key);
     }
     return;
   }
 
-  // Read-only by method for EVERYTHING else: the three routes above are the only paths on which
+  // Read-only by method for EVERYTHING else: the four routes above are the only paths on which
   // any method beyond GET/HEAD does anything, and nothing below this line has to know writes exist.
   if (req.method !== "GET" && req.method !== "HEAD") {
     res.writeHead(405, {
@@ -963,7 +1311,7 @@ const RUN_DIRECTLY = process.argv[1]
 
 if (RUN_DIRECTLY) {
   server.listen(PORT, HOST, () => {
-    logLine(`serving ${REPO_ROOT} (GET/HEAD everywhere; the only write routes are per-project roadmap edit, history sync and project emit)`);
+    logLine(`serving ${REPO_ROOT} (GET/HEAD everywhere; the only write routes are per-project roadmap edit, history sync, project emit and verdict write)`);
     logLine(`registry: ${activeRegistryPath()}`);
     logLine(`open  http://${HOST}:${PORT}${ENTRY}`);
   });
@@ -980,6 +1328,7 @@ export {
   ROADMAP_EDIT_SUFFIX,
   HISTORY_SYNC_SUFFIX,
   PROJECT_EMIT_SUFFIX,
+  VERDICT_WRITE_SUFFIX,
   PROJECT_EMIT_ARTIFACT_PATHS,
   activeRegistryPath,
   readRegistry,

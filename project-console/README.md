@@ -1,4 +1,4 @@
-# Project Console (transplanted, multi-project; read-only plus three write routes)
+# Project Console (transplanted, multi-project; read-only plus four write routes)
 
 The Project Console of `cantu-studio`, transplanted onto this project's own sources (O4.P11), now
 wrapped by a **multi-project shell** (O4.P3): a persistent sidebar lists every registered project,
@@ -20,8 +20,8 @@ never edited for QA.
 The server serves the repository root read-only, plus one **virtual namespace**
 `/projects/<key>/**` that maps onto the roots listed in the registry — that is how sibling
 repositories' `.project/` folders and doc bodies are read. Since O4.P12 (D-050) it also exposes
-write routes per registered project — **exactly three** since O4.P14 — and nothing else accepts
-a write:
+write routes per registered project — **exactly four** since #57 (three between O4.P14 and it) —
+and nothing else accepts a write:
 
 - `POST /projects/<key>/__project-console/roadmap/edit` — bounded roadmap edits with the
   dry-run→confirm contract (`apply:false` previews and writes nothing; `apply:true` requires the
@@ -41,9 +41,19 @@ a write:
   half-written. A button and not a watcher, on purpose: the console writes `.project/` only when
   the operator asks. It runs no Git that writes and never commits; after re-emitting, review the
   diff and commit it yourself.
+- `POST /projects/<key>/__project-console/verdict/write` — writes **`verdict.json` beside the
+  `report.json` it answers** (#57, RUN-CONSOLE-VERDICT-POST-001), in the repo of the project that
+  filed the report. This is the endpoint behind the report surface's **Write verdict.json**
+  button. The verdict model is the renderer's own file, loaded and asked — the closed verdict
+  vocabularies, the completeness gate, the run-APPROVED guard and the derived `stopped` are the
+  same ones the operator saw on screen — and the written file is that model's own output plus
+  `decided_at`, stamped by the server. The signer is whatever the person typed; no name lives in
+  the code. It writes that one file atomically (temp+rename, tmpdir backup, re-read as authority)
+  and touches nothing else: no re-emission (the index's `verdict_present` catches up on the next
+  emission the operator asks for), no status change, no Git.
 
 Every other method on every other route still answers **405**; escaping a registered root answers
-403; `.git` is never served or written. All three write routes refuse, with a named reason, a
+403; `.git` is never served or written. All four write routes refuse, with a named reason, a
 project the registry does not list or whose root no layout claims, and every write destination is
 verified inside the registered root after path resolution — by one of two mirror-image guards:
 `resolveCanonicalWritePath` (inside the root, never inside the derived `.project/`) and

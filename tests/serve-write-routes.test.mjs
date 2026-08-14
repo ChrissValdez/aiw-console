@@ -1,7 +1,9 @@
 // The write routes of the global console server and everything that must stay read-only around
 // them. O4.P12 opened TWO; O4.P14 made it THREE by adding the manual re-emission of `.project/`
-// (`__project-console/project/emit`, whose own behaviour lives in tests/serve-project-emit.test.mjs
-// — what is measured HERE is the read-only matrix it sits inside). Runs the real serve.mjs on an
+// (`__project-console/project/emit`, whose own behaviour lives in tests/serve-project-emit.test.mjs);
+// #57 made it FOUR by adding the verdict write (`__project-console/verdict/write`, whose own
+// behaviour lives in tests/serve-verdict-write.test.mjs — what is measured HERE is the read-only
+// matrix both sit inside). Runs the real serve.mjs on an
 // ephemeral port against a GENERATED
 // fixture registry (PC_REGISTRY) whose projects live in a temp dir, so no real repository is
 // written by the edit tests. The registry deliberately includes:
@@ -29,6 +31,7 @@ import {
   ROADMAP_EDIT_SUFFIX,
   HISTORY_SYNC_SUFFIX,
   PROJECT_EMIT_SUFFIX,
+  VERDICT_WRITE_SUFFIX,
   resolveCanonicalWritePath,
   resolveEmissionWritePath,
   externalRunIdsFor,
@@ -350,7 +353,7 @@ test("read-only preserved: every method beyond GET/HEAD on any NON-route path an
 });
 
 test("read-only preserved: non-POST methods on the write routes answer 405 method_not_allowed (route exists, method does not)", async () => {
-  const routes = [ROADMAP_EDIT_SUFFIX, HISTORY_SYNC_SUFFIX, PROJECT_EMIT_SUFFIX];
+  const routes = [ROADMAP_EDIT_SUFFIX, HISTORY_SYNC_SUFFIX, PROJECT_EMIT_SUFFIX, VERDICT_WRITE_SUFFIX];
   for (const method of ["PUT", "PATCH", "DELETE"]) {
     for (const suffix of routes) {
       const answer = await jsonRequest(method, `/projects/editable/${suffix}`);
@@ -362,12 +365,13 @@ test("read-only preserved: non-POST methods on the write routes answer 405 metho
 
 // ---------------------------------------------------------------- THE MATRIX, measured
 
-// [O4.P14] The read-only matrix, MEASURED against the running server rather than asserted from
-// memory — and the count that the phase moved: EXACTLY THREE routes accept POST, and ZERO accept
-// any other write method. The test prints the matrix it measured, so the record's table is a
-// transcript of this run and not a hand-kept list that can drift from the server.
-test("MATRIX: exactly THREE routes accept POST, zero accept PUT/PATCH/DELETE, everything else is 405 read_only_console", async (t) => {
-  const WRITE_SUFFIXES = [ROADMAP_EDIT_SUFFIX, HISTORY_SYNC_SUFFIX, PROJECT_EMIT_SUFFIX];
+// [O4.P14, #57] The read-only matrix, MEASURED against the running server rather than asserted
+// from memory — and the count that moved twice: EXACTLY FOUR routes accept POST (O4.P14 made it
+// three; #57's verdict write made it four), and ZERO accept any other write method. The test
+// prints the matrix it measured, so the record's table is a transcript of this run and not a
+// hand-kept list that can drift from the server.
+test("MATRIX: exactly FOUR routes accept POST, zero accept PUT/PATCH/DELETE, everything else is 405 read_only_console", async (t) => {
+  const WRITE_SUFFIXES = [ROADMAP_EDIT_SUFFIX, HISTORY_SYNC_SUFFIX, PROJECT_EMIT_SUFFIX, VERDICT_WRITE_SUFFIX];
   const NON_ROUTE_PATHS = [
     "/project-console/index.html",
     "/project-console/projects.json",
@@ -375,13 +379,15 @@ test("MATRIX: exactly THREE routes accept POST, zero accept PUT/PATCH/DELETE, ev
     "/projects/editable/roadmap/roadmap.json",
     "/projects/editable/__project-console/roadmap",       // near-miss: a prefix of a route
     "/projects/editable/__project-console/project",       // near-miss: a prefix of a route
+    "/projects/editable/__project-console/verdict",       // near-miss: a prefix of a route
     "/projects/editable/__project-console/project/emit/x",// near-miss: a route plus a segment
+    "/projects/editable/__project-console/verdict/write/x",// near-miss: a route plus a segment
     "/no/existe"
   ];
   const METHODS = ["POST", "PUT", "PATCH", "DELETE"];
   const rows = [];
 
-  // 1. The three routes. "Accepts POST" means the server ROUTED it — it answered with this
+  // 1. The four routes. "Accepts POST" means the server ROUTED it — it answered with this
   //    route's own vocabulary rather than the blanket read-only refusal. Whether that particular
   //    POST then wrote is each route's own contract (a dry-run writes nothing; `editable` is not
   //    a Git repository so its sync answers 503); what is measured here is the read-only shape.
@@ -402,8 +408,8 @@ test("MATRIX: exactly THREE routes accept POST, zero accept PUT/PATCH/DELETE, ev
     }
     rows.push([suffix, cells]);
   }
-  assert.equal(acceptPost, 3, "exactly three routes accept POST");
-  assert.equal(WRITE_SUFFIXES.length, 3, "and there are exactly three of them declared");
+  assert.equal(acceptPost, 4, "exactly four routes accept POST");
+  assert.equal(WRITE_SUFFIXES.length, 4, "and there are exactly four of them declared");
 
   // 2. Everything else, including every near-miss of a route path.
   for (const path of NON_ROUTE_PATHS) {
@@ -459,7 +465,10 @@ test("route matching is exact: near-miss paths are not write routes", () => {
   assert.deepEqual(matchWriteRoute("/projects/editable/__project-console/roadmap/edit"), { key: "editable", endpoint: "roadmap_edit" });
   assert.deepEqual(matchWriteRoute("/projects/editable/__project-console/history/sync"), { key: "editable", endpoint: "history_sync" });
   assert.deepEqual(matchWriteRoute("/projects/editable/__project-console/project/emit"), { key: "editable", endpoint: "project_emit" });
+  assert.deepEqual(matchWriteRoute("/projects/editable/__project-console/verdict/write"), { key: "editable", endpoint: "verdict_write" });
   assert.equal(matchWriteRoute("/projects/editable/__project-console/roadmap/edit/extra"), null);
+  assert.equal(matchWriteRoute("/projects/editable/__project-console/verdict/write/extra"), null);
+  assert.equal(matchWriteRoute("/projects/editable/__project-console/verdict"), null);
   assert.equal(matchWriteRoute("/projects/editable/__project-console/roadmap"), null);
   assert.equal(matchWriteRoute("/__project-console/roadmap/edit"), null);
   assert.equal(matchWriteRoute("/projects/__project-console/roadmap/edit"), null);

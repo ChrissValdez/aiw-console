@@ -800,9 +800,12 @@ export const ROADMAP_TREE_SOURCE_PATH = ROOT_LAYOUTS[0].roadmap;
 const PACKAGE_SOURCE_PATH = "package.json";
 // Where a repository files its run reports (O4.P17). Layout-independent for the same reason
 // PACKAGE_SOURCE_PATH is: a report belongs to the repo, not to where that repo keeps its plan.
-const REPORTS_SOURCE_DIR = "reports";
-const REPORT_FILE_NAME = "report.json";
-const VERDICT_FILE_NAME = "verdict.json";
+// EXPORTED since #57 (RUN-CONSOLE-VERDICT-POST-001): the verdict write route composes the
+// report and verdict paths from these, so the server and the emitter cannot disagree about
+// where a report lives or what sits beside it.
+export const REPORTS_SOURCE_DIR = "reports";
+export const REPORT_FILE_NAME = "report.json";
+export const VERDICT_FILE_NAME = "verdict.json";
 
 // CONTRATO §10.c — the tree identifies its own model. This is the identifier of the model THIS
 // CONTRACT specifies; it is what a tree that declares nothing is credited with, and the name the

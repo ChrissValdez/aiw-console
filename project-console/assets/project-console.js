@@ -36,18 +36,21 @@ function setActiveProjectBase(repoBase) {
     memory: `${PROJECT_BASE}guardrails/project_memory.jsonl`,
     // Derived read-only Git commit history view (§19).
     gitHistory: `${PROJECT_BASE}git_history.json`,
-    // THE THREE WRITE ROUTES (O4.P12 opened two, reverting the O4.P11 deferral by D-050;
-    // O4.P14 adds the third). Composed from REPO_BASE like every other route, so they always
-    // address the ACTIVE project: the server maps them onto that project's registered root,
-    // resolves its canonical roadmap through the root layout, and re-emits `.project/` after a
-    // confirmed write. Dry-run→confirm and the availability probe (v3ProbeEndpoint) are
-    // unchanged from the source console.
+    // THE FOUR WRITE ROUTES (O4.P12 opened two, reverting the O4.P11 deferral by D-050;
+    // O4.P14 added the third; #57 adds the fourth). Composed from REPO_BASE like every other
+    // route, so they always address the ACTIVE project: the server maps them onto that
+    // project's registered root, resolves its canonical roadmap through the root layout, and
+    // re-emits `.project/` after a confirmed write. Dry-run→confirm and the availability probe
+    // (v3ProbeEndpoint) are unchanged from the source console.
     historySync: `${REPO_BASE}__project-console/history/sync`,
     roadmapEdit: `${REPO_BASE}__project-console/roadmap/edit`,
     // [O4.P14] Re-emit the ACTIVE project's whole `.project/` folder from its canonical. The
     // same gesture `historySync` already performs for ONE derived artifact, extended to all
     // seven — and fired only by the operator's click, never on a timer.
-    projectEmit: `${REPO_BASE}__project-console/project/emit`
+    projectEmit: `${REPO_BASE}__project-console/project/emit`,
+    // [#57] Write verdict.json beside a report of the ACTIVE project. The server derives the
+    // destination from the report folder's name alone; no path travels from here.
+    verdictWrite: `${REPO_BASE}__project-console/verdict/write`
   };
 }
 
@@ -5036,8 +5039,41 @@ function v3OpenRunReport(runId) {
     title: run ? run.title : "",
     subtitle: runId,
     backLabel: run ? `Back to Run #${run.queue_order}` : "Back to the run",
-    onBack: () => v3OpenRunDetail(runId, "back")
+    onBack: () => v3OpenRunDetail(runId, "back"),
+    // [#57] The writer the renderer's sign button calls. Composed HERE — the one file that
+    // owns routes — from the write route of the ACTIVE project and the run identifier the
+    // report was opened by; the verdict object travels as the renderer produced it, and the
+    // answer comes back as { ok, path } or { ok:false, reason } in the endpoint's own words.
+    writeVerdict: v3VerdictWriter(runId)
   });
+}
+
+// [#57] Build the writer for one run's report: POST the signed verdict at the verdict write
+// route and translate the endpoint's answer for the renderer's hint. A refusal travels as the
+// endpoint worded it (its `errors` list joined, or its `reason`), never reworded here.
+function v3VerdictWriter(runId) {
+  const url = PATHS ? PATHS.verdictWrite : "";
+  if (!url) return null;
+  return async (verdict) => {
+    let response;
+    try {
+      response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store",
+        body: JSON.stringify({ run_id: runId, verdict })
+      });
+    } catch (error) {
+      return { ok: false, reason: (error && error.message) || "the request failed" };
+    }
+    let payload = null;
+    try { payload = await response.json(); } catch (error) { payload = null; }
+    if (response.ok && payload && payload.ok) return { ok: true, path: payload.path || "" };
+    const reason = payload && (Array.isArray(payload.errors) && payload.errors.length
+      ? payload.errors.join("; ")
+      : payload.reason);
+    return { ok: false, reason: reason || `HTTP ${response.status}` };
+  };
 }
 
 function v3BackRunDetail() {

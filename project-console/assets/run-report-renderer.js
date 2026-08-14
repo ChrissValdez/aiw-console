@@ -10,12 +10,17 @@
 // the data. The domain-blind suite (run-report-domain-blind) proves it mechanically against
 // the four shipped fixtures — including that no word of theirs appears in this file.
 //
-// What it deliberately does NOT do (ticket #52): it does not write verdict.json to the repo
-// (#55 adds the endpoint — the sign button downloads to the operator's machine, exactly as the
-// prototype does), it does not add the console tab or the route from the run (#53), and it
-// does not validate the report against the contract. A report that does not parse produces an
-// honest message, never a blank surface; a missing optional block paints as "not declared",
-// which is a different fact from an empty one ("none").
+// What it deliberately does NOT do (ticket #52): it does not add the console tab or the route
+// from the run (#53), and it does not validate the report against the contract. A report that
+// does not parse produces an honest message, never a blank surface; a missing optional block
+// paints as "not declared", which is a different fact from an empty one ("none").
+//
+// THE SIGN BUTTON SAYS WHAT IT DOES (#57 — RUN-CONSOLE-VERDICT-POST-001; an earlier version of
+// this header attributed the endpoint to #55, which was false: #55 was the QA repairs). When
+// the console injects a writer (`opts.writeVerdict`), signing WRITES verdict.json beside the
+// report through #57's endpoint and the button says "Write". With no writer injected — this
+// file judged alone, or a page that wired none — signing downloads to the operator's machine
+// and the button says "Download". Both labels are chrome, both translate, and both are true.
 
 // ---------------------------------------------------------------------------
 // Closed vocabularies — never per-report, never per-item; any custom verdict
@@ -58,7 +63,10 @@ const RR_STRINGS = {
     decisionsGroup: "decisions to ratify", decisionType: "executor decision", runType: "the run", itemType: "item",
     ifAccepted: "if accepted", ifRejectedScope: "if rejected",
     signLabel: "verdict_by — who signs", signPlaceholder: "Type your name to sign",
-    writeVerdict: "Write verdict.json", previewOutput: "Preview what would be written",
+    writeVerdict: "Write verdict.json", downloadVerdict: "Download verdict.json",
+    previewOutput: "Preview what would be written",
+    completeWrite: "Complete. It writes verdict.json beside the report.",
+    writing: "Writing…", writtenTo: "Written: ", writeRefused: "The write was refused: ",
     runContext: "Run context", metadata: "Run metadata", deviation: "The emitter declares a deviation",
     countsFiles: "Counts and files", gateVerification: "Gate and verification",
     blindSpots: "Blind spots", alternatives: "Discarded alternatives", unreviewed: "Unreviewed",
@@ -93,7 +101,10 @@ const RR_STRINGS = {
     decisionsGroup: "decisiones a ratificar", decisionType: "decisión del ejecutor", runType: "el run", itemType: "ítem",
     ifAccepted: "si se adopta", ifRejectedScope: "si se rechaza",
     signLabel: "verdict_by — quién firma", signPlaceholder: "Escribe tu nombre al firmar",
-    writeVerdict: "Escribir verdict.json", previewOutput: "Ver lo que se escribiría",
+    writeVerdict: "Escribir verdict.json", downloadVerdict: "Descargar verdict.json",
+    previewOutput: "Ver lo que se escribiría",
+    completeWrite: "Completo. Escribe verdict.json junto al reporte.",
+    writing: "Escribiendo…", writtenTo: "Escrito: ", writeRefused: "La escritura se rechazó: ",
     runContext: "Contexto del run", metadata: "Metadatos del run", deviation: "El emisor declara una desviación",
     countsFiles: "Recuentos y ficheros", gateVerification: "Compuerta y verificación",
     blindSpots: "Puntos ciegos", alternatives: "Alternativas descartadas", unreviewed: "Sin revisar",
@@ -435,9 +446,10 @@ function rrRecOut(state, id) {
   };
 }
 
-// What #55's endpoint will receive. `verdict_by` is whatever the operator TYPED — the
-// signer's name is never a constant in this code, and an empty box signs nothing.
-// `decided_at` stays null here: the writer stamps it, not the view.
+// What #57's endpoint receives (an earlier comment here said #55, which was false — #55 was
+// the QA repairs; the endpoint is RUN-CONSOLE-VERDICT-POST-001). `verdict_by` is whatever the
+// operator TYPED — the signer's name is never a constant in this code, and an empty box signs
+// nothing. `decided_at` stays null here: the writer stamps it, not the view.
 //
 // `stopped` is DERIVED, never chosen — no control on the surface sets it. The emitter
 // declared which items halt everything (`stop: true`); rejecting one of those is what
@@ -852,17 +864,27 @@ function rrCardForRunHtml(report, state, T) {
     rrRunApprovedGuard(report, state, T)));
 
   const blocks = rrSignBlocks(report, state, T);
-  const ready = blocks.ready;
-  const signHint = ready ? T.complete
-    : [blocks.missing.length ? T.missingPrefix + blocks.missing.join(T.and) + "." : "", blocks.contradiction || ""]
-      .filter(Boolean).join(" ");
-  const sign = '<div class="rr-sign' + (ready ? " rr-sign-ready" : "") + '">' +
+  // TWO VERBS, ONE TRUTH EACH (#57): with a writer injected the button writes verdict.json
+  // beside the report and says "Write"; without one it downloads and says "Download". The
+  // hint follows the same fact, and after a write it carries the endpoint's own answer — the
+  // path that was written, or the refusal, worded.
+  const writeMode = !!state.writer;
+  const writeState = state.write || { status: "idle", detail: "", path: "" };
+  const busy = writeState.status === "writing";
+  const ready = blocks.ready && !busy;
+  const signHint = busy ? T.writing
+    : writeState.status === "written" ? T.writtenTo + writeState.path
+      : writeState.status === "failed" ? T.writeRefused + writeState.detail
+        : blocks.ready ? (writeMode ? T.completeWrite : T.complete)
+          : [blocks.missing.length ? T.missingPrefix + blocks.missing.join(T.and) + "." : "", blocks.contradiction || ""]
+            .filter(Boolean).join(" ");
+  const sign = '<div class="rr-sign' + (blocks.ready ? " rr-sign-ready" : "") + '">' +
     '<div class="rr-sign-row">' +
     '<div class="rr-field"><label>' + rrEsc(T.signLabel) + "</label>" +
     '<input class="rr-input" data-rr-act="reviewer" placeholder="' + rrEsc(T.signPlaceholder) +
     '" value="' + rrEsc(state.reviewer || "") + '"></div>' +
     '<button type="button" class="rr-btn rr-btn-primary rr-sign-btn" data-rr-act="sign"' + (ready ? "" : " disabled") + ">" +
-    rrIcon("download") + rrEsc(T.writeVerdict) + "</button></div>" +
+    rrIcon(writeMode ? "seal-check" : "download") + rrEsc(writeMode ? T.writeVerdict : T.downloadVerdict) + "</button></div>" +
     '<span class="rr-sign-hint">' + rrEsc(signHint) + "</span>" +
     '<details class="rr-sign-preview"><summary>' + rrIcon("caret") + rrEsc(T.previewOutput) + "</summary>" +
     '<pre class="rr-verdict-json">' + rrEsc(JSON.stringify(rrVerdictOutput(report, state), null, 2)) + "</pre></details></div>";
@@ -1137,8 +1159,19 @@ function rrInitialState(input) {
     report: parsed.report, error: parsed.error,
     cardIdx: 0, filter: "all",
     v: {}, reviewer: "", previewTab: {}, previewStatus: {}, previewBase: "",
+    // The writer the console injects (#57), and what became of the last write. With no writer
+    // the sign button downloads, and says so — two different verbs for two different acts.
+    writer: null, write: { status: "idle", detail: "", path: "" },
     lang: rrLsGet("lang", "en"), theme: rrLsGet("theme", "dark")
   };
+}
+
+// Any change to what would be signed makes the last write's outcome stale: the hint must not
+// keep claiming "written" over a state that no longer is what was written.
+function rrResetWrite(state) {
+  if (state.write && state.write.status !== "idle" && state.write.status !== "writing") {
+    state.write = { status: "idle", detail: "", path: "" };
+  }
 }
 
 // Every preview path is probed ONCE per mount; a pane only becomes an iframe after the
@@ -1173,6 +1206,9 @@ function renderRunReport(container, input, opts) {
   const options = opts || {};
   const state = rrInitialState(input);
   state.previewBase = String(options.previewBase || "");
+  // The writer arrives by INJECTION (#57) — a callback, never a URL composed here, so this
+  // file stays blind to where a verdict lands and to whose project the report belongs.
+  state.writer = typeof options.writeVerdict === "function" ? options.writeVerdict : null;
 
   function draw() {
     container.setAttribute("data-theme", state.theme);
@@ -1220,14 +1256,17 @@ function renderRunReport(container, input, opts) {
       if (id === "__run__" && next === "APPROVED" &&
           !rrRunApprovedGuard(state.report, state, rrT(state.lang)).available) return;
       rrSetRec(state, id, { verdict: next, disposition: null });
+      rrResetWrite(state);
       draw();
     } else if (act === "disposition") {
       const current = rrRec(state, id).disposition;
       rrSetRec(state, id, { disposition: current === value ? null : value, dispOther: "" });
+      rrResetWrite(state);
       draw();
     } else if (act === "chosen-option") {
       const current = rrRec(state, id).chosenOption;
       rrSetRec(state, id, { chosenOption: current === value ? null : value });
+      rrResetWrite(state);
       draw();
     } else if (act === "goto") {
       goStep(id);
@@ -1247,7 +1286,28 @@ function renderRunReport(container, input, opts) {
       draw();
     } else if (act === "sign") {
       if (!rrSignBlocks(state.report, state, rrT(state.lang)).ready) return;
-      rrDownloadVerdict(JSON.stringify(rrVerdictOutput(state.report, state), null, 2));
+      // No writer injected: the button said "Download", and that is what happens.
+      if (!state.writer) {
+        rrDownloadVerdict(JSON.stringify(rrVerdictOutput(state.report, state), null, 2));
+        return;
+      }
+      // Writer injected: the button said "Write", and the outcome — the path written, or the
+      // refusal — comes back worded from whoever actually wrote. One write at a time.
+      if (state.write.status === "writing") return;
+      state.write = { status: "writing", detail: "", path: "" };
+      draw();
+      Promise.resolve()
+        .then(() => state.writer(rrVerdictOutput(state.report, state)))
+        .then((result) => {
+          state.write = result && result.ok
+            ? { status: "written", detail: "", path: String(result.path || "") }
+            : { status: "failed", detail: String((result && (result.reason || result.detail)) || ""), path: "" };
+          draw();
+        })
+        .catch((error) => {
+          state.write = { status: "failed", detail: String((error && error.message) || error), path: "" };
+          draw();
+        });
     }
   });
 
@@ -1261,11 +1321,14 @@ function renderRunReport(container, input, opts) {
     const id = target.getAttribute("data-rr-id");
     if (act === "note") {
       rrSetRec(state, id, { note: target.value });
+      rrResetWrite(state);
     } else if (act === "disp-other") {
       rrSetRec(state, id, { dispOther: target.value, disposition: null });
+      rrResetWrite(state);
     } else if (act === "reviewer") {
       const wasReady = rrSignBlocks(state.report, state, rrT(state.lang)).ready;
       state.reviewer = target.value;
+      rrResetWrite(state);
       const isReady = rrSignBlocks(state.report, state, rrT(state.lang)).ready;
       if (wasReady !== isReady) {
         draw();

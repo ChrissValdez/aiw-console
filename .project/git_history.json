@@ -1,27 +1,38 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-14T07:00:57.907Z",
+  "generated_at": "2026-08-14T07:07:48.420Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-14T03:46:05.815Z"
+      "mtime": "2026-08-14T07:01:42.057Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-14T07:00:57.851Z"
+      "mtime": "2026-08-14T07:07:48.402Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "789c3b79ef7507f8d0840a085177296edbe7b1bd",
+  "head": "e0cff369d5261eb2c19e9a7d191e7e95401027de",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 233,
+  "commit_total": 234,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "e0cff36",
+      "full_sha": "e0cff369d5261eb2c19e9a7d191e7e95401027de",
+      "date": "2026-08-14T01:01:41-06:00",
+      "parents": "789c3b7",
+      "subject": "cierra el #57 RUN-CONSOLE-VERDICT-POST-001 como done: active -> completed, con el veredicto del operador verbatim en su record. La QA paso los seis pasos y la guarda de this_run mordio delante del operador por primera vez con su mensaje literal. Verificado contra el fichero escrito: verdict_by tecleado y no incrustado, stopped derivado y correcto, source_commit copiado del reporte. Registra D-066: firmar sobre un veredicto existente avisa, resume lo que cambia y pide confirmacion, y que no cambie nada tambien se avisa, porque un aviso que solo aparece cuando hay diferencias ensena a pulsar sin leer. Deja declarados los tres hallazgos que la QA encontro usando la superficie y que van al run siguiente: la consola escribe el veredicto y no lo lee nunca, firmar dos veces sobrescribe en silencio, y el recuento se lee mal con sus bloqueadores inalcanzables. Y dos errores propios corregidos en voz alta: publique ocho pasos de veredicto cuando son once, y publique dos veces que el arbol de CQL estaba limpio cuando el status excedia el tiempo y la tuberia convirtio el timeout en cero modificados",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-VERDICT-POST-001"
+    },
     {
       "branch": "main",
       "sha": "789c3b7",

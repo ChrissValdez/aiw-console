@@ -2641,3 +2641,73 @@ reparto de quién ejecuta Git, o que retire la modalidad Cowork. Las capacidades
 límites del entorno son mediciones fechadas y se vuelven a probar al abrir cada sesión: si
 una prueba de arranque contradice lo declarado aquí, gana la prueba y se corrige hacia
 adelante.
+
+## D-065 — 2026-08-13 — El reporte de run gana un RESUMEN del emisor: lo derivable se deriva, lo escrito se acota, y una ausencia sin motivo no es una ausencia válida
+
+**Origen:** el operador entró a un run de `cantu-quizzes-latex` que esperaba veredicto y
+midió el hueco con estas palabras: *«si sé que es una revisión de ese quiz, pero no sé en
+qué se fijó, qué revisó, qué decisiones tomó, qué encontró. Sólo sé en qué puntos necesita
+una decisión mía, pero no saber ese contexto hace más difícil para mí justamente tomar una
+decisión.»*
+
+**Medido el 2026-08-13 a las 03:41 UTC, antes de decidir nada:** el reporte del piloto
+**no tiene ninguna clave de resumen, narrativa ni alcance** — se buscaron y no existe
+ninguna. Y en cambio **sí existe ya el mecanismo de criterios reutilizables** que el
+operador pedía: `profile`, `profile_source`, `profile_source_version` y un `satisfies` por
+ítem contra los 29 ids del perfil, que produjo su primer número —10 criterios tocados,
+11 requisitos sin un solo check—. **No se inventa: se pinta.**
+
+### Las tres decisiones del operador, con sus palabras
+
+1. **El resumen es del EMISOR.** *«si es del emisor, justamente el que ejecutó hace el
+   reporte de qué se hizo y qué abarcó etc.»* La consola lo pinta y no lo compone: sólo
+   quien ejecutó sabe en qué se fijó, y un resumen compuesto por la consola sería prosa
+   generada sobre datos.
+
+2. **Presencia obligatoria, contenido opcional — y LA AUSENCIA SE JUSTIFICA.** *«estoy de
+   acuerdo en que puede estar ausente con motivo pero es obligatorio que explique ese
+   motivo aunque sea brevemente, para que no simplemente se lo salte, sino que realmente
+   por alguna justificación no lo hizo.»* Esto endurece la propuesta de la cabina: un campo
+   vacío no basta con declararse vacío, **tiene que decir por qué**. Es una guarda contra
+   saltarse el campo disfrazándolo de «no aplica».
+
+3. **Va DESPUÉS de cerrar el `#57`.** Dos runs nuevos sobre la misma superficie de reportes
+   no se abren con un run vivo encima.
+
+### El principio que lo hace reproducible entre tipos de run
+
+**Lo derivable se DERIVA y nadie lo escribe** —cobertura de criterios, ítems por tipo,
+cuántos piden veredicto, compuerta, verificación, recuentos—; **lo escrito se ACOTA por
+forma** a preguntas fijas —qué superficie se ejerció de verdad, con qué criterios se miró
+incluidos los adoptados que el perfil no tenía, y qué salió—; y **el resumen no puede
+afirmar nada que los ítems no sostengan, ni repetir lo que ya dice otro bloque**. Una cifra
+derivada no puede mentir sobre el trabajo porque sale del trabajo.
+
+### El riesgo del fichero de criterios, medido en este mismo reporte
+
+Un criterio reutilizable **no es un enunciado con id: es un id más un chequeo tan concreto
+que dos ejecutores saquen el mismo número.** La §6.4 de la rúbrica afirma «88 de 90
+distractoras explicadas»; el taller obtuvo **1 en lectura estricta y 5 en amplia** y lo
+declaró irreproducible, porque la §6.4 nunca define qué cuenta como explicar una
+distractora. Un criterio sin chequeo produce **cobertura falsa: sale verde y no significa
+nada.**
+
+### Observación de la cabina, no del operador, y va al run del contrato
+
+El contrato **ya tiene vocabulario para «no se hizo y por qué»**: la forma de un punto
+ciego es `what` · `why_not` · `who_could` · `affects`. La ausencia justificada que pide la
+decisión 2 debería **reutilizar esa forma en vez de inventar otra**. Lo decide el run del
+contrato; aquí queda nombrado para que no se redescubra.
+
+### Cómo se ejecuta
+
+**Dos runs, contrato antes que interfaz.** El del contrato produce **un fichero** aprobado
+por el operador, se estrena en **un** caso real, y ese piloto entrega también veredicto
+sobre el contrato mismo. El de la interfaz pinta **por presencia de campo**, ciego al
+dominio, y **no enumera dónde tocar**: ordena el método, porque enumerar inventarios ya
+falló dos veces en este subsistema. El contrato del reporte es del hilo
+`cantu-quizzes-latex`; el sobre y lo que la consola promete pintar son de `aiw-console`.
+
+Criterio de borrado: la sustituye una decisión que devuelva la autoría del resumen a la
+consola, que retire la obligación de justificar una ausencia, o que retire el mecanismo de
+perfil y `satisfies` del que este resumen deriva su cobertura.

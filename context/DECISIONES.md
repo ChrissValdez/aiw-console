@@ -2711,3 +2711,51 @@ falló dos veces en este subsistema. El contrato del reporte es del hilo
 Criterio de borrado: la sustituye una decisión que devuelva la autoría del resumen a la
 consola, que retire la obligación de justificar una ausencia, o que retire el mecanismo de
 perfil y `satisfies` del que este resumen deriva su cobertura.
+
+## D-066 — 2026-08-14 — Firmar sobre un veredicto que ya existe: avisa, resume lo que cambia, y pide confirmación — y decir «no cambia nada» también es avisar
+
+**Origen: medido en la QA del `#57`, usando la superficie.** El operador firmó el veredicto
+del piloto de `cantu-quizzes-latex`, volvió a entrar, **no vio nada**, y volvió a firmar. La
+consola respondió `Written: …` las dos veces y **las dos veces escribió de verdad**. Lo que
+falló no fue la escritura: **la consola escribe el veredicto y no lo lee nunca**, así que el
+formulario nace vacío al reabrir y la segunda firma **sobrescribió a la primera en
+silencio**, sin aviso y sin historia. Esta vez no costó nada porque los dos ficheros eran
+idénticos salvo la marca de tiempo. **La próxima no tiene por qué.**
+
+### La decisión del operador, con sus palabras
+
+> «avisar, pedir confirmacion y dar un pequeño resumen de los cambios hechos sobre el
+> veredicto anterior, si es igual avisar (sobrescribir con los mismos datos) o sobre
+> escribir con estos cambios?»
+
+**Se descartaron las otras dos por su consecuencia, no por gusto:** *bloquear* dejaría al
+operador atrapado cuando cambie de opinión, que es exactamente lo que estaba haciendo;
+*sobrescribir en silencio* es lo que acababa de ocurrir dos veces sin que nadie se enterara.
+
+### Lo que queda fijado
+
+1. **Firmar sobre un `verdict.json` existente NUNCA es una escritura directa.** Avisa y
+   espera confirmación explícita. Sin confirmación no se escribe.
+2. **El aviso lleva un resumen de qué cambia respecto del veredicto anterior.** Pequeño, no
+   un diff completo: qué pasos cambian de veredicto, de disposición o de nota.
+3. **Que no cambie nada TAMBIÉN se avisa**, y con esas palabras: se sobrescribe con los
+   mismos datos. Un aviso que sólo aparece cuando hay diferencias enseña al operador a
+   pulsar sin leer.
+4. **El resumen se DERIVA de comparar los dos ficheros. Nadie lo escribe**, y hereda el
+   principio de la D-065: una cifra derivada no puede mentir sobre el trabajo porque sale
+   del trabajo.
+
+### Alcance
+
+Rige para **todo proyecto** cuyo reporte se firme desde la consola, no sólo para el que lo
+descubrió: la ruta de escritura es una y la promesa la hace la consola.
+
+**No lo implementa el `#57`.** Ese run declara qué escribe y declara qué no hace, y leer de
+vuelta nunca estuvo dentro; además su `run_id` —`RUN-CONSOLE-VERDICT-POST-001`— **describe
+su alcance**, y una lectura de vuelta no cabe en un `POST`. Se cierra y esto va al run
+siguiente, junto con las otras dos cosas que la QA descubrió: **leer el veredicto existente
+al abrir sin perder el borrador al recargar**, y **el recuento legible con sus bloqueadores
+alcanzables**.
+
+Criterio de borrado: la sustituye una decisión que retire la confirmación, que permita
+sobrescribir en silencio, o que traslade la escritura del veredicto fuera de la consola.

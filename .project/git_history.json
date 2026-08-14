@@ -1,27 +1,59 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-13T23:54:42.815Z",
+  "generated_at": "2026-08-14T07:00:57.907Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-13T23:41:00.481Z"
+      "mtime": "2026-08-14T03:46:05.815Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-13T23:54:42.801Z"
+      "mtime": "2026-08-14T07:00:57.851Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "657a9d1f397aad5b16d8d0e5430c17b712f07a19",
+  "head": "789c3b79ef7507f8d0840a085177296edbe7b1bd",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 230,
+  "commit_total": 233,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "789c3b7",
+      "full_sha": "789c3b79ef7507f8d0840a085177296edbe7b1bd",
+      "date": "2026-08-13T21:46:05-06:00",
+      "parents": "90c8bff",
+      "subject": "D-065: el reporte de run gana un resumen del emisor. Tres decisiones del operador con sus palabras: el resumen lo escribe quien ejecuto y la consola solo lo pinta; su presencia es obligatoria y su contenido opcional, pero una ausencia tiene que declarar su motivo para que nadie se salte el campo disfrazandolo de no aplica; y va despues de cerrar el 57. El principio que lo hace reproducible entre tipos de run: lo derivable se deriva y nadie lo escribe, lo escrito se acota a preguntas fijas, y el resumen no puede afirmar nada que los items no sostengan. Medido antes de decidir: el reporte no tiene ninguna clave de resumen, y en cambio el mecanismo de criterios reutilizables ya existe y ya se estreno via profile y satisfies. Se ejecuta en dos runs, contrato antes que interfaz, y cruza dos hilos",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "90c8bff",
+      "full_sha": "90c8bff296d417ef823df8c664262fdd7cca0e9d",
+      "date": "2026-08-13T20:48:03-06:00",
+      "parents": "de94da9",
+      "subject": "#57 RUN-CONSOLE-VERDICT-POST-001: la cuarta ruta de escritura, POST verdict/write, que escribe verdict.json al lado del report.json que responde por la fontaneria existente (embudo, guarda de origen y peer, resolveCanonicalWritePath, temporal-y-renombrado con re-lectura como autoridad y rollback); el modelo NO se reimplementa: el servidor carga el renderizador por vm y pregunta a rrSteps, rrSignBlocks y rrVerdictOutput, las mismas funciones que ve el operador; el verbo deja de mentir con dos verbos veraces en ingles y espanol segun haya writer inyectado o no; exporta las tres constantes de ruta del proyector para que servidor y emisor no puedan discrepar; retira el pin C.3 que fijaba la ausencia de care_budget y quedo rancio cuando el operador lo declaro por la op sancionada, conservando lo invariante y mudando la garantia de ausencia al fixture contiguo; 28 tests nuevos en dos suites. El run sigue active: la firma del veredicto real es del operador y el taller deliberadamente no la fabrico",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-VERDICT-POST-001"
+    },
+    {
+      "branch": "main",
+      "sha": "de94da9",
+      "full_sha": "de94da96a2801f245aafea87c7dcd748ad891a8d",
+      "date": "2026-08-13T17:55:21-06:00",
+      "parents": "657a9d1",
+      "subject": "abre el #57 RUN-CONSOLE-VERDICT-POST-001: planned -> active, el endpoint que escribe verdict.json y cierra el subsistema de reportes; re-emite los siete artefactos de .project/; transcribe verbatim el mensaje de cantu-quizzes-latex que cierra las tres del emisor (unchanged en lenguaje del operador, subject.feedback en 17 de 18, prosa recortada) con su verificacion contra disco: 18 items, 10 con requires_verdict false, y la discrepancia declarada de que nuestra vista deriva OCHO pasos de veredicto y no diez",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-VERDICT-POST-001"
+    },
     {
       "branch": "main",
       "sha": "657a9d1",

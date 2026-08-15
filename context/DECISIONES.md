@@ -2880,3 +2880,56 @@ imposición.**
 
 Criterio de borrado: la sustituye una decisión que devuelva la elección del perfil al
 ejecutor, que fije la versión en otro momento, o que retire el perfil como mecanismo.
+
+## D-069 — 2026-08-15 — El catálogo de criterios lo escribe la CABINA del proyecto dueño, no su ejecutor — con UNA excepción de piloto, acotada y con caducidad
+
+**Origen, y corrige un hueco del §0 que el propio operador detectó al leerlo:**
+
+> «creo que es mejor que el catalogo de criterios se haga en cabina, nos podemos auxiliar de
+> algun ticket para definir esos criterios pero aqui se definen y revisa · ya que esten
+> definidos y documentados · el ejecutor los toma · asi lo diseñe»
+
+**El hueco:** el §0 del sobre repartía por **proyecto** —«el proyecto que emite»— y eso
+dejaba sin decidir **quién dentro del proyecto**. En la práctica el perfil lo mantenía
+**quien ejecuta**, que es exactamente lo que la separación adversaria prohíbe: *quien mide
+para juzgar no puede ser quien escribió la expectativa*.
+
+### Lo que queda fijado
+
+1. **El catálogo de criterios —rúbrica y perfil— lo escribe y lo revisa la CABINA del
+   proyecto dueño**, en fase de diseño del run. Puede auxiliarse de un ticket de taller para
+   redactarlo, pero **se define y se revisa en cabina**.
+2. **El ejecutor los TOMA ya definidos y documentados.** No los escribe, no los amplía por su
+   cuenta. Un criterio que el ejecutor adopte sobre la marcha —como `D1` en el piloto— **va
+   sin id y pendiente de ratificación**, que es como el piloto ya lo hizo.
+3. **El eje del reparto tiene dos dimensiones, no una:** qué proyecto **y en qué fase**.
+
+### La excepción de piloto, y por qué se escribe su caducidad
+
+**El catálogo del piloto de quizzes se redacta en `aiw-console`.** Razón del operador: el
+ida y vuelta entre dos hilos añade fricción que una prueba piloto no debe pagar.
+
+**Y nace con destino declarado:** se muda al repo del emisor en su run de adopción. **Es la
+única excepción y no se extiende** — el siguiente catálogo, de `cantu-quizzes-latex` o de
+cualquier otro proyecto, se escribe en la cabina de su dueño. Palabras del operador:
+*«pero solo este caso como prueba piloto, próximas revisiones o casos en otros proyectos
+incluido cantu quizzes ya se hace allá.»*
+
+**Por qué la caducidad se escribe y no se recuerda:** una excepción sin fecha de muerte se
+convierte en la regla, y esta en particular pondría a `aiw-console` a redactar criterios de
+un dominio del que es deliberadamente ciego — hay una suite de 160 tokens vetados que muerde
+a quien mete una palabra del dominio en el renderizador, y **ya mordió a tres autores**.
+
+### Lo que NO cambia
+
+El sobre y la promesa de pintura siguen siendo de `aiw-console`; el contenido y su rúbrica
+siguen siendo del proyecto que emite. **Lo único que cambia es en qué fase de ese proyecto
+se teclean, y quién no puede teclearlos.**
+
+**Enmienda al contrato congelado:** el §0 de `docs/SOBRE-DEL-REPORTE-v1.md` se enmienda con
+esta decisión, **fechada y visible**, no editada en silencio. Es el mecanismo previsto: un
+contrato congelado sólo se mueve por decisión numerada.
+
+Criterio de borrado: la sustituye una decisión que devuelva el catálogo al ejecutor, que
+traslade su autoría a un proyecto que no es su dueño de forma permanente, o que retire el
+perfil como mecanismo.

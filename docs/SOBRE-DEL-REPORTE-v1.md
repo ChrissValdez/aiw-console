@@ -42,12 +42,26 @@ Hoy no está dicho en ningún sitio cuál contrato es de quién. Queda dicho aqu
 |---|---|---|
 | **El SOBRE** — los campos comunes a todo run de cualquier proyecto, el resumen del emisor, y `verdict.json` | **`aiw-console`** — este documento | `projects/aiw-console/docs/SOBRE-DEL-REPORTE-v1.md` |
 | **La PROMESA de pintura** — qué hace la consola con cada campo presente, ausente o vacío | **`aiw-console`** — este documento la declara (§3), separando lo construido de lo prometido; la fuente de lo construido es `project-console/assets/run-report-renderer.js`, `run-report-surface.js` y sus tests | este repo |
-| **El CONTRATO de dominio** — qué tiene que ser cierto del contenido revisado, y su rúbrica | **el proyecto que emite** | p. ej. `cantu-quizzes-latex/docs/RUBRICA-DE-NIVELES.md` |
-| **El PERFIL** — los ids estables de los criterios del dominio y qué evidencia exige cada uno | **el proyecto que emite** | p. ej. `cantu-quizzes-latex/docs/PERFIL-REPORTE-QUIZZES-v1.md` |
+| **El CONTRATO de dominio** — qué tiene que ser cierto del contenido revisado, y su rúbrica | **la CABINA del proyecto que emite** (D-069) | p. ej. `cantu-quizzes-latex/docs/RUBRICA-DE-NIVELES.md` |
+| **El PERFIL** — los ids estables de los criterios del dominio y qué evidencia exige cada uno | **la CABINA del proyecto que emite** (D-069) | p. ej. `cantu-quizzes-latex/docs/PERFIL-REPORTE-QUIZZES-v1.md` |
 
 **El principio que reparte, y viene de `CONTRATO.md` de este repo: la norma la escribe quien
 lee.** La consola es la lectora del sobre — por eso el sobre es suyo. El contenido lo lee el
 operador con la rúbrica del dominio delante — por eso los criterios son del emisor.
+
+**ENMIENDA D-069, 2026-08-15 — segundo eje del reparto, y no lo tenía.** Las dos filas de
+arriba decían «el proyecto que emite» y eso dejaba sin decidir **quién dentro de ese
+proyecto**. Queda decidido: **el catálogo de criterios lo escribe y lo revisa la CABINA del
+proyecto dueño, en fase de diseño del run, y el EJECUTOR sólo lo toma.** Es la separación
+adversaria aplicada al criterio mismo: *quien mide para juzgar no puede ser quien escribió
+la expectativa*, y hasta hoy el perfil lo mantenía quien ejecuta. El eje del reparto ya no
+es sólo **qué proyecto**, sino **qué proyecto Y en qué fase**.
+
+**Excepción de PILOTO, acotada y con caducidad declarada.** El catálogo del piloto de
+quizzes se redacta **en `aiw-console`**, porque el ida y vuelta entre hilos añade fricción
+que un piloto no debe pagar. **Nace con destino declarado**: se muda al repo del emisor en
+su run de adopción. **Es la única excepción y no se extiende**: el siguiente catálogo —de
+`cantu-quizzes-latex` o de cualquier otro proyecto— se escribe en la cabina de su dueño.
 
 **Relevo declarado.** La cabecera del contrato del emisor dice, verbatim: «Este documento
 deja de ser su fuente en cuanto ellos emitan la suya» — y su §15 reparte qué se muda: el

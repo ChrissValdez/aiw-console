@@ -2759,3 +2759,58 @@ alcanzables**.
 
 Criterio de borrado: la sustituye una decisión que retire la confirmación, que permita
 sobrescribir en silencio, o que traslade la escritura del veredicto fuera de la consola.
+
+## D-067 — 2026-08-15 — La cobertura se lee DURA: el silencio es «no revisado», y quien revisó y encontró limpio lo declara — con `satisfies` colgando también de donde vive la evidencia
+
+**Procedencia, dicha con precisión porque importa.** La formulación de abajo **es de la
+cabina**; el operador la aprobó con «procedamos con tu recomendación» tras leer las tres
+opciones que el `#59` dejó encuadradas. **No se le atribuyen palabras que no dijo.** Lo que
+sí es suyo, y está en la D-065, es el principio del que ésta se deduce: *«puede estar
+ausente con motivo pero es obligatorio que explique ese motivo … para que no simplemente se
+lo salte»*.
+
+**El encuadre medido, del estreno del contrato contra el reporte real del piloto:** 29 ids
+en el perfil, **10 tocados, 19 sin tocar**; de esos 19, **5 declarados como punto ciego y
+14 en silencio**. Y los 14 **no son una sola cosa: son cuatro**, las cuatro en el mismo
+reporte — cumplido por la cabecera sin ítem que lo cite; revisado y limpio pero declarado
+sólo en prosa; no disparado esta vez; y silencio de verdad, donde nadie puede distinguir
+«revisado y limpio» de «nunca mirado».
+
+### Lo que queda fijado
+
+1. **El silencio significa «NO REVISADO».** Lectura dura, la del perfil §2.2 tal cual.
+2. **Quien revisó y encontró limpio lo DECLARA.** No hay cobertura por sobreentendido.
+3. **`satisfies` puede colgar también de la cabecera donde vive la evidencia** —`counts`,
+   `profile_data`— y no sólo de un ítem. Esto es la extensión que hace barata la lectura
+   dura: resuelve sin ceremonia el criterio que la cabecera ya cumple y el que se revisó
+   limpio, **sin crear un segundo sitio donde afirmar cobertura**.
+4. **«No aplica» y «no disparado» se declaran con la forma del punto ciego** —`what`,
+   `why_not`, `who_could`, `affects`—, que ya está medida y ya se usa. **No se inventa
+   forma nueva.**
+5. **Un criterio no reproducible se declara como tal** y no se cuenta como cumplido.
+
+### Por qué se descartaron las otras dos, y no por gusto
+
+- **«Silencio = sin declarar», estado propio:** no afirma nada falso, pero **institucionaliza
+  la ausencia sin motivo**, que es exactamente lo que la D-065 prohíbe. Nadie queda obligado
+  a declarar nada.
+- **Declaración explícita por criterio en su propia estructura:** crea **un segundo sitio
+  donde se puede afirmar cobertura**, y dos fuentes para el mismo número es literalmente
+  cómo nació el «88 de 90 distractoras explicadas» que al medirse resultó ser **1 en lectura
+  estricta y 5 en amplia**.
+
+### El coste, declarado y no escondido
+
+**Al principio los reportes honestos parecerán peores.** El piloto tendrá que declarar unos
+19 criterios, y cada una de las revisiones que siguen pagará algo parecido. **A cambio la
+cobertura pasa a significar algo**, y el silencio deja de poder disfrazarse de verde. El
+coste baja solo: lo declarado se reutiliza entre revisiones del mismo perfil.
+
+### Qué se descongela con esto
+
+El **§6 del documento del sobre** dejó de ser una sección abierta. Se enmienda con esta
+decisión y **el estreno se vuelve a medir bajo la regla nueva**, porque la cobertura del
+piloto cambia de significado aunque no cambie de número.
+
+Criterio de borrado: la sustituye una decisión que admita cobertura por sobreentendido, que
+permita afirmar cobertura desde dos sitios, o que retire el perfil y `satisfies`.

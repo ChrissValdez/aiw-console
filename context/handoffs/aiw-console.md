@@ -1,8 +1,9 @@
 # Relevo — hilo `aiw-console`
 
-**Fecha:** 2026-08-13 · **Sustituye** al relevo del 2026-08-08.
-Aquella sesión cerró con **57 runs**; ésta cierra con **64** y con el subsistema de
-reportes construido entero.
+**Fecha:** 2026-08-15 · **Sustituye** al relevo del 2026-08-13.
+Aquella sesión cerró con **64 runs** y el subsistema de reportes construido.
+Ésta cierra con **67**, el subsistema **cerrado de verdad** —se escribe, se lee y se
+confirma antes de sobrescribir—, y **el contrato del sobre CONGELADO como v1**.
 
 La sustancia va DENTRO. Los punteros a records son procedencia, no respuesta.
 
@@ -10,242 +11,297 @@ La sustancia va DENTRO. Los punteros a records son procedencia, no respuesta.
 
 ## 1. DÓNDE ESTAMOS
 
-**NO hay ningún run `active`.**
+**Hay UN run `active`: el `#60`, y su QA está PENDIENTE.**
 
-`projects/aiw-console/roadmap/roadmap.json` · md5 **`c67234f1494af9f10a2f2f3c520a875e`**
-**64 runs** · `completed 56 · planned 8` · densidad `1..64` · ids únicos · **0 CR**
-`HEAD` = `origin/main` = **`2d7f7d2`** · cero candados en los cinco repos.
+`projects/aiw-console/roadmap/roadmap.json` · md5 **`216921399eeea31105ef3e90438f162a`**
+**67 runs** · `completed 59 · planned 7 · active 1` · densidad `1..67` · ids únicos
+`HEAD` = **`a7f50dfe`** · **cero commits sin publicar** · cero candados en los cinco repos.
 
-**Elegibles, medidos al cerrar. Vuelve a medirlos: cambian con cada cierre.**
-
-| | run | qué es |
+| | run | estado |
 |---|---|---|
-| **#57** | `RUN-CONSOLE-VERDICT-POST-001` | el endpoint que escribe `verdict.json` — cierra el subsistema |
-| #58 | `RUN-CONSOLE-PARIDAD-RENDER-CANTU-001` | QA de paridad; **una de las dos compuertas del cutover** |
-| #60 | `RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001` | saca el canónico de Cantu de la carpeta que el cutover borra |
-| #62 | `RUN-CONSOLE-STALE-TEXTS-REPAIR-001` | cinco textos que describen este repo en falso |
-| #63 | `RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001` | las cuatro ops de contenedor en el frontend |
-| #64 | `RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001` | auditoría visual, deliberadamente la última |
+| **#60** | `RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001` | **`active`. El trabajo está entregado y commiteado (`6aee60a`). Falta que el operador mire la pantalla.** |
+| #61 | `RUN-CONSOLE-PARIDAD-RENDER-CANTU-001` | una de las dos compuertas del cutover |
+| #62 | `RUN-CONSOLE-UI-UX-001` | espera al #61 |
+| #63 | `RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001` | saca el canónico de Cantu de la carpeta que el cutover borra |
+| #64 | `RUN-CONSOLE-CORTE-RETIRO-LOCAL-001` | el cutover; espera a #61, #62 y #63 |
+| #65 | `RUN-CONSOLE-STALE-TEXTS-REPAIR-001` | textos falsos; **esta sesión le dejó tres semillas nuevas, §7** |
+| #66 | `RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001` | las cuatro ops de contenedor en el frontend |
+| #67 | `RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001` | auditoría visual, deliberadamente la última |
 
-Bloqueados: **#59** espera a #58; **#61** (el cutover) espera a #58, #59 y #60.
+**Y hay DOS runs que no existen todavía y que el operador ya encargó:**
+
+- **El catálogo de criterios del piloto de quizzes** — en ESTE repo, por la excepción de
+  piloto de la D-069, con destino declarado al repo del emisor. §5.
+- **El ancla externa de nivel PAA** — el operador está extrayendo cuatro simuladores
+  fuera del chat y los traerá en la sesión siguiente. §6.
 
 ---
 
-## 2. LO QUE ESTA SESIÓN ENTREGÓ — el subsistema de reportes, en seis runs
-
-Un **reporte de run** es lo que un ejecutor emite para que un humano juzgue su trabajo:
-qué cambió, por qué, qué no pudo verificar, qué decidió por su cuenta. Su contrato lo
-escribe `cantu-quizzes-latex`; **el sobre, el renderizador y la consola son de este hilo.**
+## 2. LO QUE ESTA SESIÓN ENTREGÓ — el subsistema de reportes, cerrado
 
 | | run | qué dejó |
 |---|---|---|
-| **#51** | Reports index | `.project/reports_index.json`, el **séptimo artefacto** |
-| **#52** | One renderer | `run-report-renderer.js`, 1 049 líneas **vanilla y ciego al dominio** |
-| **#53** | Reports surface | del detalle del run a su reporte, y de vuelta |
-| **#54** | Verdict model | dos tokens en el ítem, tres en el run, `this_run` y la guarda |
-| **#55** | QA repairs | los cinco hallazgos del operador · `done with deviations` |
-| **#56** | Preview sandbox | el marco pasa a origen opaco |
+| **#57** | `VERDICT-POST` | la **cuarta ruta de escritura**: `verdict.json` al lado del reporte |
+| **#58** | `VERDICT-SURFACE` | el veredicto **se lee de vuelta**, el borrador sobrevive a la recarga, y sobrescribir **avisa y resume** |
+| **#59** | `ENVELOPE-CONTRACT` | **el documento del sobre, 942 líneas, CONGELADO como v1** |
+| **#60** | `ENVELOPE-RENDER` | la consola **pinta** el resumen del emisor y la cobertura de criterios |
 
-**El séptimo artefacto costó DOS paradas medidas del taller.** El pin de `.project/`
-estaba en **ocho** sitios ejecutables, no en tres ni en cuatro como dijeron dos tickets
-míos seguidos. Y el hallazgo que lo justifica todo: **`emitted-artifacts-declaration.test.mjs:149`
-siguió VERDE con siete artefactos vivos** — lee fixtures congelados el 2026-07-30 que nada
-regenera, así que **nunca cubrió lo que dos tickets creyeron.** La aserción viva que existe
-hoy no restituye una garantía: la crea por primera vez.
+### El ciclo del veredicto, cerrado y probado con un humano
 
-### El renderizador es ciego al dominio, y hay guarda mecánica
+El operador firmó un veredicto real, salió, volvió y **no vio nada** — porque la consola
+escribía y **no leía nunca**. Firmó otra vez y **sobrescribió en silencio**. Los dos
+ficheros eran idénticos salvo la marca de tiempo, así que no costó nada; **la próxima no
+tenía por qué**. El `#58` lo cerró: hoy el primer pulsado nunca escribe, avisa con un
+resumen **derivado de comparar los dos ficheros**, y **cuando no cambia nada también avisa**
+—porque un aviso que sólo aparece cuando hay diferencias enseña a pulsar sin leer—.
 
-Un mismo código pinta reportes de cinco proyectos. **Cero ramas por nombre de proyecto y
-cero ramas por `type` de ítem: se pinta por PRESENCIA DE CAMPOS.** Lo prueba una suite de
-**94 tokens vetados**, y esa guarda **mordió a su propio autor dos veces** — cazó palabras
-en los comentarios de quien la escribió. Una guarda que solo atrapa a otros no está probada.
+**La guarda del `#54` mordió delante del operador por primera vez:** *«APPROVED is not
+available for the run: 1 fix is owed to this run itself»*. Hasta entonces sólo la probaban
+tests.
 
-### El modelo de veredicto, y de dónde salió
+### El renderizador pasó de CERO a pintar la cobertura
 
-Lo pidió el operador usando la superficie: una sola lista servía dos preguntas distintas.
+Medido antes de empezar el `#60`: el renderizador mencionaba `satisfies` **cero veces** y
+`profile_data` **cero veces**. Todo el valor del mecanismo de criterios estaba enterrado en
+el JSON mientras el operador leía el reporte. Hoy pinta los tres cubos —**cumplidos y
+declarados · declarados sin cumplir · silencio = no revisado**— y el cubo del silencio
+**pinta la regla**, no un número neutro.
 
-    verdict      APPROVED · CHANGES_REQUIRED · BLOCKED   (los de aiw/kernel.mjs:213)
-                 el ÍTEM toma solo los dos primeros
-    disposition  this_run · new_run · operator_fixed · discard
-    stopped      DERIVADO, nunca elegido
-
-**`BLOCKED` sobra en el ítem por construcción:** que algo detenga todo lo declara el emisor
-con `stop: true` y la consecuencia se deriva.
-**`this_run` era la disposición que faltaba:** las tres anteriores mandaban el arreglo
-fuera, así que aprobar el run siempre era coherente y la contradicción no tenía nombre.
-**La guarda:** un run puede ser `APPROVED` con ítems en `CHANGES_REQUIRED` **solo si cada
-uno lleva disposición y ninguna es `this_run`**. Es guarda, **no agregación**: el veredicto
-del run nunca se calcula desde los ítems.
-
-**Y encaja sin traducir con el `closeout_result` de este roadmap:** todo aprobado es `done`;
-corregido hacia adelante es `done with deviations`; un arreglo debido aquí y el run no cierra.
-
-### El sandbox — medido sirviendo, no leyendo
-
-El marco de previsualización era un `iframe` **del mismo origen y sin `sandbox`**, con
-**cero CSP y cero X-Frame-Options**, y **el origen es la ÚNICA guarda** de las tres rutas
-que escriben (`roadmap/edit`, `history/sync`, `project/emit`). Un HTML emitido por
-cualquier proyecto habría tenido el DOM de la consola —incluida la firma tecleada— y acceso
-de escritura.
-
-**Cerrado con `sandbox` de conjunto VACÍO.** La medición que lo decide: **`Origin: null`
-devuelve 403 en las tres rutas**, así que la guarda existente ya rechaza el origen opaco
-sin tocarla. **CSP y X-Frame-Options se midieron, están a cero, y son OTRO run** — atacan
-quién enmarca a la consola, no lo que el marco hace hacia dentro.
+**Lo que la consola todavía NO puede:** nombrar **cuáles** ids están en silencio. El
+inventario de los 29 `QZ-C-*` **no tiene canal máquina** —no viaja en el reporte ni en el
+índice, y parsear el documento del emisor exigiría un regex de dominio que la ceguera veta—.
+**Eso lo arregla el catálogo como dato (§5).**
 
 ---
 
-## 3. ⚠⚠ LA LECCIÓN DE MÉTODO DE ESTA SESIÓN: `grep` NO ES UNA MEDICIÓN
+## 3. ⚠⚠ LA LECCIÓN DE MÉTODO: MEDIR PRESENCIA CUANDO HABÍA QUE MEDIR CONTENIDO
 
-**Cinco veces esta sesión un `grep` mío iba a producir un hallazgo falso.** Cinco:
+**Seis errores de la cabina esta sesión, y tres son el mismo:**
 
-1. «Los 2,8 MB del prototipo son la fuente» — **eran React**; la fuente ocupa 8 KB.
-2. «`type: creation` no está tratado» — **sí lo estaba**; el renderizador no ramifica por tipo.
-3. «El prototipo no lleva los cuatro casos» — **los llevaba**; el dato va gzip+base64 en un bundle.
-4. Medí **el fichero equivocado**: había dos con nombre parecido en `uploads`.
-5. «Ramifica por `kind`» — era `step.kind`, un objeto **interno de la vista** con nombre que colisiona.
+1. **«Ocho pasos de veredicto». Eran ONCE.** Conté `items` y **no le pregunté a la vista**:
+   `rrSteps` cuenta también las dos autodecisiones y el run. El taller acertó; CQL también
+   se equivocó, con «10».
+2. **«El árbol de CQL está limpio», dicho DOS veces. No lo estaba.** `git status --porcelain`
+   sobre un repo de **327 MB** excede el tiempo, y **la tubería convirtió el timeout en cero
+   modificados**. Misma clase que `--ignore-cr-at-eol` canalizado.
+3. **Di por bueno «`subject.feedback` en 17 de 18».** La clave existía y **el valor estaba
+   vacío en nueve**. Mi sonda preguntó `!== undefined`.
+4. **«El taller sigue trabajando»** cuando ya había entregado — lo deduje de la hora del
+   fichero en vez de preguntar.
+5. **Le di un comando de arranque peor que su propio script**, que mata el servidor viejo
+   del puerto — el fallo que ese lanzador existe para impedir.
+6. **Di un coste falso en una decisión** —«barata, la escribo yo»— cuando tocaba el motor.
+   Se corrigió **antes** de registrarla.
 
-**Y una sexta, de conteo:** cité **32** ids `QZ-C-*` del perfil de CQL; son **29**, porque
-mi patrón atrapaba comodines de prosa. CQL había publicado **30** sin derivarlo de ningún
-sitio, que es peor.
+**Y el hallazgo que lo convierte en patrón y no en descuido:** el validador de CQL aprobaba
+las nueve retroalimentaciones vacías **porque comprobaba `"feedback" in subject`** —
+presencia, no contenido. **Dos hilos independientes, la misma trampa, y en los dos produjo
+un verde.**
 
-**Las reglas que salen, y son operativas:**
-
-- **Antes de publicar el resultado de un `grep`, preguntarse si el patrón puede VER lo que
-  busca.** Datos comprimidos, nombres que colisionan, ficheros homónimos: en los tres el
-  cero significa «no lo vi», no «no está».
-- **Una cifra viaja con el comando que la produce.** CQL lo hizo bien al final: su perfil
-  lleva el inventario y el `grep -oP` que lo cuenta.
-- **El método del taller es mejor que el mío y hay que copiarlo:** en vez de barrer ficheros
-  buscando sitios, **copió el repo, implementó el cambio y corrió la suite entera**. Eso es
-  exhaustivo por construcción. Un `grep` no lo es nunca.
-
-### Corolario: el TICKET no debe enumerar inventarios
-
-Dos tickets míos declararon el inventario de sitios del pin —tres, luego cuatro— y **eran
-ocho**. El tercero dejó de enumerar y **ordenó el método**: implementa en una copia, corre
-la suite, y **la suite es el inventario**. Salió a la primera.
-
-**Y la condición de parada cambió con él:** «apareció un sitio nuevo» dejó de ser motivo de
-parada —es el trabajo— y pasó a serlo **«una decisión cambiaría lo que el sistema PROMETE»**.
+**Regla que queda: una sonda de presencia NO es una sonda de contenido, y en un campo de
+texto casi nunca es la que quieres.**
 
 ---
 
-## 4. LA QA HUMANA PAGÓ, y es el argumento más fuerte que tenemos
+## 4. EL CONTRATO DEL SOBRE — congelado, y qué significa
 
-**El operador recorrió veinte pasos y encontró CINCO defectos con la suite en verde
-—643 de 644— mientras los cinco estaban presentes.** Ninguno salió de un test.
+`docs/SOBRE-DEL-REPORTE-v1.md` · **942 líneas · CONGELADO el 2026-08-15**
 
-1. Un bloque pintado dos veces y sin plegar.
-2. **La clave del JSON usada como etiqueta.** Leyó «No cambió: statement» y **preguntó qué
-   era**. Yo medí dos sitios y avisé de que podían no ser todos: **eran doce.**
-3. Un ítem `info` —definido como «no requiere acción»— **pedía veredicto y consumía un paso**.
-4. **El reporte afirma que la retroalimentación no cambió y nunca la enseña.**
-5. La previsualización **nunca se había visto pintar nada**; solo existía la rama «missing».
+Se estrenó contra el reporte real del piloto **antes** de darse por bueno, se enmendó con la
+decisión del operador y **se volvió a medir bajo la regla nueva**. Toda cifra viaja con su
+comando en el Anexo A.
 
-**El 5 escondía dos cosas peores:** los assets del `#55` **nunca pintaron** —el `src` usaba
-la ruta pelada y daba 404, así que el paso de QA pasó por accidente— y encenderlo destapó el
-agujero de seguridad del §2.
+**Congelado significa: no se mueve salvo por decisión numerada.** Ya se movió una vez así
+—la D-069— y la enmienda va **fechada y visible dentro del §0**, no editada en silencio.
 
-**Regla que queda:** cuando un paso de QA pase, comprobar que pasó **por la razón correcta**.
+### Las cinco decisiones que lo gobiernan
 
----
+- **D-065** — el resumen es del **emisor**; presencia obligatoria, contenido opcional, **y
+  una ausencia declara su motivo**; lo derivable se deriva y nadie lo escribe.
+- **D-066** — sobrescribir un veredicto **avisa, resume lo que cambia y pide confirmación**;
+  y que no cambie nada **también se avisa**.
+- **D-067** — la cobertura se lee **DURA**: el silencio es «no revisado», quien revisó y
+  encontró limpio **lo declara**, y `satisfies` puede colgar de la cabecera **donde vive la
+  evidencia** (`header_satisfies[]` con `where` obligatorio).
+- **D-068** — el perfil se declara **en el run, antes de ejecutar** (hoy en
+  `full_description`, forma barata); la **versión se fija al ABRIR** el run; y lo
+  irreproducible **por construcción** lo declara el **perfil**, una vez, no las 39
+  revisiones.
+- **D-069** — el catálogo de criterios lo escribe **la CABINA del proyecto dueño**, no su
+  ejecutor. **Excepción de piloto acotada y con caducidad escrita**, §5.
 
-## 5. LO QUE ESTÁ ABIERTO CON CQL — tres cosas del EMISOR
+### La regla que impide la cobertura falsa, y de dónde salió
 
-Nosotros no podemos repararlas: el renderizador pinta lo que llega, y hacerle inventar
-una traducción sería que aprendiera su dominio.
+**Un criterio reutilizable no es un enunciado con un id: es un id más un chequeo tan
+concreto que dos ejecutores saquen el mismo número.** La rúbrica afirma «88 de 90
+distractoras explicadas»; el ejecutor obtuvo **1 en lectura estricta y 5 en amplia**, porque
+la §6.4 nunca define qué cuenta como explicar una distractora. **Un criterio sin chequeo
+sale verde y no significa nada.**
 
-- **`unchanged` mezcla identificadores con prosa.** `["statement","options","feedback"]`
-  junto a `["valores de todas las opciones"]`.
-- **La prosa de un ítem repite el rótulo que la vista pone.** «Si se rechaza» dos veces.
-- **`subject.feedback` no existe.** Cero de nueve ítems; dos lo nombran en su `unchanged`.
-  **Comprobado: pintarlo no exige nada más que mostrar un campo presente.**
+### Una quinta situación que apareció midiendo
 
-**Enmiendas pedidas a su contrato:** el §7 sigue diciendo `ok | no | duda`; falta
-`mechanical` en el §1; y el tipo `info` debe declarar `requires_verdict: false`.
-**Todo enviado el 2026-08-13.**
-
-**Y les debemos el documento del sobre.** Es nuestro, sigue pendiente, y la condición que
-pusimos ya se cumple: la superficie existe y se ha usado. Va después del `#57`.
-
----
-
-## 6. LA MÁQUINA, GIT Y LOS CANDADOS — sin cambios, y siguen mordiendo
-
-**Modo COWORK CONECTADO.** La ruta de montaje **se deriva cada sesión**. Los cinco repos
-clonados. **La escritura del canónico por el motor está probada**: esta sesión la usó
-más de quince veces.
-
-**El CRLF está resuelto y la regla vieja sigue muerta:** `aiw-console` tiene
-`.gitattributes` idéntico al de los tres repos hermanos, el árbol en LF, y **la cabina y el
-operador leen el mismo número**. `aiw` sigue siendo el único de los cinco sin
-`.gitattributes` — **es de su hilo**.
-
-**Los candados siguen apareciendo, y hay que comprobarlos EN EL TURNO que entrega el
-bloque**, con `find`, nunca corriendo git. Esta sesión apareció uno en `cantu-studio` a
-mitad de trabajo; **es de otro hilo y no se toca**.
-
-**GitHub Desktop sondea el repo y toma el candado.** El bloque lo cierra antes de correr.
-
-**Un índice con `stat` viejo NO se arregla refrescando: se reconstruye con
-`git read-tree HEAD`.** Probado sobre copias: `--refresh` y `--really-refresh` no bastan.
+El encuadre de la cobertura tenía cuatro filas y **resultó tener cinco**:
+`QZ-C-COUNT-MOVE` está **cumplido por ítems que existen y no lo citan**. No lo alcanza la
+extensión a la cabecera —colgarlo de `counts` sería citar evidencia donde no vive— y **la
+regla 2 de la D-067 ya lo resuelve** sin reabrir nada.
 
 ---
 
-## 7. DEFECTOS DE MÉTODO DE LA CABINA, además de los `grep`
+## 5. EL CATÁLOGO DE CRITERIOS — el run que falta, y por qué es aquí
 
-1. **Le di el ticket del `#54` y el aviso de «no lo pegues» en el mismo mensaje**, con el
-   aviso debajo. El taller lo ejecutó estando `planned`, y **el roadmap afirmó algo falso
-   durante un día**. El aviso va ANTES del ticket, o el ticket no se emite.
-2. **Escribí una guarda de árbol limpio sobre un árbol que yo mismo acababa de ensuciar**,
-   sin exceptuarme. Regla: **una guarda se evalúa sobre los ficheros EN ALCANCE.**
-3. **Puse una cifra propia envejecida en un criterio de aceptación** —«339 modificados»—
-   después de escribir el canónico tres veces yo mismo.
-4. **Mandé al operador a una ronda de diseño que ya estaba hecha**, por el error 3 de la §3.
+**La D-069 lo pone en la cabina del proyecto dueño. La excepción de piloto lo trae aquí**,
+porque el ida y vuelta entre hilos añade fricción que una prueba piloto no debe pagar.
 
-**Y la separación adversaria pagó en los seis runs.** El taller contradijo a la cabina en
-cada uno y **acertó siempre**: los ocho sitios del pin, los doce rótulos, la duplicación en
-el fichero que yo no miré, el `Origin: null` que decidió el sandbox, y que los assets del
-`#55` nunca habían pintado.
+**Nace con destino declarado: se muda al repo del emisor en su run de adopción.** Y la
+caducidad está escrita porque **una excepción sin fecha de muerte se convierte en la regla**,
+y ésta pondría a este repo a redactar criterios de un dominio del que es **deliberadamente
+ciego** — la suite de tokens vetados creció de 94 a **160** agujas y **ya mordió a tres
+autores distintos**, el último el ejecutor del `#60` con un `it.type !=`.
 
----
+**La forma acordada es JSON**, y no por gusto: **cero ficheros YAML o TOML en el repo y
+`dependencies: {}` vacías**. Y sobre todo, el motor asegura **ida y vuelta byte a byte**, que
+es lo que sostiene el ritual de `md5 antes/después`; YAML no puede prometerlo.
 
-## 8. LO QUE QUEDA ABIERTO, CON SU CONDICIÓN DE CIERRE
+Cada ficha: **`id` · `demands` · `check` · `evidence` · `reproducible`**. El `check` es el
+campo que hoy no existe y que la §6.4 demuestra que hace falta.
 
-**El `#57`, el endpoint del veredicto.** Cierra el subsistema. Hoy el botón dice «Write
-verdict.json» **y lo que hace es descargar** — desde esa pantalla el verbo miente.
+**Y el inventario viaja como artefacto derivado en `.project/`**, igual que los otros siete
+— con eso la consola pasa a **nombrar** los ids en silencio.
 
-**CSP y X-Frame-Options.** Medidos a cero, declarados como otro run.
-
-**El volumen real.** El fixture versionado del caso de desarrollo trae **4 ítems**; el de
-volumen, 28. El techo medido está en **~700 ítems**.
-
-**Un `.gitattributes` para `aiw`** — el último de los cinco. **De su hilo.**
-
-**El documento del sobre** — §5.
-
-**Unificar `setDeps`, el rename de `depends_on`, `V3_BATCHABLE_OPS`** — siguen esperando la
-ventana de «tres roadmaps en reposo».
-
-**Los 9 runs terminales sin `closeout_result`** — no se rellenan.
+**El trabajo de fondo es del operador, no de un taller:** escribir el chequeo de un criterio
+**es fijar el estándar**, y un ejecutor que se lo invente estaría inventando la vara con la
+que se le mide. Un taller sí puede extraer los 29 de la rúbrica, rellenar lo derivable y
+**marcar lo que no**.
 
 ---
 
-## 9. RECORDS DE ESTA SESIÓN
+## 6. EL ANCLA DE NIVEL PAA — lo que el operador está extrayendo ahora
+
+**El problema que lo motiva, en sus palabras:** no tiene una referencia de nivel — *«no
+tengo un examen nivel PAA para decir: tengo que poder pasar este examen, no más difícil, no
+más fácil»*.
+
+**Y el diagnóstico que salió al medir: su ancla actual es AUTORREFERENCIAL.** El reporte del
+piloto declara `anchor_size: 40` — «20 del Examen Diagnóstico + 20 del Simulador», **material
+propio construido por el mismo proceso que se está revisando**. Si deriva, el ancla deriva
+con él y nadie se entera.
+
+**Lo que ya tenía sin saberlo:** su propia prueba de práctica dice en la página 1, verbatim,
+que **«se elaboró con la misma cantidad de ejercicios, la misma variedad de temas y el mismo
+nivel de dificultad que la prueba verdadera»**. Eso ES el ancla.
+
+**Lo que le faltaba:** la **Práctica Oficial** de College Board con AprendoLibre —
+`paa.aprendolibre.com`, gratuita, cientos de ejercicios oficiales. **De ahí salen los cuatro
+simuladores que está extrayendo.**
+
+### Lo acordado para cuando los traiga
+
+- **Una fuente canónica, no cuatro ficheros ni una carpeta por tema.** Cada reactivo con
+  `source`, `position`, `topic`, enunciado, opciones y **respuesta**. Las vistas por tema son
+  **consultas**, no ficheros — un derivado persistido es una copia de la verdad que nadie
+  regenera.
+- **Conservar la POSICIÓN.** Hipótesis **a verificar, no a creer**: si la PAA ordena de
+  fácil a difícil dentro de la sección, la posición es el único dato de dificultad por
+  reactivo que se puede obtener, porque las estadísticas no se publican.
+- **Clasificar con los códigos del corpus** —`ARI-FA-Fracciones`, `ARI-PI-Porcentajes`…— o el
+  cruce no ocurre. **Y marcar los que no encajen: ésos son temas que la PAA evalúa y el banco
+  no cubre.**
+- **Contar reactivos por subtema ANTES de escribir el criterio.** Habrá subtemas con dos o
+  tres, y un criterio que compare contra un ancla de dos **no significa nada**: tiene que
+  declarar el tamaño y decir cuándo es demasiado delgada.
+- **Verbatim.** Arreglar una redacción al transcribir convierte la vara en material propio.
+- **Y la vara se mira, no se copia:** es propiedad de College Board y su PDF prohíbe la
+  reproducción. Ruta separada, marcados como externos, **fuera de toda compilación de quiz**.
+
+**El operador extraerá primero los cuatro de matemáticas.** Se le recomendó parar ahí antes
+de hacer los doce restantes: si el diseño falla, falla habiendo pagado 4 y no 16.
+
+---
+
+## 7. LO QUE ESTÁ ABIERTO CON `cantu-quizzes-latex`
+
+**Adoptaron el sobre a mitad de esta sesión, y el reporte del piloto cambió bajo nuestros
+pies** — el `#60` lo detectó y ganó el disco. Hoy el reporte trae `summary` con sus tres
+claves, `header_satisfies`, `QZ-C-COUNT-MOVE` citado, y `QZ-C-DISTR` declarado en un
+`affects`.
+
+**Cobertura verificada con comando propio: `citados 14 (11 ítems + 3 cabecera) · cumplidos 13
+· declarados 16 · silencio 0`.** La regla 5 funciona sobre dato: `QZ-C-DISTR` sale de
+cumplidos **sin leer una línea de prosa**.
+
+**Lo que queda con ellos, y el operador ya lo aprobó:**
+
+1. **Que commiteen la adopción.** Su árbol la tiene **sin versionar**, y **nuestros fixtures
+   copian ese disco**: si se descartara, tendríamos pruebas apuntando a algo que nunca
+   existió en la historia.
+2. **Su run de adopción** — el sobre v1, la D-068 y la D-069. Aprobado por el operador,
+   **va a su cola**.
+3. **`QZ-R-06`:** dicen que va citada en `header_satisfies` y **en el reporte hay cero
+   apariciones de `QZ-R-06` ni de ningún `QZ-R-*`**. Puede que se refieran a su perfil. **Sin
+   confirmar.**
+
+**El veredicto del piloto NO es el veredicto del operador.** Lo firmó para probar la
+herramienta y **lo retiraron por renombrado**, dejando un fichero que se delata solo con
+cinco señales. **`D1` NO está ratificada** pese a lo que dijera el fichero, y su alcance
+declarado es entrar en la rúbrica v3 y **aplicarse a los 39 runs restantes**.
+
+---
+
+## 8. LA MÁQUINA, GIT Y LOS CANDADOS
+
+**Modo COWORK CONECTADO.** La ruta de montaje **se deriva cada sesión**. **El borrado hay
+que pedirlo**: al abrir esta sesión `rm` daba `Operation not permitted`, se pidió el permiso
+y quedó habilitado para la carpeta.
+
+**Dos cosas medidas que muerden y no estaban en el relevo anterior:**
+
+- **`git status --porcelain` completo sobre `cantu-quizzes-latex` (327 MB) EXCEDE EL TIEMPO.**
+  Va **acotado a rutas** — `-- reports .project` — o miente por timeout. **Y no se canaliza a
+  `head`**, porque eso convierte el error en un cero.
+- **El entorno puede ponerse lento y matar un `commit` a mitad es lo que crea el candado.**
+  Pasó una vez: el commit **sí entró** y se verificó **leyendo `.git/HEAD` y `.git/logs/HEAD`
+  directamente, sin invocar git**. Es la sonda correcta cuando git no responde.
+
+`origin/main` **se resuelve por nombre**, no por `refs/remotes/origin/main` — el ref suelto y
+el empaquetado discrepan y `rev-parse` de la ruta completa falla.
+
+**El lanzador del operador es mejor que un `node` a mano:** `start-console.cmd` mata el
+proceso viejo del puerto, verifica que queda libre y abre el navegador. **Y miente sobre sí
+mismo** — §9.
+
+---
+
+## 9. SEMILLAS PARA EL `#65`, no su inventario
+
+**El `#65` tiene que derivar la lista corriendo el método. Estas tres aparecieron de paso:**
+
+- **`start-console.ps1` se llama a sí mismo «Read-only console: the server answers GET and
+  HEAD only and writes nothing».** **Son CUATRO rutas de escritura**, y la frase se le enseña
+  al operador justo cuando va a firmar. **La más peligrosa de las encontradas.**
+- **`CONTRATO.md` declara que un run admite 11 claves y el disco tiene 15** — la
+  clasificación añadió seis por una op sancionada. Es el contrato del roadmap describiendo un
+  árbol que ya no existe.
+- **El acuse de la re-emisión dice «Re-emitted 6 artifacts»** y son siete; el README decía
+  «all six artifacts».
+
+---
+
+## 10. RECORDS DE ESTA SESIÓN
 
 ```
 context/aiw-console/records/
-  INDICE-DE-REPORTES-PARADA-O4-P17.md              (1ª parada del taller)
-  INDICE-DE-REPORTES-SEGUNDA-PARADA-O4-P17.md      (2ª parada: son ocho sitios)
-  INDICE-DE-REPORTES-RESOLUCION-O4-P17.md
-  RENDERIZADOR-UNICO-DE-REPORTES.md                (§F: siete consejos al segundo)
-  SUPERFICIE-DE-REPORTES-EN-LA-CONSOLA.md          (§J: el packet de 16 pasos)
-  MODELO-DE-VEREDICTO-DOS-EN-EL-ITEM-TRES-EN-EL-RUN.md
-  REPARACIONES-QA-DEL-REPORTE-CINCO-HALLAZGOS-DEL-OPERADOR.md
-  SANDBOX-DEL-MARCO-DE-PREVISUALIZACION.md
+  MENSAJE-DE-CQL-CIERRE-DE-LAS-TRES-DEL-EMISOR.md
+  ENDPOINT-DEL-VEREDICTO-CIERRE-Y-VEREDICTO-DEL-OPERADOR.md
+  SUPERFICIE-DEL-VEREDICTO-CIERRE-Y-EL-APPROVED-QUE-NO-ES-REAL.md
+  PINTADO-DEL-SOBRE-RESUMEN-Y-COBERTURA.md
+docs/
+  SOBRE-DEL-REPORTE-v1.md            ← el contrato congelado
+context/
+  DECISIONES.md                      ← D-065 a D-069
 ```
 
-Y la especificación de la interfaz, versionada: `design/run-review-prototype.html`.
-**Es React y esta consola es vanilla sin paso de build: es especificación de aspecto y
-conducta, NO código que portar.** Su línea 389 son 2,6 MB de bundle comprimido: **no se lee.**
+**Y una nota sobre formatos, por si vuelve la pregunta:** se decidió **JSON para dato** y se
+descartaron YAML, XML y TOML con razones medidas. **Markdown se queda para los tickets**, que
+los lee un humano. **Y para bloques de contenido pegado a un modelo, etiquetas tipo XML**,
+porque delimitan lo que el Markdown no puede cuando el contenido trae su propio Markdown
+dentro. Son tres preguntas distintas con tres respuestas distintas.

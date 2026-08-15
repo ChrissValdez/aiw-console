@@ -398,9 +398,10 @@ test("the denominator is UNCHANGED and correct: the run does not count itself, a
   const rr = loadRenderer();
   const { handle } = mount(rr, CASE_1);
   const T = rr.rrT(handle.state.lang);
-  // CASO-1 measured against the file: 9 items + 2 decisions + the run = 12 steps; I1 declares
-  // requires_verdict false, so 11 ask for a verdict; the run does not count itself, so 10.
-  assert.equal(rr.rrSteps(handle.state.report, T).length, 12, "twelve steps are walked through");
+  // CASO-1 measured against the file [#60, re-copied]: 18 items + 2 decisions + the run =
+  // 21 steps; its ten `info` items declare requires_verdict false, so 11 ask for a verdict;
+  // the run does not count itself, so 10.
+  assert.equal(rr.rrSteps(handle.state.report, T).length, 21, "twenty-one steps are walked through");
   assert.equal(rr.rrSigningSteps(handle.state.report, T).length, 11, "eleven of them ask for a verdict");
   const decided = rr.rrSigningSteps(handle.state.report, T).filter((s) => s.kind !== "run");
   assert.equal(decided.length, 10, "and the recap's denominator is ten");

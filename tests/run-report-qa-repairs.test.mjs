@@ -197,10 +197,12 @@ test("defect 2: no label anywhere on any card of any fixture is a raw JSON key �
 test("defect 2: the gate block — the site the ticket named — reads as words, in both languages", () => {
   const rr = loadRenderer();
   const { container, handle } = mount(rr, CASE_1);
-  // English.
+  // English. [#60] The sweep is over LABELS: the emitter's summary prose now cites
+  // `verification_reason` by name, and prose travels verbatim — the view never NAMING a raw
+  // key and the report SAYING whatever it says are two different facts.
   let html = container.innerHTML;
   for (const key of ["verification_reason", "gate_reason", "items_note", "verification_note"]) {
-    assert.ok(!html.includes(key), `the key ${key} reaches the screen`);
+    assert.ok(!html.includes('class="rr-kv-k">' + key + "<"), `the key ${key} labels a row`);
   }
   assert.ok(html.includes("Why no verification"), "the reason row is named");
   assert.ok(html.includes(">Gate<"), "so is the gate row");
@@ -212,7 +214,7 @@ test("defect 2: the gate block — the site the ticket named — reads as words,
   handle.redraw();
   html = container.innerHTML;
   for (const key of ["verification_reason", "gate_reason", "items_note"]) {
-    assert.ok(!html.includes(key), `the key ${key} reaches the Spanish screen`);
+    assert.ok(!html.includes('class="rr-kv-k">' + key + "<"), `the key ${key} labels a Spanish row`);
   }
   assert.ok(html.includes("Por qué no hay verificación"), "the Spanish label is written, not derived");
   assert.ok(html.includes("Compuerta"), "and so is the gate's");
@@ -239,10 +241,14 @@ test("defect 2: the unchanged list translates the identifiers it can name and le
   handle.state.lang = "es";
   handle.goStep("R1");
   const html = container.innerHTML;
-  // R1 declares ["statement", "options", "feedback"] — three contract field names.
-  assert.ok(html.includes("Enunciado") && html.includes("Opciones") && html.includes("Retroalimentación"),
-    "the three named fields arrive in Spanish");
-  assert.ok(!/class="rr-tag rr-tag-neutral">statement</.test(html), "and none of them as its key");
+  // [#60] R1 used to declare ["statement", "options", "feedback"]; the emitter has since
+  // repaired its own half — the refreshed report writes what a person calls them — so the
+  // fixture now proves the PROSE path and the unit below keeps proving the translation.
+  assert.ok(html.includes("el enunciado") && html.includes("las opciones") && html.includes("la retroalimentacion"),
+    "the emitter's own words travel verbatim");
+  assert.ok(!/class="rr-tag rr-tag-neutral">statement</.test(html), "and no raw key rides the list");
+  assert.equal(rr.rrUnchangedLabel("statement", "es"), "Enunciado",
+    "an identifier the table names still translates — the capability did not leave with the fixture");
   // THE OTHER HALF IS NOT REPAIRED HERE. C5 declares prose in the same array; it must travel
   // verbatim, because inventing a translation for it would be the view making up what the
   // run said. The emitter writing identifiers next to prose is the ENVELOPE's defect.
@@ -282,12 +288,17 @@ test("defect 3: the counter went from 12 to 11 while the operator still walks 12
   const T = rr.rrT("en");
   const steps = rr.rrSteps(handle.state.report, T);
   // BEFORE this run the two numbers were the same one, and the info item was in both.
-  assert.equal(steps.length, 12, "twelve steps are still walked — the item is SHOWN");
+  // [#60] The refreshed report walks 21 steps and still signs 11: its ten `info` items all
+  // declare requires_verdict: false, and each one is shown without being counted.
+  assert.equal(steps.length, 21, "twenty-one steps are still walked — every item is SHOWN");
   const progress = rr.rrProgress(handle.state.report, handle.state, T);
-  assert.equal(progress.total, 11, "eleven ask for a verdict — the info item does NOT COUNT");
+  assert.equal(progress.total, 11, "eleven ask for a verdict — the info items do NOT COUNT");
   assert.equal(progress.done, 0);
   const na = steps.filter((s) => !s.signs);
-  assert.deepEqual([...na.map((s) => s.id)], ["I1"], "exactly the item that declared it needs none");
+  assert.deepEqual([...na.map((s) => s.id)],
+    ["I1", "P90-Dificil018", "P90-Dificil009", "P90-Dificil013", "P90-Dificil004",
+      "P90-Dificil007", "P90-Medio039", "P90-Dificil017", "P90-Dificil020", "P90-Medio023"],
+    "exactly the items that declared they need none");
 });
 
 test("defect 3: the item is SHOWN and NOT SIGNED — its card renders whole, without a verdict bar", () => {
@@ -320,7 +331,10 @@ test("defect 3: it never blocks the signature, and never hides in the pending fi
   handle.state.v = {};
   handle.state.filter = "pending";
   handle.redraw();
-  const rows = [...container.innerHTML.matchAll(/data-rr-act="goto" data-rr-id="([^"]*)"/g)].map((m) => m[1]);
+  // [#60] Scoped to the RAIL's own rows: the coverage section also navigates by goto —
+  // every citing item is a link to its card — and those citations are not a pending list.
+  const rows = [...container.innerHTML.matchAll(/class="rr-rail-row[^"]*" data-rr-act="goto" data-rr-id="([^"]*)"/g)].map((m) => m[1]);
+  assert.ok(rows.length > 0, "the pending filter still lists the owed steps");
   assert.ok(!rows.includes("I1"), "an item that owes nothing is never listed as pending");
 });
 

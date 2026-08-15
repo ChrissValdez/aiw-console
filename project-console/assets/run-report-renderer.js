@@ -72,6 +72,27 @@ const RR_STRINGS = {
     blindSpots: "Blind spots", alternatives: "Discarded alternatives", unreviewed: "Unreviewed",
     notDeclared: "not declared", none: "none", noVerification: "no verification",
     absent: "The report does not carry this field: nobody looked.",
+    // [#60] The emitter's summary (envelope §4) and the criteria coverage (§6). The summary
+    // paints three fixed questions by PRESENCE; the coverage paints the three buckets of the
+    // decided reading with the decision's own labels, and the silence bucket paints a RULE,
+    // never an invented list — the profile's inventory does not travel in the report.
+    emitterSummary: "Emitter summary",
+    summaryDeclaredAbsence: "declared absence",
+    summaryEmpty: "Empty, and no reason declared. An absence declares its reason; this one does not.",
+    derivedKicker: "Derived from the data — nobody writes these",
+    itemsByType: "Items by type", stepsAsking: "Steps that ask for a verdict",
+    coverage: "Criteria coverage",
+    fulfilledBucket: "Fulfilled and declared",
+    declaredBucket: "Declared unfulfilled",
+    silenceBucket: "Silence = not reviewed",
+    silenceRule: "Whatever the profile demands and this report neither cites nor declares is NOT REVIEWED — silence is not coverage. The id inventory of the profile lives in its own document, not in the report, so this view names no silent id: that list is derived with the profile in front.",
+    alsoCited: "also cited — the citation does not count as fulfilled",
+    affectsNote: "The ids read against the inventory of the profile; whatever is not a profile criterion is scope, not coverage.",
+    headerCites: "Citations from the header",
+    whereMissing: "this key does not exist in this report",
+    profileFigures: "Figures of the profile",
+    citesLabel: "Criteria it cites", citesNone: "Cites no criterion",
+    headerTag: "header",
     compare: "Compare",
     parseError: "This report could not be read as JSON.",
     parseErrorHint: "The file on disk is the authority. Nothing below is rendered because nothing could be parsed:",
@@ -127,6 +148,24 @@ const RR_STRINGS = {
     blindSpots: "Puntos ciegos", alternatives: "Alternativas descartadas", unreviewed: "Sin revisar",
     notDeclared: "sin declarar", none: "ninguno", noVerification: "sin verificación",
     absent: "El reporte no trae este campo: nadie lo miró.",
+    // [#60] El resumen del emisor (§4 del sobre) y la cobertura de criterios (§6).
+    emitterSummary: "Resumen del emisor",
+    summaryDeclaredAbsence: "ausencia declarada",
+    summaryEmpty: "Vacío y sin motivo declarado. Una ausencia declara su motivo; esta no lo declara.",
+    derivedKicker: "Derivado del dato — nadie lo escribe",
+    itemsByType: "Ítems por tipo", stepsAsking: "Pasos que piden veredicto",
+    coverage: "Cobertura de criterios",
+    fulfilledBucket: "Cumplidos y declarados",
+    declaredBucket: "Declarados sin cumplir",
+    silenceBucket: "Silencio = no revisado",
+    silenceRule: "Lo que el perfil exige y este reporte ni cita ni declara está NO REVISADO — el silencio no es cobertura. El inventario de ids del perfil vive en su propio documento, no en el reporte, así que esta vista no nombra ningún id silencioso: esa lista se deriva con el perfil delante.",
+    alsoCited: "también citado — la cita no cuenta como cumplido",
+    affectsNote: "Estos ids se leen contra el inventario del perfil; lo que no sea un criterio del perfil es alcance, no cobertura.",
+    headerCites: "Citas desde la cabecera",
+    whereMissing: "esa clave no existe en este reporte",
+    profileFigures: "Las cifras del perfil",
+    citesLabel: "Criterios que cita", citesNone: "No cita ningún criterio",
+    headerTag: "cabecera",
     compare: "Comparar",
     parseError: "Este reporte no se pudo leer como JSON.",
     parseErrorHint: "El fichero en disco es la autoridad. Abajo no se pinta nada porque nada se pudo parsear:",
@@ -197,7 +236,14 @@ const RR_FIELD_LABELS = {
     before: "Before", after: "After", why: "Reasoning", authority: "Authority",
     evidence: "Evidence", comparisons: "Reference cases", headline: "Headline",
     expected: "What to expect", location: "Location", subject: "Subject",
-    if_rejected: "If rejected", options_considered: "Paths considered"
+    if_rejected: "If rejected", options_considered: "Paths considered",
+    // [#60] The envelope's summary keys are its three fixed questions, so their labels ARE
+    // the questions; the blind-spot form and the citation fields are the envelope's too.
+    profile_source: "Profile source", profile_source_version: "Profile source version",
+    exercised: "What was truly exercised", criteria: "What criteria it was measured with",
+    outcome: "What came out",
+    what: "What", why_not: "Why not", who_could: "Who could", affects: "Affects",
+    satisfies: "Criteria cited", satisfies_note: "Why it cites none", where: "Where"
   },
   es: {
     project: "Proyecto", kind: "Tipo", mode: "Modo", schema_version: "Versión de esquema",
@@ -212,7 +258,12 @@ const RR_FIELD_LABELS = {
     before: "Antes", after: "Después", why: "Razonamiento", authority: "Autoridad",
     evidence: "Evidencia", comparisons: "Casos de referencia", headline: "Titular",
     expected: "Qué se espera ver", location: "Ubicación", subject: "Sujeto",
-    if_rejected: "Si se rechaza", options_considered: "Caminos considerados"
+    if_rejected: "Si se rechaza", options_considered: "Caminos considerados",
+    profile_source: "Fuente del perfil", profile_source_version: "Versión de la fuente del perfil",
+    exercised: "Qué se ejerció de verdad", criteria: "Con qué criterios se miró",
+    outcome: "Qué salió",
+    what: "Qué", why_not: "Por qué no", who_could: "Quién podría", affects: "A qué alcanza",
+    satisfies: "Criterios citados", satisfies_note: "Por qué no cita", where: "Dónde"
   }
 };
 
@@ -461,6 +512,92 @@ function rrKvEntries(arr, lang) {
       .filter(([, v]) => v != null && !(Array.isArray(v) && v.length === 0))
       .map(([k, v]) => ({ k: rrLabelForKey(k, lang), v: typeof v === "object" ? JSON.stringify(v) : String(v) }))
   }));
+}
+
+// [#60] THE COVERAGE, derived from the report alone and exact as far as the data reaches.
+// The envelope fixes the reading: cited ids are profile ids by contract, a declared id is
+// whatever a blind spot's `affects` names, and FULFILLED is cited-minus-declared — so a
+// criterion declared irreproducible (or any other gap) never counts as fulfilled, which is
+// the decided rule, not a style. What this function deliberately does NOT produce is the
+// silent ids or a count of declared CRITERIA: both need the profile's id inventory, which
+// lives in the emitter's own document and does not travel in the report. A number the data
+// cannot produce is a number this view does not invent.
+function rrCoverage(report) {
+  const R = report || {};
+  const headerCites = Array.isArray(R.header_satisfies) ? R.header_satisfies : [];
+  const spots = Array.isArray(R.blind_spots) ? R.blind_spots : [];
+  const citedBy = {};
+  const cite = (id) => (citedBy[id] = citedBy[id] || { items: [], header: [] });
+  rrItems(R).forEach((it) => {
+    (Array.isArray(it && it.satisfies) ? it.satisfies : []).forEach((id) => {
+      const slot = cite(String(id));
+      if (it.item_id != null && !slot.items.includes(it.item_id)) slot.items.push(it.item_id);
+    });
+  });
+  headerCites.forEach((h) => {
+    (Array.isArray(h && h.satisfies) ? h.satisfies : []).forEach((id) => {
+      const slot = cite(String(id));
+      if (h && h.where != null && !slot.header.includes(String(h.where))) slot.header.push(String(h.where));
+    });
+  });
+  const declared = new Set();
+  spots.forEach((b) => (Array.isArray(b && b.affects) ? b.affects : []).forEach((a) => declared.add(String(a))));
+  const cited = Object.keys(citedBy).sort();
+  return {
+    citedBy, cited,
+    fulfilled: cited.filter((id) => !declared.has(id)),
+    subtracted: cited.filter((id) => declared.has(id)),
+    declarations: spots
+      .map((b) => ({
+        affects: (Array.isArray(b && b.affects) ? b.affects : []).map(String),
+        why_not: b && b.why_not != null ? String(b.why_not) : ""
+      }))
+      .filter((d) => d.affects.length > 0),
+    hasData: !!(cited.length || Object.prototype.hasOwnProperty.call(R, "header_satisfies"))
+  };
+}
+
+// [#60] A header citation's `where` names the key its evidence lives under, dots going
+// deeper. Resolving it is presence-reading, not validation: the value paints when the path
+// reaches one, and a path that reaches nothing is declared by its name — the same honesty
+// the previews owe a missing asset.
+function rrResolvePath(root, path) {
+  const segs = String(path == null ? "" : path).split(".").filter(Boolean);
+  if (!segs.length || root == null) return { found: false, value: null };
+  let node = root;
+  for (const seg of segs) {
+    if (node != null && typeof node === "object" && Object.prototype.hasOwnProperty.call(node, seg)) node = node[seg];
+    else return { found: false, value: null };
+  }
+  return { found: true, value: node };
+}
+
+// [#60] The summary's three fixed questions, each in exactly one state, decided by
+// PRESENCE: prose travels verbatim; a declared absence carries its reason; EMPTY is the
+// absence-without-reason the contract forbids, and it paints AS that — never disguised as
+// the plain "nobody looked". A declared absence that omits its reason paints like a missing
+// key, which is the promise, not an accident.
+function rrSummaryStates(report) {
+  const R = report || {};
+  const present = !!R && Object.prototype.hasOwnProperty.call(R, "summary");
+  const summary = present && R.summary && typeof R.summary === "object" ? R.summary : null;
+  const rows = ["exercised", "criteria", "outcome"].map((key) => {
+    const v = summary ? summary[key] : undefined;
+    if (typeof v === "string" || typeof v === "number" || typeof v === "boolean") {
+      return String(v).trim() !== ""
+        ? { key, state: "prose", text: String(v) }
+        : { key, state: "empty" };
+    }
+    const absent = v && typeof v === "object" && v.absent && typeof v.absent === "object" ? v.absent : null;
+    if (absent && typeof absent.why_not === "string" && absent.why_not.trim() !== "") {
+      return {
+        key, state: "declared", why_not: absent.why_not,
+        who_could: typeof absent.who_could === "string" ? absent.who_could : ""
+      };
+    }
+    return { key, state: "undeclared" };
+  });
+  return { present, rows };
 }
 
 // One record per step id: verdict (closed set), disposition (a SECOND step, and only with
@@ -940,6 +1077,18 @@ function rrCardForItemHtml(report, item, state, T) {
     sections.push('<div class="rr-unchanged"><span class="rr-unchanged-label">' + rrIcon("equals") + rrEsc(T.unchanged) + "</span>" +
       item.unchanged.map((u) => rrTagHtml(rrUnchangedLabel(u, T.lang), "rr-tag-neutral")).join("") + "</div>");
   }
+  // [#60] The criteria this item cites — envelope §2.2. An EMPTY satisfies is a declared
+  // fact about this item (it cites nothing, and says why in its note); an absent one paints
+  // nothing, exactly like every other absent field. The ids are the profile's and travel
+  // verbatim.
+  if (Array.isArray(item.satisfies) || item.satisfies_note != null) {
+    const cites = (Array.isArray(item.satisfies) ? item.satisfies : []).map((sid) =>
+      '<span class="rr-tag rr-tag-outline rr-cite-tag">' + rrEsc(String(sid)) + "</span>").join("");
+    sections.push('<div class="rr-cites"><span class="rr-kicker">' + rrEsc(T.citesLabel) + "</span>" +
+      '<div class="rr-cite-row">' + (cites || '<span class="rr-cites-none">' + rrEsc(T.citesNone) + "</span>") + "</div>" +
+      (item.satisfies_note != null ? '<p class="rr-cites-note">' + rrEsc(String(item.satisfies_note)) + "</p>" : "") +
+      "</div>");
+  }
 
   const reasoningParts = [];
   if (item.why) reasoningParts.push('<p class="rr-why">' + rrEsc(item.why) + "</p>");
@@ -1232,7 +1381,15 @@ function rrRailHtml(report, state, T) {
     ' data-rr-act="filter" data-rr-value="' + value + '">' + rrEsc(label) + "</label>").join("");
 
   const blocks = rrContextBlocks(report, T);
+  // [#60] The summary rides the rail with the block rule: absent wears its badge. The
+  // coverage link appears exactly when its section paints.
+  const summaryDeclared = !!report && Object.prototype.hasOwnProperty.call(report, "summary");
+  const coverageShown = !!report &&
+    ((Object.prototype.hasOwnProperty.call(report, "profile") && report.profile !== null) || rrCoverage(report).hasData);
   const links = [
+    { label: T.emitterSummary, target: "rr-sec-summary",
+      badge: summaryDeclared ? null : { badge: T.notDeclared, badgeCls: "rr-badge-absent" } },
+    ...(coverageShown ? [{ label: T.coverage, target: "rr-sec-coverage", badge: null }] : []),
     { label: T.metadata, target: "rr-sec-meta", badge: null },
     ...(report && report.pilot_deviation ? [{ label: T.deviation, target: "rr-sec-dev", badge: null }] : []),
     { label: T.countsFiles, target: "rr-sec-scope", badge: null },
@@ -1277,11 +1434,165 @@ function rrKvRowsHtml(rows) {
     '<div class="rr-kv"><span class="rr-kv-k">' + rrEsc(row.k) + '</span><span class="rr-kv-v">' + rrEsc(row.v) + "</span></div>").join("");
 }
 
+// [#60] A block of the EMITTER's own figures, painted whole without pretending a schema:
+// scalars as they are, one level of keys opened up, anything deeper as its JSON. The keys
+// are humanised, never raw — this view can show the emitter's namespace and cannot name it.
+function rrFigureRowsHtml(data) {
+  // A DECLARED null is a real state of a figure — the contract's own way of refusing to
+  // publish a number it cannot reproduce — and it paints the same dash the counts table
+  // already uses for nothing-here, never the word "null".
+  const cell = (v) => v == null ? "—" : (typeof v === "object" ? JSON.stringify(v) : String(v));
+  return Object.entries(data || {}).map(([k, v]) => {
+    if (v != null && typeof v === "object" && !Array.isArray(v)) {
+      const sub = Object.entries(v).map(([sk, sv]) =>
+        '<div class="rr-kv rr-kv-sub"><span class="rr-kv-k">' + rrEsc(rrHumanKey(sk)) + '</span><span class="rr-kv-v">' +
+        rrEsc(cell(sv)) + "</span></div>").join("");
+      return '<div class="rr-figure"><span class="rr-figure-k">' + rrEsc(rrHumanKey(k)) + "</span>" + sub + "</div>";
+    }
+    return '<div class="rr-kv"><span class="rr-kv-k">' + rrEsc(rrHumanKey(k)) + '</span><span class="rr-kv-v">' +
+      rrEsc(cell(v)) + "</span></div>";
+  }).join("");
+}
+
+// [#60] The emitter's summary — envelope §4, and the operator's own origin for it: he
+// could not see what a run looked at. THREE LAYERS, kept apart on screen the way the
+// contract keeps them. The WRITTEN layer is the three fixed questions and only them,
+// verbatim, each in exactly one state (prose · declared absence with its reason · empty
+// without one, which paints as the breach it is · nothing at all). The DERIVED layer is
+// calculated from the data right below, labelled as such — a figure an emitter writes into
+// its own summary is a figure this strip never reads. The PROHIBITED layer is enforced by
+// what this view refuses to do: it composes no prose over the report.
+function rrSummaryHtml(report, T) {
+  const S = rrSummaryStates(report);
+  const rows = !S.present
+    ? '<span class="rr-block-blurb">' + rrEsc(T.absent) + "</span>"
+    : S.rows.map((row) => {
+      const label = '<span class="rr-kicker">' + rrEsc(rrLabelForKey(row.key, T.lang)) + "</span>";
+      if (row.state === "prose") {
+        return '<div class="rr-summary-q">' + label + '<p class="rr-prose">' + rrEsc(row.text) + "</p></div>";
+      }
+      if (row.state === "declared") {
+        return '<div class="rr-summary-q">' + label +
+          '<div class="rr-summary-absence"><span class="rr-tag rr-tag-outline rr-summary-absence-tag">' +
+          rrEsc(T.summaryDeclaredAbsence) + "</span>" +
+          '<p class="rr-prose">' + rrEsc(row.why_not) + "</p>" +
+          (row.who_could
+            ? '<div class="rr-kv"><span class="rr-kv-k">' + rrEsc(rrLabelForKey("who_could", T.lang)) +
+              '</span><span class="rr-kv-v">' + rrEsc(row.who_could) + "</span></div>"
+            : "") +
+          "</div></div>";
+      }
+      if (row.state === "empty") {
+        return '<div class="rr-summary-q">' + label +
+          '<div class="rr-summary-empty">' + rrIcon("warning") + "<span>" + rrEsc(T.summaryEmpty) + "</span></div></div>";
+      }
+      return '<div class="rr-summary-q">' + label + '<span class="rr-summary-undeclared">' + rrEsc(T.absent) + "</span></div>";
+    }).join("");
+
+  const tally = {};
+  rrItems(report).forEach((it) => {
+    // The same read the steps use: the value when the item carries one, the chrome word
+    // when it does not — a TALLY of whatever arrives, never a test against a known value.
+    const name = String((it && it.type) || T.itemType);
+    tally[name] = (tally[name] || 0) + 1;
+  });
+  const typeChips = Object.entries(tally).map(([name, n]) =>
+    '<span class="rr-tag rr-tag-neutral">' + rrEsc(name) + " × " + n + "</span>").join("");
+  const asking = report ? rrSigningSteps(report, T).length : 0;
+  const cov = rrCoverage(report);
+  const derived = '<div class="rr-summary-derived"><span class="rr-kicker">' + rrEsc(T.derivedKicker) + "</span>" +
+    '<div class="rr-kv"><span class="rr-kv-k">' + rrEsc(T.itemsByType) + '</span><span class="rr-kv-v rr-summary-typechips">' +
+    (typeChips || rrEsc(T.none)) + "</span></div>" +
+    '<div class="rr-kv"><span class="rr-kv-k">' + rrEsc(T.stepsAsking) + '</span><span class="rr-kv-v">' + asking + "</span></div>" +
+    (cov.hasData
+      ? '<div class="rr-kv"><span class="rr-kv-k">' + rrEsc(T.fulfilledBucket) + '</span><span class="rr-kv-v">' + cov.fulfilled.length + "</span></div>"
+      : "") +
+    "</div>";
+
+  const badge = S.present ? "" : '<span class="rr-badge rr-badge-absent">' + rrEsc(T.notDeclared) + "</span>";
+  return '<details class="rr-sec" id="rr-sec-summary" open><summary>' + rrIcon("caret") +
+    '<span class="rr-sec-title">' + rrEsc(T.emitterSummary) + "</span>" + badge + "</summary>" +
+    '<div class="rr-sec-body">' + rows + derived + "</div></details>";
+}
+
+// [#60] The criteria coverage — envelope §6, under the decided hard reading, with the
+// decision's own three labels. FULFILLED is derivable exactly from the report alone (cited
+// minus declared needs no inventory) and every id carries its evidence: the citing items,
+// clickable, and the header key when the citation hangs there. DECLARED paints the
+// declarations themselves — affected ids and the reason, verbatim, never classified — and
+// claims no count of criteria, because which of those ids belong to the profile only the
+// profile's own inventory can say. SILENCE paints the decided rule, and no invented list:
+// the inventory lives in the emitter's document and does not travel in the report.
+function rrCoverageHtml(report, T) {
+  const R = report || {};
+  const declaresProfile = Object.prototype.hasOwnProperty.call(R, "profile") && R.profile !== null;
+  const cov = rrCoverage(R);
+  if (!declaresProfile && !cov.hasData) return "";
+
+  const head = ["profile", "profile_source", "profile_source_version"]
+    .filter((k) => R[k] != null)
+    .map((k) => ({ k: rrLabelForKey(k, T.lang), v: String(R[k]) }));
+
+  const site = (id) => {
+    const slot = cov.citedBy[id] || { items: [], header: [] };
+    return slot.items.map((it) =>
+      '<span class="rr-cov-site" data-rr-act="goto" data-rr-id="' + rrEsc(it) + '">' + rrEsc(it) + "</span>").join("") +
+      slot.header.map((w) =>
+        '<span class="rr-cov-site rr-cov-site-header">' + rrEsc(T.headerTag) + " · " + rrEsc(w) + "</span>").join("");
+  };
+  const fulfilledRows = cov.fulfilled.map((id) =>
+    '<div class="rr-cov-row"><span class="rr-cov-id">' + rrEsc(id) + '</span><span class="rr-cov-sites">' + site(id) + "</span></div>").join("");
+  const fulfilledBadge = rrEmptyBadge(true, cov.fulfilled.length, T);
+
+  const declRows = cov.declarations.map((d) => {
+    const chips = d.affects.map((id) => {
+      const also = cov.cited.includes(id);
+      return '<span class="rr-cov-id' + (also ? " rr-cov-id-subtracted" : "") + '">' + rrEsc(id) + "</span>" +
+        (also ? '<span class="rr-cov-subnote">' + rrEsc(T.alsoCited) + "</span>" + site(id) : "");
+    }).join("");
+    return '<div class="rr-cov-decl"><div class="rr-cov-decl-ids">' + chips + "</div>" +
+      (d.why_not ? '<p class="rr-cov-why">' + rrEsc(d.why_not) + "</p>" : "") + "</div>";
+  }).join("");
+
+  const headerRows = (Array.isArray(R.header_satisfies) ? R.header_satisfies : []).map((h) => {
+    const ids = (Array.isArray(h && h.satisfies) ? h.satisfies : []).map((id) =>
+      '<span class="rr-cov-id">' + rrEsc(String(id)) + "</span>").join("");
+    const res = rrResolvePath(R, h && h.where);
+    const evidence = res.found
+      ? '<span class="rr-cov-evidence">' +
+        rrEsc(res.value == null ? "—" : (typeof res.value === "object" ? JSON.stringify(res.value) : String(res.value))) + "</span>"
+      : '<span class="rr-cov-evidence rr-cov-evidence-missing">' + rrEsc(T.whereMissing) + "</span>";
+    return '<div class="rr-cov-header-row"><div class="rr-cov-header-main">' +
+      '<span class="rr-loc-path">' + rrEsc(h && h.where != null ? String(h.where) : "") + "</span>" + ids + "</div>" + evidence +
+      (h && h.note != null ? '<p class="rr-cov-why">' + rrEsc(String(h.note)) + "</p>" : "") + "</div>";
+  }).join("");
+
+  const figures = R.profile_data != null && typeof R.profile_data === "object"
+    ? '<div class="rr-cov-figures"><span class="rr-kicker">' + rrEsc(T.profileFigures) + "</span>" + rrFigureRowsHtml(R.profile_data) + "</div>"
+    : "";
+
+  const buckets =
+    '<div class="rr-cov-bucket"><div class="rr-cov-bucket-head"><span class="rr-kicker rr-kicker-accent">' + rrEsc(T.fulfilledBucket) +
+    '</span><span class="rr-badge ' + fulfilledBadge.cls + '">' + rrEsc(fulfilledBadge.badge) + "</span></div>" + fulfilledRows + "</div>" +
+    '<div class="rr-cov-bucket"><div class="rr-cov-bucket-head"><span class="rr-kicker">' + rrEsc(T.declaredBucket) + "</span>" +
+    (declRows ? "" : '<span class="rr-badge rr-badge-empty">' + rrEsc(T.none) + "</span>") + "</div>" +
+    (declRows ? declRows + '<p class="rr-cov-note">' + rrEsc(T.affectsNote) + "</p>" : "") + "</div>" +
+    '<div class="rr-cov-bucket rr-cov-silence"><div class="rr-cov-bucket-head"><span class="rr-kicker">' + rrEsc(T.silenceBucket) + "</span></div>" +
+    '<p class="rr-cov-silence-rule">' + rrEsc(T.silenceRule) + "</p></div>";
+
+  return '<details class="rr-sec" id="rr-sec-coverage" open><summary>' + rrIcon("caret") +
+    '<span class="rr-sec-title">' + rrEsc(T.coverage) + "</span></summary>" +
+    '<div class="rr-sec-body">' + rrKvRowsHtml(head) + buckets +
+    (headerRows ? '<div class="rr-cov-headercites"><span class="rr-kicker">' + rrEsc(T.headerCites) + "</span>" + headerRows + "</div>" : "") +
+    figures + "</div></details>";
+}
+
 // The run context under the card: metadata, the emitter's declared deviation when there is
 // one, counts and files, gate and verification, and the three blocks.
 function rrContextHtml(report, T) {
   const R = report || {};
   const metaKeys = ["project", "kind", "mode", "schema_version", "run_id", "queue_order", "profile",
+    "profile_source", "profile_source_version",
     "profile_reason", "execution_path", "emitted_by", "emitted_when", "emitted_at",
     "source_commit", "source_branch", "log_dir"];
   const metaRows = metaKeys.filter((k) => R[k] != null).map((k) => ({ k: rrLabelForKey(k, T.lang), v: String(R[k]) }));
@@ -1323,6 +1634,13 @@ function rrContextHtml(report, T) {
   if (R.items_note) gateRows.push({ k: L("items_note"), v: R.items_note });
 
   const details = [];
+  // [#60] The emitter's summary and the criteria coverage lead the context: the summary is
+  // what the operator lacked, and the coverage is what the citations promise. Both paint by
+  // presence — the summary's absence is itself painted, the coverage skips a report that
+  // declares no profile and cites nothing.
+  details.push(rrSummaryHtml(report, T));
+  const coverageHtml = rrCoverageHtml(report, T);
+  if (coverageHtml) details.push(coverageHtml);
   details.push('<details class="rr-sec" id="rr-sec-meta"><summary>' + rrIcon("caret") +
     '<span class="rr-sec-title">' + rrEsc(T.metadata) + '</span><span class="rr-sec-chip">' + rrEsc(R.run_id || "") + "</span></summary>" +
     '<div class="rr-sec-body">' + rrKvRowsHtml(metaRows) + "</div></details>");

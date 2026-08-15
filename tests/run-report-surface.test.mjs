@@ -54,7 +54,16 @@ function domainTokens(report) {
       (item.subject.previews || []).forEach((p) => { push(p.label); push(p.target); push(p.path); });
     }
     if (item.location) push(item.location.path);
+    // [#60] The citation era, harvested exactly as the renderer's own suite harvests it.
+    (Array.isArray(item.satisfies) ? item.satisfies : []).forEach(push);
   });
+  (Array.isArray(report.header_satisfies) ? report.header_satisfies : []).forEach((h) => {
+    (Array.isArray(h.satisfies) ? h.satisfies : []).forEach(push);
+  });
+  (Array.isArray(report.blind_spots) ? report.blind_spots : []).forEach((b) => {
+    (Array.isArray(b.affects) ? b.affects : []).forEach(push);
+  });
+  Object.keys(report.profile_data || {}).forEach(push);
   return tokens;
 }
 
@@ -71,8 +80,11 @@ function vetoedNeedles() {
 
 test("criterion 4 survives the mount: not one word of any fixture's domain appears in the mounting code", () => {
   const needles = vetoedNeedles();
-  // The same 94 the renderer is judged against, derived the same way from the same four cases.
-  assert.equal(needles.length, 94, "the veto is the one #52 measured, not a smaller one");
+  // The same corpus the renderer is judged against, derived the same way from the same four
+  // cases. #52 measured 94; [#60] re-measured 160 after CASO-1 was re-copied from the real
+  // report (18 items, citations, profile figures) and the citation-era fields joined the
+  // harvest. The pin exists so the veto can never silently SHRINK.
+  assert.equal(needles.length, 160, "the veto is the measured one, not a smaller one");
   for (const path of [SURFACE_JS, SURFACE_CSS]) {
     const haystack = readFileSync(path, "utf8").toLowerCase();
     for (const needle of needles) {

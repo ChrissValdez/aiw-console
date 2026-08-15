@@ -7,6 +7,11 @@
 // projects/cantu-quizzes-latex/reports/RUN-QUIZZES-FRACTIONS-REVIEW-PILOT-001/report.json,
 // CASO-2/3/4 from the workspace _scratch (disposable by declaration, so the copies here are
 // the durable ones).
+//
+// [#60] CASO-1 re-copied 2026-08-15, after the emitter adopted the envelope: the real
+// report now carries a summary, per-item `satisfies`, `header_satisfies` and seven blind
+// spots, and grew to 18 items. A versioned copy that stops tracking its original stops
+// being one; every figure below that moved, moved because the report did.
 
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -64,13 +69,13 @@ function click(container, attrs) {
 // CASO 1 — the audit of content: nine items, two of them stops.
 // ---------------------------------------------------------------------------
 
-test("CASO-1: steps put the stop items first and count 9 items + 2 decisions + the run", () => {
+test("CASO-1: steps put the stop items first and count 18 items + 2 decisions + the run", () => {
   const rr = loadRenderer();
   const { report } = rr.rrParseReport(CASE_1);
   const steps = rr.rrSteps(report, { itemType: "item", decisionsGroup: "decisions to ratify", runGroup: "the run" });
   // vm arrays carry the sandbox's prototypes; spreading into host arrays keeps the strict
   // asserts about VALUES, which is what these tests judge.
-  assert.equal(steps.length, 12);
+  assert.equal(steps.length, 21);
   assert.deepEqual([...steps.slice(0, 2).map((s) => s.id)], ["R1", "R2"]);
   assert.equal(steps[steps.length - 1].id, "__run__");
   assert.deepEqual([...steps.filter((s) => s.kind === "decision").map((s) => s.id)], ["D1", "D2"]);
@@ -87,7 +92,7 @@ test("CASO-1: one card at a time — the first surface is the stop item, expande
   // ONE card exists in the DOM: the card head appears once and no other item's content does.
   assert.equal((html.match(/class="rr-card-head"/g) || []).length, 1, "exactly one card at a time");
   assert.ok(!html.includes("Al simplificar la fracción"), "no other item's content is rendered alongside");
-  assert.ok(html.includes("1 / 12"), "the position counter squares with the step count");
+  assert.ok(html.includes("1 / 21"), "the position counter squares with the step count");
 });
 
 test("CASO-1: an item takes two verdicts and only the run takes three; the report's own verdict_options never paint", () => {
@@ -135,8 +140,8 @@ test("CASO-1: empty is not absent — [] says none, a missing key says not decla
   const rr = loadRenderer();
   const { container } = mount(rr, CASE_1);
   const html = container.innerHTML;
-  // blind_spots has two entries, alternatives is [], unreviewed is not in the file.
-  assert.ok(/rr-badge-count">2</.test(html), "blind_spots counts 2");
+  // blind_spots has seven entries, alternatives is [], unreviewed is not in the file.
+  assert.ok(/rr-badge-count">7</.test(html), "blind_spots counts 7");
   assert.ok(/rr-badge-empty">none</.test(html), "alternatives [] reads none");
   assert.ok(/rr-badge-absent">not declared</.test(html), "a missing key reads not declared");
   assert.ok(html.includes("The report does not carry this field: nobody looked."),
@@ -152,7 +157,10 @@ test("CASO-1: the pilot's declared deviation and the null verification render as
   // RUN-CONSOLE-REPORT-QA-REPAIRS-001, defect 2: this used to assert the operator read the
   // raw key `verification_reason`. The row is what matters and it is still there — under
   // the words a person uses for it, and the declared reason itself is untouched.
-  assert.ok(!html.includes("verification_reason"), "the JSON key never reaches the screen");
+  // [#60] The sweep narrowed to LABELS: the emitter's own summary prose cites the key by
+  // name ("ver verification_reason y el punto ciego…") and prose travels verbatim — the
+  // view not naming a raw key and the report saying whatever it says are different facts.
+  assert.ok(!html.includes('class="rr-kv-k">verification_reason<'), "the JSON key never labels a row");
   assert.ok(html.includes("Why no verification"), "the row wears its written label");
   assert.ok(html.includes("Ningún run ha compilado este subtema"), "and the declared reason renders next to it");
 });
@@ -164,10 +172,13 @@ test("CASO-1: a declared gap with before:null renders as what-exists-now; an ite
   let html = container.innerHTML;
   assert.ok(html.includes("What exists now"), "before:null paints the only-after form");
   assert.ok(html.includes("no prior version"), "and says there was nothing before");
+  // [#60] The refreshed report leaves no item without both sides (I1 grew a declared
+  // before:null), so the neither-side behaviour is proved on a minimal report instead.
   handle.goStep("I1");
   html = container.innerHTML;
-  assert.ok(!html.includes('class="rr-diff"'), "before and after both absent paint no diff at all");
   assert.ok(html.includes("10 preguntas donde un error plausible"), "the item still renders whole");
+  const bare = mount(rr, JSON.stringify({ run_id: "RUN-X", items: [{ item_id: "X1", headline: "sin lados" }] }));
+  assert.ok(!bare.container.innerHTML.includes('class="rr-diff"'), "before and after both absent paint no diff at all");
 });
 
 test("CASO-1: the before/after pair marks changed lines and keeps the unchanged declaration", () => {
@@ -336,7 +347,10 @@ test("CASO-4: enumerated-and-empty blocks read none, a failing verification rend
   const html = container.innerHTML;
   // The three block badges paint twice each: once in the rail links, once on the sections.
   assert.equal((html.match(/rr-badge-empty">none</g) || []).length, 6, "blind_spots, alternatives and unreviewed all say none");
-  assert.ok(!html.includes("not declared"), "nothing in this report is undeclared");
+  // [#60] One thing IS undeclared now that the envelope carries a summary: this report
+  // predates it, and that absence paints (rail badge + section badge), exactly twice.
+  assert.equal((html.match(/rr-badge-absent">not declared</g) || []).length, 2,
+    "the summary's absence is the only undeclared thing, badged on rail and section");
   // The verification's OWN sub-fields are the emitter's vocabulary: the head is labelled,
   // the tail is humanised, and neither is printed as a dotted identifier.
   assert.ok(!html.includes("verification.exit"), "no dotted JSON key on screen");
@@ -365,8 +379,9 @@ test("a report missing every optional block still renders whole", () => {
   const html = container.innerHTML;
   assert.ok(html.includes("RUN-X"), "the run card renders from the header alone");
   assert.ok(html.includes("1 / 1"), "the run is the single step");
-  // Rail links and sections each carry the badge: three undeclared blocks, six badges.
-  assert.equal((html.match(/rr-badge-absent">not declared</g) || []).length, 6,
+  // Rail links and sections each carry the badge: three undeclared blocks plus the
+  // undeclared summary [#60], eight badges.
+  assert.equal((html.match(/rr-badge-absent">not declared</g) || []).length, 8,
     "every undeclared block says so instead of failing");
   const out = rr.rrVerdictOutput(handle.state.report, handle.state);
   assert.deepEqual([...out.items], []);
@@ -379,14 +394,14 @@ test("a verdict click touches exactly one step — there is no gesture that fill
   click(container, { "data-rr-act": "verdict", "data-rr-id": "R1", "data-rr-value": "APPROVED" });
   const T = rr.rrT(handle.state.lang);
   const undecided = rr.rrSteps(handle.state.report, T).filter((s) => !rr.rrRec(handle.state, s.id).verdict);
-  assert.equal(undecided.length, 11, "one signed, eleven steps (run included) still pending");
+  assert.equal(undecided.length, 20, "one signed, twenty steps (run included) still without one");
   assert.ok(!container.innerHTML.includes("still without a verdict"),
     "the warning lives on the run card only");
   handle.goStep("__run__");
-  // Nine of the eleven are steps the run card tallies; the tenth is the run itself, and the
-  // eleventh is the `info` item, which is walked past but never counted (defect 3).
+  // Nine of the twenty are steps the run card tallies; the run itself and the ten `info`
+  // items are walked past but never counted (defect 3).
   assert.ok(container.innerHTML.includes("9 still without a verdict. The run verdict does not replace them."),
-    "and there it names the ten");
+    "and there it names the nine");
 });
 
 test("the chrome speaks both languages without touching the report's text", () => {

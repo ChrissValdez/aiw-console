@@ -590,3 +590,77 @@
   background: color-mix(in srgb, var(--rr-bg) 55%, var(--rr-surface));
   border: 1px solid var(--rr-divider); border-radius: var(--rr-radius-sm); padding: 12px 14px;
 }
+
+/* — [#60] the emitter's summary: three fixed questions, each state distinct on sight — */
+.rr-summary-q { display: flex; flex-direction: column; gap: 4px; padding: 8px 0; border-bottom: 1px solid color-mix(in srgb, var(--rr-text) 7%, transparent); }
+.rr-summary-q:last-of-type { border-bottom: 0; }
+.rr-summary-q .rr-prose { max-width: 72ch; }
+.rr-summary-absence { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.rr-summary-absence-tag { color: var(--rr-accent-300); border-color: var(--rr-accent-600); }
+.rr-summary-empty {
+  display: flex; align-items: flex-start; gap: 8px; font-size: 13px;
+  color: var(--rr-accent-100);
+  background: color-mix(in srgb, var(--rr-accent-500) 14%, transparent);
+  border: 1px solid var(--rr-accent-500);
+  border-radius: var(--rr-radius-sm); padding: 8px 10px; max-width: 72ch;
+}
+.rr-summary-empty .rr-ic { color: var(--rr-accent-300); margin-top: 2px; }
+.rr-summary-undeclared { font-size: 13px; color: color-mix(in srgb, var(--rr-text) 45%, transparent); font-style: italic; }
+.rr-summary-derived {
+  margin-top: 12px; padding: 10px 12px;
+  background: color-mix(in srgb, var(--rr-bg) 55%, var(--rr-surface));
+  border: 1px dashed var(--rr-divider); border-radius: var(--rr-radius-sm);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.rr-summary-typechips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* — [#60] the coverage: three buckets, the silence loud, every citation with its site — */
+.rr-cov-bucket { padding: 10px 0; border-bottom: 1px solid color-mix(in srgb, var(--rr-text) 7%, transparent); }
+.rr-cov-bucket-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.rr-cov-row { display: flex; align-items: baseline; gap: 10px; padding: 3px 0; flex-wrap: wrap; }
+.rr-cov-id {
+  font-family: var(--rr-mono); font-size: 12px; color: var(--rr-text);
+  background: color-mix(in srgb, var(--rr-text) 8%, transparent);
+  border-radius: var(--rr-radius-sm); padding: 1px 7px;
+}
+.rr-cov-id-subtracted { text-decoration: line-through; text-decoration-color: var(--rr-accent-400); text-decoration-thickness: 1px; }
+.rr-cov-subnote { font-size: 11px; color: var(--rr-accent-300); margin-left: 6px; }
+.rr-cov-sites { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.rr-cov-site {
+  font-family: var(--rr-mono); font-size: 11px; cursor: pointer;
+  color: var(--rr-accent-300); border-bottom: 1px dotted var(--rr-accent-600);
+}
+.rr-cov-site-header { cursor: default; border-bottom: 0; color: color-mix(in srgb, var(--rr-text) 55%, transparent); }
+.rr-cov-decl { padding: 6px 0; }
+.rr-cov-decl-ids { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+.rr-cov-why { font-size: 13px; color: color-mix(in srgb, var(--rr-text) 70%, transparent); max-width: 72ch; margin-top: 4px; }
+.rr-cov-note { font-size: 11px; color: color-mix(in srgb, var(--rr-text) 45%, transparent); margin-top: 8px; }
+.rr-cov-silence { border-bottom: 0; }
+.rr-cov-silence-rule {
+  font-size: 13px; max-width: 72ch;
+  color: var(--rr-accent-100);
+  background: color-mix(in srgb, var(--rr-accent-500) 10%, transparent);
+  border-left: 3px solid var(--rr-accent-400);
+  border-radius: var(--rr-radius-sm); padding: 8px 12px;
+}
+.rr-cov-headercites, .rr-cov-figures { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
+.rr-cov-header-row { padding: 6px 0; border-bottom: 1px solid color-mix(in srgb, var(--rr-text) 7%, transparent); }
+.rr-cov-header-row:last-of-type { border-bottom: 0; }
+.rr-cov-header-main { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.rr-cov-header-main .rr-loc-path { flex: none; max-width: 40ch; direction: ltr; }
+.rr-cov-evidence {
+  display: block; font-family: var(--rr-mono); font-size: 11px; margin-top: 3px;
+  color: color-mix(in srgb, var(--rr-text) 60%, transparent);
+  overflow-wrap: anywhere;
+}
+.rr-cov-evidence-missing { color: var(--rr-accent-300); font-style: italic; }
+.rr-figure { display: flex; flex-direction: column; gap: 2px; padding: 6px 0; }
+.rr-figure-k { font-size: 13px; font-weight: 500; }
+.rr-kv-sub { margin-left: 16px; }
+
+/* — [#60] the criteria an item cites, on its card — */
+.rr-cites { display: flex; flex-direction: column; gap: 6px; }
+.rr-cite-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.rr-cite-tag { font-family: var(--rr-mono); font-size: 11px; }
+.rr-cites-none { font-size: 13px; color: color-mix(in srgb, var(--rr-text) 55%, transparent); font-style: italic; }
+.rr-cites-note { font-size: 13px; color: color-mix(in srgb, var(--rr-text) 70%, transparent); max-width: 72ch; }

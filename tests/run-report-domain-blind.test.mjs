@@ -43,7 +43,20 @@ function domainTokens(report) {
       (item.subject.previews || []).forEach((p) => { push(p.label); push(p.target); push(p.path); });
     }
     if (item.location) push(item.location.path);
+    // [#60] The profile ids an item cites are the emitter's vocabulary too.
+    (Array.isArray(item.satisfies) ? item.satisfies : []).forEach(push);
   });
+  // [#60] The citation era extends the ban: header citations carry profile ids, blind
+  // spots carry scoped ids in `affects`, and profile_data's OWN keys are the profile's
+  // namespace. `where` is deliberately NOT harvested — it names envelope keys (`counts`,
+  // `profile_data.…`), which are the renderer's own working vocabulary.
+  (Array.isArray(report.header_satisfies) ? report.header_satisfies : []).forEach((h) => {
+    (Array.isArray(h.satisfies) ? h.satisfies : []).forEach(push);
+  });
+  (Array.isArray(report.blind_spots) ? report.blind_spots : []).forEach((b) => {
+    (Array.isArray(b.affects) ? b.affects : []).forEach(push);
+  });
+  Object.keys(report.profile_data || {}).forEach(push);
   return tokens;
 }
 

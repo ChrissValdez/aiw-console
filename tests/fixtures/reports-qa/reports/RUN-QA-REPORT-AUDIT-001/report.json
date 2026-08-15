@@ -2,247 +2,969 @@
   "schema_version": 1,
   "kind": "content",
   "mode": "audit",
-
   "project": "cantu-quizzes-latex",
   "run_id": "RUN-QUIZZES-FRACTIONS-REVIEW-PILOT-001",
   "run_title": "Review ARI-FA-Fracciones against the rubric, as the pilot",
   "queue_order": 2,
-
   "execution_path": "taller",
   "emitted_by": "cabina",
   "emitted_when": "veredicto",
-  "emitted_at": "2026-08-08T22:40:00Z",
+  "emitted_at": "2026-08-13T00:00:00Z",
   "source_commit": "5fb98c4",
   "source_branch": null,
   "log_dir": null,
-
   "pilot_deviation": {
-    "what": "El contrato (§2, §3) dice que report.json lo escribe el ENCARGO. Este lo escribió la CABINA.",
+    "what": "El contrato (§2, §3) dice que report.json lo escribe el ENCARGO. Este lo escribió la CABINA. Ademas, la cabina derivo mecanicamente el p90 de las 90 retroalimentaciones del subtema, que el run nunca reporto.",
     "why": "El run entregó y commiteó antes de que el contrato existiera. Re-ejecutarlo para que se auto-reporte costaría una sesión de taller y volvería a litigar contenido ya entregado, cuando lo que el piloto prueba es el CONTRATO.",
     "how_the_separation_is_preserved": "La cabina no inventó juicio: before/after se DERIVAN mecánicamente del commit 5fb98c4, y why/authority/evidence se TRANSCRIBEN del record del propio run (context/cantu-quizzes-latex/records/PILOTO-FRACCIONES-Y-QA-PENDIENTE.md). Transcribir un packet real es trabajo de cabina; autorizar el criterio no lo es, y por eso D1 y D2 van a self_decisions y no se dan por buenos.",
     "applies_to": "SOLO este run. A partir de #3 lo emite el encargo, y su ticket lo ordena."
   },
-
   "gate": "human_judgment",
   "verification": null,
   "verification_reason": "Ningún run ha compilado este subtema. Los tres \\input de Fracciones están comentados en Matematicas.tex (líneas 69, 70 y 71) y el run de O2.P3 no existe todavía. Conforme al §1: gate human_judgment con verification null es válido.",
-
   "counts": {
-    "Facil":   { "before": 25, "after": 25 },
-    "Medio":   { "before": 45, "after": 45 },
-    "Dificil": { "before": 20, "after": 20 }
+    "Facil": {
+      "before": 25,
+      "after": 25
+    },
+    "Medio": {
+      "before": 45,
+      "after": 45
+    },
+    "Dificil": {
+      "before": 20,
+      "after": 20
+    }
   },
   "counts_note": "Cero bajas, cero huecos. Verificado en texto crudo: \\begin{multi} = \\end{multi} = \\item* = códigos, en los tres ficheros.",
-
   "locations": [
-    { "label": "Fácil",
+    {
+      "label": "Fácil",
       "path": "PAA/Banco de Preguntas/Matematicas/Temas/1. Aritmetica/1.3.ARI-FA-Fracciones-01_Facil.tex",
-      "lines": 629, "note": "25 preguntas · 6 ítems apuntan aquí" },
-    { "label": "Medio",
+      "lines": 629,
+      "note": "25 preguntas · 6 ítems apuntan aquí"
+    },
+    {
+      "label": "Medio",
       "path": "PAA/Banco de Preguntas/Matematicas/Temas/1. Aritmetica/1.3.ARI-FA-Fracciones-02_Medio.tex",
-      "lines": 1289, "note": "45 preguntas · recibe la bajada" },
-    { "label": "Difícil",
+      "lines": 1289,
+      "note": "45 preguntas · recibe la bajada"
+    },
+    {
+      "label": "Difícil",
       "path": "PAA/Banco de Preguntas/Matematicas/Temas/1. Aritmetica/1.3.ARI-FA-Fracciones-03_Dificil.tex",
-      "lines": 701, "note": "20 preguntas · recibe la subida" },
-    { "label": "Ancla (solo lectura)",
+      "lines": 701,
+      "note": "20 preguntas · recibe la subida"
+    },
+    {
+      "label": "Ancla (solo lectura)",
       "path": "PAA/Examen Diagnostico/Secciones/3. Matemáticas/ARI-FA-Fracciones.tex",
-      "lines": 533, "note": "20 preguntas + 20 del Simulador = ancla de 40. No se toca." }
+      "lines": 533,
+      "note": "20 preguntas + 20 del Simulador = ancla de 40. No se toca."
+    }
   ],
-
   "items": [
     {
       "item_id": "R1",
       "type": "reclassification",
-      "subject": { "id": "ARI-FA-Fracciones-Medio-046", "label": "Dificil-001 → Medio-046" },
-      "location": { "path": "…/1.3.ARI-FA-Fracciones-02_Medio.tex", "line": 1253 },
+      "subject": {
+        "id": "ARI-FA-Fracciones-Medio-046",
+        "label": "Dificil-001 → Medio-046",
+        "feedback": "Vamos a resolver el problema paso a paso:\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Calcular la fracción de los dos hijos mayores.}\n\t\t\tSumamos la fracción del primer hijo (\\(\\frac{1}{3}\\)) y la del segundo (\\(\\frac{2}{5}\\)).\n\t\t\t\\[ \\frac{1}{3} + \\frac{2}{5} \\]\n\t\t\tEl común denominador es 15:\n\t\t\t\\[ \\frac{5}{15} + \\frac{6}{15} = \\frac{11}{15} \\]\n\t\t\t\\item \\textbf{Paso 2: Calcular la fracción del hijo menor.}\n\t\t\tEl total de la herencia es 1 (o \\(\\frac{15}{15}\\)). Restamos la fracción de los hijos mayores:\n\t\t\t\\[ 1 - \\frac{11}{15} = \\frac{15}{15} - \\frac{11}{15} = \\frac{4}{15} \\]\n\t\t\t\\item \\textbf{Paso 3: Establecer la ecuación.}\n\t\t\tSabemos que la fracción del hijo menor (\\(\\frac{4}{15}\\)) equivale a \\$24,000. Sea \\(T\\) el total de la herencia:\n\t\t\t\\[ \\frac{4}{15}T = 24000 \\]\n\t\t\t\\item \\textbf{Paso 4: Despejar el total (T).}\n\t\t\tMultiplicamos ambos lados por \\(\\frac{15}{4}\\):\n\t\t\t\\[ T = 24000 \\cdot \\frac{15}{4} \\]\n\t\t\tSimplificamos (24000 / 4 = 6000):\n\t\t\t\\[ T = 6000 \\cdot 15 = 90000 \\]\n\t\t\t\\item \\textbf{Resultado:} El monto total de la herencia es \\$90,000.\n\t\t\\end{itemize}",
+        "feedback_chars": 1075
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-02_Medio.tex",
+        "line": 1253
+      },
       "stop": true,
       "headline": "LA BAJADA — la pregunta estaba clasificada por encima de su nivel",
       "statement": "Un padre de familia decide repartir su herencia: al primer hijo \\(\\frac{1}{3}\\) del total, al segundo \\(\\frac{2}{5}\\), y al hijo menor el resto. Si el hijo menor recibe $24,000, ¿cuál fue el monto total de la herencia?",
-      "options": ["$80,000", "$90,000*", "$100,000", "$120,000"],
-      "before": { "code": "ARI-FA-Fracciones-Dificil-001", "file": "03_Dificil.tex", "level": "Reto" },
-      "after":  { "code": "ARI-FA-Fracciones-Medio-046",   "file": "02_Medio.tex", "level": "PAA", "line": 1253 },
-      "unchanged": ["statement", "options", "feedback"],
+      "options": [
+        "$80,000",
+        "$90,000*",
+        "$100,000",
+        "$120,000"
+      ],
+      "before": {
+        "code": "ARI-FA-Fracciones-Dificil-001",
+        "file": "03_Dificil.tex",
+        "level": "Reto"
+      },
+      "after": {
+        "code": "ARI-FA-Fracciones-Medio-046",
+        "file": "02_Medio.tex",
+        "level": "PAA",
+        "line": 1253
+      },
+      "unchanged": [
+        "el enunciado",
+        "las opciones",
+        "la retroalimentacion"
+      ],
       "why": "Es paso por paso la misma maquinaria que una pregunta que el examen trata como Medio: sumar dos fracciones, restar de 1, despejar. Y una Medio del propio fichero tiene un paso más y se queda donde está. Si el examen la trata como Medio, el Banco no puede tratarla como Difícil.",
-      "authority": { "source": "docs/RUBRICA-DE-NIVELES.md", "section": "§2 (el ancla como corpus de referencia) y §5" },
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§2 (el ancla como corpus de referencia) y §5"
+      },
       "comparisons": [
-        { "label": "Examen Diagnóstico · Medio-018 · el bote de pintura", "role": "anchor",
+        {
+          "label": "Examen Diagnóstico · Medio-018 · el bote de pintura",
+          "role": "anchor",
           "text": "Un pintor utiliza \\(\\frac{1}{3}\\) de un bote de pintura para una pared y \\(\\frac{1}{4}\\) del mismo bote para otra. Si al final le quedan 10 litros, ¿cuántos litros contenía el bote originalmente?",
-          "options": ["20 litros", "24 litros*", "28 litros", "30 litros", "No conozco la respuesta"],
-          "note": "Retroalimentación de 5 PASOS — uno más que la movida. Es pregunta de examen, luego es nivel PAA por definición." },
-        { "label": "Banco · Medio-014 · la herencia de $240,000", "role": "peer",
+          "options": [
+            "20 litros",
+            "24 litros*",
+            "28 litros",
+            "30 litros",
+            "No conozco la respuesta"
+          ],
+          "note": "Retroalimentación de 5 PASOS — uno más que la movida. Es pregunta de examen, luego es nivel PAA por definición."
+        },
+        {
+          "label": "Banco · Medio-014 · la herencia de $240,000",
+          "role": "peer",
           "text": "Una herencia de $240,000 se reparte así: \\(\\frac{1}{3}\\) para el cónyuge, \\(\\frac{1}{4}\\) para el hijo mayor y el resto se divide por igual entre dos hijos menores. ¿Cuánto recibe cada hijo menor?",
-          "options": ["$40,000", "$50,000*", "$60,000", "$100,000"],
-          "note": "4 pasos, y el 3.º es una división extra que la movida NO tiene. Se queda en Medio. Está en 02_Medio.tex : 380." }
+          "options": [
+            "$40,000",
+            "$50,000*",
+            "$60,000",
+            "$100,000"
+          ],
+          "note": "4 pasos, y el 3.º es una división extra que la movida NO tiene. Se queda en Medio. Está en 02_Medio.tex : 380."
+        }
       ],
       "evidence": [
         "El ancla dice si una OPERACIÓN es de nivel PAA, no si una PRESENTACIÓN lo es. Está medido que sobrepromociona el nivel Fácil de forma sistemática.",
         "Aquí el ancla tiene 40 preguntas y el juicio es firme. Hay subtemas con 10, y ahí se degrada más rápido de lo que sugiere el recuento."
       ],
       "if_rejected": "No es un error de esta pregunta: el criterio del §2 no discrimina, y hay que reescribir la rúbrica antes de aplicarla a los otros 39 subtemas. Los demás ítems dejan de importar.",
-      "verdict_options": ["De acuerdo", "En desacuerdo", "Duda"]
+      "satisfies": [
+        "QZ-C-ANCHOR",
+        "QZ-C-DIM-STEPS",
+        "QZ-C-LEVEL-DEFLATED",
+        "QZ-C-COUNT-MOVE"
+      ],
+      "requires_verdict": true,
+      "verdict_disposition_options": [
+        "this_run",
+        "new_run",
+        "operator_fixed",
+        "discard"
+      ]
     },
     {
       "item_id": "R2",
       "type": "reclassification",
-      "subject": { "id": "ARI-FA-Fracciones-Dificil-021", "label": "Medio-033 → Dificil-021" },
-      "location": { "path": "…/1.3.ARI-FA-Fracciones-03_Dificil.tex", "line": 671 },
+      "subject": {
+        "id": "ARI-FA-Fracciones-Dificil-021",
+        "label": "Medio-033 → Dificil-021",
+        "feedback": "Resolvemos la fracción continua empezando desde la parte más interna (el denominador más bajo) y subiendo.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Resolver el denominador más interno.}\n\t\t\t\\( 2 - \\frac{1}{2} = \\frac{4}{2} - \\frac{1}{2} = \\frac{3}{2} \\).\n\t\t\t\\item \\textbf{Paso 2: Sustituir.} La expresión se convierte en:\n\t\t\t$$ \\frac{1}{1 + \\frac{1}{\\frac{3}{2}}} $$\n\t\t\t\\item \\textbf{Paso 3: Resolver la fracción intermedia.} \\( \\frac{1}{\\frac{3}{2}} \\) es el recíproco de \\( \\frac{3}{2} \\), que es \\( \\frac{2}{3} \\).\n\t\t\t\\item \\textbf{Paso 4: Sustituir de nuevo.} La expresión ahora es:\n\t\t\t$$ \\frac{1}{1 + \\frac{2}{3}} $$\n\t\t\t\\item \\textbf{Paso 5: Resolver el denominador final.} \\( 1 + \\frac{2}{3} = \\frac{3}{3} + \\frac{2}{3} = \\frac{5}{3} \\).\n\t\t\t\\item \\textbf{Paso 6: Calcular el resultado final.} La expresión es \\( \\frac{1}{\\frac{5}{3}} \\), que es el recíproco de \\( \\frac{5}{3} \\). El resultado es \\( \\frac{3}{5} \\).\n\t\t\\end{itemize}",
+        "feedback_chars": 937
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-03_Dificil.tex",
+        "line": 671
+      },
       "stop": true,
       "headline": "LA SUBIDA — la pregunta estaba clasificada por debajo de su nivel",
       "statement": "Evalúe la siguiente fracción continua: $$\\frac{1}{1 + \\frac{1}{2 - \\frac{1}{2}}}$$",
-      "options": ["\\(\\frac{2}{3}\\)", "\\(\\frac{3}{5}\\)*", "\\(\\frac{5}{3}\\)", "\\(\\frac{4}{3}\\)"],
-      "before": { "code": "ARI-FA-Fracciones-Medio-033",   "file": "02_Medio.tex",   "level": "PAA" },
-      "after":  { "code": "ARI-FA-Fracciones-Dificil-021", "file": "03_Dificil.tex", "level": "Reto", "line": 671 },
-      "unchanged": ["statement", "options", "feedback"],
-      "why": "Ninguna de las 40 preguntas de examen del subtema anida más allá de profundidad 1. Esta es de profundidad 3, y 6 pasos. Se sale del techo que marca el examen.",
-      "authority": { "source": "docs/RUBRICA-DE-NIVELES.md", "section": "§2 (ancla) · §3.4 (dimensiones) · §5" },
-      "comparisons": [
-        { "label": "Banco · Dificil-019 — se queda en Reto", "role": "peer",
-          "text": "Encuentre el valor de \\(x\\): \\[ \\left(\\frac{1}{2} - \\frac{1}{3}\\right)x = \\frac{5}{4} + \\frac{2}{3} \\]",
-          "options": ["\\(x = \\frac{23}{4}\\)", "\\(x = \\frac{23}{3}\\)", "\\(x = \\frac{23}{2}\\)*", "\\(x = 23\\)"],
-          "note": "4 pasos, PROFUNDIDAD 1. Si profundidad 1 ya basta para Reto, profundidad 3 no puede ser Medio. Está en 03_Dificil.tex : 605." }
+      "options": [
+        "\\(\\frac{2}{3}\\)",
+        "\\(\\frac{3}{5}\\)*",
+        "\\(\\frac{5}{3}\\)",
+        "\\(\\frac{4}{3}\\)"
       ],
-      "evidence": ["Profundidad de anidamiento medida en las 40 preguntas del ancla: máximo 1."],
+      "before": {
+        "code": "ARI-FA-Fracciones-Medio-033",
+        "file": "02_Medio.tex",
+        "level": "PAA"
+      },
+      "after": {
+        "code": "ARI-FA-Fracciones-Dificil-021",
+        "file": "03_Dificil.tex",
+        "level": "Reto",
+        "line": 671
+      },
+      "unchanged": [
+        "el enunciado",
+        "las opciones",
+        "la retroalimentacion"
+      ],
+      "why": "Ninguna de las 40 preguntas de examen del subtema anida más allá de profundidad 1. Esta es de profundidad 3, y 6 pasos. Se sale del techo que marca el examen.",
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§2 (ancla) · §3.4 (dimensiones) · §5"
+      },
+      "comparisons": [
+        {
+          "label": "Banco · Dificil-019 — se queda en Reto",
+          "role": "peer",
+          "text": "Encuentre el valor de \\(x\\): \\[ \\left(\\frac{1}{2} - \\frac{1}{3}\\right)x = \\frac{5}{4} + \\frac{2}{3} \\]",
+          "options": [
+            "\\(x = \\frac{23}{4}\\)",
+            "\\(x = \\frac{23}{3}\\)",
+            "\\(x = \\frac{23}{2}\\)*",
+            "\\(x = 23\\)"
+          ],
+          "note": "4 pasos, PROFUNDIDAD 1. Si profundidad 1 ya basta para Reto, profundidad 3 no puede ser Medio. Está en 03_Dificil.tex : 605."
+        }
+      ],
+      "evidence": [
+        "Profundidad de anidamiento medida en las 40 preguntas del ancla: máximo 1."
+      ],
       "if_rejected": "Mismo desenlace que R1: el criterio no discrimina y la rúbrica se reescribe antes de los 39 subtemas restantes.",
-      "verdict_options": ["De acuerdo", "En desacuerdo", "Duda"]
+      "satisfies": [
+        "QZ-C-ANCHOR",
+        "QZ-C-DIM-STEPS",
+        "QZ-C-DIM-CONCEPTS",
+        "QZ-C-LEVEL-INFLATED",
+        "QZ-C-COUNT-MOVE"
+      ],
+      "requires_verdict": true,
+      "verdict_disposition_options": [
+        "this_run",
+        "new_run",
+        "operator_fixed",
+        "discard"
+      ]
     },
     {
       "item_id": "C3",
       "type": "correction",
-      "subject": { "id": "ARI-FA-Fracciones-Facil-014", "label": "Facil-014" },
-      "location": { "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex", "line": 330 },
+      "subject": {
+        "id": "ARI-FA-Fracciones-Facil-014",
+        "label": "Facil-014",
+        "feedback": "Para simplificar la fracción \\(\\frac{18}{30}\\), buscamos el número más grande que divida a ambos (MCD).\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Encontrar el Máximo Común Divisor (MCD).} El MCD de 18 y 30 es 6.\n\t\t\t\\item \\textbf{Paso 2: Dividir el numerador por el MCD.} \\(18 \\div 6 = 3\\).\n\t\t\t\\item \\textbf{Paso 3: Dividir el denominador por el MCD.} \\(30 \\div 6 = 5\\).\n\t\t\t\\item \\textbf{Paso 4: Resultado.} La fracción simplificada es \\(\\frac{3}{5}\\). (Nota: \\(\\frac{9}{15}\\) y \\(\\frac{6}{10}\\) también son equivalentes, pero \\(\\frac{3}{5}\\) es la mínima expresión).\n\t\t\\end{itemize}",
+        "feedback_chars": 583
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex",
+        "line": 330
+      },
       "stop": false,
       "headline": "EL DEFECTO DURO — el enunciado admitía tres respuestas correctas",
       "before": {
         "statement": "Al simplificar la fracción \\(\\frac{18}{30}\\), ¿cuál es su equivalente?",
-        "options": ["\\(\\frac{9}{15}\\)  ← también correcta", "\\(\\frac{3}{5}\\)*", "\\(\\frac{6}{10}\\)  ← también correcta", "\\(\\frac{2}{3}\\)"],
+        "options": [
+          "\\(\\frac{9}{15}\\)  ← también correcta",
+          "\\(\\frac{3}{5}\\)*",
+          "\\(\\frac{6}{10}\\)  ← también correcta",
+          "\\(\\frac{2}{3}\\)"
+        ],
         "raw": "Al simplificar la fracción \\(\\frac{18}{30}\\), ¿cuál es su equivalente?"
       },
       "after": {
         "statement": "Al simplificar la fracción \\(\\frac{18}{30}\\) a su mínima expresión, ¿cuál es el resultado?",
-        "options": ["\\(\\frac{9}{15}\\)", "\\(\\frac{3}{5}\\)*", "\\(\\frac{6}{10}\\)", "\\(\\frac{2}{3}\\)"],
+        "options": [
+          "\\(\\frac{9}{15}\\)",
+          "\\(\\frac{3}{5}\\)*",
+          "\\(\\frac{6}{10}\\)",
+          "\\(\\frac{2}{3}\\)"
+        ],
         "raw": "Al simplificar la fracción \\(\\frac{18}{30}\\) a su mínima expresión, ¿cuál es el resultado?"
       },
-      "unchanged": ["options"],
+      "unchanged": [
+        "las opciones"
+      ],
       "why": "\\(\\frac{9}{15}\\), \\(\\frac{3}{5}\\) y \\(\\frac{6}{10}\\) son las TRES equivalentes a \\(\\frac{18}{30}\\). Las opciones no se tocaron: se acotó el enunciado, que era lo que estaba mal.",
-      "authority": { "source": "docs/RUBRICA-DE-NIVELES.md", "section": "§4 — una y solo una clave" },
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§4 — una y solo una clave"
+      },
       "comparisons": [],
       "evidence": [
         "La propia retroalimentación de la pregunta ya lo reconocía entre paréntesis y seguía dando una sola por buena.",
         "Ningún grep encuentra esto: hacía falta leer que «equivalente» es verdad de tres opciones. Ni la clave lo delataba, porque la clave era correcta."
       ],
-      "verdict_options": ["Correcto", "Rechazo", "Duda"]
+      "satisfies": [
+        "QZ-C-HARD-ONEKEY"
+      ],
+      "section": "hard_defects",
+      "requires_verdict": true,
+      "verdict_disposition_options": [
+        "this_run",
+        "new_run",
+        "operator_fixed",
+        "discard"
+      ]
     },
     {
       "item_id": "C1",
       "type": "correction",
-      "subject": { "id": "ARI-FA-Fracciones-Facil-012", "label": "Facil-012" },
-      "location": { "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex", "line": 281 },
+      "subject": {
+        "id": "ARI-FA-Fracciones-Facil-012",
+        "label": "Facil-012",
+        "feedback": "Para saber el total, debemos sumar las fracciones que comió cada persona.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Plantear la suma.} \\(\\frac{1}{8} + \\frac{3}{8}\\).\n\t\t\t\\item \\textbf{Paso 2: Sumar.} Como tienen el mismo denominador (8), simplemente sumamos los numeradores: \\(1 + 3 = 4\\).\n\t\t\t\\item \\textbf{Paso 3: Escribir el resultado inicial.} La suma es \\(\\frac{4}{8}\\).\n\t\t\t\\item \\textbf{Paso 4: Simplificar la fracción.} El Máximo Común Divisor (MCD) de 4 y 8 es 4.\n\t\t\t\\item \\textbf{Paso 5: Dividir por el MCD.} \\(4 \\div 4 = 1\\) (numerador) y \\(8 \\div 4 = 2\\) (denominador).\n\t\t\t\\item \\textbf{Paso 6: Resultado final.} En total comieron \\(\\frac{1}{2}\\) de la pizza.\n\t\t\\end{itemize}",
+        "feedback_chars": 685
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex",
+        "line": 281
+      },
       "stop": false,
       "headline": "Dos opciones valían lo mismo",
       "statement": "Laura comió \\(\\frac{1}{8}\\) de una pizza y Carlos comió \\(\\frac{3}{8}\\) de la misma pizza. ¿Qué fracción de la pizza comieron en total?",
-      "before": { "options": ["\\(\\frac{4}{16}\\)  = ¼", "\\(\\frac{1}{2}\\)*", "\\(\\frac{3}{64}\\)", "\\(\\frac{2}{8}\\)  = ¼ ← mismo valor que la 1.ª"], "raw": "\\item \\(\\frac{2}{8}\\)" },
-      "after":  { "options": ["\\(\\frac{4}{16}\\)", "\\(\\frac{1}{2}\\)*", "\\(\\frac{3}{64}\\)", "\\(\\frac{3}{8}\\)"], "raw": "\\item \\(\\frac{3}{8}\\)" },
-      "unchanged": ["statement"],
+      "before": {
+        "options": [
+          "\\(\\frac{4}{16}\\)  = ¼",
+          "\\(\\frac{1}{2}\\)*",
+          "\\(\\frac{3}{64}\\)",
+          "\\(\\frac{2}{8}\\)  = ¼ ← mismo valor que la 1.ª"
+        ],
+        "raw": "\\item \\(\\frac{2}{8}\\)"
+      },
+      "after": {
+        "options": [
+          "\\(\\frac{4}{16}\\)",
+          "\\(\\frac{1}{2}\\)*",
+          "\\(\\frac{3}{64}\\)",
+          "\\(\\frac{3}{8}\\)"
+        ],
+        "raw": "\\item \\(\\frac{3}{8}\\)"
+      },
+      "unchanged": [
+        "el enunciado"
+      ],
       "why": "\\(\\frac{2}{8}\\) y \\(\\frac{4}{16}\\) valen ambas \\(\\frac{1}{4}\\). El alumno que descarta una descarta las dos: la pregunta tenía tres opciones reales, no cuatro.",
-      "authority": { "invented_by": "taller", "why_invented": "la §4 de la rúbrica no contempla opciones con el mismo valor", "decision_item": "D1" },
-      "comparisons": [], "evidence": [],
-      "verdict_options": ["Correcto", "Rechazo", "Duda"]
+      "authority": {
+        "invented_by": "taller",
+        "why_invented": "la §4 de la rúbrica no contempla opciones con el mismo valor",
+        "decision_item": "D1"
+      },
+      "comparisons": [],
+      "evidence": [],
+      "satisfies": [],
+      "satisfies_note": "criterio inventado por el taller: «dos opciones con el mismo valor». NO tiene id en el perfil porque la rubrica no lo contiene. Si el operador lo adopta en D1, la v3 le dara un QZ-C-* y este satisfies dejara de estar vacio.",
+      "requires_verdict": true,
+      "verdict_disposition_options": [
+        "this_run",
+        "new_run",
+        "operator_fixed",
+        "discard"
+      ]
     },
     {
       "item_id": "C2",
       "type": "correction",
-      "subject": { "id": "ARI-FA-Fracciones-Facil-013", "label": "Facil-013" },
-      "location": { "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex", "line": 306 },
+      "subject": {
+        "id": "ARI-FA-Fracciones-Facil-013",
+        "label": "Facil-013",
+        "feedback": "Para encontrar la madera restante, debemos restar el pedazo cortado (\\(\\frac{1}{4}\\)) a la longitud original (\\(\\frac{7}{8}\\)).\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Plantear la resta.} \\(\\frac{7}{8} - \\frac{1}{4}\\).\n\t\t\t\\item \\textbf{Paso 2: Encontrar un denominador común.} Los denominadores son 8 y 4. El Mínimo Común Múltiplo (mcm) es 8.\n\t\t\t\\item \\textbf{Paso 3: Convertir \\(\\frac{1}{4}\\) a octavos.} Multiplicamos numerador y denominador por 2: \\(\\frac{1 \\times 2}{4 \\times 2} = \\frac{2}{8}\\). (La fracción \\(\\frac{7}{8}\\) ya está en octavos).\n\t\t\t\\item \\textbf{Paso 4: Realizar la resta.} Ahora restamos \\(\\frac{7}{8} - \\frac{2}{8}\\).\n\t\t\t\\item \\textbf{Paso 5: Resultado.} Restamos los numeradores: \\(7 - 2 = 5\\). Le quedan \\(\\frac{5}{8}\\) de metro.\n\t\t\\end{itemize}",
+        "feedback_chars": 773
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex",
+        "line": 306
+      },
       "stop": false,
       "headline": "Dos opciones eran el mismo número",
       "statement": "Un carpintero tiene una tabla de madera que mide \\(\\frac{7}{8}\\) de metro. Si corta un pedazo de \\(\\frac{1}{4}\\) de metro, ¿qué fracción de metro de madera le queda?",
-      "before": { "options": ["\\(\\frac{6}{4}\\)", "\\(\\frac{5}{8}\\)*", "\\(\\frac{3}{4}\\)  ← mismo valor que la 4.ª", "\\(\\frac{6}{8}\\)  = ¾"], "raw": "\\item \\(\\frac{3}{4}\\)" },
-      "after":  { "options": ["\\(\\frac{6}{4}\\)", "\\(\\frac{5}{8}\\)*", "\\(\\frac{9}{8}\\)", "\\(\\frac{6}{8}\\)"], "raw": "\\item \\(\\frac{9}{8}\\)" },
-      "unchanged": ["statement"],
+      "before": {
+        "options": [
+          "\\(\\frac{6}{4}\\)",
+          "\\(\\frac{5}{8}\\)*",
+          "\\(\\frac{3}{4}\\)  ← mismo valor que la 4.ª",
+          "\\(\\frac{6}{8}\\)  = ¾"
+        ],
+        "raw": "\\item \\(\\frac{3}{4}\\)"
+      },
+      "after": {
+        "options": [
+          "\\(\\frac{6}{4}\\)",
+          "\\(\\frac{5}{8}\\)*",
+          "\\(\\frac{9}{8}\\)",
+          "\\(\\frac{6}{8}\\)"
+        ],
+        "raw": "\\item \\(\\frac{9}{8}\\)"
+      },
+      "unchanged": [
+        "el enunciado"
+      ],
       "why": "\\(\\frac{3}{4}\\) y \\(\\frac{6}{8}\\) son el mismo número.",
-      "authority": { "invented_by": "taller", "why_invented": "la §4 no contempla opciones con el mismo valor", "decision_item": "D1" },
-      "comparisons": [], "evidence": [],
-      "verdict_options": ["Correcto", "Rechazo", "Duda"]
+      "authority": {
+        "invented_by": "taller",
+        "why_invented": "la §4 no contempla opciones con el mismo valor",
+        "decision_item": "D1"
+      },
+      "comparisons": [],
+      "evidence": [],
+      "satisfies": [],
+      "satisfies_note": "criterio inventado por el taller: «dos opciones con el mismo valor». NO tiene id en el perfil porque la rubrica no lo contiene. Si el operador lo adopta en D1, la v3 le dara un QZ-C-* y este satisfies dejara de estar vacio.",
+      "requires_verdict": true,
+      "verdict_disposition_options": [
+        "this_run",
+        "new_run",
+        "operator_fixed",
+        "discard"
+      ]
     },
     {
       "item_id": "C4",
       "type": "correction",
-      "subject": { "id": "ARI-FA-Fracciones-Facil-018", "label": "Facil-018" },
-      "location": { "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex", "line": 429 },
+      "subject": {
+        "id": "ARI-FA-Fracciones-Facil-018",
+        "label": "Facil-018",
+        "feedback": "Para encontrar la \"mitad de\" una cantidad (incluso si es una fracción), debemos multiplicar esa cantidad por \\(\\frac{1}{2}\\).\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Plantear la multiplicación.} \\(\\frac{3}{4} \\text{ (de azúcar)} \\times \\frac{1}{2} \\text{ (la mitad)}\\).\n\t\t\t\\item \\textbf{Paso 2: Multiplicar los numeradores.} \\(3 \\times 1 = 3\\).\n\t\t\t\\item \\textbf{Paso 3: Multiplicar los denominadores.} \\(4 \\times 2 = 8\\).\n\t\t\t\\item \\textbf{Paso 4: Resultado.} Se necesitarán \\(\\frac{3}{8}\\) de taza de azúcar.\n\t\t\\end{itemize}",
+        "feedback_chars": 527
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex",
+        "line": 429
+      },
       "stop": false,
       "headline": "Dos opciones eran el mismo número, y la nueva informa",
       "statement": "Una receta de galletas requiere \\(\\frac{3}{4}\\) de taza de azúcar. Si solo quieres preparar la mitad de la receta, ¿qué fracción de taza de azúcar necesitarás?",
-      "before": { "options": ["\\(\\frac{3}{2}\\)", "\\(\\frac{3}{8}\\)*", "\\(\\frac{4}{6}\\)", "\\(\\frac{6}{4}\\)  = \\(\\frac{3}{2}\\) ← mismo valor que la 1.ª"], "raw": "\\item \\(\\frac{6}{4}\\)" },
-      "after":  { "options": ["\\(\\frac{3}{2}\\)", "\\(\\frac{3}{8}\\)*", "\\(\\frac{4}{6}\\)", "\\(\\frac{3}{4}\\)"], "raw": "\\item \\(\\frac{3}{4}\\)" },
-      "unchanged": ["statement"],
+      "before": {
+        "options": [
+          "\\(\\frac{3}{2}\\)",
+          "\\(\\frac{3}{8}\\)*",
+          "\\(\\frac{4}{6}\\)",
+          "\\(\\frac{6}{4}\\)  = \\(\\frac{3}{2}\\) ← mismo valor que la 1.ª"
+        ],
+        "raw": "\\item \\(\\frac{6}{4}\\)"
+      },
+      "after": {
+        "options": [
+          "\\(\\frac{3}{2}\\)",
+          "\\(\\frac{3}{8}\\)*",
+          "\\(\\frac{4}{6}\\)",
+          "\\(\\frac{3}{4}\\)"
+        ],
+        "raw": "\\item \\(\\frac{3}{4}\\)"
+      },
+      "unchanged": [
+        "el enunciado"
+      ],
       "why": "\\(\\frac{6}{4}\\) y \\(\\frac{3}{2}\\) son el mismo número. Además \\(\\frac{3}{4}\\) es el error plausible de quien olvida partir por la mitad, así que la nueva distractora informa en lugar de sobrar.",
-      "authority": { "invented_by": "taller", "why_invented": "la §4 no contempla opciones con el mismo valor", "decision_item": "D1" },
-      "comparisons": [], "evidence": [],
-      "verdict_options": ["Correcto", "Rechazo", "Duda"]
+      "authority": {
+        "invented_by": "taller",
+        "why_invented": "la §4 no contempla opciones con el mismo valor",
+        "decision_item": "D1"
+      },
+      "comparisons": [],
+      "evidence": [],
+      "satisfies": [],
+      "satisfies_note": "criterio inventado por el taller: «dos opciones con el mismo valor». NO tiene id en el perfil porque la rubrica no lo contiene. Si el operador lo adopta en D1, la v3 le dara un QZ-C-* y este satisfies dejara de estar vacio.",
+      "requires_verdict": true,
+      "verdict_disposition_options": [
+        "this_run",
+        "new_run",
+        "operator_fixed",
+        "discard"
+      ]
     },
     {
       "item_id": "C5",
       "type": "correction",
-      "subject": { "id": "ARI-FA-Fracciones-Facil-020", "label": "Facil-020" },
-      "location": { "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex", "line": 475 },
+      "subject": {
+        "id": "ARI-FA-Fracciones-Facil-020",
+        "label": "Facil-020",
+        "feedback": "Para restar una fracción a un número entero, primero convertimos el entero a una fracción con el mismo denominador.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Plantear la resta.} \\(1 - \\frac{5}{4}\\).\n\t\t\t\\item \\textbf{Paso 2: Convertir el entero 1 a fracción.} Usamos el denominador de la otra fracción (4). El entero 1 es igual a \\(\\frac{4}{4}\\).\n\t\t\t\\item \\textbf{Paso 3: Realizar la resta.} \\(\\frac{4}{4} - \\frac{5}{4}\\).\n\t\t\t\\item \\textbf{Paso 4: Restar los numeradores.} \\(4 - 5 = -1\\).\n\t\t\t\\item \\textbf{Paso 5: Resultado.} El resultado es \\(\\frac{-1}{4}\\), que es lo mismo que \\(-\\frac{1}{4}\\).\n\t\t\\end{itemize}",
+        "feedback_chars": 613
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex",
+        "line": 475
+      },
       "stop": false,
       "headline": "Notación: el signo menos quedaba fuera del modo matemático",
       "statement": "¿Cuál es el resultado de \\(1 - \\frac{5}{4}\\)?",
-      "before": { "options": ["\\(\\frac{1}{4}\\)", "-\\(\\frac{1}{4}\\)*  ← el signo, fuera de la fórmula", "\\(\\frac{9}{4}\\)", "\\(-1\\)"], "raw": "\\item* -\\(\\frac{1}{4}\\)" },
-      "after":  { "options": ["\\(\\frac{1}{4}\\)", "\\(-\\frac{1}{4}\\)*", "\\(\\frac{9}{4}\\)", "\\(-1\\)"], "raw": "\\item* \\(-\\frac{1}{4}\\)" },
-      "unchanged": ["statement", "valores de todas las opciones"],
+      "before": {
+        "options": [
+          "\\(\\frac{1}{4}\\)",
+          "-\\(\\frac{1}{4}\\)*  ← el signo, fuera de la fórmula",
+          "\\(\\frac{9}{4}\\)",
+          "\\(-1\\)"
+        ],
+        "raw": "\\item* -\\(\\frac{1}{4}\\)"
+      },
+      "after": {
+        "options": [
+          "\\(\\frac{1}{4}\\)",
+          "\\(-\\frac{1}{4}\\)*",
+          "\\(\\frac{9}{4}\\)",
+          "\\(-1\\)"
+        ],
+        "raw": "\\item* \\(-\\frac{1}{4}\\)"
+      },
+      "unchanged": [
+        "el enunciado",
+        "los valores de todas las opciones"
+      ],
       "why": "El signo se componía como guion de texto, con otro tipo y otra separación que el resto de la fórmula. No cambia el valor de nada: cambia cómo se ve la clave impresa. Es la única referencia de este tipo del subtema.",
-      "authority": { "source": "docs/RUBRICA-DE-NIVELES.md", "section": "§8 — forma" },
-      "comparisons": [], "evidence": [],
-      "verdict_options": ["Correcto", "Rechazo", "Duda"]
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§8 — forma"
+      },
+      "comparisons": [],
+      "evidence": [],
+      "satisfies": [
+        "QZ-C-WORD"
+      ],
+      "requires_verdict": true,
+      "verdict_disposition_options": [
+        "this_run",
+        "new_run",
+        "operator_fixed",
+        "discard"
+      ]
     },
     {
       "item_id": "H1",
       "type": "declared_gap",
-      "subject": { "id": "ARI-FA-Fracciones-Facil-025", "label": "Facil-025" },
-      "location": { "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex", "line": 600 },
+      "subject": {
+        "id": "ARI-FA-Fracciones-Facil-025",
+        "label": "Facil-025",
+        "feedback": "Para comparar un número mixto y una fracción impropia, lo mejor es convertir ambos al mismo formato. Convertiremos el número mixto a fracción impropia.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Convertir el número mixto \\(2\\frac{1}{4}\\) a fracción impropia.}\n\t\t\t\\begin{itemize}\n\t\t\t\t\\item Multiplicar entero por denominador: \\(2 \\times 4 = 8\\).\n\t\t\t\t\\item Sumar el numerador: \\(8 + 1 = 9\\).\n\t\t\t\t\\item Mantener el denominador: \\(\\frac{9}{4}\\).\n\t\t\t\\end{itemize}\n\t\t\t\\item \\textbf{Paso 2: Comparar las dos fracciones.} Ahora comparamos \\(\\frac{9}{4}\\) (que es \\(2\\frac{1}{4}\\)) con la otra cantidad, \\(\\frac{10}{4}\\).\n\t\t\t\\item \\textbf{Paso 3: Concluir.} Como ambas tienen el mismo denominador (4), la fracción con el numerador más grande es la mayor.\n\t\t\t\\item \\textbf{Paso 4: Resultado.} Dado que \\(10 > 9\\), la fracción \\(\\frac{10}{4}\\) es mayor.\n\t\t\\end{itemize}",
+        "feedback_chars": 858
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-01_Facil.tex",
+        "line": 600
+      },
       "stop": false,
       "headline": "Defecto detectado y NO reparado, a propósito",
       "statement": "¿Cuál de las siguientes cantidades es mayor, \\(2\\frac{1}{4}\\) o \\(\\frac{10}{4}\\)?",
       "before": null,
-      "after": { "options": ["Son iguales", "\\(\\frac{10}{4}\\)*", "\\(2\\frac{1}{4}\\)", "No se puede determinar  ← descartable sin leer el enunciado"] },
-      "unchanged": ["todo — el run no lo tocó"],
+      "after": {
+        "options": [
+          "Son iguales",
+          "\\(\\frac{10}{4}\\)*",
+          "\\(2\\frac{1}{4}\\)",
+          "No se puede determinar  ← descartable sin leer el enunciado"
+        ]
+      },
+      "unchanged": [
+        "el enunciado, las opciones y la retroalimentacion"
+      ],
       "why": "«No se puede determinar» se descarta sin leer el enunciado. No se sustituyó porque la pregunta solo admite TRES respuestas con sentido —mayor una, mayor la otra, iguales—, así que meter una cuarta distractora obliga a rehacer el ítem entero. El run entregó el hueco declarado en vez de taparlo con algo peor.",
-      "authority": { "source": "docs/RUBRICA-DE-NIVELES.md", "section": "§7.3 — declarar el hueco es preferible a un parche" },
-      "comparisons": [], "evidence": ["Esto NO es un defecto del run: cumplir la §7.3 es lo que se le pedía."],
-      "verdict_options": ["Dejarla como está", "Rehacer el ítem", "Retirarla y reponer"]
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§7.3 — declarar el hueco es preferible a un parche"
+      },
+      "comparisons": [],
+      "evidence": [
+        "Esto NO es un defecto del run: cumplir la §7.3 es lo que se le pedía."
+      ],
+      "satisfies": [
+        "QZ-C-HARD-DEFENSIBLE"
+      ],
+      "requires_verdict": true,
+      "verdict_disposition_options": [
+        "this_run",
+        "new_run",
+        "operator_fixed",
+        "discard"
+      ]
     },
     {
       "item_id": "I1",
       "type": "info",
-      "subject": { "id": "ARI-FA-Fracciones", "label": "Distractoras sin explicar" },
-      "location": { "path": "…/1.3.ARI-FA-Fracciones-*.tex", "line": null },
+      "subject": {
+        "id": "ARI-FA-Fracciones",
+        "label": "Distractoras sin explicar"
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-*.tex",
+        "line": null
+      },
       "stop": false,
       "headline": "10 preguntas donde un error plausible aterriza sobre una opción listada",
-      "before": null, "after": null, "unchanged": [],
+      "before": null,
+      "after": null,
+      "unchanged": [],
       "why": "En 10 preguntas del subtema, un error plausible del alumno aterriza exactamente sobre una opción listada y la retroalimentación no explica por qué esa opción está mal. 5 de las 10 son de la familia «fracción del resto», que es el error canónico del tema.",
-      "authority": { "source": "docs/RUBRICA-DE-NIVELES.md", "section": "§6.4" },
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§6.4"
+      },
       "comparisons": [],
-      "evidence": ["No es defecto. Es información para decidir qué deben hacer los 39 runs restantes."],
+      "evidence": [
+        "No es defecto. Es información para decidir qué deben hacer los 39 runs restantes."
+      ],
+      "satisfies": [
+        "QZ-C-DISTR"
+      ],
       "requires_verdict": false
+    },
+    {
+      "item_id": "P90-Dificil018",
+      "type": "info",
+      "section": "feedback_p90",
+      "subject": {
+        "id": "ARI-FA-Fracciones-Dificil-018",
+        "label": "Dificil-018",
+        "feedback": "Este es un problema de tasas de trabajo. La tasa es la inversa del tiempo. Sea \\(T\\) el tiempo que tarda el desagüe C en vaciar el tanque.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Definir las tasas horarias.}\n\t\t\t\\begin{itemize}\n\t\t\t\t\\item Tasa de A (llena): \\(\\frac{1}{6}\\) del tanque por hora.\n\t\t\t\t\\item Tasa de B (llena): \\(\\frac{1}{8}\\) del tanque por hora.\n\t\t\t\t\\item Tasa de C (vacía): \\(\\frac{1}{T}\\) del tanque por hora (esta tasa se resta).\n\t\t\t\t\\item Tasa combinada (A+B-C): \\(\\frac{1}{12}\\) (tarda 12h en llenarse).\n\t\t\t\\end{itemize}\n\t\t\t\\item \\textbf{Paso 2: Establecer la ecuación.}\n\t\t\tTasa(A) + Tasa(B) - Tasa(C) = Tasa(Combinada)\n\t\t\t\\[ \\frac{1}{6} + \\frac{1}{8} - \\frac{1}{T} = \\frac{1}{12} \\]\n\t\t\t\\item \\textbf{Paso 3: Despejar la tasa del desagüe (\\(\\frac{1}{T}\\)).}\n\t\t\tReorganizamos la ecuación para aislar \\(\\frac{1}{T}\\):\n\t\t\t\\[ \\frac{1}{6} + \\frac{1}{8} - \\frac{1}{12} = \\frac{1}{T} \\]\n\t\t\tBuscamos el mínimo común múltiplo de 6, 8 y 12, que es 24.\n\t\t\t\\[ \\frac{4}{24} + \\frac{3}{24} - \\frac{2}{24} = \\frac{1}{T} \\]\n\t\t\t\\[ \\frac{4+3-2}{24} = \\frac{1}{T} \\implies \\frac{5}{24} = \\frac{1}{T} \\]\n\t\t\t\\item \\textbf{Paso 4: Encontrar el tiempo T.}\n\t\t\tSi la tasa \\(\\frac{1}{T} = \\frac{5}{24}\\), entonces el tiempo \\(T = \\frac{24}{5}\\) horas.\n\t\t\t\\item \\textbf{Paso 5: Convertir a horas y minutos.}\n\t\t\t\\[ T = \\frac{24}{5} = 4.8 \\text{ horas} \\]\n\t\t\tEsto es 4 horas completas más 0.8 horas.\n\t\t\tConvertimos 0.8 horas a minutos: \\(0.8 \\cdot 60 = 48\\) minutos.\n\t\t\tEl tiempo es 4 horas y 48 minutos.\n\t\t\\end{itemize}",
+        "feedback_chars": 1512
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-*.tex",
+        "line": null
+      },
+      "stop": false,
+      "requires_verdict": false,
+      "headline": "1512 caracteres — por encima del p90 del subtema (1168)",
+      "before": null,
+      "after": null,
+      "unchanged": [],
+      "why": "La §6.3 no pone techo de longitud y ordena listar las que superan el p90 para que el operador las mire.",
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§6.3"
+      },
+      "satisfies": [
+        "QZ-C-FB-P90"
+      ],
+      "comparisons": [],
+      "evidence": [
+        "Listada, NO clasificada: el run nunca dijo si repite, divaga o explica lo que no se pregunto."
+      ]
+    },
+    {
+      "item_id": "P90-Dificil009",
+      "type": "info",
+      "section": "feedback_p90",
+      "subject": {
+        "id": "ARI-FA-Fracciones-Dificil-009",
+        "label": "Dificil-009",
+        "feedback": "La distancia total (\\(D\\)) es la caída inicial más la suma de todas las subidas y bajadas de los rebotes.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Caída inicial.}\n\t\t\tLa pelota cae 12 metros.\n\t\t\t\\item \\textbf{Paso 2: Distancias de los rebotes.}\n\t\t\t\\begin{itemize}\n\t\t\t\t\\item 1er rebote: Sube \\(12 \\cdot \\frac{3}{4}\\) y baja \\(12 \\cdot \\frac{3}{4}\\). Total del rebote: \\(2 \\cdot 12 \\cdot (\\frac{3}{4})\\).\n\t\t\t\t\\item 2do rebote: Sube \\(12 \\cdot (\\frac{3}{4})^2\\) y baja \\(12 \\cdot (\\frac{3}{4})^2\\). Total del rebote: \\(2 \\cdot 12 \\cdot (\\frac{3}{4})^2\\).\n\t\t\t\\end{itemize}\n\t\t\t\\item \\textbf{Paso 3: Plantear la suma total.}\n\t\t\t\\[ D = 12 + \\left[ 2 \\cdot 12 \\left( \\frac{3}{4} \\right) + 2 \\cdot 12 \\left( \\frac{3}{4} \\right)^2 + 2 \\cdot 12 \\left( \\frac{3}{4} \\right)^3 + \\dots \\right] \\]\n\t\t\tFactorizamos \\(2 \\cdot 12 = 24\\) de la sección de rebotes:\n\t\t\t\\[ D = 12 + 24 \\left[ \\frac{3}{4} + \\left(\\frac{3}{4}\\right)^2 + \\left(\\frac{3}{4}\\right)^3 + \\dots \\right] \\]\n\t\t\t\\item \\textbf{Paso 4: Sumar la serie geométrica infinita.}\n\t\t\tLa expresión en el corchete es una serie geométrica infinita con primer término \\(a = \\frac{3}{4}\\) y razón \\(r = \\frac{3}{4}\\).\n\t\t\tLa suma es \\(S = \\frac{a}{1-r}\\).\n\t\t\t\\[ S = \\frac{\\frac{3}{4}}{1 - \\frac{3}{4}} = \\frac{\\frac{3}{4}}{\\frac{1}{4}} = 3 \\]\n\t\t\t\\item \\textbf{Paso 5: Calcular D.}\n\t\t\tSustituimos la suma (3) en la ecuación:\n\t\t\t\\[ D = 12 + 24(3) = 12 + 72 = 84 \\]\n\t\t\tLa distancia total es 84 metros.\n\t\t\\end{itemize}",
+        "feedback_chars": 1448
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-*.tex",
+        "line": null
+      },
+      "stop": false,
+      "requires_verdict": false,
+      "headline": "1448 caracteres — por encima del p90 del subtema (1168)",
+      "before": null,
+      "after": null,
+      "unchanged": [],
+      "why": "La §6.3 no pone techo de longitud y ordena listar las que superan el p90 para que el operador las mire.",
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§6.3"
+      },
+      "satisfies": [
+        "QZ-C-FB-P90"
+      ],
+      "comparisons": [],
+      "evidence": [
+        "Listada, NO clasificada: el run nunca dijo si repite, divaga o explica lo que no se pregunto."
+      ]
+    },
+    {
+      "item_id": "P90-Dificil013",
+      "type": "info",
+      "section": "feedback_p90",
+      "subject": {
+        "id": "ARI-FA-Fracciones-Dificil-013",
+        "label": "Dificil-013",
+        "feedback": "Este problema requiere interpretar cuidadosamente las fracciones. Sea \\(V\\) el volumen total (igual a 1).\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Interpretar la extracción.}\n\t\t\tSea \\(E\\) la fracción extraída y \\(NE\\) la fracción no extraída.\n\t\t\tSabemos que \\(E + NE = 1\\) (el total).\n\t\t\tLa condición es \\(E = \\frac{1}{4} NE\\).\n\t\t\t\\item \\textbf{Paso 2: Calcular E y NE.}\n\t\t\tSustituimos la condición en la primera ecuación:\n\t\t\t\\[ \\left(\\frac{1}{4} NE\\right) + NE = 1 \\]\n\t\t\t\\[ \\frac{5}{4} NE = 1 \\implies NE = \\frac{4}{5} \\]\n\t\t\tSi lo que no se extrajo es \\(\\frac{4}{5}\\), lo que se extrajo (\\(E\\)) es \\(1 - \\frac{4}{5} = \\frac{1}{5}\\).\n\t\t\t(Verificación: \\(E = \\frac{1}{5}\\) es, en efecto, \\(\\frac{1}{4}\\) de \\(NE = \\frac{4}{5}\\)).\n\t\t\t\\item \\textbf{Paso 3: Calcular el líquido devuelto.}\n\t\t\tSe devuelven \\(\\frac{2}{3}\\) de lo que se extrajo (\\(E = \\frac{1}{5}\\)).\n\t\t\tDevuelto = \\(\\frac{2}{3} \\cdot \\frac{1}{5} = \\frac{2}{15}\\).\n\t\t\t\\item \\textbf{Paso 4: Calcular el volumen final.}\n\t\t\tEl volumen final es lo que no se extrajo (\\(NE\\)) más lo que se devolvió:\n\t\t\t\\[ V_{\\text{final}} = NE + \\text{Devuelto} = \\frac{4}{5} + \\frac{2}{15} \\]\n\t\t\tComún denominador 15: \\(\\frac{12}{15} + \\frac{2}{15} = \\frac{14}{15}\\).\n\t\t\t\\item \\textbf{Paso 5: Calcular lo que falta.}\n\t\t\tEl recipiente está lleno a \\(\\frac{14}{15}\\). La fracción que falta para llenarlo es:\n\t\t\t\\[ 1 - \\frac{14}{15} = \\frac{1}{15} \\]\n\t\t\\end{itemize}",
+        "feedback_chars": 1405
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-*.tex",
+        "line": null
+      },
+      "stop": false,
+      "requires_verdict": false,
+      "headline": "1405 caracteres — por encima del p90 del subtema (1168)",
+      "before": null,
+      "after": null,
+      "unchanged": [],
+      "why": "La §6.3 no pone techo de longitud y ordena listar las que superan el p90 para que el operador las mire.",
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§6.3"
+      },
+      "satisfies": [
+        "QZ-C-FB-P90"
+      ],
+      "comparisons": [],
+      "evidence": [
+        "Listada, NO clasificada: el run nunca dijo si repite, divaga o explica lo que no se pregunto."
+      ]
+    },
+    {
+      "item_id": "P90-Dificil004",
+      "type": "info",
+      "section": "feedback_p90",
+      "subject": {
+        "id": "ARI-FA-Fracciones-Dificil-004",
+        "label": "Dificil-004",
+        "feedback": "Este es un problema de \"tasas de trabajo\". La tasa es la fracción del tanque que se llena (o vacía) en una hora.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Definir las tasas horarias.}\n\t\t\t\\begin{itemize}\n\t\t\t\t\\item Llave 1 (llena): \\(\\frac{1}{4}\\) del tanque por hora.\n\t\t\t\t\\item Llave 2 (llena): \\(\\frac{1}{6}\\) del tanque por hora.\n\t\t\t\t\\item Desagüe (vacía): \\(\\frac{1}{8}\\) del tanque por hora (esta tasa se resta).\n\t\t\t\\end{itemize}\n\t\t\t\\item \\textbf{Paso 2: Calcular la tasa combinada.}\n\t\t\tSumamos las tasas de llenado y restamos la de vaciado:\n\t\t\t\\[ \\text{Tasa} = \\frac{1}{4} + \\frac{1}{6} - \\frac{1}{8} \\]\n\t\t\tEl mínimo común múltiplo de 4, 6 y 8 es 24.\n\t\t\t\\[ \\text{Tasa} = \\frac{6}{24} + \\frac{4}{24} - \\frac{3}{24} = \\frac{6+4-3}{24} = \\frac{7}{24} \\]\n\t\t\tJuntos, llenan \\(\\frac{7}{24}\\) del tanque cada hora.\n\t\t\t\\item \\textbf{Paso 3: Calcular el tiempo total.}\n\t\t\tEl tiempo es el inverso de la tasa:\n\t\t\t\\[ \\text{Tiempo} = \\frac{1}{\\text{Tasa}} = \\frac{1}{\\frac{7}{24}} = \\frac{24}{7} \\text{ horas} \\]\n\t\t\t\\item \\textbf{Paso 4: Convertir a horas y minutos.}\n\t\t\tDividimos 24 entre 7: \\(24 \\div 7 = 3\\) con un residuo de 3.\n\t\t\tEsto es 3 horas completas y \\(\\frac{3}{7}\\) de una hora.\n\t\t\tConvertimos \\(\\frac{3}{7}\\) horas a minutos:\n\t\t\t\\[ \\frac{3}{7} \\cdot 60 = \\frac{180}{7} \\approx 25.71 \\text{ minutos} \\]\n\t\t\tEl valor más cercano es 3 horas y 26 minutos.\n\t\t\\end{itemize}",
+        "feedback_chars": 1372
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-*.tex",
+        "line": null
+      },
+      "stop": false,
+      "requires_verdict": false,
+      "headline": "1372 caracteres — por encima del p90 del subtema (1168)",
+      "before": null,
+      "after": null,
+      "unchanged": [],
+      "why": "La §6.3 no pone techo de longitud y ordena listar las que superan el p90 para que el operador las mire.",
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§6.3"
+      },
+      "satisfies": [
+        "QZ-C-FB-P90"
+      ],
+      "comparisons": [],
+      "evidence": [
+        "Listada, NO clasificada: el run nunca dijo si repite, divaga o explica lo que no se pregunto."
+      ]
+    },
+    {
+      "item_id": "P90-Dificil007",
+      "type": "info",
+      "section": "feedback_p90",
+      "subject": {
+        "id": "ARI-FA-Fracciones-Dificil-007",
+        "label": "Dificil-007",
+        "feedback": "Vamos a calcular la fracción del salario que le queda al final. Sea \\(S\\) el salario total.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Resto después del alquiler.}\n\t\t\tGasta \\(\\frac{1}{5}\\). Le queda \\(1 - \\frac{1}{5} = \\frac{4}{5}\\) de su salario.\n\t\t\t\\item \\textbf{Paso 2: Resto después de la comida.}\n\t\t\tGasta \\(\\frac{2}{7}\\) \\textit{del resto} (\\(\\frac{4}{5}S\\)).\n\t\t\tLa fracción gastada en comida (respecto al total) es \\(\\frac{2}{7} \\cdot \\frac{4}{5} = \\frac{8}{35}\\).\n\t\t\tEl resto después de la comida es \\(\\frac{4}{5} - \\frac{8}{35} = \\frac{28}{35} - \\frac{8}{35} = \\frac{20}{35} = \\frac{4}{7}\\) del salario total.\n\t\t\t\\item \\textbf{Paso 3: Resto después del transporte.}\n\t\t\tGasta \\(\\frac{1}{3}\\) \\textit{del nuevo resto} (\\(\\frac{4}{7}S\\)).\n\t\t\tLa fracción gastada en transporte (respecto al total) es \\(\\frac{1}{3} \\cdot \\frac{4}{7} = \\frac{4}{21}\\).\n\t\t\tEl resto final es \\(\\frac{4}{7} - \\frac{4}{21} = \\frac{12}{21} - \\frac{4}{21} = \\frac{8}{21}\\) del salario total.\n\t\t\t\\item \\textbf{Paso 4: Calcular el salario total.}\n\t\t\tEl resto final (\\(\\frac{8}{21}\\) del salario) equivale a \\$3,200.\n\t\t\t\\[ \\frac{8}{21}S = 3200 \\]\n\t\t\tDespejamos \\(S\\):\n\t\t\t\\[ S = 3200 \\cdot \\frac{21}{8} = (3200 \\div 8) \\cdot 21 = 400 \\cdot 21 = 8400 \\]\n\t\t\tEl salario es \\$8,400.\n\t\t\\end{itemize}",
+        "feedback_chars": 1270
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-*.tex",
+        "line": null
+      },
+      "stop": false,
+      "requires_verdict": false,
+      "headline": "1270 caracteres — por encima del p90 del subtema (1168)",
+      "before": null,
+      "after": null,
+      "unchanged": [],
+      "why": "La §6.3 no pone techo de longitud y ordena listar las que superan el p90 para que el operador las mire.",
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§6.3"
+      },
+      "satisfies": [
+        "QZ-C-FB-P90"
+      ],
+      "comparisons": [],
+      "evidence": [
+        "Listada, NO clasificada: el run nunca dijo si repite, divaga o explica lo que no se pregunto."
+      ]
+    },
+    {
+      "item_id": "P90-Medio039",
+      "type": "info",
+      "section": "feedback_p90",
+      "subject": {
+        "id": "ARI-FA-Fracciones-Medio-039",
+        "label": "Medio-039",
+        "feedback": "Calculamos el precio final como una fracción del precio original (\\(P\\)) para encontrar el descuento total.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Primer descuento.} El precio se reduce en \\( \\frac{1}{4} \\). El precio restante es \\( 1 - \\frac{1}{4} = \\frac{3}{4} \\) del original. Precio nuevo = \\( \\frac{3}{4} P \\).\n\t\t\t\\item \\textbf{Paso 2: Segundo descuento.} Se aplica un descuento de \\( \\frac{1}{5} \\) *sobre el nuevo precio* (\\( \\frac{3}{4} P \\)).\n\t\t\tEl descuento es: \\( \\frac{1}{5} \\times \\frac{3}{4} P = \\frac{3}{20} P \\).\n\t\t\t\\item \\textbf{Paso 3: Calcular el precio final.} Restamos el segundo descuento del precio nuevo:\n\t\t\t\\( \\frac{3}{4} P - \\frac{3}{20} P \\).\n\t\t\t\\item \\textbf{Paso 4: Restar las fracciones.} El común denominador es 20.\n\t\t\t\\( \\frac{15}{20} P - \\frac{3}{20} P = \\frac{12}{20} P \\).\n\t\t\t\\item \\textbf{Paso 5: Simplificar el precio final.} \\( \\frac{12}{20} P = \\frac{3}{5} P \\). El precio final es \\( \\frac{3}{5} \\) del original.\n\t\t\t\\item \\textbf{Paso 6: Calcular el descuento total.} Si el precio final es \\( \\frac{3}{5} P \\), el descuento total es la diferencia con el precio original: \\( P - \\frac{3}{5} P = \\frac{2}{5} P \\). La fracción de descuento total es \\( \\frac{2}{5} \\).\n\t\t\\end{itemize}",
+        "feedback_chars": 1224
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-*.tex",
+        "line": null
+      },
+      "stop": false,
+      "requires_verdict": false,
+      "headline": "1224 caracteres — por encima del p90 del subtema (1168)",
+      "before": null,
+      "after": null,
+      "unchanged": [],
+      "why": "La §6.3 no pone techo de longitud y ordena listar las que superan el p90 para que el operador las mire.",
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§6.3"
+      },
+      "satisfies": [
+        "QZ-C-FB-P90"
+      ],
+      "comparisons": [],
+      "evidence": [
+        "Listada, NO clasificada: el run nunca dijo si repite, divaga o explica lo que no se pregunto."
+      ]
+    },
+    {
+      "item_id": "P90-Dificil017",
+      "type": "info",
+      "section": "feedback_p90",
+      "subject": {
+        "id": "ARI-FA-Fracciones-Dificil-017",
+        "label": "Dificil-017",
+        "feedback": "Evaluamos cada término de la expresión por separado aplicando las leyes de los exponentes.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Evaluar \\(\\left(\\frac{2}{3}\\right)^{-2}\\).}\n\t\t\tEl exponente negativo invierte la base: \\(\\left(\\frac{3}{2}\\right)^{2}\\).\n\t\t\tElevamos al cuadrado: \\(\\frac{3^2}{2^2} = \\frac{9}{4}\\).\n\t\t\t\\item \\textbf{Paso 2: Evaluar \\(\\left(\\frac{1}{27}\\right)^{-\\frac{1}{3}}\\).}\n\t\t\tEl exponente negativo invierte la base: \\((27)^{\\frac{1}{3}}\\).\n\t\t\tEl exponente \\(\\frac{1}{3}\\) significa la raíz cúbica: \\(\\sqrt[3]{27} = 3\\).\n\t\t\t\\item \\textbf{Paso 3: Evaluar \\(\\left(\\frac{16}{25}\\right)^{\\frac{1}{2}}\\).}\n\t\t\tEl exponente \\(\\frac{1}{2}\\) significa la raíz cuadrada: \\(\\sqrt{\\frac{16}{25}} = \\frac{\\sqrt{16}}{\\sqrt{25}} = \\frac{4}{5}\\).\n\t\t\t\\item \\textbf{Paso 4: Sumar y restar los resultados.}\n\t\t\tLa expresión se convierte en:\n\t\t\t\\[ \\frac{9}{4} + 3 - \\frac{4}{5} \\]\n\t\t\tSumamos los primeros dos términos (común denominador 4): \\(\\frac{9}{4} + \\frac{12}{4} = \\frac{21}{4}\\).\n\t\t\tAhora restamos \\(\\frac{4}{5}\\):\n\t\t\t\\[ \\frac{21}{4} - \\frac{4}{5} \\]\n\t\t\tEl común denominador de 4 y 5 es 20:\n\t\t\t\\[ \\frac{21 \\cdot 5}{20} - \\frac{4 \\cdot 4}{20} = \\frac{105}{20} - \\frac{16}{20} = \\frac{89}{20} \\]\n\t\t\\end{itemize}",
+        "feedback_chars": 1217
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-*.tex",
+        "line": null
+      },
+      "stop": false,
+      "requires_verdict": false,
+      "headline": "1217 caracteres — por encima del p90 del subtema (1168)",
+      "before": null,
+      "after": null,
+      "unchanged": [],
+      "why": "La §6.3 no pone techo de longitud y ordena listar las que superan el p90 para que el operador las mire.",
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§6.3"
+      },
+      "satisfies": [
+        "QZ-C-FB-P90"
+      ],
+      "comparisons": [],
+      "evidence": [
+        "Listada, NO clasificada: el run nunca dijo si repite, divaga o explica lo que no se pregunto."
+      ]
+    },
+    {
+      "item_id": "P90-Dificil020",
+      "type": "info",
+      "section": "feedback_p90",
+      "subject": {
+        "id": "ARI-FA-Fracciones-Dificil-020",
+        "label": "Dificil-020",
+        "feedback": "Podemos calcular el cambio multiplicando los factores de ganancia o pérdida. Sea \\(V = 1\\) el valor inicial.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Valor después del Año 1 (Ganancia de \\(\\frac{1}{5}\\)).}\n\t\t\tEl valor se multiplica por \\(1 + \\frac{1}{5} = \\frac{6}{5}\\).\n\t\t\tValor = \\(1 \\cdot \\frac{6}{5} = \\frac{6}{5}\\).\n\t\t\t\\item \\textbf{Paso 2: Valor después del Año 2 (Pérdida de \\(\\frac{1}{4}\\)).}\n\t\t\tEl valor \\textit{actual} (\\(\\frac{6}{5}\\)) se multiplica por el factor de pérdida \\(1 - \\frac{1}{4} = \\frac{3}{4}\\).\n\t\t\tValor = \\(\\frac{6}{5} \\cdot \\frac{3}{4} = \\frac{18}{20} = \\frac{9}{10}\\).\n\t\t\t\\item \\textbf{Paso 3: Valor después del Año 3 (Ganancia de \\(\\frac{1}{3}\\)).}\n\t\t\tEl valor \\textit{actual} (\\(\\frac{9}{10}\\)) se multiplica por el factor de ganancia \\(1 + \\frac{1}{3} = \\frac{4}{3}\\).\n\t\t\tValor Final = \\(\\frac{9}{10} \\cdot \\frac{4}{3} = \\frac{36}{30} = \\frac{6}{5}\\).\n\t\t\t\\item \\textbf{Paso 4: Calcular la ganancia neta.}\n\t\t\tComparamos el valor final (\\(\\frac{6}{5}\\)) con el valor inicial (1).\n\t\t\tGanancia Neta = Valor Final - Valor Inicial\n\t\t\t\\[ \\frac{6}{5} - 1 = \\frac{6}{5} - \\frac{5}{5} = \\frac{1}{5} \\]\n\t\t\tHubo una ganancia neta de \\(\\frac{1}{5}\\) del valor original.\n\t\t\\end{itemize}",
+        "feedback_chars": 1206
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-*.tex",
+        "line": null
+      },
+      "stop": false,
+      "requires_verdict": false,
+      "headline": "1206 caracteres — por encima del p90 del subtema (1168)",
+      "before": null,
+      "after": null,
+      "unchanged": [],
+      "why": "La §6.3 no pone techo de longitud y ordena listar las que superan el p90 para que el operador las mire.",
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§6.3"
+      },
+      "satisfies": [
+        "QZ-C-FB-P90"
+      ],
+      "comparisons": [],
+      "evidence": [
+        "Listada, NO clasificada: el run nunca dijo si repite, divaga o explica lo que no se pregunto."
+      ]
+    },
+    {
+      "item_id": "P90-Medio023",
+      "type": "info",
+      "section": "feedback_p90",
+      "subject": {
+        "id": "ARI-FA-Fracciones-Medio-023",
+        "label": "Medio-023",
+        "feedback": "Este es un problema de trabajo combinado. Sumamos las \"velocidades\" (fracción de pared por hora) de Juan y Pedro.\n\t\t\\begin{itemize}\n\t\t\t\\item \\textbf{Paso 1: Calcular la velocidad de Juan.} Tarda 6 horas, su velocidad es \\(\\frac{1}{6}\\) de pared por hora.\n\t\t\t\\item \\textbf{Paso 2: Calcular la velocidad de Pedro.} Tarda 4 horas, su velocidad es \\(\\frac{1}{4}\\) de pared por hora.\n\t\t\t\\item \\textbf{Paso 3: Calcular la velocidad combinada.} Se suman sus velocidades. El denominador común es 12.\n\t\t\t\\[ \\text{Velocidad combinada} = \\frac{1}{6} + \\frac{1}{4} = \\frac{2}{12} + \\frac{3}{12} = \\frac{5}{12} \\]\n\t\t\tJuntos pintan \\(\\frac{5}{12}\\) de la pared por hora.\n\t\t\t\\item \\textbf{Paso 4: Calcular el tiempo total.} El tiempo es el recíproco de la velocidad combinada.\n\t\t\t\\[ \\text{Tiempo} = \\frac{1}{\\frac{5}{12}} = \\frac{12}{5} \\text{ horas} \\]\n\t\t\t\\item \\textbf{Paso 5: Convertir a horas y minutos.}\n\t\t\t\\[ \\frac{12}{5} = 2 \\frac{2}{5} \\text{ horas} \\]\n\t\t\tPara convertir \\(\\frac{2}{5}\\) de hora a minutos, multiplicamos por 60.\n\t\t\t\\[ \\frac{2}{5} \\times 60 \\text{ min} = \\frac{120}{5} \\text{ min} = 24 \\text{ minutos} \\]\n\t\t\tEl tiempo total es 2 horas y 24 minutos.\n\t\t\\end{itemize}",
+        "feedback_chars": 1172
+      },
+      "location": {
+        "path": "…/1.3.ARI-FA-Fracciones-*.tex",
+        "line": null
+      },
+      "stop": false,
+      "requires_verdict": false,
+      "headline": "1172 caracteres — por encima del p90 del subtema (1168)",
+      "before": null,
+      "after": null,
+      "unchanged": [],
+      "why": "La §6.3 no pone techo de longitud y ordena listar las que superan el p90 para que el operador las mire.",
+      "authority": {
+        "source": "docs/RUBRICA-DE-NIVELES.md",
+        "section": "§6.3"
+      },
+      "satisfies": [
+        "QZ-C-FB-P90"
+      ],
+      "comparisons": [],
+      "evidence": [
+        "Listada, NO clasificada: el run nunca dijo si repite, divaga o explica lo que no se pregunto."
+      ]
     }
   ],
-
   "blind_spots": [
     {
       "what": "Que los tres ficheros del subtema COMPILEN, y que el PDF resultante se vea bien",
       "why_not": "Los tres \\input están comentados en Matematicas.tex (líneas 69-71) y el run de O2.P3 —la verificación por compilación— no existe todavía en el roadmap",
       "who_could": "El run de O2 «A green or a red exists», cuando se cree",
-      "affects": ["ARI-FA-Fracciones-Facil-020", "ARI-FA-Fracciones-Dificil-021"]
+      "affects": [
+        "ARI-FA-Fracciones-Facil-020",
+        "ARI-FA-Fracciones-Dificil-021"
+      ]
     },
     {
       "what": "La cifra «88 de 90» que cita la §6.4 de la rúbrica",
       "why_not": "No es reproducible: el taller obtuvo 1 en lectura estricta y 5 en amplia, porque la §6.4 nunca define qué cuenta como explicar una distractora",
       "who_could": "La rúbrica v3, al definir el criterio",
-      "affects": ["I1"]
+      "affects": [
+        "I1",
+        "QZ-C-DISTR"
+      ]
+    },
+    {
+      "what": "Si las 9 retroalimentaciones por encima del p90 repiten, divagan o explican lo que no se pregunto",
+      "why_not": "La §6.3 exige decir cual de las tres es, y el run nunca hizo esa clasificacion. La cabina puede medir la longitud, no juzgar el contenido.",
+      "who_could": "El run que rehaga esta revision con el perfil delante",
+      "affects": [
+        "P90-Dificil018",
+        "P90-Dificil009",
+        "P90-Dificil013",
+        "P90-Dificil004",
+        "P90-Dificil007",
+        "P90-Medio039",
+        "P90-Dificil017",
+        "P90-Dificil020",
+        "P90-Medio023"
+      ]
+    },
+    {
+      "what": "Los cinco requisitos de la §6.3 sobre CADA retroalimentacion del subtema (explica el porque, cita la evidencia, es amable, no depende de la posicion, no contradice a la clave)",
+      "why_not": "El run no reporto haberlos comprobado y el reporte no traia las retroalimentaciones. Ahora se muestran las de los 8 sujetos, pero eso es 8 de 90.",
+      "who_could": "Un run de revision con el perfil QZ-C-FB-* delante",
+      "affects": [
+        "QZ-C-FB-WHY",
+        "QZ-C-FB-EVIDENCE",
+        "QZ-C-FB-KIND",
+        "QZ-C-FB-NOPOS",
+        "QZ-C-FB-CONSISTENT"
+      ]
+    },
+    {
+      "what": "Los tres criterios de conservacion que no se dispararon",
+      "why_not": "Cero bajas y cero huecos (counts_note): no hubo reemplazo que juzgar (COUNT-QUALITY) ni baja sin reemplazo (COUNT-REPLACE), y el criterio de nivel SI resulto aplicable —se reclasificaron R1 y R2—, asi que la clausula provisional (COUNT-PROVISIONAL) nunca entro.",
+      "who_could": "Un run del subtema donde alguna si se dispare",
+      "affects": [
+        "QZ-C-COUNT-REPLACE",
+        "QZ-C-COUNT-QUALITY",
+        "QZ-C-COUNT-PROVISIONAL"
+      ]
+    },
+    {
+      "what": "Las dimensiones 3, 4 y 5 del juicio de nivel",
+      "why_not": "La rubrica exige citar la dimension que MUEVE un veredicto; las dos reclasificaciones se movieron por pasos y conceptos (DIM-STEPS, DIM-CONCEPTS). Estas tres no movieron ninguno y por eso no se citan.",
+      "who_could": "Una revision donde una de las tres decida una reclasificacion",
+      "affects": [
+        "QZ-C-DIM-FORMULA",
+        "QZ-C-DIM-DISTANCE",
+        "QZ-C-DIM-ARITH"
+      ]
+    },
+    {
+      "what": "Las cuatro restricciones duras de la §4 que el run nunca reporto haber comprobado",
+      "why_not": "El run no declaro haberlas revisado en las 90 preguntas y el reporte no trae evidencia de ninguna. La cabina NO puede suplirlo: comprobar que ninguna exige calculadora, que toda clave es correcta, que toda opcion es un valor valido y que la exactitud se respeta es juicio sobre las 90, y es del ejecutor. La lectura dura (D-067) obliga a decirlo en voz alta en vez de dejarlo en silencio.",
+      "who_could": "Un run de revision del subtema con el perfil delante",
+      "affects": [
+        "QZ-C-HARD-NOCALC",
+        "QZ-C-HARD-KEYTRUE",
+        "QZ-C-HARD-VALIDOPT",
+        "QZ-C-HARD-EXACT"
+      ]
     }
   ],
-
   "self_decisions": [
     {
       "decision_id": "D1",
@@ -250,7 +972,18 @@
       "why": "La §4 de la rúbrica no lo contempla. Con él se encontraron 3 de las 5 correcciones: Facil-012, Facil-013 y Facil-018.",
       "scope_if_accepted": "Entra en la rúbrica v3 y se aplica a los 39 runs restantes. Es trivial de mecanizar: es el chequeo de mayor rendimiento que falta.",
       "scope_if_rejected": "Hay que retirarlo antes de que se aplique 39 veces, y las tres correcciones que produjo se revierten.",
-      "options": ["Se adopta", "Se descarta", "Con matiz"]
+      "options": [
+        "Se adopta",
+        "Se descarta",
+        "Con matiz"
+      ],
+      "verdict_disposition_options": [
+        "this_run",
+        "new_run",
+        "operator_fixed",
+        "discard"
+      ],
+      "requires_verdict": true
     },
     {
       "decision_id": "D2",
@@ -258,9 +991,69 @@
       "why": "La rúbrica no dice qué hacer con el código al reclasificar. El taller la inventó y ya está aplicada: Dificil-001 y Medio-033 no existen (verificado, 0 apariciones).",
       "scope_if_accepted": "Precio: dentro de un año un subtema muy revisado tendrá agujeros visibles en la numeración. Ganancia: cualquier referencia externa a un código —la hoja de un alumno, un reporte, un enlace— apunta a la misma pregunta para siempre.",
       "scope_if_rejected": "Habría que renumerar denso y aceptar que un código cambie de dueño.",
-      "options": ["Se adopta", "Renumerar denso", "Otra"]
+      "options": [
+        "Se adopta",
+        "Renumerar denso",
+        "Otra"
+      ],
+      "verdict_disposition_options": [
+        "this_run",
+        "new_run",
+        "operator_fixed",
+        "discard"
+      ],
+      "requires_verdict": true
     }
   ],
-
-  "alternatives": []
+  "alternatives": [],
+  "profile": "cantu-quizzes-latex/PERFIL-REPORTE-QUIZZES-v1",
+  "profile_source": "docs/RUBRICA-DE-NIVELES.md",
+  "profile_source_version": "v2",
+  "profile_data": {
+    "anchor_size": 40,
+    "anchor_size_note": "20 preguntas en el Examen Diagnostico + 20 en el Simulador, del mismo subtema",
+    "anchor_code_errata": [],
+    "position_refs_fixed": 1,
+    "position_refs_fixed_note": "la unica referencia por letra del subtema, corregida en el commit cae3050 — corregida por el commit cae3050, ANTERIOR a este run, por eso se cita en header_satisfies y no tiene item propio.",
+    "feedback_p90_chars": 1168,
+    "feedback_stats": {
+      "n": 90,
+      "min": 454,
+      "median": 865,
+      "p75": 1031,
+      "p90": 1168,
+      "max": 1512
+    },
+    "distractor_explained": {
+      "count": null,
+      "total": 90,
+      "criterio_usado": "NO DEFINIDO — la §6.4 de la rubrica no dice que cuenta como explicar una distractora; el taller obtuvo 1 en lectura estricta y 5 en amplia. La cifra «88 de 90» de la rubrica NO es reproducible."
+    },
+    "ticket_figure_mismatches": []
+  },
+  "header_satisfies": [
+    {
+      "where": "counts",
+      "satisfies": [
+        "QZ-C-COUNT-DECLARE"
+      ]
+    },
+    {
+      "where": "counts_note",
+      "satisfies": [
+        "QZ-C-HARD-MULTI"
+      ]
+    },
+    {
+      "where": "profile_data.position_refs_fixed",
+      "satisfies": [
+        "QZ-C-POS"
+      ]
+    }
+  ],
+  "summary": {
+    "exercised": "Se leyeron los tres ficheros del subtema (629+1289+701 lineas, 90 preguntas) y se extrajeron las 90 retroalimentaciones para derivar el p90. El antes/despues de los 7 cambios se derivo del commit 5fb98c4. El ancla de 40 preguntas se conto en el Diagnostico y el Simulador. NO se compilo nada: los tres \\input estan comentados (ver verification_reason y el punto ciego correspondiente).",
+    "criteria": "Del perfil se ejercieron el ancla y el nivel (QZ-C-ANCHOR, DIM-STEPS, DIM-CONCEPTS, LEVEL-INFLATED, LEVEL-DEFLATED, COUNT-MOVE, COUNT-DECLARE), dos duros (HARD-ONEKEY, HARD-DEFENSIBLE), la redaccion (WORD), la posicion (POS) y el p90 (FB-P90). El ejecutor ADOPTO un criterio que el perfil no tenia —«dos opciones con el mismo valor»— y va sin id, en self_decisions D1, pendiente de ratificacion. QZ-C-DISTR se declara IRREPRODUCIBLE por construccion: la §6.4 no define que cuenta como explicar una distractora.",
+    "outcome": "Dos reclasificaciones sin bajas (R1, R2), cinco correcciones (C1-C5, la mayor C3 que tenia tres respuestas correctas), un hueco declarado y no reparado (H1), y una observacion de subtema (I1). Recuentos 25/45/20 intactos. Nueve retroalimentaciones por encima del p90 listadas y NO clasificadas (P90-*)."
+  }
 }

@@ -892,8 +892,9 @@
               "title": "The signed verdict becomes visible: read back on open, confirmed before it is overwritten, and the step that blocks you reachable",
               "summary": "A verdict that exists on disk is invisible in the console, signing again overwrites it in silence, and the recap says one step blocks the run without saying which. The three came out of the operator using the surface, not out of a suite.",
               "full_description": "WHY IT EXISTS: the write route landed and the operator signed a real verdict twice. Both writes succeeded and the second silently replaced the first, because NOTHING READS verdict.json BACK. The form is born empty on reopen, the typed verdicts live only in the tab's memory, and the chip that says whether a verdict is filed is a snapshot taken when .project/ was last emitted, so a signed report can look unsigned three ways at once. THREE THINGS, AND THE MIDDLE ONE IS A PROMISE, NOT A FEATURE. FIRST, read the existing verdict when the report opens, and do not lose what is typed when the page reloads. SECOND, D-066: signing over an existing verdict is never a direct write. It warns, it summarises what changes against the previous verdict, and it waits for explicit confirmation; when nothing changes it says so with those words, because a warning that only appears when something differs teaches the operator to click without reading. The summary is DERIVED by comparing the two files and nobody writes it. THIRD, the recap is legible and its blockers are reachable: the rows print the same denominator and read like separate totals, and neither the guard nor the recap names anyone, so knowing one step is owed means hunting it among twenty-one cards. The operator asked for a collapsible list, closed by default. The cabin adds, and this is the cabin's and not the operator's: a list solves knowing which one and does not solve reaching it. WHAT IT DOES NOT DO: it does not close runs, it does not validate a report against its contract, and it does not touch the write route's guards, which QA exercised and which held.",
-              "status": "active",
-              "depends_on": []
+              "status": "completed",
+              "depends_on": [],
+              "closeout_result": "done"
             },
             {
               "run_id": "RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001",

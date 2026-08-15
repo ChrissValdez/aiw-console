@@ -1,27 +1,49 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-14T07:07:48.420Z",
+  "generated_at": "2026-08-15T04:55:41.917Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-14T07:01:42.057Z"
+      "mtime": "2026-08-14T07:46:02.055Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-14T07:07:48.402Z"
+      "mtime": "2026-08-15T04:55:41.876Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "e0cff369d5261eb2c19e9a7d191e7e95401027de",
+  "head": "8c41ed345eaeeaf512ff6e7d337ab31827c20363",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 234,
+  "commit_total": 236,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "8c41ed3",
+      "full_sha": "8c41ed345eaeeaf512ff6e7d337ab31827c20363",
+      "date": "2026-08-14T01:46:01-06:00",
+      "parents": "b8a8158",
+      "subject": "#58 RUN-CONSOLE-VERDICT-SURFACE-001: el veredicto firmado se vuelve visible. Lee verdict.json como DATO que llega de quien sabe donde vive, lo hidrata en el formulario y lo nombra en la topbar y en la tarjeta del run; un fichero que no parsea se trata como ausencia y el reporte abre igual. El borrador vive en localStorage con clave por run_id y se limpia tras una escritura correcta, por el mecanismo que la consola ya tenia y sin inventar ninguno. D-066 implementada: el primer pulsado sobre un veredicto existente no escribe nada, avisa con un resumen DERIVADO de comparar los dos ficheros, y cuando no cambia nada tambien avisa diciendo que se sobrescribe con los mismos datos; cambiar algo con el panel abierto lo retira. El denominador NO cambia y se dice una vez con su razon, las filas dejan de imprimirlo, y la guarda y el recuento pasan a NOMBRAR a sus bloqueadores en un desplegable cerrado por defecto donde cada entrada salta a su paso. serve.mjs sin tocar: las guardas de la ruta de escritura quedan intactas. 22 pruebas nuevas. Suite medida por el taller: 695 antes, 717 despues, 0 fallos",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-VERDICT-SURFACE-001"
+    },
+    {
+      "branch": "main",
+      "sha": "b8a8158",
+      "full_sha": "b8a8158d905e777185a6756ed2874bb00ae764a9",
+      "date": "2026-08-14T01:08:26-06:00",
+      "parents": "e0cff36",
+      "subject": "inserta y abre el #58 RUN-CONSOLE-VERDICT-SURFACE-001, active: el veredicto firmado se vuelve visible. Lleva las tres cosas que la QA del #57 encontro usando la superficie: leer el verdict.json existente al abrir sin perder el borrador al recargar, la politica D-066 de avisar y resumir lo que cambia antes de sobrescribir incluido cuando no cambia nada, y el recuento legible con sus bloqueadores alcanzables. El id nombra la SUPERFICIE y no un verbo, porque el del run anterior describia su alcance y por eso no se pudo estirar. Entra en 58 y los siete planificados se corren uno: verificacion campo a campo contra el respaldo devuelve un run nuevo, siete queue_order desplazados exactamente como publico el remap del dry-run, y ningun otro campo tocado. 65 runs, densidad 1..65, ids unicos, checkInvariants 0",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-VERDICT-SURFACE-001"
+    },
     {
       "branch": "main",
       "sha": "e0cff36",

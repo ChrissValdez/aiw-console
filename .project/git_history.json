@@ -1,27 +1,69 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-15T05:04:46.517Z",
+  "generated_at": "2026-08-15T06:51:54.273Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-15T04:57:24.802Z"
+      "mtime": "2026-08-15T06:51:32.242Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-15T05:04:46.478Z"
+      "mtime": "2026-08-15T06:51:54.243Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "6346a08734d90513c91adf6ad7def729d8a875a5",
+  "head": "4fce973156d25958afd92b7cbfb83701a38593ca",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 237,
+  "commit_total": 241,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "4fce973",
+      "full_sha": "4fce973156d25958afd92b7cbfb83701a38593ca",
+      "date": "2026-08-15T00:51:32-06:00",
+      "parents": "e63e697",
+      "subject": "#59: funde la D-067 en el documento del sobre y vuelve a medir el estreno. El 6 deja de ser seccion abierta y conserva el encuadre de las cuatro situaciones que el operador leyo antes de decidir. La extension de satisfies queda como bloque propio header_satisfies con where obligatorio y NO anidada en counts, porque la vista pinta cada clave de counts como un nivel y anidarla habria pintado un nivel fantasma. Aparecio una QUINTA situacion, QZ-C-COUNT-MOVE, cumplida por items que existen y no la citan, que la extension a la cabecera no alcanza y que la regla 2 de la D-067 ya resuelve sin reabrirla; va fuera de la tabla de las cuatro. Tres contradicciones a la cabina verificadas contra disco y las tres las gana el disco: el renderizador no lee satisfies ni profile_data y por tanto la cobertura NO se pinta hoy de ninguna forma, satisfies no puede anidarse en counts, y QZ-C-DISTR se contaba cumplido cuando el unico item que lo cita es aquel cuya cifra el propio reporte declara irreproducible, asi que la cifra honesta es 9 y no 10. Re-medicion: los 14 en silencio caen a 0, salen del silencio por cita de cabecera exactamente tres, y la casilla de no aplicable tiene cero ocupantes porque los cinco declarados dicen que no se comprobaron",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e63e697",
+      "full_sha": "e63e6973c76a160aa4f16e9a95002dc4f9b237c0",
+      "date": "2026-08-15T00:27:59-06:00",
+      "parents": "20a8f6d",
+      "subject": "D-067: la cobertura se lee dura. El silencio significa no revisado, quien reviso y encontro limpio lo declara, y satisfies puede colgar tambien de la cabecera donde vive la evidencia, que es la extension que la hace barata sin crear un segundo sitio donde afirmar cobertura. No aplica y no disparado se declaran con la forma del punto ciego, ya medida. Se descartan las otras dos por su consecuencia: sin declarar institucionaliza la ausencia sin motivo que la D-065 prohibe, y la declaracion en estructura propia crea dos fuentes para el mismo numero, que es como nacio el 88 de 90 que resulto ser 1 o 5. Coste declarado: al principio los reportes honestos pareceran peores. La procedencia se marca con precision: la formulacion es de la cabina y el operador la aprobo, no se le atribuyen palabras que no dijo. Descongela el 6 del documento del sobre, que se enmienda y cuyo estreno hay que volver a medir bajo la regla nueva",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "20a8f6d",
+      "full_sha": "20a8f6da2869a55dd308616657c222ec3d934ac3",
+      "date": "2026-08-15T00:18:23-06:00",
+      "parents": "b9b6e3f",
+      "subject": "#59 RUN-CONSOLE-REPORT-ENVELOPE-CONTRACT-001: el documento del sobre, 567 lineas, estrenado contra el reporte real del piloto de fracciones. Fija quien obliga a quien, donde viven los ficheros y como los descubre la consola, lo que la consola PROMETE pintar, las tres capas del resumen de la D-065, y los criterios via perfil y satisfies. La ausencia justificada reutiliza la forma del punto ciego en vez de inventar otra, medido que sirve. El estreno declara que en el piloto habria quedado vacio el bloque summary entero, con el mismo motivo que ya declara pilot_deviation. La parada que el ticket predijo se disparo y el 6 queda SIN CONGELAR: la semantica de la cobertura es decision del operador, con el encuadre medido de que los 14 criterios silenciosos no son una cosa sino cuatro. Dos hallazgos para enviar al emisor y no imponerle: los nueve items P90 declaran feedback_chars entre 1172 y 1512 con subject.feedback VACIO, que es la ausencia sin motivo que la D-065 prohibe, y QZ-R-06 a medias. Sin tocar renderizador ni el repo del emisor",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORT-ENVELOPE-CONTRACT-001"
+    },
+    {
+      "branch": "main",
+      "sha": "b9b6e3f",
+      "full_sha": "b9b6e3f8977097a1a4a38a085eca2524554e892e",
+      "date": "2026-08-14T23:05:25-06:00",
+      "parents": "6346a08",
+      "subject": "inserta y abre el #59 RUN-CONSOLE-REPORT-ENVELOPE-CONTRACT-001, active: el documento del sobre, que se debia a los proyectos que emiten reportes desde que se construyo la superficie y cuya condicion ya se cumplio, ahora ampliado con la D-065. Fija que el resumen es del emisor, que su presencia es obligatoria y su ausencia tiene que declarar motivo, que lo derivable se deriva y nadie lo escribe, y que un criterio reutilizable no es un enunciado con id sino un id mas un chequeo tan concreto que dos ejecutores saquen el mismo numero. Produce un DOCUMENTO y no toca el renderizador: el contrato va antes que la interfaz porque es caro y dificil de deshacer. Medido antes de abrirlo: CONTRATO.md es el contrato de la carpeta .project y no del reporte, asi que el documento del sobre no existe. Entra en 59 y los siete planificados se corren uno, exactamente como publico el remap; 66 runs, densidad 1..66, ids unicos, checkInvariants 0",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORT-ENVELOPE-CONTRACT-001"
+    },
     {
       "branch": "main",
       "sha": "6346a08",

@@ -1,27 +1,38 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-15T04:55:41.917Z",
+  "generated_at": "2026-08-15T05:04:46.517Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-14T07:46:02.055Z"
+      "mtime": "2026-08-15T04:57:24.802Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-15T04:55:41.876Z"
+      "mtime": "2026-08-15T05:04:46.478Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "8c41ed345eaeeaf512ff6e7d337ab31827c20363",
+  "head": "6346a08734d90513c91adf6ad7def729d8a875a5",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 236,
+  "commit_total": 237,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "6346a08",
+      "full_sha": "6346a08734d90513c91adf6ad7def729d8a875a5",
+      "date": "2026-08-14T22:57:24-06:00",
+      "parents": "8c41ed3",
+      "subject": "cierra el #58 RUN-CONSOLE-VERDICT-SURFACE-001 como done: la QA paso los seis pasos y el operador sobrescribio dos veces leyendo el resumen antes de confirmar, asi que la escritura silenciosa que motivo el run ya no puede ocurrir. Y el record lleva la advertencia que pesa mas que el cierre: el APPROVED que hay en el verdict.json de cantu-quizzes-latex NO es el veredicto del operador, lo puso para probar la herramienta, y por tanto D1 NO esta ratificada aunque el fichero lo diga, siendo que su alcance declarado es entrar en la rubrica v3 y aplicarse a los 39 runs restantes. El operador espera el resumen de la D-065 y los criterios de la revision anexados antes de emitir su juicio real, y declara ese piloto como el piloto de todos los que siguen. Medido: el fichero NO quedo todo approved como el lo recordaba, C4 esta en CHANGES_REQUIRED con disposicion operator_fixed, gana el disco, y esa discrepancia prueba la guarda del #54 sobre un caso que nadie construyo para probarla",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-VERDICT-SURFACE-001"
+    },
     {
       "branch": "main",
       "sha": "8c41ed3",

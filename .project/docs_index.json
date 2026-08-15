@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-15T04:55:41.917Z",
+  "generated_at": "2026-08-15T05:04:46.517Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -715,6 +715,10 @@
     {
       "path": "context/aiw-console/records/SUPERFICIE-DE-REPORTES-EN-LA-CONSOLA.md",
       "mtime": "2026-08-10T22:11:44.983Z"
+    },
+    {
+      "path": "context/aiw-console/records/SUPERFICIE-DEL-VEREDICTO-CIERRE-Y-EL-APPROVED-QUE-NO-ES-REAL.md",
+      "mtime": "2026-08-15T04:56:35.915Z"
     },
     {
       "path": "context/aiw-console/records/TINTA-CONTRASTADA-SOBRE-ACENTO-CANTU.md",
@@ -2284,6 +2288,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-10T22:11:44.983Z"
+    },
+    {
+      "title": "`#58` `RUN-CONSOLE-VERDICT-SURFACE-001` — cierre, y la advertencia que va con él",
+      "path": "context/aiw-console/records/SUPERFICIE-DEL-VEREDICTO-CIERRE-Y-EL-APPROVED-QUE-NO-ES-REAL.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-15T04:56:35.915Z"
     },
     {
       "title": "Tinta contrastada sobre el acento del autor — `accentText`",

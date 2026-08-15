@@ -2814,3 +2814,69 @@ piloto cambia de significado aunque no cambie de número.
 
 Criterio de borrado: la sustituye una decisión que admita cobertura por sobreentendido, que
 permita afirmar cobertura desde dos sitios, o que retire el perfil y `satisfies`.
+
+## D-068 — 2026-08-15 — El perfil se declara ANTES de ejecutar, la versión se fija al ABRIR el run, y lo irreproducible por construcción lo declara el PERFIL y no cada reporte
+
+**Procedencia.** La formulación es **de la cabina**; el operador la aprobó tras el encuadre,
+y **la primera decisión se corrigió antes de registrarla** porque la cabina le había dado un
+coste falso —«barata, la escribo yo»— cuando en realidad tocaba el motor. El operador
+aprobó la versión corregida. El origen es suyo y está en sus palabras:
+
+> «en el run se define el scope y los criterios, solo que agregamos que para criterios
+> repetitivos podiamos tener un adjunto … Y ahi lo creamos una vez y cada run referencia
+> "criterios de aceptacion y de revision en file source" … pero cuando viene el reporte pone
+> ese file source que uso como referencia y aparte, un summary de lo que hizo, que reviso»
+
+**Casi todo eso ya estaba construido** —el perfil es reutilizable, versionado, opcional con
+motivo, con ids estables y `satisfies` por ítem— y consta así en el §5 del documento del
+sobre. Lo que sigue es lo que **no** estaba.
+
+### 1 · El perfil se declara en el RUN, no sólo en el reporte
+
+**El problema medido:** hoy `profile` se declara **únicamente en el reporte**, es decir,
+**lo elige quien ejecuta, después de ejecutar.** Eso rompe la separación adversaria: *quien
+mide para juzgar no puede ser quien escribió la expectativa*. Si el ejecutor elige contra
+qué se le mide, la cobertura deja de ser una promesa y pasa a describir lo que le apeteció
+mirar.
+
+**La forma adoptada, y es la BARATA a propósito:** el run declara su perfil **dentro de
+`full_description`, con una forma fija**, y el ticket obliga al taller a repetirlo y a
+**parar si no coincide** con lo que el run dice.
+
+**Por qué no una clave estructural, hoy:** `CONTRATO.md` fija 9 claves de run más dos
+reservadas y dos opcionales —**11 admitidas**— y **el disco tiene 15**, porque la
+clasificación ya añadió seis por una op sancionada. Añadir `profile` no es imposible ni sin
+precedente, pero **exige una op nueva en el motor, admisión en el contrato y enmienda de la
+tabla**: es un run, no un trazo de pluma. Y los runs que necesitan declararlo **no son los
+de este repo**: las revisiones de quiz viven en el canónico del emisor.
+
+**Cuándo se promueve a clave estructural:** **cuando alguien pueda enseñar que la forma en
+texto falló.** No antes. Mismo criterio que se aplica para no abrir capacidades del motor
+sólo porque existan.
+
+### 2 · La versión del perfil se fija cuando el run se ABRE
+
+Ni al planificarlo ni al escribir el reporte. **Es el único de los tres momentos que es
+determinista:** al planificar puede faltar mucho tiempo, y al escribir el reporte vuelve a
+decidir el ejecutor. Fijarla al abrir hace que **dos runs abiertos el mismo día sean
+comparables**, y deja constancia de por qué uno midió distinto que otro.
+
+**Va a hacer falta pronto:** `D1` del piloto es exactamente lo que dispara la v3 de la
+rúbrica, y hay runs planificados bajo la v2.
+
+### 3 · Lo irreproducible POR CONSTRUCCIÓN lo declara el perfil
+
+Hoy un criterio irreproducible **se vuelve a declarar en cada reporte**. El piloto tuvo que
+declarar dos veces que la §6.4 de la rúbrica no define qué cuenta como explicar una
+distractora — **y las 39 revisiones siguientes tendrían que declararlo otra vez cada una.**
+
+- **Por construcción** —el criterio no define su chequeo— **lo declara el PERFIL, una vez.**
+- **Por circunstancia** —«esta vez no pude medirlo»— lo declara el reporte, como hasta ahora.
+
+**Por qué rinde:** un criterio roto declarado en el perfil **es visible al planificar y le
+pone precio a arreglarlo**; declarado 39 veces en 39 reportes es ruido que todo el mundo
+aprende a saltarse. **Y como el perfil es del emisor, esto es una PETICIÓN, no una
+imposición.**
+
+Criterio de borrado: la sustituye una decisión que devuelva la elección del perfil al
+ejecutor, que fije la versión en otro momento, o que retire el perfil como mecanismo.

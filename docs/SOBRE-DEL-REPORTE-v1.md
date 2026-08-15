@@ -648,8 +648,20 @@ Ninguna otra clave del sobre habría quedado ausente sin motivo declarable.
 abierta (§6) que era del operador y dos hallazgos (§8.3.3, §8.3.4) que se envían al emisor,
 no se le imponen. **Veredicto al 2026-08-15: la sección abierta está cerrada (D-067) y
 re-medida (§8.4); los dos hallazgos siguen en pie y afinados.** Un contrato que no se
-estrena no se congela; éste queda estrenado, enmendado y re-medido, y **no se congela hasta
-la aprobación del operador** — que es ya la única condición que le falta.
+estrena no se congela; éste queda estrenado, enmendado y re-medido.
+
+**CONGELADO el 2026-08-15.** El operador aprobó el reparto del §0 —la única parte del
+documento que no se deducía de una decisión que él ya hubiera tomado— tras leerlo con su
+tabla delante. Las demás partes normativas son suyas por origen: la D-065 (el resumen del
+emisor y la ausencia que declara su motivo), la D-066 (sobrescribir avisa y resume), la
+D-067 (la cobertura se lee dura) y la D-068 (el perfil se declara antes de ejecutar, la
+versión se fija al abrir, y lo irreproducible por construcción lo declara el perfil).
+
+**Qué significa congelado, y qué no.** El sobre y la promesa de pintura de este documento
+dejan de moverse salvo por decisión numerada; **v1 es la versión con la que los emisores lo
+adoptan**. Lo que NO congela: el §3 distingue lo construido de lo prometido, y lo prometido
+sigue siendo trabajo por hacer — congelar la promesa es lo que permite construirla sin
+perseguir un blanco móvil.
 
 ### 8.4 · La RE-MEDICIÓN bajo la regla nueva — el mismo reporte, 2026-08-15
 

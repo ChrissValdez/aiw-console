@@ -1,27 +1,48 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-15T06:51:54.273Z",
+  "generated_at": "2026-08-15T07:31:51.390Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-15T06:51:32.242Z"
+      "mtime": "2026-08-15T07:30:14.997Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-15T06:51:54.243Z"
+      "mtime": "2026-08-15T07:31:51.360Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "4fce973156d25958afd92b7cbfb83701a38593ca",
+  "head": "99828aeb19f01699d4db6eb80f77ba2d5528846f",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 241,
+  "commit_total": 243,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "99828ae",
+      "full_sha": "99828aeb19f01699d4db6eb80f77ba2d5528846f",
+      "date": "2026-08-15T01:30:14-06:00",
+      "parents": "1e60c7f",
+      "subject": "D-068 y CONGELA el contrato del sobre v1. Tres decisiones: el perfil se declara en el run y no solo en el reporte, porque hoy lo elige quien ejecuta despues de ejecutar y eso rompe la separacion adversaria; la version del perfil se fija al ABRIR el run, el unico de los tres momentos que es determinista; y lo irreproducible POR CONSTRUCCION lo declara el perfil una vez en vez de repetirse en 39 reportes. La primera se adopta en su forma barata, dentro de full_description con guarda de ticket, y se corrigio antes de registrarla porque la cabina habia dado un coste falso: CONTRATO.md admite 11 claves de run y el disco tiene 15, asi que anadir una clave exige op nueva en el motor y enmienda del contrato, y ademas los runs que la necesitan viven en el canonico del emisor. Se promueve a clave estructural solo cuando alguien pueda ensenar que la forma en texto fallo. El documento queda CONGELADO como v1: el operador aprobo el reparto del 0, y el resto de sus partes normativas son suyas por origen via D-065, D-066, D-067 y D-068",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1e60c7f",
+      "full_sha": "1e60c7f71ca158fe75b88b9d774fbab9a7727896",
+      "date": "2026-08-15T00:52:18-06:00",
+      "parents": "4fce973",
+      "subject": "cierra el #59 RUN-CONSOLE-REPORT-ENVELOPE-CONTRACT-001 como done: el documento del sobre queda estrenado, enmendado con la D-067 y re-medido, 942 lineas. El run cierra pero el CONTRATO NO SE CONGELA: le falta la unica condicion que queda, que es la aprobacion del operador, y el propio documento lo dice en su veredicto del estreno",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORT-ENVELOPE-CONTRACT-001"
+    },
     {
       "branch": "main",
       "sha": "4fce973",

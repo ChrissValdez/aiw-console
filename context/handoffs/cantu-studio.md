@@ -1,254 +1,193 @@
 # HANDOFF — hilo `cantu-studio` (el proyecto)
 
-> Escrito por la cabina el **2026-08-12**, al cerrar la sesión que llevó `#55` → `#60`.
-> Sustituye al relevo del 2026-08-11. Todo lo de aquí está **medido**, no recordado, y lleva
-> su fecha. **Las cifras de este documento son mediciones fechadas: contrástalas contra el
+> Escrito por la cabina el **2026-08-16**, al cerrar la sesión que llevó `#100` → `#104`.
+> **Sustituye al relevo del 2026-08-12**, que tenía tres afirmaciones falsas; están corregidas
+> abajo, nombradas una a una.
+>
+> **Todo lo de aquí está medido y lleva fecha. Son mediciones fechadas: contrástalas contra el
 > canónico al abrir. Gana el disco.**
 
 ---
 
 ## ⚠ LO PRIMERO: DERIVA LA RUTA Y PRUEBA LA CAPACIDAD
 
-La ruta de montaje **cambia entre sesiones**. No la heredes. Deriva, prueba que se lee el
-workspace, que el validador corre y que `git log` responde en los cinco repos. **Si algo
-falla, declara modo ESPEJO.**
+La ruta de montaje **cambia entre sesiones**. No la heredes. Prueba que se lee el workspace, que
+`git log` responde en los cinco repos, **que el borrado está habilitado** y que `.git` es
+escribible. Si algo falla, declara modo ESPEJO.
 
-**Y tres cosas que costaron tiempo, dos de ellas corrigiendo este mismo documento:**
+**Comprueba `.git/index.lock` en los cinco repos con `ls`, nunca corriendo git para averiguarlo.**
+En esta sesión no apareció ni uno, con `--no-optional-locks` en todo comando y `add`/`commit`
+solos en su llamada.
 
-1. **Todo comando de git lleva `--no-optional-locks` Y un `timeout` explícito.** Un comando
-   muerto por timeout deja un `.git/index.lock` huérfano que bloquea los commits del
-   operador. **En esta sesión no apareció ni uno**, con esa disciplina y timeouts de 90–280 s.
-   `status --porcelain` es seguro aunque se mate; `diff` no.
-2. **`dist/` está RASTREADO, no ignorado.** **47 ficheros rastreados según git, 76 en disco**
-   — las dos cifras son ciertas y son distintas cosas; el taller sólo puede medir la segunda.
-   Un barrido con `require()` sobre `.js` del repo **para descubrir qué cargar** los ejecuta.
-   Cargar un módulo nombrado a propósito es otra cosa y es legítima.
-3. **LA CABINA NO PUEDE BORRAR. El relevo anterior decía que sí y era FALSO.** Medido el
-   2026-08-11: `rm` sobre `_scratch` → `Operation not permitted`. Todo respaldo y todo fichero
-   suelto que la cabina cree **lo tiene que borrar el operador**, con su ruta completa.
+### TRES AFIRMACIONES DEL RELEVO ANTERIOR QUE SON FALSAS HOY — medidas el 2026-08-16
+
+1. **«LA CABINA NO PUEDE BORRAR» — FALSO.** Probado: crear y borrar en `_backups/` y `_scratch/`
+   funciona. **Era un permiso que nadie había pedido**, no una imposibilidad.
+2. **«La cabina no commitea» — FALSO.** Esta sesión hizo **seis commits** con `add` dirigido e
+   identidad explícita, sin dejar un solo lock. **Al operador le queda el `push` y sólo el push**,
+   y no es política: no hay ruta a GitHub.
+3. **«`dist/` está RASTREADO, 47 ficheros» — FALSO HOY.** Medido: `git ls-files dist` → **0**, y
+   `tools/author-lite/editor-ui/dist` → **0**. No está versionado. La orden operativa —no tocarlo—
+   se cumple igual, pero la razón que daba el relevo ya no es cierta.
 
 ---
 
 ## ⚠⚠ LA VÍA DE ESCRITURA DEL CANÓNICO ES LA CONSOLA, NO EL CLI
 
-**Es el hallazgo que más tiempo costó al arrancar y no está en ningún otro sitio.**
+**Sigue vigente y sigue siendo lo que más tiempo ahorra.** `cantu-studio/tools/roadmap/roadmap-edit.mjs`
+importa el motor viejo y **se niega a escribir** por una dependencia externa que es **legal**.
 
-`cantu-studio/tools/roadmap/roadmap-edit.mjs` es el único CLI de edición, e importa **su
-propio** `roadmap-plan.mjs`, que es el motor viejo. **Se NIEGA a escribir**, con este mensaje:
+    cd projects/aiw-console
+    PC_PORT=47xx node project-console/serve.mjs &        # captura el PID; NUNCA pkill -f, mata tu propia shell
+    POST http://127.0.0.1:47xx/projects/cantu-studio/__project-console/roadmap/edit
+      { op, args:{...}, apply:false }                    # dry-run -> devuelve remap + baseline
+      { op, args:{...}, apply:true, baseline }           # compare-and-swap
 
-    target file already fails the invariants; fix it before editing
-    run RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001
-      depends on unknown run RUN-CANTU-ROADMAP-CONTENT-AUDIT-001 (orphaned dependency)
+**`serve.mjs` re-emite los 7 artefactos de `.project/` él solo** tras cada escritura.
 
-**Es un FALSO POSITIVO.** Ese run existe: es el `#4` `completed` del canónico de
-`aiw-console`. Es una dependencia externa **legal**. El motor viejo no conoce el concepto;
-el nuevo sí — `aiw-console/tools/roadmap/roadmap-core.mjs:423`,
-`checkInvariants(obj, { externalRunIds })`.
+**Los procesos en segundo plano NO sobreviven entre llamadas de bash.** Levanta el servidor y haz
+el POST **en la misma llamada**. El `baseline` es un hash de contenido, así que **sí sobrevive**:
+puedes hacer el dry-run en una llamada y el apply en la siguiente.
 
-**La forma que funciona, usada nueve veces esta sesión sin un solo fallo:**
+**Nombres de argumento verificados esta sesión — van todos anidados bajo `args`:**
 
-    cd projects/aiw-console/project-console
-    PC_PORT=88xx node serve.mjs &          # cero dependencias externas
-    POST http://127.0.0.1:88xx/projects/cantu-studio/__project-console/roadmap/edit
-      { op, apply:false, args }            # dry-run: devuelve remap + baseline
-      { op, apply:true, baseline, args }   # compare-and-swap; re-emite .project/ solo
+| op | argumentos |
+|---|---|
+| `set-status` | `run`, `status`, `closeoutResult` |
+| `set-text` | `targetType:"run"`, `targetId`, `title`, `summary`, `fullDescription` — **NO usa `run`** |
+| `insert` | `runId`, `title`, `summary`, `fullDescription` + **exactamente una** de `after` / `before` / `endOfPhase` |
+| `move` | **una** de `after` / `before` / `toOrder`; `toPhase` solo no basta |
 
-`serve.mjs` compone `externalRunIds` desde `project-console/projects.json` y se los pasa a
-`planEdit`. **Y re-emite los 7 artefactos de `.project/` él solo** tras cada escritura: la
-cabina no tiene que hacerlo aparte.
-
-**Nombres de argumento que no son obvios y costaron un turno cada uno:**
-
-- `set-text` NO usa `run`. Usa `targetType:"run"` + `targetId`.
-- `move` exige **una** de `after` / `before` / `toOrder`. `toPhase` solo no basta.
-- `set-classification` usa `correctnessModel`, `workType`, `blastRadius`, `failureSurfaces`
-  en camelCase, y **el vocabulario es cerrado**. `MECHANICAL_ORACLE`, `SYSTEMIC`, `WIDE` y
-  `HIDDEN` **NO son válidos** — se probaron y el batch se negó. Deriva el vocabulario real
-  del canónico antes de usarlo.
-
-**Y la escritura del canónico desde la cabina, que el relevo anterior daba por no probada,
-ESTÁ PROBADA:** nueve escrituras aplicadas, todas con md5 antes/después y verificación campo
-a campo contra respaldo. Funciona pese a que la cabina no pueda borrar.
+**El canónico de este proyecto es `.aiw/roadmap/roadmap.json`** — con `.aiw/`. `.project/roadmap.json`
+es la **proyección emitida**, no la fuente. Su forma es `objectives[].phases[].runs[]`: **no hay
+`runs` en la raíz**, hay que recorrer el árbol.
 
 ---
 
 ## QUÉ SIGUE — lo primero al abrir
 
-**No hay ningún run `active`.** La cola quedó quieta a propósito.
+**`#104` `RUN-CANTU-SLIDE-TITLE-SLIDE-AUTHORABLE-001` está `active`** — «Make the Portada a real
+editable block created with the presentation». **El ticket se entregó al operador y el taller
+puede estar corriendo.** Lo primero es pedirle el resultado.
 
-`history=60` · **84 runs** · `ready_next=4` · canónico **`1d341fe3`** al cerrar (árbol CRLF).
+`136 runs` · `completados 104` · `densidad 1..N` · `un solo activo` · canónico **`d320d2ca`**
+(md5 del árbol de trabajo) al cerrar.
 
-    aiw 38bb00b · aiw-console f21b814 · cantu-studio c7c8e0e
-    cantu-lessons eeb2551 · cantu-quizzes-latex 8a0b367
+**Respaldo vivo, NO borrar mientras `#104` siga abierto:**
+`_backups/roadmap.cantu-studio.20260816-151726.pre-titleslide.json`. **Bórralo al cerrar el run.**
 
-**Elegibles ahora mismo:** `#61` «Verify global Formula Inserter integration», `#62` «Audit
-and define the Slide grid system», `#79` y `#80` (documentación).
-
-**El operador dejó dicho el orden: 58 → 60 → 61.** Los dos primeros cerraron; **lo siguiente
-por su palabra es `#61`.**
-
-### Cinco cosas esperan decisión suya y NINGUNA se puede lanzar sola
-
-No las repitas como preguntas sueltas: llévalas dentro del ticket que las toque.
-
-1. **«Nota desplegable» como hijo de Dos columnas.** Lo pidió él directamente. Hoy está fuera
-   en cuatro capas: `COLUMN_CHILD_OPTIONS` (11 tipos), la unión de los dos esquemas, la
-   fábrica, y `renderColumns` sin `case`. **Y `#58` acaba de escribir la guarda que lo
-   rechaza**, así que abrirlo obliga a bajar esa lista de seis a cinco — hay una prueba que lo
-   fuerza. **Pregunta abierta que él no contestó:** si el run mide también los otros cinco
-   (`columns` anidado, `Video`, `Cálculo aritmético`, `Jerarquía`, `Secuencia de pasos`) o se
-   acota a uno. La cabina recomendó acotarlo.
-2. **Grupo C, tres runs**, sacados de `#58` por decisión suya: los **nueve** márgenes de raíz
-   puestos en escala; las **284** declaraciones de color cableadas convertidas a roles; y las
-   guardas de HTML. **Los tres mueven todas las lecciones existentes.**
-3. **El `findWebComponent` de `main.js`** — hallazgo de `#60`, sin reparar. `main.js:48` lleva
-   una **segunda copia** con el mismo empate latente **y una divergencia previa**: no tiene
-   `WEB_TYPE_ENGINE_ALIASES`, así que **`split` resuelve distinto allí que en el motor**.
-   Repararlo cambia lo que el build de `dist` emite para `split` — es un píxel, es otro run.
-4. **`#57`, `#58` y `#60` quedaron SIN CLASIFICACIÓN escrita.** Derívala del vocabulario real
-   y pónsela a los tres de una vez.
-5. **La deuda con nombre de `#57`:** la regla del último `=` y el recuadro del resultado
-   **debe volver como CONTROL, no como texto** — el campo mostrando qué mitad va a quedar en
-   recuadro mientras el autor escribe. Hoy **no está explicada en ninguna parte**; sólo es
-   observable en la vista previa. Él aceptó perderla sabiendo eso.
+**Detrás, por orden:** `#105` `flowDrafts` sin acotar · `#106` movimiento visual desde el mapa ·
+`#107`–`#119` los componentes de diapositiva.
 
 ---
 
-## EL PATRÓN QUE FUNCIONÓ CUATRO VECES: el encargo en DOS ACTOS
+## EL CICLO QUE FUNCIONA, y costó cambiarlo
 
-**Es lo más valioso que produjo esta sesión y no está en la configuración.**
+**Turno 1 — abrir y encargar.** Derivar `run_id` y título del canónico, dry-run, aplicar,
+verificar con md5, publicar el parte, y debajo el ticket. **El operador sólo pega el ticket.**
 
-**Acto uno: el taller MIDE y PARA, sin implementar nada. Acto dos: el operador decide y el
-taller implementa.** Se usó en la pérdida de pasos, en la retirada de la Guía, en los
-paquetes y en el determinismo. **En los cuatro, el acto uno desmintió algo que se daba por
-cierto**, y en dos de ellos reencuadró el run entero.
+**Turno 2 — medir, entregar QA. EL RUN NO SE CIERRA AQUÍ.** La cabina verifica lo que el taller
+escribió, **commitea**, y entrega la QA. **El run se queda `active` hasta el veredicto del
+operador**, porque estas superficies sólo las juzga su ojo.
 
-Cómo se escribe: el ticket dice en el objetivo que **terminar el acto uno sin implementar
-nada es el resultado esperado, no un fallo**, y lo respalda con una condición de parada
-explícita. Sin esa frase, un taller competente implementa y decide de paso.
+**Turno 3 — cerrar con su veredicto, escribirlo a disco VERBATIM, y encadenar.** El push no
+bloquea nada.
 
-**Cuándo usarlo:** siempre que el trabajo mueva algo que el operador no ha autorizado, o
-cuando el encuadre dependa de una medición que aún no existe.
-
-**Lo que hace que funcione es la separación adversaria, y hay una prueba limpia:** en `#58`
-el taller del acto dos **era una sesión distinta que no traía las mediciones del acto uno**,
-las volvió a hacer desde disco, y **encontró tres discrepancias** — dos de ellas cifras que
-la cabina había copiado del acto uno sin re-medir.
+**Y antes de todo ticket: modelo, esfuerzo y sesión.** Lo pidió por escrito. Opus es el default;
+Alto es el esfuerzo del trabajo real; sesión nueva cuando la anterior sesgaría.
 
 ---
 
-## Lo que hizo esta sesión
+## LA SUITE, Y UN LÍMITE DE LA CABINA QUE HAY QUE SABER
 
-**Cuatro runs cerrados, dos insertados, nueve commits.** Tres de los cuatro **no existían al
-abrir**.
+    node --test "tools/author-lite/compiler-api/tests/*.test.mjs" "tools/roadmap/tests/*.test.mjs" "tools/dev/tests/*.test.mjs"
 
-| run | qué | rondas |
-|---|---|---|
-| `#55` Modo matriz de Aritmética por la vía de autoría | insertado y cerrado | **4** |
-| `#56` La pérdida de pasos al cambiar de modo | insertado y cerrado | 2 actos |
-| `#57` Retirada de la Guía de componentes | cerrado | 2 actos |
-| `#58` Paquetes, readiness y las deudas de familia | cerrado | 2 actos |
-| `#60` Determinismo de los motores y red de fixtures | insertado y cerrado | 1, sin QA |
+**Al cerrar: 1499 / 1494 pasan / 5 fallan.**
 
-**Nueve veredictos y decisiones del operador quedaron versionados en el repo**, verbatim, en
-`docs/_historical_run_record/`. Ninguno murió en el chat. Es la primera sesión en que eso se
-cumple entero.
+**LA SUITE COMPLETA NO CABE EN UNA LLAMADA DE LA CABINA.** Se mide **por lotes** —los ficheros
+ordenados y partidos en cuatro— y aun así **`webCorpusFixtureNet.test.mjs` no cabe ni solo**. No
+es que falle: es que la cabina no lo ve. **Se declara, no se disimula.**
 
-### Lo que más cambió el estado del proyecto
+### LOS CINCO FALLOS NO TIENEN UNA CAUSA, TIENEN TRES — corrección del 2026-08-16
 
-**El motor es determinista.** Diez acuñadores sembrados desde un SHA-256 del `data` del
-componente. **La estabilidad del corpus pasó de 21/42 a 42/42** — ese es el número que mide
-el defecto, no los «942 bytes» de un caso. Probado además **entre procesos distintos**.
+**«Causa única verificada: una dependencia huérfana» estaba escrito en tres records y varios
+tickets, y es FALSO.** Las tres:
 
-**Existe una red de 63 árboles fijados sobre los 42 ficheros de contenido.** Es lo que
-permite a los cinco runs pendientes probar qué movieron. La referencia es **la salida
-anterior a sembrar**, no lo que produce el motor de hoy.
+1. **La dependencia huérfana** — `RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` apunta a
+   un run que no está en este canónico. **3 pruebas** (`createPhase` ×2, `deletePhase`).
+2. **`clearProgress` B7** — *«the canonical roadmap should carry at least one terminal run with a
+   progress record»*. No hay ninguno.
+3. **`C5 [SENTINEL]`** — **exige CERO runs `active`**. Está rojo **siempre que haya un run
+   abierto**, o sea, siempre que se esté trabajando. **Se enciende y se apaga con el ciclo.**
+   Predicho y confirmado en el mismo turno: al cerrar `#102` bajó a 4, al abrir `#103` volvió a 5.
 
-**`renderColumns` cruza el stack Y alcanza los portadores profundos.** Y aquí está el
-hallazgo que reencuadró `#58`: **el texto del run se equivocaba sobre cuál reparación movía
-lecciones publicadas**. El selector movía **cero**; la que las movía era una **segunda causa
-que nadie había medido** — `card` y `list` llevan el margen **un nivel por debajo** de su
-raíz.
-
-**Aritmética tiene dos modos autorables**, matriz acumulada por paso, botón de tachar por
-fila, y un diálogo que enumera lo que un cambio de modo pierde.
-
-**La Guía de componentes ya no existe** en ninguna superficie. `blockCatalog.js` bajó de 1 321
-a 349 líneas.
+**Ninguno se toca. Si ves 4 en vez de 5, mira si hay run activo antes de celebrar nada.**
 
 ---
 
-## Cómo trabaja este operador — lo aprendido, corregido y ampliado
+## LO QUE EL OPERADOR HA DICHO Y RIGE — sus palabras
 
-- **Decide mirando el resultado, no leyendo la descripción.**
-- **Odia las notas de ayuda pequeñas en el panel.** *Envejecen rápido y hacen ruido visual.*
-  **Quítalas por defecto**, y distingue nota de **mensaje de validación**, que sí se queda.
-  **ESTO YA ESTABA EN EL RELEVO ANTERIOR Y LA CABINA NO LO TRASLADÓ A NINGÚN TICKET. Costó
-  TRES RONDAS de `#55`.** Es el defecto más caro de la sesión y era de lectura, no de juicio.
-- **Rechaza los modos automáticos derivados.** Si no elige, no aparece. Una siembra al
-  insertar sí la acepta; un recálculo en vivo, no.
-- **Quiere que el desplegable sólo ofrezca cosas elegibles.** Por eso cayó el desplegable de
-  tres marcas del paso: dos de las tres opciones renderizaban idéntico.
-- **Nombra él mismo lo que quiere.** «tachar / no tachar» lo puso él, y era mejor que
-  «Este divisor no funcionó», que era invención de la cabina y él rechazó por no entendible.
-- **Contesta en prosa y salta preguntas.** **Si una decisión no llega en DOS vueltas, tómala
-  con la recomendación escrita y decláralo reversible.** Se aplicó tres veces esta sesión y
-  las tres funcionaron — incluido el cierre de esta misma sesión.
-- **Pide el comando de borrado, no que borre a mano.** Y **NUNCA le des un comando con un
-  «pero no lo ejecutes todavía»**: lo ejecuta. Pasó, y se perdió un respaldo antes de tiempo.
-  Si no toca ejecutarlo, no se escribe.
-- **Acepta perder cosas si le explicas el coste.** Aceptó perder la regla del último `=`
-  sabiendo que no es adivinable. Lo que no acepta es enterarse después.
+> **«el de web se ve excelente […] es una replica casi exacta de los campos y como agarra la
+> paleta de colores de la configuracion global y los iconos igual»** — **Web es la
+> especificación, no la inspiración.**
+
+> **«yo no borro o modifico los archivos tu lo haces, y commiteas yo solo hago el push»**
+
+> **«siempre antes de ponerme un ticket dime el modelo que recomiendas esfuerzo y si es la misma
+> sesion o nueva»**
+
+> **«el qa dame instrucciones mas claras, donde me meto para revisar eso, y que quieres que
+> revise»** — lo pidió **dos veces**. Pasos concretos: dónde, qué pulsar, qué se espera ver.
+
+> **«siempre que cerremos sesion, me generas (actualizas) el handoff y el prompt de reinicio»**
+> — 2026-08-16. **Esto no se le vuelve a preguntar.**
+
+**Y cuatro backticks** cuando un ticket lleve bloques de código dentro: con tres, se partió por la
+mitad una vez.
 
 ---
 
-## Las lecciones caras — todas de la cabina equivocándose
+## LO QUE ESTA SESIÓN ENSEÑÓ, y no está en ningún otro sitio
 
-**El taller corrigió a la cabina más de quince veces esta sesión, siempre con medición.**
+**1 · Medir una capa y publicar la conclusión.** En `#103` la cabina midió el servidor, encontró
+la causa, publicó las cifras y **dio el terreno por medido**. Había una **segunda compuerta en el
+cliente** que ni siquiera dejaba salir la petición: **un arreglo sólo en servidor habría sido
+invisible**. La sonda era correcta; **el alcance no**.
 
-1. **Comprimir las palabras del operador es el defecto que más caro sale.** Él escribió «toda
-   la matriz»; la cabina lo puso en el ticket como «la fila del paso»; el taller construyó la
-   compresión. **Una ronda entera.** Si sus palabras admiten dos lecturas, **pregunta o cita
-   verbatim**; no elijas por él.
-2. **Copiar una cifra del acto uno al ticket del acto dos sin re-medir**, cuando el propio
-   ticket ordena re-medir. Pasó dos veces en `#58`: «17 punteros» eran 16 ficheros, «16» eran
-   15. **Las cifras de un acto anterior son mediciones fechadas, aunque sean de esta sesión.**
-3. **Convertir una pregunta del operador en una instrucción.** Él pidió recomendación sobre la
-   marca del paso; el ticket la escribió como orden. Lo que llegó fue la recomendación de la
-   cabina puesta en obra, no algo que él aprobó.
-4. **Mandar demostrar algo con una suite que nunca se midió que existiera.** El run de
-   colapsabilidad del panel **no tiene pruebas**: se verificó por QA humana y lo dice en su
-   texto.
-5. **Medir con el instrumento equivocado.** Tres veces, y **dos se cortaron antes de
-   publicar**: buscar `j-column-stack` en el contenido para deducir el reparto de formas —esa
-   clase la emite el renderer, no vive en el contenido—, y contar `Math.random` restantes que
-   eran comentarios. La regla que las cortó: **antes de publicar, pregúntate si la sonda puede
-   ver lo que buscas.**
-6. **Recomendar sin medir la compatibilidad.** La cabina recomendó montar el insertor de
-   fórmula en «Resultado final» bajo D-061; el campo **prohíbe delimitadores** y el insertor
-   **los escribe**. El comentario del esquema lo decía y estaba delante desde la primera
-   medición. **Produjo el defecto bloqueante de la ronda 3.**
+**2 · La parada de análisis pagó por segunda vez.** `#103` llevaba escrita dentro su condición de
+parada. La cabina midió **antes de emitir el ticket**, vio que se habría activado al llegar, y le
+llevó la decisión al operador. **Se ahorró un taller entero.**
+
+**3 · El patrón «capacidad en el motor, cerrada en el esquema» va por la QUINTA vez** —`layout.rows`,
+coordenadas, tipos de lámina, tamaños, y ahora la Portada—. Y esta vez **el repo ya decía de quién
+era el trabajo**: `draftSchema.js` lleva escrito *«le toca al run de Title Slide»*, y **ese run no
+existía**. **Cuando encuentres una capacidad cerrada, nómbrala; no la abras por tu cuenta.**
+
+**4 · La validación del editor tiene DOS momentos y son legítimos.** Nivel de campo en
+`onTouched` —decisión medida para no gritar mientras se teclea—, nivel de bloque y celda sobre el
+**borrador vivo**. Barrido de 60 casos: el esquema del editor y los del servidor **dan las mismas
+rutas**. No los separes.
 
 ---
 
-## Punteros
+## ABIERTO Y SIN DUEÑO — nombrado, no reparado
 
-- **Canónico:** `projects/cantu-studio/.aiw/roadmap/roadmap.json` — CRLF, `1d341fe3`.
-- **Validador:** `node tools/project-console/validate-project-console-state.mjs`
-- **Suite:** `node --test "tests/*.test.mjs"` desde `tools/author-lite/compiler-api` —
-  **733 al cerrar**. **LA CABINA NO REPRODUJO NI UNA SOLA CIFRA DE LA SUITE EN TODA LA
-  SESIÓN**, siete rondas y cuatro runs: **excede el tope de tiempo de su entorno** (se quedó
-  en el test 487 tras nueve minutos) mientras corre en **menos de cuatro segundos** en la
-  máquina del operador. Toda cifra de suite en los records es del taller.
-- **Arnés de comparación:** `tools/author-lite/compiler-api/tests/helpers/webRenderHarness.mjs`
-  y `corpusManifest.mjs`. **Su ancla es el atributo `id`, no la forma del token** — anclar por
-  forma se llevó clases reales por delante. **Un id mal cableado DEBE romperlo**, y hay una
-  prueba que lo fija. No lo debilites al extenderlo.
-- **Los árboles fijados:** `tests/fixtures/corpus/`, 63 árboles, 3,54 MB. **Se regeneran a
-  mano** con `pinCorpusFixtures.mjs`, nunca desde la suite: una referencia que se regenera
-  sola no prueba nada.
-- **La siembra:** `src/builders/shared/mintId.js`. **Vive ahí a propósito** — `web/` y
-  `partials/` se barren y todo `.js` allí queda registrado como componente del motor.
-- **Records y veredictos:** `projects/cantu-studio/docs/_historical_run_record/`
-- **Las etiquetas que ve el autor** viven en `blockCatalog.js` y en `COLUMN_CHILD_OPTIONS`.
-  Al operador se le nombra siempre por ellas, nunca por el identificador del motor.
+- **La rama `isLessonGated` de `RealPreviewPanel` quedó sin llamante**, con los botones «Crear
+  lección» y «Explorar» del panel de previa. Verificado: **cero llamantes**. Retirar afordancias
+  visibles es decisión del operador.
+- **El encabezado vacío de Web** con lección en blanco y ≥1 bloque.
+- **Las tildes rotas** — UTF-8 doble en los dos gemelos del esquema. **31 líneas / 40 apariciones**
+  en el del servidor, y **nadie ha fijado si se cuentan líneas o apariciones**.
+- **Las ocho notas de frontera** — modales de flujo, ajustes de iconos, editor de paletas.
+- **El recorte silencioso del cuerpo de la tarjeta** (`overflow: hidden`).
+- **`SlidePreviewPanel.jsx`**, muerto y sin retirar.
+- **El alias `columns`**, que el motor lee y el esquema no conoce.
+- **El build nunca limpia `dist/`.**
+
+---
+
+## AL CERRAR SESIÓN
+
+**El operador lo pidió explícitamente el 2026-08-16 y es permanente:** al cerrar, la cabina
+**actualiza este handoff Y entrega el prompt de reinicio**, sin que se lo pidan. El prompt vive en
+`context/cantu-studio/PROMPT-DE-REINICIO.md`.

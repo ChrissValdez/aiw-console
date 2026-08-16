@@ -37,7 +37,12 @@ Al cerrar sesion, actualizas el handoff y este prompt sin que te lo pida.
 ## Lo que la sesión nueva debe saber sin tener que leerlo todo
 
 **El estado al cerrar:** `136 runs` · `completados 104` · `densidad 1..N` · **un solo activo, el
-`#104`** · canónico `d320d2ca` · **1 commit sin publicar** al escribir esto.
+`#104`** · canónico `d320d2ca`.
+
+**El estado del push NO se escribe aquí a propósito**, porque envejece entre que se escribe y se
+lee: **derívalo al abrir**, con `HEAD` contra `origin/main` en los dos repos que esta sesión tocó
+—`cantu-studio` y `aiw-console`—. Al cerrar el 2026-08-16 quedaba **un commit sin publicar en
+`aiw-console`**, el del propio relevo.
 
 **Respaldo vivo que NO se borra** mientras `#104` siga abierto:
 `_backups/roadmap.cantu-studio.20260816-151726.pre-titleslide.json`.

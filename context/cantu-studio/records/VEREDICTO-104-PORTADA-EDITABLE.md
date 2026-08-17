@@ -152,3 +152,48 @@ un asterisco a mano**, y hacerlo sería romper la regla que ese fichero existe p
 ramas**. Con tema no vacío, ese literal **no debería alcanzarse nunca**. Lo que él pide —que la
 etiqueta nazca prellenada con el tema— **se resuelve en la semilla** y es independiente del
 respaldo del motor. **Que el taller mida por qué lo vio antes de cambiar el motor.**
+
+---
+
+# TERCER VEREDICTO — la QA de la RONDA 3, y DOS REGLAS DE OPERACIÓN NUEVAS
+
+> **Recogido por la cabina el 2026-08-16.** Es un **PASS**, y viene con dos instrucciones
+> permanentes sobre cómo la cabina debe trabajar. **Las reglas no son del run: son de la cabina,
+> y rigen en todos los hilos desde ya.**
+
+## SUS PALABRAS, VERBATIM
+
+    no tienes que estarme recordando del push con que sigas haciendo el commit yo los seguire haceindo
+
+    ahora como regla siempe que oucpes que revise algo dame una lista de pasos por hacer enumerada y cada paso corto
+
+    Ahora est aQA
+    se ve bien la porada jala bien
+    aunque aun no tiene lo de lso tamaños
+    Actualmente no hay ningun boton para ajustar el tamaño de la portada de ningun campo
+
+## LAS DOS REGLAS — permanentes, y sustituyen a lo que decía la configuración
+
+**REGLA 1 · SE ACABA EL RECORDATORIO DE PUSH.** La configuración de cabina manda cerrar cada
+respuesta con «toca push — N commits sin publicar». **El operador lo retira explícitamente:**
+mientras la cabina siga commiteando, él hace los push por su cuenta. **La cabina no vuelve a
+mencionarlo**, ni al cierre de una respuesta ni al cierre de sesión. El commit sigue siendo
+obligación de la cabina y no cambia.
+
+**REGLA 2 · TODA PETICIÓN DE REVISIÓN VA EN LISTA NUMERADA DE PASOS CORTOS.** Siempre que la
+cabina necesite que el operador revise algo —QA, elección entre opciones, verificación—, lo
+entrega como **lista enumerada**, **un paso por línea**, **cada paso corto**. Nada de párrafos
+con la instrucción dentro. **Es la TERCERA vez que pide algo de esta familia**: ya había pedido
+dos veces «instrucciones más claras, dónde me meto y qué quieres que revise». Esta lo concreta
+en una forma.
+
+## EL VEREDICTO DE LA RONDA 3
+
+**PASS** — «se ve bien la porada jala bien». Los cuatro detalles quedan aceptados: título
+obligatorio con su asterisco y su rojo, prellenado de garantía, etiqueta sembrada del tema, y
+placeholders podados.
+
+**Y confirma con sus ojos lo que el taller reportó**: «Actualmente no hay ningún botón para
+ajustar el tamaño de la portada de ningún campo». **No es un fallo: es la parada del punto 5**,
+que se disparó porque ninguna escalera calibrada alcanza los 6rem / 1.2rem / 0.9rem de la
+portada. **Lo nombra como pendiente, no como defecto.**

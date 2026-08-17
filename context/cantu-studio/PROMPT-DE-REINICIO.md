@@ -1,8 +1,8 @@
-# Prompt de reinicio — hilo `cantu-studio`
+# PROMPT DE REINICIO — hilo `cantu-studio`
 
-> Actualizado por la cabina el **2026-08-16**. **Se pega tal cual al abrir la sesión nueva.**
-> El operador lo pidió como parte fija del cierre: *«siempre que cerremos sesion, me generas
-> (actualizas) el handoff y el prompt de reinicio»*.
+> **Actualizado por la cabina el 2026-08-17**, al cerrar la sesión que llevó `#104` → `#108`.
+> Se pega **verbatim** al abrir la sesión siguiente. No lleva cifras que envejezcan: manda
+> derivarlas.
 
 ---
 
@@ -10,7 +10,6 @@
 Hilo cantu-studio. Eres la cabina.
 
 ARRANQUE, en este orden y midiendo, no suponiendo:
-
 1. Deriva la ruta de montaje del workspace. No la heredes de ningun documento.
 2. Comprueba .git/index.lock en los cinco repos CON ls, nunca corriendo git para
    averiguarlo. Si hay alguno, borralo y declaralo.
@@ -24,38 +23,52 @@ ARRANQUE, en este orden y midiendo, no suponiendo:
    .project/roadmap.json es la proyeccion emitida, no la fuente.
 6. Reporta el estado en una tabla, con la hora de medicion.
 
-DONDE QUEDAMOS: #104 RUN-CANTU-SLIDE-TITLE-SLIDE-AUTHORABLE-001 esta ACTIVE --
-«Make the Portada a real editable block created with the presentation». El ticket
-ya se entrego y el taller pudo haberlo ejecutado. Al terminar el arranque,
-PIDEME EL RESULTADO DEL TICKET: te lo voy a pegar justo despues de este prompt.
+DOS LIMITES TUYOS QUE YA ESTAN MEDIDOS Y TE AHORRAN UNA HORA:
+- Tu tope por llamada son ~178 segundos aunque pidas 600. La suite se mide POR
+  LOTES, y algun lote hay que partirlo en dos cuando crece.
+- Corre las pruebas SIEMPRE con --test-concurrency=1. Sin eso la contencion
+  produce ROJOS FALSOS: un lote dio 10 fallos y el mismo lote con concurrencia 1
+  dio 214/214. Un rojo sin esa bandera no se publica: se vuelve a medir.
+- /tmp NO es escribible. Los ficheros auxiliares van a _scratch/.
+
+DOS REGLAS DE OPERACION QUE EL OPERADOR PUSO POR ESCRITO Y SON PERMANENTES:
+- NO le recuerdes el push. Nunca. Tu commiteas, el publica cuando quiere.
+- TODA peticion de revision va en LISTA NUMERADA de pasos CORTOS, uno por linea.
+
+DONDE QUEDAMOS: #108 RUN-CANTU-SLIDE-NARRATIVE-AUDIT-AND-IMPLEMENT-001 esta ACTIVE
+y NO se cierra todavia. Su ronda 1 esta entregada y commiteada, pero el operador
+reviso Narrativa y encontro cuatro cosas, y TRES DE ELLAS EXIGEN TOCAR EL MOTOR,
+que el plan de quince runs declara de solo lectura con parada explicita.
+
+LO PRIMERO NO ES EMITIR UN TICKET: es llevarle la decision. Lee su veredicto
+verbatim y las cuatro mediciones en
+projects/aiw-console/context/cantu-studio/records/VEREDICTO-108-NARRATIVA.md,
+verifica esas mediciones contra el disco, y presentale las opciones con
+recomendacion: abrir el motor para Narrativa fuera del plan, o posponerlo.
+
+Y HAY DOS RUNS QUE EL YA PIDIO Y NO EXISTEN EN EL CANONICO:
+- FUSIONAR: que fusione si hay UN SOLO componente en los cuadrantes elegidos,
+  independientemente de su posicion, y que PROHIBA fusionar cuadrantes con mas de
+  uno. Toca el contrato de rejilla.
+- LOS DOS ICONOS de la paleta: el de Portada no lo asocia, y el de Libre lo quiere
+  un poco mas alto. El vehiculo que ya funciono con el es un HTML con opciones
+  DIBUJADAS, no una descripcion.
 
 Al cerrar sesion, actualizas el handoff y este prompt sin que te lo pida.
 ```
 
 ---
 
-## Lo que la sesión nueva debe saber sin tener que leerlo todo
+## POR QUÉ ESTE PROMPT NO LLEVA CIFRAS
 
-**El estado al cerrar:** `136 runs` · `completados 104` · `densidad 1..N` · **un solo activo, el
-`#104`** · canónico `d320d2ca`.
+Porque **envejecen dentro de la propia sesión**. El relevo tiene las mediciones fechadas y el
+canónico tiene la verdad; el prompt sólo tiene que poner a la cabina **a medir en el orden
+correcto** y decirle **dónde quedó la conversación**, que es lo único que el disco no puede
+contarle.
 
-**El estado del push NO se escribe aquí a propósito**, porque envejece entre que se escribe y se
-lee: **derívalo al abrir**, con `HEAD` contra `origin/main` en los dos repos que esta sesión tocó
-—`cantu-studio` y `aiw-console`—. Al cerrar el 2026-08-16 quedaba **un commit sin publicar en
-`aiw-console`**, el del propio relevo.
+## LO QUE SÍ LLEVA, Y ES DELIBERADO
 
-**Respaldo vivo que NO se borra** mientras `#104` siga abierto:
-`_backups/roadmap.cantu-studio.20260816-151726.pre-titleslide.json`.
-
-**La vía de escritura del canónico es la consola**, levantando `serve.mjs` y haciendo POST **en la
-misma llamada de bash** —los procesos de fondo no sobreviven entre llamadas—, con dry-run primero
-y `baseline` en el apply.
-
-**La suite completa no cabe en una llamada de la cabina:** se mide por lotes, y
-`webCorpusFixtureNet.test.mjs` no cabe ni solo. **1499 / 1494 / 5** al cerrar, y **los cinco
-fallos tienen TRES causas**, no una — una de ellas, `C5 [SENTINEL]`, está roja **simplemente
-porque hay un run abierto**.
-
-**Y el ciclo:** el run se abre en el turno 1 con su ticket, se mide y se commitea en el turno 2
-**sin cerrarlo**, y **se cierra en el turno 3 con el veredicto del operador**, escrito a disco
-verbatim. Antes de cada ticket: **modelo, esfuerzo y sesión**.
+Los **dos límites de capacidad** y las **dos reglas de operación** van dentro del prompt, no sólo
+en el relevo, porque son cosas que la cabina necesita **antes** de leer nada — el límite de los
+178 segundos y la bandera de concurrencia deciden cómo mide desde el primer comando, y las dos
+reglas del operador deciden cómo escribe desde la primera respuesta.

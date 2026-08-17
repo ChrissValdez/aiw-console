@@ -197,3 +197,58 @@ placeholders podados.
 ajustar el tamaño de la portada de ningún campo». **No es un fallo: es la parada del punto 5**,
 que se disparó porque ninguna escalera calibrada alcanza los 6rem / 1.2rem / 0.9rem de la
 portada. **Lo nombra como pendiente, no como defecto.**
+
+---
+
+# LOS TAMAÑOS POR DEFECTO, FIJADOS POR EL OPERADOR — 2026-08-16
+
+## LOS NÚMEROS, Y SON SUYOS
+
+| Campo | Hoy | **Fijado** | En píxeles |
+|---|---|---|---|
+| Título | 6rem | **6rem** *(sin cambio — «está excelente»)* | 96px |
+| Subtítulo | 1.2rem | **2.8rem** | 44.8px |
+| Etiqueta | 0.9rem | **1.9rem** | 30.4px |
+| Descripción | 1.8rem | **2.0rem** | 32px |
+| **Ancho de la descripción** | **700px** | **1536px** | el 80 % del lienzo |
+
+**El ancho es el mismo tope que la portada ya declara para el título**, así que los dos textos
+rompen contra el mismo límite y no quedan dos criterios de ancho conviviendo.
+
+## EL DEFECTO DE ANCHO, Y DE DÓNDE SALIÓ
+
+**Lo encontró él mirando, no una sonda:** *«descripción tiene un espacio de escritura pequeño,
+hace salto de línea muy rápido, en menos espacio del del subtítulo»*.
+
+**Medido y confirmado:** `.j-title-description` declara `max-width: 700px` **fijo**, mientras
+`.j-title-main` usa `max-width: 80%` —1536px— y el subtítulo **no declara ninguno**. La
+descripción tenía el **46 %** del ancho del título, y por eso rompía antes que un texto que se
+pinta más grande. **No lo causó el tamaño nuevo:** estaba ahí desde siempre y sólo se hizo
+visible al crecer la descripción.
+
+## TRES ENTREGABLES FALLIDOS DE LA CABINA, Y SUS TRES CAUSAS
+
+**Se escriben porque son de la misma familia y la tercera se repitió tras arreglar la segunda.**
+
+1. **Escala mal anclada.** La primera hoja escaló con `1rem = 24px`. En la diapositiva **`1rem`
+   son 16px**: el 24px de `#j-infinity-root` fija el `em`, no el `rem`, y eso está escrito en
+   `comp_global.css` tras una corrección medida en un run anterior. **Pintaba todo un 50 % más
+   grande que la realidad**, y la cabina lo dio por bueno sin comprobarlo contra el CSS que
+   tenía delante.
+2. **CSS del motor sobre la página del visor.** `comp_global.css` declara
+   `body, html { width:100vw; height:100vh; overflow:hidden; display:flex }` —el reset de una
+   diapositiva a pantalla completa— y la cabina lo inyectó en su propia página. Salió **negra**.
+   Arreglado aislando cada diapositiva en un **iframe con documento propio**.
+3. **Orden de las hojas de estilo.** `renderTitleSlide` devuelve su `<style>` **pegado al
+   `<section>`**, o sea dentro del `body`; la cabina puso el override en el `<head>`. Con la
+   misma especificidad **gana el último del documento**, y las cuatro portadas salían idénticas.
+   El operador lo cazó y dio la pista buena: *«la tabla se actualiza pero no se ve reflejado»*.
+   Arreglado **por orden** —el override detrás del HTML del motor— y **con una guarda que lo
+   comprueba antes de escribir el fichero**, porque una regla que alguien tiene que recordar se
+   sustituye por una comprobación mecánica siempre que se pueda.
+
+**LA LECCIÓN DE PROCESO, y vale más que las tres causas:** las tres primeras hojas ofrecían
+**opciones de la cabina** y cada afinado costaba **un turno entero**. La cuarta le dio **los
+mandos** —deslizadores sobre la portada real— y el operador cerró los cuatro números **de una
+vez, sin volver a preguntar**. **Cuando el juicio es visual, la cabina no debe entregar
+candidatos: debe entregar el instrumento.**

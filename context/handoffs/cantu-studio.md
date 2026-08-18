@@ -1,8 +1,7 @@
 # HANDOFF — hilo `cantu-studio` (el proyecto)
 
-> Escrito por la cabina el **2026-08-17**, al cerrar la sesión que llevó `#104` → `#108`.
-> **Sustituye al relevo del 2026-08-16.** Aquel no tenía cifras falsas; éste corrige **dos
-> mediciones de capacidad** suyas y añade lo que enseñaron cinco cierres.
+> Escrito por la cabina el **2026-08-18**, al cerrar la sesión que llevó `#108` → `#115`.
+> **Sustituye al relevo del 2026-08-17.**
 >
 > **Todo lo de aquí está medido y lleva fecha. Contrástalo contra el canónico al abrir. Gana el
 > disco.**
@@ -15,160 +14,171 @@ La ruta de montaje **cambia entre sesiones**. No la heredes. Prueba que se lee e
 `git log` responde, **que el borrado está habilitado** y que `.git` es escribible.
 
 **Comprueba `.git/index.lock` en los cinco repos con `ls`, nunca corriendo git.** En esta sesión
-no apareció ni uno, con `--no-optional-locks` en todo comando y `add`/`commit` solos en su
-llamada.
+no apareció ninguno **pese a que un `diff` murió por timeout** — la tabla dice que eso deja lock,
+y esa vez no lo dejó. **Compruébalo igual: la tabla no es una garantía.**
 
-### DOS LÍMITES DE LA CABINA, RE-MEDIDOS Y PEORES DE LO QUE DECÍA EL RELEVO ANTERIOR
+### LOS LÍMITES DE LA CABINA, RE-MEDIDOS
 
-1. **EL TOPE POR LLAMADA SON ~178 SEGUNDOS, aunque se pidan 600.** El relevo decía que
-   `webCorpusFixtureNet.test.mjs` «no cabe»; ahora se sabe **por qué**. Consecuencia diaria: la
-   suite se mide **por lotes de 6**, y algún lote **hay que partir en dos** cuando crece.
-2. **`--test-concurrency=1` NO ES OPCIONAL.** Sin él, la contención del sandbox produce **rojos
-   falsos**: en esta sesión un lote dio **10 fallos** y el mismo lote con concurrencia 1 dio
-   **214/214 verdes**. **Un rojo sin `--test-concurrency=1` no se publica: se vuelve a medir.**
-
-### EL BORRADO SE PIDE Y FUNCIONA
-
-Probado otra vez: `rm` falla con `Operation not permitted` y **se pide con la herramienta**, es
-por carpeta y persiste. Nunca se reporta como imposible.
+1. **EL TOPE POR LLAMADA SON ~178 SEGUNDOS.** Esta sesión lo tocó una vez, agrupando `status` y
+   `diff`. **Las mediciones lentas van solas.**
+2. **`--test-concurrency=1` NO ES OPCIONAL.** Sin él la contención produce rojos falsos.
+3. **EL BORRADO SE PIDE Y FUNCIONA.** `rm` falla con `Operation not permitted` y se pide con la
+   herramienta; es por carpeta y persiste.
+4. **`/tmp` NO ES ESCRIBIBLE.** Los auxiliares van a `_scratch/`.
+5. **NUEVO — LOS MENSAJES DE COMMIT VAN POR FICHERO, NUNCA POR LÍNEA DE SHELL.** Esta sesión
+   perdió una palabra de un mensaje porque el shell interpretó unas comillas invertidas. Se
+   enmendó porque el commit **no estaba publicado** — se comprobó antes con `branch -r --contains`.
 
 ---
 
-## ⚠⚠ LA VÍA DE ESCRITURA DEL CANÓNICO ES LA CONSOLA, NO EL CLI
-
-Sigue vigente y sigue siendo lo que más tiempo ahorra.
+## ⚠⚠ LA VÍA DE ESCRITURA DEL CANÓNICO ES LA CONSOLA
 
     cd projects/aiw-console
-    PC_PORT=4731 node project-console/serve.mjs > <ruta escribible>/pc.log 2>&1 &
-    POST http://127.0.0.1:4731/projects/cantu-studio/__project-console/roadmap/edit
+    PC_PORT=<libre> node project-console/serve.mjs > <ruta en _scratch>/pc.log 2>&1 &
+    POST http://127.0.0.1:<puerto>/projects/cantu-studio/__project-console/roadmap/edit
       { op, args:{...}, apply:false }                    # dry-run -> remap + baseline
       { op, args:{...}, apply:true, baseline }           # compare-and-swap
 
-**`/tmp` NO ES ESCRIBIBLE** en esta sandbox: los logs y los ficheros auxiliares van a
-`_scratch/`. Medido esta sesión, dos veces.
+**Levanta el servidor y haz el POST en la misma llamada**: los procesos en segundo plano no
+sobreviven entre llamadas. `serve.mjs` re-emite los 7 artefactos de `.project/` él solo.
 
-`serve.mjs` re-emite los 7 artefactos de `.project/` él solo. Los procesos en segundo plano no
-sobreviven entre llamadas: **levanta el servidor y haz el POST en la misma llamada**; el
-`baseline` sí sobrevive.
+**Nombres de argumento verificados esta sesión:** `set-status` → `run`, `status`,
+`closeoutResult` · `set-text` → `targetType:"run"`, `targetId`, `title`, `summary`,
+`fullDescription` · `insert` → `runId`, `title`, `summary`, `fullDescription` + `before`/`after`
+· `move` → `run` + `toOrder`.
 
-**Nombres de argumento verificados:** `set-status` → `run`, `status`, `closeoutResult` ·
-`set-text` → `targetType:"run"`, `targetId`, `title`, `summary`, `fullDescription` · `insert` →
-`runId`, `title`, `summary`, `fullDescription` + una de `after`/`before`/`endOfPhase` · `move` →
-una de `after`/`before`/`toOrder`.
+**El canónico es `.aiw/roadmap/roadmap.json`** — con `.aiw/`, y **el `aiw/` sin punto de la raíz
+del workspace es OTRO repo**. Forma `objectives[].phases[].runs[]`.
 
-**El canónico es `.aiw/roadmap/roadmap.json`** — con `.aiw/`. `.project/roadmap.json` es la
-proyección. Forma `objectives[].phases[].runs[]`: **no hay `runs` en la raíz**.
+---
+
+## LAS CUATRO REGLAS DE OPERACIÓN DEL OPERADOR — permanentes
+
+**Son cuatro y tienen la MISMA FORMA: retiran de la respuesta trabajo que la cabina le estaba
+pasando a él.** Sus récords están en `context/cantu-studio/records/`.
+
+1. **NO SE LE RECUERDA EL PUSH.** Nunca, ni al cerrar sesión.
+2. **TODA PETICIÓN DE REVISIÓN VA EN LISTA NUMERADA DE PASOS CORTOS.** Uno por línea.
+3. **NO SE LE RECOMIENDA MODELO NI ESFUERZO EN LA MISMA SESIÓN** — no puede cambiarlos sin
+   reiniciar. **PERO LA SESIÓN SE DECLARA SIEMPRE**, en las dos direcciones: «misma sesión» o
+   «sesión nueva». En sesión nueva sí van modelo y esfuerzo, porque ahí los elige.
+4. **EL TICKET NO SE ANUNCIA: SE ENTREGA.** Nada de «dime cuándo la abras y te lo paso». Sólo se
+   retiene si falta una decisión suya — y si esa decisión es barata de revertir, se elige, se
+   entrega el ticket igual y la elección va marcada dentro como inferencia vetable.
+
+**El patrón, que es lo único que hay que recordar de las cuatro:** antes de escribir una línea
+dirigida al operador, preguntarse **si le deja trabajo que la cabina podía haber hecho**. Si se
+lo deja, sobra — **y la prueba es por línea, no por bloque**.
 
 ---
 
 ## QUÉ SIGUE — lo primero al abrir
 
-**`#108` `RUN-CANTU-SLIDE-NARRATIVE-AUDIT-AND-IMPLEMENT-001` está `active` y NO SE CIERRA
-todavía.** Su ronda 1 está entregada y commiteada (`7fa8819`), pero el operador encontró cuatro
-cosas en Narrativa y **tres exigen tocar el motor**, que el plan de quince runs declara de sólo
-lectura. **Lo primero de la sesión es llevarle esa decisión**, no emitir un ticket.
+**CERO RUNS ACTIVOS al cerrar.** El siguiente es **`#116`**,
+`RUN-CANTU-SLIDE-BODY-TEXT-OWN-SCALES-001` — «Narrativa» y «Lista con etiquetas» reciben su
+propia escala de texto anclada en lo de hoy, **y ahí se apaga su «Automático»**, que son las dos
+últimas superficies que lo conservan.
 
-Su veredicto verbatim y las cuatro mediciones están en
-`context/cantu-studio/records/VEREDICTO-108-NARRATIVA.md`.
+**Ese run lleva una deuda declarada dentro:** «Lista con etiquetas» **está contenido y el
+operador no puede ni insertarlo**, así que **la mitad de su QA no se puede mirar** hasta que se
+levante su contención. Está escrito en el run y hay que decirlo al entregar la QA.
 
-`137 runs` · `completados 108` · `densidad 1..137` · `un solo activo` · canónico **`f46afb9b`**
-(md5 del árbol de trabajo) al cerrar.
+**Detrás, por orden:** `#117` la separación bajo el título de la diapositiva — **que absorbe la
+retirada del espaciado de Narrativa**, por decisión del operador · `#118` la convención
+campo→tamaño en todos los formularios · `#119` Lista con etiquetas · y el resto de la cadena.
 
-**Detrás, por orden:** `#109` Lista con etiquetas · `#110` Gráfico SVG · `#111` Video · y el
-resto de la cadena de quince.
-
-**Y hay DOS runs que no existen todavía y el operador ya pidió:**
-
-1. **FUSIONAR** — hoy obliga a poner el componente en la esquina superior izquierda del área.
-   Quiere que fusione **independientemente de la posición** si hay **un solo** componente, y que
-   **prohíba** fusionar cuadrantes con más de uno. Toca el contrato de rejilla.
-2. **LOS DOS ICONOS de la paleta** — el de «Portada» no lo asocia, y el de «Libre» lo quiere «un
-   poquito más alto» (es `SlideGridGlyph`, un SVG propio, `rect` 20×12, ratio 1.67, que **él
-   mismo eligió sobre opciones dibujadas**).
+**Contrasta las cifras contra el canónico al abrir. Al cerrar esta sesión: 146 runs, 116
+completados, densidad `1..146`, cero activos.**
 
 ---
 
-## LAS DOS REGLAS DE OPERACIÓN QUE PUSO ESTA SESIÓN — permanentes
+## LA REGLA QUE EL OPERADOR PUSO Y GOBIERNA TODAS LAS ESCALAS
 
-**1 · NO SE LE RECUERDA EL PUSH.** Retira explícitamente el «toca push — N commits». Mientras la
-cabina commitee, él hace los push. **No se menciona ni al cerrar sesión.** El commit sigue siendo
-obligación de la cabina.
+> **«Mediano» significa «lo que ya ves».** En toda escala de tamaño de diapositiva, el peldaño
+> mediano vale **exactamente** lo que esa superficie pinta hoy sin campo.
 
-**2 · TODA PETICIÓN DE REVISIÓN VA EN LISTA NUMERADA DE PASOS CORTOS.** Un paso por línea, sin
-párrafos con la instrucción dentro. **Es la tercera vez que pide algo de esta familia.**
+Sus palabras: *«El tamaño mediano deberia ser el tamaño automatico acual hay que actualizar la
+escalera de tamaños para esto»*.
 
----
-
-## LA LECCIÓN MÁS CARA DE LA SESIÓN: cuando el juicio es VISUAL, entrega el INSTRUMENTO
-
-Para fijar cuatro tamaños de la Portada la cabina gastó **tres entregables fallidos y tres
-turnos**, cada uno ofreciendo **candidatos suyos**. El cuarto le dio **deslizadores sobre el
-render real** y el operador cerró los cuatro números **de una vez**.
-
-**Las tres causas, porque son de la misma familia:**
-
-1. **Escala mal anclada.** Se escaló con `1rem = 24px`; en la diapositiva **`1rem` son 16px** —el
-   24px de `#j-infinity-root` fija el `em`, no el `rem`, y está escrito en `comp_global.css`.
-2. **El CSS del motor sobre la página del visor.** `comp_global.css` declara
-   `body, html { height:100vh; overflow:hidden; display:flex }`. Inyectarlo en la propia página
-   la colapsa. **Cada diapositiva va en un iframe con documento propio.**
-3. **Orden de las hojas.** `renderTitleSlide` devuelve su `<style>` **pegado al `<section>`**, o
-   sea en el `body`. Un override en el `<head>` **pierde** por orden. Va **al final del body**,
-   y con **guarda que lo comprueba antes de escribir el fichero**.
+**Es lo que hace que apagar «Automático» sea seguro sin negociar superficie por superficie.** Y
+hay prueba de que ya era cierta antes de nombrarse: **las escalas que se pudieron apagar sin
+mover un píxel eran justo las que se habían anclado así.**
 
 ---
 
-## EL CICLO, Y UN PASO QUE LA CABINA SE SALTÓ
+## LA LECCIÓN MÁS CARA DE LA SESIÓN: EL DEFECTO VIVE EN EL VALOR POR DEFECTO
 
-**Turno 1 — ABRIR Y ENCARGAR.** Derivar, dry-run `planned → active`, **aplicar**, verificar,
-publicar el parte, y debajo el ticket.
+El operador tuvo que pedir **dos veces** que se quitara «Automático». No porque se olvidara a
+nadie: **porque el control nacía con la opción encendida**, y la reparación anterior se acotó a
+una superficie a propósito — *«quien apaga la opción es el llamador, uno por uno»*.
 
-**LA CABINA SE SALTÓ EL «APLICAR» UNA VEZ** y emitió el ticket con el run en `planned`. **La
-guarda de aborto del propio ticket lo cazó**, el taller no tocó nada. Es la mejor prueba de que
-esa guarda no es higiene: **está escrita para cazar al ticket, y cazó a quien lo escribió.**
+**Cada componente nuevo nacía con el defecto.** Y una prueba lo **congelaba**: fijaba
+`automatico = true` como defecto, protegiendo el alcance de su run **y a la vez la fábrica de
+defectos**.
 
-**Turno 2 — MEDIR, COMMITEAR, ENTREGAR QA. EL RUN NO SE CIERRA AQUÍ.**
-
-**Turno 3 — CERRAR con su veredicto, escribirlo a disco VERBATIM, y encadenar.**
-
----
-
-## EL TALLER CONTRADIJO A LA CABINA EN **CINCO** RUNS SEGUIDOS, Y ACERTÓ LAS CINCO
-
-**No es anécdota: es el mecanismo funcionando, y hay que seguir invitándolo en cada ticket.**
-
-1. **`#105`** — «1536px son *exactamente* el `max-width` del título»: **falso**. El `80%` resuelve
-   contra la caja de contenido (`1920 − 2·5rem = 1760`), o sea **1408px**. La cabina afirmó una
-   identidad **sin preguntarse contra qué resuelve el porcentaje**.
-2. **`#106` r1** — «las flechas ya calculan el destino con `moveOpenItemTo`»: **conflaciona dos
-   funciones**. Calcula `slideGridNeighbourCell`; `moveOpenItemTo` sólo aplica. **El matiz decidió
-   la mudanza.**
-3. **`#106` r3** — la cabina le encontró a él una **incoherencia**: usó el peor caso del contrato
-   (celda del 4×4) para decidir que el nombre no cabía, **en el mismo reporte donde ya había
-   descartado el 4×4 por inalcanzable**. La celda real de plantilla es `171,67 × 143px`.
-4. **`#107`** — «nueve o más llamadas a `setFlowDrafts`»: son **8 apariciones, 7 llamadas**; la
-   octava está **dentro de un comentario**. Y había una **novena escritura que no es llamada** —el
-   inicializador de `useState`— que la cabina no vio.
-5. **`#108`** — contra **el plan**, no contra la cabina: la entrada R4 dice que `narrativeType` es
-   el único campo motor-legible que falta, y **`dimmed`/`dimmedOpacity` también lo son**. El
-   inventario 9.1 **se contradice dentro de su propia entrada**.
-
-**El patrón de los fallos de la cabina es siempre el mismo: SONDAS QUE NO DISTINGUEN.** Código de
-comentario, una función de otra, un porcentaje de su base. **Antes de publicar, pregúntate si la
-sonda puede ver lo que buscas.**
+**Generaliza:** cuando una reparación se acote a propósito, **preguntarse si el defecto vive en
+el valor por defecto**. Si vive ahí, acotarla garantiza que vuelva.
 
 ---
 
-## «CAPACIDAD EN EL MOTOR, CERRADA EN EL ESQUEMA» VA POR LA **OCTAVA** VEZ
+## LA CABINA SE CONTRADIJO A SÍ MISMA CUATRO VECES, Y LAS CUATRO LAS CAZÓ EL TALLER
 
-`layout.rows`, coordenadas, tipos de lámina, tamaños, la Portada, el asterisco derivado del
-esquema, el selector de tamaño reusable, y ahora **`dimmed` en los cinco tipos de ítem**.
+**No es anécdota: es el patrón de fallo dominante de la cabina en esta sesión.**
 
-**Cuando encuentres una capacidad cerrada, NÓMBRALA; no la abras por tu cuenta.**
+1. **`#108`** — el ticket decía «la condición de la cola compartida» y la enmienda decía
+   «gobernada por la lista». Seguir la enmienda habría roto dos pruebas ajenas.
+2. **`#110`** — el ticket ordenaba volver a un total de pruebas congelado **y** añadir una guarda.
+3. **`#113`** — ordenaba dar la escalera al título **y** no tocar el esquema. **La distinción que
+   faltaba:** sobre el mismo fichero, **retirar** un campo es sustractivo y rompe contrato;
+   **añadir** uno es aditivo. Una regla escrita para proteger de lo primero bloqueó lo segundo.
+4. **`#115`** — pedía escribir dentro de un fichero que el mismo ticket declaraba fuera de alcance.
 
-**Y su gemelo, nuevo esta sesión: A VECES LA CAPACIDAD TAMPOCO ESTÁ EN EL MOTOR.** Los tamaños de
-la Portada y los del título de Narrativa **no eran huecos de esquema**: eran CSS fijo. Antes de
-prometer un selector, **mide si el motor sabe pintarlo**.
+**Antes de emitir: leer el ticket entero buscando órdenes que no puedan cumplirse a la vez.**
+
+---
+
+## Y EL OTRO PATRÓN: SONDAS QUE NO DISTINGUEN
+
+**Le falló a la cabina seis o siete veces esta sesión.** Casos: contar apariciones creyendo que
+son llamadas (incluida la línea del `import`); `grep -r` arrastrando `node_modules` hasta agotar
+el tiempo; `head -3` truncando una lista y casi publicando una discrepancia inexistente; buscar
+`automatico={` sin ver el `automatico` a secas; una regex sobre el literal de un ítem que **no
+puede** ver un campo que entra por `spread` 40 líneas más arriba.
+
+**Y le falló también al taller, tres veces, cazadas por su propio método:** una guarda que
+casaba con la prosa de un comentario; otra que casaba con la hoja de estilo en vez del elemento
+pintado; una mutación que moría al cargar y ponía roja la suite sin probar nada.
+
+**Antes de publicar el resultado de una sonda, preguntarse si la sonda puede ver lo que se
+busca.** Y **si el resultado viene de una lista, si estaba completa**.
+
+---
+
+## LA CORRECCIÓN DE `C5 [SENTINEL]` — el relevo anterior lo encuadraba mal
+
+**El relevo llevaba dos sesiones diciendo que `C5` «exige cero runs activos» y «se enciende y se
+apaga con el ciclo».** Medido: su título e intención son **«the canonical file was never written
+by this suite»** — es un **centinela de fuga**, no un semáforo del ciclo. Su aserción **sí**
+cuenta runs activos, así que el hecho no era falso; **el encuadre sí**, y llevó a la cabina a
+predecir un número en un ticket en vez de leer un propósito.
+
+---
+
+## LO QUE FUNCIONÓ Y HAY QUE SEGUIR HACIENDO
+
+- **DIBUJAR OPCIONES, NO DESCRIBIRLAS.** Volvió a rendir dos veces: los glifos y las siete
+  conductas de desborde. **Un HTML de un fichero, opciones lado a lado, al tamaño real y
+  ampliadas.**
+- **LA DISCIPLINA DE MUTACIÓN.** Cada guarda se ve **roja** por mutación y se restaura. Cazó
+  guardas que pasaban con el motor roto.
+- **VERIFICAR CONTRA LA SALIDA ANTERIOR, NO CONTRA LA PROPIA.** En `#115` las portadas se
+  compararon contra los árboles fijados del repositorio.
+- **LA PARADA DE ANÁLISIS.** Se usó una vez y **desmintió la mitad de la premisa de su run**: la
+  regla que iba a implementarse **ya existía en las dos puertas**.
+- **PARAR SIN ESCRIBIR NI LAS GUARDAS** cuando falta una decisión del operador. Escribirlas
+  habría fijado lo que él no había decidido.
+- **FIJAR ES UN ACTO.** Las pruebas y árboles que se ponen rojos se **enmiendan con su nota**,
+  nunca se regeneran en silencio.
 
 ---
 
@@ -177,63 +187,39 @@ prometer un selector, **mide si el motor sabe pintarlo**.
     node --test --test-concurrency=1 "tools/author-lite/compiler-api/tests/*.test.mjs" \
       "tools/dev/tests/*.test.mjs" "tools/roadmap/tests/*.test.mjs"
 
-**Al cerrar: 1581 / 1576 pasan / 5 fallan.** compiler-api 1401 · dev 7 · roadmap 173.
+**Al cerrar: `1639 · 1634 pasan · 5 fallan`.** Los cinco son previos y están todos en
+`tools/roadmap/tests/`, por una **dependencia huérfana del canónico real** —
+`RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` → `RUN-CANTU-ROADMAP-CONTENT-AUDIT-001`,
+que no existe — más `clearProgress B7` y el centinela `C5`. **Ninguno se toca.**
 
-**LOS CINCO FALLOS TIENEN TRES CAUSAS, NO UNA:**
-
-1. **Dependencia huérfana** — `RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` apunta a un
-   run que no está en este canónico. **3 pruebas.**
-2. **`clearProgress` B7** — no hay ningún run terminal con registro de progreso.
-3. **`C5 [SENTINEL]`** — **exige CERO runs `active`**. **Se enciende y se apaga con el ciclo**, y
-   esta sesión lo confirmó **dos veces seguidas prediciéndolo**: al cerrar `#104` bajó a 4, al
-   abrir `#105` volvió a 5.
-
-**Ninguno se toca. Si ves 4 en vez de 5, mira si hay run activo antes de celebrar nada.**
-
----
-
-## LO QUE EL OPERADOR HA DICHO Y RIGE — sus palabras
-
-> **«el titulo de la leccion y el del bloque de portada son diferentes, el titulo de portada toma
-> como referencia el de leccion para llenarse la primera vez, pero no son el mismo campo»**
-
-> **«yo no borro o modifico los archivos tu lo haces, y commiteas yo solo hago el push»**
-
-> **«siempre antes de ponerme un ticket dime el modelo que recomiendas esfuerzo y si es la misma
-> sesion o nueva»**
-
-> **«el qa dame instrucciones mas claras, donde me meto para revisar eso, y que quieres que
-> revise»** — y su forma definitiva: **lista numerada, pasos cortos.**
-
-> **«siempre que cerremos sesion, me generas (actualizas) el handoff y el prompt de reinicio»**
-
-**Y cuatro backticks** cuando un ticket lleve bloques de código dentro.
+**El objetivo de todo run es NINGUNA REGRESIÓN, no un total congelado.**
 
 ---
 
 ## ABIERTO Y SIN DUEÑO — nombrado, no reparado
 
-- **`dimmed`/`dimmedOpacity`**: el motor los aplica a **cualquier** ítem, el esquema sólo los
-  declara en la Tarjeta.
-- **`handleDuplicateDraft`** guarda sin `scopeDraftToFlow` — inocuo hoy, propagaría la mezcla con
-  un fichero anterior a `#106`.
-- **La Portada sembrada estando en Web** desaparece del lienzo al primer cambio a Slide.
-  **Conducta anterior a `#107`**, verificada idéntica con y sin acotar.
-- **El tope del título vs el de la descripción** en la Portada: 1408 contra 1536px. Decisión del
-  operador si deben igualarse.
-- **La rama `isLessonGated`** de `RealPreviewPanel`, sin llamante.
-- **Las tildes rotas** — UTF-8 doble en los dos gemelos del esquema.
-- **`SlidePreviewPanel.jsx`**, muerto y sin retirar.
-- **El alias `columns`**, que el motor lee y el esquema no conoce.
-- **El build nunca limpia `dist/`** (pero `dist/` **no** está versionado: medido, 0 ficheros).
+- **«Extra grande» contra «muy grande».** El operador lo ha escrito **dos veces**. La lista es
+  compartida por Slide y Web, y una prueba la fija verbatim. **Es suyo y no tiene run.**
+- **Una etiqueta de sólo espacios pinta una píldora vacía.** Inalcanzable desde el editor; cuesta
+  un `trim`; mueve 0 árboles.
+- **El suelo del dibujo del gráfico en la fila 4.** En cuatro filas el armazón se lleva casi toda
+  la banda. Se alivió al quitar la descripción, **no se cerró**.
+- **El ocupante anclado fuera del rectángulo** al fusionar: hoy inalcanzable desde el mapa.
+- **El rótulo de éxito de la fusión**: publicado, **no consta elegido**.
+- **`dimmed`/`dimmedOpacity`**, `handleDuplicateDraft`, la rama `isLessonGated`, las tildes rotas
+  del esquema, `SlidePreviewPanel.jsx` muerto, el alias `columns`, y `dist/` sin limpiar.
+- **Tres textos fuera de alcance quedaron falsos y nombrados** en `#115`.
 
 ---
 
-## SEIS RUNS SEGUIDOS SIN MÁS PRUEBA QUE EL OJO DEL OPERADOR
+## LA SUPERFICIE QUE SÓLO JUZGA EL OJO DEL OPERADOR
 
-El proyecto **no tiene renderizador de React**. Toda la superficie visual del editor —Portada,
-panel, mapa de rejilla, cruz de movimiento— lleva **seis runs consecutivos** sin cobertura
-automática. **Se nombra en cada cierre para que el operador decida si acumula riesgo.**
+**Van ONCE runs consecutivos.** El proyecto no tiene renderizador de React y la cabina no ve
+interfaces. **Dos de ellos cerraron con QA parcial, seguidos.**
+
+**Y hay un fallo de la cabina que se repitió y no debe volver:** escribió un paso de QA sobre un
+componente que el operador **no puede ni insertar**. **Antes de pedir un paso, comprobar que es
+ejecutable.**
 
 ---
 

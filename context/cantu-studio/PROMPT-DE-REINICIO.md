@@ -1,6 +1,6 @@
 # PROMPT DE REINICIO — hilo `cantu-studio`
 
-> **Actualizado por la cabina el 2026-08-17**, al cerrar la sesión que llevó `#104` → `#108`.
+> **Actualizado por la cabina el 2026-08-18**, al cerrar la sesión que llevó `#108` → `#115`.
 > Se pega **verbatim** al abrir la sesión siguiente. No lleva cifras que envejezcan: manda
 > derivarlas.
 
@@ -19,40 +19,59 @@ ARRANQUE, en este orden y midiendo, no suponiendo:
 4. Lee tu relevo desde disco: projects/aiw-console/context/handoffs/cantu-studio.md
    Y CONTRASTA SUS CIFRAS CONTRA EL CANONICO. Gana el disco.
 5. El canonico es projects/cantu-studio/.aiw/roadmap/roadmap.json -- con .aiw/ --
-   y su forma es objectives[].phases[].runs[]: no hay runs en la raiz.
-   .project/roadmap.json es la proyeccion emitida, no la fuente.
+   y su forma es objectives[].phases[].runs[]. OJO: el aiw/ SIN punto de la raiz
+   del workspace es OTRO repo. .project/roadmap.json es la proyeccion, no la fuente.
 6. Reporta el estado en una tabla, con la hora de medicion.
 
-DOS LIMITES TUYOS QUE YA ESTAN MEDIDOS Y TE AHORRAN UNA HORA:
-- Tu tope por llamada son ~178 segundos aunque pidas 600. La suite se mide POR
-  LOTES, y algun lote hay que partirlo en dos cuando crece.
-- Corre las pruebas SIEMPRE con --test-concurrency=1. Sin eso la contencion
-  produce ROJOS FALSOS: un lote dio 10 fallos y el mismo lote con concurrencia 1
-  dio 214/214. Un rojo sin esa bandera no se publica: se vuelve a medir.
+LIMITES TUYOS YA MEDIDOS, QUE TE AHORRAN UNA HORA:
+- Tu tope por llamada son ~178 segundos. Las mediciones lentas VAN SOLAS: agrupar
+  status y diff mato una llamada esta sesion.
+- Corre las pruebas SIEMPRE con --test-concurrency=1. Sin eso la contencion produce
+  ROJOS FALSOS. Un rojo sin esa bandera no se publica: se vuelve a medir.
 - /tmp NO es escribible. Los ficheros auxiliares van a _scratch/.
+- LOS MENSAJES DE COMMIT VAN POR FICHERO (-F), NUNCA por linea de shell: unas
+  comillas invertidas te comeran una palabra.
 
-DOS REGLAS DE OPERACION QUE EL OPERADOR PUSO POR ESCRITO Y SON PERMANENTES:
-- NO le recuerdes el push. Nunca. Tu commiteas, el publica cuando quiere.
-- TODA peticion de revision va en LISTA NUMERADA de pasos CORTOS, uno por linea.
+LAS CUATRO REGLAS DEL OPERADOR, Y SON PERMANENTES:
+1. NO le recuerdes el push. Nunca, ni al cerrar sesion.
+2. TODA peticion de revision va en LISTA NUMERADA de pasos CORTOS, uno por linea.
+3. NO le recomiendes modelo ni esfuerzo en la MISMA sesion -- no puede cambiarlos.
+   PERO DECLARA SIEMPRE LA SESION, en las dos direcciones: "misma sesion" o
+   "sesion nueva". En sesion nueva SI van modelo y esfuerzo.
+4. EL TICKET NO SE ANUNCIA: SE ENTREGA, en el mismo turno en que abres el run.
+   Solo lo retienes si falta una decision suya.
+Las cuatro tienen la misma forma: retiran trabajo que le estabas pasando a el.
 
-DONDE QUEDAMOS: #108 RUN-CANTU-SLIDE-NARRATIVE-AUDIT-AND-IMPLEMENT-001 esta ACTIVE
-y NO se cierra todavia. Su ronda 1 esta entregada y commiteada, pero el operador
-reviso Narrativa y encontro cuatro cosas, y TRES DE ELLAS EXIGEN TOCAR EL MOTOR,
-que el plan de quince runs declara de solo lectura con parada explicita.
+TUS DOS PATRONES DE FALLO, MEDIDOS ESTA SESION. Vigilalos:
+- TICKETS QUE SE CONTRADICEN A SI MISMOS. Paso CUATRO veces. Antes de emitir, lee el
+  ticket entero buscando ordenes incompatibles. La distincion que mas falto: sobre un
+  mismo fichero, RETIRAR un campo rompe contrato y ANADIR uno es aditivo -- una regla
+  escrita para prohibir lo primero bloqueara lo segundo si no lo dices.
+- SONDAS QUE NO DISTINGUEN. Seis o siete veces. Apariciones contadas como llamadas,
+  grep -r arrastrando node_modules, head truncando una lista, un patron que no ve un
+  campo que entra por spread. Antes de publicar: ¿puede la sonda ver lo que busco?
+  ¿estaba completa la lista?
 
-LO PRIMERO NO ES EMITIR UN TICKET: es llevarle la decision. Lee su veredicto
-verbatim y las cuatro mediciones en
-projects/aiw-console/context/cantu-studio/records/VEREDICTO-108-NARRATIVA.md,
-verifica esas mediciones contra el disco, y presentale las opciones con
-recomendacion: abrir el motor para Narrativa fuera del plan, o posponerlo.
+DONDE QUEDAMOS: CERO RUNS ACTIVOS. El siguiente de la cola es #116,
+RUN-CANTU-SLIDE-BODY-TEXT-OWN-SCALES-001 -- Narrativa y Lista con etiquetas reciben
+su propia escala de texto anclada en lo de hoy, y ahi se apaga su «Automatico», que
+son las dos ultimas superficies que lo conservan.
 
-Y HAY DOS RUNS QUE EL YA PIDIO Y NO EXISTEN EN EL CANONICO:
-- FUSIONAR: que fusione si hay UN SOLO componente en los cuadrantes elegidos,
-  independientemente de su posicion, y que PROHIBA fusionar cuadrantes con mas de
-  uno. Toca el contrato de rejilla.
-- LOS DOS ICONOS de la paleta: el de Portada no lo asocia, y el de Libre lo quiere
-  un poco mas alto. El vehiculo que ya funciono con el es un HTML con opciones
-  DIBUJADAS, no una descripcion.
+ESE RUN LLEVA UNA DEUDA DECLARADA DENTRO: «Lista con etiquetas» esta CONTENIDO y el
+operador no puede ni insertarlo, asi que la mitad de su QA no se puede mirar hasta que
+se levante su contencion. Dilo al entregar la QA.
+
+Detras van: #117 la separacion bajo el titulo de la diapositiva -- que ABSORBE la
+retirada del espaciado de Narrativa, por decision del operador --, #118 la convencion
+campo->tamano en todos los formularios, y #119 Lista con etiquetas.
+
+LA REGLA QUE EL OPERADOR PUSO Y GOBIERNA TODAS LAS ESCALAS: «Mediano» significa «lo
+que ya ves». El peldano mediano vale EXACTAMENTE lo que esa superficie pinta hoy sin
+campo. Es lo que hace seguro apagar «Automatico» sin negociar superficie por
+superficie.
+
+Y SIGUE ABIERTO, SIN RUN Y ES SUYO: «Extra grande» contra «muy grande», que el ha
+escrito DOS VECES. La lista la comparten Slide y Web y una prueba la fija verbatim.
 
 Al cerrar sesion, actualizas el handoff y este prompt sin que te lo pida.
 ```
@@ -68,7 +87,11 @@ contarle.
 
 ## LO QUE SÍ LLEVA, Y ES DELIBERADO
 
-Los **dos límites de capacidad** y las **dos reglas de operación** van dentro del prompt, no sólo
-en el relevo, porque son cosas que la cabina necesita **antes** de leer nada — el límite de los
-178 segundos y la bandera de concurrencia deciden cómo mide desde el primer comando, y las dos
-reglas del operador deciden cómo escribe desde la primera respuesta.
+**Los límites de capacidad** y **las cuatro reglas del operador** van dentro del prompt y no sólo
+en el relevo, porque son cosas que la cabina necesita **antes** de leer nada: deciden cómo mide
+desde el primer comando y cómo escribe desde la primera respuesta.
+
+**Y esta versión añade los DOS PATRONES DE FALLO de la cabina**, que es lo nuevo. No son
+anécdotas: los tickets que se contradicen a sí mismos costaron **cuatro paradas de taller** en
+una sesión, y las sondas que no distinguen fallaron media docena de veces. **Ponerlos en el
+prompt es más barato que volver a pagarlos.**

@@ -38,10 +38,29 @@ hereda esa dificultad y no la sube.** Que suba es la excepción, no el caso.
 
 ## CÓMO QUEDA LA LÍNEA DE LA CABINA
 
-- **Misma sesión** → **no se dice nada** de modelo ni de esfuerzo. Sólo el ticket.
-- **Sesión nueva** → se dice, con las tres cosas juntas y **con el porqué**: qué hace que este
-  encargo no herede la dificultad del anterior, o qué sesgo del taller anterior justifica
-  empezar de cero.
+> **CORREGIDO EL MISMO DÍA, 2026-08-17.** La primera versión de esta sección decía que en la
+> misma sesión **no se dice nada**. **Era una lectura equivocada de la cabina**, y el operador
+> la corrigió en cuanto la vio aplicada:
+>
+>     si pero igual me dejas mensaje siempre de "misma sesion" o "sesion nueva"
+>     lo que no se decia es el modelo y esfuerzo
+>
+> **Lo que sobra es el modelo y el esfuerzo. La sesión NO sobra: es la única de las tres sobre
+> la que él puede actuar, así que se dice SIEMPRE.** La cabina había colapsado «no digas lo que
+> no puede usar» en «no digas nada», y con eso le quitó también el dato que sí usaba.
+
+- **SIEMPRE se declara la sesión**, en las dos direcciones: **«misma sesión»** o **«sesión
+  nueva»**. Sin excepción, y también cuando la respuesta es la aburrida.
+- **Misma sesión** → **se dice «misma sesión» y NADA de modelo ni esfuerzo.** Él mantiene los
+  que arrancó.
+- **Sesión nueva** → se dice, **con modelo y esfuerzo**, porque ahí sí los elige, y **con el
+  porqué**: qué hace que este encargo no herede la dificultad del anterior, o qué sesgo del
+  taller anterior justifica empezar de cero.
+
+**El caso que destapó el error:** la cabina recomendó sesión nueva para abrir un run, y en el
+turno siguiente —ronda 2 del mismo run, misma sesión— **calló**. El operador tuvo que
+preguntar «¿este va en la misma sesión?». **Un silencio no es una respuesta cuando el turno
+anterior dijo lo contrario.**
 
 ## POR QUÉ ESTA REGLA ES DE LA MISMA FAMILIA QUE LAS OTRAS DOS
 
@@ -55,3 +74,9 @@ misma forma: **retiran de la respuesta algo sobre lo que él no puede actuar.**
 
 **El patrón que la cabina tiene que aprender de las tres:** antes de escribir una línea
 dirigida al operador, preguntarse **si él puede hacer algo con ella**. Si no puede, sobra.
+
+**Y el corolario que costó la corrección de arriba, porque es la otra mitad del mismo patrón:**
+la prueba es **por línea, no por bloque**. Que dos datos viajen juntos en la misma frase no
+significa que sobren los dos. **Se retira lo que no puede usar y se conserva lo que sí** — y
+cuando la cabina no está segura de cuál es cuál, la respuesta es **preguntar**, no callar el
+bloque entero.

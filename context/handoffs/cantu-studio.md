@@ -1,7 +1,7 @@
 # HANDOFF — hilo `cantu-studio` (el proyecto)
 
-> Escrito por la cabina el **2026-08-20**, al cerrar la sesión que llevó `#116` → `#130`.
-> **Sustituye al relevo del 2026-08-18.**
+> Escrito por la cabina el **2026-08-22**, al cerrar la sesión de `#131`.
+> **Sustituye al relevo del 2026-08-20.**
 >
 > **Todo lo de aquí está medido y lleva fecha. Contrástalo contra el canónico al abrir. Gana el
 > disco.**
@@ -13,48 +13,61 @@
 La ruta de montaje **cambia entre sesiones**. No la heredes. Prueba que se lee el workspace, que
 `git log` responde, **que el borrado está habilitado** y que `.git` es escribible.
 
-**Comprueba `.git/index.lock` en los cinco repos con `ls`, nunca corriendo git.** Esta sesión
-apareció **uno** en `cantu-quizzes-latex` sin que la cabina tocara ese repo. Lo borró y lo
-declaró. **Compruébalo igual: no es teórico.**
+**Comprueba `.git/index.lock` en los cinco repos con `ls`, nunca corriendo git.** Esta sesión no
+apareció ninguno; la anterior sí, en un repo que la cabina no había tocado. **Compruébalo igual.**
 
-### LOS LÍMITES DE LA CABINA, RE-MEDIDOS EL 2026-08-20
+### LOS LÍMITES DE LA CABINA, RE-MEDIDOS EL 2026-08-22
 
-1. **EL TOPE POR LLAMADA SON ~178 SEGUNDOS.** Esta sesión lo tocó **cuatro veces**: la suite
-   completa ya **NO CABE** en una llamada, y un `grep -r` sin excluir `node_modules` se lo come
-   entero. **Las mediciones lentas van solas, y la suite completa la mide el taller.**
+1. **EL TOPE POR LLAMADA SON ~120–178 SEGUNDOS.** Esta sesión lo tocó **tres veces**, y una de
+   ellas **hizo daño** — ver la sección del arnés. La suite completa **NO CABE**: la mide el
+   taller.
 2. **`--test-concurrency=1` NO ES OPCIONAL.**
-3. **EL BORRADO SE PIDE Y FUNCIONA.** Es por carpeta y persiste.
-4. **`/tmp` NO ES ESCRIBIBLE.** Los auxiliares van a `_scratch/`.
-5. **LOS MENSAJES DE COMMIT VAN POR FICHERO, NUNCA POR LÍNEA DE SHELL.** Pasó **DOS VECES** esta
-   sesión: unas comillas invertidas se comieron una palabra. Las dos se enmendaron porque no
-   estaban publicadas.
-6. **NUEVO — LOS SCRIPTS AUXILIARES VAN POR FICHERO, NO POR HEREDOC.** Un heredoc con backticks
-   o `${}` se rompe o se ejecuta. Pasó varias veces, a la cabina y al taller.
+3. **EL BORRADO SE PIDE Y FUNCIONA.** `rm` falla; la herramienta de permiso lo habilita por
+   carpeta y persiste. Se pide UNA vez al arrancar.
+4. **`/tmp` SÍ ERA ESCRIBIBLE esta sesión**, al contrario de lo que decía el relevo anterior.
+   Aun así usa `_scratch/`: es barato y no depende de la medición.
+5. **MENSAJES DE COMMIT Y SCRIPTS, POR FICHERO.** Nunca heredoc con backticks, nunca por línea.
+6. **`grep -r` SOBRE `src` Y `tools` SIN EXCLUIR `node_modules` SE COME LA LLAMADA ENTERA.**
+   Pasó esta sesión, con el aviso ya escrito delante. **Usa la herramienta de búsqueda.**
+7. **NUEVO — LA CONSOLA NO SOBREVIVE ENTRE LLAMADAS.** Cada `bash` es un proceso aislado: un
+   `serve.mjs` lanzado en una llamada está muerto en la siguiente. **Levanta y haz el POST en la
+   MISMA llamada.** Pasó, y costó un intento.
 
 ---
 
-## ⚠⚠ LO QUE MÁS TE VA A DOLER SI NO LO LEES: LOS TRES FALLOS DE COMMIT
+## ⚠⚠ EL FALLO MÁS CARO DE ESTA SESIÓN, Y FUE DE LA CABINA
 
-**TRES COMMITS DE ESTA SESIÓN SALIERON INCOMPLETOS**, y uno **dejó la rama sin compilar**:
+**LA CABINA CORRIÓ EL ARNÉS DE MUTACIÓN PARA VERIFICAR UNA CIFRA, Y LO MATÓ POR TIMEOUT.**
 
-| | qué faltó | consecuencia |
-|---|---|---|
-| `#126` | `SlideRuleMathField.jsx` | **un `import` a un módulo inexistente** |
-| `#128` | `SlideSizeSelect.jsx` | un comentario mintiendo en el commit |
-| `#129` | una guarda de Web | un recuento desactualizado |
+El arnés guarda los originales **en memoria** y restaura al cerrar. Al morir el proceso, **dejó
+viva una mutación**: `conceptGridJAMAS` en el despachador del formulario.
 
-**La causa fue siempre la misma:** `git add -u` sobre directorios, o una lista por nombre
-**tecleada de memoria**. `-u` **solo escenifica modificaciones de ficheros ya seguidos: los
-nuevos no los ve**.
+**Y lo peligroso es cómo NO se vio:** el fichero ya estaba modificado, así que **el `git status`
+seguía diciendo exactamente lo mismo — 17 entradas, ninguna nueva**. Solo se detectó porque la
+cabina volvió a correr las guardas **después**. Si no llega a repetir esa medición, habría
+commiteado el árbol mutado.
 
-**LA REGLA CORREGIDA, Y ES LO QUE HAY QUE HACER:**
+> **REGLA: la cabina NO corre el arnés de mutación. Es del taller, tarda más que su tope, y
+> matarlo a mitad deja código mutado que el `git status` no delata.**
+>
+> **Y la de fondo: después de tocar cualquier cosa, la comprobación se REPITE. Un verde de antes
+> del toque no vale.**
+
+---
+
+## ⚠⚠ LOS TRES FALLOS DE COMMIT DE LA SESIÓN ANTERIOR — la regla siguió funcionando
+
+Esta sesión hizo **seis commits, todos completos**, derivando siempre del `git status`:
 
     FILES=$(git --no-optional-locks status --porcelain | grep -vE "\.aiw/|\.project/" | awk '{print $NF}')
     echo "$FILES" | xargs git --no-optional-locks add
 
-**La lista por nombre se DERIVA del `git status`, no se teclea.** Y los tres se detectaron
-**midiendo el `git status` del run siguiente**, no revisando: **esa medición al abrir cada
-entrega se ha pagado tres veces sola.**
+**En `aiw-console` hay que ACOTAR además al hilo**: `| grep -v '^context/aiw/'`. Esa carpeta es
+del hilo `aiw` y lleva toda la sesión sin versionar. **No la toques.**
+
+**Y sigue midiendo el `git status` al abrir cada entrega.** Esta sesión confirmó por ahí que el
+corpus estaba intacto —**cero ficheros de `src/content` o de `fixtures/corpus` en el status**—,
+que es una verificación de 63 árboles gratis y por ausencia.
 
 ---
 
@@ -66,130 +79,125 @@ entrega se ha pagado tres veces sola.**
       { op, args:{...}, apply:false }                    # dry-run -> remap + baseline
       { op, args:{...}, apply:true, baseline }           # compare-and-swap
 
-**Levanta el servidor y haz el POST en la misma llamada.** `serve.mjs` re-emite los 7 artefactos
-de `.project/` él solo.
+**Levanta el servidor y haz el POST en la MISMA llamada.** `serve.mjs` re-emite los 7 artefactos
+de `.project/` él solo y corre `checkInvariants` tras cada escritura.
 
-**Nombres de argumento verificados:** `set-status` → `run`, `status`, `closeoutResult` ·
-`set-text` → `targetType:"run"`, `targetId`, `fullDescription` · `insert` → `runId`, `title`,
-`summary`, `fullDescription` + `before`/`after` · `move` → `run` + `toOrder`.
+**Argumentos verificados:** `set-status` → `run`, `status`, `closeoutResult` · `set-text` →
+`targetType:"run"`, `targetId`, `fullDescription` · `insert` → `runId`, `title`, `summary`,
+`fullDescription` + `before`/`after` · `move` → `run` + `toOrder`.
 
 **El canónico es `.aiw/roadmap/roadmap.json`** — con `.aiw/`. Forma `objectives[].phases[].runs[]`.
 
+### EL VALIDADOR: cuál es y cuál NO
+
+**NO uses `tools/project-console/validate-project-console-state.mjs`.** Reconcilia otro árbol y
+sobre `cantu-studio` devuelve **25 líneas de rojo**, incluida una que dice que falta el fichero
+que acabas de escribir. La cabina lo corrió y publicó el rojo antes de darse cuenta.
+
+**El que gobierna es `checkInvariants` del motor de `aiw-console`**, con `externalRunIds`
+compuestos como los compone `serve.mjs`. **Los `root` del registro se resuelven contra
+`project-console/`, no contra la raíz del workspace** — resolverlos mal recoge **cero** externos y
+fabrica un rojo por dependencia huérfana que no existe. Bien resueltos: **155 externos, cero
+errores.**
+
+> **Las dos caras del mismo defecto en una sesión: una sonda equivocada produce un verde, y
+> también produce un rojo. Ninguno de los dos se cuestiona solo.**
+
 ---
 
-## LAS SEIS REGLAS DE OPERACIÓN DEL OPERADOR — permanentes
-
-**Todas tienen la MISMA FORMA: retiran de la respuesta trabajo que la cabina le pasaba a él.**
+## LAS OCHO REGLAS DEL OPERADOR — permanentes
 
 1. **NO SE LE RECUERDA EL PUSH.** Nunca.
 2. **TODA PETICIÓN DE REVISIÓN VA EN LISTA NUMERADA DE PASOS CORTOS.** Uno por línea.
 3. **NO SE LE RECOMIENDA MODELO NI ESFUERZO EN LA MISMA SESIÓN. PERO LA SESIÓN SE DECLARA
-   SIEMPRE.**
-4. **EL TICKET NO SE ANUNCIA: SE ENTREGA.**
-5. **NUEVA (2026-08-18) — UN RUN NUEVO SE LANZA EN SESIÓN NUEVA; LAS RONDAS DE CORRECCIÓN, NO.**
-   **El corte es el `run_id`, no el tamaño.** En sesión nueva SÍ van modelo y esfuerzo, porque
-   ahí los elige. La cabina había degradado esto a decir «misma sesión» por costumbre.
-   → `records/REGLA-SESION-NUEVA-POR-RUN-NUEVO.md`
-6. **NUEVA (2026-08-18) — EL MATERIAL DE QA LO PRODUCE LA CABINA Y LO PRUEBA CONTRA LA PUERTA
-   REAL.** Sus palabras: *«dame el json para los test no solo me digas que lo invente»*. Un
-   material sin probar puede fabricar un rojo falso.
-
-### Y DOS REGLAS DE FORMATO Y DE CIERRE (2026-08-20)
-
-7. **UN TICKET NO PUEDE LLEVAR UNA VALLA DE CÓDIGO DENTRO DE OTRA.** La valla interior CIERRA la
-   exterior y el operador ve el ticket cortado. **Pasó varias veces.** Salidas: **indentar con
-   cuatro espacios**, o valla exterior de **cuatro** tildes. Y **releer el ticket entero buscando
-   triples antes de enviarlo**.
-   → `records/REGLA-FORMATO-Y-CIERRE-DE-SESION.md`
-8. **AL CERRAR UN RUN CORRECTAMENTE, SI HAY SESIÓN LARGA DETRÁS, TOCA RELEVO**: handoff, prompt
-   de reinicio, commits — y el operador reinicia.
+   SIEMPRE, en las dos direcciones.**
+4. **EL TICKET NO SE ANUNCIA: SE ENTREGA**, en el mismo turno en que se abre el run.
+5. **UN RUN NUEVO SE LANZA EN SESIÓN NUEVA; las rondas de corrección, en la misma. EL CORTE ES EL
+   `run_id`, NO EL TAMAÑO.** En sesión nueva SÍ van modelo y esfuerzo.
+6. **EL MATERIAL DE QA LO PRODUCE LA CABINA Y LO PASA POR LA PUERTA REAL** antes de darlo.
+7. **UN TICKET NO LLEVA UNA VALLA DE CÓDIGO DENTRO DE OTRA.** Cuatro espacios de indentación, o
+   valla exterior de cuatro tildes. **Y se relee entero buscando triples antes de enviarlo.**
+8. **DIBÚJALE LAS OPCIONES ANTES DE PEDIRLE QUE DECIDA.** *«tengo que verlo visual para
+   entenderlo».* Esta sesión se le dibujó **tres veces** y las tres decidió en una línea.
 
 ---
 
 ## QUÉ SIGUE — lo primero al abrir
 
-**CERO RUNS ACTIVOS al cerrar.** El siguiente es **`#131`**,
-`RUN-CANTU-SLIDE-CONCEPTGRID-ADMIT-AND-IMPLEMENT-001` — «conceptGrid como componente de celda».
-**Llega SIN NOMBRE DE AUTOR**, igual que llegó `split`.
+**CERO RUNS ACTIVOS al cerrar.** El siguiente es **`#132`**,
+`RUN-CANTU-SLIDE-TABLE-ADMIT-AND-IMPLEMENT-001` — «Tabla».
 
-**Contrasta contra el canónico al abrir. Al cerrar esta sesión: 153 runs, 131 completados,
-densidad `1..153`, cero activos.**
+**Al cerrar esta sesión: 153 runs, 132 completados, 21 planned, densidad `1..153`, cero activos,
+`history=132 · ready_next=7 · later=14`.** Contrástalo.
 
-**Quedan CUATRO componentes por admitir** —conceptGrid, Tabla, Cálculo aritmético— **y DOS tipos
-de diapositiva por exponer** —Procedimiento matemático y Jerarquía.
+**Quedan DOS componentes por admitir** —Tabla y Cálculo aritmético— **y DOS tipos de diapositiva
+por exponer** —Procedimiento matemático y Jerarquía.
 
----
+### `#132` «Tabla» tiene DOS cosas medidas que le ahorran una ronda
 
-## LO QUE ESTA SESIÓN CONSTRUYÓ, Y GOBIERNA TODO LO QUE VIENE
-
-### 1 · EL PELDAÑO ES EL TECHO
-
-**Decisión del operador del 2026-08-20, que SUSTITUYÓ a su propia decisión anterior.** Si cabe,
-se pinta el peldaño; si no, **el texto baja hasta caber**; **y nunca sube por encima** —así
-«Automático» no vuelve por la puerta de atrás—. **Suelo: 12 px. El aviso al autor pasa callado.**
-
-**Y el acierto no es el algoritmo, es dónde vive:** `fitEngine.js` se inyecta desde **los dos
-cascarones del documento** y **jamás desde `renderSlides()`**, que es lo que los 63 árboles
-capturan byte a byte. Por eso encoge en pantalla **sin mover un solo árbol**.
-
-**Agujero conocido:** no ve los recortes de contenido alineado abajo. El déficit se reporta como
-**0** mientras se pierden **150–405 px**.
-
-### 2 · EL CRITERIO DE LAS CINCO COSAS — hizo que una admisión costara UNA ronda en vez de cinco
-
-Todo componente que se admita responde de una vez por: **tamaño anclado**, **armazón que
-escala**, **color de la paleta global**, **icono del catálogo global**, y **saltos de línea**.
-Y si alguna no aplica, **se declara midiendo** —la Regla declaró «icono: no aplica» tras medir
-que no dibuja ninguno.
-
-### 3 · LO QUE SE APLICA SIN VOLVER A PREGUNTAR
-
-- **«Mediano» vale lo que la superficie pinta hoy** — salvo donde él mueva el ancla, y entonces
-  se declara quién lo movió.
-- **El color sale de la paleta global**, no de tablas fijas del motor.
-- **Los rótulos los pone él.** Y **antes de proponer uno, se mira si el equivalente de Web ya lo
-  tiene**: `split` se llamó «Tarjeta con desglose» hasta que él señaló que Web ya lo llamaba
-  **«Explicación guiada»**.
-- **El asterisco marca los obligatorios; los opcionales no llevan nada.**
-- **Retirar del FORMULARIO no es retirar del CONTRATO.**
+1. **`case 'table'` YA EXISTE en `renderColumnsSlide.js`.** A diferencia de `conceptGrid`, el
+   motor ya la pinta: **es plantilla pura de `split`, sin abrir motor.**
+2. **El nombre YA EXISTE**: `blockCatalog.js` la rotula **«Tabla»**. Como con `split` y con
+   `conceptGrid`: **la compuerta de nombre se cierra midiendo, no proponiendo.**
+3. **Su trampa está nombrada desde el plan:** el esquema debe exigir **celdas de objeto** — el
+   motor **revienta** con las celdas de cadena que usa Web. Es la incompatibilidad cruzada más
+   afilada del proyecto.
 
 ---
 
-## LAS DOS LECCIONES CARAS DE ESTA SESIÓN, Y LAS DOS SON DE LA CABINA
+## LO QUE ESTA SESIÓN CONSTRUYÓ, Y GOBIERNA LO QUE VIENE
 
-### A · EL ENCUADRE EQUIVOCADO SOBREVIVE A REPARACIONES CORRECTAS
+### 1 · EL PATRÓN «CAPACIDAD EN LOS HERMANOS, CERRADA EN ESTE»
 
-`#130` necesitó **NUEVE rondas**. **Cuatro arreglaron la capa equivocada** porque el encuadre de
-la cabina apuntaba al formulario — y **todas aquellas reparaciones eran correctas**. El esquema
-no se cuestionó **hasta que la cabina lo llamó directamente**, y bastaron **tres llamadas**.
+`conceptGrid` fue el único de seis componentes de celda **sin paleta global**, y no por diseño:
+por **residuo de frontera de run**. La frontera era correcta y el resultado era una divergencia
+que el operador vio en la primera QA.
 
-**Y volvió a pasar una capa más abajo:** se arreglaron las **listas** vacías y no se miraron las
-**cadenas** vacías, que tenían la trampa idéntica.
+> **REGLA: antes de cerrar un run de admisión, pregúntate qué tienen los hermanos que este no.
+> Si la respuesta es «lo mismo pero su run se lo dio», el operador lo va a ver.**
 
-> **REGLA: cuando un defecto sobreviva a DOS reparaciones correctas, el encuadre está mal, no la
-> reparación. Y la salida es llamar a la capa de abajo DIRECTAMENTE, no afinar la de arriba.**
+### 2 · EL PATRÓN DE MÓDULOS: DUPLICAR Y ATAR, NO COMPARTIR
 
-### B · MEDIR CON LA HERRAMIENTA EQUIVOCADA PRODUCE UN VERDE
+**Medido el 2026-08-22 y es de arquitectura:** **cero imports cruzan entre `src/builders/` y
+`editor-ui/`.** Los motores son CommonJS de Core; el editor es ESM empaquetado. `tokens.js` lo
+importan los motores y **los tests**, pero **ningún código de producción de `author-lite`**.
 
-La cabina recomendó igualar el tamaño del número **comparando un DISCO RELLENO con un TEXTO
-PELADO**. Las proporciones quedaron iguales y **lo que se ve, no**.
+**El patrón de la casa es duplicar y atar con una guarda que ABRE el fichero del motor y le
+extrae la lista por expresión regular.** Y un record anterior dejó la puerta abierta: *«Si el
+operador prefiere el import directo, es una decisión de arquitectura y la dice él.»*
 
-> **REGLA: un tamaño percibido no es un tamaño de fuente. Compara TRATAMIENTOS, no números.**
+**El operador eligió GUARDA.** No propongas módulo compartido sin decirle que es arquitectura.
+
+### 3 · LOS SIETE SEPARADORES, Y LA TRAMPA DE LOS CARACTERES GEMELOS
+
+Las dos listas de motor son ahora **idénticas**: `['+', '-', '=', '>', '<', '∙', 'x']`. El `·`
+**U+00B7** salió; el que queda es `∙` **U+2219**. **Se ven casi iguales y no son el mismo.**
+
+### 4 · EL DESPLEGABLE DE SIGNOS SE MONTA *ENTRE* TÉRMINOS
+
+`{grupo.sign ? ... : null}` — el primer término no tiene signo delante. **Con un solo término no
+aparece ninguno**, igual que Web. **Esto produjo la falsa alarma que abrió el cierre**, porque el
+packet no lo decía.
+
+> **REGLA NUEVA PARA TODA QA: un paso que mira un control tiene que decir CUÁNDO ESE CONTROL NO
+> DEBE APARECER. Si no, fabrica un rojo.**
 
 ---
 
 ## LO QUE HAY QUE SEGUIR EXIGIENDO AL TALLER, PORQUE RINDE
 
-- **EL ARNÉS DE MUTACIÓN.** Esta sesión desmintió **premisas de guardas** —un `.strict()` que no
-  existía—, cazó **guardas verdes con huecos reales**, y **retiró cuatro defensas inalcanzables**
-  en vez de fingirlas.
-- **CONDUCIR, NO LEER.** El formulario se conduce **en navegador con efectos**; el CSS heredado
-  miente; un párrafo vacío no se ve en el marcado.
-- **QUE LA SONDA SE CONTRADIGA CON EL CENSO Y GANE EL CENSO.** Pasó una docena de veces.
-- **DECLARAR QUÉ PRUEBA CADA GUARDA: el mecanismo o la pantalla.** Lo aprendimos cuando la QA
-  humana desmintió a una sonda sin efectos.
-- **RETIRAR UNA GUARDA EN VEZ DE REESCRIBIRLA PARA QUE PASE**, cuando lo que afirmaba ya no es
-  lo que el componente hace.
+- **EL ARNÉS DE MUTACIÓN.** Esta sesión destapó **cuatro guardas flojas** del propio taller —dos
+  miraban comentarios en vez de código— y **retiró una defensa inalcanzable**, la quinta
+  declarada del proyecto. **PERO EXIGE SU ARTEFACTO**: van **dos rondas seguidas** en que el
+  taller publica «46 de 46» **sin dejar salida en disco**, y su script declara **47** entradas.
+- **CONDUCIR, NO LEER.** El defecto del `fallbackId` —el desplegable diciendo un color y la
+  tarjeta pintando otro— **solo apareció conduciendo el navegador**.
+- **QUE CADA GUARDA DECLARE SI PRUEBA EL MECANISMO O LA PANTALLA.**
+- **QUE LA SONDA SE CONTRADIGA CON EL CENSO Y GANE EL CENSO.**
+- **EL CRITERIO DE LAS CINCO COSAS**, y si alguna no aplica, **que se declare midiendo**.
+- **QUE DECLARE SI LA PÁGINA DE QA NECESITA RED.** La de la ronda 0 la necesitaba y el packet la
+  presentaba como doble clic: sin internet, **0 nodos KaTeX y 25 delimitadores en crudo**, y dos
+  pasos habrían dado MAL por causa ajena.
 
 ---
 
@@ -198,32 +206,31 @@ PELADO**. Las proporciones quedaron iguales y **lo que se ve, no**.
     node --test --test-concurrency=1 "tools/author-lite/compiler-api/tests/*.test.mjs" \
       "tools/dev/tests/*.test.mjs" "tools/roadmap/tests/*.test.mjs"
 
-**Al cerrar: `1852 · 1847 pasan · 5 fallan`.** Los cinco son previos, todos en
-`tools/roadmap/tests/`, por una **dependencia huérfana del canónico** —
-`RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` → un run que no existe— más
-`clearProgress` y el centinela `C5`. **Ninguno se toca.**
+**Al cerrar: `1880 · 1875 pasan · 5 fallan`** — cifra del **taller**. Los cinco son previos, en
+`tools/roadmap/tests/`, por la dependencia huérfana del canónico. **Ninguno se toca.**
 
-**LA CABINA NO PUEDE MEDIRLA: excede su tope por llamada.** Mide subconjuntos y declara que la
-cifra completa es del taller.
+**LA CABINA NO PUEDE MEDIRLA.** Mide subconjuntos —esta sesión midió 133 y 28— y declara que la
+completa es del taller.
 
 ---
 
 ## ABIERTO Y SIN DUEÑO — todo nombrado, nada reparado
 
-- **EL RECORTE DE LA FILA 4 Y EL AGUJERO DEL MOTOR DE AJUSTE**, con sus 150–405 px. **Es del
-  mecanismo, no de un componente.**
-- **EL VÍDEO EN SU CELDA:** franjas 16:9, huella mínima o recorte. **Un vídeo no encoge de letra.**
+- **EL RECORTE DE LA FILA 4 Y EL AGUJERO DEL MOTOR DE AJUSTE**, 150–405 px. Del mecanismo.
+- **`.j-anatomy-display { flex: 0 0 300px }`** — 300 de los ~500 px que pide la tarjeta no ceden.
+- **EL TOPE DE CINCO TÉRMINOS**: el formulario de diapositiva no lo comprueba y el esquema rebota
+  el sexto **después**. Web sí lo comprueba. **Fallo real, fuera por decisión del operador.**
+- **EL `fallbackId` SIN GUARDA**: si alguien lo devuelve a `'ctx'`, la suite no se entera.
+- **EL TONO QUE NO COINCIDE**: item importado con `variant` y sin color elegido — el desplegable
+  muestra el hex de la paleta y la tarjeta pinta el del mapa privado (`focus`: `#B69F58` contra
+  `#C2B280`). Declarado en el código.
+- **LA DIVERGENCIA DE DELIMITADORES**: Web respeta el del autor, diapositiva envuelve siempre.
+- **EL VÍDEO EN SU CELDA.** **Un vídeo no encoge de letra.**
 - **TRES COMPONENTES CON LA TRAMPA DE LA CADENA VACÍA:** `card.variant`, `callout.accentColor`,
-  `rule.accentColor`.
-- **LAS 16 MEDIDAS DE ARMAZÓN** en píxeles fijos que el triaje nombró, **12 de ellas de la
-  Tarjeta**.
-- **QUE LA CELDA DE «Explicación guiada» PINTE NÚMERO Y RÓTULO** como Web.
-- **LAS SEIS DIVERGENCIAS CON WEB** de ese mismo componente.
-- **LAS CUATRO DEFENSAS INALCANZABLES** declaradas.
-- **QUE LA PROSA DE DIAPOSITIVA NO RECHACE HTML** —el esquema lo acepta; el compilador escapa por
-  el camino del autor.
-- **`bulb` ya no pinta un libro**, pero **un comentario falso quedó en los dos gemelos** del
-  esquema.
+  `rule.accentColor`. `split` y `conceptGrid` ya la cerraron.
+- **LAS 16 MEDIDAS DE ARMAZÓN** en píxeles fijos, 12 de la Tarjeta.
+- **`badgeTextVariant`**, el `<details>` «LaTeX avanzado» y el `InlineFormulaField` en
+  «Contenido» — los tres fuera **por decisión del operador**.
 - **«Extra grande» contra «muy grande»**, que sigue siendo suyo.
 - **`CLAUDE.md` describe un árbol `docs/author-lite/` que NO EXISTE.**
 
@@ -231,9 +238,26 @@ cifra completa es del taller.
 
 ## LA SUPERFICIE QUE SOLO JUZGA SU OJO
 
-**El proyecto no tiene renderizador de React y la cabina no ve interfaces.** Esta sesión lo
-demostró de la forma más cara posible: **la QA humana desmintió a una sonda que el propio taller
-había declarado ciega**, y hicieron falta cuatro rondas más.
+**El proyecto no tiene renderizador de React y la cabina no ve interfaces.**
 
-**Y por eso él pidió que se le DIBUJEN las opciones antes de decidir.** Cuando se le dibujó,
-decidió en una línea. Cuando se le describió, hubo que volver.
+**Y hay una clase de cosa que la cabina NO PUEDE VERIFICAR NUNCA: su paleta configurada.** No
+vive en el repositorio. El packet de la ronda 1 le prometió ver «Malva», «Azul acero», «Verde
+Jade», «Dorado Arena» — **esos rótulos no existen en el código**, que dice «Morado», «Azul»,
+«Dorado». Puede que su paleta sí los tenga. **La cabina lo declaró como no verificable y le dijo
+que lo que importaba del paso era que fuese SU paleta, no los nombres.**
+
+> **Cuando un paso de QA nombre algo que vive fuera del montaje, dilo. Un nombre que la cabina no
+> puede medir se marca, no se afirma.**
+
+---
+
+## CÓMO CERRÓ `#131`, PARA QUE NO SE CUENTE MAL
+
+**Veredicto GLOBAL, no paso a paso.** *«se ve bien pass»*, confirmado a pregunta de la cabina que
+cubría los quince pasos. **Ningún paso individual tiene BIEN/MAL/VETO escrito**, y el
+`closeout_result` lo declara: si mañana aparece un defecto en cualquiera de los quince, **no se
+puede afirmar que la QA lo aprobó**.
+
+**Y el veredicto que abrió la ronda 1 fue el que más rindió de toda la sesión**: dos observaciones
+suyas de treinta segundos destaparon una divergencia de siete caracteres entre motores y el único
+componente de seis sin paleta global.

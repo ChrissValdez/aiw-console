@@ -48,6 +48,11 @@ escribieron antes de que los peldaños existieran.
 
 > **No se está añadiendo libertad: se está devolviendo la que el editor quitó.**
 
+> ⚠ **ATENCIÓN — LA SECCIÓN QUE SIGUE CONTIENE UN DATO FALSO DE LA CABINA.**
+> No se borra, porque la casa corrige hacia adelante y no reescribe. **La corrección está
+> al final del documento, en «LA PREMISA DE LOS DOS CARRILES ERA FALSA».** Léela antes de
+> actuar sobre nada de esta sección.
+
 ## LA CORRECCIÓN DEL OPERADOR, Y ES LA QUE DECIDE LA UNIDAD
 
 La cabina recomendó enseñar **píxeles** argumentando que el escenario es fijo. **El
@@ -98,3 +103,79 @@ cambia todos a la vez.
 **Este run va ANTES que los mandos nuevos de «Procedimiento matemático».** Si primero se
 montan tres desplegables y luego se cambia la pieza, el trabajo se hace dos veces. *La
 pieza compartida se arregla antes que quienes la usan.*
+
+---
+
+# LA PREMISA DE LOS DOS CARRILES ERA FALSA — corrección del 2026-08-24
+
+> **Se corrige hacia adelante. El texto de arriba se queda como estaba**, con su aviso
+> delante, porque borrarlo dejaría circulando la versión falsa sin rastro de que lo fue.
+
+## QUÉ DECÍA MAL, Y QUÉ DICE EL DISCO
+
+Arriba se afirma que **Web guarda un MULTIPLICADOR y diapositiva un TAMAÑO ABSOLUTO**.
+**Es falso.** Verificado por la cabina el 2026-08-24, después de que el taller parara sin
+escribir un solo fichero:
+
+| | qué escribe el desplegable de cuatro peldaños | cómo lo resuelve el motor |
+|---|---|---|
+| Diapositiva | `textSize` — enum de cuatro | `tokens.js` → rem absoluto |
+| **Web** | **`list.textSize` — enum de cuatro** | **`renderList.js:19` → rem absoluto** |
+
+`TEXT_SIZE_STYLES` de `renderList.js` declara rem absolutos por peldaño:
+`small { title: '1.25rem', body: '0.98rem' }` · `medium { title: '1.5rem' }` · etc.
+**No hay multiplicador por ninguna parte.**
+
+`textScale` (0.75–1.25) **sí existe**, pero vive **solo en `SplitBlockShapeSchema`**, tiene
+mando propio —un campo numérico, no un desplegable— y ese esquema **no declara `textSize`**.
+
+> **LOS DOS CARRILES GUARDAN LA MISMA CLASE DE NÚMERO donde este run actúa.**
+
+## CÓMO SE EQUIVOCÓ LA CABINA
+
+Midió `textScale` en `renderTable.js` del carril Web y **generalizó que el mando de tamaño
+escribía multiplicadores**, sin comprobar nunca **qué campo escribe el desplegable**. Es la
+forma exacta del error de `variantMap`: encontró UNA cosa y dio por hecho que era LA cosa.
+
+**Agravante:** el operador la corrigió a medias sin saberlo —«lo del escenario fijo aplica a
+slide, no a web», que era cierto— y la cabina, en vez de volver a medir el campo, construyó
+encima **una segunda capa igual de falsa**: la de enseñar porcentaje en Web.
+
+## LAS CIFRAS QUE TAMBIÉN ESTABAN MAL
+
+| | decía la cabina | dice el disco |
+|---|---|---|
+| mandos de cuatro peldaños | 17 en 9 ficheros | **18 en 5 ficheros** |
+| piezas compartidas | «UNA» | **DOS**, más un desplegable en línea que ninguna alcanza |
+| valores distintos del corpus | «NUEVE» | **SEIS** |
+
+El decimoctavo recorre `TEXT_SIZE_OPTIONS` a mano en `WebBlockEditor.jsx:2385`: **cambiar
+la pieza no lo cambia**. Y el «nueve» salió de contar líneas de la propia sonda en vez de
+valores distintos.
+
+## LO QUE SE DECIDE EN CONSECUENCIA — operador, 2026-08-24
+
+> **«adelante con tus recomendaciones»**
+
+**1 · LA UNIDAD ES `rem`, Y ES LA MISMA EN LOS DOS CARRILES.**
+
+    −  1.65 rem  +   ↺
+
+La razón que decide: **es lo que el operador ya escribe**. Su corpus está lleno de rem
+puestos a mano, y al pedir el mando dijo literalmente *«digamos 5 rem o 0.5 rem»*.
+Descartados **píxeles** —mentirían en Web, donde el `rem` depende del contenedor y del
+lector— y **porcentaje** —es derivado: si se retocan los peldaños, los porcentajes se
+mueven solos—.
+
+**2 · «ENSEÑAR EL VALOR PINTADO» SALE DE `#136` Y VA A RUN PROPIO.**
+
+No es una funcionalidad: **es un puente que no existe**. El editor y la previa viven en
+puertos distintos sin comunicación, y el valor solo existe dentro de la previa en tiempo de
+ejecución. Medido por el taller: una celda pide ~39px y la pantalla pinta **13,42px**.
+Construir ese puente es tocar el núcleo.
+
+## Y UN AVISO QUE EL TICKET NO PREVIÓ
+
+Abrir la escritura libre **exige valla propia en el esquema**. Medido con estilos
+computados: `0rem` da texto invisible sin avisar, y `abc` o `1.65` sin unidad **heredan del
+padre** en vez de caer al respaldo — el `|| '1.65rem'` solo atrapa lo vacío.

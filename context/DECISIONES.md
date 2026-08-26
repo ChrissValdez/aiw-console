@@ -2933,3 +2933,43 @@ contrato congelado sólo se mueve por decisión numerada.
 Criterio de borrado: la sustituye una decisión que devuelva el catálogo al ejecutor, que
 traslade su autoría a un proyecto que no es su dueño de forma permanente, o que retire el
 perfil como mecanismo.
+
+---
+
+## D-070 — 2026-08-26 — Un ticket nuevo se emite en SESIÓN NUEVA; las rondas sobre el mismo ticket van en la misma, y se limitan
+
+Decidido por **Christopher Valdez Cantu** el **2026-08-26**, con sus palabras:
+
+> *«solo cuando me generes tickets trata de que sean una sesion nueva cuando los generas*
+> *solo cuando son respuesta a un ticket o correccion sobre un mismo ticket puedes generarme rondas de ticket*
+>
+> *pero trata de limitarlas*
+> *porqeu luego tengo tickets larguisimos con el contexto al maximo inecesariamente»*
+
+### La regla
+
+- **Un ticket NUEVO se emite en una sesión de cabina NUEVA.** El corte es el `run_id`: si el
+  ticket abre un run que no estaba abierto, la sesión anterior no lo emite.
+- **Las rondas de corrección sobre un ticket YA emitido pueden ir en la misma sesión.** Una
+  enmienda D-061, una segunda vuelta del taller o la respuesta a un «para y reporta» son
+  rondas del mismo ticket, no tickets nuevos.
+- **Las rondas se LIMITAN.** No es una autorización a encadenar indefinidamente dentro de una
+  sesión: cuando la cadena de rondas empieza a arrastrar contexto que la ronda siguiente no
+  necesita, se corta y se abre sesión nueva aunque el `run_id` no haya cambiado.
+
+### El coste que la regla evita, dicho por el operador
+
+**Tickets larguísimos con el contexto al máximo innecesariamente.** El contexto que una sesión
+acumula no es gratis: viaja dentro de cada ticket que esa sesión emite, y el taller lo paga en
+tiempo y en atención sobre material que no le hace falta. Una sesión larga produce tickets
+largos aunque el encargo sea corto.
+
+### Qué NO cambia
+
+Sigue vigente la regla anterior de sesión nueva por sesgo —«cuando el encargo anterior sesgaría
+al siguiente», y en particular cuando el taller anterior tiene invertido su razonamiento en lo
+que sigue—. **D-070 no la sustituye: le añade un segundo motivo, que es el TAMAÑO del contexto
+arrastrado, no sólo el sesgo.** Las dos se aplican, y basta con que una pida el corte.
+
+Criterio de borrado: la sustituye una decisión que permita emitir tickets nuevos en sesión
+continuada, o que traslade el corte a una coordenada distinta del `run_id`.

@@ -2973,3 +2973,53 @@ arrastrado, no sólo el sesgo.** Las dos se aplican, y basta con que una pida el
 
 Criterio de borrado: la sustituye una decisión que permita emitir tickets nuevos en sesión
 continuada, o que traslade el corte a una coordenada distinta del `run_id`.
+
+---
+
+## D-071 — 2026-08-26 — La decisión NO CRÍTICA la toma la cabina y la EXPLICA al tomarla; sólo la crítica sube al operador
+
+Decidido por **Christopher Valdez Cantu** el **2026-08-26**, con sus palabras:
+
+> *«a partir de ahora si la desicion no es critica, tomala y explicamela al momento de hacerla»*
+
+### La regla
+
+- **La cabina TOMA las decisiones no críticas.** No las convierte en preguntas.
+- **Y las EXPLICA en el mismo turno en que las toma**, no después y no si se le pregunta. La
+  explicación es parte de la decisión, no un añadido.
+- **Sólo sube al operador lo CRÍTICO.**
+
+### Qué es crítico, y por tanto sigue subiendo
+
+Se deriva de las reglas que ya existen, no se inventa un criterio nuevo:
+
+1. **Lo irreversible o caro de deshacer** — un contrato, una identidad de run, una decisión de
+   arquitectura. Es el mismo criterio que decide cuándo se usa Fable.
+2. **Lo que exige JUICIO VISUAL** — la cabina no ve interfaces, así que nunca es suya.
+3. **Lo que cambia el ALCANCE de un run** — D-061 lo exige por escrito y eso no se toca.
+4. **Lo que toca ficheros que la cabina no creó** — borrarlos o publicarlos sigue siendo del
+   operador aunque parezcan basura.
+5. **Lo que el operador ya declaró suyo** — el orden de la cola, el diseño, y los veredictos.
+
+### Lo que deja de subir
+
+El vehículo de una QA, el nombre de un fichero de trabajo, cómo partir un commit, qué sonda
+escribir, en qué orden medir, si un respaldo consumido se borra, y las decenas de bifurcaciones
+de ese tamaño que antes se ofrecían como pregunta. **Preguntarlas cuesta un turno del operador y
+la respuesta era previsible.**
+
+### Por qué la EXPLICACIÓN es obligatoria y no opcional
+
+Sin ella la regla degenera en que la cabina hace cosas y el operador se entera tarde o no se
+entera. **La explicación es lo que mantiene la decisión auditable y revocable**: el operador
+puede desandarla en una línea porque sabe que se tomó y por qué. Una decisión no crítica tomada
+en silencio se vuelve crítica en cuanto sale mal.
+
+### Qué NO cambia
+
+**«Dibújale las opciones con su coste MEDIDO antes de pedirle que decida»** sigue vigente para lo
+crítico, y es lo que más ha rendido. D-071 no la debilita: **le quita el ruido de alrededor** para
+que sólo llegue lo que de verdad merece un turno suyo.
+
+Criterio de borrado: la sustituye una decisión que devuelva las decisiones menores al operador, o
+que retire la obligación de explicarlas al tomarlas.

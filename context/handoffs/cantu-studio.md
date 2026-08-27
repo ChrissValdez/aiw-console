@@ -1,296 +1,213 @@
 # HANDOFF — hilo `cantu-studio` (el proyecto)
 
-> Escrito por la cabina el **2026-08-26**, al cerrar la sesión que re-fijó los árboles del
-> corpus y arrancó la enmienda D-061 del color del paso.
-> **Sustituye al relevo del 2026-08-26 anterior (el de `#142`).**
+> Escrito por la cabina el **2026-08-26**, tras CERRAR `#134` con aprobación visual del operador.
+> **Sustituye al relevo anterior del mismo día.**
 >
 > **Todo lo de aquí está medido y lleva fecha. Contrástalo contra el canónico al abrir. Gana el
 > disco.**
 
 ---
 
-## ⚠ LO PRIMERO QUE TIENES QUE HACER, Y NO ES EL ARRANQUE
+## ⚠ LO PRIMERO: `#136` NO EMPIEZA CON UN TICKET
 
-**Esta sesión cerró con una enmienda D-061 APROBADA Y SIN APLICAR.** El operador dijo «A» a la
-enmienda y «A» al umbral. Lo primero de la sesión nueva, después del arranque, es entregar **en
-UN SOLO TURNO**:
+**`#136` lleva una PARADA DE ANÁLISIS escrita DENTRO de su `full_description`:**
 
-1. **La enmienda del `full_description` de `#134`** — por la consola, con el ritual completo.
-2. **El ticket del taller**, debajo, sin anunciarlo.
+> *«este run NO empieza escribiendo. Empieza midiendo QUÉ MUEVE EN WEB, y llevándoselo al
+> operador.»*
 
-D-061 exige que el texto del run se enmiende **en el mismo encargo**. No se separan.
+**Esa medición es de la CABINA, no del taller.** El primer acto sobre `#136` es medir el terreno
+y llevarle el encuadre al operador — no emitir un encargo. El operador ya eligió `#136` como
+siguiente (2026-08-26), así que la parada se celebra en cuanto se abra el hilo.
+
+**Lo que hay que medir, y está dicho en el propio run:**
+
+- `renderTable.js` lee `design/tokens/tokens`, **no** `commons.js`. Es el único de los cinco
+  componentes de celda que quedó fuera de la convergencia de la tabla compartida.
+- **`tokens.js` lo lee TAMBIÉN WEB** — `web/partials/renderConceptGrid.js`.
+- Converger su respaldo cuesta **52 superficies**, más del **triple** que todo el lote 2 entero.
+- «Tabla» ya tiene hecho su `theme`: lee la paleta desde el lote 2, y con eso se cerró la
+  divergencia del `ctx`. **Lo que falta es su RESPALDO**, el caso en que nadie declara nada.
+
+**Y hay un compromiso de la cabina con `#134` que apunta aquí:** la consolidación de los dos
+hexes del verde del paso de resultado quedó **nombrada como trabajo de `#136`** y no se hizo
+antes a propósito, para no fabricar trabajo que `#136` tendría que deshacer.
+
+### ⚠ `PARADA-136-LA-PREMISA-DE-LOS-DOS-CARRILES-ERA-FALSA.md` NO ES DE ESTE `#136`
+
+**Medido el 2026-08-26.** Ese registro habla de `textScale` y los mandos de tamaño, y pertenece a
+**`RUN-CANTU-SHARED-SIZE-CONTROL-STEPPER-001`**, que estaba en la posición 136 el 2026-08-24.
+**El número es una coordenada fechada.** Leerlo como propio de `RUN-CANTU-TOKENS-JS-…` arrancaría
+la sesión sobre una premisa ajena.
 
 ---
 
-## LO PRIMERO DEL ARRANQUE: DERIVA LA RUTA Y PRUEBA LA CAPACIDAD
+## EL ARRANQUE: DERIVA LA RUTA Y PRUEBA LA CAPACIDAD
 
 La ruta de montaje **cambia entre sesiones**. No la heredes.
 
-**MEDIDO EL 2026-08-26 Y CORRIGE AL RELEVO ANTERIOR: el borrado NACE DESHABILITADO.** El relevo
-de `#142` decía «borrado, `add` y `commit`: funcionan», y al abrir esta sesión **`rm` falló con
-`Operation not permitted`**. Hay que **PEDIRLO** con `allow_cowork_file_delete`, y entonces
-funciona para toda la sesión. **Pídelo en el arranque, antes de crear el primer fichero de
-prueba** — yo no lo hice y dejé dos probes dentro de `.git` que no podía borrar.
+**EL BORRADO NACE DESHABILITADO.** Al abrir, `rm` falla con `Operation not permitted`. Se **PIDE**
+con `allow_cowork_file_delete` y entonces funciona toda la sesión. **Pídelo ANTES de crear el
+primer fichero de prueba.**
 
-Locks: **ninguno en los cinco repos**, ni al abrir ni tras decenas de operaciones de git.
-Compruébalo igual, con `ls`.
+Locks: **ninguno en toda la sesión del 2026-08-26**, en decenas de operaciones de git.
+Compruébalo igual, con `ls`, en los cinco repos.
 
-### EL VEHÍCULO PARA ESCRIBIR EL CANÓNICO — sigue vigente, medido el 2026-08-25
+### EL VEHÍCULO PARA ESCRIBIR EL CANÓNICO — usado con éxito tres veces el 2026-08-26
 
 - Canónico: **`cantu-studio/.aiw/roadmap/roadmap.json`**. `roadmap/roadmap.json` NO EXISTE.
-- Motor: **`aiw-console/tools/roadmap/roadmap-core.mjs`** (2 479 líneas). El de `cantu-studio`
-  (1 213) no conoce `lane`, y el canónico declara `lanes`.
-- Se escribe por la consola: `serve.mjs` en puerto libre, POST a
-  `/projects/cantu-studio/__project-console/roadmap/edit`. Dry-run, luego apply con baseline.
+- Motor: **`aiw-console/tools/roadmap/roadmap-core.mjs`** (2 479 líneas). El canónico declara
+  `lanes` y el motor de `cantu-studio` (1 213) no las conoce.
+- **Por la consola**, y el servidor **no sobrevive entre llamadas de bash**: todo el ritual va en
+  UN solo script. `PC_PORT=<libre> node projects/aiw-console/project-console/serve.mjs`, y POST a
+  `/projects/cantu-studio/__project-console/roadmap/edit`.
+- Cuerpo: **`{ op, args, apply, baseline }`**. Dry-run con `apply:false` devuelve `baseline`;
+  el apply lo exige como compare-and-swap.
 - Nombres de argumentos: `set-status` → `{ run, status, closeoutResult }` (**`run`, no `runId`**);
   `set-text` → `{ targetType, targetId, fullDescription }`; `insert` → `{ runId, title, summary,
-  fullDescription, before }`.
+  fullDescription, before }` (`before` es un **run_id**, no un número).
+- `serve.mjs` **re-emite `.project/` él solo** tras cada escritura: los siete artefactos.
 
-### ⚠ `checkInvariants` — EL RELEVO ANTERIOR ESTABA INCOMPLETO Y ME COSTÓ UN ROJO FALSO
+### `checkInvariants` — LA FIRMA COMPLETA
 
-Decía «exige un `Set`, no un array». **Cierto sobre el VALOR y mudo sobre la FORMA.** La firma
-real es:
+    checkInvariants(obj, { externalRunIds })   // OBJETO DE OPCIONES, no posicional
 
-    checkInvariants(obj, { externalRunIds })   // OBJETO DE OPCIONES
-
-Pasé el `Set` **posicional**, `externalRunIds` se quedó en `null`, y obtuve **1 error de
-dependencia colgante que era falso**. Estuve a punto de publicarlo como discrepancia contra el
-relevo. Con la forma buena: **0 errores**.
-
-Y `externalRunIdsFor('cantu-studio')` **devuelve una PROMESA**. Hay que `await`. Resuelve a un
-`Set` de **155**.
+Pasarlo posicional deja `externalRunIds` en `null` y produce **un rojo falso** de dependencia
+colgante. Y **`externalRunIdsFor('cantu-studio')` devuelve una PROMESA**: hay que `await`.
+Resuelve a un `Set` de **155**.
 
 ---
 
-## ESTADO DEL CANÓNICO — medido el 2026-08-26 a las 03:44
+## ESTADO DEL CANÓNICO — medido el 2026-08-26 al cerrar
 
 ```
-total 160 · completed 139 · active 1 · planned 20
-validador: 0 errores · history=139 · ready_next=20
-densidad 1..N: true · ids únicos: true
-md5: b5a27310e8c03a34e661bb832ebaa09a   (SIN TOCAR en toda la sesión)
-EOL: \r\n
+total 164 · completed 140 · active 0 · planned 24
+validador: 0 errores · densidad 1..N: true · ids únicos: true
+md5: 527da8ae98391f44e4f4391958ca20b1     EOL: \r\n
 ```
 
-- **Único run activo: `#134` «Make the author palette win over the engine fixed colour tables»**,
-  `RUN-CANTU-SLIDE-AUTHOR-PALETTE-WINS-001`, carril `DEVELOPMENT`.
-- **Siguiente por cola: `#136` «Decide and migrate the tokens.js fallback, which both rails read».**
-- **El carril NO es un campo de `#134`.** Sólo 12 de 160 runs llevan `lane`, y los doce son
-  `DOCUMENTATION`. El resto resuelve al defecto, `DEVELOPMENT`. Confirmado con `resolveRunLane`.
+**NO HAY NINGÚN RUN ACTIVO.**
+
+```
+#134 completed  Make the author palette win over the engine fixed colour tables   ← cerró hoy
+#136 planned    Decide and migrate the tokens.js fallback, which both rails read  ← EL SIGUIENTE
+#137 planned    Give the editor a duplicate control for blocks, slides and in-cell items
+#138 planned    Remove the outer frame around the terms of Anatomia de formula
+#139 planned    Open the badge ink channel of Anatomia de formula and decide its private colour table
+#140 planned    Make the JSON import name what it drops instead of dropping it in silence
+#141 planned    Admit and implement Calculo aritmetico as an item
+```
+
+**`#138` y `#139` tocan el MISMO fichero** (`SlideConceptGridFields.jsx`) y están pegados a
+propósito. **`#139` lleva su propia parada de análisis**: su segunda mitad —la tabla privada de
+seis colores— **no la pidió el operador** y convergerla mueve árboles.
 
 ---
 
-## LO QUE ESTA SESIÓN HIZO
+## LO QUE ESTA SESIÓN CERRÓ: `#134`, con aprobación visual
 
-### 1 · La red de fixtures pasó de 10 rojos a 0
+Veredicto verbatim en `context/cantu-studio/records/VEREDICTO-134-CIERRE-APROBADO.md`:
+**«jala y me gusta»**, tras siete pasos de QA sin ningún `mal`.
 
-Los árboles seguían fijados en `09d09709`, **antes del lote 0**, mientras los cuatro lotes de la
-migración ya estaban en disco. El operador eligió la opción **B**: separar por causa.
+**La enmienda D-061 costó dos rondas, y la primera se equivocó de sitio.** Los tres mandos
+nacieron con «Automático»; el operador los probó y devolvió que no servía. Medido: con SU paleta,
+**Malva da 2,99 con blanco — 0,0089 por debajo de 3** —, así que la regla seguía eligiendo tinta
+oscura. **La regla no arreglaba su queja; el mando manual sí.** La ronda 2 retiró «Automático».
 
-- **`14534e33`** — los **7** que movió el color. Pares sistemáticos: `#5E81AC → #4F75A8` (el `ctx`,
-  **convergió**), `#C2B280 → #B69F58` (el `focus`), y seis más. Más `#5C4B40` y `#6B6352`
-  entrando sin nada que salga: la tinta oscura de la insignia, de 1,55:1 a 5,95:1.
-- **`8d0241ac`** — los **3** de «Jerarquía», declarados como **deuda de `#142`**, que cerró sin
-  re-fijar los árboles que movió aunque su propio fijador lo manda.
+**Forma final, y es el precedente a copiar en `#139`:** listas de **UNA opción más
+«Personalizado»** — «Color del título» → Negro; «Color del número de paso» → Blanco. El paso de
+resultado cae solo en «Personalizado» con el verde, sin una línea escrita para conseguirlo.
 
-**La red completa tarda ~75 s** y **no cabe en `node --test` dentro de una llamada** (tope
-~178 s). Lo que sí cabe: comparar sólo los árboles, por tandas reanudables. La suite entera
-sigue sin caber.
-
-**Punto ciego declarado y NO medido:** `#AA00BB` y `#0FA47A` entran una vez cada uno en
-«Jerarquía». Hipótesis: colores del autor en el contenido. Sin confirmar.
-
-### 2 · D-070, del operador
-
-Ticket nuevo → sesión nueva; rondas del mismo ticket juntas, y **limitadas**. El corte es el
-`run_id`, y hay un **segundo motivo** de corte: el TAMAÑO del contexto arrastrado.
-Commit `4b7d66b` en `aiw-console`.
-
-### 3 · La QA de `#134` se ejecutó y PASÓ, salvo un hallazgo
-
-Palabras del operador: **«lo demás jaló ya con este json»**. Tarjeta, Nota destacada, Portada y
-«Anatomía de fórmula» pasaron. **Queda un solo defecto**, y es el de abajo.
+**Y una decisión de la cabina que conviene recordar:** no se tocó `tokens.js` aunque el taller lo
+propusiera, **por razón de cola**: es el objeto de `#136`.
 
 ---
 
-## ⚠ LOS PAYLOADS DE QA SE DERIVAN DE `blockFactory`, NUNCA SE ESCRIBEN DE MEMORIA
+## ⚠ LAS DOS LECCIONES MÁS CARAS DE LA SESIÓN
 
-**Es la lección más cara de esta sesión y le costó dos rondas al operador.**
+### 1 · UN PAYLOAD DE QA SE DERIVA DE `blockFactory`, NUNCA SE ESCRIBE DE MEMORIA
 
-Escribí un payload de memoria. Pasó `parseAndValidateBlocks` —la puerta que el relevo manda
-usar— **y el editor lo mostró roto y la previa falló**. Tres errores míos:
+Costó **dos rondas del operador**. La cabina escribió un payload que **pasó
+`parseAndValidateBlocks`** y llegó roto al editor. Tres errores:
 
-| escribí | es | qué pasó |
+| se escribió | es | qué pasó |
 |---|---|---|
-| `columns: 3` | **`layout: { cols: N }`** | la rejilla se borra en silencio |
-| `accentColor` en `card` | **`variant`** | el color se borra en silencio |
-| `terms: [f1, f2, f3]` | **array plano que ALTERNA `f, signo, f, signo, f`** | sin divisores |
+| `columns: 3` | **`layout: { cols: N }`** | la rejilla se borra |
+| `accentColor` en `card` | **`variant`** | el color se borra |
+| `terms: [f1,f2,f3]` | **array plano que ALTERNA `f, signo, f`** | sin divisores |
 
-**LA PUERTA NO RECHAZA NADA DE ESO: LO BORRA.** Medido: una tarjeta con `accentColor` sale de la
-puerta como `{"type":"card","title":"T","content":"C"}`, desnuda. **Pasar la puerta no significa
-que el bloque esté bien.**
+**LA PUERTA NO RECHAZA: BORRA.** Una tarjeta con `accentColor` sale como
+`{"type":"card","title":"T","content":"C"}` y la puerta devuelve `ok:true`. De aquí nace `#140`.
 
-**Lo que funciona:** partir de `createDefaultSlideItem(...)` / `createDefaultSlideBlock()` /
-`createDefaultStackSlideBlock()` y **sólo cambiar los textos**. Luego verificar que el bloque
-sale **intacto** de la puerta, comparando **por claves ordenadas** (el orden de claves cambia y
-un `JSON.stringify` crudo da falsos «cambiado»).
+**Lo que funciona:** partir de `createDefaultSlideItem` / `createDefaultSlideBlock` /
+`createDefaultStackSlideBlock`, cambiar sólo los textos, y verificar que el bloque sale **intacto**
+comparando **por claves ORDENADAS** (el orden cambia y un `JSON.stringify` crudo da falsos
+«cambiado»). **Hay DOS puertas** —la del editor y `SlidesPreviewDraftSchema` del compiler-api— y
+**aun las dos juntas no bastan**: el fallo del operador ocurrió en el FORMULARIO, que la cabina
+**no puede ejecutar**.
 
-**Hay DOS puertas, no una.** La segunda es `SlidesPreviewDraftSchema` del `compiler-api`. Pásalo
-por las dos. **Y aun así no basta**: el fallo del operador ocurrió en el FORMULARIO, que la
-cabina **no puede ejecutar**. No reproduje su error exacto y lo declaré así.
+**Trampa medida:** una `x` sola como término se lee como **signo de multiplicar**.
 
-**Trampa medida:** una `x` sola como término se lee como **signo de multiplicar** y deja el
-término vacío.
+**EL PAYLOAD QUE SÍ FUNCIONÓ está en el commit `f9452062`** y en el relevo anterior; derívalo otra
+vez de la fábrica antes de reusarlo, no lo copies a ciegas.
 
-### EL PAYLOAD QUE SÍ FUNCIONÓ, verbatim
+### 2 · UNA SONDA DE TEXTO NO VE UN AGREGADOR
 
-```json
-[
-  { "kind": "titleSlide", "title": "Migracion de paleta", "subtitle": "Los colores salen de tu paleta", "badge": "QA 134", "description": "" },
-  { "kind": "columnsSlide", "title": "Tarjeta y Nota destacada", "subtitle": "", "layout": { "cols": 2 },
-    "items": [
-      { "type": "card", "variant": "ctx", "title": "Tarjeta A", "content": "Debe pintar el color de tu paleta." },
-      { "type": "card", "variant": "ctx", "title": "Tarjeta B", "content": "Mismo color que A: las dos usan el mismo token." },
-      { "type": "callout", "variant": "subtle", "accentColor": "meta", "title": "Nota destacada", "content": "Su borde izquierdo sale de la paleta." }
-    ] },
-  { "kind": "stackSlide", "studioTitle": "QA 134 - contraste de insignias",
-    "steps": [
-      { "title": "Ecuación lineal", "math": "2x + 3 = 11" },
-      { "title": "Restar 3 en los dos lados", "math": "2x = 8", "details": "Lo que hacemos de un lado hay que hacerlo del otro." },
-      { "title": "Dividir entre 2", "math": "x = 4", "isResult": true }
-    ] },
-  { "kind": "columnsSlide", "title": "Anatomia de formula", "subtitle": "", "layout": { "cols": 1 },
-    "items": [
-      { "type": "conceptGrid", "variant": "def", "accentColor": "def", "title": "Partes de la ecuacion", "badge": "3 TERMINOS",
-        "terms": ["a", "+", "b", "+", "c"], "content": "La tinta de la insignia debe leerse oscura, no blanca." }
-    ] }
-]
-```
+La cabina predijo que se moverían **DOS** árboles y fueron **TRES**. Censó el literal `stackSlide`
+con un patrón de texto, y **`showcase_library.js` no contiene esa palabra ni una vez**: hace
+`readdirSync` de su directorio, `require` de sus hermanos y re-exporta sus `sectionsSlide` **por
+referencia**.
 
----
-
-## LA ENMIENDA D-061 APROBADA — lo que la sesión nueva tiene que entregar
-
-Guardada verbatim en `context/cantu-studio/records/DECISION-134-EL-COLOR-DEL-PASO-Y-SUS-TRES-MANDOS.md`,
-commit `9705560`.
-
-### El defecto
-
-«Procedimiento matemático» **no tiene canal de color**. Su acento sale de `variantMap`, tabla
-privada de siete tokens. Lo dice el propio editor en su cabecera (`SlideStackEditor.jsx:108`).
-
-**Y `#134` PROMETIÓ ESTO EN SU `full_description` Y NO LO ENTREGÓ.** Es el primero de los
-pendientes que su texto dice que «ya se acumulan esperando este run». **El lote 1 arregló la
-TINTA de la insignia y no abrió el CANAL del color.** Son dos cosas y sólo se hizo una.
-
-### Lo que el operador pidió — tres mandos, con «Regla matemática» (`split`) de referencia
-
-| mando | opciones |
-|---|---|
-| **Color** | paleta global + personalizado |
-| **Color del título** | Automático · Blanco · Negro · Personalizado |
-| **Color del número de paso** | Automático · Blanco · Negro · Personalizado |
-
-`ColorTokenOrCustomField` (`components/common/VariantSelect.jsx:131`) **ya existe** y la montan
-siete componentes, incluido `SlideSplitFields.jsx:475`. **No se escribe selector nuevo.**
-
-### El umbral de «Automático»: eligió **A**
-
-Medido sobre los nueve tokens cargados de `commons.js`:
-
-| token | acento | blanco | negro | emite HOY |
-|---|---|---|---|---|
-| `def` | `#9B6FA5` | **4,03** | **5,21** | blanco |
-| `ctx` | `#4F75A8` | 4,73 | 4,44 | blanco |
-| `ex` | `#6EB4C7` | 2,33 | 9,02 | `#2A4F5B` |
-| `focus` | `#B69F58` | 2,60 | 8,09 | `#5C4B40` |
-| `str` | `#C9BFAE` | 1,82 | 11,55 | `#6B6352` |
-| `res` | `#87A96B` | 2,65 | 7,92 | blanco |
-| `wrn` | `#C97353` | 3,46 | 6,06 | blanco |
-| `err` | `#B24B5A` | 5,19 | 4,05 | blanco |
-| `meta` | `#3F4A5D` | 8,94 | 2,35 | blanco |
-
-**REGLA ELEGIDA (A): blanco si despeja 3:1; si no, la tinta oscura.** Es la que ya aplica el
-motor. Su punto flojo declarado es `res` (2,65 con blanco).
-
-**HALLAZGO QUE CAMBIA EL DIAGNÓSTICO, y se midió:** para `def` —el paso que el operador vio— **la
-tabla del motor emite BLANCO**, no tinta oscura. Así que **el número oscuro viene de la
-derivación de SU paleta** (fuente 1, `accentTextColor`), no del motor. **No se midió su paleta
-activa**, y no se debe afirmar más de eso.
-
-**Y una trampa nombrada:** «máximo contraste» **no** es lo que él pidió y le daría negro en `def`
-—5,21 contra 4,03—, que es justo lo que rechazó. Él describió un umbral de claridad, no una
-maximización. Las dos reglas discrepan en `def`, `res` y `wrn`.
+**REGLA: antes de censar el corpus por un literal, acuérdate de `showcase_library.js`.** Vale para
+`conceptGrid`, para `card`, para cualquier tipo. **`#139` lleva ese aviso escrito dentro.**
 
 ---
 
 ## LO QUE QUEDA ABIERTO Y ES DEL OPERADOR
 
-**De `#134`:**
+**Sin decidir, y se lo dibujó con coste medido:**
 
-- **La enmienda D-061 de arriba.** Aprobada, sin aplicar.
-- El re-fijado de árboles **ya no está pendiente**: se hizo, y la red está verde.
+- **Las TRES carpetas de `QA/temp/` sin rastrear** — dos de `#134` y una de `#142`. Eligió
+  **ignorarlas hasta que `#134` cerrara y decidirlas juntas**. `#134` ya cerró: toca.
+- `cantu-studio/.claude/launch.json` y `aiw-console/context/aiw/records/`, también sin rastrear.
 
-**Runs nuevos que el operador nombró y NO se insertaron en la cola** — decisión suya pendiente:
+**Declarado y NO reparado en `#134`, con su aprobación explícita:**
 
-1. **Duplicar componente y duplicar diapositiva.** No existe en ninguna parte para bloques; sólo
-   para lecciones (`LessonExplorerModal`). **`BlockFrame.jsx` es UNA cabecera compartida por los
-   dos carriles** —la usan `WebBlockEditor`, `SlideBlockEditor`, `SlideHierarchyEditor`,
-   `SlideStackEditor` y `SlideTitleSlideEditor`—, y `useFieldArray` ya trae `insert()` sin usar.
-   **LA TRAMPA, MEDIDA:** duplicar byte a byte **repite el id acuñado**. Rendericé un bloque una
-   vez y dos: `j-stack-863teqnvk` las dos veces. El id se deriva del CONTENIDO. **El botón tiene
-   que re-acuñar.** Son diez prefijos: `j-stack-`, `j-arith-`, `tree-`, `j-table-`, `narr-`,
-   `j-video-`, `j-visual-`, `j-container-`, `j-grid-`, `vis-`.
-   Y son **dos superficies**: `BlockFrame` y `SlideGridMap` (componentes dentro de «Libre»).
-   La cabina recomendó **un solo run** para las dos; el operador **no decidió**.
-2. **El recuadro dentro del recuadro de «Anatomía de fórmula».** Palabras suyas: quitar la caja
-   grande de TERMINOS y dejarlos colgando como los PASOS de «Procedimiento matemático».
-   Superficie: **UNA línea**, `SlideConceptGridFields.jsx:211`. Es el único recuadro de su clase.
-3. **La puerta que borra campos en silencio** en vez de avisar. Nombrado, sin run.
+- **`res`** (`#87A96B`) en 2,04:1 con blanco.
+- **`P4` del procedimiento retirada** como afirmación de contraste. **Su coste: nada avisará si
+  un token futuro deja el número ilegible.** `P4-ter` conserva la afirmación donde sigue siendo
+  cierta. **El `P4` de la Portada NO se tocó.**
+- La consolidación de los dos hexes del verde → `#136`.
 
-**De `#142`, sin dueño:** el glifo `Network`; exponer `hideHeader`; el DOBLE-ENVUELTO de
-`getMathContent` en «Procedimiento matemático»; el nodo sin `variant` en el esquema; la guarda de
-HTML ciega en el canal del autor.
-
-**De antes:** la Portada con campo de color vacío emite `#4F75A8`; `.j-v14-badge` y
-`.j-anatomy-badge` fuerzan blanco desde la hoja; el desplegable de la Portada miente con el campo
-vacío; los tres hallazgos de `#135`.
+**De antes, y siguen vivos:** la Portada con campo de color vacío emite `#4F75A8`;
+`.j-v14-badge` fuerza blanco desde la hoja; el desplegable de la Portada miente con el campo
+vacío; el DOBLE-ENVUELTO de `getMathContent`; el glifo `Network`; `hideHeader`; los tres
+hallazgos de `#135`.
 
 ---
 
-## LO QUE ESTA CABINA HIZO MAL
+## LÍMITES DE LA CABINA — RE-MEDIDOS EL 2026-08-26
 
-1. **El payload escrito de memoria** — dos rondas del operador. Ya está arriba con su regla.
-2. **`checkInvariants` posicional** → rojo falso, casi publicado como discrepancia.
-3. **Dos probes dentro de `.git`** creados antes de pedir el permiso de borrado.
-4. **Dije que la causa del fallo era `columns` vs `layout` y era INCOMPLETO**: las dos puertas
-   aceptan ambas formas. Lo corregí en el mismo turno en vez de dejarlo correr.
-
-**Lo que sí funcionó y conviene repetir:** **dibujarle las opciones con su coste MEDIDO antes de
-pedirle que decida.** Cuatro veces esta sesión —el re-fijado, el run de duplicar, la enmienda
-D-061 y el umbral— y **las cuatro eligió en una palabra**: «B», «A», «A», «A».
-
----
-
-## LÍMITES DE LA CABINA RE-MEDIDOS EL 2026-08-26
-
-- **Borrado: NACE APAGADO. Se pide.** `add` y `commit` funcionan; ningún lock en toda la sesión.
-- **`git push`: sigue sin ruta a GitHub.** Es del operador. **NO SE LE RECUERDA. NUNCA.**
-- **Tope de una llamada de bash: ~178 s.** `node --test` sobre la red de fixtures no cabe.
+- **Borrado: NACE APAGADO, se pide.** `add` y `commit` funcionan; cero locks en toda la sesión.
+- **`git push`: sin ruta a GitHub. Es del operador. NO SE LE RECUERDA. NUNCA.**
+- **Tope de una llamada de bash: ~178 s.** La red de fixtures comparando sólo árboles cabe
+  (~75 s); `node --test` sobre ella **no**.
 - **`grep -rn` sobre `tools/author-lite` REVIENTA el límite de salida.** Usa `-l`, acota con
   `--include` y `--exclude-dir=node_modules`, y evita `dist/`.
-- **La cabina NO VE INTERFACES.** Todo juicio visual es del operador, y el formulario del editor
-  no se puede ejecutar aquí.
+- **Los procesos en segundo plano NO sobreviven entre llamadas.** `serve.mjs` va dentro del script.
+- **La cabina NO VE INTERFACES**, y **no puede ejecutar el formulario del editor**.
 
 ---
 
-## HIGIENE AL CIERRE
+## REGLAS DEL OPERADOR VIGENTES
 
-- **Borrado por la cabina:** sus ~20 sondas de la sesión, sus 4 ficheros de mensaje de commit, el
-  respaldo de `DECISIONES.md`, el respaldo de los 63 árboles, y un probe suyo del arranque.
-- **NO borrado, porque no es suyo:** los ~130 ficheros de `_scratch` y los respaldos de
-  `_backups` de sesiones anteriores. **Hay 7 respaldos de roadmap ahí que probablemente ya no
-  hacen falta** — es del operador decidirlo.
-- **Sin rastrear, y el operador no ha decidido:** `cantu-studio/.claude/launch.json`,
-  `cantu-studio/QA/temp/RUN-CANTU-SLIDE-HIERARCHY-TYPE-EXPOSE-001/` (de un run ya cerrado), y
-  `aiw-console/context/aiw/records/`.
+- **D-070** — ticket nuevo → sesión nueva; rondas del mismo ticket juntas y **limitadas**.
+- **D-071** — **la decisión NO CRÍTICA la toma la cabina y la EXPLICA al tomarla.** Sólo sube lo
+  crítico: lo irreversible, el juicio visual, el alcance de un run, los ficheros que la cabina no
+  creó, y lo que él ya declaró suyo.
+- **El operador decide cuándo se cierra la sesión.** No se cierra por iniciativa de la cabina.
+- **No se le recomienda modelo ni esfuerzo en la misma sesión**, pero **la sesión se declara
+  siempre**.
+- **Toda petición de revisión va en lista numerada de pasos cortos**, uno por línea, diciendo
+  primero carril, luego componente, luego qué buscar.
+- **Lo que más ha rendido, y son ya siete veces:** dibujarle las opciones **con su coste MEDIDO**
+  antes de pedirle que decida. Contestó en una palabra las siete.

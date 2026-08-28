@@ -96,3 +96,28 @@ mala—. **Y la ruptura:**
 **Si su borrador guardado contiene una matriz de diapositiva.** Vive en el `localStorage` **de su
 perfil de navegador**, y el taller **no abrió el editor para no arriesgarse a escribir en la
 ranura**. **Es la única cifra que falta, y sólo importa si se elige la B.**
+
+---
+
+# ⚠ ESTE PÁRRAFO QUEDÓ OBSOLETO EN LA RONDA 2, Y COSTÓ TRABAJO A UN TALLER POSTERIOR
+
+**Anotado el 2026-08-28 por la cabina.** Se anota **y no se reescribe**: era cierto cuando se
+escribió, y la traza de por qué cambió es lo que evita que alguien lo «arregle» de vuelta.
+
+**LO QUE DEJÓ DE SER CIERTO:** en la ronda 2, el taller descubrió que **su panel de navegador SÍ
+comparte perfil con el operador** —lo contrario de lo que había afirmado— y **resolvió el riesgo
+en vez de sólo declararlo**: tomó **la huella del borrador desde una página estática del mismo
+origen**, que no arranca la app, y **levantó una segunda instancia del editor en otro puerto**,
+o sea otro origen y otro almacenamiento. **La ranura del operador quedó con el mismo `sha256`
+antes y después.**
+
+**LA TÉCNICA COMPLETA VIVE EN EL `closeout_result` DE `RUN-CANTU-SLIDE-MATRIX-WRITE-IT-ONCE-001`**,
+en el canónico de `cantu-studio`.
+
+**POR QUÉ ESTA ANOTACIÓN EXISTE, y es la lección:** el taller de
+`RUN-CANTU-SLIDE-STACK-PREMATH-BLANK-MEANS-BLANK-001` vino a la **carpeta de records** a buscar la
+técnica, **encontró esta versión vieja**, concluyó que no existía y **tuvo que reconstruirla desde
+cero**. El cierre estaba bien; **el sitio donde el siguiente iba a mirar, no.**
+
+> **Un hallazgo de ronda 2 que deja obsoleto un record de ronda 1 hay que anotarlo EN EL RECORD,
+> no sólo en el cierre.**

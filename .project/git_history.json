@@ -1,27 +1,949 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-15T07:31:51.390Z",
+  "generated_at": "2026-08-28T01:50:02.451Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-15T07:30:14.997Z"
+      "mtime": "2026-08-28T01:40:28.686Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-15T07:31:51.360Z"
+      "mtime": "2026-08-28T01:50:02.414Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "99828aeb19f01699d4db6eb80f77ba2d5528846f",
+  "head": "04959a041000879c19e7b284899843441575f40b",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 243,
+  "commit_total": 335,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "04959a0",
+      "full_sha": "04959a041000879c19e7b284899843441575f40b",
+      "date": "2026-08-27T19:40:28-06:00",
+      "parents": "337a624",
+      "subject": "docs(cantu-studio): veredicto del operador sobre la parada del #147 -- opcion A, la pieza compartida se amplia sin perder el rotulo",
+      "body": "Guarda verbatim la «A» y, sobre todo, los dos precedentes que decidieron la eleccion:\n\n  · EL QUE SIRVIO: el #146 ya cambio la firma de CabeceraDeColeccion el mismo dia y las dos\n    guardas siguieron verdes, porque anclan sobre el nombre y el export, no sobre la firma.\n    Ampliar de forma aditiva es aun mas seguro que aquello, que quitaba.\n  · EL QUE NO SERVIA, y se dijo: el taller propuso «Tabla» como precedente para aceptar el\n    «Eliminar» generico. Verificado contra disco: no es equivalente. «Tabla» no tiene guarda\n    de paridad con Web sobre su boton de eliminar y «Terminos» si.\n\nY deja escrito que la parada fue correcta: el taller no monto la pieza ni relajo la guarda.\nReconocio las dos condiciones de parada del ticket y subio las salidas con su coste.\n\nFichero escrito en este repo, por nombre completo:\n  context/cantu-studio/records/VEREDICTO-147-OPCION-A-LA-PIEZA-COMPARTIDA-SE-AMPLIA-SIN-PERDER-EL-ROTULO.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "337a624",
+      "full_sha": "337a62449d78fad2718c06744d4d2d0e6e098e7a",
+      "date": "2026-08-27T18:57:46-06:00",
+      "parents": "c950823",
+      "subject": "docs(cantu-studio): veredicto de QA de #146 -- PASS -- y los dos hallazgos que el operador encontro al mirar",
+      "body": "Guarda verbatim su «jalo ... ya lo revise el QA y paso todo», y sobre todo las cinco frases\ncon que describio el defecto de «Formula de partida», que valen mas que el veredicto: nadie\nlas habria escrito desde una medicion.\n\nLleva dentro la verificacion de la cabina contra disco de renderStackSlide.js:479-484 y :462,\nel nombre del defecto -- el autor no puede expresar el vacio --, la consecuencia que hay que\nmedir antes de tocar y que puede ser cara, y el precedente de su propia propuesta.\n\nY deja dicho que el color por factor NO era hallazgo nuevo: era el punto 4 del porte,\nconfirmado en pantalla. Lo nuevo es el criterio del divisor, que se anexo al texto del #148.\n\nFichero escrito en este repo, por nombre completo:\n  context/cantu-studio/records/VEREDICTO-146-PASS-Y-DOS-HALLAZGOS-FORMULA-DE-PARTIDA-Y-COLOR-POR-FACTOR.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c950823",
+      "full_sha": "c950823be531d88bc07c60097ee4394b67cff689",
+      "date": "2026-08-27T18:28:44-06:00",
+      "parents": "ee7512f",
+      "subject": "docs(cantu-studio): veredicto del operador sobre la parada de #146 -- opcion A, el boton se mueve y el resultado sigue siendo el ultimo",
+      "body": "Guarda verbatim la respuesta «A», y sobre todo POR QUE fue A: no por barata, sino porque B\ncontradecia una decision del propio operador que ya esta viva en Web. «Linea de tiempo»\ntiene hoy un boton punteado debajo que tampoco agrega al final cuando el ultimo paso es el\nde resultado, y eso esta ahi por criterio suyo de la ronda 4. Diapositiva habia copiado la\nlogica de Web y se quedo a medias: copio el insert y no copio el boton.\n\nLleva dentro la tension declarada en vez de tapada: sus palabras fueron «y ahi se agrega al\nfinal», y en el caso del paso de resultado eso no se cumple en ninguno de los dos carriles.\nSe le dijo antes de decidir, y decidio con eso delante. B queda nombrada como run propio si\nal verlo en pantalla no le convence.\n\nY lo que el veredicto NO decide: si CabeceraDeColeccion debe desaparecer al quedarse sin\nboton. Se nombra y se pregunta al cerrar.\n\nFichero escrito en este repo, por nombre completo:\n  context/cantu-studio/records/VEREDICTO-146-OPCION-A-EL-RESULTADO-SIGUE-SIENDO-EL-ULTIMO.md\n\nEl run sigue active. Este turno NO toca la consola ni el canonico: solo se registra el\nveredicto y se emite el encargo de implementacion.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "ee7512f",
+      "full_sha": "ee7512f7d9db3f7489b0e5e1720cfef0e88bab6b",
+      "date": "2026-08-27T18:26:19-06:00",
+      "parents": "4e2ab6e",
+      "subject": "docs(cantu-studio): PARADA de #146 -- el censo del taller, DOS errores de la cabina corregidos hacia adelante, y el precedente de Web que cambia la pregunta",
+      "body": "El taller paro y reporto sin escribir codigo, como el ticket le autorizaba. Se transcribe su\npacket en vez de sustituirlo, y detras va lo que la cabina midio despues, declarado como suyo.\n\nLA CABINA SE EQUIVOCO DOS VECES Y SE PUBLICA IGUAL DE FUERTE QUE EL ERROR:\n\n  1. «SlideArithmeticFields.jsx monta las DOS formas» es FALSO. Su unico border-dashed es\n     :421, un border-t separador dentro de «Fila de resultado», y no hay ningun boton con\n     w-full y dashed en ese fichero. Conte border-dashed y lei cada aparicion como boton de\n     agregar: la quinta forma de fallar, medir con la sonda equivocada y publicarlo. La\n     afirmacion esta en un record, en el full_description del run y en un mensaje de commit.\n\n  2. «1 por fichero en ocho ficheros mas» tambien es falso, y lo peor es que MI PROPIA SONDA\n     habia impreso «dashed x3 AddBlockZone.jsx». Comprimi mal una medicion correcta: la\n     tercera forma de fallar.\n\nNO SE REESCRIBE HACIA ATRAS. El record y el texto del run se quedan; la correccion viaja\ndentro del ticket de la ronda siguiente. Y NO se toca el canonico: el run esta active y el\nritual estructural no corre con un encargo en vuelo.\n\nEL CENSO: 19 controles, 13 punteados y 6 enlace azul, los 6 de diapositiva y todos por\nCabeceraDeColeccion. Web ya tiene la forma estandar en el 100 % de sus controles, asi que por\nel criterio escrito en el propio ticket ESTE RUN NO TOCA WEB. El taller corrigio mi cifra con\nmas precision que yo: de los 13 border-dashed de WebBlockEditor.jsx solo 10 son botones.\n\nEL PRECEDENTE QUE LA CABINA MIDIO DESPUES, y que ninguno de los dos habia seguido hasta el\nfinal aunque el comentario del codigo lo señalaba: «Linea de tiempo» de WEB YA TIENE la\ncombinacion que el taller marco como contradictoria -- boton punteado de ancho completo\ndebajo, y logica que inserta ANTES del paso de resultado. Esta en produccion, en el carril\nque el operador llamo «bien pulido», y por criterio suyo escrito en la ronda 4. La opcion A\ndeja de ser «aceptar una rareza» y pasa a ser portar la forma de Web con fidelidad.\n\nVERIFICADO POR LA CABINA, sin correr la suite: las dos unicas pruebas del repo que anclan\nsobre CabeceraDeColeccion son slideTableAdmitAndImplement.test.mjs -- cinco menciones,\nincluida /export const CabeceraDeColeccion/ en :939 -- y slideConceptGridTermsFrame.test.mjs\nen :174. Actualizarlas es trabajo declarado, no sorpresa.\n\nFichero escrito en este repo, por nombre completo:\n  context/cantu-studio/records/PARADA-146-EL-CENSO-DEL-TALLER-Y-DOS-ERRORES-DE-LA-CABINA.md\n\nEl run sigue active. No se cierra ni se cambia su status: espera decision del operador.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4e2ab6e",
+      "full_sha": "4e2ab6e5269a1250752f0310eaed5dce53d60563",
+      "date": "2026-08-27T18:00:21-06:00",
+      "parents": "b6a9b9c",
+      "subject": "docs(cantu-studio): decision del operador -- el boton de agregar va punteado abajo en todos los componentes, y la correccion del record que lo tenia al reves",
+      "body": "Guarda verbatim las cuatro frases con que el operador pidio la estandarizacion, y las dos\ncapturas que describio: «Procedimiento matematico» con el enlace azul arriba, y «Calculo\naritmetico» de Web con el boton punteado abajo.\n\nLleva dentro:\n  · LA CORRECCION, publicada igual de fuerte que el error: el record del porte afirmaba que\n    el enlace azul arriba era la forma DE WEB, y esta al reves. Con la prueba de disco de\n    las dos formas y sus lineas. Lo desmintio el ojo del operador antes que ninguna sonda.\n  · el censo del terreno: CabeceraDeColeccion centralizada, seis consumidores en cuatro\n    ficheros, y el hallazgo de que LAS DOS FORMAS YA CONVIVEN dentro de cada carril;\n  · el limite declarado de la sonda: border-dashed no distingue un boton de agregar de otras\n    piezas punteadas, asi que la cifra va como valor a verificar y el censo exacto es del run;\n  · la frontera con sus palabras -- «no cambia funcionalidad, cambia diseño» -- y el caso\n    conocido que hay que nombrar sin tocar: la colocacion propia del paso de resultado;\n  · lo que la decision NO decide: si CabeceraDeColeccion debe desaparecer;\n  · REGLA NUEVA DEL OPERADOR: la recomendacion de MODELO y ESFUERZO vuelve, y sustituye a la\n    regla anterior que decia que a este operador no se le recomendaban. Desde hoy se declaran\n    las tres juntas -- modelo, esfuerzo y sesion -- en toda respuesta que preceda a un ticket.\n\nFichero escrito en este repo, por nombre completo:\n  context/cantu-studio/records/DECISION-EL-BOTON-DE-AGREGAR-VA-PUNTEADO-ABAJO-EN-TODO.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b6a9b9c",
+      "full_sha": "b6a9b9c1e424f9cceb82e02ac9e12e32d268cf50",
+      "date": "2026-08-27T17:51:17-06:00",
+      "parents": "8d330b5",
+      "subject": "docs(cantu-studio): veredicto del operador -- el porte va en DOS runs y se autoriza tocar Web con superficie minima",
+      "body": "Guarda verbatim «vamos ocn tus reocmendaciones procede», que aprueba las dos preguntas que\nse le pusieron delante: la opcion B para partir el porte, y el permiso acotado sobre Web.\n\nLleva dentro, ademas del verbatim:\n  · que autoriza y que NO autoriza en WebBlockEditor.jsx, escrito literal;\n  · resultBox fuera de los dos runs, nombrado y no abierto -- cuarta vez del patron\n    «capacidad en un lado, cerrada en el otro»;\n  · la tension de identidad del run_id que describe alcance, declarada en vez de tapada;\n  · el hallazgo de papel != disco sobre la trampa de «Procedimiento matematico», con lo que\n    la medicion SI autoriza a concluir y lo que NO;\n  · el orden en la cola como decision de cabina bajo D-071, con su porque y su reversibilidad.\n\nFichero escrito en este repo, por nombre completo:\n  context/cantu-studio/records/VEREDICTO-EL-PORTE-VA-EN-DOS-RUNS-Y-SE-AUTORIZA-TOCAR-WEB.md\n\nNo se toca nada mas de aiw-console. context/aiw/records/ sigue sin rastrear y no lo creo\nla cabina.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8d330b5",
+      "full_sha": "8d330b5d6424411cfa712a309f5eed13e792c2eb",
+      "date": "2026-08-27T17:19:20-06:00",
+      "parents": "327aa7f",
+      "subject": "docs(cantu-studio): relevo del cierre de sesion del 2026-08-27 -- siete runs cerrados, y la leccion que costo seis rondas",
+      "body": "SUSTITUYE al relevo del mismo dia escrito por la manana, ya obsoleto en sus cifras.\n\nVA PRIMERA LA LECCION, porque es lo que mas vale de la sesion:\nUNA VERIFICACION SIN LA SUPERFICIE DECLARADA NO ES UNA VERIFICACION.\nRUN-CANTU-SLIDE-ARITHMETIC-ITEM-ADMIT-001 acumulo CUATRO luces verdes con el operador viendo el\ndefecto -- un arnes headless, LA CABINA DANDO ESE ARNES POR BUENO SIN PREGUNTAR SOBRE QUE\nSUPERFICIE CORRIA, una suite de 2 040 pruebas, y una ronda entera midiendo la superficie real.\nLas cuatro median con material que ya venia completo. NADIE MEDIA EL BOTON. Lo encontro el OJO\ndel operador, en una captura donde SOBRABA HUECO DEBAJO DE LAS FILAS.\nSiete hipotesis, siete retiradas, TRES de la cabina. La septima la mato su propia sonda: cogio la\nPRIMERA coincidencia de `arithmetic` y publico «la semilla trae 7 y 3» como si fuera prueba.\nHabia dos semillas.\n\nCINCO REGLAS NUEVAS, todas pagadas: declarar la superficie de toda medicion; medir lo que crea el\nBOTON; comprobar si hay MAS de una coincidencia antes de publicar; no juntar veredicto de QA con\ndecision de diseno en el mismo turno; y leer el full_description de un run ANTES de recomendarlo.\n\nESTADO: total 165 · completed 147 · active 0 · planned 18 · validador 0 errores · 63 arboles\nverdes · md5 b968211baaa8d40535f4cb3a7041530b.\n\nLO PRIMERO DE LA PROXIMA SESION: encuadrar el run del PORTE, con la direccion que el operador\nabrio el solo -- «es agarrar los campos de web que estan bien pulidos y ponerlos aca» -- Y CON LAS\nCINCO COSAS APILADAS SOBRE LOS FORMULARIOS DELANTE JUNTAS, no de una en una. Con sus dos fronteras\nmedidas: HexOnlyColorField no esta exportado, y resultBox es de Web y solo de Web.\n\nEntran ademas los CUATRO METODOS que funcionaron y conviene reusar -- el diferencial con\ncentinelas por Module._compile, el diff de los pines como QA estructural, la red de fixtures\ncorrida por la cabina, y contar con las hojas FUERA -- y la explicacion del rojo de\ntools/roadmap/tests, que NO es un defecto del canonico sino unas pruebas que no pasan\nexternalRunIds.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "327aa7f",
+      "full_sha": "327aa7fc0ca94c234d34ff14802f61f33ba90572",
+      "date": "2026-08-27T17:08:50-06:00",
+      "parents": "cbffd7a",
+      "subject": "docs(cantu-studio): «es agarrar los campos de web que estan bien pulidos y ponerlos aca» -- la direccion que el operador abrio al aprobar la semilla",
+      "body": "Se guarda como se guarda un veredicto -- verbatim y versionado -- porque LA ABRIO EL, no se la\npregunto nadie, y porque una decision de diseno del operador vale lo mismo que un veredicto de QA.\n\nNO ES UNA LISTA DE TRES ARREGLOS: ES UNA DIRECCION. Web lleva mas rondas de pulido que\ndiapositiva, y el operador dice que LA FORMA BUENA YA EXISTE Y NO HAY QUE INVENTARLA OTRA VEZ. Es\nel mismo movimiento que este proyecto ya hizo con los rotulos -- «los rotulos son los de Web,\ncampo a campo» -- y con los precedentes de #134 y #138.\n\nLAS TRES PIEZAS QUE NOMBRO, y cada una conecta con algo ya declarado:\n  · EL COLOR POR FACTOR sincronizado con sus numeros -> conecta con `counts[].color`, que se quedo\n    sin control porque HexOnlyColorField es un const NO EXPORTADO de WebBlockEditor.jsx. Traerlo\n    EXIGE TOCAR WEB, y eso se decide al encuadrar.\n  · «+ Agregar factor» / «+ Agregar paso», enlace azul arriba en vez de boton punteado abajo ->\n    conecta con lo diferido en el run del marco de terminos: CabeceraDeColeccion es JUSTO la pieza\n    que pinta el rotulo con su boton de anadir arriba. LA PIEZA DE LA CASA YA EXISTE.\n  · EL DESPLEGABLE DEL RECUADRO DEL RESULTADO -> ⚠ FRONTERA MEDIDA: `resultBox` es de WEB Y SOLO\n    DE WEB; el motor de diapositiva NUNCA lo lee y su esquema lo excluye explicitamente. Traerlo\n    NO es portar un control: es ABRIR UNA CAPACIDAD que ese motor no tiene. Cuarta vez que aparece\n    el patron «capacidad en un lado, cerrada en el otro», y esa decision es del operador.\n\nY SE DEJA CONTADO QUE VAN CINCO COSAS APILADAS sobre los formularios del editor, ninguna rota y\nninguna pedida antes de hoy: la separacion de la coleccion, los controles propios de «Terminos»,\nla trampa `''` -> #4F75A8 de «Procedimiento matematico» -- esa SI es defecto real --,\n`counts[].color` sin control, y las dos faltas de ortografia de la semilla de Web. LAS CINCO CAEN\nSOBRE LA MISMA DIRECCION QUE EL OPERADOR ACABA DE NOMBRAR: cuando se encuadre el run del porte,\nse le ponen las cinco delante JUNTAS en vez de seguir apilandolas de una en una.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "cbffd7a",
+      "full_sha": "cbffd7aae4fe248371f12bf31c2f4af61a807a58",
+      "date": "2026-08-27T01:09:27-06:00",
+      "parents": "4bcccf9",
+      "subject": "docs(cantu-studio): el veredicto sobre la puerta del importador, verbatim -- «funcino bien / pass»",
+      "body": "APROBADO. Tres pasos, ningun `mal`.\n\nY CONTESTO EL PASO 1 ENSENANDO EL MENSAJE, que es lo que hace este veredicto mas valioso que un\n«bien»: permitio comprobar algo que ninguna prueba mide -- QUE EL MENSAJE SE PUEDE SEGUIR. Nombra\nla clave, localiza el bloque hasta el item, dice la forma buena, y la dice CON EL VALOR QUE EL\nESCRIBIO, mostrando aparte lo que pone la fabrica. Ese detalle no estaba en el ticket: lo puso el\ntaller.\n\nEl paso 2 era el que de verdad importaba -- que la forma BUENA entre -- porque un rechazo de mas\nhabria invalidado el trabajo aunque los otros dos salieran bien.\n\nLA VINETA VACIA que pego con el error NO viene de la puerta: devuelve un array con UNA entrada de\n376 caracteres, no vacia. Medido antes de darle importancia. Nombrada, no abierta.\n\nQUEDA DECLARADO LO QUE SIGUE SIN MIRAR: la puerta de la PREVIA no se toco y sigue aceptando y\nborrando en silencio. Fue decision del operador -- eligio A, que toca una puerta -- y la otra\nnecesita antes una medicion que no existe.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4bcccf9",
+      "full_sha": "4bcccf9259a128a05021822531e32c64a741f8d7",
+      "date": "2026-08-27T00:21:08-06:00",
+      "parents": "f35a1fa",
+      "subject": "docs(cantu-studio): la parada de RUN-CANTU-EDITOR-JSON-IMPORT-SILENT-DROP-001 -- rechazar no rompe ningun borrador, y `problem` no esta donde el run lo buscaba",
+      "body": "UN FALLO DE LA CABINA PRIMERO: recomendo abrir este run SIN haber leido su full_description, y el\nrun lleva una parada dentro, asi que no empieza con un ticket. Se corrigio antes de abrirlo, pero\nla recomendacion salio mal dada. REGLA: leer el texto del run ANTES de recomendarlo.\n\nEL CENSO QUE EL RUN MANDA HACER, con metodo que no es un grep -- pasar cada borrador por su\nesquema y comparar entrada contra salida, porque Zod DESCARTA lo que no conoce:\n  11 borradores censados · 0 arrastran claves desconocidas · 0 claves descartadas.\nRECHAZAR NO ROMPE NINGUN BORRADOR DEL CORPUS. El riesgo que el run temia no existe hoy.\n\nPERO `problem` SI EXISTE, Y NO DONDE EL RUN LO BUSCABA: 0 apariciones en borradores .json y\nCUATRO ficheros de contenido ya construido .js. Eso PARTE LA PREGUNTA EN DOS: el contenido\nconstruido NO pasa por la puerta del importador, asi que endurecer esa puerta no lo toca;\nendurecer la de la PREVIA si podria, y ESO NO SE HA MEDIDO.\n\nUN FALLO DE SONDA PROPIO, PUBLICADO: la sonda que debia REPRODUCIR el defecto no lo consiguio --\nningun esquema exportado acepta un bloque suelto, porque los bloques se validan DENTRO de un\nborrador. LA CABINA NO HA REPRODUCIDO EL DEFECTO EN ESTA PARADA. Se sostiene sobre la medicion de\nla cabina anterior y sobre un hecho que no es una medicion: le costo dos rondas al propio\noperador. El taller que tome el run debe reproducirlo primero, y si no lo reproduce, PARA.\n\nCuatro opciones con su coste quedan dibujadas. La recomendacion de la cabina es RECHAZAR en la\npuerta del importador -- 0 borradores rotos, medido -- y dejar la puerta de la previa para otra\ndecision, porque `problem` vive en contenido construido y nadie ha medido si la cruza.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f35a1fa",
+      "full_sha": "f35a1fa4b6d2dc7093c6bec9275efe26ef691bec",
+      "date": "2026-08-27T00:18:19-06:00",
+      "parents": "1bb3622",
+      "subject": "docs(cantu-studio): el contraste de la insignia se queda en el mando -- tercera vez que el operador toma esta decision, y la primera con numero delante",
+      "body": "Respuesta verbatim a una pregunta unica, sin QA mezclada: «si».\n\nSE LEE COMO «si, se queda asi» -- que era la pregunta en negrita y la recomendacion de la cabina.\nLa alternativa ofrecida al final -- medir un run que diera tinta declarada a focus, res y str --\nexigia pedirla explicitamente y NO SE PIDIO. Si la lectura es erronea se corrige hacia adelante\nen una palabra, y eso queda escrito dentro del registro.\n\nLOS NUMEROS QUE TENIA DELANTE, medidos por la cabina, blanco sobre el acento: err 5,19 · ctx 4,73\n· def 4,03 -- y MEJORO SOLA, venia de 2,83 -- · focus 2,60 · res 2,65 · str 1,82. TRES DE SEIS por\ndebajo de 3:1. El taller midio ademas cinco de cinco con la paleta clara del operador; esa cifra\nes suya y la cabina no la re-midio.\n\nPOR QUE ES COHERENTE Y NO UNA REPETICION CIEGA: es la tercera vez, y la razon de las dos\nanteriores sigue medida y en pie -- con su paleta, Malva daba 2,99 con blanco, 0,0089 por debajo\nde 3, asi que la correccion automatica NO arreglaba su queja y el mando manual SI. Y ahora hay\nalgo que en #134 no habia: si un rotulo se ve mal, tiene el mando para arreglarlo en dos clics.\n\nLO QUE CUESTA, dicho sin adorno: nada avisara si un token futuro deja el numero ilegible. Mismo\ncoste que se declaro al retirar la P4 del procedimiento, aceptado por la misma razon.\n\nLO QUE NO DECIDE: no cierra la puerta a dar tinta declarada a focus, res y str en la tabla\ncompartida. Hoy solo ex, focus y str la tienen y `res` NO. Sigue disponible como run propio.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1bb3622",
+      "full_sha": "1bb3622cf1b9e5809b6e5527b78f7951a65d9ae3",
+      "date": "2026-08-27T00:16:40-06:00",
+      "parents": "776fdb9",
+      "subject": "docs(cantu-studio): el veredicto sobre la tinta de la insignia, verbatim -- «jalo bien pass»",
+      "body": "APROBADO. Cuatro pasos, ningun `mal`.\n\nY esta vez la cabina NO junto la QA con ninguna decision de diseno en el mismo turno, que es la\nregla que salio del veredicto anterior: una respuesta de una palabra no tuvo que contestar a dos\npreguntas.\n\nQUEDA PARA DESPUES DEL CIERRE, con numero delante: la guarda de contraste se retiro. Blanco sobre\nel acento -- err 5,19 · ctx 4,73 · def 4,03 (MEJORO SOLA, venia de 2,83) · focus 2,60 · res 2,65 ·\nstr 1,82. TRES DE SEIS por debajo de 3:1, medido por la cabina. El taller midio ademas cinco de\ncinco con la paleta clara del operador, y esa cifra es SUYA: la cabina no la re-midio porque no\ntiene esa paleta.\n\nY SE DEJA CONTADO QUE VAN TRES COSAS APILADAS sobre SlideConceptGridFields.jsx -- la separacion de\nla coleccion, los controles propios de «Terminos», y la trampa `''` -> #4F75A8 de la ranura\nhermana de «Procedimiento matematico», que esa SI es un defecto real aunque no de este fichero.\nCuando se junten cuatro conviene proponerle un run que las barra de una vez en vez de seguir\napilandolas.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "776fdb9",
+      "full_sha": "776fdb9eaaa03ad67cf878ac39424678c67202b2",
+      "date": "2026-08-26T22:53:11-06:00",
+      "parents": "2354342",
+      "subject": "docs(cantu-studio): la parada de analisis de RUN-CANTU-SLIDE-CONCEPTGRID-BADGE-INK-AND-TABLE-001 -- la tabla privada mueve UN arbol, no «arboles»",
+      "body": "El run son DOS trabajos y el segundo no lo pidio el operador, asi que su propio texto ordena\nmedir antes de escribir. Sigue `planned`; no se emitio encargo.\n\nLAS CUATRO AFIRMACIONES DEL RUN, contra el disco: tres CIERTAS y la cuarta -- que los seis `tint`\nno se derivan del acento -- se deja marcada como cifra del run, no re-medida aqui.\n`badgeTextVariant` esta en LOS DOS esquemas, no en uno (compiler-api:668 y editor-ui:642). Y la\nrazon que el formulario declara para no ofrecerlo -- «la hoja clava color: #FFFFFF y nada lo\npisa» -- CADUCO: renderConceptCard.js:237-239 resuelve accentTextColor y si no\nresolveVariantInk(variant), y lo emite EN LINEA. Es la cuarta vez que aparece el patron\n«capacidad en el motor, cerrada en el esquema, con un comentario cuya razon ya no se sostiene».\n\nLO MEDIDO, con centinelas por Module._compile y render diferencial del corpus:\n  · `color`: 10 superficies DISTINTAS, en UN solo fichero -- src/content/sandbox/\n    test_theory_complex.js -- y solo alcanzan DOS de los seis tokens, `def` y `focus`.\n  · `tint`: 2 superficies distintas, el mismo fichero.\n  · Las brutas son 20 y 4 porque showcase_library.js re-exporta esas escenas POR REFERENCIA.\nEL ENCUADRE DEL RUN DECIA QUE «MUEVE ARBOLES». Mueve UN arbol de sandbox. Y convergir `ctx`,\n`res`, `err` y `str` mueve CERO.\n\nLA OPCION LIMPIA ESTA BLOQUEADA, y por eso hay que preguntar: #136 resolvio su tabla cruzada\nRETIRANDOLA, pero esta guarda { color, tint } y slides/helpers/commons.js NO TIENE equivalente de\n`tint`. La paleta de autor si lo tiene, con otro nombre -- `surface` --, pero el motor no lee la\npaleta y traerlo seria una copia nueva, que es justo lo que #136 retiro.\n\nUN FALLO DE SONDA PROPIO, PUBLICADO: el sub-censo que debia contar cuantos items no declaran\ncolor devolvio 0, que es falso. La cifra que vale es la diferencial, que no depende de saber leer\nla forma.\n\nCuatro opciones con su coste quedan dibujadas, y junto a ellas las DOS cosas que quedaron\ndiferidas sobre este mismo formulario al cerrar el run del marco de terminos, para que el\noperador pueda decidir las tres de una sentada.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2354342",
+      "full_sha": "2354342e7eeaccfbe91320b8be070c77fb79cb89",
+      "date": "2026-08-26T22:34:29-06:00",
+      "parents": "bfb3b0e",
+      "subject": "docs(cantu-studio): el veredicto sobre el marco de terminos, verbatim -- y la regla que sale de haber preguntado en vez de suponer",
+      "body": "APROBADO: «si hice el qa y paso». Los tres pasos sin ningun `mal`.\n\nPOR QUE HAY DOS FRASES EN EL REGISTRO. El operador contesto «pass» a un turno donde la cabina le\npedia DOS cosas a la vez: el veredicto de QA y una decision de diseno. Esa misma palabra habia\nsignificado «paso de decidir» el turno anterior, en #137.\n\nLA CABINA NO LO ADIVINO: pregunto. Y era importante preguntarlo porque «cerrado con aprobacion\nvisual» y «cerrado sin QA» no son lo mismo, y el segundo hay que nombrarlo. De haberlo supuesto,\nel registro habria sido FALSO.\n\nREGLA QUE SALE DE AQUI Y VA AL RELEVO: no juntar en el mismo turno un veredicto de QA y una\ndecision de diseno. Una respuesta de una palabra no puede contestar a dos preguntas.\n\nQueda ademas registrado como DIFERIDO -- no como aprobado -- si los terminos se separan bien sin\nmarco, con la propuesta ya escrita y sin aplicar: la linea border-t que ya usan los pasos de\n«Procedimiento matematico». Eso y la segunda diferencia nombrada (Terminos sigue con controles\npropios en vez de CabeceraDeColeccion/ItemDeColeccion) caen sobre el mismo formulario que tocara\nRUN-CANTU-SLIDE-CONCEPTGRID-BADGE-INK-AND-TABLE-001, asi que se le vuelven a poner delante cuando\nese run se encuadre.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "bfb3b0e",
+      "full_sha": "bfb3b0e2d3ae1fe2b83130118f2ed57e1918f27b",
+      "date": "2026-08-26T21:56:38-06:00",
+      "parents": "6e23f30",
+      "subject": "docs(cantu-studio): el veredicto del operador sobre duplicar, verbatim -- «funciona ien» / «pass»",
+      "body": "Se guarda a disco porque un veredicto de QA es la unica entrada capaz de descubrir lo que\nninguna medicion vio, y se guarda VERBATIM y versionado, no en el chat.\n\nRegistra los cinco pasos que se le pidieron y como se lee su respuesta: los pasos 1, 2, 3 y 5\nAPROBADOS, sin ningun `mal`.\n\nY EL PASO 4 COMO NO DECIDIDO, que es lo que hace falta escribir. No era «bien/mal»: era una\ndecision de producto -- si la Portada debe poder duplicarse -- que la cabina le subio por ser\nsuya, y contesto «pass». Se registra como NO DECIDIDO, no como aprobado, para que nadie lo lea\nmanana como una aprobacion que no dio.\n\nQueda escrito que la Portada SI se puede duplicar mientras tanto, con las dos razones que se le\ndieron, para que esten ahi el dia que quiera revisarlo. Cambiar de opinion cuesta una guarda en\nun editor, no un run.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6e23f30",
+      "full_sha": "6e23f30c471645fa23444d6f0549cc42c7b33457",
+      "date": "2026-08-26T21:06:58-06:00",
+      "parents": "5fc5abc",
+      "subject": "docs(cantu-studio): el cierre de tokens.js -- primer cierre SIN QA del proyecto, y el censo REAL de la capa 3",
+      "body": "DOS COSAS QUE VAN JUNTAS PORQUE SE MIDIERON JUNTAS.\n\n1 · EL CIERRE SIN QA. Es el primero del proyecto: #134 cerro con la del operador. Lo aprobo el,\ncon el coste delante. Las 27 superficies estan TODAS en src/content/sandbox/ y los seis colores\nya los habia aprobado en #134. Queda declarado que si el siguiente run sobre la misma superficie\ntambien cierra sin QA, hay que nombrarlo.\n\nY LA TECNICA QUE SUSTITUYO A LA QA, que conviene reusar: cuando un run RE-FIJA arboles, el DIFF\nDE LOS PINES **es** la QA estructural. No hizo falta correr la red -- que ademas no cabe en una\nllamada de la cabina. 27 de 27 pares cambian solo el hex, cero cambios de estructura.\n\n2 · EL CENSO REAL DE LA CAPA 3, que el operador pidio para saber si eran tres runs o treinta.\nEl techo de 145 era falso por partida doble: la sonda contaba literales Y acumulaba\nrecompilaciones. El metodo que vale engancha Module.prototype._compile, pone un centinela unico\npor par (fichero, hex) y renderiza el corpus: un centinela que aparece, PINTA.\n\n  · WEB: 12 ficheros pintan, y NO SON VIEJOS -- son los valores VIGENTES de la paleta de Web.\n    Borrarlos seria repintar Web, o sea la opcion A que el operador descarto ese mismo dia.\n  · DIAPOSITIVA: 9 ficheros, y quitando los que solo pintan `meta` quedan SIETE.\n  · DOS de los siete ya tienen dueno. SON UNOS CINCO TRABAJOS, NO TREINTA.\n\nCon sus dos limites declarados: las cuentas estan infladas por el agregador y por las hojas, asi\nque ordenan por peso pero no prometen superficies; y miden contra el corpus de HOY.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "5fc5abc",
+      "full_sha": "5fc5abc4dff4eff52275b6d6543c61df3f22e323",
+      "date": "2026-08-26T19:41:42-06:00",
+      "parents": "3f2af39",
+      "subject": "docs(cantu-studio): relevo del 2026-08-27 -- la parada de tokens.js cerro, y la sesion nueva empieza con el TICKET",
+      "body": "SE ESCRIBE AHORA Y NO AL CERRAR SESION, a proposito: el ticket de #136 va en sesion nueva\n(D-070) y esa sesion lee este fichero. Dejarlo con las cifras de ayer la haria arrancar\nsobre un canonico que ya cambio -- el md5 se movio de 527da8ae a e0da373f.\n\nLO QUE CAMBIA RESPECTO AL RELEVO DEL 2026-08-26:\n\n  · La parada de #136 YA SE CELEBRO. El relevo anterior mandaba celebrarla; este manda NO\n    volver a celebrarla y empezar por el ticket, con el alcance ya confirmado por el\n    operador.\n  · Entra QUE ES «C» y entran las DOS GUARDAS que el ticket no puede romper -- C1 y C1-bis\n    de slideEngineColourSelfConsistency.test.mjs. Si el taller propone tocar los VALORES de\n    tokens.js, esta fuera de alcance.\n  · Entran las 41 superficies medidas en diferencial, el metodo con que se midieron, y los\n    tres hechos que el encuadre no anticipaba: `.bg` no se renderiza nunca; todo el coste\n    esta en sandbox; `.main` alcanza seis tokens en diapositiva y dos en Web.\n  · DOS LECCIONES DE SONDA NUEVAS, que hacen cuatro: una sonda que busca `tokens.def` NO VE\n    UNA INDEXACION DINAMICA -- Web accede con resolveColorTheme(tokens, item.variant) -- y\n    CONTAR APARICIONES DE UN VALOR NO ES CONTAR QUIEN LO LEE: el primer censo dio 3 927\n    porque contaba copias privadas y hojas de estilo.\n  · Entran tres trampas del vehiculo que costaron tiempo: externalRunIdsFor vive en\n    serve.mjs y devuelve una PROMESA, no en el motor; la respuesta de la consola trae\n    `errors: undefined` CUANDO TODO VA BIEN y eso no es un fallo; y los runs viven en\n    objectives[].phases[].runs[], no en la raiz -- leer obj.runs devuelve total 0.\n  · CORRECCION: el relevo anterior mandaba a #136 el compromiso de los dos verdes del paso\n    de resultado. NO depende de este run -- renderStackSlide.js no lee tokens.js.\n  · CORRECCION: el relevo anterior atribuia a #142 una de las carpetas de QA/temp/. Es de\n    RUN-CANTU-SLIDE-HIERARCHY-TYPE-EXPOSE-001, queue_order 146. Las tres ya estan\n    commiteadas en 5d26af8a.\n  · Entra que _scratch/ NO es todo de la cabina: hay material de sesiones anteriores del\n    operador, y la cabina borra solo lo suyo.\n\nPOR QUE ESTE MENSAJE SE ENMIENDA: el primer intento paso el mensaje por -m en la linea de\nshell y bash se comio dos fragmentos entre acentos graves como sustitucion de comandos. Dos\nlineas quedaron falsas. La regla del operador -- MENSAJES DE COMMIT POR FICHERO, NUNCA POR\nLINEA DE SHELL -- existe exactamente por esto, y la cabina la incumplio. El commit no habia\nsalido del disco, asi que se corrige donde estaba en vez de dejar la version rota\ncirculando.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "3f2af39",
+      "full_sha": "3f2af397fb452f4779a853325cc5719d9683ecdf",
+      "date": "2026-08-26T19:37:18-06:00",
+      "parents": "85b86d3",
+      "subject": "docs(cantu-studio): el veredicto del operador sobre la parada de tokens.js, verbatim -- «vamos con C»",
+      "body": "Se guarda a disco porque una decision de diseno del operador se guarda como un veredicto de\nQA: con sus palabras, versionada, y no en el chat.\n\nRegistra QUE es C, las tres opciones descartadas con el coste medido que se le dibujo, las\ncuatro razones que sostienen la eleccion, y -- explicitamente -- LAS CUATRO COSAS QUE ESTA\nDECISION NO DECIDE: las 32 copias privadas de la tabla vieja, las claves .bg y label que\nnadie renderiza, el compromiso pendiente de #134 sobre los dos verdes del paso de resultado\n(que NO depende de este run, porque renderStackSlide.js no lee tokens.js), y quien resuelve\nel color, que no cambia.\n\nEl run sigue planned. D-070: su ticket va en sesion nueva.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "85b86d3",
+      "full_sha": "85b86d3a8f9a00b9fbab27dc09d94d44d022ba5b",
+      "date": "2026-08-26T19:31:43-06:00",
+      "parents": "6e09be5",
+      "subject": "docs(cantu-studio): la parada de analisis de RUN-CANTU-TOKENS-JS-SHARED-FALLBACK-CROSSES-RAILS-001, y dos de sus tres premisas no cuadran",
+      "body": "El run lleva la parada escrita DENTRO de su full_description y ordena parar y reportar si\nalguna afirmacion no cuadra con el disco. Dos no cuadran. El run sigue `planned` y NO se\nemitio ningun encargo.\n\nLO MEDIDO, con metodo diferencial -- mutar en memoria la tabla de color del modulo ya\ncargado y diffear el corpus renderizado:\n\n  · `tokens.js` mueve 41 superficies DISTINTAS: 27 de «Tabla» en diapositiva y 14 de la\n    rejilla de Web. No 52. Las 82 apariciones renderizadas son esas 41 contadas dos veces,\n    porque showcase_library.js las re-exporta POR REFERENCIA (5 de 5 y 10 de 10, verificado\n    por identidad de objeto).\n  · `.bg` NO SE RENDERIZA NUNCA, en ninguno de los dos carriles. Convergir el respaldo es\n    una decision sobre `.main` y solo sobre `.main`.\n  · Los 4 ficheros del corpus que cambian estan TODOS en src/content/sandbox/. Cero\n    lecciones, cero staging, cero borradores.\n\nLA PREMISA QUE HAY QUE CORREGIR: `tokens.js` no es una copia vieja olvidada. ES LA\nREFERENCIA DE WEB, y la prueba C1 de slideEngineColourSelfConsistency.test.mjs lo afirma en\nlos nueve ids a proposito desde el lote 0 de #134. Moverlo rompe C1 y C1-bis. No es un\narreglo de higiene: es repintar el carril Web.\n\nUN ERROR PROPIO, PUBLICADO Y NO BORRADO: el primer censo conto toda aparicion de un hex de\ntokens.js en el HTML y dio 3 927. Es falso como respuesta a «que mueve tokens.js». La sonda\nqueda marcada como descartada dentro del registro.\n\nY una segunda sonda fallida que vale la pena: la primera concluyo «un solo lector de color\nen todo el repo» porque Web indexa DINAMICAMENTE -- resolveColorTheme(tokens, variant) --\ny ningun patron de `tokens.def` lo ve.\n\nHALLAZGO QUE SE NOMBRA Y NO SE ABRE: la tabla vieja esta ademas escrita a mano en 32\nficheros del motor, 145 apariciones en codigo. Convergir tokens.js los deja igual.\n\nCORRECCION AL RELEVO: el compromiso pendiente de #134 -- los dos hexes del verde del paso\nde resultado -- NO depende de este run. renderStackSlide.js no lee tokens.js; sus dos\nverdes son literales escritos a mano.\n\nCuatro opciones con su coste medido quedan dibujadas en el registro, a la espera del\nveredicto del operador.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6e09be5",
+      "full_sha": "6e09be570fdcabeee43518fe7bdca1a85c017403",
+      "date": "2026-08-26T19:03:29-06:00",
+      "parents": "8b0b930",
+      "subject": "docs(cantu-studio): relevo tras cerrar #134 -- y el aviso de que #136 NO empieza con un ticket",
+      "body": "#136 lleva una PARADA DE ANALISIS escrita dentro de su propio `full_description`:\n«este run NO empieza escribiendo. Empieza midiendo QUE MUEVE EN WEB, y\nllevandoselo al operador». Esa medicion es de la CABINA, no del taller, asi que\nel primer acto sobre #136 es medir el terreno y llevar el encuadre.\n\nY un aviso de identidad que habria arrancado la sesion siguiente sobre una\npremisa ajena: `PARADA-136-LA-PREMISA-DE-LOS-DOS-CARRILES-ERA-FALSA.md` NO es de\neste #136. Habla de `textScale` y pertenece a\n`RUN-CANTU-SHARED-SIZE-CONTROL-STEPPER-001`, que ocupaba la posicion 136 el\n2026-08-24. El numero es una coordenada fechada.\n\nESTADO: 164 runs · 140 completed · 0 ACTIVE · 24 planned · validador 0 errores.\nNo queda ningun run activo.\n\nLAS DOS LECCIONES MAS CARAS DE LA SESION, con su regla:\n  1. Un payload de QA se DERIVA de `blockFactory`, nunca se escribe de memoria.\n     `parseAndValidateBlocks` no rechaza los campos mal escritos: LOS BORRA, y\n     devuelve ok:true. Costo dos rondas del operador y de ahi nace #140.\n  2. Una sonda de texto NO VE UN AGREGADOR. `showcase_library.js` no contiene la\n     palabra `stackSlide` y aun asi movio un arbol, porque hace `readdirSync` y\n     re-exporta las escenas de sus hermanos por referencia. La cabina predijo\n     DOS arboles y eran TRES.\n\nEl relevo lleva ademas el vehiculo de escritura completo -- que serve.mjs no\nsobrevive entre llamadas de bash y todo el ritual va en un solo script --, la\nfirma de `checkInvariants` con su objeto de opciones, que el borrado nace\napagado, y las decisiones del operador sin tomar.\n\nFichero escrito en este repo, por nombre completo:\ncontext/handoffs/cantu-studio.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8b0b930",
+      "full_sha": "8b0b9305bc431414fda0ce6946de5121689e94c1",
+      "date": "2026-08-26T18:57:04-06:00",
+      "parents": "78101a7",
+      "subject": "docs(cantu-studio): el veredicto de cierre de #134, verbatim -- y por que su segunda mitad va a run propio",
+      "body": "Aprobacion visual del operador del 2026-08-26 sobre la enmienda D-061 tras su\nsegunda ronda, guardada con sus palabras y sin resumir: «jala y me gusta, solo\nque quiero lo mismo en anatomia de formula / el texto del rotulo no que tenga\ncolor automatico sino que sea por default blanco con la opcion de personalizado\nigual que aqui».\n\nEs una APROBACION con una peticion SEPARADA. Los siete pasos de la QA se\nejecutaron y ninguno volvio `mal`.\n\nLa decision de encuadre se le dibujo con su coste medido y eligio B -- run\npropio -- por una razon que ya estaba medida antes de preguntarle: lo de\n«Anatomia de formula» NO es copiar el mando. `renderConceptCard.js:72` guarda\nuna tabla privada de seis colores cuyos hexes son los de ANTES de la migracion.\nHay un canal que abrir Y una tabla que decidir.\n\nQueda escrito ademas lo declarado y no reparado con su aprobacion: `res` en\n2,04:1, la retirada de `P4` como afirmacion de contraste con su coste dicho\nantes, y la consolidacion de los hexes del verde como trabajo de `#136`.\n\nFichero escrito en este repo, por nombre completo:\ncontext/cantu-studio/records/VEREDICTO-134-CIERRE-APROBADO.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "78101a7",
+      "full_sha": "78101a772cf02203c0a49eebbb2b6d58df6d0512",
+      "date": "2026-08-26T04:36:19-06:00",
+      "parents": "79229d4",
+      "subject": "docs(decisiones): D-071 -- la decision NO CRITICA la toma la cabina y la EXPLICA al tomarla",
+      "body": "Decision del operador del 2026-08-26, verbatim: «a partir de ahora si la\ndesicion no es critica, tomala y explicamela al momento de hacerla».\n\nLa cabina deja de convertir en preguntas las bifurcaciones menores -- el\nvehiculo de una QA, como partir un commit, que sonda escribir, si un respaldo\nconsumido se borra-- y las TOMA, explicandolas en el mismo turno. Preguntarlas\ncostaba un turno del operador y la respuesta era previsible.\n\nSigue subiendo lo CRITICO, y el criterio se DERIVA de reglas que ya existen en\nvez de inventarse: lo irreversible o caro de deshacer, lo que exige JUICIO\nVISUAL (la cabina no ve interfaces), lo que cambia el ALCANCE de un run (D-061\nlo exige por escrito), lo que toca ficheros que la cabina no creo, y lo que el\noperador ya declaro suyo.\n\nLA EXPLICACION ES OBLIGATORIA Y NO OPCIONAL: es lo que mantiene la decision\nauditable y revocable. Una decision no critica tomada en silencio se vuelve\ncritica en cuanto sale mal.\n\nNO debilita «dibujale las opciones con su coste MEDIDO antes de pedirle que\ndecida», que sigue vigente para lo critico y es lo que mas ha rendido. Le quita\nel ruido de alrededor.\n\nEmitido desde el hilo `cantu-studio`. Fichero escrito en este repo, por nombre\ncompleto: context/DECISIONES.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "79229d4",
+      "full_sha": "79229d4cbafffa3b5901474257f92dc84cd61611",
+      "date": "2026-08-26T04:25:17-06:00",
+      "parents": "9705560",
+      "subject": "docs(cantu-studio): relevo de la sesion del re-fijado -- la red queda verde y la enmienda D-061 del color del paso queda aprobada y SIN aplicar",
+      "body": "QUE HIZO LA SESION:\n  · La red de fixtures pasa de 10 rojos a 0. Opcion B del operador: dos commits\n    por causa -- 14534e33 los 7 del color, 8d0241ac los 3 de «Jerarquia» como\n    deuda declarada de #142, que cerro sin re-fijar lo que movio.\n  · D-070 (4b7d66b): ticket nuevo en sesion nueva; rondas del mismo ticket\n    juntas y limitadas.\n  · La QA visual de #134 se ejecuto y PASO salvo un hallazgo. Verbatim del\n    operador: «lo demas jalo ya con este json».\n  · Queda aprobada y sin aplicar la enmienda D-061 del color del paso (9705560).\n\nLO QUE EL RELEVO CORRIGE DEL ANTERIOR:\n  · EL BORRADO NACE DESHABILITADO. El relevo de #142 decia que funcionaba; al\n    abrir fallo con Operation not permitted. Se PIDE en el arranque.\n  · `checkInvariants(obj, { externalRunIds })` toma un OBJETO DE OPCIONES. El\n    relevo anterior solo hablaba del valor. Pasarlo posicional da un ROJO FALSO.\n  · `externalRunIdsFor` devuelve una PROMESA; hay que await. Resuelve a 155.\n\nLA LECCION QUE MAS COSTO, y va con su regla:\n  Un payload de QA NO se escribe de memoria: se DERIVA de `blockFactory`.\n  `parseAndValidateBlocks` no rechaza los campos mal escritos, LOS BORRA en\n  silencio, y el bloque llega desnudo al editor. Hay DOS puertas, no una, y aun\n  las dos juntas no bastan porque el fallo ocurre en el FORMULARIO, que la\n  cabina no puede ejecutar.\n\nEl canonico NO se toco en toda la sesion: md5 b5a27310e8c03a34e661bb832ebaa09a\nal abrir y al cerrar. #134 sigue active; #136 sigue siendo el siguiente.\n\nFichero escrito en este repo, por nombre completo:\ncontext/handoffs/cantu-studio.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "9705560",
+      "full_sha": "970556028242c7aa6a6f9605210b57dab2fc5d30",
+      "date": "2026-08-26T04:16:23-06:00",
+      "parents": "4b7d66b",
+      "subject": "docs(cantu-studio): el color del paso y sus tres mandos -- y #134 prometio este canal y no lo abrio",
+      "body": "Decision de diseno del operador del 2026-08-26, verbatim, tomada mirando la\nprevia de la QA de #134. Pide tres mandos para «Procedimiento matematico»,\ncon «Regla matematica» (`split`) como referencia explicita: Color, Color del\ntitulo y Color del numero de paso; los dos ultimos con Automatico / Blanco /\nNegro / Personalizado, y el Automatico eligiendo blanco sobre fondo oscuro y\nnegro sobre claro.\n\nLO QUE LA CABINA MIDIO Y PESA MAS QUE LA PETICION: el `full_description` de\n#134 nombra el color del paso como el PRIMERO de los pendientes que esperaban\na ese run, y el lote 1 arreglo la TINTA de la insignia sin abrir el CANAL del\ncolor. `SlideStackEditor.jsx:108` lo dice en su propia cabecera: el componente\n«carece de canal», su acento sale de `variantMap`, tabla privada de siete\ntokens.\n\nY por que el numero sale oscuro sin combinar: la tinta se deriva con umbral\n3:1 —texto grande WCAG, declarado en el lote 1—. Sobre un acento de tono medio\ndespeja el umbral y no queda bien. Pasar el umbral y combinar no son lo mismo.\n\nEl operador confirma que TODO LO DEMAS de la QA paso con el payload derivado de\nla fabrica. Este es el unico hallazgo.\n\nFichero escrito en este repo, por nombre completo:\ncontext/cantu-studio/records/DECISION-134-EL-COLOR-DEL-PASO-Y-SUS-TRES-MANDOS.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4b7d66b",
+      "full_sha": "4b7d66b97f44395ef3f8797ade97b0a05e2dc7cf",
+      "date": "2026-08-26T03:43:41-06:00",
+      "parents": "01c3969",
+      "subject": "docs(decisiones): D-070 -- un ticket nuevo se emite en sesion NUEVA; las rondas del mismo ticket van juntas, y se limitan",
+      "body": "Decision del operador del 2026-08-26, guardada VERBATIM con sus palabras. El\ncorte es el `run_id`: si el ticket abre un run que no estaba abierto, la sesion\nanterior no lo emite. Las rondas de correccion sobre un ticket ya emitido si\npueden ir en la misma sesion, y aun asi se limitan.\n\nEl coste que evita, dicho por el: «luego tengo tickets larguisimos con el\ncontexto al maximo inecesariamente». El contexto que una sesion acumula viaja\ndentro de cada ticket que esa sesion emite, y lo paga el taller.\n\nNO sustituye a la regla de sesion nueva por SESGO: le anade un segundo motivo,\nque es el TAMANO del contexto arrastrado. Basta con que una de las dos pida el\ncorte.\n\nEmitido desde el hilo `cantu-studio`. Fichero escrito en este repo, por nombre\ncompleto: context/DECISIONES.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "01c3969",
+      "full_sha": "01c3969411f0eccc33af3863857f49c214050f00",
+      "date": "2026-08-26T03:10:51-06:00",
+      "parents": "9c008b0",
+      "subject": "docs(cantu-studio): relevo de la sesion de #142, y el veredicto de cierre",
+      "body": "EL HANDOFF SUSTITUYE AL DEL 2026-08-22 y lo escribe la cabina, no el operador. Va con el\nestado del canonico medido a las 03:07: 160 runs, 139 completed, UN activo -- #134 -- y #136\ncomo siguiente por cola.\n\nLO QUE MAS VALE DEL RELEVO NO ES EL ESTADO, SON LAS TRAMPAS MEDIDAS:\n  · el canonico de este proyecto vive en `.aiw/roadmap/roadmap.json`, se escribe POR LA\n    CONSOLA, y los nombres de los argumentos NO son los que parecen: `set-status` quiere\n    `run`, no `runId`. Se descubrio a base de rechazos.\n  · `checkInvariants` exige un Set y los `externalRunIds` REALES -- son 155. Con un array\n    vacio da un ROJO FALSO de dependencia colgante.\n  · la suite no cabe en una llamada: 135 ficheros, siete tandas, y las tandas tardan distinto\n    entre llamadas.\n  · `serverCleanMachineColorPaletteBootstrap` es FLAKY bajo paralelismo. Cinco rojas\n    acompañada, 5 de 5 sola. No es defecto: aislar antes de clasificar.\n  · los procesos en segundo plano NO sobreviven entre llamadas de bash.\n\nLA CAUSA RAIZ QUE COSTO TRES RONDAS QUEDA ESCRITA CON SU LECCION GENERAL: el taller\nverificaba en un documento generado SIN reproductor y el operador miraba el IFRAME del panel.\nMismo codigo, vehiculo distinto. Cuando un defecto solo se ve en el vehiculo del operador,\nhay que reproducirlo EN ESE VEHICULO antes de tocar codigo -- y la instrumentacion previa\nseparo «no llego» de «llego y midio mal» sin escribir una linea de motor.\n\nY EL RELEVO INCLUYE LO QUE ESTA CABINA HIZO MAL, que es la parte que mas ahorra al siguiente\nhilo: CINCO sondas falsas en una sesion, todas de la misma familia -- el patron no distinguia\ncomentario, CSS o cadena de codigo, o el escape del shell se comia el regex. Dos estuvieron a\npunto de reportarse como defecto del taller. La regla que sale: LAS SONDAS VAN EN FICHERO,\nnunca en `node -e`. Y una sexta de otra familia: un rojo falso del validador por medir con el\nvocabulario equivocado.\n\nEL VEREDICTO DE CIERRE va aparte y VERBATIM, con lo que la cabina verifico contra disco antes\nde cerrar -- gemelos identicos, fronteras intactas, cero arboles movidos -- Y CON LO QUE NO\nPUDO VERIFICAR: la suite completa no cupo, asi que el total de 1964 se declara como medicion\ndel TALLER, no de la cabina.\n\nY AMBOS DOCUMENTOS DEJAN CUMPLIDA LA INSTRUCCION DEL OPERADOR: al cerrar #142 no se abrio\notro run. Lo que siga va en sesion nueva.\n\nDos ficheros de `context/cantu-studio` y `context/handoffs`. `add` dirigido por nombre;\nningun otro hilo escribe en este commit.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "9c008b0",
+      "full_sha": "9c008b07580be029f3606049029733ee32f6cbb6",
+      "date": "2026-08-26T00:36:26-06:00",
+      "parents": "77031ba",
+      "subject": "docs(cantu-studio): veredicto de #142 -- «Jerarquia» pasa, y aparece el desborde",
+      "body": "EL VEREDICTO DEL OPERADOR A DISCO, VERBATIM Y VERSIONADO. Tres afirmaciones suyas que sin\nesto habrian muerto en el chat: «ya jalo», «pero la formula ya la leyo bien», y el defecto\nnuevo con su forma de arreglo ya elegida -- «si no cabe que se escale todo hasta que quepa».\n\nCIERRA DOS COSAS: la exposicion del tipo -- aparece en el mazo, se inserta, se edita, se\npega por «Insertar JSON» y compila, y la raiz sin color pinta el azul de la PALETA y no el\nhex legado-- y la enmienda D-061 de la formula, verificada en el pixel con la formula exacta\nde su primera captura.\n\nNO CIERRA EL RUN, y el documento dice por que: el arbol desborda su lamina por arriba y por\nabajo.\n\nINCLUYE LO QUE LA CABINA MIDIO DESPUES de recibir el veredicto, para que el arreglo no\nempiece de cero: `fitEngine.js` ya mecaniza la decision del operador --con su propia cita\ndel 2026-08-20 en la cabecera-- y NO alcanza a Jerarquia porque su selector solo recorre\n`.j-columns-stage`. Y el precedente de como se resolvio antes en un tipo de pantalla\ncompleta: `renderStackSlide` copio el patron en vez de extender la pieza.\n\nY DEJA ESCRITA LA INSTRUCCION DE CIERRE del operador: cuando `#142` cierre, NO se abre otro\nrun -- handoff y sesion nueva.\n\nEscribe un solo fichero nuevo en `context/cantu-studio/records/`. `add` dirigido por nombre;\nningun otro hilo escribe en este commit.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "77031ba",
+      "full_sha": "77031ba72895d715f9bc42f28d264b62f5d95564",
+      "date": "2026-08-25T17:33:16-06:00",
+      "parents": "3bbfad1",
+      "subject": "context(cantu-studio): el gris de la nota converge a meta, y la frontera de L7 se sigue",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "3bbfad1",
+      "full_sha": "3bbfad1eefd103afb390359875af661fe3ef43ca",
+      "date": "2026-08-25T05:17:35-06:00",
+      "parents": "c17b563",
+      "subject": "context(cantu-studio): el troceo de #134 en cuatro lotes, y tres de las cuatro preguntas decididas",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c17b563",
+      "full_sha": "c17b5633ef16c8d8bcd8b3fca8da453bd626be5a",
+      "date": "2026-08-25T03:58:50-06:00",
+      "parents": "699106c",
+      "subject": "context(cantu-studio): la direccion y el orden de la migracion de color -- hacia la paleta del autor, y los defectos primero",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "699106c",
+      "full_sha": "699106cab4aa215e49d5449485d885727fccd7c4",
+      "date": "2026-08-24T17:01:57-06:00",
+      "parents": "12f7ad2",
+      "subject": "context(cantu-studio): corrige hacia adelante la decision del mando de tamano -- la premisa de los dos carriles era falsa, y la unidad es rem en ambos",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "12f7ad2",
+      "full_sha": "12f7ad2d6b2d6d6220ba89d3c4609a66cc5330bb",
+      "date": "2026-08-24T16:52:11-06:00",
+      "parents": "fa99670",
+      "subject": "context(cantu-studio): la parada de #136 -- los dos carriles SI guardan la misma clase de numero, y la premisa contraria era de la cabina",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fa99670",
+      "full_sha": "fa99670e332bcbb1bf02dbe4ecfc7202e7309558",
+      "date": "2026-08-24T16:34:47-06:00",
+      "parents": "dd106cd",
+      "subject": "context(cantu-studio): decision de arquitectura -- el mando de tamano pasa a escalonador compacto, y los cuatro peldanos eran un invento del editor",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "dd106cd",
+      "full_sha": "dd106cdb2f3808498d1dc6e8fd4ab25c097ad867",
+      "date": "2026-08-24T01:56:41-06:00",
+      "parents": "b987cc2",
+      "subject": "context(cantu-studio): la QA de #134 -- el paso cero, y los siete controles que Web ya tenia resueltos",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b987cc2",
+      "full_sha": "b987cc2f8ac7215d0c9b997c439f9506b74a7979",
+      "date": "2026-08-23T20:34:33-06:00",
+      "parents": "660c9cd",
+      "subject": "context(cantu-studio): el principio del operador -- la paleta global manda siempre, y «ctx» es un nombre heredado de cuando los colores se escribian a mano",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "660c9cd",
+      "full_sha": "660c9cdad336a924cc2203fb9f91c476f09b191e",
+      "date": "2026-08-23T19:58:03-06:00",
+      "parents": "6773e58",
+      "subject": "context(cantu-studio): decision del operador en #132 -- opcion B, la tabla siempre tiene color, y el defecto se ancla en lo que ya pinta",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6773e58",
+      "full_sha": "6773e589920fd7e9c5c0b474b2e2917b7f1951db",
+      "date": "2026-08-23T19:17:41-06:00",
+      "parents": "d09a3b5",
+      "subject": "context(cantu-studio): el veredicto de la ronda 2 de #132 -- «El de la tabla», los tres «Automatico» de Web, y el caso de la tabla sin color",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d09a3b5",
+      "full_sha": "d09a3b53b154e6f1ffb71210813ee02ef8be5099",
+      "date": "2026-08-23T17:58:56-06:00",
+      "parents": "d89b65f",
+      "subject": "context(cantu-studio): el veredicto de la ronda 1 de #132 -- el estilo de etiqueta, y el tamano que ya estaba construido",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d89b65f",
+      "full_sha": "d89b65f2178134c6e27d943edd1ba51c71102962",
+      "date": "2026-08-23T16:07:15-06:00",
+      "parents": "e13649b",
+      "subject": "context(cantu-studio): el veredicto de la ronda 0 de #132 -- los comandos de Web como referencia, y el encuadre del icono que la cabina puso mal",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e13649b",
+      "full_sha": "e13649b75108993539a538f31f1bc1789077e389",
+      "date": "2026-08-23T00:36:50-06:00",
+      "parents": "68fcebb",
+      "subject": "context(cantu-studio): el relevo de la sesion de #131 -- handoff, prompt de reinicio y el veredicto de cierre",
+      "body": "TRES FICHEROS, add dirigido. context/aiw/records/ queda FUERA: es del hilo `aiw` y\nlleva toda la sesion sin versionar.\n\nEL VEREDICTO DE CIERRE guarda sus palabras verbatim -- «sigue sin aparecer el dropdown\ncon los separadores de terminos» y, a continuacion, «se ve bien pass» -- y la medicion\nque explica la primera: el desplegable se monta ENTRE terminos, asi que en una celda de\nUN solo termino no aparece ninguno, igual que Web. No era un fallo. LO QUE FALLO FUE EL\nPACKET, que mandaba mirar la zona de terminos sin decir cuando el control NO debe\naparecer.\n\nEL HANDOFF re-mide los limites de la cabina y añade cuatro que costaron tiempo esta\nsesion: la consola no sobrevive entre llamadas; grep -r sobre src o tools se come la\nllamada aunque el aviso estuviera escrito; el validador que gobierna es checkInvariants\ncon los root resueltos contra project-console/; y LA CABINA NO CORRE EL ARNES DE\nMUTACION -- lo mato por timeout y dejo viva una mutacion que el git status NO delataba\nporque el fichero ya estaba modificado.\n\nY deja medido lo que ahorra una ronda en #132 «Tabla»: su `case` YA EXISTE en el motor\n-plantilla pura de split, sin abrir motor-, su nombre YA EXISTE en blockCatalog.js, y su\ntrampa esta nombrada desde el plan -el esquema debe exigir celdas de OBJETO porque el\nmotor revienta con las de cadena que usa Web-.\n\nEL PROMPT DE REINICIO incorpora las cuatro reglas nuevas que salieron de #131: un paso\nde QA tiene que decir cuando un control NO debe aparecer; antes de cerrar una admision,\npreguntarse que tienen los hermanos que este no; lo que vive fuera del montaje se marca\ny no se afirma; y el patron de modulos es duplicar y atar con guarda, siendo el modulo\ncompartido una decision de arquitectura del operador.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "68fcebb",
+      "full_sha": "68fcebbb3a196be31c652e97848f54bc1048be8f",
+      "date": "2026-08-22T19:46:06-06:00",
+      "parents": "10ceaae",
+      "subject": "context(cantu-studio): el veredicto de QA de #131 -- separador de terminos y paleta global",
+      "body": "Veredicto del operador sobre la ronda 1, guardado VERBATIM con sus dos capturas descritas.\nVETA el paso 11 y nombra defecto en el 13.\n\nY guarda las mediciones que cambiaron la respuesta a cada una: el separador es SOLO\nformulario -el validador de `terms` es el mismo objeto que Web comparte por referencia-,\nmientras que la paleta son TRES capas. Mas la correccion de la cabina: no existe ningun\nmodulo compartido entre los motores y el editor, y el patron de la casa es duplicar y atar\ncon guarda.\n\nAdd dirigido. context/aiw/records/ queda FUERA: es del hilo `aiw`.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "10ceaae",
+      "full_sha": "10ceaae5de0ce5f5d8ed69ad35d53bc04b3ca04d",
+      "date": "2026-08-21T22:21:21-06:00",
+      "parents": "92f775a",
+      "subject": "context(cantu-studio): el veredicto de #131 -- el motor no tenia celda para conceptGrid",
+      "body": "Veredicto de DISENO del operador, guardado como uno de QA porque decide lo que el\ntaller puede tocar.\n\nQUE CONTIENE\n  · La medicion que paro el ticket: renderColumnsSlide.js despacha DOCE tipos y\n    conceptGrid no esta; no existe renderConceptCard.js; el dibujo vive incrustado\n    en el layout de diapositiva entera y atado a la fila 2 de tres.\n  · Por que `split` engañaba, medido en git: su `case` entro en 3e3e5551, y el\n    commit de su run de admision (946c5bec) no toco renderColumnsSlide.js.\n  · Las CUATRO opciones que se le dibujaron, y el veredicto: A, extraer una vez.\n  · El nombre, medido y no propuesto: «Anatomia de formula», blockCatalog.js:148.\n  · El material de QA pasado por la puerta real ANTES de entregarlo: cinco pruebas,\n    y la conclusion de que hoy rebota SOLO por el discriminante.\n  · DOS FALLOS DE SONDA DE LA CABINA, declarados con la misma fuerza que el acierto:\n    un validador equivocado que dio 25 rojos -- uno de ellos decia que faltaba el\n    fichero recien escrito-- y una composicion mala de externalRunIds que recogio\n    cero externos y produjo un rojo por dependencia huerfana inexistente. Con los\n    root resueltos bien: 155 externos, cero errores.\n\nAdd dirigido por nombre. context/aiw/records/ queda FUERA a proposito: es del hilo\n`aiw`, no de este.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "92f775a",
+      "full_sha": "92f775a55d410a08aade57c7b26b75b581b21ae8",
+      "date": "2026-08-21T21:41:09-06:00",
+      "parents": "f12851c",
+      "subject": "context(cantu-studio): el relevo de la sesion #116-#130 -- handoff reescrito y prompt de reinicio con los dos patrones de fallo nuevos",
+      "body": "RELEVO DE UNA SESION LARGA: quince runs cerrados, de #116 a #130, con cinco componentes\nhabilitados o admitidos y el modelo de tamano cambiado a medio camino.\n\nEL HANDOFF LLEVA, ADEMAS DE LA TOPOLOGIA Y LOS LIMITES: las OCHO reglas del operador\n-tres de ellas nuevas de esta sesion-, los TRES fallos de commit con la solucion escrita\nen codigo, el criterio de las cinco cosas, el peldano-es-el-techo con el motor de ajuste\nviviendo FUERA del renderizador, y la lista entera de lo abierto y no reparado.\n\nEL PROMPT DE REINICIO anade DOS PATRONES DE FALLO NUEVOS de la cabina, y el primero\ncosto NUEVE rondas en un solo run:\n\n  1. EL ENCUADRE EQUIVOCADO SOBREVIVE A REPARACIONES CORRECTAS. Si un defecto sobrevive\n     a dos reparaciones correctas, el encuadre esta mal, no la reparacion: hay que\n     llamar a la capa de abajo, no afinar la de arriba.\n  2. MEDIR CON LA HERRAMIENTA EQUIVOCADA PRODUCE UN VERDE. Un tamano percibido no es un\n     tamano de fuente: se comparan TRATAMIENTOS, no numeros.\n\nY lleva escrito en codigo el comando que deriva la lista de ficheros del git status, que\nes lo que habria evitado los tres commits incompletos.\n\nNOTA DE ESTE COMMIT, Y ES UN DEFECTO DE LA CABINA CORREGIDO ANTES DE PUBLICAR: la\nprimera version arrastro un fichero del hilo `aiw` -un record de su RUN-41- porque la\nlista se derivo del git status SIN acotar al hilo. Derivar la lista arregla el fallo de\ndejarse ficheros fuera, pero abre el contrario en ESTE repo, donde escriben varios\nhilos. La regla completa es: DERIVAR LA LISTA DEL STATUS **Y ACOTARLA AL HILO** antes de\nanadir. El commit se rehizo sin ese fichero, que queda sin seguir y es de su hilo.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f12851c",
+      "full_sha": "f12851ceaccbdc9f6e30e40a28d4a5039ba3ae7f",
+      "date": "2026-08-21T21:37:44-06:00",
+      "parents": "e93545a",
+      "subject": "context(cantu-studio): el veredicto de #130 -- nueve rondas verbatim, y los dos errores de encuadre y de medicion de la cabina",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e93545a",
+      "full_sha": "e93545a06d11a7f3ea8a90c56ccbe54984af8359",
+      "date": "2026-08-21T18:17:29-06:00",
+      "parents": "7efad76",
+      "subject": "context(cantu-studio): dos reglas del operador -- la valla de codigo anidada que corta el ticket, y el reinicio de sesion al cerrar #130",
+      "body": "REGLA 1: un ticket no puede llevar una valla de codigo dentro de otra. La cabina\nentrega los tickets dentro de una valla de tres tildes invertidas, y cuando el texto\ndel ticket incluye OTRA valla de tres, esa segunda CIERRA la primera y el operador ve\nel ticket cortado. No es la primera vez en esta sesion. Tres salidas en orden: no\nanidar -indentar con cuatro espacios-, o valla exterior de CUATRO tildes, y releer el\nticket entero buscando triples antes de enviarlo.\n\nEs de la misma familia que los otros defectos de entrega de hoy -los tres commits a\nlos que les falto un fichero y las comillas invertidas que se comieron una palabra-:\nel contenido era correcto y el VEHICULO lo estropeo. Se arregla con una comprobacion,\nno con cuidado.\n\nREGLA 2: al cerrar #130 -cerrado correctamente, no a medias- toca reinicio de sesion.\nLa cabina actualiza el handoff y el prompt de reinicio, los commitea, y el operador\nreinicia la conversacion. El documento lista lo que las dos cosas tienen que llevar de\nesta sesion.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7efad76",
+      "full_sha": "7efad7615feba8672a7aa3d3535f7face715a389",
+      "date": "2026-08-21T04:33:44-06:00",
+      "parents": "2dcf993",
+      "subject": "context(cantu-studio): el veredicto de #129 -- el nombre que ya existia, y el arnes que desmintio una premisa de su propia guarda",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2dcf993",
+      "full_sha": "2dcf9931d3bfb55a70cafcc6c6036cdcb46123d3",
+      "date": "2026-08-21T02:41:26-06:00",
+      "parents": "3dcd4b8",
+      "subject": "context(cantu-studio): el veredicto de #128 -- el triaje que el censo no puede medir, y la prueba que congelaba el defecto",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "3dcd4b8",
+      "full_sha": "3dcd4b862853d4a0ad444140383ab0e24ed68f56",
+      "date": "2026-08-21T00:49:31-06:00",
+      "parents": "df41ff3",
+      "subject": "context(cantu-studio): el veredicto de #127 -- y el defecto de la cabina en el commit de #126, detectado midiendo",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "df41ff3",
+      "full_sha": "df41ff381ed25cfa4f90a70e19464391402153f8",
+      "date": "2026-08-20T23:38:54-06:00",
+      "parents": "acc6099",
+      "subject": "context(cantu-studio): el veredicto de #126 -- el criterio de las cinco cosas a la primera, y el operador sustituye su propia decision de geometria",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "acc6099",
+      "full_sha": "acc6099574d6cc72b27495e06bc79d5d1b47ad86",
+      "date": "2026-08-20T21:52:31-06:00",
+      "parents": "829cdef",
+      "subject": "context(cantu-studio): el veredicto de #125 -- los saltos de linea, y la pregunta del video contestada sin adelantar su run",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "829cdef",
+      "full_sha": "829cdefd54a8d7480c1fc6f745db4ce0fb8c19b3",
+      "date": "2026-08-20T21:02:20-06:00",
+      "parents": "0b379c2",
+      "subject": "context(cantu-studio): el veredicto de #124 -- cinco rondas verbatim, y una decision que NO se cierra por silencio",
+      "body": "VEREDICTO-124-NOTA-DESTACADA.md guarda sus palabras de las cuatro rondas de defectos\nmas el cierre, «pas».\n\nLO QUE ENSENA, Y ES LO MISMO QUE ENSENO #121: las cuatro ultimas rondas salieron de\nque el operador POR FIN PODIA VER el componente, y las cuatro son la MISMA CLASE DE\nDEFECTO -- valores escritos a mano que no escalan: el icono de 20px, el borde de 4px,\nel relleno de 16/20px-. La Lista pago lo mismo con su pildora de 56px.\n\nY POR ESO SE CENSARON LOS DEMAS: 44 medidas de armazon en pixeles fijos en los cinco\ncomponentes con escala, con la Tarjeta a la cabeza con 21. Indicio, no diagnostico, y\nno se toco ninguno.\n\nLA DECISION QUE QUEDA ABIERTA: al salir «Variante» del formulario, el autor perdio la\nunica forma de pedir una nota SUTIL. Se le dibujo y se le ofrecieron tres salidas con\nla primera recomendada. SU «pas» CIERRA LA QA, NO LA DECISION, y la cabina no la da\npor elegida: comprometerle a una ronda 6 sobre su silencio seria inventarle intencion,\ny este proyecto ya registra dos casos en que una eleccion quedo aceptada sin sus\npalabras.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "0b379c2",
+      "full_sha": "0b379c2dcc435efba31329c585c191cd2ac8535c",
+      "date": "2026-08-19T20:20:09-06:00",
+      "parents": "1f3c39c",
+      "subject": "context(cantu-studio): el veredicto de #123 -- y una regla del operador sobre el MATERIAL DE QA",
+      "body": "VEREDICTO-123-LA-TERCERA-COMPUERTA-CERRADA.md guarda sus palabras integras. Los dos\npasos pasan, y el segundo es el que importa: el mensaje que vio habla de un CAMPO\nOBLIGATORIO y no de contencion, asi que se retiro la negativa por contencion sin\naflojar la validacion.\n\nY REGISTRA UNA CORRECCION DE METODO QUE PIDIO EL: «dame el json para los test no solo\nme digas que lo invente». Tenia razon y es de la misma familia que sus otras cuatro\nreglas: dejaba trabajo suyo en la respuesta.\n\nLA REGLA, y se aplica a toda QA futura: cuando un paso de revision requiera MATERIAL\nDE ENTRADA -JSON, texto, una URL, un fichero-, la cabina lo PRODUCE y lo ENTREGA, y\nlo pasa por la PUERTA REAL antes de darselo. Un material de QA sin probar puede\nfabricar un rojo falso, que es peor que no tener QA.\n\nSe hizo asi en el mismo turno: los dos casos se ejecutaron contra\nparseAndValidateBlocks antes de entregarse, y la prediccion y lo que el vio en\npantalla coincidieron literalmente.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1f3c39c",
+      "full_sha": "1f3c39c46f2645a79b59b48482001f4f6fa694f6",
+      "date": "2026-08-19T19:03:41-06:00",
+      "parents": "cdd7abb",
+      "subject": "context(cantu-studio): el veredicto de #122 -- la tercera compuerta, un defecto de la cabina sobre trabajo cerrado, y la geometria de celda decidida sobre un dibujo",
+      "body": "VEREDICTO-122-VIDEO-Y-LA-TERCERA-COMPUERTA.md guarda sus palabras integras: «el video\nen teoria jalo / pero... mira se apachurro raro», y sobre el dibujo de las cuatro\nsalidas, «vamos con tu recomendacion dame el ticket». Adjunto una captura.\n\nTRES COSAS QUEDAN REGISTRADAS.\n\n1. LAS COMPUERTAS DE CONTENCION SON TRES, NO DOS. El selector, el mapa de aptitud y el\n   importador de JSON. Solo la primera y la tercera bloquean; la segunda se midio aqui\n   en vez de heredarse del run anterior, que era el punto.\n\n2. UN DEFECTO DE LA CABINA SOBRE TRABAJO YA ENTREGADO Y COMMITEADO. El ticket de\n   RUN-CANTU-SLIDE-ICONLIST-LIFT-AND-IMPLEMENT-001 nombro dos superficies de\n   contencion y son tres, asi que aquel run cerro con el componente A MEDIO\n   HABILITAR: insertable desde el selector, rechazado al importar. La tercera estaba\n   escrita en la nota del plan ANTES de aquel run y la cabina no la leyo al redactar\n   el encargo. No es del taller. Aquel run no se reabre ni se reescribe su historia:\n   se corrige hacia adelante en un run propio, con guarda mecanica.\n\n3. LA GEOMETRIA DE CELDA, DECIDIDA SOBRE UN DIBUJO Y NO SOBRE PROSA. El operador vio\n   DOS sintomas opuestos del mismo agujero -en celda alta el video deja hueco, en fila\n   baja sale a 10:1- y eligio la opcion D: la celda se ajusta al contenido. Queda\n   escrito el razonamiento que se le dio, no solo la letra que eligio: la A descuelga\n   el componente respecto a su vecino, la B destroza un video EDUCATIVO donde el texto\n   de la pizarra es el contenido, y la C se come contenido y tapa los controles.\n\nY queda escrito que esa decision NO se resuelve sola: el escenario tiene alto fijo, y\nque pasa cuando dos componentes de la misma fila piden alturas distintas es una\npregunta que su run tiene que medir y, si resulta ser suya, dibujar y preguntar.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "cdd7abb",
+      "full_sha": "cdd7abb7f3705a50dda45fca5b7b9e4b6f586dd4",
+      "date": "2026-08-19T18:04:18-06:00",
+      "parents": "b2fbe30",
+      "subject": "context(cantu-studio): regla del operador -- un RUN NUEVO se lanza en SESION NUEVA; las rondas de correccion, no",
+      "body": "REGLA-SESION-NUEVA-POR-RUN-NUEVO.md guarda sus palabras integras. Es permanente\nhasta que el la retire.\n\nEL CORTE ES EL run_id, NO EL TAMANO DEL ENCARGO. Ronda de correccion sobre el mismo\nrun: misma sesion, porque el taller ya tiene el terreno medido. Run nuevo: SESION\nNUEVA siempre, y con modelo y esfuerzo declarados, porque ahi si los elige.\n\nEL DEFECTO QUE CORRIGE ERA DE LA CABINA. La regla anterior decia «declara siempre la\nsesion, en las dos direcciones» y la cabina la degrado a declarar «misma sesion» por\ndefecto, tambien al abrir runs nuevos. Dejo de ser una decision y paso a ser una\nmuletilla.\n\nCOSTE MEDIDO: el ticket de #122 salio recomendando misma sesion con el taller\ncargando cinco rondas de razonamiento sobre la Lista con etiquetas. Y la muletilla\nse llevaba por delante algo mas: en sesion nueva el operador ELIGE modelo y\nesfuerzo, y recomendar misma sesion por costumbre le quitaba esa eleccion sin que\nnadie lo decidiera.\n\nYa estaba escrito en las reglas de cabina -«sesion nueva cuando el taller anterior\ntiene invertido su propio razonamiento en lo que sigue»- y la cabina no lo aplico. Y\nno se pierde nada al cortar, porque lo que el run siguiente necesita esta en\nFICHEROS: un contrato en un fichero no envejece; el razonamiento de una sesion si.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b2fbe30",
+      "full_sha": "b2fbe3093e6736b198a26b0c8efcf90bde45f4d3",
+      "date": "2026-08-19T18:01:11-06:00",
+      "parents": "e5a8a77",
+      "subject": "context(cantu-studio): el veredicto de #121 -- cinco rondas verbatim, y cuatro decisiones suyas, una de ellas derogando su propia regla",
+      "body": "VEREDICTO-121-LISTA-CON-ETIQUETAS.md guarda sus palabras de las cinco rondas,\nintegras, mas el cierre: «pass dame el siguiente ticket».\n\nLAS CUATRO DECISIONES QUE ESTE RUN FIJA: el control de una coleccion va\nencabezandola; el ancla de esta superficie se mueve a 1.5rem -y eso DEROGA, solo\naqui, su propia regla del 2026-08-17 «Mediano significa lo que ya ves», derogada por\nquien la puso-; la descripcion es opcional TAMBIEN en Web, eligiendo relajar el\nesquema compartido sobre partirlo en dos; y el asterisco marca los obligatorios\nmientras los opcionales no llevan nada, que es la de mas alcance y no es de este\ncomponente.\n\nQUEDA REGISTRADO UN ERROR DE LA CABINA, publicado igual de fuerte que el trabajo:\nafirmo en un ticket que el desborde de cuatro filas llevaba tres mediciones seguidas\nempeorando, y era falso -lo dedujo por acumulacion en vez de medirlo-. Al defecto\nsigue costando 280px desde la ronda 2. El taller necesito cuatro escenas nuevas para\nverlo, porque las que habia usaban listas sin peldano y habrian contestado «no\nempeora», cierto solo para el defecto. Es la sonda que no distingue, sembrada por el\nticket.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e5a8a77",
+      "full_sha": "e5a8a77ba2c7c1e591b009a23f1cfab578b1e4bf",
+      "date": "2026-08-19T14:18:37-06:00",
+      "parents": "9bdf700",
+      "subject": "context(cantu-studio): el veredicto de #120 y EL VIRAJE -- no se trabaja sobre un componente que el autor no puede insertar",
+      "body": "VEREDICTO-120-Y-EL-VIRAJE-A-HABILITAR.md guarda sus palabras integras. La primera\nmitad cierra el run: la Tarjeta pasa en sus cuatro familias, revisada por el en\nCantu Studio.\n\nLA SEGUNDA MITAD ES UNA ORDEN DE PRIORIDAD Y CAMBIA LA COLA: «vamos a enfocarnos en\nhabilitar los componentes que faltan, antes de hacer cosas que afectan componentes\naun no habilitados».\n\nNo es una preferencia: es un diagnostico correcto de un defecto medido en este\npropio repo. #116 dejo la mitad de su QA sin mirar porque el no podia insertar el\ncomponente; #119 cerro sin QA visual; #120 volvio a nombrar la Lista como no\nverificable. Tres runs seguidos produciendo trabajo que el autor no puede juzgar, y\ncada uno dejando una deuda que hay que reabrir.\n\nLA REGLA QUEDA ESCRITA: no se trabaja sobre un componente que el autor no puede\ninsertar, salvo que el propio run sea el que lo habilita. Con su corolario, que\nevita el error simetrico: aplicar despues las convenciones ya escritas NO es trabajo\nduplicado -las reglas no se rehacen, se aplican-, y ahora con ojo humano detras.\n\nLa cola no se reordena aqui. Se reordena midiendo y con el remap publicado antes.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "9bdf700",
+      "full_sha": "9bdf70084d92532caae73ca6b5184cc03d407cc0",
+      "date": "2026-08-19T13:33:25-06:00",
+      "parents": "45d4536",
+      "subject": "context(cantu-studio): la correccion del ticket de #120 -- publicada igual de fuerte que el error",
+      "body": "CORRECCION-120-TICKET-CONTRADICTORIO.md registra que el ticket de la cabina afirmo\nque «Metrica y Cita» eran componentes sin run asignado, cuando son DOS DE LAS CUATRO\nFAMILIAS DE LA TARJETA que ese mismo run tiene encargadas desde su titulo.\n\nDE DONDE VINO, Y ES LO UTIL: de una tabla que la propia cabina dibujo para el\noperador el turno anterior y que NUNCA verifico contra el esquema. Al turno\nsiguiente la copio al ticket como si fuera medicion. Es la cuarta forma de fallar de\n«papel no es disco»: citar una medicion PROPIA que nunca existio, dentro de la misma\nsesion.\n\nLA DISTINCION QUE FALTABA ES DE NOMBRES: «Metrica» y «Cita» designan a la vez una\nFAMILIA de la Tarjeta y una FORMA de la regla. Cuando un mismo rotulo designa dos\ncosas de niveles distintos, el ticket tiene que decir cual de las dos.\n\nSe retira la linea del Out of scope y las cuatro familias entran. NO es ampliar el\nalcance y D-061 no aplica: es quitar una restriccion falsa y devolver el ticket a lo\nque el run, su titulo y la regla en disco ya decian. Queda marcado como inferencia\nde la cabina y VETABLE por el operador.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "45d4536",
+      "full_sha": "45d4536792e2f602416f1d17cbccc5c920873dce",
+      "date": "2026-08-19T12:58:55-06:00",
+      "parents": "44d48c7",
+      "subject": "context(cantu-studio): el veredicto de #119 -- y una instruccion de metodo del operador que vale para todo lo que sigue",
+      "body": "VEREDICTO-119-CONTRATO-DE-COLOCACION.md guarda sus palabras integras: «si, decidid,\nsobre eso qe sigue, tengo que verlo visual para entenderlo».\n\nLa primera mitad cierra el run: la forma (c) de la regla dice lo que el decidio.\n\nLA SEGUNDA MITAD ES UNA INSTRUCCION DE METODO, NO UN COMENTARIO, y se registra como\npermanente hasta que el la retire: lo que viene -la Tarjeta y la Lista- es donde la\nregla se vuelve visible, y esta diciendo que LA PROSA NO LE SIRVE PARA JUZGARLA.\n\nConsecuencia que la cabina asume: antes de que el operador tenga que decidir sobre\nuna colocacion se le DIBUJA, no se le describe; el dibujo va ANTES del ticket cuando\nla decision es suya, no despues en la QA; y un dibujo de la cabina NO ES UNA CAPTURA\n-la cabina no ve interfaces-, asi que se marca como esquema y el render real lo\nproduce el taller.\n\nQueda registrado tambien que este run cerro SIN QA VISUAL, que es legitimo y se\ndeclara, y que es el primero de esta cadena tras doce con ella.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "44d48c7",
+      "full_sha": "44d48c78375a3e0c06a110cd09cd6dd36955f917",
+      "date": "2026-08-18T18:19:03-06:00",
+      "parents": "10cc283",
+      "subject": "context(cantu-studio): la decision de diseno de #118, guardada como un veredicto -- la Lista no tenia campo con el que emparejar",
+      "body": "DECISION-118-PARTICION-Y-LISTA.md registra las dos preguntas que la parada de\nRUN-CANTU-SLIDE-EDITOR-FIELD-SIZE-PAIRING-001 dejo abiertas y las dos respuestas del\noperador, con las opciones que se le presentaron y cual se recomendo.\n\nSe guarda igual que un veredicto de QA porque lo es: la convencion que el pidio -«no\ncampo, campo, campo / tamano, tamano, tamano»- NO TIENE LECTURA UNICA sobre una\ncoleccion repetida, y elegir por el habria sido inventar intencion.\n\n  1. El control de la Lista va ENCABEZANDO LA COLECCION, rotulado de forma que se\n     entienda que gobierna toda la lista.\n  2. Esa colocacion VIAJA DENTRO del run que levanta su contencion, porque ese run\n     rehace el formulario entero igualmente.\n\nQueda escrito tambien que la tercera opcion -repetir el control en cada item- era\nuna trampa y se le dijo al ofrecerla: cumple la letra de la convencion rompiendo su\nintencion, porque convierte un ajuste global en N y eso es CONDUCTA, declarada fuera\nde alcance.\n\nY queda registrada, publicada igual de fuerte que el error, UNA CORRECCION DE LA\nCABINA: el ticket de #118 afirmo que la cola compartida gobernaba TRES tipos y son\nDOS. El ticket marcaba esa cifra como envejecida y mandaba re-medirla, y por eso el\nerror no llego a ninguna parte. Es el argumento entero de por que las cifras de un\nticket se marcan como valores a verificar.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "10cc283",
+      "full_sha": "10cc283bd0cacd04b873f3fe3e9a26eb99e5c6eb",
+      "date": "2026-08-18T17:42:59-06:00",
+      "parents": "b4f79f1",
+      "subject": "context(cantu-studio): el veredicto de #117, verbatim -- y el rotulo que quedo aceptado por un «pass» y no por sus palabras",
+      "body": "VEREDICTO-117-SEPARACION-DEL-ENCABEZADO.md guarda sus palabras integras: «se ve bien\npass».\n\nSegundo veredicto seguido que llega en una linea sobre una QA de seis pasos. Se\nregistra el patron en vez de normalizarlo en silencio: los pasos 1 a 3 eran de\nparada y pasan; el 4, el 5 y el 6 pedian una linea de porque y no la llevan.\n\nEl paso 5 es el que pesa. El propio run advertia por escrito que los rotulos los\ndecide el operador y que hay un conflicto abierto en este proyecto por no haberlo\nhecho. «Separacion bajo el encabezado» se entrego marcado como propuesta y quedo\naceptado por el pass. Se toma por bueno y queda escrito que nunca lo escribio el:\nes vetable, ninguna prueba lo clava y ningun contrato depende de el.\n\nQueda tambien registrado lo nombrado y no reparado, incluido un fallo de la cabina:\nel inventario de pistas obsoletas que puso en el ticket estaba incompleto porque la\nsonda no miraba el otro fichero. Son tres vivas, no dos.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b4f79f1",
+      "full_sha": "b4f79f11d6dbba31addec71d59f841525b73fe33",
+      "date": "2026-08-18T16:05:18-06:00",
+      "parents": "aef12ab",
+      "subject": "context(cantu-studio): el veredicto de #116, verbatim -- y el paso que el operador no contesto, marcado como inferencia vetable",
+      "body": "VEREDICTO-116-ESCALAS-DE-CUERPO.md guarda sus palabras integras: «se ven bien\nprocede».\n\nLa QA se pidio en cinco pasos con formato de respuesta literal y el veredicto llego\nen una linea. La diferencia se registra en vez de disimularse: los pasos 1 a 4\npasan, y el 5 -que juego de razones queda- NO se contesto explicitamente. La cabina\nlo resolvio por inferencia hacia lo que ya hay en disco, lo marco como tal en el\nrecord, y declaro que es reversible barato: tres numeros por tabla, 0,64 px de\ndiferencia maxima, ningun contrato tocado.\n\nQueda escrito tambien que «Lista con etiquetas» no tuvo ojo humano en su superficie\nde autoria, que van doce runs consecutivos en los que la unica prueba visual es el\noperador y tres cierres con QA parcial.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "aef12ab",
+      "full_sha": "aef12ab4e2aa9a71c990d49d57aefc795012f9a0",
+      "date": "2026-08-18T06:06:02-06:00",
+      "parents": "18400df",
+      "subject": "context(cantu-studio): cierra la sesion #108-#115 -- relevo reescrito, prompt de reinicio con los DOS PATRONES DE FALLO de la cabina, y el veredicto de la etiqueta",
+      "body": "OCHO RUNS CERRADOS EN LA SESION. El relevo se reescribe entero y el prompt de reinicio anade lo\nque no tenia: los dos patrones de fallo que la cabina repitio, porque ponerlos en el prompt es\nmas barato que volver a pagarlos.\n\nPATRON 1 -- TICKETS QUE SE CONTRADICEN A SI MISMOS. Cuatro veces, y las cuatro las cazo el\ntaller parando en vez de adivinar. La distincion que mas falto: sobre un mismo fichero, RETIRAR\nun campo rompe contrato y ANADIR uno es aditivo; una regla escrita para prohibir lo primero\nbloquea lo segundo si nadie lo dice.\n\nPATRON 2 -- SONDAS QUE NO DISTINGUEN. Media docena: apariciones contadas como llamadas, grep -r\narrastrando node_modules hasta agotar el tiempo, un head que trunco una lista y casi publica una\ndiscrepancia inexistente, y una regex que NO PUEDE ver un campo que entra por spread cuarenta\nlineas mas arriba.\n\nSE CORRIGE EL ENCUADRE DE C5 [SENTINEL] que el relevo arrastraba desde dos sesiones: es un\ncentinela de FUGA y no un semaforo del ciclo. Su asercion si cuenta runs activos, asi que el\nhecho no era falso -- el encuadre si, y llevo a la cabina a predecir un numero en un ticket en\nvez de leer un proposito.\n\nY SE ESCRIBE LA LECCION MAS CARA: el defecto vivia en el VALOR POR DEFECTO. El operador tuvo que\npedir dos veces que se quitara «Automatico» porque la reparacion anterior se acoto a proposito y\nuna prueba congelaba la fabrica de defectos.\n\nLas cuatro reglas de operacion del operador quedan juntas y con su forma comun nombrada: las\ncuatro retiran trabajo que la cabina le estaba pasando a el.\n\nOnce runs consecutivos cuya superficie visual solo la juzga su ojo, dos de ellos con QA parcial\nseguidos, y un fallo que no debe volver: pedirle un paso de QA sobre un componente que no puede\nni insertar.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "18400df",
+      "full_sha": "18400df4166cce8712241b3aa7607527afd94ed4",
+      "date": "2026-08-18T04:27:07-06:00",
+      "parents": "adfceb5",
+      "subject": "veredicto(cantu-studio #114): 'todo jalo', y tres cosas mas -- un defecto, una correccion de diseno y una nota que pidio por escrito",
+      "body": "Queda que un paso de la QA era INVERIFICABLE y la cabina no lo vio al escribirla: no se puede\nrevisar el tamano de texto de un componente que el autor no puede insertar.\n\nEl defecto de la etiqueta se registra como lo que es -- una decision que el operador REVOCA, no un\nbug encontrado-, porque el editor documenta que el respaldo era deliberado y estaba explicado al\nautor.\n\nEl espaciado cambia de dueno, y se conserva la razon de arquitectura del operador junto con la\nconsecuencia que acepto: es el mismo control que ya habia pedido, no dos.\n\nY la nota que pidio explicitamente que quedara por escrito: las dos superficies que conservan\n'Automatico' lo hacen a proposito, con su run ya en la cola.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "adfceb5",
+      "full_sha": "adfceb515552cd2c0bba644bfeb785ec96a06046",
+      "date": "2026-08-18T03:12:06-06:00",
+      "parents": "0bfd0ee",
+      "subject": "record(cantu-studio #113): cierre con QA parcial, y el «Automatico» que vuelve porque el defecto vive en el valor por defecto",
+      "body": "Queda la queja del operador de las dos veces, y la de la primera esta citada verbatim dentro del\npropio codigo desde el run que la atendio -- con su razon general bien entendida y la reparacion\nacotada a proposito.\n\nSe escribe por que vuelve: el control NACE con la opcion encendida, asi que cada control nuevo\nnace con el defecto. No es un olvido, es el defecto por defecto.\n\nY se escribe la parte de la cabina sin rodeos: su ticket de la ronda 3 ordenaba conservar\n«Automatico» para mantener la aditividad. Le mando al taller montar el defecto que el operador\nya habia pedido quitar.\n\nMas los seis pasos de QA que nadie miro, cuales tenian consecuencia de parada, y que son dos\ncierres seguidos con QA parcial.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "0bfd0ee",
+      "full_sha": "0bfd0ee25d19029cbb0902efb37b448fffad9c91",
+      "date": "2026-08-17T23:59:03-06:00",
+      "parents": "e1d5a37",
+      "subject": "decision(cantu-studio #113): la descripcion deja de pintarse en diapositiva, y el esquema NO se toca",
+      "body": "La parada 1 era la esperada y se disparo: el censo dio 5 items, hecho cargando los modulos y\nrecorriendo el objeto -- en test_multimedia.js el grafico entra por spread y el caption vive 40\nlineas mas arriba, asi que ninguna regex sobre el literal lo habria visto. Es exactamente por lo\nque la cabina se nego a dar su propio numero.\n\nY el ticket de la cabina no vio lo que de verdad decidio: visualShape, buildVisualOutput y\nVisualFields SON COMPARTIDOS CON WEB, mas una quinta puerta que nadie habia nombrado -- la\nfabrica-. 'Retirarlo de visual y solo visual' no era borrar una linea.\n\nLa via elegida la propuso la cabina juntando las mediciones del taller y no estaba en ninguna de\nlas dos listas: motor de diapositiva y formulario de diapositiva dejan de emitirlo y ofrecerlo,\nel esquema queda intacto. Cero contrato roto, cero borradores invalidados, Web intacto, y los\n55,7px de dibujo recuperados igual.\n\nSe guarda POR QUE se descartaron las otras tres, no solo cual gano. La de partir las piezas se\ncayo por su propio argumento: su queja era de MANTENIMIENTO, y partir en dos lo que hoy es una\npieza crea ese mismo coste en otro sitio.\n\nY se acepta a sabiendas lo que cuesta: deja un campo muerto en el esquema.\n\nQueda por verificar antes de escribir que el campo se puede acotar por flujo; si no se puede, la\nvia se cae y hay que volver a preguntar.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e1d5a37",
+      "full_sha": "e1d5a373cf65b625e82cefa26bf8726a2e068afd",
+      "date": "2026-08-17T23:38:28-06:00",
+      "parents": "fc744d3",
+      "subject": "regla(operador): el ticket no se anuncia, se entrega -- solo se retiene si falta una decision suya",
+      "body": "Cuarta regla de la misma familia en una sola sesion, y la cabina cerro AL MENOS TRES turnos con\n'dime cuando la abras y te paso el ticket'. Las tres veces el operador tuvo que escribir un\nmensaje entero cuya unica funcion era pedir lo que la cabina ya podia haber dado; uno de ellos\nfue literalmente 'abre el ticket'.\n\nEl coste no es el turno: es que tiene que acordarse de volver.\n\nY si la decision que falta es barata de revertir, se elige, se entrega el ticket igual y la\neleccion va marcada dentro como inferencia vetable -- patron que ya funciono dos veces en esta\nsesion.\n\nLas cuatro reglas retiran trabajo que la cabina le estaba pasando a el: tres retiran ruido que\nno puede usar, esta retira un ida y vuelta que no hacia falta.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fc744d3",
+      "full_sha": "fc744d377a32b5dc6707971756b4bad70fd87fed",
+      "date": "2026-08-17T23:09:20-06:00",
+      "parents": "2d493d3",
+      "subject": "veredicto(cantu-studio #112): 'la funcion del grid jalo como deberia', y dos peticiones nuevas que no son de ese run",
+      "body": "Queda escrito lo que el veredicto NO dice: no menciono el caso 4, donde el dibujo se acota a 0px\nen cuatro filas. Estaba en la QA como paso con consecuencia de parada, no la disparo, pero\ntampoco lo nombro. Sigue abierto y sigue siendo suyo.\n\nSus razones para quitar la descripcion del grafico son de MANTENIMIENTO y no de estetica -'no\ntiene buena medida', 'es una lata darle mantenimiento'- y traen su propia alternativa: la\nNarrativa, que ya existe. Eso se conserva porque es lo que hara que dentro de seis meses nadie\nla devuelva 'por completitud'.\n\nY 'muy grande' va por la segunda vez contra el 'Extra grande' de la lista compartida. Ya no es\ndiscrepancia aislada sino patron -- con el agravante medido desde #110 de que el proyecto YA\nconvive con los dos rotulos, porque la lista del Espaciador de Web dice 'Muy grande' para el\nmismo valor.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2d493d3",
+      "full_sha": "2d493d301ddeecdd85e6160b7c1f19447492997d",
+      "date": "2026-08-17T21:59:12-06:00",
+      "parents": "793a304",
+      "subject": "regla(operador): CORRIGE la version de hace un rato -- la sesion se dice SIEMPRE; lo que sobra es el modelo y el esfuerzo",
+      "body": "La cabina escribio la regla como 'en la misma sesion no se dice nada' y el operador la corrigio\nen cuanto la vio aplicada: la sesion es la UNICA de las tres sobre la que el puede actuar, asi\nque se declara siempre, en las dos direcciones.\n\nEl caso que lo destapo: la cabina recomendo sesion nueva para abrir un run y en el turno\nsiguiente -misma sesion- callo, y el tuvo que preguntar. Un silencio no es una respuesta cuando\nel turno anterior dijo lo contrario.\n\nY el corolario, que es la otra mitad del patron de las tres reglas: la prueba de 'esto le sirve\no no' es POR LINEA, no por bloque. Que dos datos viajen en la misma frase no significa que\nsobren los dos.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "793a304",
+      "full_sha": "793a3047a63061f812864d9ab7403df9b013c141",
+      "date": "2026-08-17T21:45:58-06:00",
+      "parents": "1e10fba",
+      "subject": "decision(cantu-studio #112): el operador elige la puerta que cubre todo, y DELEGA en la cabina la del desborde -- que recomienda sin fingir que ve",
+      "body": "Puerta: min-height: 0 en el envoltorio. Mueve 8 de 50 entre 11 y 35px, pero cubre las 32 sin\nfilas declaradas Y las recien creadas -- y eso ultimo es lo que decidio, porque una diapositiva\nnueva nace sin filas y con la otra puerta el defecto que el acaba de encontrar seguiria vivo.\n\nDesborde: cito la frase con la que la cabina se habia negado a recomendar -'esto es juicio\nvisual'- y aun asi delego. Queda escrito COMO se recomienda entonces: leyendo los numeros que\nel taller midio, donde encoger solo el grafico domina en los tres ejes a la vez, Y DECLARANDO\nque lo que la cabina no puede juzgar es si se VE bien. La ronda 2 tiene orden de ponerselo\ndelante en la QA.\n\nEl principio detras, porque va a gobernar mas que este caso: el dibujo vectorial no tiene suelo\nde legibilidad y el texto si.\n\nY queda nombrado el riesgo de pieza compartida: es una conducta POR TIPO, y quedan siete\ncomponentes que caeran en la misma rejilla. Si la ronda 2 la escribe como regla general se\nvuelve contrato.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1e10fba",
+      "full_sha": "1e10fbae5e8f5102b02dca087269356f2394e18f",
+      "date": "2026-08-17T20:30:42-06:00",
+      "parents": "0b1400b",
+      "subject": "record(cantu-studio #111): cierre con QA parcial declarada, y el defecto de rejilla que el operador cazo trabajando",
+      "body": "Sus palabras verbatim con la captura descrita, y sus tres preguntas contestadas una a una\nmidiendo: no salio de esta sesion, no es el SVG, y no lo habia visto porque con una sola fila\nno hay nada que repartir.\n\nSe declara sin adornos que cinco pasos de la QA quedaron sin ojo humano, cual era el que tenia\nconsecuencia de parada, y que es el octavo run consecutivo cuya superficie visual solo puede\njuzgar el operador -- aunque el anterior cerro con QA completa, asi que no son dos a ciegas\nseguidos.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "0b1400b",
+      "full_sha": "0b1400b0035162776feabf9ae2452a5ea850967c",
+      "date": "2026-08-17T18:34:10-06:00",
+      "parents": "4386c14",
+      "subject": "veredicto(cantu-studio #110): 'jala bien' -- y el operador caza un residuo de antes de que existiera la rejilla",
+      "body": "'Grafico SVG' ocupa un puesto en el riel de TIPOS de diapositiva y no es un tipo: es un\ncomponente de celda de la diapositiva 'Libre', con su propio esquema dentro de la union de\nitems de la rejilla. Y ademas esta disabled: true, o sea que ocupa el puesto para no hacer\nnada.\n\nQueda registrado por que NO se enmendo #110 para meterlo, y en que se diferencia de #108, donde\nD-061 si aplico.\n\nY las dos contradicciones del taller en la ronda 2, las dos defectos de la cabina: el nombre de\nbloque Web que la cabina invento traduciendo el identificador -habia DOS nombres reales en la\nhistoria del fichero y no uso ninguno-, y un ticket que ordenaba a la vez congelar el total de\npruebas y anadir una guarda.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4386c14",
+      "full_sha": "4386c14201f79ef69ec48f9d2f603132691314fc",
+      "date": "2026-08-17T18:01:32-06:00",
+      "parents": "fa7d8ad",
+      "subject": "regla(operador): no se recomienda modelo ni esfuerzo en la misma sesion -- la recomendacion se colapsa en 'sesion nueva'",
+      "body": "No es preferencia de estilo: el operador NO PUEDE actuar sobre esa recomendacion a mitad de\nsesion, porque cambiar modelo o esfuerzo equivale a reiniciar la conversacion. Una\nrecomendacion sobre la que no se puede actuar es ruido que le obliga a leer y descartar.\n\nLa unica palanca real es SESION NUEVA, y ahi si van las tres cosas con su porque.\n\nY sube por criticidad poco: una segunda ronda es normalmente una correccion sobre un run cuya\ndificultad ya quedo fijada por el turno que lo abrio.\n\nTERCERA regla de esta familia en una sesion -las otras dos: no recordar el push, y las\nrevisiones en lista numerada- y las tres retiran de la respuesta algo sobre lo que el no puede\nactuar. El patron que la cabina tiene que aprender es ese, no las tres reglas por separado.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fa7d8ad",
+      "full_sha": "fa7d8ad5ad6ddd168e1e03cd31e7ecb9345103a7",
+      "date": "2026-08-17T17:11:33-06:00",
+      "parents": "6804b39",
+      "subject": "veredicto(cantu-studio #109): 'funciona, dale pass' -- y la correccion de C5 [SENTINEL] que hay que llevar al relevo",
+      "body": "El relevo lleva al menos dos sesiones describiendo C5 como un semaforo del ciclo que 'se\nenciende y se apaga', y presumiendo de haberlo predicho dos veces. Medido: su titulo e\nintencion son otra cosa -es un centinela de FUGA, comprueba que la suite no colo un run activo\nsintetico en el canonico real-, aunque su asercion si cuenta runs activos. El hecho no era\nfalso; el encuadre si, y por eso la cabina predijo un numero en un ticket en vez de leer un\nproposito.\n\nY queda escrito que el rotulo de exito de la fusion se publica pero NO consta elegido.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6804b39",
+      "full_sha": "6804b393e8b42eaaeab3d4c7141edcb6d9e264b1",
+      "date": "2026-08-17T16:47:26-06:00",
+      "parents": "358f1f3",
+      "subject": "decision(cantu-studio #109): el operador aprueba la fusion por ocupacion DESPUES de pedir que se le explique, y con el principio que rompe delante",
+      "body": "Queda escrita la secuencia -'explicame la regla A antes de aprobarla' y luego 'apruebo'-\nporque es la diferencia entre una decision informada y un visto bueno.\n\nRompe 'nada se reubica solo', que hoy no tiene excepciones y gobierna las flechas y el boton\nde separar. Se le presentaron las dos lecturas y eligio con las dos delante.\n\nY esta cambiando SU PROPIA decision anterior: el codigo documenta que la forma de pedir la\nfusion la eligio el contra la recomendacion de la cabina. Por eso el run ordena actualizar ese\ncomentario en vez de dejarlo afirmando lo que el codigo ya no hara.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "358f1f3",
+      "full_sha": "358f1f3245943ade25c7acaa692b67d2cdc83dbd",
+      "date": "2026-08-17T16:34:00-06:00",
+      "parents": "f3ee681",
+      "subject": "veredicto(cantu-studio #108 ronda 3): 'pass', y el cierre del run entero",
+      "body": "Una palabra que aprueba los cuatro pasos que se le pidio mirar y NADA MAS: se deja escrito\nque el puesto del control de espaciado y el conflicto 'Extra grande' vs 'Muy grande' siguen\nabiertos, porque ninguno de los dos estaba en la QA.\n\nCon el recuento de las tres veces que el taller contradijo a la cabina en este run y acerto\nlas tres -- y con la peor de las tres dicha en voz alta: el ticket de la cabina lo decia bien\ny su enmienda lo decia mal.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f3ee681",
+      "full_sha": "f3ee681fd9efab7d5e14848693c99ad4e9bcd9fc",
+      "date": "2026-08-17T15:56:12-06:00",
+      "parents": "ef8e396",
+      "subject": "veredicto(cantu-studio #108 ronda 2): 'jala bien', y la peticion de reordenar el formulario -- con las dos decisiones de diseno que la acompanan",
+      "body": "Verbatim, con lo medido al recibirlo: de los tres controles de tamano, dos ya viven en la rama\nde narrativa y el tercero lo pinta la cola compartida de Tarjeta y Lista con etiquetas.\n\nY las dos decisiones que el operador tomo sobre eso -- alcance estrecho con run propio para la\nconvencion, y 'Tipo de narrativa' arriba con la casilla de centrado al final -- que de otro\nmodo habrian muerto en el chat.\n\nQueda marcado lo que es derivacion de la cabina y no palabra suya: que el espaciado va pegado\nal titulo.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "ef8e396",
+      "full_sha": "ef8e39681720ed4390bd02ebbcfdc9c4b02081e0",
+      "date": "2026-08-17T02:24:53-06:00",
+      "parents": "cbcd0de",
+      "subject": "context(cantu-studio): cierra la sesion #104-#108 -- veredicto de Narrativa, relevo reescrito y prompt de reinicio",
+      "body": "EL VEREDICTO. Cuatro cosas de Narrativa y una de FUSIONAR que no es de este run. Medido al\nrecibirlo: TRES de las cuatro exigen tocar el MOTOR --el titulo tiene el tamano fijo en CSS y no\nlee textSize, el espaciado titulo-parrafo es margin fijo, y narrativeType no es un control de\ntamano sino un cambio de variante entera--, y el plan de quince runs declara el motor de solo\nlectura con parada explicita. POR ESO #108 NO SE CIERRA: lo primero de la sesion siguiente es\nllevarle la decision, no emitir un ticket.\n\nY se guarda una correccion de la cabina hecha ANTES de publicarla: primero midio que\ngetGridPositionStyles no compone col.style y concluyo que el motor tiraba el dato de centrar\nverticalmente. ERA FALSO -- el envoltorio de columna SI lo pinta y el compilador SI lo emite--,\nasi que el defecto existe pero esta en medio de la cadena, y quedan tres hipotesis escritas para\nque el taller las mida en vez de dispararle al primer CSS.\n\nEL RELEVO se reescribe entero. Corrige DOS limites de capacidad que el anterior daba peor\ndescritos: el tope real por llamada son ~178 segundos aunque se pidan 600, y --test-concurrency=1\nNO ES OPCIONAL porque sin el la contencion produce ROJOS FALSOS -medido: 10 fallos que eran\n214/214 verdes-. Anade que /tmp no es escribible.\n\nRecoge las DOS REGLAS DE OPERACION que el operador puso esta sesion --no recordarle el push\nnunca, y toda peticion de revision en lista numerada de pasos cortos-- y la leccion mas cara:\ncuando el juicio es VISUAL, la cabina no debe entregar candidatos sino EL INSTRUMENTO. Tres\nentregables fallidos y tres turnos para fijar cuatro tamanos; el cuarto le dio deslizadores sobre\nel render real y los cerro de una vez.\n\nY deja escrito que el taller contradijo a la cabina en CINCO runs seguidos y acerto las cinco,\ncon el patron comun de los fallos: SONDAS QUE NO DISTINGUEN -codigo de comentario, una funcion de\notra, un porcentaje de su base-.\n\nEL PROMPT DE REINICIO no lleva cifras a proposito, porque envejecen dentro de la propia sesion:\nlleva el orden de medicion, los dos limites de capacidad, las dos reglas del operador y donde\nquedo la conversacion, que es lo unico que el disco no puede contar.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "cbcd0de",
+      "full_sha": "cbcd0de84ed9105c253b4bacc328c966aa0dc21e",
+      "date": "2026-08-16T23:29:36-06:00",
+      "parents": "ceb5e73",
+      "subject": "veredicto(cantu-studio #106 ronda 3): jala bien, solo falta centrar el rotulo bajo la cruz",
+      "body": "El mecanismo, los 28px y el umbral quedan aceptados. Lo unico que rechaza es la alineacion: el\nnombre y el tipo salen pegados al borde izquierdo de la celda y los quiere CENTRADOS bajo las\nflechas.\n\nSu palabra «de repente» es la pista del defecto y por eso se guarda: no le molesta que el texto\neste a la izquierda en abstracto --asi estaba antes-- sino que CAMBIE DE EJE respecto de la cruz\nque tiene justo encima. Un elemento centrado con otro a bandera debajo se lee como dos cosas\nsueltas en vez de un bloque.\n\nY queda escrita la hipotesis para que el taller la verifique en vez de dispararle al primer\nCSS: el propio taller declaro en la ronda 3 que el rotulo se pinta en dos sitios desde un solo\ncomponente para que no puedan discrepar, asi que es probable que el compartido conserve la\nalineacion de su sitio original --donde la izquierda era correcta-- y la haya heredado bajo la\ncruz. Si es asi, el arreglo no es tocar el componente compartido sino que cada sitio declare su\nalineacion.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "ceb5e73",
+      "full_sha": "ceb5e7305b2a82e5329dc9474613c7c49eb76301",
+      "date": "2026-08-16T22:51:08-06:00",
+      "parents": "3604e00",
+      "subject": "veredicto(cantu-studio #106 ronda 2): la cruz sirve, faltan tamano y el nombre debajo -- y la cabina caza una incoherencia de medicion que juega a favor del operador",
+      "body": "«Mejoro». Pide botones mas grandes y que el nombre y el tipo del componente vuelvan, debajo de\nla cruz. Es exactamente la variante que el propio taller dejo declarada en su packet, y la pide\nsin haberla leido.\n\nLas dos peticiones se pelean: botones mas grandes SUBEN la altura de la cruz y devolver el\ntexto NECESITA altura. Lo que decide si eso importa es que celda es la mas pequena de verdad, y\nahi la ronda 2 se midio mal.\n\nLA INCOHERENCIA, y esta en el mismo reporte: para las cifras del veto el taller DESCARTO el 4x4\ncon razon escrita -aporta el solo 524288 de 578305 configuraciones y ninguna plantilla lo\nofrece-, y para decidir que el texto no cabe USO LA CELDA DEL 4x4, que es justo el caso que\nacababa de descartar por inalcanzable. Dos varas distintas para el mismo espacio de casos.\n\nMedido por la cabina en slideGridGeometry: las SEIS plantillas son 1x1, 2x1 iguales, 2x1 35/65,\n3x1, 2x2 y 3x2. El maximo de filas que ofrece cualquiera es DOS. Con dos filas la celda es el\ndoble de alta y la cruz de 50px mas el texto de 27 si cabe. El 4x4 sigue siendo alcanzable a\nmano porque el contrato lo permite, asi que el caso pequeno existe pero no es el comun.\n\nLA REGLA CORRECTA NO ES NUNCA NI SIEMPRE: es que el nombre se escriba CUANDO QUEPA.\n\nY no es un fallo del taller: sus dos mediciones son correctas por separado. Lo que fallo fue\naplicar el peor caso del contrato como si fuera el caso normal, despues de haber demostrado en\nel mismo reporte que no lo es.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "3604e00",
+      "full_sha": "3604e004a171adeb000cf360278c6a71c09c37f7",
+      "date": "2026-08-16T22:14:08-06:00",
+      "parents": "c70419b",
+      "subject": "veredicto(cantu-studio #106): el mecanismo jala, la forma no -- las flechas pasan a cruz y el desplegable se elimina",
+      "body": "No es un fail: el objetivo del run --mover desde el mapa en vez del formulario-- esta cumplido\ny el operador lo confirma con la interfaz delante. Lo que rechaza es la FORMA. Va como segunda\nronda del mismo run y NO necesita D-061, porque no amplia alcance: termina de hacer bien lo\nencargado.\n\nCuatro cosas: el desplegable Mover a y su mensaje se eliminan -«no aporta nada»-; el boton de\nintercambio queda descartado antes de nacer; las cuatro flechas dejan de ir en linea y pasan a\nCRUZ -arriba arriba, izquierda y derecha a los lados, abajo abajo, «simulando un control\nremoto»-; y la cruz va EN EL CENTRO del componente, no en el borde inferior de la celda.\n\nY se escribe lo que su veto cuesta, medido por el taller y no opinado: el desplegable no estaba\npor inercia. En una rejilla 2x2 con tres componentes, el de la primera celda tiene LAS CUATRO\nFLECHAS APAGADAS y (2,2) sigue siendo destino legal en diagonal. Sin desplegable y sin\nintercambio, ese movimiento se vuelve INALCANZABLE, y la 2x2 es la rejilla mas comun. No se le\ndiscute la decision: se le nombra el coste y se ejecuta lo que pidio, con el encargo de MEDIR\ncuantos movimientos quedan inalcanzables para que lo sepa con numeros.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c70419b",
+      "full_sha": "c70419bcb83115d16dd2cb28264b01ef934f2c8b",
+      "date": "2026-08-16T20:41:49-06:00",
+      "parents": "c84c0d5",
+      "subject": "veredicto(cantu-studio #105): pass limpio con la QA ejecutada, y la contradiccion del taller que la cabina confirma",
+      "body": "Primer pass de la sesion que llega con los pasos ejecutados y sin reservas. Se guarda verbatim.\n\nY se guarda sobre todo lo que ninguna QA descubrio y descubrio el taller midiendo lo que el\nticket afirmaba: que 1536px NO son el max-width que el titulo declara. El porcentaje del titulo\nresuelve contra la caja de contenido del contenedor --1920 menos 160 de padding, con border-box,\no sea 1760px-- y vale 1408px. La descripcion puede pintarse 128px mas ancha que el titulo. La\ncabina afirmo una identidad sin preguntarse contra que resuelve el porcentaje, que era la\nprimera pregunta que habia que hacerse.\n\nSe anotan como aceptadas por omision las dos decisiones del taller que el pass no nombro, para\nque consten como aceptadas y no como inadvertidas.\n\nY se re-mide un limite de la cabina que el relevo tenia peor descrito: webCorpusFixtureNet no\ncabe en una llamada porque el tope real son unos 178 segundos aunque se pidan 600. Justo la\nprueba que este run re-anclo es la que la cabina no ha visto correr.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c84c0d5",
+      "full_sha": "c84c0d5c7c7d8dce458311844be5977ef11d25cb",
+      "date": "2026-08-16T19:53:16-06:00",
+      "parents": "a73edda",
+      "subject": "veredicto(cantu-studio #104): los tamanos que el operador fijo mirando, el defecto de ancho que encontro el, y las TRES causas de los tres entregables fallidos de la cabina",
+      "body": "Los numeros quedan a disco antes de que se implementen: titulo 6rem sin cambio, subtitulo\n2.8rem, etiqueta 1.9rem, descripcion 2.0rem, y el ancho de la descripcion de 700px a 1536px,\nque no es un numero nuevo sino el 80 por ciento que el titulo ya declara en esa misma\ndiapositiva.\n\nEl defecto de ancho lo encontro EL mirando y no una sonda: la descripcion tenia max-width 700px\nfijo, el 46 por ciento del ancho del titulo, y el subtitulo no declara ninguno. No lo causo el\ntamano nuevo -estaba desde siempre- y solo se hizo visible al crecer el texto.\n\nY se escriben las TRES causas de los tres entregables fallidos de la cabina, porque son de la\nmisma familia y la tercera se repitio despues de arreglar la segunda: escala anclada en 24px\ncuando en la diapositiva el rem son 16px; el reset de canvas del motor inyectado sobre la\npagina del visor, que la colapso en negro; y el override en el head mientras el estilo del motor\nviaja en el body, que hacia ganar al ultimo y pintaba las cuatro portadas iguales.\n\nLA LECCION DE PROCESO VALE MAS QUE LAS TRES CAUSAS Y SE ESCRIBE COMO TAL: las tres primeras\nhojas ofrecian OPCIONES DE LA CABINA y cada afinado costaba un turno entero. La cuarta le dio\nLOS MANDOS y el operador cerro los cuatro numeros de una vez. Cuando el juicio es visual, la\ncabina no debe entregar candidatos: debe entregar el instrumento.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "a73edda",
+      "full_sha": "a73eddaeb68034b106dc63a05a5b039231444869",
+      "date": "2026-08-16T19:11:37-06:00",
+      "parents": "7fd5140",
+      "subject": "veredicto(cantu-studio #104): PASS a la ronda 3, y DOS REGLAS DE OPERACION NUEVAS que no son del run sino de la cabina",
+      "body": "Regla 1: se acaba el recordatorio de push. La configuracion mandaba cerrar cada respuesta con\nlos commits sin publicar y el operador lo retira -- mientras la cabina siga commiteando, el\nhace los push por su cuenta. La cabina no vuelve a mencionarlo, ni al cierre de una respuesta\nni al de sesion. El commit sigue siendo obligacion de la cabina.\n\nRegla 2: toda peticion de revision va en LISTA NUMERADA de pasos CORTOS, uno por linea, sin\nparrafos con la instruccion dentro. Es la TERCERA vez que pide algo de esta familia -- ya\nhabia pedido dos veces instrucciones mas claras sobre donde meterse y que revisar-- y esta la\nconcreta en una forma. Las dos rigen en TODOS los hilos desde ya, no solo en este.\n\nY el veredicto: PASS a la ronda 3. Confirma con sus ojos la parada del punto 5 -no hay ningun\nboton de tamano- y la nombra como pendiente, no como defecto.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7fd5140",
+      "full_sha": "7fd514054adf20cba6c50540b5faa855e14488fc",
+      "date": "2026-08-16T17:56:56-06:00",
+      "parents": "8817534",
+      "subject": "veredicto(cantu-studio #104): PASS a la ronda 2 con cuatro detalles, y la cabina mide que tres de ellos son uno solo",
+      "body": "«jala como esperaba»: la divergencia, la multi-portada y la siembra quedan aceptadas. Lo que\npide encima son refinamientos de la misma superficie -- menos ruido de placeholders, titulo\nobligatorio con asterisco y mensaje rojo, prellenado de garantia con la palabra Titulo cuando\nla leccion no tiene, y la etiqueta sembrada del TEMA en vez de quedarse vacia. Da la razon\nestructural: las carpetas son proyecto, tema, leccion.\n\nY lo medido al recibirlo ahorra la mitad del trabajo: EL ASTERISCO Y EL ERROR ROJO YA EXISTEN\nY SON AUTOMATICOS. TextInputField los pinta solo y el asterisco se DERIVA DEL ESQUEMA por el\nnombre del campo, sin lista que mantener -- su propia cabecera dice que no hay ninguna lista y\nque se le pregunta al esquema. Asi que obligatorio, asterisco y mensaje rojo NO son tres\npeticiones sino una: declarar title requerido en los dos gemelos. Pintar un asterisco a mano\nseria romper la regla que ese fichero existe para sostener. Sexta vez del patron de capacidad\nya construida y cerrada aguas arriba.\n\nY queda nombrado, sin decidir, que SYSTEM SHOWCASE no deberia alcanzarse nunca con tema no\nvacio, porque el compilador hace viajar topic en las dos ramas y el motor lo prefiere al\nliteral: que el taller mida por que lo vio antes de tocar el motor.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8817534",
+      "full_sha": "88175346f6c1dffeb21284833853d74f67695a9e",
+      "date": "2026-08-16T16:44:25-06:00",
+      "parents": "8139b90",
+      "subject": "veredicto(cantu-studio #104): el operador veta la unicidad y el eco de solo lectura, y pide que los textos de la Portada sean del bloque",
+      "body": "Su texto va VERBATIM y sin corregir. Ejecuto la QA en pantalla y respondio con comentarios de\ndiseno en vez de pass/fail: los diez pasos quedan SIN veredicto y eso se declara en el cierre\ndel run, no se disimula.\n\nLas dos piezas que veta son las dos que la QA marcaba como invencion de la cabina y vetables:\nla regla de maximo una Portada --que vive en el superRefine del array de los dos gemelos y en\nel freno hablado de la paleta-- y el eco de solo lectura de titulo, subtitulo y etiqueta, que\ncito entero para decir que le abre y le bloquea. El mecanismo de marcar las invenciones\nfunciono: se marcaron, se miraron y se vetaron.\n\nY pide algo mayor que un veto, que cambia el contrato y no la interfaz: los textos de la\nPortada dejan de ser una vista viva de lesson.* y pasan a ser datos del bloque, sembrados de\nla metadata y divergibles -- «se autollena con esos datos, pero puede diferir». Mas los\ntamanos de letra de titulo, subtitulo y badge, y dos iconos de la paleta.\n\nPrimer record del hilo cantu-studio en context/: se crea el directorio records/ por simetria\ncon los otros tres proyectos.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8139b90",
+      "full_sha": "8139b9013b533fed314e1336cab7d32e9c169960",
+      "date": "2026-08-16T15:25:01-06:00",
+      "parents": "c62a6cd",
+      "subject": "context(cantu-studio): el prompt de reinicio deja de llevar el numero de commits sin publicar y manda derivarlo",
+      "body": "Era un dato que envejece entre que se escribe y se lee -- el operador hizo push entre dos turnos y la cifra ya mentia --, que es la cuarta forma de fallar de papel-no-es-disco: citar una medicion propia que caduco dentro de la misma sesion. Ahora el prompt manda derivar HEAD contra origin/main en los dos repos al abrir, y solo deja constancia de que al cerrar quedaba uno sin publicar en aiw-console.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c62a6cd",
+      "full_sha": "c62a6cdf30a12b598273839103950854f3e9b6d7",
+      "date": "2026-08-16T15:21:59-06:00",
+      "parents": "daf3bcd",
+      "subject": "context(cantu-studio): reescribe el relevo del hilo y crea el prompt de reinicio, que pasa a ser parte fija del cierre",
+      "body": "El operador lo pidio por escrito el 2026-08-16: «siempre que cerremos sesion, me generas\n(actualizas) el handoff y el prompt de reinicio». Queda escrito en los dos documentos para que\nno dependa de que la cabina lo recuerde.\n\nEL RELEVO ANTERIOR, DEL 2026-08-12, TENIA TRES AFIRMACIONES FALSAS Y SE NOMBRAN UNA A UNA en vez\nde reescribirse en silencio: que la cabina no puede borrar --era un permiso que nadie habia\npedido--, que no commitea --esta sesion hizo seis commits sin dejar un solo lock-- y que dist/\nesta rastreado con 47 ficheros --medido hoy: cero, en el raiz y en editor-ui--.\n\nY CORRIGE LA CIFRA QUE MAS SE HABIA REPETIDO: los cinco fallos de tools/roadmap no tienen una\ncausa sino TRES, y una de ellas, el centinela C5, esta roja simplemente porque hay un run\nabierto, asi que se enciende y se apaga con el ciclo normal de trabajo. Si alguien ve cuatro, es\nque no hay run activo, no que se haya arreglado algo.\n\nEntra ademas el limite de medicion de la cabina que esta sesion descubrio: la suite completa no\ncabe en una llamada suya y se mide por lotes, y webCorpusFixtureNet no cabe ni solo -- no es que\nfalle, es que no lo ve, y eso se declara.\n\nadd DIRIGIDO por nombre, que en este repo escriben varios hilos. Los dos ficheros son:\ncontext/handoffs/cantu-studio.md y context/cantu-studio/PROMPT-DE-REINICIO.md. context/aiw/records/\nqueda sin tocar, no es de este hilo.",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "daf3bcd",
+      "full_sha": "daf3bcd65c3d44d3c1c93844cf3e536fdbd4d83f",
+      "date": "2026-08-15T16:16:48-06:00",
+      "parents": "b51e271",
+      "subject": "peticiones abiertas al emisor cantu-quizzes-latex: las dos que venian del relevo mas una tercera que encontro el operador mirando la pantalla durante la QA del 60 -- el campo verification.command lleva pegada dentro una nota entre parentesis que no es adorno sino una precondicion, asi que ni el comando se puede copiar ni el requisito se lee como tal; la consola NO tiene defecto porque pinta el dato verbatim, y el renderizador ya sabe pintar verification_note en los dos idiomas pero el reporte no trae esa clave. No se sube a decision numerada: el sobre esta congelado como v1 y no regula la forma de dentro de verification, y con un solo caso medido no se sabe si es caso suelto o familia -- lo ensenara el catalogo de criterios. Y queda nombrado, sin decidir, que el commit del emisor de las 11:00 dejo la copia CASO-1 sin ser byte a byte con su original en cuatro hunks enumerados, sin tocar ninguna cifra que la suite fija",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b51e271",
+      "full_sha": "b51e271e9c03eecc3be52489eb8706d5307d064e",
+      "date": "2026-08-15T15:18:59-06:00",
+      "parents": "a7f50df",
+      "subject": "relevo del hilo aiw-console, 2026-08-15: 67 runs, el 60 activo con su QA pendiente, y el contrato del sobre congelado como v1. Lleva las cinco decisiones que lo gobiernan de la D-065 a la D-069, los dos runs que el operador ya encargo y no existen todavia (el catalogo de criterios aqui por la excepcion de piloto, y el ancla externa de nivel PAA que esta extrayendo fuera del chat), y lo acordado para cuando traiga los simuladores: una fuente canonica y no cuatro ficheros, conservar la posicion por si la PAA ordena de facil a dificil, clasificar con los codigos del corpus, contar por subtema antes de escribir el criterio, y verbatim. La leccion de metodo son seis errores de la cabina y tres son el mismo: medir presencia cuando habia que medir contenido, la misma trampa que aprobo nueve retroalimentaciones vacias en el validador del emisor. Y dos cosas nuevas de la maquina: el status completo de cantu-quizzes-latex excede el tiempo y hay que acotarlo a rutas sin canalizarlo, y cuando git no responde el estado se lee de .git directamente",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "a7f50df",
+      "full_sha": "a7f50dfe52ed124622a41f6ad6c688ff3abaa2ec",
+      "date": "2026-08-15T11:11:46-06:00",
+      "parents": "6aee60a",
+      "subject": "D-069: el catalogo de criterios lo escribe la CABINA del proyecto dueno, no su ejecutor. El 0 del sobre repartia por proyecto y dejaba sin decidir quien dentro del proyecto, y en la practica el perfil lo mantenia quien ejecuta, que es justo lo que la separacion adversaria prohibe. El eje del reparto pasa a tener dos dimensiones: que proyecto y en que fase. Con UNA excepcion de piloto, acotada y con caducidad escrita: el catalogo del piloto de quizzes se redacta en aiw-console porque el ida y vuelta entre hilos anade friccion que una prueba piloto no debe pagar, pero nace con destino declarado y se muda al repo del emisor en su run de adopcion; el siguiente catalogo se escribe en la cabina de su dueno. La caducidad se escribe y no se recuerda porque una excepcion sin fecha de muerte se convierte en la regla, y esta pondria a este repo a redactar criterios de un dominio del que es deliberadamente ciego. Enmienda fechada y visible al contrato congelado, que es el mecanismo previsto: un contrato congelado solo se mueve por decision numerada",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6aee60a",
+      "full_sha": "6aee60a5f87d10e259f05abaf2494576639b4bf5",
+      "date": "2026-08-15T10:59:03-06:00",
+      "parents": "e1222c9",
+      "subject": "#60 RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001: la consola pinta el resumen del emisor y la cobertura de criterios. El renderizador pasa de CERO menciones de satisfies y profile_data a catorce. La cobertura se deriva por dato y no leyendo prosa: un criterio declarado irreproducible sale de los cumplidos por la regla 5 de la D-067, y el silencio se pinta como no revisado y no como hueco neutro. El resumen se pinta por presencia de campo con sus tres capas separadas, y una ausencia sin motivo se ve como el incumplimiento que es en vez de disimularse. Ambos serve.mjs con git diff vacio: las rutas de escritura siguen intactas. Las agujas del veto de ceguera crecen de 94 a 160 al incluir satisfies, affects y las claves de profile_data, y el veto mordio por tercera vez a su propio autor. Suite 717 antes, 732 despues, cero fallos, medido por el taller. Hallazgo encuadrado y no decidido: el inventario de los 29 ids del perfil no tiene canal maquina hacia la consola, asi que se deriva lo derivable y no se fabrica la precision que el dato no tiene",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001"
+    },
+    {
+      "branch": "main",
+      "sha": "e1222c9",
+      "full_sha": "e1222c94482b06b0b6d0d79d97a06578d4beccff",
+      "date": "2026-08-15T01:32:26-06:00",
+      "parents": "99828ae",
+      "subject": "inserta y abre el #60 RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001, active: la consola pinta lo que el sobre promete. Punto de partida medido: el renderizador menciona satisfies cero veces y profile_data cero veces, asi que la cobertura no se pinta hoy de ninguna forma y todo el valor del mecanismo de criterios sigue enterrado en el JSON mientras el operador lee el reporte. Dos superficies que difieren: los criterios y su cobertura se pueden pintar contra DATOS REALES hoy porque el piloto ya trae perfil, fuente, version y satisfies por item; el resumen del emisor no, porque ningun reporte trae uno todavia, y se prueba contra fixtures hasta que un emisor lo emita. Estrena la D-068: el run declara su perfil en full_description, y este declara que no tiene ninguno en vez de dejarlo en silencio. Entra en 60 y los siete planificados se corren uno, exactamente como publico el remap",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001"
+    },
     {
       "branch": "main",
       "sha": "99828ae",

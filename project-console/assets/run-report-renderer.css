@@ -615,6 +615,36 @@
 .rr-summary-typechips { display: flex; flex-wrap: wrap; gap: 6px; }
 
 /* — [#60] the coverage: three buckets, the silence loud, every citation with its site — */
+/* — [#61] and on top of them the glance, so the three figures land before anything else.
+   The silence cell is deliberately the odd one out on sight: it holds a word, not a number,
+   and it is tinted like the rule it stands for so nobody reads it as a zero. — */
+.rr-cov-glance { display: flex; flex-direction: column; gap: 8px; padding: 2px 0 14px; }
+.rr-cov-glance-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.rr-cov-glance-cell {
+  flex: 1 1 180px; min-width: 170px; display: flex; flex-direction: column; gap: 2px;
+  padding: 10px 14px; border: 1px solid var(--rr-divider); border-radius: var(--rr-radius-sm);
+  background: color-mix(in srgb, var(--rr-bg) 55%, var(--rr-surface));
+}
+.rr-cov-glance-k {
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+  color: color-mix(in srgb, var(--rr-text) 50%, transparent);
+}
+.rr-cov-glance-v { font-size: 26px; line-height: 1.15; font-variant-numeric: tabular-nums; color: var(--rr-text); }
+.rr-cov-glance-note { font-size: 11px; line-height: 1.5; color: color-mix(in srgb, var(--rr-text) 55%, transparent); }
+.rr-cov-glance-silence { border-color: var(--rr-accent-600); background: color-mix(in srgb, var(--rr-accent-500) 8%, transparent); }
+.rr-cov-glance-silence .rr-cov-glance-v { font-size: 17px; line-height: 1.35; color: var(--rr-accent-100); }
+/* — [#61] the fold: what is here to be audited, closed on arrival and complete when opened — */
+.rr-cov-audit { margin-top: 14px; border: 1px solid var(--rr-divider); border-radius: var(--rr-radius-sm); }
+.rr-cov-audit > summary {
+  display: flex; align-items: center; gap: 8px; padding: 9px 12px;
+  font-size: 12.5px; color: color-mix(in srgb, var(--rr-text) 65%, transparent);
+}
+.rr-cov-audit-title { flex: 1; }
+.rr-cov-audit-body { padding: 0 12px 12px; }
+.rr-cov-audit-blurb {
+  font-size: 11px; max-width: 70ch; margin: 0 0 4px;
+  color: color-mix(in srgb, var(--rr-text) 45%, transparent);
+}
 .rr-cov-bucket { padding: 10px 0; border-bottom: 1px solid color-mix(in srgb, var(--rr-text) 7%, transparent); }
 .rr-cov-bucket-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
 .rr-cov-row { display: flex; align-items: baseline; gap: 10px; padding: 3px 0; flex-wrap: wrap; }

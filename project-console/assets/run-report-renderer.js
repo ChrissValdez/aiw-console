@@ -91,6 +91,16 @@ const RR_STRINGS = {
     headerCites: "Citations from the header",
     whereMissing: "this key does not exist in this report",
     profileFigures: "Figures of the profile",
+    // [#61] The operator's division, in his own words: "what I need to judge" versus "what is
+    // there to audit". The glance carries the first; the fold carries the second, complete.
+    // The silence slot deliberately holds no number — see rrCoverageHtml.
+    glanceKicker: "The three figures, at a glance",
+    glanceFulfilledNote: "cited criteria that no declaration covers",
+    glanceDeclaredNote: "declarations — never a count of criteria; their ids stay below, verbatim",
+    glanceSilenceValue: "not reviewed",
+    glanceSilenceNote: "a rule, not a figure: the profile's inventory does not travel in the report",
+    auditDetail: "Material for auditing",
+    auditDetailBlurb: "Folded because it is here to be audited, not judged at a glance. Nothing is summarised: it opens complete.",
     citesLabel: "Criteria it cites", citesNone: "Cites no criterion",
     headerTag: "header",
     compare: "Compare",
@@ -164,6 +174,16 @@ const RR_STRINGS = {
     headerCites: "Citas desde la cabecera",
     whereMissing: "esa clave no existe en este reporte",
     profileFigures: "Las cifras del perfil",
+    // [#61] La división del operador, con sus palabras: «lo que necesito para juzgar» frente a
+    // «lo que está para auditar». El vistazo lleva lo primero; el pliegue lo segundo, completo.
+    // La casilla del silencio no lleva número a propósito — véase rrCoverageHtml.
+    glanceKicker: "Las tres cifras, de un vistazo",
+    glanceFulfilledNote: "criterios citados que ninguna declaración cubre",
+    glanceDeclaredNote: "declaraciones — nunca un recuento de criterios; sus ids quedan abajo, verbatim",
+    glanceSilenceValue: "no revisado",
+    glanceSilenceNote: "una regla, no una cifra: el inventario del perfil no viaja en el reporte",
+    auditDetail: "Material para auditar",
+    auditDetailBlurb: "Plegado porque está para auditarse, no para juzgarse de un vistazo. Nada se resume: se abre completo.",
     citesLabel: "Criterios que cita", citesNone: "No cita ningún criterio",
     headerTag: "cabecera",
     compare: "Comparar",
@@ -1571,6 +1591,27 @@ function rrCoverageHtml(report, T) {
     ? '<div class="rr-cov-figures"><span class="rr-kicker">' + rrEsc(T.profileFigures) + "</span>" + rrFigureRowsHtml(R.profile_data) + "</div>"
     : "";
 
+  // [#61] THE GLANCE — the operator's decision of 2026-08-27, after he read this section
+  // whole and said it was correct and unreadable: the figures he judges with ride on top,
+  // and the material that exists to be audited folds below. WHAT EACH SLOT MAY SAY IS FIXED
+  // BY D-067, NOT BY WHAT WOULD FIT. Fulfilled is the exact subtraction the bucket paints,
+  // the one number this report alone sustains. Declared counts DECLARATIONS and says so:
+  // counting those ids as criteria would need the profile's inventory, which does not travel
+  // in the report. And SILENCE CARRIES NO NUMBER — a number is precisely what the rule
+  // forbids it to become, so its slot carries the rule's own verdict word and the bucket
+  // below still states the rule in full. Three slots, three buckets; one of them is a rule.
+  const glanceCell = (label, value, note, cls) =>
+    '<div class="rr-cov-glance-cell' + (cls ? " " + cls : "") + '">' +
+    '<span class="rr-cov-glance-k">' + rrEsc(label) + "</span>" +
+    '<span class="rr-cov-glance-v">' + rrEsc(value) + "</span>" +
+    '<span class="rr-cov-glance-note">' + rrEsc(note) + "</span></div>";
+  const glance = '<div class="rr-cov-glance"><span class="rr-kicker">' + rrEsc(T.glanceKicker) + "</span>" +
+    '<div class="rr-cov-glance-grid">' +
+    glanceCell(T.fulfilledBucket, String(cov.fulfilled.length), T.glanceFulfilledNote, "") +
+    glanceCell(T.declaredBucket, String(cov.declarations.length), T.glanceDeclaredNote, "") +
+    glanceCell(T.silenceBucket, T.glanceSilenceValue, T.glanceSilenceNote, "rr-cov-glance-silence") +
+    "</div></div>";
+
   const buckets =
     '<div class="rr-cov-bucket"><div class="rr-cov-bucket-head"><span class="rr-kicker rr-kicker-accent">' + rrEsc(T.fulfilledBucket) +
     '</span><span class="rr-badge ' + fulfilledBadge.cls + '">' + rrEsc(fulfilledBadge.badge) + "</span></div>" + fulfilledRows + "</div>" +
@@ -1580,11 +1621,27 @@ function rrCoverageHtml(report, T) {
     '<div class="rr-cov-bucket rr-cov-silence"><div class="rr-cov-bucket-head"><span class="rr-kicker">' + rrEsc(T.silenceBucket) + "</span></div>" +
     '<p class="rr-cov-silence-rule">' + rrEsc(T.silenceRule) + "</p></div>";
 
+  // [#61] THE FOLD — exactly the two things the operator named as audit material: the raw
+  // counts object and the profile figures. The counts object is not free-standing: it is the
+  // EVIDENCE of a header citation, and the untouchable rule binds a `where` to the evidence
+  // it reaches. So the citations travel into the fold as the block they already are, whole —
+  // splitting them would decide which citation is audit and which is judgment, and that
+  // classification belongs to the operator, not here. Folded, never removed, never prosed:
+  // this is a `details` around the same markup, so what opens is byte for byte what painted
+  // before, `where` beside its evidence and every figure with its own key.
+  const auditParts =
+    (headerRows ? '<div class="rr-cov-headercites"><span class="rr-kicker">' + rrEsc(T.headerCites) + "</span>" + headerRows + "</div>" : "") +
+    figures;
+  const audit = auditParts
+    ? '<details class="rr-cov-audit"><summary>' + rrIcon("caret") +
+      '<span class="rr-cov-audit-title">' + rrEsc(T.auditDetail) + "</span></summary>" +
+      '<div class="rr-cov-audit-body"><p class="rr-cov-audit-blurb">' + rrEsc(T.auditDetailBlurb) + "</p>" +
+      auditParts + "</div></details>"
+    : "";
+
   return '<details class="rr-sec" id="rr-sec-coverage" open><summary>' + rrIcon("caret") +
     '<span class="rr-sec-title">' + rrEsc(T.coverage) + "</span></summary>" +
-    '<div class="rr-sec-body">' + rrKvRowsHtml(head) + buckets +
-    (headerRows ? '<div class="rr-cov-headercites"><span class="rr-kicker">' + rrEsc(T.headerCites) + "</span>" + headerRows + "</div>" : "") +
-    figures + "</div></details>";
+    '<div class="rr-sec-body">' + glance + rrKvRowsHtml(head) + buckets + audit + "</div></details>";
 }
 
 // The run context under the card: metadata, the emitter's declared deviation when there is

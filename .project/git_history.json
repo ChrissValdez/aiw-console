@@ -1,27 +1,59 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-28T02:10:21.518Z",
+  "generated_at": "2026-08-28T03:14:09.430Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-28T02:09:17.616Z"
+      "mtime": "2026-08-28T03:13:39.294Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-28T02:10:21.480Z"
+      "mtime": "2026-08-28T03:14:09.403Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "771ac2b74e1e2a759046e9cbde42ba0a6c60a2ad",
+  "head": "cf82dcc9bed23a773b472a6a43a19cffa1964438",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 338,
+  "commit_total": 341,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "cf82dcc",
+      "full_sha": "cf82dcc9bed23a773b472a6a43a19cffa1964438",
+      "date": "2026-08-27T21:13:39-06:00",
+      "parents": "4314a61",
+      "subject": "#61 RUN-CONSOLE-REPORT-COVERAGE-READABILITY-001: el vistazo de tres cifras arriba y el material de auditoria plegado debajo. Trabajo del taller, commiteado por la cabina. Las tres casillas salen de rrCoverage, la misma derivacion que pintan los cajones, sin un byte de dominio; el pliegue Material para auditar llega CERRADO y envuelve las citas de cabecera y las cifras del perfil sin resumir nada -- se abre completo. La tercera casilla NO lleva numero: la decision del operador pedia tres cifras y la D-067 prohibe que el silencio sea una cifra neutra, asi que mando la regla intocable y la casilla dice no revisado con el rotulo una regla, no una cifra. 13 tests nuevos, seis de ellos marcados UNTOUCHABLE en su nombre, y el taller probo que muerden con seis mutaciones a mano revertidas despues. Suite 745/745/0 segun el taller, con la base 732/732/0 verificada por el mismo antes de tocar nada: la cabina NO corre la suite porque su entorno anade un fallo espurio. Verificado por la cabina contra disco: dos ficheros modificados y 90 lineas, git diff vacio en los dos serve.mjs, md5 del canonico intacto y .project sin tocar. Y el taller corrigio una cifra del ticket con razon: eran 14 citados y 13 cumplidos, no 14 cumplidos; el 14 es QZ-C-DISTR, el restado",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORT-COVERAGE-READABILITY-001"
+    },
+    {
+      "branch": "main",
+      "sha": "4314a61",
+      "full_sha": "4314a610d3835381e10aa4fd2d76f75752b0ee0f",
+      "date": "2026-08-27T21:09:05-06:00",
+      "parents": "7917c4d",
+      "subject": "docs(cantu-studio): veredicto del operador -- los dos placeholders de Web tambien llevan acento (#148, D-061)",
+      "body": "Guarda verbatim «procede con tu recomendacion» y, sobre todo, POR QUE dos caracteres necesitan\nD-061: la autorizacion decia «de la semilla» y un placeholder no lo es. El taller establecio esa\ndistincion, paro donde debia, y la decision volvio al operador.\n\nLas cuatro condiciones desarrolladas, con dos declaradas como tension: la QA aun no se ha\nejecutado, y el run_id habla de semilla mientras esto toca placeholders.\n\nFichero escrito en este repo, por nombre completo:\n  context/cantu-studio/records/VEREDICTO-148-LOS-PLACEHOLDERS-DE-WEB-TAMBIEN-LLEVAN-ACENTO.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7917c4d",
+      "full_sha": "7917c4d12fdf42e28554eb7ad40135d30e95b586",
+      "date": "2026-08-27T20:10:51-06:00",
+      "parents": "771ac2b",
+      "subject": "abre el #61 RUN-CONSOLE-REPORT-COVERAGE-READABILITY-001, planned a active: el taller reorganiza la seccion de cobertura para que sirva al juicio del operador. Guarda de titulo derivada del canonico por queue_order 61 y verificada antes de tocar nada. Evidencia: dry-run con remap vacio, md5 68bb167277d8c863670afbd811af1b66 a f7537e413bc5650716afd1860ead7531, verificacion campo a campo contra el respaldo con UN solo campo cambiado -- el status de ese run y de ningun otro -- densidad 1..68 intacta, un unico run activo, y .project re-emitido en el mismo acto con sus siete ficheros y la derivada coherente",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORT-COVERAGE-READABILITY-001"
+    },
     {
       "branch": "main",
       "sha": "771ac2b",

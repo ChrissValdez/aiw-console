@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-28T02:10:21.518Z",
+  "generated_at": "2026-08-28T03:14:09.430Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -153,6 +153,10 @@
       "mtime": "2026-08-08T09:13:17.606Z"
     },
     {
+      "path": "context/aiw-console/records/COBERTURA-LEGIBLE-VISTAZO-Y-PLIEGUE-DE-AUDITORIA.md",
+      "mtime": "2026-08-28T02:27:40.546Z"
+    },
+    {
       "path": "context/aiw-console/records/CONGELADO-MAPA-NOMBRES-Y-BARRIDO-RUTA-LEGACY-CANTU.md",
       "mtime": "2026-08-08T09:13:17.606Z"
     },
@@ -219,6 +223,10 @@
     {
       "path": "context/aiw-console/records/DISCIPLINA-UN-RUN-POR-CARRIL.md",
       "mtime": "2026-08-08T09:13:17.623Z"
+    },
+    {
+      "path": "context/aiw-console/records/DISENO-DEL-REPORTE-LECTURA-Y-CITAS-2026-08-27.md",
+      "mtime": "2026-08-28T03:07:01.753Z"
     },
     {
       "path": "context/aiw-console/records/DISPOSICION-CARPETAS-COLA-AIW.md",
@@ -1093,6 +1101,10 @@
       "mtime": "2026-08-28T02:04:47.398Z"
     },
     {
+      "path": "context/cantu-studio/records/VEREDICTO-148-LOS-PLACEHOLDERS-DE-WEB-TAMBIEN-LLEVAN-ACENTO.md",
+      "mtime": "2026-08-28T03:07:33.024Z"
+    },
+    {
       "path": "context/cantu-studio/records/VEREDICTO-CONCEPTGRID-BADGE-INK-APROBADO.md",
       "mtime": "2026-08-27T06:16:24.920Z"
     },
@@ -1486,6 +1498,14 @@
       "freshness": "2026-08-08T09:13:17.606Z"
     },
     {
+      "title": "`#61` `RUN-CONSOLE-REPORT-COVERAGE-READABILITY-001` — la cobertura se lee para juzgar",
+      "path": "context/aiw-console/records/COBERTURA-LEGIBLE-VISTAZO-Y-PLIEGUE-DE-AUDITORIA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-28T02:27:40.546Z"
+    },
+    {
       "title": "Congelado del mapa de nombres y barrido de la ruta legacy (cantu-studio)",
       "path": "context/aiw-console/records/CONGELADO-MAPA-NOMBRES-Y-BARRIDO-RUTA-LEGACY-CANTU.md",
       "nav_tier": "evidence",
@@ -1620,6 +1640,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-08T09:13:17.623Z"
+    },
+    {
+      "title": "El reporte como cosa que se LEE — feedback del operador y lo que el disco dice",
+      "path": "context/aiw-console/records/DISENO-DEL-REPORTE-LECTURA-Y-CITAS-2026-08-27.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-28T03:07:01.753Z"
     },
     {
       "title": "DISPOSICIÓN DE LAS CUATRO CARPETAS DE COLA DE AIW",
@@ -3364,6 +3392,14 @@
       "default_visible": false,
       "ia_bucket": "context/cantu-studio/records",
       "freshness": "2026-08-28T02:04:47.398Z"
+    },
+    {
+      "title": "VEREDICTO DEL OPERADOR — `#148`: los dos placeholders de Web también llevan acento",
+      "path": "context/cantu-studio/records/VEREDICTO-148-LOS-PLACEHOLDERS-DE-WEB-TAMBIEN-LLEVAN-ACENTO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T03:07:33.024Z"
     },
     {
       "title": "VEREDICTO DE QA — `RUN-CANTU-SLIDE-CONCEPTGRID-BADGE-INK-AND-TABLE-001`",

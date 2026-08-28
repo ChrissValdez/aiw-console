@@ -1,27 +1,38 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-28T03:14:09.430Z",
+  "generated_at": "2026-08-28T03:23:22.498Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-28T03:13:39.294Z"
+      "mtime": "2026-08-28T03:14:47.626Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-28T03:14:09.403Z"
+      "mtime": "2026-08-28T03:23:22.458Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "cf82dcc9bed23a773b472a6a43a19cffa1964438",
+  "head": "a1075f8c6b5ffb3d2c91dc22434d31aa359fa76a",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 341,
+  "commit_total": 342,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "a1075f8",
+      "full_sha": "a1075f8c6b5ffb3d2c91dc22434d31aa359fa76a",
+      "date": "2026-08-27T21:14:47-06:00",
+      "parents": "cf82dcc",
+      "subject": "cierra el #61 RUN-CONSOLE-REPORT-COVERAGE-READABILITY-001 como completed: APROBADO CON RESERVA por el operador, y la reserva va verbatim -- se ve mejor pero sigue siendo mucha informacion. Lo prometido se entrego y se verifico contra disco. El operador ratifico la direccion del pliegue con una frase casi identica a la que el taller habia escrito dentro de el, y tomo dos decisiones: el silencio se queda con no revisado en vez de cifra porque la D-067 gana a su propia peticion de tres cifras, y el bloque de citas de cabecera viaja entero al pliegue porque separarlo habria exigido inventar el criterio que cita es auditoria, que es su juicio. POR QUE NO BASTA, y no es defecto del run: la seccion sigue nombrando criterios por codigo y la pantalla no tiene ni una palabra de lo que cada codigo exige, porque ese inventario vive en la rubrica del emisor y no viaja en el reporte. Faltan datos, no maquetacion. El operador pidio parar y definir la estructura antes de seguir parcheando, y de esa parada sale un record con su feedback VERBATIM: el lector lateral de documentos a media pantalla que abra la cita donde se la cita, el contrato de la cita, el catalogo de criterios que es literalmente lo que el describio, y el item declared_gap que no entiende y que escribe el emisor. Medido en esa parada, y es lo que cambia el tamano del problema: el servidor YA sirve los .md del proyecto con 200, la rubrica YA tiene encabezados anclables, la consola YA carga un indice de tres documentos y el reporte YA lleva punteros estructurados en authority con source y section -- lo unico que falta es que la vista los convierta en enlace, que es el patron de capacidad en el dato cerrada en la vista por quinta vez en este repo. Y segundo caso de la familia de verification.command: hay citas que viajan como dato y citas enterradas en prosa dentro de un why_not, y las segundas no se pueden enlazar sin un regex de dominio que la ceguera veta",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORT-COVERAGE-READABILITY-001"
+    },
     {
       "branch": "main",
       "sha": "cf82dcc",

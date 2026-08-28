@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-28T01:50:02.451Z",
+  "generated_at": "2026-08-28T02:08:27.534Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -295,6 +295,10 @@
     {
       "path": "context/aiw-console/records/GOBERNANZA-DECLARADA-AIW.md",
       "mtime": "2026-08-08T09:13:17.639Z"
+    },
+    {
+      "path": "context/aiw-console/records/HALLAZGOS-67-SUPERFICIE-DEL-REPORTE.md",
+      "mtime": "2026-08-28T02:04:15.620Z"
     },
     {
       "path": "context/aiw-console/records/INDICE-DE-REPORTES-PARADA-O4-P17.md",
@@ -745,6 +749,10 @@
       "mtime": "2026-08-08T09:13:17.735Z"
     },
     {
+      "path": "context/aiw-console/records/VEREDICTO-QA-DEL-60-Y-CIERRE.md",
+      "mtime": "2026-08-28T01:55:15.155Z"
+    },
+    {
       "path": "context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md",
       "mtime": "2026-08-08T09:13:17.735Z"
     },
@@ -1079,6 +1087,10 @@
     {
       "path": "context/cantu-studio/records/VEREDICTO-147-OPCION-A-LA-PIEZA-COMPARTIDA-SE-AMPLIA-SIN-PERDER-EL-ROTULO.md",
       "mtime": "2026-08-28T01:40:13.455Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-147-REAPUNTAR-LAS-TRES-Y-ARREGLAR-LA-GUARDA-B-BAJO-D-061.md",
+      "mtime": "2026-08-28T02:04:47.398Z"
     },
     {
       "path": "context/cantu-studio/records/VEREDICTO-CONCEPTGRID-BADGE-INK-APROBADO.md",
@@ -1760,6 +1772,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-08T09:13:17.639Z"
+    },
+    {
+      "title": "Hallazgos del operador sobre la superficie del reporte — semilla del `#67`",
+      "path": "context/aiw-console/records/HALLAZGOS-67-SUPERFICIE-DEL-REPORTE.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-28T02:04:15.620Z"
     },
     {
       "title": "Record — Índice de reportes (`O4.P17`) — PARADA MEDIDA antes de escribir código",
@@ -2658,6 +2678,14 @@
       "freshness": "2026-08-08T09:13:17.735Z"
     },
     {
+      "title": "`#60` `RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001` — la QA del operador y el cierre",
+      "path": "context/aiw-console/records/VEREDICTO-QA-DEL-60-Y-CIERRE.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-28T01:55:15.155Z"
+    },
+    {
       "title": "VEREDICTO — `roadmap_tree_v1` como formato consumible",
       "path": "context/aiw-console/records/VEREDICTO-ROADMAP-TREE-V1.md",
       "nav_tier": "evidence",
@@ -3328,6 +3356,14 @@
       "default_visible": false,
       "ia_bucket": "context/cantu-studio/records",
       "freshness": "2026-08-28T01:40:13.455Z"
+    },
+    {
+      "title": "VEREDICTO DEL OPERADOR — `#147`: se reapuntan las tres guardas, y la guarda `B` se arregla aquí bajo D-061",
+      "path": "context/cantu-studio/records/VEREDICTO-147-REAPUNTAR-LAS-TRES-Y-ARREGLAR-LA-GUARDA-B-BAJO-D-061.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T02:04:47.398Z"
     },
     {
       "title": "VEREDICTO DE QA — `RUN-CANTU-SLIDE-CONCEPTGRID-BADGE-INK-AND-TABLE-001`",

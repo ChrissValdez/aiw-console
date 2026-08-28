@@ -1,27 +1,48 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-28T01:50:02.451Z",
+  "generated_at": "2026-08-28T02:08:27.534Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-28T01:40:28.686Z"
+      "mtime": "2026-08-28T02:06:35.889Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-28T01:50:02.414Z"
+      "mtime": "2026-08-28T02:08:27.497Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "04959a041000879c19e7b284899843441575f40b",
+  "head": "e3cc90c306445caa1be19cb46c509646b479fa8b",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 335,
+  "commit_total": 337,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "e3cc90c",
+      "full_sha": "e3cc90c306445caa1be19cb46c509646b479fa8b",
+      "date": "2026-08-27T20:06:35-06:00",
+      "parents": "324f9ca",
+      "subject": "docs(cantu-studio): veredicto del operador en la ronda 2 del #147 -- reapuntar las tres y arreglar la guarda B bajo D-061",
+      "body": "Guarda verbatim su «vamos con tu recomendacion» sobre DOS preguntas, y desarrolla las cuatro\ncondiciones de D-061 una a una, con DOS declaradas como tension en vez de darse por buenas:\nla QA de este run aun no se ha ejecutado, y el run_id describe portar formas mientras esta\nampliacion arregla el recorte de una sonda.\n\nLleva ademas el principio que decidio la primera pregunta y conviene que quede escrito:\nUNA GUARDA QUE APUNTA A UN SITIO QUE DEJO DE SER EL SITIO ESTA ROTA, NO RELAJADA.\n\nY el diagnostico verificado de la guarda B: pasa en falso porque su recorte no cierra el map y\nse traga el boton de agregar, que desde el #146 lleva la clase estandar con border y py-2.\nDaño colateral de otro run, probado dos veces por el taller.\n\nFichero escrito en este repo, por nombre completo:\n  context/cantu-studio/records/VEREDICTO-147-REAPUNTAR-LAS-TRES-Y-ARREGLAR-LA-GUARDA-B-BAJO-D-061.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "324f9ca",
+      "full_sha": "324f9ca83f6ab711ab011b1d58862b2c203bfa3a",
+      "date": "2026-08-27T19:55:55-06:00",
+      "parents": "04959a0",
+      "subject": "cierra el #60 RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001 como completed: la QA del operador se ejecuto por fin, doce dias despues de la entrega, sobre las DOS superficies y aprobo los trece pasos -- cinco en el proyecto de ejemplo reports-qa y ocho sobre el reporte real del piloto, con B3 a B6 verificados sobre el volcado que el operador pego y no sobre su palabra. El veredicto se transcribe VERBATIM y se declara que el operador nunca firmo la palabra aprobado: dio la QA por confirmada y pidio seguir. Salen TRES hallazgos que NO son defectos de este run y abren el 67 con sus palabras: el resumen del emisor enterrado detras de todos los pasos del indice, la seccion de cobertura correcta e ILEGIBLE para el juicio humano -- que es el hallazgo del dia porque aprobo los cuatro pasos que la miden y aun asi no sirve para lo que existe -- y los ids internos que la cobertura usa como evidencia y la pantalla no ensena nunca. Y se publican tres errores propios de la cabina con la misma fuerza que se publicaron: A2 no era fallo sino una sonda que miro profile_data cuando la seccion la convoca profile, mandar a buscar el item por su item_id C1 incumplia la regla de nombrar las cosas como se ven en pantalla donde se llama Facil-012, y dentro del propio cierre se corrio como guarda un validador de layout .aiw que este repo no usa, canalizado a tail, asi que su EXIT 0 era del tail: ese verde NO se publico y las cifras salen de los artefactos del proyector. Evidencia: set-status por la ruta de la consola porque este repo no tiene CLI, dry-run con remap vacio, md5 216921399eeea31105ef3e90438f162a a 83af46fb8a16726b80c18c2b967c6d55, verificacion campo a campo contra el respaldo con EXACTAMENTE dos campos cambiados y los dos del 60, .project re-emitido en el mismo acto con sus siete ficheros, y el proyector declarando No active run 60 of 67 runs completed",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001"
+    },
     {
       "branch": "main",
       "sha": "04959a0",

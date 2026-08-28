@@ -1,5 +1,18 @@
 # Hallazgos del operador sobre la superficie del reporte — semilla del `#67`
 
+> **DECISIÓN DEL OPERADOR, 2026-08-27 · el `#67` NO se adelanta.** Verbatim:
+>
+> > «no lo abras, ese run es cuando acabemos los arreglos pendientes, doy una revisada
+> > general y te traigo una lista completa de feedback»
+>
+> La cabina había preparado el dry-run del movimiento —`#67` de la 67 a la 61, con siete runs
+> desplazados— y **no se aplicó: no se escribió un solo byte en el canónico.** El `#67` se
+> queda el último, que es donde su propio texto dice que debe estar y por la razón que el
+> operador escribió el 2026-08-01: abre trabajo en vez de cerrarlo.
+>
+> **Estos hallazgos siguen vivos y esperando aquí.** No mueren por no abrirse el run: son la
+> materia de esa revisión general.
+
 **Abierto el 2026-08-27.** Recogidos durante la QA del `#60`. **Las palabras del operador van
 VERBATIM.** Lo que la cabina midió va aparte y marcado.
 

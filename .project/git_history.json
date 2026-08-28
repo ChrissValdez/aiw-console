@@ -1,27 +1,38 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-28T02:08:27.534Z",
+  "generated_at": "2026-08-28T02:10:21.518Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-08-28T02:06:35.889Z"
+      "mtime": "2026-08-28T02:09:17.616Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-08-28T02:08:27.497Z"
+      "mtime": "2026-08-28T02:10:21.480Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "e3cc90c306445caa1be19cb46c509646b479fa8b",
+  "head": "771ac2b74e1e2a759046e9cbde42ba0a6c60a2ad",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 337,
+  "commit_total": 338,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "771ac2b",
+      "full_sha": "771ac2b74e1e2a759046e9cbde42ba0a6c60a2ad",
+      "date": "2026-08-27T20:09:17-06:00",
+      "parents": "e3cc90c",
+      "subject": "inserta el #61 RUN-CONSOLE-REPORT-COVERAGE-READABILITY-001 en la posicion 61, planned: la seccion de cobertura se vuelve legible para el juicio humano -- las cifras arriba y el material de auditoria plegado debajo. Nace del hallazgo que solo el ojo del operador podia encontrar: esa seccion APROBO los cuatro pasos de QA que la miden, B3 a B6, y aun asi no sirve para lo que existe. Correcta e inutil a la vez. La forma la decidio el operador en una parada de analisis, con la cabina midiendo antes de proponer: mas de cien elementos a un mismo nivel visual -- 14 ids cumplidos con 25 chips, 7 bloques de declarados con 28 ids y 1467 caracteres de prosa, 3 citas de cabecera una de ellas imprimiendo un JSON crudo, y 24 filas de cifras del perfil. El run lleva escrito lo que NO puede tocar porque es semantica decidida y no maquetacion: el silencio dice su regla y nunca vuelve a ser un numero neutro, los declarados conservan ids y why_not verbatim, cada cita conserva su where Y la evidencia que ese where alcanza, y el id restado sigue tachado y visible. Y lleva su para y reporta: si plegar exige DECIDIR que cifra es para juzgar y cual para auditar en un caso que la decision del operador no cubre, para y trae la lista, porque clasificar evidencia es juicio del operador y no del ejecutor. Fuera de alcance a proposito los otros dos hallazgos, H-01 el resumen enterrado y H-03 los ids que ninguna pantalla ensena. Y queda registrado que el 67 NO se adelanto: el operador decidio que su auditoria visual va cuando se acaben los arreglos pendientes, que es donde su propio texto dice que debe estar; el dry-run del movimiento se hizo y no se aplico. Evidencia: dry-run con el remap publicado antes de aplicar, md5 83af46fb8a16726b80c18c2b967c6d55 a 68bb167277d8c863670afbd811af1b66, verificacion campo a campo contra el respaldo con UN id nuevo, cero ids perdidos y queue_order como unico campo tocado en los 7 runs desplazados, densidad 1..68 intacta, y .project re-emitido en el mismo acto con sus siete ficheros",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-REPORT-COVERAGE-READABILITY-001"
+    },
     {
       "branch": "main",
       "sha": "e3cc90c",

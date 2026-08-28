@@ -343,3 +343,91 @@ operador acaba de cambiar.
 criterio 2 dice «en la superficie viva **y sólo ahí**». Estos dos no los lee el autor: los lee la
 cabina. **La decisión de si entran es del operador**, y el precedente ya dice que sí entraron la
 vez anterior.
+
+---
+
+## 10 · RONDA 2 — los doce entraron. Medido el 2026-08-28
+
+> El operador aprobó A y B (`VEREDICTO-151-LOS-DOCE-DUDOSOS-ENTRAN.md`, verbatim *«apruebo la
+> recomendacion procede»*). **Servidor reiniciado antes de mirar nada: PID 14852, `12:29:36`.**
+> El borrador del operador **no se tocó**: el banner «Restaurar Borrador» sigue en pantalla sin
+> pulsar, verificado en el DOM (`banner_borrador_intacto: true`).
+
+### 10.1 · UNA TERCERA CIFRA MÍA QUE ESTABA MAL — **`QA/temp/` son 38 ficheros, no 39**
+
+La §5 de este mismo censo escribió «`QA/temp/` (**39** ficheros, 87 ocurrencias)». **Es un error
+mío**, y de él lo heredaron el texto del run y el record del veredicto. Medido:
+
+```bash
+python censo.py | grep "\./QA/temp/" | awk '{s+=$1; n++} END {print n, s}'
+```
+```
+38  93
+```
+
+**Son 38 ficheros y 93 ocurrencias.** Y **no cambiaron porque yo tocara algo** — el digest de la
+carpeta entera es idéntico antes y después (§10.4). Cambió porque la cuenta anterior estaba mal.
+
+### 10.2 · A · Los nueve — **los nueve eran afirmación; ninguno resultó ser historia**
+
+Miré cada uno en su contexto. **El criterio decisivo lo dieron los propios ficheros**, no yo: en
+`slideSplitAdmitAndImplement.test.mjs:917-921`, dos mensajes hermanos de la misma prueba dicen
+«**Anatomía de fórmula** se apendizó» y «**Tabla** se apendizó detrás de ella» —y `conceptGrid` se
+llamaba «Comparador de conceptos» cuando aquello ocurrió—. **El fichero ya citaba la etiqueta
+VIGENTE dentro de un relato de un hecho pasado.** Los nueve se alinean con eso.
+
+| fichero:línea (antes) | qué era | veredicto |
+|---|---|---|
+| `slideArithmeticItemAdmit:86` | título del material de QA; nadie lo compara (`grep 'en celda'`) | afirmación → cambiado |
+| `slideArithmeticItemAdmit:168` | nombre de `A1` | afirmación → cambiado |
+| `slideArithmeticItemAdmit:542` | nombre de `A8` | afirmación → cambiado |
+| `slideArithmeticItemAdmit:566` | mensaje sobre un estado de **hoy** («la familia está vacía») | afirmación → cambiado |
+| `slideArithmeticItemAdmit:640` | nombre de `A11` | afirmación → cambiado |
+| `slideArithmeticSeedContradictsItsResult:184` | nombre de `C1` | afirmación → cambiado |
+| `slideConceptGridAdmitAndImplement:454` | mensaje sobre la cuenta de **hoy** | afirmación → cambiado |
+| `slideIconListJsonImportGate:434` | mensaje sobre el censo de **hoy** | afirmación → cambiado |
+| `slideSplitAdmitAndImplement:927` | mensaje sobre el orden de **hoy** | afirmación → cambiado |
+
+**Una decisión de más, declarada para que se pueda revertir en una línea:** el nombre de `A1` decía
+también *«y el rotulo se DERIVA del catalogo de Web»*, que es **la falsedad que la ronda 1 midió**
+y que la cabina ya corrigió dentro del run. Se reescribió a lo que la prueba garantiza de verdad:
+*«y esta prueba ata su rotulo al catalogo de Web»*. **Si el operador prefiere sólo la etiqueta, se
+deshace cambiando esa frase.**
+
+### 10.3 · B · Los dos documentos — **con la forma del precedente, buscada y copiada**
+
+El precedente `RUN-CANTU-SLIDE-TYPE-NAMES-001` usa **dos formas distintas**, una por documento, y
+se copió cada una donde le toca:
+
+- **Plan (`SLIDE-PER-COMPONENT-RUN-PLAN-PROPOSAL.md`)** — la etiqueta se actualiza **en la lista,
+  en el sitio** (§1 punto 4 y §7), y debajo va un bloque «**Amended \<fecha\> by `<run>`, in \<N\>
+  place(s).**» numerado, con el porqué. Se comprobó que el precedente hizo exactamente eso: su
+  lista ya dice `stack` «Procedimiento matemático» **y** su enmienda declara «not «Secuencia»».
+  Se añadió **«Amended 2026-08-28 … in one place.»** tras la enmienda de 2026-08-15, en orden
+  cronológico. `:137` **no se tocó**: narra el orden del re-corte y sigue siendo cierto.
+- **Mapa (`REFERENCE-SLIDE-WEB-COMPONENT-MAPPING.md`)** — el precedente anotó la línea `> Status:`,
+  declaró la regla en la cabecera y **sustituyó las etiquetas en el cuerpo**. Igual aquí: `Status`
+  anotado, bloque «**Amended … in one label.**» bajo el párrafo de la regla, y las **tres**
+  apariciones al día (§1, el encabezado §3.1, la fila de §5). El nombre retirado se escribe **en
+  estilo de código** — `Cálculo aritmético` — porque ese documento lo pide por escrito: *«Retired
+  names appear in code style above so a later sweep does not rewrite them again.»*
+
+**Las otras cuatro afirmaciones obsoletas del mapa NO se tocaron** —la de «sólo Tarjeta y Narrativa
+son insertables» está en la línea inmediatamente anterior al encabezado §3.1 que sí cambió—. Los
+dos bloques nuevos lo declaran: *«no figure, verdict or claim … was re-measured on 2026-08-28»*.
+
+### 10.4 · Las comprobaciones
+
+| qué | comando | resultado |
+|---|---|---|
+| **`QA/temp/` intacto** | sha256 por fichero + digest del conjunto, antes y después | **1751 ficheros, digest `5f5a5506…d18ec1` idéntico**; `diff` de las 1751 líneas **vacío** |
+| **corpus quieto** | `node --test webCorpusFixtureNet.test.mjs` | «los **63** árboles del corpus siguen siendo los fijados» · «los dos motores reproducen byte a byte» |
+| **guardas verdes** | 7 ficheros de prueba | **123 pruebas, 0 fallos** |
+| **guardas no aflojadas** | arnés de mutación de la ronda 1, re-ejecutado | **6/6 ROJO**, restaurado byte a byte |
+| **los dos carriles** | `import()` desde el servidor vivo | los tres rótulos «Factorización aritmética», `id_interno: "arithmetic"`, `concuerdan: true` |
+| `lint` | `npm run lint` | 3 problemas, **los tres preexistentes**, en ficheros no tocados |
+
+**Quedan 76 ficheros con la cadena vieja (eran 79), 223 ocurrencias.** De ellos 38 son `QA/temp/` y
+11 `docs/_historical_run_record/`: historia, intacta y así se queda. **Líneas vivas de código con
+la cadena: 1** — `SlideItemEditor.jsx:911`, que es un comentario JSX y que el filtro mecánico da
+por viva (limitación ya declarada en §1).

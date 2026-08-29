@@ -154,6 +154,73 @@ cuatro con QA humana aprobada. No hay dos seguidos.
 
 ---
 
+---
+
+## ⚠⚠ CORRECCIÓN DEL 2026-08-29 — DOS AFIRMACIONES DE ESTE DOCUMENTO ERAN FALSAS
+
+> **Añadido, no reescrito.** Lo de arriba queda como se publicó; esto lo corrige hacia adelante.
+> Lo desmintió el taller de `RUN-CANTU-EDITOR-SIZE-SHRINK-IS-DECLARED-001` y lo verificó la
+> cabina contra disco.
+
+### 1. «EL HALLAZGO QUE CAMBIÓ LA PREGUNTA» era falso
+
+Este documento afirma que solo el paso enfocado se ajusta con el techo del autor, y que por eso
+el «tamaño pintado» no existe para los demás. **No es cierto.**
+
+- `compiler.js` emite **una lámina por paso** — `pasos.map((paso, focusIndex) => …)`.
+- En la escena *i*, **el techo es el del paso *i***: `renderStackSlide.js:721` lee
+  `focusStep.formulaMaxFontSize`, el `focusStep` de **esa** escena.
+- Las escenas se ocultan con **`opacity`, nunca con `display`** — ni en `comp_global.css` ni en
+  `slidesPlayer.js`— así que **todas tienen caja**.
+- `renderStackSlide.js:951` llama a `fitFocus()` **sin condición** a los 200 ms.
+- Por eso las dos guardas que lo habrían impedido —`offsetParent === null` y
+  `clientWidth === 0`— **no se activan nunca**.
+
+**El booleano es computable para todos los pasos.** La afirmación era cierta *dentro de una
+lámina* y falsa *sobre los pasos*: la cabina miró `fitFocus` y **no miró quién construye las
+escenas**.
+
+**Consecuencia que se declara:** el operador eligió **D** sobre **F** con esta premisa delante.
+La cabina se lo dijo y **le ofreció reabrir «enseñar el número pintado»**. Lo declinó: su razón
+original —*«el defecto es la mentira, no la ausencia del número»*— no dependía del error.
+
+### 2. «`renderLayout` solo lo usa `buildSingleWebLesson.js`» era falso
+
+**Son tres**, y el tercero es `tools/author-lite/compiler-api/services/previewRenderer.js`
+(~`:292` y ~`:347`) — **la previa Web de Author Lite**. La sonda de la cabina buscó en
+`compiler-api/` y el fichero estaba en `compiler-api/services/`.
+
+Lo demás que este documento afirma de ese protocolo **se sostiene**: es carril Web, lleva el
+zoom de accesibilidad del lector, y no lo escucha nadie.
+
+### 3. Lo que la parada cerró y no vuelve a abrirse
+
+- **El tope del historial NO es defecto.** Está razonado y es decisión del operador, verbatim en
+  `renderStackSlide.js:885-889`. Cero montajes de `historySize`.
+- **`soloMarca` no sirve**, por dos mitades: `SizeStepper` no consume `FieldError` —pinta su
+  propio `<p>`— y **no tiene superficie de marca**: cero `aria-invalid`, cero `border-red`.
+- **Los identificadores de celda no hacen falta**; **el proxy tampoco**.
+
+### 4. Y una guarda del propio repo que miente en verde
+
+`sharedSizeControlStepper.test.mjs` afirma **tres veces** que el censo de mandos es **20** y
+**pasa 31/31**. **El disco tiene 21**: omite `SlideHierarchyEditor.jsx:157`, que monta «Tamaño
+del encabezado». Se arregla dentro de
+`RUN-CANTU-EDITOR-SIZE-SHRINK-IS-DECLARED-001`, por decisión del operador.
+
+### 5. Las decisiones del 2026-08-29
+
+Operador Christopher Valdez Cantu, **verbatim: «vamos con tus recomendaicones»**, sobre tres
+decisiones dibujadas con recomendación explícita:
+
+- **M1** — marca propia, no-error. *Un tamaño que encogió no es un error.*
+- **C2** — identidad de bloque desde el compilador. **El alcance se amplía**: el compilador deja
+  de estar fuera de alcance **solo para emitir esa identidad**.
+- **El censo se arregla en este run.**
+- **No se reabre «enseñar el número pintado».**
+
+---
+
 ## FUENTES
 
 - Paquete del taller:

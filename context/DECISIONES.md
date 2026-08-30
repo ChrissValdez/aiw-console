@@ -3023,3 +3023,48 @@ que sólo llegue lo que de verdad merece un turno suyo.
 
 Criterio de borrado: la sustituye una decisión que devuelva las decisiones menores al operador, o
 que retire la obligación de explicarlas al tomarlas.
+
+---
+
+## D-072 — LA SESIÓN NUEVA ES EL DEFAULT; LA MISMA SESIÓN ES LA EXCEPCIÓN QUE SE JUSTIFICA
+
+**Fecha:** 2026-08-30 · **Proyecto:** transversal · **Origen:** hilo `cantu-studio`, al emitir el
+ticket de `RUN-CANTU-SLIDE-STACK-FORMULA-ONE-SCALE-001`.
+
+**Decisión del operador Christopher Valdez Cantu, VERBATIM:**
+
+> «el ticket lo puedo pegar en una sesion nueva? es un run nuevo y la sesion anterior de taller ya
+> duro mucho. trata de pedir sesion nueva siempre que se pueda, solo es en la misma sesion cuando
+> se esta trabajando sobre lo mismo y se ocupa contexto de lo que ya se hizo»
+
+### Qué cambia
+
+La recomendación de **SESIÓN** que la cabina declara antes de cada ticket **invierte su default**:
+
+- **SESIÓN NUEVA por defecto.** No hace falta justificarla.
+- **LA MISMA SESIÓN sólo cuando el taller siguiente NECESITA el razonamiento del anterior** — una
+  ronda 2 sobre el mismo defecto, una corrección de lo que él mismo acaba de escribir. Y cuando se
+  pide, **se dice qué contexto concreto se está reusando**.
+
+### Por qué, y es un error de calibración de la cabina
+
+La cabina venía recomendando «la misma sesión» **por inercia de que era el mismo componente**.
+Eso es la variable equivocada: lo que decide no es el componente, es **si el taller siguiente
+necesita lo que el anterior tiene en la cabeza**. En la serie `#163`–`#167`, varios runs
+consecutivos tocaban el mismo fichero y **ninguno necesitaba el contexto del anterior**, porque
+todo lo medido ya viajaba escrito en el `full_description` y en los paquetes de `QA/temp/`.
+
+**Y hay una razón de fondo que refuerza el default:** esta casa escribe todo lo medido en el run
+y en el paquete precisamente para que **el contexto no tenga que viajar en la cabeza de nadie**.
+Si un ticket necesita la sesión anterior para entenderse, **el ticket está incompleto** — y eso
+es un defecto del encargo, no una razón para reusar la sesión.
+
+### Relación con D-070
+
+D-070 —ticket de run nuevo, sesión nueva— sigue **suspendido** desde el 2026-08-27 por petición
+del operador, que dijo «yo te aviso cuando toque reiniciar el hilo». **D-072 no lo reactiva:**
+D-070 hablaba de reiniciar **el hilo de la cabina**; D-072 habla de **la sesión del taller**, que
+es otra cosa y siempre fue del operador.
+
+Criterio de borrado: la sustituye una decisión que devuelva el default a la misma sesión, o que
+haga que los tickets dejen de ser autosuficientes.

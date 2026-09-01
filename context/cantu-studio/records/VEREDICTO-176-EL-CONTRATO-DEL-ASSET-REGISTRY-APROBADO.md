@@ -81,3 +81,70 @@ El operador **no leyó el documento**. Preguntó por qué se le pedía leerlo, l
 cabina se lo explicó, pidió recomendación y la cabina recomendó el resumen. **La
 decisión de no leer el documento fue informada y es suya**; la recomendación de no
 leerlo fue de la cabina.
+
+---
+
+# ⚠ CORRECCIÓN — 2026-09-01, posterior a todo lo de arriba
+
+**Nada de lo escrito arriba se ha modificado. Esto se añade, que es como se
+corrige.**
+
+## El «defecto» que la cabina declaró NO existía casi entero
+
+La sección «LO QUE ESTE VEREDICTO NO CUBRE» afirma: *«Medido: no existe tal
+comentario en todo el fichero.»* **Es falso.** El comentario existe, en
+`tools/studio/compiler-api/services/previewRenderer.js`, **líneas 320-322**,
+cerrando el bloque de cabecera justo encima del `require` de la pasada. Nombra la
+superficie exacta, la declara deliberada y da dos razones.
+
+Lo desmintió el taller del encargo de corrección, que **paró sin tocar un fichero**
+acogiéndose a la condición 2 de «para y reporta» — exactamente para lo que esa
+cláusula estaba escrita.
+
+## Qué era verdad y qué no, desglosado
+
+De la Regla 4.4, lo único falso es **una palabra**:
+
+| afirmación de la Regla 4.4 | veredicto, re-medido |
+|---|---|
+| «emits 4 complete documents» | **cierto** |
+| «3 call the pass» | **cierto** |
+| «the fourth carries its exemption in a comment» | **cierto** |
+| «**beside it**» | **falso** — el comentario está en la 320, el retorno en la 800 |
+
+**Y `INV-5` no nace fallando.** Su texto exige *«wrapped or carry a declared
+exemption»*, y **no exige adyacencia**. Un escáner que busque en el módulo una
+exención declarada que nombre la superficie **pasa hoy**. No hay deuda que `#178`
+herede, y no hay que debilitar la invariante.
+
+## Por qué la cabina lo midió mal, con precisión
+
+La sonda fue `(//|/\*|\*).*(dedupe|pasada|exempt|exenc|no llama|deliberad)`, con
+`-i`, sobre el fichero entero. Devolvió `No matches found`.
+
+**El patrón exigía un marcador de comentario en la MISMA línea que el término.** El
+bloque abre con `/*` en la línea **287** y cierra con `*/` en la **322**, y **sus
+líneas intermedias no llevan asterisco**. La línea 320 empieza con espacios y el
+texto. **La sonda no podía ver lo que estaba buscando**, y su patrón contenía
+literalmente `no llama`, que es como empieza esa línea.
+
+Es la quinta forma de fallar de la configuración —medir con la herramienta
+equivocada y publicar el resultado— en su variante más traicionera: **un vacío se
+lee como ausencia, y un vacío no se cuestiona como se cuestionaría un número raro.**
+
+## Lo que este error costó, y se declara
+
+1. **Un encargo de taller entero**, emitido para arreglar algo que casi no estaba
+   roto. El taller lo gastó midiendo y parando.
+2. **Una decisión pedida al operador sobre una premisa falsa** — las opciones
+   A/B/C. Eligió A, y A se apoyaba en que la invariante nacía fallando.
+3. **Dos artefactos ya commiteados con la afirmación falsa dentro**: el mensaje del
+   commit `3bca05e5` y este mismo record. **Ninguno se reescribe.** Los dos quedan,
+   y esta sección es su corrección hacia adelante.
+
+## Lo que NO cambia
+
+**El `pass` del operador sigue en pie tal cual.** Se dio sobre las cinco decisiones
+de diseño, y ninguna de las cinco depende de esto. Lo que cambia es el tamaño del
+arreglo pendiente: de «una regla falsa y una invariante endeudada» a **una cláusula
+de ubicación mal escrita**.

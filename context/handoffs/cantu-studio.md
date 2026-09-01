@@ -1,78 +1,114 @@
 # HANDOFF — hilo `cantu-studio` (el proyecto)
 
-> Escrito por la cabina al cerrar la sesión del **2026-08-28**. **Sustituye al relevo del
-> 2026-08-27**, cuyas cifras ya están obsoletas.
+> Escrito por la cabina al cerrar la sesión del **2026-09-01**. **Sustituye al relevo del
+> 2026-08-28**, cuyas cifras ya están obsoletas.
 >
 > **Todo lo de aquí está medido y lleva fecha. Contrástalo contra el canónico al abrir. Gana el
 > disco.**
 
 ---
 
-## ⚠ LA LECCIÓN DE ESTA SESIÓN, Y VA PRIMERA PORQUE SE REPITIÓ CUATRO VECES
+## ⚠ LA LECCIÓN DE ESTA SESIÓN, Y VA PRIMERA PORQUE SON CUATRO CASOS DE LA MISMA FALTA
 
-> **LA SONDA ES PARTE DE LA AFIRMACIÓN. UN RESULTADO SIN CONTROL POSITIVO NO ES UNA MEDICIÓN.**
+> **LA CABINA MIDIÓ POCO Y COPIÓ MUCHO. Las cuatro cifras falsas de esta sesión salieron de
+> RE-PUBLICAR el número de otro, y en las cuatro lo que se perdió fue EL SUSTANTIVO QUE LO ACOTA.**
 
-Cuatro casos, todos de esta sesión:
+| lo que publicó la cabina | lo que era | de dónde salió el fallo |
+|---|---|---|
+| «quedan 1435,9 KiB = **79,3 % en SLIDE**» | 79,3 % **de un fichero**; 32,8 % del corpus | el reporte de origen decía *«sobre el fichero ya deduplicado»* y **la cabina dejó caer el sustantivo al citarlo**. Efecto: subestimar lo alcanzable a la mitad |
+| «**16** huérfanos de `author_lite`» | **27** | su primera medición no miró dentro de `dist/_moodle/` |
+| «**4** fallos preexistentes» | **11** | **tenía los dos números delante** —`#173` decía 11, `#174` decía 4— y **copió el más reciente sin ver que se contradecían** |
+| «**2** árboles se mueven» | **3** | copió un renglón que contaba **pruebas** y lo publicó como si contara **árboles** |
 
-1. **La cabina corrió una guarda con `vitest`** y obtuvo «no test suite found». **Iba a reportar
-   que el fichero estaba vacío.** El control positivo sobre un test que ya existía **falló
-   igual**: esta casa usa `node:test` en los 154 ficheros y **vitest devuelve ese error en
-   TODOS**. Era la sonda.
-2. **El taller de `#156` reportó «6 rutas sólo del autor»** y las retiró él mismo: su barrido
-   inyectaba claves que el bloque no admite y la unión discriminada fallaba entera.
-3. **El taller de `#157` midió el `<aside>` equivocado** —el riel izquierdo— y repitió la
-   medición antes de publicarla.
-4. **`#154` abrió con CUATRO de las cinco mediciones de la cabina falsas**, y el taller las
-   desmontó sin escribir una línea de producción.
+**Ninguna la detectó la cabina.** Tres las desmintió el taller y una salió al ir a cerrar.
 
-**LA REGLA QUE SALE:** antes de publicar un cero, **demostrar que la sonda vería el uno**. Se hizo
-seis veces esta sesión y las seis pagaron.
+**LAS DOS GUARDAS QUE SALEN, y son mecánicas, no disciplina:**
 
-**Y LA SEGUNDA LECCIÓN, DE `#154` Y `#157`:** *cuando la cabina nombra por el mecanismo, se
-equivoca.* Puso «Tamaño máximo de las fórmulas» y el operador lo corrigió a **«Tamaño de la
-fórmula»**: de siete filas medidas, **seis pintan el número exacto** — la cabina había puesto la
-excepción en el sitio de la regla.
+1. **Toda cifra copiada de un reporte ajeno viaja con el sustantivo que la acota —*de este
+   fichero*, *del corpus*, *de esta escena*— EN LA MISMA FRASE, o no se copia.**
+2. **Cuando dos reportes dan números distintos de lo mismo, NO gana el más reciente: se mide.**
+   Una contradicción no mirada no es una cifra envejecida, es una decisión de no mirar.
+
+### Y una sonda propia que sí se cazó a tiempo — el contraejemplo que enseña
+
+Para contar huérfanos la cabina escribió un comparador de nombres entre `dist/` y `src/content/`
+y **devolvió 57, incluyendo ficheros vivos**. **No se publicó y no se borró por él**: el borrado
+se limitó a lo que se sostiene *por estructura* —`src/content/author_lite` ya no existe—. **Esa
+es la forma correcta**, y es la misma familia que los peldaños contados sobre prosa y los
+`<head>` que eran `<header>`.
+
+### La tercera falta, que no es de cifras
+
+**La cabina cerró `#174` SIN QA ejecutada y NO LO DECLARÓ.** La regla permite cerrar sin QA; lo
+que prohíbe es callarlo. Lo encontró ella al preparar la hoja siguiente y **metió la superficie
+huérfana como paso 4 de la QA de `#175`**, que el operador aprobó. **Deuda saldada, no
+acumulada.** Guarda propuesta: que todo `closeout_result` lleve una línea explícita
+`QA: ejecutada` / `QA: NO ejecutada, superficie sin mirar: …`.
+
+### Y la cuarta: emitir un ticket sin abrir el run
+
+**`#174` nunca se puso en `active`.** La cabina emitió el ticket saltándose la mitad de apertura
+del turno 1, así que durante todo el encargo el canónico decía que nadie trabajaba en él **y la
+cabina hizo dos escrituras estructurales creyendo que no había encargo en vuelo**. No hubo daño
+porque no había otro hilo: **suerte, no diseño**. Se cerró de `planned` a `completed`
+directamente en vez de fabricar un paso que no ocurrió.
+**Guarda:** antes de emitir un ticket, leer el `status` del run del canónico y **abortar si no es
+`active`**.
 
 ---
 
-## ESTADO DEL CANÓNICO — medido el 2026-08-28 a las 21:47
+## ESTADO DEL CANÓNICO — medido el 2026-09-01
 
 | | |
 |---|---|
 | ruta | `projects/cantu-studio/.aiw/roadmap/roadmap.json` |
-| md5 al cerrar | `d706fd872f00a507a814a804ac396085` |
-| runs | **178**, `queue_order` denso `1..178`, ids únicos |
-| `completed` | **162** · `active` **0** · `planned` **16** |
-| validador | **0 errores**, motor de `aiw-console` (2 479 líneas), `externalRunIds` = 157 |
+| md5 al cerrar | `b17c055fe58fe2e32ce7d9b0308b48a0` |
+| runs | **190**, `queue_order` denso `1..190`, ids únicos |
+| `completed` | **176** · `active` **0** · `planned` **14** |
+| validador | **0 errores, 0 avisos**, motor de `aiw-console` |
+| arista colgante | **1, PREEXISTENTE** — `RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` → `RUN-CANTU-ROADMAP-CONTENT-AUDIT-001`. **Es la causa de los 11 fallos de `tools/roadmap`** |
 | `.project/` | re-emitido por `serve.mjs` en cada escritura |
 
-### Lo que cerró esta sesión — CUATRO runs, todos con QA humana aprobada
+### Lo que cerró esta sesión — TRES runs
 
 | # | run | veredicto |
 |---|---|---|
-| **154** | per-step formula size | «jalo bien» + «si jalo estas» (dos rondas) |
-| **155** | hide premath in single view | «pass» |
-| **156** | mark the field the preview refuses on | «pass» |
-| **157** | declare a stopped preview | «pass» |
+| **173** | emitir cada hoja una vez por fichero | «pass» (5 pasos) |
+| **174** | el guion una vez por fichero + configuración | **sin QA** — su superficie se miró en la QA de `#175` |
+| **175** | asentar el reparto: previa, guardas, arneses, árboles | «pass» (6 pasos) |
 
-### La cola: el siguiente es `#158`
+### La cola: el siguiente es `#176`
 
-`#158` **«Open a channel so the editor can show the size the page actually paints»** — el canal
-para que el mando enseñe el valor **pintado** y no sólo el pedido. **Dos talleres midieron que NO
-hacía falta para cerrar `#154`**, porque el operador aceptó por adelantado que al desbordarse el
-mando diga un número que la pantalla no cumple. **Sigue siendo real y ahora es el primero.**
-
-Después: `#163` auditoría de UX, `#164` historial por campo, `#166`/`#167` el registro de activos.
+`#176` **«Design the Asset Registry»**, y **llega con un piloto ya hecho** — ver el record
+`HALLAZGO-EL-PILOTO-LE-ENSENA-CUATRO-COSAS-AL-ASSET-REGISTRY.md`, que es lo primero que hay que
+leer antes de emitir ese ticket. Después: `#177` contrato `ctx.assets`, `#178`/`#179` integración
+y validación, `#180` auditoría de UX, `#181` historial por campo.
 
 ---
 
 ## ⚠ LO PRIMERO DE LA PRÓXIMA SESIÓN
 
-**Nada urgente está a medias.** Los cuatro runs cerraron con QA y **no queda ningún `active`**.
+**Nada está a medias. Cero `active`. Árbol limpio salvo `.claude/launch.json`, que ya venía sin
+rastrear.**
 
-**Lo que conviene decidir antes de encadenar `#158`:** si sigue teniendo sentido después de que
-`#156` y `#157` cambiaran el vocabulario de «lo que el editor te dice» — ahora los campos se
-marcan solos y la previa declara cuándo miente. **Medirlo antes de emitir el ticket.**
+**Lo que conviene hacer antes de encadenar `#176`:** leer el record del piloto. Contiene **cuatro
+sitios donde un contrato general se habría equivocado**, los cuatro medidos sobre un caso real, y
+uno de ellos —que parametrizar fue *reescribir* el componente y no *configurarlo*— cambia el
+presupuesto del diseño entero.
+
+---
+
+## LO QUE ESTA SESIÓN CONSIGUIÓ, EN CIFRAS MEDIDAS
+
+```
+   corpus SLIDE publicado    4384,3 → 1596,8 KiB    −63,6 %
+   documento de la PREVIA    2397,6 →  227,9 KiB    −90,5 %   (35 ms de coste)
+   WEB / MOODLE              −24,2 % / −24,4 %
+```
+
+**Y el hallazgo que nadie buscaba:** en la previa se repetían **21 copias de la hoja de estilos
+desde antes del reparto**. La regresión del 6,6 % que abrió `#175` fue el hilo del que tirar.
+**La lección: una regresión pequeña en una superficie no medida suele ser la punta de una grande.**
 
 ---
 
@@ -80,144 +116,130 @@ marcan solos y la previa declara cuándo miente. **Medirlo antes de emitir el ti
 
 Nombrado, medido, **sin run**:
 
-- **El suelo de 14 px es de DECREMENTO, no un tope inferior.** La valla del esquema admite
-  `0.5rem` y el taller midió **8 px pintados**: hoy el autor puede empequeñecer la fórmula por
-  debajo del suelo. **Cerrado por D-071 con el default conservador —se queda— tras preguntarle
-  dos veces sin respuesta.** Revertirlo es una línea en la valla.
-- **Vaciar un campo de enum tira el error a la RAÍZ del bloque** y no marca ningún campo. **18
-  casos**, igual antes que después de `#156`: **no es regresión**. Arreglarlo obligaría a
-  rediseñar `erroresRealesDelBloque`.
-- **Ensombrecer el dibujo de la previa.** Descartado **dos veces** por el operador —al elegir la
-  cinta y al aprobarla—. **Compatible con la cinta** si algún día hace falta.
-- **`renderStackSlide.js:772` tiene un ternario cuyas dos ramas son idénticas.** Nombrado **tres
-  veces**, sin tocar: el guion del motor viaja DENTRO del HTML y los 63 árboles fijados lo
-  capturan verbatim, así que una limpieza cosmética los movería.
-- **`contentScale`** — palanca por paso sobre la fórmula grande que **APAGA el autoajuste**. Cero
-  claves de zod, tres comentarios. **Se queda cerrada a propósito.**
-- **El respaldo a nivel de BLOQUE del tamaño de fórmula.** El taller de `#154` opinó que debería
-  existir **pero no como espejo del paso**, y que la pregunta real es si el bloque *sustituye* al
-  paso para el caso común. **Es decisión del operador.**
-- **Carrera latente con KaTeX** (preexistente): `fitFocus` mide antes de que KaTeX termine.
-- **`StackSlideSchema.steps` no lleva** el `.superRefine` de «sólo el último paso puede ser
-  resultado» que sí lleva el timeline de Web.
-- **`automatico={false}`** en el montaje del `SizeStepper` es **prop muerta**.
-- **El mapa `REFERENCE-SLIDE-WEB-COMPONENT-MAPPING.md` sigue con cuatro afirmaciones obsoletas**
-  que cuatro runs seguidos han encontrado. **Sin run.**
+- **Los 11 fallos de `tools/roadmap`** son por la **arista colgante del canónico**, no por código.
+  Medidos idénticos antes y después de tres runs. **Arreglarlos es una decisión, no un bug.**
+- **Los +7,2 KiB del fichero de una sola instancia** (`staging/1_propiedades_numeros_slide`). La
+  pasada no los recupera y recuperarlos sería cambiar la conducta del reparto. **Declarado fuera
+  de alcance, no arreglado a escondidas.**
+- **Los filtros de Moodle**: el de emoticonos convierte `8-.` dentro de un `path` SVG en un PNG
+  «tímido» y `(y)` en «Sí»; el de autoenlace inyecta `<a>` en sus encabezados. **Se desactivan
+  desde la administración de Moodle. Ofrecido, no tomado.**
+- **`renderStackSlide.js` tiene un ternario cuyas dos ramas son idénticas.** Nombrado **cuatro
+  veces**. Sigue sin tocar por la misma razón: movería árboles fijados.
+- **`contentScale`**, **el respaldo a nivel de BLOQUE del tamaño de fórmula**, **el suelo de 14 px
+  de decremento (D-071)**, **vaciar un enum tira el error a la raíz (18 casos)**, y **el mapa
+  `REFERENCE-SLIDE-WEB-COMPONENT-MAPPING.md` con cuatro afirmaciones obsoletas**. Todos siguen
+  vivos y sin run, sin cambios desde el relevo anterior.
+- **El texto visible de las dos marcas** — preguntado **cinco veces sin respuesta**. Declarado
+  como deuda nombrada; **no se vuelve a preguntar.**
 
 ---
 
-## MÉTODOS QUE FUNCIONARON Y CONVIENE REUSAR
+## MÉTODOS QUE FUNCIONARON ESTA SESIÓN Y CONVIENE REUSAR
 
-- **La PARADA DE ANÁLISIS pagó las dos veces que se usó.** En `#156` desmintió media premisa —el
-  árbol de errores correcto ya se calculaba y se tiraba en la última línea— y en `#157` desmontó
-  el síntoma entero. **Las dos ahorraron un taller cada una.**
-- **Dibujarle las opciones.** En `#157` se le pusieron delante **tres tratamientos dibujados** y
-  contestó en dos líneas, con el texto ya escrito. **Va quince veces.**
-- **Empezar FOTOGRAFIANDO cuando la decisión se tomó sobre una reconstrucción.** `#157` lo hizo
-  criterio 1: la cabina no ve interfaces, dedujo el comportamiento leyendo el fuente, y **el
-  taller confirmó los cuatro puntos antes de escribir**. Si hubiera fallado, la decisión del
-  operador se habría tomado sobre algo falso.
-- **Guardas que EJECUTAN en vez de leer.** La de `#157` extrae la condición del fichero y la corre
-  contra su tabla de verdad: no comprueba que la línea siga escrita igual, sino que **siga
-  decidiendo igual**. Y recorta ramas **balanceando llaves**, no con dos regex cercanas.
-- **Verificación por MUTACIÓN con restauración garantizada.** `#155` 6/6, `#157` 9/9.
-- **La prueba de «cero borrados» como argumento.** `erroresDelFormulario.js` salió **+81/−0**: eso
-  demuestra que la función original está intacta sin leer una línea del diff.
-- **Balance de paréntesis para verificar dónde CIERRA un envoltorio JSX.** En `#155` era la
-  comprobación que más importaba: si el cierre caía 7 líneas más abajo, el paso de resultado se
-  quedaba sin su única fórmula.
-- **Montar un banco FUERA del repo con las librerías reales** cuando no hay jsdom. `#155` probó
-  así que esconder un campo no borra el dato.
-
-### ⚠ CÓMO FABRICAR UN BORRADOR INVÁLIDO — costó dos intentos, no lo redescubras
-
-- **Un bloque nuevo NACE VÁLIDO.** Probado contra el esquema: sus tres pasos vienen rellenos.
-- **«Insertar JSON» NO SIRVE.** Valida con el mismo esquema y rechaza en la puerta — medido:
-  `{"ok":false,"errors":["Bloque 1 (stackSlide) — steps.1.math: Este campo es obligatorio"]}`.
-- **LA PUERTA QUE SIRVE ES LA RANURA DEL BORRADOR**, que hace `reset()` sin validar: se escribe el
-  borrador en `jame_draft_buffer_slide` desde la consola, se recarga y se pulsa **«Restaurar
-  Borrador»**. **Verificar antes de entregarlo que falla por la ruta que se quiere y sólo por
-  ésa**, y que `hasUsefulDraftBuffer` daría verdadero.
-- **Siempre en una SEGUNDA INSTANCIA en otro puerto** — otro origen, otro almacenamiento.
-  `npm run dev -- --port 5199` desde `editor-ui`. **`vite.config.js` NO fija `strictPort`**: si el
-  puerto está ocupado Vite se va al siguiente sin avisar, y acabas pegando en un origen y mirando
-  otro. **Leer el puerto que imprime.**
+- **⭐ MEDIR LA HIPÓTESIS ANTES DE CONSTRUIR SOBRE ELLA, escrito como criterio 1 del ticket.** En
+  `#175` la hipótesis de la previa salió cierta y **por mucho más de lo esperado**, y de paso
+  destapó el desperdicio de las hojas. Si hubiera salido falsa, se habría ahorrado el run entero.
+  **El ticket decía literalmente «es una hipótesis: mídela, no la asumas».**
+- **⭐ EL ORDEN DENTRO DEL TICKET COMO PARTE DEL ENCARGO.** «Primero la previa, porque lo que se
+  decida ahí cambia código y re-fijar antes sería tirar el re-fijado.» El taller lo respetó y no
+  hubo trabajo tirado.
+- **⭐ EL PILOTO ANTES DEL CONTRATO.** `#174` se programó **antes** del diseño del registro para
+  que el diseño se hiciera contra un caso real. **Rindió cuatro hallazgos que el abstracto no
+  habría dado**, y tres contradicen lo que un contrato general habría asumido.
+- **La invariante ATADA en vez de comprobada.** `dedupeEmittedBlocks` **re-expande su propio
+  resultado en cada llamada y lanza si no reproduce la entrada**. No es un test: es el código
+  negándose a mentir.
+- **Bancos de sabotaje sobre el propio arnés.** En `#175`, 7 de 7 cazados **y el caso 3 salió
+  ciego**, destapando que el arnés reconocía por subcadena y dejaba pasar un renombrado. **Una
+  prueba que no puede fallar no prueba nada, y ésta lo descubrió de sí misma.**
+- **Fijadores que SE NIEGAN A ESCRIBIR** si aparece una forma que no esperaban.
+- **Dibujarle las opciones.** Va **dieciséis veces**. En esta sesión, tres opciones dibujadas
+  —aceptar, revertir, aceptar arreglando la previa— y contestó «procede con tu recomendación».
+- **Equivalencia demostrada EJECUTANDO, no leyendo.** 219 412 escrituras al DOM comparadas entre
+  el motor de git y el nuevo, en 4 geometrías × 2 regímenes.
 
 ---
 
-## EL VEHÍCULO PARA ESCRIBIR EL CANÓNICO — usado **nueve veces** el 2026-08-28, sin un fallo
+## EL VEHÍCULO PARA ESCRIBIR EL CANÓNICO — usado **seis veces** el 2026-09-01, sin un fallo
 
 **El CLI de `cantu-studio` no escribe.** La vía es la consola:
 
 ```
-cd projects/aiw-console && node project-console/serve.mjs      # arranca SIEMPRE en 8788; --port se ignora
+cd projects/aiw-console && PORT=8788 node project-console/serve.mjs &
 POST http://127.0.0.1:8788/projects/cantu-studio/__project-console/roadmap/edit
      { op, args, apply:false }            → devuelve baseline y remap
      { op, args, apply:true, baseline }   → aplica
 ```
 
-**⚠ EL SERVIDOR NO SOBREVIVE ENTRE LLAMADAS DE BASH.** Hay que levantarlo y hacer el POST **en la
-misma llamada**. Esperar con `curl` en bucle, no con `sleep` a ciegas.
+**⚠ LA FORMA DEL CUERPO ES `{op, args, apply, baseline}` — UNA SOLA OP POR PETICIÓN.** Mandar
+`{ops:[…]}` devuelve `unknown op undefined`. Costó una llamada averiguarlo; está en
+`project-console/serve.mjs:~500`.
 
-**Ops usadas:** `set-status {run, status, closeoutResult}`, `set-text {targetType:'run', targetId,
-title?, summary?, fullDescription?}`, `insert {runId, title, summary, fullDescription, before}`.
+**⚠ EL SERVIDOR NO SOBREVIVE ENTRE LLAMADAS DE BASH.** Levantarlo y hacer el POST **en la misma
+llamada**, esperando con `curl`/`/dev/tcp` en bucle, no con `sleep` a ciegas.
 
-**`set-text` ACEPTA `title` en los runs** — comprobado en el motor. Sirvió para **estrechar el
-título de `#156` sin destruir su `run_id`**, que seguía siendo verdad.
+**Ops usadas esta sesión:** `set-status {run, status, closeoutResult}` ×4,
+`insert {runId, title, summary, fullDescription, status, before}` ×2.
 
-### `checkInvariants` y `externalRunIds`
+### `checkInvariants` — dónde vive de verdad
 
-**`externalRunIdsFor` NO se exporta desde `roadmap-core.mjs`: vive en `project-console/serve.mjs`.**
+**`tools/roadmap/` en `aiw-console` sólo tiene `roadmap-core.mjs` y `roadmap-plan.mjs`. NO HAY
+`roadmap-cli.mjs`.** Se invoca así:
 
 ```js
-import { checkInvariants } from '.../tools/roadmap/roadmap-core.mjs';
-import { externalRunIdsFor } from '.../project-console/serve.mjs';
-const ext = await externalRunIdsFor('cantu-studio');
-checkInvariants(obj, { externalRunIds: ext });
+import { checkInvariants } from './tools/roadmap/roadmap-core.mjs';
+checkInvariants(JSON.parse(fs.readFileSync(canonico,'utf8')));
 ```
 
 ### Los runs NO viven en la raíz
 
 Se recorre `objectives[].phases[].runs[]`. Leer `obj.runs` devuelve **0**, que es una sonda mal
-escrita y no un canónico vacío.
+escrita y no un canónico vacío. **Pasó otra vez esta sesión.**
 
 ---
 
-## LÍMITES DE LA CABINA — RE-MEDIDOS EL 2026-08-28
+## LÍMITES DE LA CABINA — RE-MEDIDOS EL 2026-09-01
 
-- **`add` y `commit` funcionan. CERO locks** en toda la sesión, en más de treinta operaciones.
+- **`add` y `commit` funcionan. CERO locks** en toda la sesión, en ocho commits.
+- **`git commit` normal REVIENTA el tope de tiempo** (23 191 ficheros). La vía es plumbing:
+  `write-tree` → `commit-tree -p HEAD -F fichero` → `update-ref HEAD`. **Ocho de ocho sin fallo.**
 - **`git push`: sin ruta a GitHub. Es del operador. NO SE LE RECUERDA. NUNCA.**
-- **Tope de una llamada de bash: ~120 s en esta sesión.** **Un `git status`/`diff` sin acotar en
-  `cantu-studio` lo revienta** — pasó una vez; se comprobó el lock en los cinco repos antes de
-  seguir y no había. **Acotar siempre con `-- ruta` y `-uno`/`-uall`.**
-- **La suite completa NO cabe.** Correr los ficheros que el run tocó sí, y basta para el delta.
-- **La cabina NO VE INTERFACES.** Todo juicio visual es del operador. **Cuando haya que
-  enseñarle algo, dibujárselo** — funciona.
+- **Tope de una llamada de bash: ~180 s.** Un `grep -r` sin acotar sobre `src tools` **lo
+  reventó** esta sesión. **Acotar siempre con rutas y `timeout`.**
+- **`git status` sin acotar revienta.** Acotar con `-- ruta`.
+- **La suite completa NO cabe.** Sus números son del taller y se declaran como suyos.
+- **BORRAR funciona sin pedir permiso** — `rm -rf` sobre `dist/` y sobre respaldos, verificado.
+- **La cabina NO VE INTERFACES.** Todo juicio visual es del operador.
 - **`_scratch/` NO es todo de la cabina.** Se borra lo suyo y se lista lo que no.
 
 ---
 
 ## REGLAS DEL OPERADOR VIGENTES
 
-- **D-070** — ticket de run nuevo → sesión nueva. **Suspendido desde el 2026-08-27 por petición
-  suya**; dijo «yo te aviso cuando toque reiniciar el hilo». **Siguió suspendido toda esta
-  sesión.** La recomendación de sesión **se declara igual, por sus méritos.**
-- **D-071** — la decisión no crítica la toma la cabina y **la explica al tomarla**. Se usó en el
-  cierre de `#154` para las dos líneas que no contestó.
-- **D-061** — ampliar el alcance sólo por veredicto humano, con las cuatro condiciones **escritas
-  una a una dentro del run**. Se usó en `#154` y **la tercera salió sin tensión**.
-- **Identidad:** cuando el alcance que sale lo describía el **título**, se estrecha el título y
-  el `run_id` se queda —hecho en `#156`—. **Cuando lo describe el `run_id`, se cierra y se abre
-  otro.** No se enmienda un identificador.
-- **SIEMPRE se declara MODELO + ESFUERZO + SESIÓN antes de un ticket**, juntos.
+- **D-070 SIGUE SUSPENDIDO.** No se abre hilo nuevo por emitir un ticket. **Él avisa.**
+- **NO SE LE RECUERDA EL PUSH. NUNCA.** Regla suya, explícita.
+- **SIEMPRE se declara MODELO + ESFUERZO + SESIÓN antes de un ticket**, los tres juntos.
+- **D-072** — *«trata de pedir sesión nueva siempre que se pueda»*; misma sesión sólo si el taller
+  siguiente necesita el razonamiento del anterior. **Esta sesión pidió sesión nueva las dos
+  veces, y las dos con razón escrita.**
 - **El operador decide cuándo se cierra la sesión.**
 - **Toda petición de revisión en lista numerada de pasos cortos**, con el nombre que él ve en
   pantalla, y **con el formato literal de respuesta que se le pide**.
 - **Las decisiones que no son pasos van numeradas aparte y con recomendación explícita.**
-- **Mensajes de commit y textos largos POR FICHERO**, nunca por línea de shell.
+- **Dibujarle las opciones antes de pedirle que decida.**
+- **Agrupar los arreglos del mismo componente EN UN SOLO RUN.** *«por eso se alarga el trabajo
+  enormemente.»*
+- **Su autocontención es que un componente no rompa a OTRO.** Repartir código y datos DENTRO de
+  un componente **no la viola** — encuadre suyo, aceptado y usado dos veces.
+- **Mensajes de commit y textos largos POR FICHERO**, nunca por línea de shell. **El shell ya ha
+  destrozado prosa con acentos cuatro veces.**
 - **`add` dirigido por nombre, nunca `-A`. El trabajo del taller y el cierre del roadmap van en
-  commits SEPARADOS.**
+  commits SEPARADOS.** Cumplido las cuatro veces esta sesión.
 - **El taller nunca toca git.** La cabina commitea; el operador publica.
-- **La ranura del operador (`localhost:5173`) no se toca**, y **`preview_start` no se llama**: ha
-  navegado solo a su editor dos veces. El taller de `#157` fotografió con **Chrome de perfil
-  propio por CDP** sobre una segunda instancia — doble aislamiento, y funcionó.
+- **⚠ LA FRASE DEL TICKET, CORREGIDA:** decir *«no ejecutes ningún comando de git que escriba —
+  ni `add`, ni `commit`, ni `push`. Deja el árbol sucio. El commit lo hace la cabina después»*.
+  La antigua decía a la vez «escrituras no» y «commitea la cabina», y **se leía de dos formas**.
+- **La ranura del operador (`localhost:5173`) no se toca**, y **`preview_start` no se llama**.
+- **⚠ TODA HOJA DE QA QUE TOQUE `compiler-api` EMPIEZA POR CERRAR Y REABRIR EL LANZADOR.** Se
+  cachea por proceso. Sin ese paso 0 el operador mide el motor viejo y da un falso negativo.

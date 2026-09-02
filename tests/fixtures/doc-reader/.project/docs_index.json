@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "doc-reader-fixture",
+  "generated_at": "2026-08-27T21:30:00.000Z",
+  "generated_from": "hand-written fixture for RUN-CONSOLE-DOC-SIDE-READER-001",
+  "docs": [
+    {
+      "title": "Reference rules",
+      "path": "docs/REFERENCE-RULES.md",
+      "nav_tier": "secondary",
+      "default_visible": false,
+      "ia_bucket": "docs",
+      "freshness": "2026-08-27T21:30:00.000Z"
+    },
+    {
+      "title": "A note with no headings at all",
+      "path": "docs/FLAT-NOTE.md",
+      "nav_tier": "secondary",
+      "default_visible": false,
+      "ia_bucket": "docs",
+      "freshness": "2026-08-27T21:30:00.000Z"
+    },
+    {
+      "title": "Listed by the index and absent from disk",
+      "path": "docs/GONE-FROM-DISK.md",
+      "nav_tier": "secondary",
+      "default_visible": false,
+      "ia_bucket": "docs",
+      "freshness": "2026-08-27T21:30:00.000Z"
+    }
+  ]
+}

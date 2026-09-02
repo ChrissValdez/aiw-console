@@ -1,0 +1,536 @@
+/* RUN-CONSOLE-DOC-SIDE-READER-001 — the chrome of the side reader, and nothing else.
+
+   Its own file for the same reason its script is: every class below is .dsr-* or
+   .doc-side-reader, so the mechanical domain-blindness veto covers the stylesheet as well as the
+   code, and no word of any project can reach either.
+
+   Layer order: 70. Above the report surface (60) and the run drawer (50), because it opens
+   BESIDE a report that stays exactly where it was — it never replaces one and never closes one.
+
+   HALF THE PAGE, AND OVER IT. The panel is fixed to the right half and overlays what is beneath;
+   it does not shrink a column or reflow anything. That is deliberate and it is criterion 1: a
+   layout the report is squeezed into would re-wrap its text under the operator's eyes and lose
+   the line he was reading. Nothing beneath this panel moves when it opens or closes. */
+
+.doc-side-reader {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 70;
+  display: none;
+  width: 50vw;
+  min-width: 380px;
+  flex-direction: column;
+  border-left: 1px solid var(--border-default);
+  background: var(--bg-panel, var(--bg-body));
+  box-shadow: -18px 0 40px -24px rgba(0, 0, 0, 0.55);
+}
+
+.doc-side-reader.open {
+  display: flex;
+}
+
+/* [#62 QA] THE VEIL, and the ONLY declaration it needs. The element in index.html carries the
+   console's own `.drawer-overlay` class — its colour token, its display/opacity toggle and its
+   `.open` idiom all come from there, untouched, because a change to `.drawer-overlay` would land
+   on the run drawer and the edit modal and is not this run's to make. Nothing about how the veil
+   LOOKS is restated here, so it can never drift from the surface it was copied from.
+   What is different is only WHERE IN THE STACK it sits: the drawer's veil is at 40, under the
+   report layer (60); this one has to dim that report, so it sits at 65 — above the report and
+   below the panel (70). One property, and no second pattern. */
+.dsr-overlay {
+  z-index: 65;
+}
+
+.dsr-bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-subtle);
+  padding: 10px 16px;
+}
+
+.dsr-ref {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* [#62 QA] The header, in two levels instead of one line carrying three things. */
+.dsr-ref-head {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.dsr-ref-title {
+  color: var(--text-primary);
+  font-size: 14.5px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Whatever the title trails after its last separator, worn as a label. Nothing paints when
+   there is none — a title with no tail keeps exactly the header it always had. */
+.dsr-ref-label {
+  flex: none;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  color: var(--text-tertiary);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0 8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dsr-ref-label:empty {
+  display: none;
+}
+
+.dsr-ref-path {
+  color: var(--text-tertiary);
+  font-size: 11.5px;
+  overflow-wrap: anywhere;
+}
+
+/* READ ONLY, said on screen and not only in the code. The operator is being asked to trust that
+   this panel cannot touch the document he is auditing; a badge is the cheapest way to say so. */
+.dsr-readonly {
+  flex: none;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  color: var(--text-tertiary);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  padding: 1px 10px;
+  text-transform: uppercase;
+}
+
+.dsr-bar-actions {
+  display: flex;
+  flex: none;
+  gap: 6px;
+}
+
+/* The global door, at the far end of the report's own top bar. */
+.dsr-open-btn {
+  flex: none;
+  margin-left: auto;
+}
+
+/* The scroller. `position: relative` on purpose: the jump sets THIS box's scrollTop from the
+   target's offsetTop, which is only correct while this box is the target's offset parent — and
+   which is what keeps the jump from ever touching a scroller outside this panel. */
+.dsr-scroll {
+  position: relative;
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 18px 60px;
+}
+
+.dsr-loading {
+  padding: 32px 4px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+}
+
+/* --- The list of documents ------------------------------------------------ */
+
+.dsr-doc-list {
+  padding: 14px 0 0;
+}
+
+.dsr-doc-list-head {
+  margin-bottom: 10px;
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+
+.dsr-doc-row {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 2px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  cursor: pointer;
+  margin-bottom: 6px;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.dsr-doc-row:hover {
+  border-color: var(--accent);
+}
+
+.dsr-doc-title {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dsr-doc-path {
+  color: var(--text-tertiary);
+  font-size: 11.5px;
+  overflow-wrap: anywhere;
+}
+
+.dsr-doc-list-source {
+  margin-top: 12px;
+  color: var(--text-tertiary);
+  font-size: 11.5px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* --- The section index ---------------------------------------------------- */
+
+.dsr-index {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-default);
+  margin: 14px 0 18px;
+  padding-bottom: 14px;
+}
+
+.dsr-index-title {
+  margin-bottom: 8px;
+  color: var(--text-tertiary);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.dsr-index-item {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  line-height: 1.5;
+  max-width: 100%;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dsr-index-item:hover {
+  color: var(--accent);
+}
+
+/* [#62 QA] A SCALE A READER CAN SEE AT A GLANCE. Seventeen headings with their subsections read
+   as one block when the whole rail carries one size and one indent step. Size, weight, colour
+   and indent now move together at every level, and the size alone is enough to tell any two
+   levels apart — which is what the suite pins, so the scale can never quietly flatten again.
+   Typography and grouping only: not one word of any document's meaning is read here. */
+.dsr-index-l1 {
+  color: var(--text-primary);
+  font-size: 13.5px;
+  font-weight: 700;
+  margin-bottom: 2px;
+  padding: 3px 0;
+}
+
+.dsr-index-l2 {
+  color: var(--text-primary);
+  font-size: 12.75px;
+  font-weight: 600;
+  margin-top: 7px;
+  padding: 2px 0;
+}
+
+.dsr-index-l3 {
+  color: var(--text-secondary, var(--text-primary));
+  font-size: 12.25px;
+  font-weight: 500;
+  padding: 1px 0 1px 13px;
+}
+
+.dsr-index-l4 {
+  color: var(--text-tertiary);
+  font-size: 11.75px;
+  font-weight: 400;
+  padding: 1px 0 1px 26px;
+}
+
+.dsr-index-l5 {
+  color: var(--text-tertiary);
+  font-size: 11.25px;
+  font-weight: 400;
+  padding: 1px 0 1px 39px;
+}
+
+.dsr-index-l6 {
+  color: var(--text-tertiary);
+  font-size: 11px;
+  font-weight: 400;
+  padding: 1px 0 1px 52px;
+}
+
+.dsr-index-empty {
+  color: var(--text-tertiary);
+  font-size: 12.5px;
+}
+
+/* --- What could not be done, said out loud -------------------------------- */
+
+.dsr-notice {
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  margin-top: 16px;
+  padding: 12px 14px;
+}
+
+.dsr-notice-line {
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.dsr-notice-section {
+  margin-top: 6px;
+  color: var(--text-primary);
+  font-size: 12.5px;
+  overflow-wrap: anywhere;
+}
+
+.dsr-notice-why {
+  margin-top: 6px;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.dsr-absence {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  margin-top: 16px;
+  padding: 14px 16px;
+}
+
+.dsr-absence.is-broken {
+  border-left: 3px solid var(--accent);
+}
+
+.dsr-absence-line {
+  color: var(--text-primary);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.dsr-absence-file {
+  margin-top: 8px;
+  color: var(--text-primary);
+  font-size: 12.5px;
+  overflow-wrap: anywhere;
+}
+
+.dsr-absence-label {
+  display: inline-block;
+  min-width: 92px;
+  color: var(--text-tertiary);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.dsr-absence-path {
+  margin-top: 10px;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* --- The document itself -------------------------------------------------- */
+
+.dsr-document {
+  color: var(--text-primary);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.dsr-document p {
+  margin: 0 0 12px;
+  max-width: 74ch;
+}
+
+.dsr-h {
+  color: var(--text-primary);
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 26px 0 10px;
+  scroll-margin-top: 12px;
+}
+
+/* [#62 QA] The same scale in the BODY, where the operator says it reads flat too — levels 4 to 6
+   were the size and weight of ordinary paragraph text, so three depths were invisible. Every
+   level now differs from the next AND from the body's 13.5px, and a second-level heading opens
+   its section with a rule above it so the eye can find where one part ends and the next begins.
+   Grouping and type; no new content, no anchors, nothing made live. */
+.dsr-h-l1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 6px 0 14px;
+}
+
+.dsr-h-l2 {
+  border-top: 1px solid var(--border-default);
+  font-size: 17.5px;
+  font-weight: 700;
+  margin: 34px 0 12px;
+  padding-top: 20px;
+}
+
+.dsr-h-l3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 26px 0 9px;
+}
+
+.dsr-h-l4 {
+  color: var(--text-primary);
+  font-size: 13.75px;
+  font-weight: 600;
+  margin: 22px 0 8px;
+}
+
+.dsr-h-l5 {
+  color: var(--text-secondary, var(--text-primary));
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin: 18px 0 6px;
+}
+
+.dsr-h-l6 {
+  color: var(--text-tertiary);
+  font-size: 12.25px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin: 16px 0 6px;
+  text-transform: uppercase;
+}
+
+.dsr-document ul,
+.dsr-document ol {
+  margin: 0 0 12px;
+  max-width: 74ch;
+  padding-left: 22px;
+}
+
+.dsr-document li {
+  margin-bottom: 4px;
+}
+
+.dsr-document blockquote {
+  border-left: 2px solid var(--border-default);
+  color: var(--text-tertiary);
+  margin: 0 0 12px;
+  max-width: 74ch;
+  padding-left: 12px;
+}
+
+.dsr-document hr {
+  border: 0;
+  border-top: 1px solid var(--border-default);
+  margin: 20px 0;
+}
+
+.dsr-document code {
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm, 4px);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  padding: 1px 4px;
+}
+
+.dsr-code {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  margin: 0 0 14px;
+  overflow-x: auto;
+  padding: 10px 12px;
+  white-space: pre;
+}
+
+/* A link keeps its words and loses its destination: this reader opens what the index lists and
+   goes nowhere else, so a live link here would be a door nobody asked for. */
+.dsr-link-text {
+  border-bottom: 1px dotted var(--border-default);
+}
+
+.dsr-table-wrap {
+  margin: 0 0 14px;
+  overflow-x: auto;
+}
+
+.dsr-table {
+  border-collapse: collapse;
+  font-size: 12.5px;
+  width: 100%;
+}
+
+.dsr-table th,
+.dsr-table td {
+  border: 1px solid var(--border-default);
+  padding: 6px 9px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.dsr-table th {
+  background: var(--bg-subtle);
+  font-weight: 600;
+}
+
+/* --- The citation, where the report paints it ----------------------------- */
+
+/* A citation that travels as data becomes a control. One that is buried in prose does not, and
+   that is not a defect being hidden: linking it would mean hunting a section mark inside a
+   sentence, which is the domain regex this console refuses. */
+.rr-authority-open {
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-align: left;
+}
+
+.rr-authority-open:hover {
+  color: var(--accent);
+}
+
+/* Narrow viewports: half a page of 700px is not a document, so the panel takes the width it
+   needs and the report is reachable again by closing it. */
+@media (max-width: 900px) {
+  .doc-side-reader {
+    width: 100vw;
+    min-width: 0;
+  }
+}

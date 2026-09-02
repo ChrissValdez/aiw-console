@@ -13,6 +13,9 @@
          the section a run detail shows about its own report. Its own file so the mechanical
          domain-blindness veto of #52 covers the mount as well as the renderer. -->
     <link rel="stylesheet" href="assets/run-report-surface.css">
+    <!-- [#62] The read-only side reader: the panel a cited document opens in, beside the report
+         and never instead of it. Its own file so the same mechanical veto covers it too. -->
+    <link rel="stylesheet" href="assets/doc-side-reader.css">
   </head>
   <body>
     <!-- MULTI-PROJECT SHELL (O4.P3). The sidebar and the Portfolio view are NEW chrome, styled
@@ -274,11 +277,50 @@
           <span id="run-report-ref-title" class="run-report-ref-title"></span>
           <span id="run-report-ref-id" class="run-report-ref-id mono"></span>
         </div>
+        <!-- [#62] THE GLOBAL DOOR into the project's documents, at the top of the report and not
+             inside any one item: the operator asked for it exactly there — «globalmente tener un
+             boton arriba para abrir estas cosas lateralmente sin cerrar el reporte». It opens the
+             side panel on the project's own docs index; the report underneath does not move. -->
+        <button class="btn btn-secondary btn-sm dsr-open-btn" type="button" data-doc-reader-open>Documents</button>
       </div>
       <div id="run-report-scroll" class="run-report-scroll">
         <div id="run-report-mount"></div>
       </div>
     </div>
+
+    <!-- [#62] THE SIDE READER. Half the page, on the right, ABOVE the report layer (60) — and an
+         overlay, not a column the report is squeezed into: nothing beneath it is resized or
+         re-laid-out when it opens, so the report cannot lose the operator's place in it. It is
+         READ ONLY and there is no control in it that says otherwise: two buttons that navigate,
+         one that closes, and no field, no form and no editable region anywhere. Inert until a
+         document is asked for; no document is ever pre-loaded here. -->
+    <!-- [#62 QA] THE VEIL. The console's OWN overlay — the same element and the same
+         `.drawer-overlay` class the run drawer dims the page with, and the same `.open` idiom —
+         so this surface introduces no second pattern and `.drawer-overlay` itself is not touched.
+         It is fixed and inset:0, so it darkens what is beneath it without resizing, scrolling or
+         re-laying-out any of it: the panel stays an overlay and the report never moves. -->
+    <div id="doc-side-reader-overlay" class="drawer-overlay dsr-overlay"></div>
+    <aside id="doc-side-reader" class="doc-side-reader" role="complementary" aria-label="Project documents (read only)" aria-hidden="true">
+      <div class="dsr-bar">
+        <div class="dsr-ref">
+          <!-- [#62 QA] Two levels, not one line carrying three things: the document's name, the
+               label its title trails, and the path underneath both. -->
+          <div class="dsr-ref-head">
+            <span id="doc-side-reader-title" class="dsr-ref-title"></span>
+            <span id="doc-side-reader-label" class="dsr-ref-label"></span>
+          </div>
+          <span id="doc-side-reader-path" class="dsr-ref-path mono"></span>
+        </div>
+        <span class="dsr-readonly">Read only</span>
+        <div class="dsr-bar-actions">
+          <button class="btn btn-secondary btn-sm" type="button" data-dsr-list>All documents</button>
+          <button class="btn btn-secondary btn-sm" type="button" data-dsr-close aria-label="Close the document">Close</button>
+        </div>
+      </div>
+      <div id="doc-side-reader-scroll" class="dsr-scroll">
+        <div id="doc-side-reader-body"></div>
+      </div>
+    </aside>
 
     <div id="edit-modal-overlay" class="drawer-overlay edit-modal-overlay"></div>
     <aside id="edit-modal" class="edit-modal" role="dialog" aria-modal="true" aria-label="Edit roadmap item" aria-hidden="true">
@@ -297,6 +339,8 @@
          `defer`, so they run in document order before the console renderer that calls them. -->
     <script src="assets/run-report-renderer.js" defer></script>
     <script src="assets/run-report-surface.js" defer></script>
+    <!-- [#62] The side reader, before the console that hands it the active project's docs index. -->
+    <script src="assets/doc-side-reader.js" defer></script>
     <script src="assets/project-console.js" defer></script>
     <!-- The shell module runs after the deferred renderer script, so the renderer's globals
          (setActiveProjectBase / resetProjectScopedState / loadActiveProject) exist when it boots. -->

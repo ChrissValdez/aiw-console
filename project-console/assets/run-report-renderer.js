@@ -515,6 +515,26 @@ function rrAuthorityText(authority, lang) {
   return Object.entries(authority).map(([k, v]) => rrLabelForKey(k, lang) + ": " + v).join(" · ");
 }
 
+// [#62] THE CITATION AS A CONTROL. The words are unchanged — this paints exactly the text above
+// — and what is added is a pair of attributes carrying the two fields the citation ALREADY
+// declares, so whoever mounts this renderer can open the document without ever parsing the
+// sentence the citation is printed as.
+//
+// A citation becomes a control only when it travels as DATA, which is what `source` is. The
+// second declared form (an invented criterion) names no document and stays plain text, and so
+// does any citation buried in a sentence somewhere else in the report: turning THOSE into links
+// means hunting a section mark inside prose, which is a domain regex and is refused. The renderer
+// stays blind either way: it hands over two strings it was given and composes no route at all.
+function rrAuthorityHtml(authority, lang) {
+  const label = rrAuthorityText(authority, lang);
+  if (!label) return "";
+  const source = authority && typeof authority.source === "string" ? authority.source.trim() : "";
+  if (!source) return "<span>" + rrEsc(label) + "</span>";
+  const section = authority && typeof authority.section === "string" ? authority.section.trim() : "";
+  return '<button class="rr-authority-open" type="button" data-rr-doc="' + rrEsc(source) + '"' +
+    (section ? ' data-rr-doc-section="' + rrEsc(section) + '"' : "") + ">" + rrEsc(label) + "</button>";
+}
+
 // EMPTY IS NOT ABSENT. `[]` was enumerated and there was nothing — "none". A missing key
 // means nobody looked — "not declared" — and the view says which (ticket criterion 5).
 function rrEmptyBadge(present, count, T) {
@@ -1114,7 +1134,7 @@ function rrCardForItemHtml(report, item, state, T) {
   if (item.why) reasoningParts.push('<p class="rr-why">' + rrEsc(item.why) + "</p>");
   if (item.authority) {
     reasoningParts.push('<div class="rr-authority">' + rrIcon("seal-check") +
-      "<span>" + rrEsc(rrAuthorityText(item.authority, T.lang)) + "</span></div>");
+      rrAuthorityHtml(item.authority, T.lang) + "</div>");
   }
   if (Array.isArray(item.evidence) && item.evidence.length > 0) {
     reasoningParts.push('<ul class="rr-evidence">' +
@@ -1199,7 +1219,7 @@ function rrCardForDecisionHtml(decision, id, state, T) {
   }
   if (decision.authority) {
     reasoningParts.push('<div class="rr-authority">' + rrIcon("seal-check") +
-      "<span>" + rrEsc(rrAuthorityText(decision.authority, T.lang)) + "</span></div>");
+      rrAuthorityHtml(decision.authority, T.lang) + "</div>");
   }
   if (reasoningParts.length) {
     sections.push('<details class="rr-reasoning" open><summary>' + rrIcon("caret") + rrEsc(T.reasoning) + "</summary>" +

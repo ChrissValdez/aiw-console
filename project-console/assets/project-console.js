@@ -5050,7 +5050,14 @@ function v3OpenRunReport(runId) {
     // owns routes — from the write route of the ACTIVE project and the run identifier the
     // report was opened by; the verdict object travels as the renderer produced it, and the
     // answer comes back as { ok, path } or { ok:false, reason } in the endpoint's own words.
-    writeVerdict: v3VerdictWriter(runId)
+    writeVerdict: v3VerdictWriter(runId),
+    // [#62] The opener a cited document is reached through. Composed HERE for the same reason
+    // every other route is: this is the one file that owns them. The mount relays the two
+    // strings the citation declared and this closure decides nothing else — the reader itself
+    // refuses any path the active project's own index does not list.
+    openDocument: (path, section) => {
+      if (typeof openDocSideReader === "function") openDocSideReader({ path, section });
+    }
   });
 }
 
@@ -5112,6 +5119,22 @@ function renderAll(data) {
     reportsIndexModelCache = typeof reportsIndexModel === "function" ? reportsIndexModel(data.reportsIndex) : null;
   } catch (error) {
     reportsIndexModelCache = null;
+  }
+  // [#62] Hand the side reader THIS project's documents index and THIS project's base, so the
+  // panel can only ever offer the documents the active project itself declares. The reader
+  // derives its own list from the artifact — this file hands over the parsed index and a base,
+  // and learns nothing about any document on the way. With the reader absent (a page that did
+  // not load it) nothing here changes and no citation becomes a control.
+  try {
+    if (typeof setDocSideReaderSource === "function") {
+      setDocSideReaderSource({
+        docsIndex: data.docsIndex,
+        base: REPO_BASE,
+        indexPath: PATHS ? displaySourcePath(PATHS.docsIndex) : ""
+      });
+    }
+  } catch (error) {
+    /* The reader states its own absence; a failure to hand it an index must not take a render down. */
   }
   // Overview renders from the v3 model (target screenshot); the legacy renderOverview
   // stays in source, dormant, like the other retired legacy renderers.
@@ -5435,6 +5458,11 @@ function resetProjectScopedState() {
   // detail of the project being left), and the model returns to null — unbuilt, not empty.
   reportsIndexModelCache = null;
   if (typeof runReportIsOpen === "function" && runReportIsOpen()) closeRunReport({ silent: true });
+  // [#62] The side reader is per-project like everything else here: a document of the project
+  // being left must not stay on screen over the project being entered, and its source returns to
+  // an index nobody has handed over yet — unread, not empty.
+  if (typeof closeDocSideReader === "function") closeDocSideReader();
+  if (typeof setDocSideReaderSource === "function") setDocSideReaderSource({});
   v3DetailStack = [];
   v3DetailOrigin = "";
   // [D-051] The lane filter is per-project state: a lane key selected in one project
@@ -7522,6 +7550,13 @@ function setupTabs() {
   byId("drawer-overlay").addEventListener("click", closeDrawer);
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
+    // [#62] The side reader sits above the report, so Escape closes the READER first — and only
+    // the reader. Closing the report from under an open document would be exactly the thing this
+    // panel exists not to do: the operator opened a rule while judging, and the judgement stays.
+    if (typeof docSideReaderIsOpen === "function" && docSideReaderIsOpen()) {
+      closeDocSideReader();
+      return;
+    }
     // [#53] The report layer sits above the drawer, so Escape closes the report FIRST and lands
     // the operator back on the run they came from. Closing the run underneath it instead would
     // throw away the judgement in progress on screen and leave nothing to come back to.

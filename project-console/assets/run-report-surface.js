@@ -290,6 +290,9 @@ const RRS_SUBTITLE_ID = "run-report-ref-id";
 let rrsOpen = null;
 let rrsBackHandler = null;
 let rrsWired = false;
+// [#62] The document opener, RELAYED exactly like the verdict writer: the console composes it,
+// this file only calls it. No path, no base and no route is built here.
+let rrsDocOpener = null;
 
 function rrsById(id) {
   return typeof document !== "undefined" ? document.getElementById(id) : null;
@@ -304,6 +307,19 @@ function rrsWire() {
     const back = event.target && event.target.closest ? event.target.closest("[data-run-report-back]") : null;
     if (back) {
       closeRunReport();
+      return;
+    }
+    // [#62] A CITATION THAT TRAVELS AS DATA, opened beside the report. The renderer marked the
+    // control with the two strings the citation already declared; this file reads them off the
+    // ATTRIBUTES it finds in the DOM — never off a report, which it still never parses — and
+    // hands them to the opener the console composed. It does not know what a document is, where
+    // one lives, or what a section means; it relays two strings and returns. The report is not
+    // touched: nothing here closes the layer, and the scroller below is left where it stands.
+    const cited = event.target && event.target.closest ? event.target.closest("[data-rr-doc]") : null;
+    if (cited) {
+      if (typeof rrsDocOpener === "function") {
+        rrsDocOpener(cited.getAttribute("data-rr-doc") || "", cited.getAttribute("data-rr-doc-section") || "");
+      }
       return;
     }
     // THE SCROLL COMPENSATION, and the one place this file knows a renderer attribute exists.
@@ -384,6 +400,8 @@ async function openRunReport(options) {
   if (!mount) return { ok: false, reason: "no_mount" };
   rrsWire();
   rrsBackHandler = typeof opts.onBack === "function" ? opts.onBack : null;
+  // [#62] Relayed, never composed. With none given, a citation simply stays inert text.
+  rrsDocOpener = typeof opts.openDocument === "function" ? opts.openDocument : null;
   rrsSetReference(opts.title, opts.subtitle, opts.backLabel);
   rrsShowLayer(true);
   const scroll = rrsById(RRS_SCROLL_ID);
@@ -454,6 +472,7 @@ function closeRunReport(options) {
   const handler = rrsBackHandler;
   rrsOpen = null;
   rrsBackHandler = null;
+  rrsDocOpener = null;
   if (handler && !silent) handler();
 }
 

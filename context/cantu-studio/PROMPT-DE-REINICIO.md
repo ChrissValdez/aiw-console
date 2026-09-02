@@ -141,4 +141,22 @@ REFERENCE-SLIDE-WEB-COMPONENT-MAPPING.md con cuatro afirmaciones obsoletas.
 Y EL TEXTO VISIBLE DE LAS DOS MARCAS: preguntado CINCO veces sin respuesta. Declarado
 como deuda nombrada. NO SE LO VUELVAS A PREGUNTAR.
 
+FALSEDAD HEREDADA QUE YA HA MORDIDO DOS VECES — MATALA AL LEERLA:
+"el export a Moodle usa `CertUtil -encode`, un binario de Windows". ES FALSO. Sigue viva en
+la tabla de "NO puede" de las REGLAS DE CABINA del Project, y de ahi la copian las cabinas.
+Medido con git grep en el run #149 y otra vez el 2026-09-02: CertUtil aparece en CERO
+ficheros de codigo, y en todo el repo rastreado SOLO dentro del propio roadmap y del
+historial de git -o sea, solo donde una cabina lo escribio-. Los records que lo desmienten
+son PARADA-149-LA-SALIDA-DE-DIAPOSITIVA-Y-DOS-ERRORES-DE-LA-CABINA.md y
+VEREDICTO-149-F1-EL-CASCARON-SE-EXTRAE-Y-MOODLE-NO-APLICA.md.
+LA CABINA DE #149 LA HEREDO DE SU RELEVO Y LA PROPAGO SIN COMPROBARLA. La cabina del
+2026-09-02 hizo EXACTAMENTE LO MISMO: se la solto al operador como coste que gobernaba el
+alcance del run del flujo de exportacion, sin medirla. Dos cabinas, la misma falsedad, el
+mismo mecanismo. NO LA REPITAS: si vas a nombrar un limite que sale de la tabla de reglas,
+mide contra ESTE disco antes de decirlo.
+
+Y el segundo hallazgo de aquel mismo closeout, que sigue vivo y toca a O7: `dist/` llevaba
+desde el 2026-08-13 SIN REPRODUCIR. Cualquier run que valide produccion contra `dist/` mide
+eso primero o esta comparando contra un artefacto viejo.
+
 Al cerrar sesion, actualizas el handoff y este prompt sin que te lo pida.

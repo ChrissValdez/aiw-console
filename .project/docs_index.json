@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-08-28T03:23:22.498Z",
+  "generated_at": "2026-09-02T23:21:57.870Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -18,7 +18,7 @@
     },
     {
       "path": "context/DECISIONES.md",
-      "mtime": "2026-08-26T10:31:02.276Z"
+      "mtime": "2026-08-30T09:57:11.938Z"
     },
     {
       "path": "context/MIGRATION-REPORT.md",
@@ -601,6 +601,10 @@
       "mtime": "2026-08-08T09:13:17.703Z"
     },
     {
+      "path": "context/aiw-console/records/REGLAS-DE-OPERACION-DEL-OPERADOR.md",
+      "mtime": "2026-08-28T04:39:41.569Z"
+    },
+    {
       "path": "context/aiw-console/records/REGLAS-DE-SELECCION-DEL-INSERTOR-CANTU.md",
       "mtime": "2026-08-08T09:13:17.703Z"
     },
@@ -818,7 +822,11 @@
     },
     {
       "path": "context/cantu-studio/PROMPT-DE-REINICIO.md",
-      "mtime": "2026-08-23T06:36:22.806Z"
+      "mtime": "2026-09-02T22:48:43.004Z"
+    },
+    {
+      "path": "context/cantu-studio/records/CENSO-SUPERFICIE-VIVA-Y-HISTORIA-DE-CALCULO-ARITMETICO.md",
+      "mtime": "2026-08-28T18:38:21.918Z"
     },
     {
       "path": "context/cantu-studio/records/CIERRE-TOKENS-JS-Y-EL-CENSO-REAL-DE-LA-CAPA-3.md",
@@ -869,6 +877,14 @@
       "mtime": "2026-08-25T11:17:14.335Z"
     },
     {
+      "path": "context/cantu-studio/records/DECISION-177-LA-SUPERFICIE-DE-ACTIVOS-VA-POR-IMPORT.md",
+      "mtime": "2026-09-01T23:11:30.545Z"
+    },
+    {
+      "path": "context/cantu-studio/records/DECISION-181-EL-DOSSIER-DE-EVIDENCIA-Y-LOS-CATCH-MUDOS-DE-WEB.md",
+      "mtime": "2026-09-02T11:39:36.594Z"
+    },
+    {
       "path": "context/cantu-studio/records/DECISION-EL-BOTON-DE-AGREGAR-VA-PUNTEADO-ABAJO-EN-TODO.md",
       "mtime": "2026-08-27T23:57:11.100Z"
     },
@@ -885,8 +901,32 @@
       "mtime": "2026-08-27T23:08:29.425Z"
     },
     {
+      "path": "context/cantu-studio/records/DECISION-NOMBRE-DESTINO-DEL-RENOMBRADO.md",
+      "mtime": "2026-08-30T21:07:52.266Z"
+    },
+    {
+      "path": "context/cantu-studio/records/DECISION-O7-NO-ES-EL-FLUJO-DE-AUTORIA-Y-BAJA-DE-PRIORIDAD.md",
+      "mtime": "2026-09-02T22:52:51.841Z"
+    },
+    {
       "path": "context/cantu-studio/records/DECISION-TOKENS-JS-EL-RESPALDO-SE-RETIRA-CADA-CARRIL-LEE-EL-SUYO.md",
       "mtime": "2026-08-27T01:34:24.141Z"
+    },
+    {
+      "path": "context/cantu-studio/records/DEFECTO-EL-RUN-QUE-NUNCA-SE-PUSO-EN-ACTIVE.md",
+      "mtime": "2026-09-01T12:14:38.761Z"
+    },
+    {
+      "path": "context/cantu-studio/records/DISENO-EL-HISTORIAL-DEL-PROCEDIMIENTO.md",
+      "mtime": "2026-08-30T00:12:04.244Z"
+    },
+    {
+      "path": "context/cantu-studio/records/HALLAZGO-EL-CAMPO-FORMULA-DE-PARTIDA-ESTA-MUERTO-EN-VISTA-UNICA.md",
+      "mtime": "2026-08-28T23:56:08.546Z"
+    },
+    {
+      "path": "context/cantu-studio/records/HALLAZGO-EL-PILOTO-LE-ENSENA-CUATRO-COSAS-AL-ASSET-REGISTRY.md",
+      "mtime": "2026-09-01T12:14:17.251Z"
     },
     {
       "path": "context/cantu-studio/records/PARADA-136-LA-PREMISA-DE-LOS-DOS-CARRILES-ERA-FALSA.md",
@@ -895,6 +935,26 @@
     {
       "path": "context/cantu-studio/records/PARADA-146-EL-CENSO-DEL-TALLER-Y-DOS-ERRORES-DE-LA-CABINA.md",
       "mtime": "2026-08-28T00:25:52.482Z"
+    },
+    {
+      "path": "context/cantu-studio/records/PARADA-149-LA-SALIDA-DE-DIAPOSITIVA-Y-DOS-ERRORES-DE-LA-CABINA.md",
+      "mtime": "2026-08-28T08:31:19.123Z"
+    },
+    {
+      "path": "context/cantu-studio/records/PARADA-152-LA-MATRIZ-YA-SE-ESCRIBE-UNA-VEZ-EN-EL-MOTOR.md",
+      "mtime": "2026-08-28T20:43:17.191Z"
+    },
+    {
+      "path": "context/cantu-studio/records/PARADA-153-EL-CENSO-ES-BAJO-PERO-LA-PREVIA-SE-CONGELA-EN-SILENCIO.md",
+      "mtime": "2026-08-28T20:35:52.682Z"
+    },
+    {
+      "path": "context/cantu-studio/records/PARADA-154-CUATRO-DE-MIS-CINCO-MEDICIONES-ERAN-FALSAS.md",
+      "mtime": "2026-08-28T22:10:49.004Z"
+    },
+    {
+      "path": "context/cantu-studio/records/PARADA-EL-VACIO-DE-FORMULA-DE-PARTIDA-EL-CENSO-ES-BAJO-Y-LA-PREVIA-SE-CONGELA.md",
+      "mtime": "2026-08-28T20:31:21.561Z"
     },
     {
       "path": "context/cantu-studio/records/PARADA-RUN-CANTU-EDITOR-JSON-IMPORT-SILENT-DROP-001.md",
@@ -923,6 +983,14 @@
     {
       "path": "context/cantu-studio/records/REGLA-SESION-NUEVA-POR-RUN-NUEVO.md",
       "mtime": "2026-08-20T00:04:00.460Z"
+    },
+    {
+      "path": "context/cantu-studio/records/RONDA-2-EL-VACIO-YA-SIGNIFICA-VACIO-CAMBIAN-DOS-Y-QUEDA-UNA-PARADA.md",
+      "mtime": "2026-08-28T21:07:55.726Z"
+    },
+    {
+      "path": "context/cantu-studio/records/RONDA-3-LA-RED-NO-ES-CIEGA-EL-NUMERO-MALO-ERA-MIO-Y-EL-PASO-YA-NACE-VALIDO.md",
+      "mtime": "2026-08-28T21:32:12.345Z"
     },
     {
       "path": "context/cantu-studio/records/VEREDICTO-104-PORTADA-EDITABLE.md",
@@ -1105,6 +1173,82 @@
       "mtime": "2026-08-28T03:07:33.024Z"
     },
     {
+      "path": "context/cantu-studio/records/VEREDICTO-148-PASS-Y-EL-OPERADOR-PIDE-EL-RECUADRO-DEL-RESULTADO.md",
+      "mtime": "2026-08-28T03:35:38.077Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-149-F1-EL-CASCARON-SE-EXTRAE-Y-MOODLE-NO-APLICA.md",
+      "mtime": "2026-08-28T08:39:25.851Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-150-PASS-Y-LA-DESCRIPCION-PASA-A-OPCIONAL-EN-DIAPOSITIVA.md",
+      "mtime": "2026-08-28T11:03:39.257Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-151-LOS-DOCE-DUDOSOS-ENTRAN.md",
+      "mtime": "2026-08-28T18:24:17.901Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-153-EL-PASO-NUEVO-NACE-CON-LA-FORMULA-DEL-ANTERIOR.md",
+      "mtime": "2026-08-28T21:16:59.853Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-153-EL-RECUADRO-SE-PARTE-EN-DOS-LAS-BARATAS-AHORA.md",
+      "mtime": "2026-08-28T04:14:42.017Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-153-FAIL-TRES-DEFECTOS-Y-LAS-CUATRO-COLOCACIONES-VUELVEN.md",
+      "mtime": "2026-08-28T04:59:06.790Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-153-PASA-EL-RECUADRO-Y-LA-MATRIZ-ABRE-RUN-PROPIO.md",
+      "mtime": "2026-08-28T08:04:55.904Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-154-LA-FORMULA-GRANDE-SI-EL-HISTORIAL-NO.md",
+      "mtime": "2026-08-28T22:34:19.518Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-154-QA-PASA-Y-LA-ETIQUETA-ESTABA-MAL-NOMBRADA.md",
+      "mtime": "2026-08-28T23:37:26.284Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-157-LA-CINTA-NOMBRA-LA-CAUSA-NO-LA-HORA.md",
+      "mtime": "2026-08-29T02:48:46.866Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-158-MARCAR-NO-MEDIR.md",
+      "mtime": "2026-08-29T21:40:59.667Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-163-LA-MARCA-QUE-NO-SE-VEIA.md",
+      "mtime": "2026-08-29T23:00:22.855Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-173-PASA-Y-LA-MITAD-DEL-PESO-SIGUE-AHI.md",
+      "mtime": "2026-09-01T11:07:41.145Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-175-LA-PREVIA-BAJA-UN-90-POR-CIENTO.md",
+      "mtime": "2026-09-01T13:22:00.653Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-176-EL-CONTRATO-DEL-ASSET-REGISTRY-APROBADO.md",
+      "mtime": "2026-09-01T14:56:11.704Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-178-LA-SUPERFICIE-DE-EMISION-APROBADA-Y-LA-5-6-ESTRECHADA.md",
+      "mtime": "2026-09-02T01:12:32.137Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-179-SUPERFICIE-CONSTRUIDA-Y-EL-ERROR-SE-ESCRIBE-EN-LA-LECCION.md",
+      "mtime": "2026-09-02T10:23:44.964Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-180-EL-NOMBRE-QUE-NADIE-HABIA-FIJADO.md",
+      "mtime": "2026-08-31T01:38:23.134Z"
+    },
+    {
       "path": "context/cantu-studio/records/VEREDICTO-CONCEPTGRID-BADGE-INK-APROBADO.md",
       "mtime": "2026-08-27T06:16:24.920Z"
     },
@@ -1115,6 +1259,10 @@
     {
       "path": "context/cantu-studio/records/VEREDICTO-DUPLICATE-BLOCK-AND-ITEM-APROBADO.md",
       "mtime": "2026-08-27T03:54:34.870Z"
+    },
+    {
+      "path": "context/cantu-studio/records/VEREDICTO-EL-COMPONENTE-SE-LLAMA-FACTORIZACION-ARITMETICA.md",
+      "mtime": "2026-08-28T17:38:50.807Z"
     },
     {
       "path": "context/cantu-studio/records/VEREDICTO-EL-PORTE-VA-EN-DOS-RUNS-Y-SE-AUTORIZA-TOCAR-WEB.md",
@@ -1138,7 +1286,7 @@
     },
     {
       "path": "context/handoffs/cantu-studio.md",
-      "mtime": "2026-08-27T23:18:57.520Z"
+      "mtime": "2026-09-01T13:23:40.267Z"
     },
     {
       "path": "docs/SOBRE-DEL-REPORTE-v1.md",
@@ -1231,7 +1379,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-08-26T10:31:02.276Z"
+      "freshness": "2026-08-30T09:57:11.938Z"
     },
     {
       "title": "MIGRATION-REPORT — Centralización del contexto de gobernanza en aiw-console",
@@ -2394,6 +2542,14 @@
       "freshness": "2026-08-08T09:13:17.703Z"
     },
     {
+      "title": "Reglas de operación que fijó el operador",
+      "path": "context/aiw-console/records/REGLAS-DE-OPERACION-DEL-OPERADOR.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-08-28T04:39:41.569Z"
+    },
+    {
       "title": "REGLAS DE SELECCIÓN DEL INSERTOR DE FÓRMULA (cantu-studio)",
       "path": "context/aiw-console/records/REGLAS-DE-SELECCION-DEL-INSERTOR-CANTU.md",
       "nav_tier": "evidence",
@@ -2831,7 +2987,15 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/cantu-studio",
-      "freshness": "2026-08-23T06:36:22.806Z"
+      "freshness": "2026-09-02T22:48:43.004Z"
+    },
+    {
+      "title": "CENSO — superficie viva frente a historia, para «Cálculo aritmético» → «Factorización aritmética»",
+      "path": "context/cantu-studio/records/CENSO-SUPERFICIE-VIVA-Y-HISTORIA-DE-CALCULO-ARITMETICO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T18:38:21.918Z"
     },
     {
       "title": "CIERRE de `RUN-CANTU-TOKENS-JS-SHARED-FALLBACK-CROSSES-RAILS-001` — y el censo REAL de la capa 3",
@@ -2930,6 +3094,22 @@
       "freshness": "2026-08-25T11:17:14.335Z"
     },
     {
+      "title": "DECISIÓN DEL OPERADOR — la superficie de activos va por import, no por contexto",
+      "path": "context/cantu-studio/records/DECISION-177-LA-SUPERFICIE-DE-ACTIVOS-VA-POR-IMPORT.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-09-01T23:11:30.545Z"
+    },
+    {
+      "title": "DECISIÓN DEL OPERADOR — `#181`: el dossier de evidencia y los `catch` mudos de web",
+      "path": "context/cantu-studio/records/DECISION-181-EL-DOSSIER-DE-EVIDENCIA-Y-LOS-CATCH-MUDOS-DE-WEB.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-09-02T11:39:36.594Z"
+    },
+    {
       "title": "DECISIÓN DE DISEÑO DEL OPERADOR — el botón de agregar va PUNTEADO ABAJO, en todos los componentes de los dos carriles",
       "path": "context/cantu-studio/records/DECISION-EL-BOTON-DE-AGREGAR-VA-PUNTEADO-ABAJO-EN-TODO.md",
       "nav_tier": "evidence",
@@ -2962,12 +3142,60 @@
       "freshness": "2026-08-27T23:08:29.425Z"
     },
     {
+      "title": "El nombre destino del renombrado interno — decisión del operador",
+      "path": "context/cantu-studio/records/DECISION-NOMBRE-DESTINO-DEL-RENOMBRADO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-30T21:07:52.266Z"
+    },
+    {
+      "title": "DECISIÓN DEL OPERADOR — `O7` no es su flujo de autoría, y baja al final",
+      "path": "context/cantu-studio/records/DECISION-O7-NO-ES-EL-FLUJO-DE-AUTORIA-Y-BAJA-DE-PRIORIDAD.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-09-02T22:52:51.841Z"
+    },
+    {
       "title": "DECISIÓN DEL OPERADOR — `RUN-CANTU-TOKENS-JS-SHARED-FALLBACK-CROSSES-RAILS-001`",
       "path": "context/cantu-studio/records/DECISION-TOKENS-JS-EL-RESPALDO-SE-RETIRA-CADA-CARRIL-LEE-EL-SUYO.md",
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/cantu-studio/records",
       "freshness": "2026-08-27T01:34:24.141Z"
+    },
+    {
+      "title": "DEFECTO DE LA CABINA — dos en el mismo run, y los dos los cazó otro",
+      "path": "context/cantu-studio/records/DEFECTO-EL-RUN-QUE-NUNCA-SE-PUSO-EN-ACTIVE.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-09-01T12:14:38.761Z"
+    },
+    {
+      "title": "DISEÑO — el historial del «Procedimiento matemático»",
+      "path": "context/cantu-studio/records/DISENO-EL-HISTORIAL-DEL-PROCEDIMIENTO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-30T00:12:04.244Z"
+    },
+    {
+      "title": "HALLAZGO — «Fórmula de partida» **está muerto** en el paso 0 y en el de resultado",
+      "path": "context/cantu-studio/records/HALLAZGO-EL-CAMPO-FORMULA-DE-PARTIDA-ESTA-MUERTO-EN-VISTA-UNICA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T23:56:08.546Z"
+    },
+    {
+      "title": "HALLAZGO — lo que el piloto le enseña al Asset Registry",
+      "path": "context/cantu-studio/records/HALLAZGO-EL-PILOTO-LE-ENSENA-CUATRO-COSAS-AL-ASSET-REGISTRY.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-09-01T12:14:17.251Z"
     },
     {
       "title": "PARADA DE `#136` — la premisa central del ticket era falsa, y era de la cabina",
@@ -2984,6 +3212,46 @@
       "default_visible": false,
       "ia_bucket": "context/cantu-studio/records",
       "freshness": "2026-08-28T00:25:52.482Z"
+    },
+    {
+      "title": "PARADA de `#149` — la salida de diapositiva: cuatro decisiones, y DOS errores de la cabina",
+      "path": "context/cantu-studio/records/PARADA-149-LA-SALIDA-DE-DIAPOSITIVA-Y-DOS-ERRORES-DE-LA-CABINA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T08:31:19.123Z"
+    },
+    {
+      "title": "PARADA de `#152` — la matriz **ya** se escribe una vez en el motor; **quien acumula es el editor**",
+      "path": "context/cantu-studio/records/PARADA-152-LA-MATRIZ-YA-SE-ESCRIBE-UNA-VEZ-EN-EL-MOTOR.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T20:43:17.191Z"
+    },
+    {
+      "title": "PARADA de `#153` — el censo es **bajo**, pero la previa **se congela en silencio**",
+      "path": "context/cantu-studio/records/PARADA-153-EL-CENSO-ES-BAJO-PERO-LA-PREVIA-SE-CONGELA-EN-SILENCIO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T20:35:52.682Z"
+    },
+    {
+      "title": "PARADA de `#154` — **cuatro de las cinco mediciones de la cabina eran falsas**",
+      "path": "context/cantu-studio/records/PARADA-154-CUATRO-DE-MIS-CINCO-MEDICIONES-ERAN-FALSAS.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T22:10:49.004Z"
+    },
+    {
+      "title": "PARADA — el censo de «Fórmula de partida» sale BAJO, y el paso nuevo CONGELA LA PREVIA ENTERA",
+      "path": "context/cantu-studio/records/PARADA-EL-VACIO-DE-FORMULA-DE-PARTIDA-EL-CENSO-ES-BAJO-Y-LA-PREVIA-SE-CONGELA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T20:31:21.561Z"
     },
     {
       "title": "PARADA DE ANÁLISIS — `RUN-CANTU-EDITOR-JSON-IMPORT-SILENT-DROP-001`",
@@ -3040,6 +3308,22 @@
       "default_visible": false,
       "ia_bucket": "context/cantu-studio/records",
       "freshness": "2026-08-20T00:04:00.460Z"
+    },
+    {
+      "title": "RONDA 2 — el vacío ya significa vacío, cambian DOS, y queda UNA parada nombrada",
+      "path": "context/cantu-studio/records/RONDA-2-EL-VACIO-YA-SIGNIFICA-VACIO-CAMBIAN-DOS-Y-QUEDA-UNA-PARADA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T21:07:55.726Z"
+    },
+    {
+      "title": "RONDA 3 — la red NO es ciega, **el número malo era el mío**, y el paso nuevo ya nace válido",
+      "path": "context/cantu-studio/records/RONDA-3-LA-RED-NO-ES-CIEGA-EL-NUMERO-MALO-ERA-MIO-Y-EL-PASO-YA-NACE-VALIDO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T21:32:12.345Z"
     },
     {
       "title": "VEREDICTO DEL OPERADOR — `#104` `RUN-CANTU-SLIDE-TITLE-SLIDE-AUTHORABLE-001`",
@@ -3402,6 +3686,158 @@
       "freshness": "2026-08-28T03:07:33.024Z"
     },
     {
+      "title": "VEREDICTO DE QA de `#148` — PASS — y el operador PIDE el recuadro del resultado en diapositiva",
+      "path": "context/cantu-studio/records/VEREDICTO-148-PASS-Y-EL-OPERADOR-PIDE-EL-RECUADRO-DEL-RESULTADO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T03:35:38.077Z"
+    },
+    {
+      "title": "VEREDICTO DEL OPERADOR — `#149`: se extrae el ensamblador (F1) y Moodle no aplica (B1)",
+      "path": "context/cantu-studio/records/VEREDICTO-149-F1-EL-CASCARON-SE-EXTRAE-Y-MOODLE-NO-APLICA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T08:39:25.851Z"
+    },
+    {
+      "title": "VEREDICTO DE QA de `#150` — PASS — y la descripción del paso pasa a OPCIONAL en diapositiva",
+      "path": "context/cantu-studio/records/VEREDICTO-150-PASS-Y-LA-DESCRIPCION-PASA-A-OPCIONAL-EN-DIAPOSITIVA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T11:03:39.257Z"
+    },
+    {
+      "title": "VEREDICTO DEL OPERADOR — `#151`: los dudosos entran, y con ellos dos documentos que hoy mienten",
+      "path": "context/cantu-studio/records/VEREDICTO-151-LOS-DOCE-DUDOSOS-ENTRAN.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T18:24:17.901Z"
+    },
+    {
+      "title": "VEREDICTO DEL OPERADOR — el paso nuevo nace con la fórmula del anterior",
+      "path": "context/cantu-studio/records/VEREDICTO-153-EL-PASO-NUEVO-NACE-CON-LA-FORMULA-DEL-ANTERIOR.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T21:16:59.853Z"
+    },
+    {
+      "title": "VEREDICTO DEL OPERADOR — `#153`: el recuadro se parte en dos, y sólo entran las dos baratas",
+      "path": "context/cantu-studio/records/VEREDICTO-153-EL-RECUADRO-SE-PARTE-EN-DOS-LAS-BARATAS-AHORA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T04:14:42.017Z"
+    },
+    {
+      "title": "VEREDICTO DE QA de `#153` — **FAIL** — tres defectos, y las cuatro colocaciones vuelven",
+      "path": "context/cantu-studio/records/VEREDICTO-153-FAIL-TRES-DEFECTOS-Y-LAS-CUATRO-COLOCACIONES-VUELVEN.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T04:59:06.790Z"
+    },
+    {
+      "title": "VEREDICTO DE QA de `#153` — el recuadro PASA; el modo matriz abre run propio",
+      "path": "context/cantu-studio/records/VEREDICTO-153-PASA-EL-RECUADRO-Y-LA-MATRIZ-ABRE-RUN-PROPIO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T08:04:55.904Z"
+    },
+    {
+      "title": "VEREDICTO DEL OPERADOR — `#154`: **la fórmula grande sí, el historial no**",
+      "path": "context/cantu-studio/records/VEREDICTO-154-LA-FORMULA-GRANDE-SI-EL-HISTORIAL-NO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T22:34:19.518Z"
+    },
+    {
+      "title": "VEREDICTO DEL OPERADOR — `#154`: **la QA pasa, y la etiqueta la nombré por el mecanismo**",
+      "path": "context/cantu-studio/records/VEREDICTO-154-QA-PASA-Y-LA-ETIQUETA-ESTABA-MAL-NOMBRADA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T23:37:26.284Z"
+    },
+    {
+      "title": "VEREDICTO DEL OPERADOR — `#157`: **la cinta nombra la causa, no la hora**",
+      "path": "context/cantu-studio/records/VEREDICTO-157-LA-CINTA-NOMBRA-LA-CAUSA-NO-LA-HORA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-29T02:48:46.866Z"
+    },
+    {
+      "title": "VEREDICTO — `#158` se cierra: el mando MARCA, no MIDE",
+      "path": "context/cantu-studio/records/VEREDICTO-158-MARCAR-NO-MEDIR.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-29T21:40:59.667Z"
+    },
+    {
+      "title": "VEREDICTO — `#163`: la marca que pasó todas las pruebas y no se veía",
+      "path": "context/cantu-studio/records/VEREDICTO-163-LA-MARCA-QUE-NO-SE-VEIA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-29T23:00:22.855Z"
+    },
+    {
+      "title": "VEREDICTO — `#173` «Emit each component stylesheet once per file, not once per instance»",
+      "path": "context/cantu-studio/records/VEREDICTO-173-PASA-Y-LA-MITAD-DEL-PESO-SIGUE-AHI.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-09-01T11:07:41.145Z"
+    },
+    {
+      "title": "VEREDICTO — `#175` «Settle the stack script split: the preview lane first, then guards, harnesses and fixtures»",
+      "path": "context/cantu-studio/records/VEREDICTO-175-LA-PREVIA-BAJA-UN-90-POR-CIENTO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-09-01T13:22:00.653Z"
+    },
+    {
+      "title": "VEREDICTO — `#176` «Design the Asset Registry»",
+      "path": "context/cantu-studio/records/VEREDICTO-176-EL-CONTRATO-DEL-ASSET-REGISTRY-APROBADO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-09-01T14:56:11.704Z"
+    },
+    {
+      "title": "VEREDICTO Y DECISIÓN — `#178` «Define the asset emit surface»",
+      "path": "context/cantu-studio/records/VEREDICTO-178-LA-SUPERFICIE-DE-EMISION-APROBADA-Y-LA-5-6-ESTRECHADA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-09-02T01:12:32.137Z"
+    },
+    {
+      "title": "VEREDICTO Y DECISIÓN — `#179` «Integrate the Asset Registry into renderers»",
+      "path": "context/cantu-studio/records/VEREDICTO-179-SUPERFICIE-CONSTRUIDA-Y-EL-ERROR-SE-ESCRIBE-EN-LA-LECCION.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-09-02T10:23:44.964Z"
+    },
+    {
+      "title": "`#180` — el renombrado interno, y el cero que nadie había nombrado",
+      "path": "context/cantu-studio/records/VEREDICTO-180-EL-NOMBRE-QUE-NADIE-HABIA-FIJADO.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-31T01:38:23.134Z"
+    },
+    {
       "title": "VEREDICTO DE QA — `RUN-CANTU-SLIDE-CONCEPTGRID-BADGE-INK-AND-TABLE-001`",
       "path": "context/cantu-studio/records/VEREDICTO-CONCEPTGRID-BADGE-INK-APROBADO.md",
       "nav_tier": "evidence",
@@ -3424,6 +3860,14 @@
       "default_visible": false,
       "ia_bucket": "context/cantu-studio/records",
       "freshness": "2026-08-27T03:54:34.870Z"
+    },
+    {
+      "title": "VEREDICTO DEL OPERADOR — el componente se llama «Factorización aritmética»",
+      "path": "context/cantu-studio/records/VEREDICTO-EL-COMPONENTE-SE-LLAMA-FACTORIZACION-ARITMETICA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-08-28T17:38:50.807Z"
     },
     {
       "title": "VEREDICTO DEL OPERADOR — el porte va en DOS runs, y se autoriza tocar Web",
@@ -3471,7 +3915,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-08-27T23:18:57.520Z"
+      "freshness": "2026-09-01T13:23:40.267Z"
     },
     {
       "title": "Sobre del reporte de run · v1 — `report.json`, su resumen, y lo que la consola promete pintar",

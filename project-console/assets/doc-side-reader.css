@@ -1,33 +1,76 @@
-/* RUN-CONSOLE-DOC-SIDE-READER-001 — the chrome of the side reader, and nothing else.
+/* The chrome of the console's document reader, and nothing else.
 
-   Its own file for the same reason its script is: every class below is .dsr-* or
-   .doc-side-reader, so the mechanical domain-blindness veto covers the stylesheet as well as the
-   code, and no word of any project can reach either.
+   Its own file for the same reason its script is: every class below is .dsr-*, so the mechanical
+   domain-blindness veto covers the stylesheet as well as the code, and no word of any project can
+   reach either.
 
-   Layer order: 70. Above the report surface (60) and the run drawer (50), because it opens
-   BESIDE a report that stays exactly where it was — it never replaces one and never closes one.
+   [#63] WHAT THIS FILE NO LONGER PAINTS, and that absence is the point. #62 shipped a second
+   renderer of markdown here and a full second set of body styles to paint it with — headings,
+   code, tables, rules, quotes — beside a console that had been painting documents all along. The
+   document is now painted by the console's ONE document renderer into the Docs tab's OWN reading
+   container, so every one of those rules is gone rather than kept dormant. What is left here is
+   the reader's own chrome: the dialog it lives in, its index column, and the sentences it says
+   when it cannot do something.
 
-   HALF THE PAGE, AND OVER IT. The panel is fixed to the right half and overlays what is beneath;
-   it does not shrink a column or reflow anything. That is deliberate and it is criterion 1: a
-   layout the report is squeezed into would re-wrap its text under the operator's eyes and lose
-   the line he was reading. Nothing beneath this panel moves when it opens or closes. */
+   COMPOSED FROM FOUR PATTERNS THIS CONSOLE ALREADY CARRIES, and no fifth is introduced:
+     · the centred-dialog geometry of `.edit-modal` — its width measure, its viewport cap, its
+       translate idiom and its layer (70);
+     · the `.docs-layout` grid of the Docs tab, 340px of index and the rest for the document;
+     · that tab's `.docs-nav` index column and `.docs-reader` reading column, worn by class;
+     · the `.drawer-overlay` veil the run drawer dims the page with.
+   The shared rules are NEVER redefined here — not one selector below names one, not even to undo
+   something, and a test asserts it. Where this reader needs something the shared rules do not
+   give, it declares it on a class of its OWN (`.dsr-measure`, below) and the Docs tab is left
+   exactly as it was.
 
-.doc-side-reader {
+   CENTRED AND OVER THE PAGE. The dialog overlays what is beneath it; it does not shrink a column
+   or reflow anything. That is deliberate and it is criterion 1: a layout the report is squeezed
+   into would re-wrap its text under the operator's eyes and lose the line he was reading. Nothing
+   beneath this dialog moves when it opens or closes. */
+
+/* The dialog. Its IDIOM is the console's edit modal — the same centring translate, the same
+   layer (70, above the report surface at 60 and the run drawer at 50), the same panel colours,
+   the same shadow token and the same `min(px, vw)` shape for its width.
+
+   [#63 QA] ITS SIZE IS NOT. The operator read a document in it and said «quedó muy chico el
+   modal, que consuma casi toda la página para que aproveche bien el espacio». The edit modal's
+   1040px is right for ONE COLUMN OF FIELDS and wrong for a reader: 340 of those pixels are the
+   index, so only ~700 were left to read in. This dialog therefore declares its own size, HERE
+   and on its own class — `.edit-modal` is untouched, because the run drawer's editor and other
+   surfaces are sized by it and this run has no business resizing them.
+
+   96vw × 94vh, and then a maximum width, because 96vw of an ultra-wide screen is not a document:
+   it is a line of text a reader loses their place along.
+
+   THE NUMBER IS 1760px AND IT IS NOT ARBITRARY. It is 96vw of an 1833px viewport, so on every
+   ordinary desktop up to and including a 1080p screen the dialog is pure 96vw and the cap never
+   shows itself at all; past that it stops growing. It is generous on purpose — the operator has
+   already decided this question once, on the Docs tab, where the reading pane «starts against
+   the navigation and fills the full remaining width (operator preference: no wasted right
+   margin)». A narrow measure would be this file overruling him twice.
+
+   The height stays DEFINITE rather than a cap, as before: the edit modal grows to its content
+   because it is one column of fields; this dialog is two columns that scroll on their own, and a
+   frame that resized between one document and the next would move the index out from under the
+   operator's cursor — which is the complaint this run exists to answer. */
+.dsr-modal {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  top: 50%;
+  left: 50%;
   z-index: 70;
   display: none;
-  width: 50vw;
-  min-width: 380px;
+  width: min(1760px, 96vw);
+  height: 94vh;
   flex-direction: column;
-  border-left: 1px solid var(--border-default);
-  background: var(--bg-panel, var(--bg-body));
-  box-shadow: -18px 0 40px -24px rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--border-default);
+  border-radius: 14px;
+  background: var(--bg-panel);
+  box-shadow: var(--shadow-drawer);
+  overflow: hidden;
+  transform: translate(-50%, -50%);
 }
 
-.doc-side-reader.open {
+.dsr-modal.open {
   display: flex;
 }
 
@@ -38,9 +81,85 @@
    LOOKS is restated here, so it can never drift from the surface it was copied from.
    What is different is only WHERE IN THE STACK it sits: the drawer's veil is at 40, under the
    report layer (60); this one has to dim that report, so it sits at 65 — above the report and
-   below the panel (70). One property, and no second pattern. */
+   below the dialog (70). One property, and no second pattern. */
 .dsr-overlay {
   z-index: 65;
+}
+
+/* [#63] THE GRID IS WORN WHOLE, AND NOT ONE DECLARATION OF IT IS RESTATED HERE — not even to
+   undo something. That took a measurement to earn, and the measurement is worth keeping: the
+   Docs tab declares `.docs-layout` TWICE. The first rule (project-console.css:1573) does carry
+   page chrome a dialog cannot use — a height measured against the VIEWPORT and a negative margin
+   that bleeds the tab into its own page padding — but a LATER rule at the top level of the same
+   stylesheet (6269) already replaces both with `height: auto`, `margin: 0`, `flex: 1 1 auto` and
+   `min-height: 0`, for the tab's own banner defect. Later rule, same specificity: it wins
+   everywhere, and it is exactly what a bounded flex-column dialog needs. The tab is responsive
+   on its own terms too (1040px narrows the index track to 260px; 720px stacks the two).
+
+   So the first draft of this file carried an override of four declarations that changed NOTHING.
+   It is deleted. A rule that restates what the cascade already says is a second answer waiting to
+   drift from the first, which is the defect of this whole run one storey down. */
+
+/* The index column and the reading column are the Docs tab's own; these two rules add only what a
+   grid row inside a bounded dialog needs in order to scroll on its own. `position: relative` is
+   load-bearing: the jump sets THIS box's scrollTop from the target's offsetTop, which is only
+   correct while this box is the target's offset parent — and which is what keeps the jump from
+   ever touching a scroller outside this dialog. */
+.dsr-nav {
+  min-height: 0;
+}
+
+.dsr-scroll {
+  position: relative;
+  min-height: 0;
+}
+
+/* [#63 QA·3] THE MEASURE — the length of a line of running text, capped inside this reader's own
+   column and nowhere else. The operator said the content was still tiring to read. MEASURED in
+   the browser at a 1920 viewport, on the reader's own reading column, before this rule existed:
+
+     column 1418px · text block 1316px · 18px/30.6px · median 137 CHARACTERS PER LINE
+     (P25 123 · P75 147, over the 28 paragraphs of a real document that wrap three lines or more)
+
+   The comfortable band for continuous prose is 45–75 characters; 137 is near double its top. The
+   leading was never the problem — 30.6px on 18px is 1.7, generous — and neither was the size. It
+   is the length, so the length is what is capped.
+
+   THE CAP IS `ch` AND NOT PIXELS, on purpose: `ch` is the width of a "0" in whatever font is in
+   force, so this rule tracks the console's type instead of freezing a number against it.
+
+   AND THE NUMBER WAS CHOSEN BY MEASURING, not by arithmetic. Converting a cap into characters by
+   hand gets it wrong — 1ch is 9.70px here while the average character of this prose is 7.92px,
+   and that ratio predicted 76 characters for a cap that actually renders 64. So five candidate
+   caps were applied to a real document and read back:
+
+     cap        prose      median CPL   P75 CPL
+     uncapped   1316px        137          147
+     62ch        602px         64           68
+     66ch        640px         69           73     ← chosen
+     70ch        679px         72           77
+     74ch        718px         77           82
+
+   66ch is the widest cap whose UPPER QUARTILE still lands inside the comfortable band, not just
+   its median: at 70ch the longer paragraphs are already running to 77. Choosing by the median
+   alone would have left a quarter of this operator's reading outside the band it was capped for.
+
+   IT CAPS THE PROSE AND NOTHING ELSE. Tables and code blocks keep the whole column: they were
+   measured too, and they do not read in lines — the tables stretch to whatever they are given,
+   and the widest code block in that document is 9317px and already scrolls inside its own box.
+   Capping them would buy nothing and cost horizontal scrolling on content that fits today. So
+   the wide blocks span, the prose stays short, and the space the operator asked to use is used
+   by exactly the content that benefits from it. Headings are not capped either, and that is a
+   measurement and not an omission: NONE of the 39 headings of that document wraps even at the
+   full 1316px, so a cap on them would change nothing that is on screen.
+
+   AND IT IS THIS READER'S, NOT THE TAB'S. Every selector below is `.dsr-measure` plus a bare
+   element name; `.docs-body`, `.docs-reader` and the rest of the shared typography are untouched
+   and cannot feel this rule — `.dsr-measure` exists only in this dialog's markup. */
+.dsr-measure p,
+.dsr-measure li,
+.dsr-measure blockquote {
+  max-width: 66ch;
 }
 
 .dsr-bar {
@@ -106,7 +225,7 @@
 }
 
 /* READ ONLY, said on screen and not only in the code. The operator is being asked to trust that
-   this panel cannot touch the document he is auditing; a badge is the cheapest way to say so. */
+   this dialog cannot touch the document he is auditing; a badge is the cheapest way to say so. */
 .dsr-readonly {
   flex: none;
   border: 1px solid var(--border-default);
@@ -130,161 +249,132 @@
   margin-left: auto;
 }
 
-/* The scroller. `position: relative` on purpose: the jump sets THIS box's scrollTop from the
-   target's offsetTop, which is only correct while this box is the target's offset parent — and
-   which is what keeps the jump from ever touching a scroller outside this panel. */
-.dsr-scroll {
-  position: relative;
-  min-height: 0;
-  flex: 1;
-  overflow-y: auto;
-  padding: 0 18px 60px;
-}
-
 .dsr-loading {
-  padding: 32px 4px;
+  padding: 12px 0;
   color: var(--text-tertiary);
   font-size: 13px;
 }
 
-/* --- The list of documents ------------------------------------------------ */
-
-.dsr-doc-list {
-  padding: 14px 0 0;
-}
-
-.dsr-doc-list-head {
-  margin-bottom: 10px;
+/* [#63] The reading column with nothing asked for yet. The index is already beside it, so this
+   points at the index instead of repeating it — and it is words, never an empty column. */
+.dsr-prompt-line {
   color: var(--text-tertiary);
-  font-size: 12px;
-}
-
-.dsr-doc-row {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  gap: 2px;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  background: var(--bg-subtle);
-  cursor: pointer;
-  margin-bottom: 6px;
-  padding: 10px 12px;
-  text-align: left;
-}
-
-.dsr-doc-row:hover {
-  border-color: var(--accent);
-}
-
-.dsr-doc-title {
-  color: var(--text-primary);
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.dsr-doc-path {
-  color: var(--text-tertiary);
-  font-size: 11.5px;
-  overflow-wrap: anywhere;
-}
-
-.dsr-doc-list-source {
-  margin-top: 12px;
-  color: var(--text-tertiary);
-  font-size: 11.5px;
+  font-size: 14px;
   line-height: 1.6;
-  overflow-wrap: anywhere;
 }
 
-/* --- The section index ---------------------------------------------------- */
+/* --- The list of documents, in the index column ---------------------------- */
 
-.dsr-index {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  border-bottom: 1px solid var(--border-default);
-  margin: 14px 0 18px;
-  padding-bottom: 14px;
+/* [#63 QA] A MENU, NOT A SANDWICH. The operator read this column and said «esa parte, texto,
+   recuadros y luego texto, no se ve un menú limpio» — a line of prose, then a stack of cards,
+   then more prose. Measured the same day: each row drew a card (a 1px border, a `--bg-subtle`
+   fill, a `--radius-md` corner and a margin between them) while the Docs tab's navigation, the
+   surface the operator named twice, draws none of it.
+
+   So the row WEARS `docs-nav-item` in the markup and this file declares nothing for it. The
+   transparent background, the absent border, the 3px bar down the left, the hover and the active
+   state all arrive from the one rule that already owns them — there is no copy here to drift.
+   The list itself therefore carries NO horizontal inset: the rows go edge to edge with the tab's
+   own 20px padding inside them, so the active bar sits flush against the column's edge exactly
+   as it does in the tab. The two prose lines take that same 20px so they line up with the names,
+   and they are demoted below — the bread stops competing with the menu. */
+.dsr-doc-list {
+  padding: 0;
 }
 
-.dsr-index-title {
-  margin-bottom: 8px;
+/* An absence sits where the list would have sat, so it takes an inset of its own rather than
+   touching the column's edges. */
+.dsr-doc-list .dsr-absence {
+  margin-right: 14px;
+  margin-left: 14px;
+}
+
+/* The count, demoted to a caption. It still says how many documents this project indexes —
+   that is the honest half of the rule — but at the size of a label instead of a sentence. */
+.dsr-doc-list-head {
+  margin-bottom: 6px;
+  padding: 0 20px;
   color: var(--text-tertiary);
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-size: 11.5px;
+  line-height: 1.45;
 }
 
-.dsr-index-item {
-  border: 0;
-  background: none;
-  cursor: pointer;
-  line-height: 1.5;
-  max-width: 100%;
-  overflow: hidden;
-  text-align: left;
-  text-overflow: ellipsis;
+/* [#63 QA·2] THE ROW NOW ADDS NOTHING AT ALL, and there is no rule for it here any more. With the
+   path gone from under the name — «que solo tenga titulo y nota, que no venga la ruta abajo del
+   nombre» — the row is a name and a label on one line, which is exactly the shape the nav item
+   already lays out: `display: flex`, centred, `justify-content: space-between`, `gap: 8px`. The
+   stacking override that made it two lines went with the second line. `dsr-doc-row` stays in the
+   markup as the row's name; it declares nothing. */
+
+/* [#63] A ROW THAT READS AS A HIERARCHY. Measured on 2026-09-02: title and path came out at
+   nearly one weight, so the eye had nothing to land on first. The name now reads clearly larger
+   than the path, and whatever the title trailed after its last separator sits at the RIGHT of the
+   row instead of running on after the name.
+
+   The split is POSITIONAL and the pill is the SAME ONE the header already wears for the same tail
+   — one idiom for one thing. No leading word of a title is given a meaning here: the genre of a
+   document does not travel as data, so reading a word to decide it is a label would be domain
+   interpretation, and this file may not do it. */
+/* [#63 QA·1]  is gone with the second line it wrapped. A name and a label on one
+   line is exactly what the nav item already lays out, so there is nothing left to wrap. */
+
+/* [#63 QA] The name takes NO colour of its own any more, so it inherits the nav item's: quiet
+   when the row is resting, brighter under the cursor, and the accent when the row is the open
+   document. That is how the tab's own labels behave, and taking a colour here would be the one
+   thing that stopped this row from reading like them. The hierarchy the operator approved is
+   untouched — it was never the colour: the name is larger and heavier, the path smaller and
+   quieter, and the version still sits apart at the right. */
+.dsr-doc-title {
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.35;
+  min-width: 0;
+}
+
+.dsr-doc-version {
+  flex: none;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  color: var(--text-tertiary);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0 8px;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
-.dsr-index-item:hover {
-  color: var(--accent);
+.dsr-doc-version:empty {
+  display: none;
 }
 
-/* [#62 QA] A SCALE A READER CAN SEE AT A GLANCE. Seventeen headings with their subsections read
-   as one block when the whole rail carries one size and one indent step. Size, weight, colour
-   and indent now move together at every level, and the size alone is enough to tell any two
-   levels apart — which is what the suite pins, so the scale can never quietly flatten again.
-   Typography and grouping only: not one word of any document's meaning is read here. */
-.dsr-index-l1 {
-  color: var(--text-primary);
-  font-size: 13.5px;
-  font-weight: 700;
-  margin-bottom: 2px;
-  padding: 3px 0;
-}
+/* [#63 QA·1] `.dsr-doc-path` is gone. The path is not lost — it is what makes a citation
+   checkable — but it belongs under the name of the document that is OPEN, in this dialog's own
+   header, and not under all of them in the menu. `.dsr-ref-path` above is where it lives. */
 
-.dsr-index-l2 {
-  color: var(--text-primary);
-  font-size: 12.75px;
-  font-weight: 600;
-  margin-top: 7px;
-  padding: 2px 0;
-}
-
-.dsr-index-l3 {
-  color: var(--text-secondary, var(--text-primary));
-  font-size: 12.25px;
-  font-weight: 500;
-  padding: 1px 0 1px 13px;
-}
-
-.dsr-index-l4 {
-  color: var(--text-tertiary);
-  font-size: 11.75px;
-  font-weight: 400;
-  padding: 1px 0 1px 26px;
-}
-
-.dsr-index-l5 {
-  color: var(--text-tertiary);
-  font-size: 11.25px;
-  font-weight: 400;
-  padding: 1px 0 1px 39px;
-}
-
-.dsr-index-l6 {
+/* The provenance, demoted to a FOOTNOTE and not deleted: a list that names where it came from is
+   a rule of this reader, and «nothing outside it can be opened here» is the promise that goes
+   with it. It keeps its words and loses its weight — under a hairline, at the foot of the menu,
+   at the smallest size in the column. */
+.dsr-doc-list-source {
+  border-top: 1px solid var(--border-subtle);
+  margin: 14px 20px 0;
+  padding-top: 10px;
   color: var(--text-tertiary);
   font-size: 11px;
-  font-weight: 400;
-  padding: 1px 0 1px 52px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
-.dsr-index-empty {
-  color: var(--text-tertiary);
-  font-size: 12.5px;
-}
+/* --- The section rail: REMOVED ---------------------------------------------
+
+   [#63 QA·2] «aqui estas manejando un sistema de documentos a la izquierda y secciones a la
+   izquierda mas abajo, no me gusta, quita las secciones» — they complicated the column instead
+   of easing it. One index in the left column and no second one under it, so the rules that
+   painted the rail — its box, its title, its items, its hover and its three levels — are deleted
+   rather than left dormant. The headings are still read and still stamped: a citation that
+   resolves still jumps to one. What is gone is the second list of them. */
+
 
 /* --- What could not be done, said out loud -------------------------------- */
 
@@ -293,7 +383,7 @@
   border-left: 3px solid var(--accent);
   border-radius: var(--radius-md);
   background: var(--bg-subtle);
-  margin-top: 16px;
+  margin-bottom: 18px;
   padding: 12px 14px;
 }
 
@@ -321,7 +411,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   background: var(--bg-subtle);
-  margin-top: 16px;
+  margin-top: 4px;
   padding: 14px 16px;
 }
 
@@ -359,153 +449,6 @@
   overflow-wrap: anywhere;
 }
 
-/* --- The document itself -------------------------------------------------- */
-
-.dsr-document {
-  color: var(--text-primary);
-  font-size: 13.5px;
-  line-height: 1.7;
-}
-
-.dsr-document p {
-  margin: 0 0 12px;
-  max-width: 74ch;
-}
-
-.dsr-h {
-  color: var(--text-primary);
-  font-weight: 600;
-  line-height: 1.35;
-  margin: 26px 0 10px;
-  scroll-margin-top: 12px;
-}
-
-/* [#62 QA] The same scale in the BODY, where the operator says it reads flat too — levels 4 to 6
-   were the size and weight of ordinary paragraph text, so three depths were invisible. Every
-   level now differs from the next AND from the body's 13.5px, and a second-level heading opens
-   its section with a rule above it so the eye can find where one part ends and the next begins.
-   Grouping and type; no new content, no anchors, nothing made live. */
-.dsr-h-l1 {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  margin: 6px 0 14px;
-}
-
-.dsr-h-l2 {
-  border-top: 1px solid var(--border-default);
-  font-size: 17.5px;
-  font-weight: 700;
-  margin: 34px 0 12px;
-  padding-top: 20px;
-}
-
-.dsr-h-l3 {
-  font-size: 15px;
-  font-weight: 600;
-  margin: 26px 0 9px;
-}
-
-.dsr-h-l4 {
-  color: var(--text-primary);
-  font-size: 13.75px;
-  font-weight: 600;
-  margin: 22px 0 8px;
-}
-
-.dsr-h-l5 {
-  color: var(--text-secondary, var(--text-primary));
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  margin: 18px 0 6px;
-}
-
-.dsr-h-l6 {
-  color: var(--text-tertiary);
-  font-size: 12.25px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  margin: 16px 0 6px;
-  text-transform: uppercase;
-}
-
-.dsr-document ul,
-.dsr-document ol {
-  margin: 0 0 12px;
-  max-width: 74ch;
-  padding-left: 22px;
-}
-
-.dsr-document li {
-  margin-bottom: 4px;
-}
-
-.dsr-document blockquote {
-  border-left: 2px solid var(--border-default);
-  color: var(--text-tertiary);
-  margin: 0 0 12px;
-  max-width: 74ch;
-  padding-left: 12px;
-}
-
-.dsr-document hr {
-  border: 0;
-  border-top: 1px solid var(--border-default);
-  margin: 20px 0;
-}
-
-.dsr-document code {
-  background: var(--bg-subtle);
-  border-radius: var(--radius-sm, 4px);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 12px;
-  padding: 1px 4px;
-}
-
-.dsr-code {
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 12px;
-  line-height: 1.55;
-  margin: 0 0 14px;
-  overflow-x: auto;
-  padding: 10px 12px;
-  white-space: pre;
-}
-
-/* A link keeps its words and loses its destination: this reader opens what the index lists and
-   goes nowhere else, so a live link here would be a door nobody asked for. */
-.dsr-link-text {
-  border-bottom: 1px dotted var(--border-default);
-}
-
-.dsr-table-wrap {
-  margin: 0 0 14px;
-  overflow-x: auto;
-}
-
-.dsr-table {
-  border-collapse: collapse;
-  font-size: 12.5px;
-  width: 100%;
-}
-
-.dsr-table th,
-.dsr-table td {
-  border: 1px solid var(--border-default);
-  padding: 6px 9px;
-  text-align: left;
-  vertical-align: top;
-}
-
-.dsr-table th {
-  background: var(--bg-subtle);
-  font-weight: 600;
-}
-
 /* --- The citation, where the report paints it ----------------------------- */
 
 /* A citation that travels as data becomes a control. One that is buried in prose does not, and
@@ -526,11 +469,7 @@
   color: var(--accent);
 }
 
-/* Narrow viewports: half a page of 700px is not a document, so the panel takes the width it
-   needs and the report is reachable again by closing it. */
-@media (max-width: 900px) {
-  .doc-side-reader {
-    width: 100vw;
-    min-width: 0;
-  }
-}
+/* Narrow viewports need no rule here either: the dialog already takes 94vw from its width
+   measure, and the Docs tab's grid carries its own breakpoints — 260px of index below 1040px,
+   and the two zones stacked below 720px, where a screen that narrow has no second column to
+   give. Adding a breakpoint of this reader's own would be a fifth pattern. */

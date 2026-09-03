@@ -288,19 +288,31 @@
       </div>
     </div>
 
-    <!-- [#62] THE SIDE READER. Half the page, on the right, ABOVE the report layer (60) — and an
-         overlay, not a column the report is squeezed into: nothing beneath it is resized or
-         re-laid-out when it opens, so the report cannot lose the operator's place in it. It is
-         READ ONLY and there is no control in it that says otherwise: two buttons that navigate,
-         one that closes, and no field, no form and no editable region anywhere. Inert until a
+    <!-- [#63] THE DOCUMENT READER — ONE reader in this console, not two. #62 built a side panel
+         beside a surface that had been reading documents with an index on the left all along
+         (the Docs tab); the operator read a document in it and named the fix himself:
+         «que se use el mismo diseno que docs de un proyecto. A la izquierda el indice y a la
+         derecha el contenido», and «creo que es mejor que este como un modal centrado, y grande,
+         con el fondo negro igual que ahora».
+
+         So the shape below is COMPOSED FROM FOUR PATTERNS THIS PAGE ALREADY CARRIES, and adds no
+         fifth: the centred-dialog geometry of `.edit-modal`; the `.docs-layout` grid of the Docs
+         tab; that tab's own `.docs-nav` index column and `.docs-reader` reading column; and the
+         `.drawer-overlay` veil the run drawer dims the page with. The index and the document are
+         two columns with two scrollers, so reading the document never scrolls the index away.
+
+         It is still an OVERLAY and not a column the report is squeezed into: nothing beneath it
+         is resized or re-laid-out when it opens, so the report cannot lose the operator's place.
+         It is READ ONLY and no control in it says otherwise: rows and sections that navigate, one
+         button that closes, and no field, no form and no editable region anywhere. Inert until a
          document is asked for; no document is ever pre-loaded here. -->
     <!-- [#62 QA] THE VEIL. The console's OWN overlay — the same element and the same
          `.drawer-overlay` class the run drawer dims the page with, and the same `.open` idiom —
          so this surface introduces no second pattern and `.drawer-overlay` itself is not touched.
          It is fixed and inset:0, so it darkens what is beneath it without resizing, scrolling or
-         re-laying-out any of it: the panel stays an overlay and the report never moves. -->
+         re-laying-out any of it: the modal stays an overlay and the report never moves. -->
     <div id="doc-side-reader-overlay" class="drawer-overlay dsr-overlay"></div>
-    <aside id="doc-side-reader" class="doc-side-reader" role="complementary" aria-label="Project documents (read only)" aria-hidden="true">
+    <aside id="doc-side-reader" class="dsr-modal" role="dialog" aria-modal="true" aria-label="Project documents (read only)" aria-hidden="true">
       <div class="dsr-bar">
         <div class="dsr-ref">
           <!-- [#62 QA] Two levels, not one line carrying three things: the document's name, the
@@ -313,12 +325,24 @@
         </div>
         <span class="dsr-readonly">Read only</span>
         <div class="dsr-bar-actions">
-          <button class="btn btn-secondary btn-sm" type="button" data-dsr-list>All documents</button>
           <button class="btn btn-secondary btn-sm" type="button" data-dsr-close aria-label="Close the document">Close</button>
         </div>
       </div>
-      <div id="doc-side-reader-scroll" class="dsr-scroll">
-        <div id="doc-side-reader-body"></div>
+      <!-- The Docs tab's own two-zone grid and its own two columns, by class and not by copy. -->
+      <div class="dsr-layout docs-layout">
+        <!-- [#63 QA·2] The index column, and it scrolls on its own. ONE index in it: the
+             project's documents. The section rail that used to sit underneath is gone —
+             «quita las secciones, hacen mas complicado en vez de facilitar». The list keeps its
+             own block so that rewriting it never touches the column, whose scroll is the
+             operator's place in a menu of hundreds. -->
+        <div id="doc-side-reader-index" class="docs-nav dsr-nav">
+          <div id="doc-side-reader-docs"></div>
+        </div>
+        <div id="doc-side-reader-scroll" class="docs-reader dsr-scroll">
+          <!-- `dsr-measure` is where this reader caps its own line length. See the stylesheet:
+               the shared typography is untouched; the constraint lives on this class alone. -->
+          <div id="doc-side-reader-body" class="docs-reader-inner dsr-measure"></div>
+        </div>
       </div>
     </aside>
 

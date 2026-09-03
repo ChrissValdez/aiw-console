@@ -1,11 +1,17 @@
-// RUN-CONSOLE-DOC-SIDE-READER-001 — THE SIDE READER. A document the operator can OPEN while he
-// judges, and nothing else.
+// THE DOCUMENT READER OF THIS CONSOLE. A document the operator can OPEN while he judges, and
+// nothing else. Opened by #62 as a side panel; rebuilt by #63 as the CENTRED MODAL below.
 //
 // WHY IT EXISTS, in the operator's own words (2026-08-27, during the QA of #61): «muchas veces
 // confio en esa desicion pero a veces son desiciones de hace semanas y no las recuerdo, y si
 // estan mal no tengo forma de auditarlas o revisarlas». A citation that cannot be opened cannot
 // be AUDITED. Today a verdict is signed against a rule the signer cannot see without leaving the
-// screen. So this file opens the rule BESIDE the report, never instead of it.
+// screen. So this file opens the rule OVER the report, never instead of it.
+//
+// AND THERE IS ONE READER IN THIS CONSOLE, NOT TWO. #62 built this beside a surface that had
+// been reading documents with an index on the left all along — the Docs tab — without knowing.
+// #63 undid that: the shape below is composed from patterns the console already carries, and the
+// document itself is painted by the console's ONE document renderer, called and never copied.
+// Nothing here renders markdown; see THE DOCUMENT, below.
 //
 // IT IS A FILE OF ITS OWN for the same reason the report mount is: the console is domain-blind
 // and its blindness is proved mechanically. A reader that must find a SECTION inside a document
@@ -14,9 +20,11 @@
 //
 // THE BLINDNESS LINE, and it is the one that decides whether this file is legal:
 //
-//   ALLOWED   — reading MARKDOWN HEADINGS. `#` at the start of a line is generic document
-//               FORMAT, the same way `{` is generic JSON. A section index derived from headings
-//               says nothing about what any project's documents are about.
+//   ALLOWED   — reading the HEADINGS the shared renderer painted. A heading is generic document
+//               FORMAT, the same way `{` is generic JSON, and since #63 this file does not even
+//               find them: it reads back the ones the console's one renderer emitted. A section
+//               index derived from headings says nothing about what any project's documents are
+//               about.
 //   FORBIDDEN — hunting a section SIGN inside free prose to turn it into a link. That is a
 //               domain regex: it knows a convention of one project's writing, it would fail
 //               silently on documents that do not use it, and it is the exact defect this
@@ -28,8 +36,8 @@
 // names one section plus a comment, or two sections at once, does NOT resolve — because telling
 // those two apart means counting section marks in prose, which is the forbidden regex, and
 // because jumping to the first of two named sections is precisely the "scrolls somewhere
-// plausible and pretends" this run forbids. It opens the document at its index and SAYS which
-// section it could not resolve.
+// plausible and pretends" this run forbids. It opens the document AT ITS BEGINNING and SAYS
+// which section it could not resolve — the naming is the rule and it does not weaken.
 //
 // IT NEVER WRITES. There is no write verb in this file, no write route, no form control, no editable
 // region: the only network verb it knows is the GET that the console already serves. What it
@@ -79,15 +87,71 @@ function dsrDocsModel(index) {
 }
 
 // ---------------------------------------------------------------------------
-// THE DOCUMENT — parsed ONCE into a section index and a body, so the two can never disagree
-// about which heading is which. The ids are POSITIONAL (`dsr-h-<n>`) and not derived from the
-// heading's words: a slug of the text would collide between two headings that say the same
-// thing, and would be one more place this file could start reading meaning into words.
+// THE DOCUMENT — RENDERED BY THE CONSOLE'S ONE DOCUMENT RENDERER, and indexed off what that
+// renderer painted.
+//
+// [#63] THIS IS THE DEFECT THIS RUN EXISTS TO UNDO, corrected. The console ALREADY read a
+// project's documents with an index beside them — its Docs tab — and #62 shipped a SECOND
+// renderer of the same markdown here, without knowing. Two renderers are two answers to one
+// question, and the operator decided there is ONE. So the body is painted by
+// `renderDocBodyContent`, the very entry point the Docs tab paints its own reader with, CALLED
+// and not copied. No markdown grammar survives in this file.
+//
+// AND THE INDEX IS READ BACK OFF THAT ONE PAINTING. Heading n of the index and the element
+// carrying id `dsr-h-n` are the same element BY CONSTRUCTION: the index is built by walking the
+// headings the renderer emitted and stamping each one as it is walked. There is no second pass
+// over the document, so there is nothing for the index and the body to disagree about. The ids
+// stay POSITIONAL for the reason #62 gave — a slug of the words would collide between two
+// headings that say the same thing, and would be one more place this file could start reading
+// meaning into words.
+//
+// THE BLINDNESS LINE HAS NOT MOVED; IT HAS MOVED HOUSE. The generic markdown rule — a run of
+// hashes at the start of a line opens a heading — now lives where the Docs tab has always kept
+// it, in the shared renderer. What is left here is narrower than before: this file recognises
+// the ELEMENT the shared renderer marked as a heading, and reads its words only to compare them,
+// whole, against a citation. Hunting a section sign inside free prose stays forbidden, and stays
+// absent.
 // ---------------------------------------------------------------------------
 
-// Inline text with the markup taken off, for the index and for matching. Emphasis marks and code
-// ticks are format; a link keeps its LABEL and loses its target, because this reader never
-// navigates anywhere.
+// The console's one document renderer, looked up at CALL time and never captured at load time:
+// this file is deferred AHEAD of the console script that declares it, so a reference taken while
+// loading would be a permanent null.
+function dsrSharedRenderer() {
+  const scope = typeof window !== "undefined" && window
+    ? window
+    : (typeof globalThis !== "undefined" ? globalThis : null);
+  const render = scope ? scope.renderDocBodyContent : null;
+  return typeof render === "function" ? render : null;
+}
+
+// The renderer's OWN output shape, not a document's: an opening heading tag wearing the
+// renderer's heading class, its content, and its matching close. The content can never contain
+// that closing tag, because the renderer escapes the whole source before it formats any of it.
+const DSR_PAINTED_HEADING = /<h([1-6]) class="docs-body-h">([\s\S]*?)<\/h\1>/g;
+
+// The renderer's markup taken off a painted heading, then its escaping undone — so what is
+// compared against a citation is exactly the run of words the operator reads on screen. Tags go
+// first and `&amp;` is undone last, or an escaped angle bracket would be mistaken for markup.
+function dsrStripTags(html) {
+  return String(html == null ? "" : html).replace(/<[^>]*>/g, "");
+}
+
+function dsrUnescape(value) {
+  return String(value == null ? "" : value)
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&");
+}
+
+function dsrHeadingText(inner) {
+  return dsrPlainText(dsrUnescape(dsrStripTags(inner)));
+}
+
+// Text with any residual markup taken off and its whitespace collapsed, for the index and for
+// matching. Kept from #62 unchanged: a citation arrives as the emitter wrote it and may still
+// carry emphasis marks or code ticks, which are format and not words.
 function dsrPlainText(raw) {
   return String(raw == null ? "" : raw)
     .replace(/`+([^`]*)`+/g, "$1")
@@ -117,173 +181,42 @@ function dsrLeadingToken(plain) {
   return first;
 }
 
-function dsrInline(raw) {
-  let out = dsrEsc(raw);
-  out = out.replace(/`([^`]+)`/g, (match, code) => "<code>" + code + "</code>");
-  // A link keeps its words and loses its destination. This reader opens documents of the index
-  // and nothing else; a live link inside a document would be a door out of it that nobody asked
-  // for, and composing its URL would be this file inventing a route.
-  out = out.replace(/\[([^\]]+)\]\(([^)\s]*)\)/g, (match, label) => '<span class="dsr-link-text">' + label + "</span>");
-  out = out.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-  out = out.replace(/(^|[\s(])\*([^*]+)\*/g, "$1<em>$2</em>");
-  return out;
-}
-
-// Parse a markdown document into { headings, html }. ONE pass, so heading n of the index and the
-// element carrying id `dsr-h-n` are the same heading by construction and not by agreement.
-//
-// Fenced blocks are tracked because a `#` inside a code fence is code, not a heading — the one
-// piece of markdown grammar this file must honour to keep its index honest.
-function dsrParseDocument(rawText) {
-  const lines = String(rawText == null ? "" : rawText).split(/\r\n?|\n/);
+// Stamp the painting and index it in ONE walk. Returns the same html with a positional id on
+// every heading the renderer emitted, plus the index of those very headings.
+function dsrIndexPainting(painted) {
   const headings = [];
-  const html = [];
-  let paragraph = [];
-  let listTag = "";
-  let listItem = null;
-  let table = null;
-  let fence = "";
-  let fenceLines = null;
-
-  const flushParagraph = () => {
-    if (!paragraph.length) return;
-    html.push("<p>" + dsrInline(paragraph.join(" ")) + "</p>");
-    paragraph = [];
-  };
-  const flushListItem = () => {
-    if (!listItem) return;
-    html.push("<li>" + dsrInline(listItem.join(" ")) + "</li>");
-    listItem = null;
-  };
-  const flushList = () => {
-    flushListItem();
-    if (!listTag) return;
-    html.push("</" + listTag + ">");
-    listTag = "";
-  };
-  const flushTable = () => {
-    if (!table) return;
-    const head = table.head.length
-      ? "<thead><tr>" + table.head.map((cell) => "<th>" + dsrInline(cell) + "</th>").join("") + "</tr></thead>"
-      : "";
-    const body = table.rows.length
-      ? "<tbody>" + table.rows.map((row) => "<tr>" + row.map((cell) => "<td>" + dsrInline(cell) + "</td>").join("") + "</tr>").join("") + "</tbody>"
-      : "";
-    html.push('<div class="dsr-table-wrap"><table class="dsr-table">' + head + body + "</table></div>");
-    table = null;
-  };
-  const flushBlocks = () => {
-    flushParagraph();
-    flushList();
-    flushTable();
-  };
-  const rowCells = (line) => line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((cell) => cell.trim());
-
-  lines.forEach((line) => {
-    const trimmed = line.trim();
-
-    // Fenced code, verbatim and escaped. Nothing inside it is a heading, a list or a table.
-    const fenceMark = /^(```+|~~~+)(.*)$/.exec(trimmed);
-    if (fence) {
-      if (fenceMark && trimmed.startsWith(fence)) {
-        html.push('<pre class="dsr-code">' + dsrEsc(fenceLines.join("\n")) + "</pre>");
-        fence = "";
-        fenceLines = null;
-      } else {
-        fenceLines.push(line);
-      }
-      return;
-    }
-    if (fenceMark) {
-      flushBlocks();
-      fence = fenceMark[1];
-      fenceLines = [];
-      return;
-    }
-
-    if (!trimmed) {
-      flushBlocks();
-      return;
-    }
-
-    // THE HEADING. The whole reason this file may read a document at all.
-    const heading = /^(#{1,6})\s+(.+?)\s*#*$/.exec(trimmed);
-    if (heading) {
-      flushBlocks();
-      const plain = dsrPlainText(heading[2]);
-      const entry = {
-        level: heading[1].length,
-        text: plain,
-        id: "dsr-h-" + headings.length,
-        label: dsrLeadingToken(plain)
-      };
-      headings.push(entry);
-      html.push("<h" + entry.level + ' class="dsr-h dsr-h-l' + entry.level + '" id="' + entry.id + '">' +
-        dsrInline(heading[2]) + "</h" + entry.level + ">");
-      return;
-    }
-
-    if (/^(-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
-      flushBlocks();
-      html.push("<hr>");
-      return;
-    }
-
-    // A table row. The delimiter row (`|---|---|`) promotes the row before it to a header.
-    if (trimmed.startsWith("|") && trimmed.endsWith("|")) {
-      flushParagraph();
-      flushList();
-      const cells = rowCells(trimmed);
-      if (!table) {
-        table = { head: [], rows: [cells] };
-        return;
-      }
-      if (table.rows.length === 1 && !table.head.length && cells.every((cell) => /^:?-{2,}:?$/.test(cell))) {
-        table.head = table.rows.pop();
-        return;
-      }
-      table.rows.push(cells);
-      return;
-    }
-    flushTable();
-
-    if (trimmed.startsWith(">")) {
-      flushParagraph();
-      flushList();
-      html.push("<blockquote>" + dsrInline(trimmed.replace(/^>\s?/, "")) + "</blockquote>");
-      return;
-    }
-
-    const ordered = /^\d+[.)]\s+(.*)$/.exec(trimmed);
-    const unordered = /^[-*+]\s+(.*)$/.exec(trimmed);
-    if (ordered || unordered) {
-      flushParagraph();
-      flushListItem();
-      const wanted = ordered ? "ol" : "ul";
-      if (listTag !== wanted) {
-        flushList();
-        html.push("<" + wanted + ">");
-        listTag = wanted;
-      }
-      listItem = [ordered ? ordered[1] : unordered[1]];
-      return;
-    }
-
-    // A non-blank line that opens no block while a list item is open belongs to that item.
-    if (listTag && listItem) {
-      listItem.push(trimmed);
-      return;
-    }
-    paragraph.push(trimmed);
+  DSR_PAINTED_HEADING.lastIndex = 0;
+  const html = String(painted == null ? "" : painted).replace(DSR_PAINTED_HEADING, (whole, tag, inner) => {
+    const words = dsrHeadingText(inner);
+    const entry = {
+      // The depth is the RENDERER'S. It paints its heading levels onto a scale of its own, and a
+      // reader that reused the painting and then claimed some other depth for it would be
+      // disagreeing with the screen the operator is looking at. Levels count from 1.
+      level: Math.max(1, Number(tag) - 1),
+      text: words,
+      id: "dsr-h-" + headings.length,
+      label: dsrLeadingToken(words)
+    };
+    headings.push(entry);
+    return "<h" + tag + ' class="docs-body-h" id="' + entry.id + '">' + inner + "</h" + tag + ">";
   });
-
-  if (fence) html.push('<pre class="dsr-code">' + dsrEsc(fenceLines.join("\n")) + "</pre>");
-  flushBlocks();
-  return { headings, html: html.join("\n") };
+  return { headings, html };
 }
 
-function dsrHeadings(rawText) {
-  return dsrParseDocument(rawText).headings;
+// Render one document and index it. `available: false` is the honest answer when this page was
+// loaded without the console script that owns the renderer: this file will not grow a renderer of
+// its own to cover for a missing one — growing a second is the whole defect — and the reader says
+// so in words rather than showing an empty column.
+function dsrRenderDocument(rawText, path) {
+  const render = dsrSharedRenderer();
+  if (!render) return { available: false, headings: [], html: "" };
+  const painted = render({ path: String(path == null ? "" : path) }, rawText);
+  const indexed = dsrIndexPainting(painted);
+  return { available: true, headings: indexed.headings, html: indexed.html };
+}
+
+function dsrHeadings(rawText, path) {
+  return dsrRenderDocument(rawText, path).headings;
 }
 
 // ---------------------------------------------------------------------------
@@ -343,28 +276,65 @@ function dsrResolveSection(headings, citation) {
 function dsrDocListHtml(model, options) {
   const opts = options || {};
   const indexPath = dsrEsc(opts.indexPath || "");
+  const activePath = typeof opts.activePath === "string" ? opts.activePath : "";
+  // [#63] Every branch is wrapped in the list's own block, so an absence sits where the list
+  // would have sat and takes the column's inset with it rather than touching its edges.
   if (!model || !model.available) {
     return `
-      <div class="dsr-absence">
-        <div class="dsr-absence-line">The documents index of this project could not be read, so there is no list of documents to offer — neither that it has any nor that it has none.</div>
-        ${indexPath ? `<div class="dsr-absence-path mono">${indexPath}</div>` : ""}
+      <div class="dsr-doc-list">
+        <div class="dsr-absence">
+          <div class="dsr-absence-line">The documents index of this project could not be read, so there is no list of documents to offer — neither that it has any nor that it has none.</div>
+          ${indexPath ? `<div class="dsr-absence-path mono">${indexPath}</div>` : ""}
+        </div>
       </div>
     `;
   }
   if (!model.docs.length) {
     return `
-      <div class="dsr-absence">
-        <div class="dsr-absence-line">This project's documents index was read and lists no document.</div>
-        ${indexPath ? `<div class="dsr-absence-path">Measured from <span class="mono">${indexPath}</span>.</div>` : ""}
+      <div class="dsr-doc-list">
+        <div class="dsr-absence">
+          <div class="dsr-absence-line">This project's documents index was read and lists no document.</div>
+          ${indexPath ? `<div class="dsr-absence-path">Measured from <span class="mono">${indexPath}</span>.</div>` : ""}
+        </div>
       </div>
     `;
   }
-  const rows = model.docs.map((doc) => `
-    <button class="dsr-doc-row" type="button" data-dsr-doc="${dsrEsc(doc.path)}">
-      <span class="dsr-doc-title">${dsrEsc(doc.title)}</span>
-      <span class="dsr-doc-path mono">${dsrEsc(doc.path)}</span>
+  // [#63] A ROW THAT READS AS A HIERARCHY. Measured on 2026-09-02: the row printed its title
+  // and its path at nearly one weight, so the eye had nothing to land on first.
+  //
+  // The split is the SAME ONE the header already makes, and it is made the same way: whatever
+  // follows the title's LAST separator leaves the name and goes to the right of the row, because
+  // of WHERE it sits and never because of what it says. This file does not know what a version
+  // is, and it must not learn: the genre of a document does NOT travel as data — the only
+  // grouping an index carries is derived from the document's own folder — so deciding that some
+  // leading word is a label by READING it would be domain interpretation, which is forbidden
+  // here. What is left of the title after the tail comes off stays the name, whole.
+  //
+  // [#63 QA] AND THE ROW IS A NAV ITEM, WORN AND NOT COPIED. The operator read the column and
+  // said «esa parte, texto, recuadros y luego texto, no se ve un menú limpio». Measured the same
+  // day: this row drew a CARD — border, background, radius, a margin between each — while the
+  // Docs tab's own navigation draws none of that: transparent, borderless, and a 3px bar down the
+  // left only when the item is active. The tab is the surface the operator named, so the row
+  // WEARS `docs-nav-item` and this file declares nothing for it. The look, the hover and the
+  // active state all arrive from the one rule that already owns them, and cannot drift from it.
+  //
+  // `active` is that rule's own word, marked here on the document that is open — the same fact
+  // the tab marks on the document it is showing.
+  const rows = model.docs.map((doc) => {
+    const split = dsrSplitTitle(doc.title);
+    const active = activePath && doc.path === activePath ? " active" : "";
+    // [#63 QA·2] TITLE AND LABEL, AND NOTHING ELSE. «que solo tenga titulo y nota, que no venga
+    // la ruta abajo del nombre». The path is not lost: it is what makes a citation checkable, so
+    // it stays where it is worth reading — under the name of the document that is OPEN, in the
+    // header of this dialog — instead of under all 325 names in the menu. It is still on the row
+    // as the handle the click travels by, which is data and not print.
+    return `
+    <button class="docs-nav-item dsr-doc-row${active}" type="button" data-dsr-doc="${dsrEsc(doc.path)}">
+      <span class="dsr-doc-title">${dsrEsc(split.name)}</span>
+      <span class="dsr-doc-version">${dsrEsc(split.label)}</span>
     </button>
-  `).join("");
+  `;
+  }).join("");
   return `
     <div class="dsr-doc-list">
       <div class="dsr-doc-list-head">${dsrEsc(`${model.docs.length} document${model.docs.length === 1 ? "" : "s"} indexed by this project`)}</div>
@@ -374,19 +344,14 @@ function dsrDocListHtml(model, options) {
   `;
 }
 
-// The section index of the document on screen. Absent headings are stated, not hidden: a
-// document with no headings has no sections to jump to, and that is a fact about the document.
-function dsrSectionIndexHtml(headings) {
-  const list = Array.isArray(headings) ? headings : [];
-  if (!list.length) {
-    return '<nav class="dsr-index is-empty" aria-label="Sections"><div class="dsr-index-empty">This document carries no headings, so it has no section index.</div></nav>';
-  }
-  const items = list.map((heading) => `
-    <button class="dsr-index-item dsr-index-l${heading.level}" type="button" data-dsr-section="${dsrEsc(heading.id)}">${dsrEsc(heading.text)}</button>
-  `).join("");
-  return `<nav class="dsr-index" aria-label="Sections"><div class="dsr-index-title">Sections</div>${items}</nav>`;
-}
-
+// [#63 QA·2] THE SECTION RAIL IS GONE, and its absence is a decision and not an oversight.
+// «aqui estas manejando un sistema de documentos a la izquierda y secciones a la izquierda mas
+// abajo, no me gusta, quita las secciones» — they complicated the column instead of easing it.
+// One index in the left column: the project's documents. Nothing else.
+//
+// The headings THEMSELVES are still read, still stamped with their positional ids, and still
+// what a citation resolves against — that is the jump, and the jump is untouched. What is gone
+// is the second list of them beside the first.
 // A citation that did not resolve. It NAMES the section it could not resolve, verbatim as the
 // report wrote it, and says which of the two things happened. Silence here would be the reader
 // pretending the jump worked.
@@ -398,7 +363,7 @@ function dsrUnresolvedHtml(resolution) {
     : "no heading of this document answers to it";
   return `
     <div class="dsr-notice" role="status">
-      <div class="dsr-notice-line">The citation's section could not be resolved, so the document opened at its index instead of jumping.</div>
+      <div class="dsr-notice-line">The citation's section could not be resolved, so the document opened at its beginning instead of jumping to it.</div>
       <div class="dsr-notice-section">Cited section: <span class="mono">${requested}</span></div>
       <div class="dsr-notice-why">${dsrEsc(why)}. Citations that carry a comment, or name more than one section at once, are read as written and never guessed at.</div>
     </div>
@@ -425,17 +390,56 @@ function dsrUnlistedHtml(path, indexPath) {
     <div class="dsr-absence is-broken">
       <div class="dsr-absence-line">This citation names a file that this project's documents index does not list, so the reader does not open it.</div>
       <div class="dsr-absence-file"><span class="dsr-absence-label">Named</span> <span class="mono">${dsrEsc(path)}</span></div>
-      ${indexPath ? `<div class="dsr-absence-path">The list below is what <span class="mono">${dsrEsc(indexPath)}</span> declares, and it is the whole of what can be opened here.</div>` : ""}
+      ${indexPath ? `<div class="dsr-absence-path">The index beside this is what <span class="mono">${dsrEsc(indexPath)}</span> declares, and it is the whole of what can be opened here.</div>` : ""}
+    </div>
+  `;
+}
+
+// [#63] A page loaded without the console script that owns the document renderer. The reader
+// refuses to render rather than grow a renderer of its own, and NAMES what is missing — the same
+// rule that governs a document it cannot read, applied to a renderer it cannot reach.
+function dsrNoRendererHtml(path) {
+  return `
+    <div class="dsr-absence is-broken">
+      <div class="dsr-absence-line">This page was loaded without the console's document renderer, so this document is not rendered. This reader paints with the one renderer the console already has and grows no second one of its own.</div>
+      <div class="dsr-absence-file"><span class="dsr-absence-label">File</span> <span class="mono">${dsrEsc(path)}</span></div>
+      <div class="dsr-absence-file"><span class="dsr-absence-label">Missing</span> <span class="mono">renderDocBodyContent</span></div>
+    </div>
+  `;
+}
+
+// [#63] The reading column with no document asked for yet. The index is already beside it, so
+// this points at the index instead of repeating it — and it is words, not an empty column.
+function dsrPromptHtml() {
+  return `
+    <div class="dsr-prompt">
+      <div class="dsr-prompt-line">Choose a document in the index to read it here.</div>
     </div>
   `;
 }
 
 // ---------------------------------------------------------------------------
-// THE PANEL. Half the page, beside the report — never instead of it.
+// THE MODAL. Centred over the report — never instead of it.
 //
-// It is an OVERLAY and not a column the report is squeezed into, and that is the whole of
-// criterion 1: nothing under it is resized, re-laid-out or re-rendered when it opens, so the
-// report cannot lose the operator's place in it. Closing it puts back a screen that never moved.
+// [#63] The operator read a document in #62's side panel and named the fix himself, by pointing
+// at a surface this console ALREADY HAS: «en vez de tener un indice al que le das click y abre
+// esa seccion y se pierde el indice, que se use el mismo diseno que docs de un proyecto. A la
+// izquierda el indice y a la derecha el contenido», and on the shape, «creo que es mejor que
+// este como un modal centrado, y grande, con el fondo negro igual que ahora».
+//
+// So this is COMPOSED FROM WHAT EXISTS and invents nothing: the centred-dialog geometry of the
+// console's edit modal, the two-column grid of its Docs tab, that tab's navigation column and
+// reading column, and the very veil the run drawer already darkens the page with. Four patterns
+// the console already carries; no fifth.
+//
+// AND THE INDEX NEVER LEAVES. The index and the document are two columns with two scrollers, so
+// reading the document moves the document and the index stays exactly where it was — which is
+// the whole of the complaint that opened this run.
+//
+// It is still an OVERLAY and not a column the report is squeezed into, and that is still the
+// whole of criterion 1: nothing under it is resized, re-laid-out or re-rendered when it opens,
+// so the report cannot lose the operator's place in it. Closing it puts back a screen that
+// never moved.
 // ---------------------------------------------------------------------------
 
 const DSR_PANEL_ID = "doc-side-reader";
@@ -443,6 +447,8 @@ const DSR_OVERLAY_ID = "doc-side-reader-overlay";
 const DSR_TITLE_ID = "doc-side-reader-title";
 const DSR_LABEL_ID = "doc-side-reader-label";
 const DSR_PATH_ID = "doc-side-reader-path";
+const DSR_INDEX_ID = "doc-side-reader-index";
+const DSR_DOCS_ID = "doc-side-reader-docs";
 const DSR_SCROLL_ID = "doc-side-reader-scroll";
 const DSR_BODY_ID = "doc-side-reader-body";
 
@@ -499,17 +505,14 @@ function dsrWire() {
       closeDocSideReader();
       return;
     }
-    if (el.closest("[data-dsr-list]")) {
-      openDocSideReader({});
-      return;
-    }
     const row = el.closest("[data-dsr-doc]");
     if (row) {
       openDocSideReader({ path: row.getAttribute("data-dsr-doc") });
       return;
     }
-    const jump = el.closest("[data-dsr-section]");
-    if (jump) dsrScrollTo(jump.getAttribute("data-dsr-section"));
+    // [#63 QA·2] No section control is listened for here any more, because none is painted: the
+    // rail that produced them is gone. `dsrScrollTo` stays, because the JUMP stays — it is what
+    // a citation that resolves does, and it is driven by the citation, not by a control.
   });
 }
 
@@ -572,6 +575,33 @@ function dsrScrollTo(targetId) {
   return true;
 }
 
+// [#63] THE INDEX COLUMN, and it is written on EVERY branch. The project's documents are always
+// listed there — a document being open never replaces them — and the sections of the open
+// document sit underneath. That is what «se pierde el indice» asked for: the index is a column of
+// its own with a scroller of its own, so reading the document moves the document.
+//
+// The two blocks are written INDEPENDENTLY, and the list is written only when it actually
+// changes: assigning the same list back would reset this column's scroll and lose the operator's
+// place in a list of hundreds — the same defect one storey down.
+//
+// [#63 QA] The list now carries WHICH document is open, so it does change from one document to
+// the next. The operator's place is kept anyway, and explicitly: the column's scroll is read
+// before the write and put back after it. Emptying a box and refilling it lets the browser clamp
+// an ancestor's scroll to a height that exists for an instant, and «se pierde el indice» is the
+// one thing this reader may not do.
+function dsrPaintIndex(model, indexPath, activePath) {
+  const docs = dsrById(DSR_DOCS_ID);
+  if (docs) {
+    const html = dsrDocListHtml(model, { indexPath, activePath });
+    if (docs.innerHTML !== html) {
+      const column = dsrById(DSR_INDEX_ID);
+      const place = column ? column.scrollTop : 0;
+      docs.innerHTML = html;
+      if (column && column.scrollTop !== place) column.scrollTop = place;
+    }
+  }
+}
+
 // Open the reader. With no `path`, on the project's list of documents; with one, on that
 // document, jumping to `section` when — and only when — that section resolves.
 //
@@ -589,12 +619,15 @@ async function openDocSideReader(options) {
   const section = typeof opts.section === "string" ? opts.section.trim() : "";
   dsrShow(true);
   if (scroll) scroll.scrollTop = 0;
+  // The row of the document being opened is marked at once, before it is fetched, so the menu
+  // answers the press immediately. A path nobody indexed marks nothing, because no row has it.
+  dsrPaintIndex(model, indexPath, path);
 
-  // No document asked for: the list. Also the landing place of every refusal below, so the
-  // operator is never left holding a panel with nothing in it.
+  // No document asked for: the index alone, and a reading column that points at it rather than
+  // standing empty.
   if (!path) {
     dsrSetHeader("Documents of this project", indexPath);
-    body.innerHTML = dsrDocListHtml(model, { indexPath });
+    body.innerHTML = dsrPromptHtml();
     dsrState = { path: "", section: "", view: model.available ? "list" : "index_unavailable" };
     return { ok: model.available, view: dsrState.view, path: "", section: "", resolved: false, reason: "none", targetId: "" };
   }
@@ -602,7 +635,7 @@ async function openDocSideReader(options) {
   const doc = model.byPath.get(path) || null;
   if (!doc) {
     dsrSetHeader("Not a document of this project", path);
-    body.innerHTML = dsrUnlistedHtml(path, indexPath) + dsrDocListHtml(model, { indexPath });
+    body.innerHTML = dsrUnlistedHtml(path, indexPath);
     dsrState = { path, section, view: "unlisted" };
     return { ok: false, view: "unlisted", path, section, resolved: false, reason: "unlisted", targetId: "" };
   }
@@ -627,13 +660,27 @@ async function openDocSideReader(options) {
     return { ok: false, view: "unreadable", path: doc.path, section, resolved: false, reason: "unreadable", targetId: "", detail: failure };
   }
 
-  const parsed = dsrParseDocument(raw);
-  const resolution = dsrResolveSection(parsed.headings, section);
+  // ONE RENDERER: the console's own, called here. When the page has none, that is said in words
+  // and no renderer is grown to replace it.
+  const rendered = dsrRenderDocument(raw, doc.path);
+  if (!rendered.available) {
+    body.innerHTML = dsrNoRendererHtml(doc.path);
+    dsrState = { path: doc.path, section, view: "no_renderer" };
+    return { ok: false, view: "no_renderer", path: doc.path, section, resolved: false, reason: "no_renderer", targetId: "" };
+  }
+
+  const resolution = dsrResolveSection(rendered.headings, section);
+  // The reading column carries the document and what could not be done with it. The index column
+  // carries the sections — beside the document, never above it, so a jump cannot scroll it away.
   body.innerHTML =
     dsrUnresolvedHtml(resolution) +
-    dsrSectionIndexHtml(parsed.headings) +
-    '<article class="dsr-document">' + parsed.html + "</article>";
-  dsrState = { path: doc.path, section, view: "document", headings: parsed.headings, resolution };
+    // The Docs tab's own reading container, so the document is painted by the one stylesheet
+    // that already paints documents in this console.
+    '<article class="docs-body">' + rendered.html + "</article>";
+  // The same active row as the paint above, so the list html is unchanged and the guard skips the
+  // write: one write per document opened, never two.
+  dsrPaintIndex(model, indexPath, doc.path);
+  dsrState = { path: doc.path, section, view: "document", headings: rendered.headings, resolution };
   if (resolution.resolved) dsrScrollTo(resolution.targetId);
   return {
     ok: true,
@@ -643,13 +690,15 @@ async function openDocSideReader(options) {
     resolved: resolution.resolved,
     reason: resolution.reason,
     targetId: resolution.targetId,
-    headings: parsed.headings.length
+    headings: rendered.headings.length
   };
 }
 
 function closeDocSideReader() {
   const body = dsrById(DSR_BODY_ID);
   if (body) body.innerHTML = "";
+  const docs = dsrById(DSR_DOCS_ID);
+  if (docs) docs.innerHTML = "";
   dsrSetHeader("", "");
   dsrShow(false);
   dsrState = null;

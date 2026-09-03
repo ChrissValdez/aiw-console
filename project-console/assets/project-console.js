@@ -2720,10 +2720,33 @@ function renderDocMarkdownLite(rawText) {
         listItem = [ordered ? ordered[1] : unordered[1]];
         continue;
       }
+      // Blockquote: a quote is a BLOCK, not a line. Consecutive quote lines belong to ONE
+      // <blockquote> - the branch used to emit one box per source line, so a quote of N lines
+      // painted N boxes, a bare ">" painted an empty box, and a bold span crossing two source
+      // lines never closed inside its own box and printed its ** literally.
+      // The run is consumed FORWARD, the same way the table branch consumes its rows, so every
+      // other block rule keeps terminating exactly as it did: the run ends at the first line that
+      // is not a quote line (a blank line included), and that line is then processed normally.
+      // Lines are joined with <br>, which keeps the quote's own line structure - a bare ">" is a
+      // blank line INSIDE the block - and lets inline() see the whole quote at once, so a bold or
+      // code span that opens on one line closes on the next. Leading and trailing blank quote
+      // lines are dropped, and a quote with no words at all paints nothing rather than an empty
+      // box. Nothing inside a quote is re-parsed as a block: a nested ">" and a "- " bullet stay
+      // the literal text they already were, escaped, exactly as the per-line branch left them.
       if (trimmed.startsWith("&gt;")) {
         flushParagraph();
         flushList();
-        html.push(`<blockquote>${inline(trimmed.replace(/^&gt;\s?/, ""))}</blockquote>`);
+        const quoteLines = [];
+        let j = i;
+        for (; j < lines.length; j += 1) {
+          const quoted = lines[j].trim();
+          if (!quoted.startsWith("&gt;")) break;
+          quoteLines.push(quoted.replace(/^&gt;\s?/, ""));
+        }
+        i = j - 1;
+        while (quoteLines.length && !quoteLines[0]) quoteLines.shift();
+        while (quoteLines.length && !quoteLines[quoteLines.length - 1]) quoteLines.pop();
+        if (quoteLines.length) html.push(`<blockquote>${inline(quoteLines.join("<br>"))}</blockquote>`);
         continue;
       }
       // Continuation of the current list item: a non-blank line that opens no new block while a

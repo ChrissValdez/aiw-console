@@ -141,6 +141,25 @@ REFERENCE-SLIDE-WEB-COMPONENT-MAPPING.md con cuatro afirmaciones obsoletas.
 Y EL TEXTO VISIBLE DE LAS DOS MARCAS: preguntado CINCO veces sin respuesta. Declarado
 como deuda nombrada. NO SE LO VUELVAS A PREGUNTAR.
 
+CUANDO LE GENERES JSON O CONTENIDO CON FORMULAS: EL COLOR SE ESCRIBE `\textcolor`.
+Medido el 2026-09-02 en
+tools/studio/editor-ui/src/features/math-authoring/constants.js: la allowlist del editor de
+formulas tiene 230 comandos verificados uno a uno contra KaTeX 0.16.9, y `textcolor` ESTA y
+`color` NO ESTA -tampoco colorbox ni fcolorbox-.
+
+La forma correcta es `\textcolor{#RRGGBB}{contenido}` con hex seguro. NUNCA `\color`.
+
+POR QUE ESTO ENGAÑA Y HAY QUE SABERLO: una formula con `\color` SE RENDERIZA BIEN, porque
+KaTeX si lo soporta y la allowlist es deliberadamente mas estrecha que KaTeX. El fallo solo
+aparece AL EDITARLA, cuando corre el sanitizador, con el mensaje «el comando \color no esta
+en la lista de comandos permitidos». Y si el operador la reescribe a mano parece que se
+arregla sola: no es magia, es que la UI emite `\textcolor`, no `\color`.
+
+LA CABINA YA LE GENERO CONTENIDO ASI, y lo encontro el operador, no la cabina: 27 apariciones
+en 5 ficheros de src/content, DOS DE ELLOS LECCIONES PUBLICADAS, y cero ficheros del corpus
+usan `\textcolor`. Es decir: todo el color matematico del corpus usa el comando que el editor
+rechaza, y por eso ninguna de esas formulas se puede editar sin reescribirla entera.
+
 FALSEDAD HEREDADA QUE YA HA MORDIDO DOS VECES — MATALA AL LEERLA:
 "el export a Moodle usa `CertUtil -encode`, un binario de Windows". ES FALSO. Sigue viva en
 la tabla de "NO puede" de las REGLAS DE CABINA del Project, y de ahi la copian las cabinas.

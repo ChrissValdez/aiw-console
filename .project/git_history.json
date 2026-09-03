@@ -1,27 +1,37 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-09-03T01:32:47.136Z",
+  "generated_at": "2026-09-03T01:59:09.045Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-09-03T01:32:12.751Z"
+      "mtime": "2026-09-03T01:49:08.019Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-09-03T01:32:47.106Z"
+      "mtime": "2026-09-03T01:59:09.018Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "66edf0c658672704ee867e707213c4097f991323",
+  "head": "c78b53d12dd11c9ec1d2706b7b85645139099dd9",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 384,
+  "commit_total": 385,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "c78b53d",
+      "full_sha": "c78b53d12dd11c9ec1d2706b7b85645139099dd9",
+      "date": "2026-09-02T19:35:19-06:00",
+      "parents": "66edf0c",
+      "subject": "cierra el #63 y releva el hilo aiw-console, 2026-09-02: 70 runs, CERO activos, y cuatro cerrados esta sesion -- 60, 61, 62 y 63. El hilo entrego el pintado del sobre y despues, en cascada, todo lo que salio de una sola frase del operador: que la seccion de cobertura APROBABA los cuatro pasos de QA que la miden y aun asi no le servia. Correcta e inutil a la vez, y eso no lo encuentra ninguna medicion. Se registra la D-073, que adopta el blueprint de documentacion de cantu-studio como estandar de los cinco proyectos hacia adelante, con su alcance exacto declarado como PENDIENTE en vez de fingido: no todo el blueprint es exportable y que las secciones de forma sean 4a 4b 4h 4i y 4j es lectura de la cabina, no decision del operador. Y se registra la leccion que casi cuesta un error: la cabina iba a numerarla D-070 y las D-070, D-071 y D-072 YA existian, escritas desde el hilo cantu-studio el 26 y el 30 de agosto -- en este repo escriben cuatro hilos y el numero siguiente se mide, no se supone. El relevo deja medido y listo para emitir el run siguiente: el renderizador compartido convierte CADA linea que empieza por > en su propio blockquote, project-console.js:2726, y por eso el documento del emisor se pinta como 46 cajas con huecos vacios y negritas literales; nadie lo habia visto porque los documentos de cantu-studio solo usan la cita de UNA linea de su cabecera de estado. Arreglarlo es codigo compartido y toca tambien la pestana de Docs. Nuevo fichero vivo de reglas de operacion del operador, verbatim, con las tres que fijo hoy. Add dirigido por nombre: canonico, los siete de .project, DECISIONES y el relevo; context/aiw/records sigue fuera porque es del hilo aiw",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "66edf0c",

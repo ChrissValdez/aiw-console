@@ -1,27 +1,48 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-09-02T23:21:57.870Z",
+  "generated_at": "2026-09-03T01:32:47.136Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-09-02T23:20:08.173Z"
+      "mtime": "2026-09-03T01:32:12.751Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-09-02T23:21:57.833Z"
+      "mtime": "2026-09-03T01:32:47.106Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "09adeb53fe0562646199bd7daacf3f6e4c430a18",
+  "head": "66edf0c658672704ee867e707213c4097f991323",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 382,
+  "commit_total": 384,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "66edf0c",
+      "full_sha": "66edf0c658672704ee867e707213c4097f991323",
+      "date": "2026-09-02T19:32:12-06:00",
+      "parents": "bdcd074",
+      "subject": "#63 RUN-CONSOLE-DOC-READER-MODAL-001: un lector y no dos -- el modal centrado que reutiliza el layout y el renderizador de la pestana de Docs, en tres entregas del taller y commiteado por la cabina. El panel lateral del #62 se retiro entero, no dormido: dsrParseDocument, dsrInline y su hoja de tipografia estan borrados, y el cuerpo lo pinta renderDocBodyContent, el mismo punto de entrada de la pestana. Tres rondas de QA del operador, cada una midiendo antes de tocar: el modal paso de min(1040px,94vw) a min(1760px,96vw) por 94vh; la lista dejo de dibujar tarjetas y viste docs-nav-item, con la regla propia BORRADA para que cada pixel de la fila sea de la pestana; la fila quedo en una linea, nombre y version, sin la ruta debajo -- que ahora se lee una vez, en la cabecera del documento abierto; el riel de secciones se retiro entero con el precio ACEPTADO por escrito de que una cita irresoluble aterrice al principio del documento, escrito como comportamiento y pinchado por prueba para que no reaparezca como regresion; y la medida de lectura se capo en 66ch dentro de la clase propia del lector. Esa ultima nacio de una hipotesis de la cabina que el taller confirmo y cuantifico: 137 caracteres por linea contra una banda comoda de 45 a 75, casi el doble, y no era el interlineado ni el tamano. El taller corrigio ademas su propia derivacion -- calculo 76 caracteres, midio 64, y entonces probo cinco topes en vez de discutir -- y eligio por el cuartil superior y no por la mediana. Verificado por la cabina contra disco en las tres rondas: ni un byte en serve.mjs, project-console.js ni project-console.css, cero reglas propias sobre selectores compartidos, roadmap y .project intactos. Las suites 795, 800 y 804 son del taller: la cabina no las corre",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-DOC-READER-MODAL-001"
+    },
+    {
+      "branch": "main",
+      "sha": "bdcd074",
+      "full_sha": "bdcd074c262c2563c58cbddbc8c7c78e6ff239d7",
+      "date": "2026-09-02T17:22:35-06:00",
+      "parents": "09adeb5",
+      "subject": "cierra el #62 DOC-SIDE-READER y abre el #63 DOC-READER-MODAL, active: la forma cambia y por eso el run tambien. El #62 entrego lo que prometia y se cierra con el veredicto del operador; lo que pidio el 2026-09-02 -- modal centrado, indice a la izquierda y contenido a la derecha como la pestana de Docs -- NO es una reparacion sino otra forma, y este run_id dice SIDE READER: enmendarlo dejaria el identificador mintiendo en todos los records futuros, asi que se cierra y se abre otro. Y se declara el duplicado que el #62 creo sin saberlo: la consola YA tenia un lector de documentos con indice a la izquierda, su pestana de Docs con .docs-layout y su propio renderizador, y el #62 construyo un segundo; el operador decidio que haya UNO y que el run nuevo reutilice el existente. Medido para que el run nuevo componga en vez de inventar: .edit-modal es un modal centrado en la 5539, .docs-layout es la rejilla de 340px y el resto en la 1573, la pestana de Docs ya mapea markdown a sus propios encabezados, y .drawer-overlay es el velo ya en uso -- cuatro patrones que existen. Y sobre la etiqueta del titulo se midio que el genero NO viaja como dato: ia_bucket se deriva del prefijo de la ruta y vale docs en los tres documentos, asi que decidir que Contrato es una etiqueta leyendo la palabra seria interpretar dominio; se parte por POSICION, como ya se hace con la version. Evidencia: tres escrituras cada una con su dry-run y su remap publicado, md5 3c4496d4b614a986e040d384278cb5e9 a 1f2e45705365573cbf87ba9a4ba7d442 a 47da21dbaa269f660517e99cea501c37, verificacion campo a campo con UN id nuevo, cero perdidos, queue_order tocado solo en los 7 desplazados, densidad 1..70 intacta, un solo run activo y .project re-emitido en cada acto",
+      "body": "",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "09adeb5",

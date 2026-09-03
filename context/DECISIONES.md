@@ -3068,3 +3068,63 @@ es otra cosa y siempre fue del operador.
 
 Criterio de borrado: la sustituye una decisión que devuelva el default a la misma sesión, o que
 haga que los tickets dejen de ser autosuficientes.
+
+---
+
+## D-073 — EL BLUEPRINT DE DOCUMENTACIÓN DE `cantu-studio` PASA A SER EL ESTÁNDAR DE LOS CINCO PROYECTOS
+
+**Fecha:** 2026-09-02 · **Proyecto:** transversal · **Origen:** hilo `aiw-console`, durante la QA
+del `#63`, leyendo la documentación del emisor en el lector nuevo.
+
+Decidido por **Christopher Valdez Cantu** el **2026-09-02**. La pregunta que se le hizo fue qué
+hacer con documentos que incumplen el estándar, y eligió **adoptarlo para todos** en vez de pedirlo
+como favor al emisor.
+
+### Lo que lo motivó, medido el 2026-09-02
+
+El operador abrió los documentos de `cantu-quizzes-latex` en la consola y dijo, verbatim:
+
+> «Estos docs estan no solo excesivamente densos, aparte parece un mar de texto no amigable,
+> cansado para la vista. Ademas arriba tiene unos metadatos no se si asi llamarlos, excesivos.»
+> · «De entrada no puede ser tan largo cada documento, para eso se secciona en multiples
+> documentos» · «trata de reproducir como se genero los docs en cantu studio porque eso se pulio
+> muchas veces para llegar a eso»
+
+**Las cifras que lo sostienen, y se vuelven a medir en el punto de uso:**
+
+| documento del emisor | líneas | cabecera de estado §4a |
+|---|---|---|
+| `CONTRATO-REPORTE-DE-CAMBIOS-v1.md` | **983** | no |
+| `RUBRICA-DE-NIVELES.md` | 259 | no |
+| `PERFIL-REPORTE-QUIZZES-v1.md` | 216 | no |
+| — los cuatro de `cantu-studio` — | 133 · 142 · 662 · 674 | **sí, los cuatro** |
+
+El tope duro del blueprint son **250 líneas**. Y la cabecera del §4a no es cosmética: **el
+renderizador de la consola ya la detecta y la pliega** en el bloque METADATA
+(`project-console.js:2747`). Un documento que la lleva se ve limpio **sin tocar una línea de
+código**; uno que no, vuelca su preámbulo entero a la cara del lector.
+
+### La regla
+
+- **El estándar es `projects/cantu-studio/docs/docs_management/DOCUMENTATION-BLUEPRINT.md`**, y
+  rige la documentación NUEVA de los cinco proyectos.
+- **Se adopta hacia adelante.** Ningún documento existente se reescribe por esta decisión: cada
+  hilo lo aplica cuando toque su documento, y su run lo declara.
+- **Cada hilo adopta en SU repo.** Esta decisión no autoriza a nadie a escribir en el repo de otro.
+
+### Lo que queda POR CERRAR, y se declara en vez de fingir que está decidido
+
+**No todo el blueprint es exportable, y quien diga lo contrario no lo ha leído.** Su §2 nombra
+componentes de Cantu Studio; su §3 define una taxonomía con subgrupos Web y Slides; su §5 trae
+plantillas de sus géneros. **Nada de eso significa nada en `cantu-quizzes-latex`.**
+
+Lo que sí parece universal —y **es una lectura de la cabina, no una decisión del operador**— son
+las secciones de forma: **§4a** cabeceras de estado, **§4b** tope de tamaño y regla de partición,
+**§4h** concisión y jerarquía visual, **§4i** reglas medibles y **§4j** selección de formato.
+
+**El alcance exacto lo cierra un run**, que debe leer el blueprint entero y proponer qué secciones
+son de forma y cuáles son del dominio de Cantu Studio. Hasta entonces esta decisión vale como
+dirección, no como lista.
+
+**Criterio de borrado:** la sustituye una decisión que retire el blueprint como estándar común, o
+que lo reemplace por un estándar propio escrito para los cinco proyectos.

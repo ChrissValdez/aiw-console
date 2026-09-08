@@ -65,7 +65,7 @@ una demuestra que el punto ciego declarado es real, la otra que no hay ruido sob
 | el tercer huérfano | `docs/project-console/run-protocol.md`, sigue citado en `docs/operations/OPERATIONS-RUN-PROTOCOL.md:91` — fichero que el taller **no tocó** |
 | la guarda corrida sola | **9 de 9 en verde**: las 4 heredadas de `#189` + las 5 nuevas |
 | finales de línea de los 13 ficheros | **100 % CRLF, línea por línea, ninguna mezclada** |
-| `checkInvariants` sobre el canónico | **0 errores**, sin `externalRunIds` — la comprobación más estricta |
+| `checkInvariants` sobre el canónico | **0 errores** — pero la frase con la que se publicó era falsa; ver la corrección de abajo |
 
 ---
 
@@ -125,3 +125,39 @@ esperaba, y no solo a uno que existe.** La guarda comprueba **existencia, no per
 ## Suite
 
 **2 390/0 → 2 395/0.** La guarda sola: **9/9**.
+
+---
+
+## ⚠ CORRECCIÓN — la segunda cifra falsa del mismo cierre, y esta se publicó
+
+**Escrita el 2026-09-07, minutos después del cierre, al abrir `#191`.**
+
+En el parte de `#190` y en el mensaje del commit `ea745bf9` la cabina publicó:
+
+> `checkInvariants: 0 errores sin externalRunIds, que es la lectura más estricta`
+
+**Las dos mitades son falsas.**
+
+1. **La sonda no midió lo que dijo medir.** `checkInvariants` espera un **`Set`** en
+   `externalRunIds` y la cabina le pasó un **array**. La rama que consulta esa colección hace
+   `.has()`, así que **con un array habría lanzado** — y no lanzó, porque con el canónico de
+   entonces **nunca llegó a esa rama**. El `0 errores` no era el resultado de la comprobación:
+   era el resultado de no haberla alcanzado. Se destapó sola al abrir `#191`, cuando el mismo
+   comando **sí** llegó a la rama y reventó con `externalRunIds.has is not a function`.
+2. **«Sin `externalRunIds`» no es más estricto: es incorrecto.** Con el `Set` real, derivado del
+   servidor, son **159 ids** y el resultado es **0 errores**. Con el `Set` vacío sale **1**, y ese
+   uno es una **arista legítima** —`RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` hacia
+   `RUN-CANTU-ROADMAP-CONTENT-AUDIT-001`, que vive en otro proyecto—. Vaciar la colección no
+   endurece la prueba: **fabrica un colgante donde no lo hay.**
+
+**La cifra buena es `0 errores` con los 159 `externalRunIds` del servidor**, medida el 2026-09-07.
+El número coincide por casualidad; el fundamento no, y el fundamento es lo que se publica.
+
+**El commit `ea745bf9` queda con la frase falsa dentro.** No se reescribe historia: se corrige
+hacia adelante, y esta es la corrección.
+
+**Y es la misma forma de fallar dos veces en un solo cierre**, la quinta de la constitución —
+medir con la herramienta equivocada. La primera vez fabricó un rojo (LF contra CRLF). La segunda
+fabricó **un verde**, que es la peligrosa, **y encima lo vistió de rigor** llamándolo «la lectura
+más estricta». La constitución avisa de los verdes; no avisaba de que la cabina los adorne.
+

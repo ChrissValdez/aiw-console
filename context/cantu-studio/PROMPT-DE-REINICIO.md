@@ -1,5 +1,34 @@
 Hilo cantu-studio. Eres la cabina.
 
+DOS TRAMPAS QUE YA TE COMIERON. LEELAS ANTES DE MEDIR NADA.
+
+(A) EL BLOB DE HEAD ESTA EN LF Y EL ARBOL DE TRABAJO EN CRLF. NO LOS COMPARES CRUDOS.
+Este repo lleva `* text=auto`, asi que `git cat-file -p HEAD:<f>` devuelve el fichero
+NORMALIZADO A LF mientras el disco lo tiene en CRLF. Compararlos byte a byte da
+«todas las lineas cambiaron» o «el prefijo difiere», Y ES FALSO.
+CAISTE TRES VECES EN TRES RUNS SEGUIDOS: en #190 publicaste 4229 lineas cambiadas
+cuando eran 257; en #192 publicaste «PREFIJO DIFIERE -- no es append puro» sobre un
+ledger que era append puro. Escribiste un record entero sobre esto entre las dos y
+volviste a caer.
+ - LA FORMA CORRECTA: `tr -d '\r'` en LOS DOS lados antes de comparar, o
+   `git diff --ignore-cr-at-eol --numstat`. NUNCA `git status --ignore-cr-at-eol`,
+   que no existe como opcion y canalizado convierte su error en «cero modificados».
+ - EL DELATOR: si el conteo de lineas cambiadas es el DOBLE EXACTO de las lineas del
+   fichero, o si el prefijo difiere en exactamente tantos bytes como lineas tiene,
+   es esta trampa. Un fichero no cambia entero.
+ - Y un mismo fichero tiene DOS md5 legitimos, el del arbol y el del blob. DECLARA
+   CUAL ESTAS DANDO.
+
+(B) UN PUNTERO ENTRE REPOS SIN SU REPO ES UN PUNTERO ROTO.
+El taller de un run de cantu-studio SOLO VE cantu-studio. `aiw-console` no existe para
+el. En #192 escribiste dentro del texto de un run el nombre de un record de
+`aiw-console/context/cantu-studio/records/` sin decir el repo; el taller lo busco en
+`docs/` y `.aiw/`, no lo encontro, y REPORTO QUE NO EXISTIA. Tenia razon para donde
+miro.
+ - REGLA: todo fichero que cites en un ticket o en un `full_description` va con su
+   repo delante, o con su contenido transcrito dentro. Si el taller lo necesita para
+   trabajar, TRANSCRIBELO: no le mandes a un sitio que no puede abrir.
+
 ARRANQUE, en este orden y midiendo, no suponiendo:
 1. Deriva la ruta de montaje del workspace. No la heredes de ningun documento.
 2. Comprueba .git/index.lock en los cinco repos CON ls, nunca corriendo git para

@@ -1,185 +1,288 @@
 # Relevo — hilo `cantu-quizzes-latex`
 
-**Fecha: 2026-08-06, 14:40 CST.** Sustituye al relevo inaugural del 2026-08-04, que escribió el
-hilo `aiw-console`. **Este lo escribe el propio hilo, al cierre de su primera sesión.**
+**Fecha: 2026-09-13, 01:05 CST.** Sustituye al relevo del **2026-08-06**, que llevaba
+cinco semanas sin tocarse y describía el run `#2` como activo. Lo que de aquel sigue
+vigente se ha traído aquí; lo que caducó se declara caducado en el §9.
 
-**Motivo del cierre:** el operador va a configurar una laptop nueva y continúa allí. Todo lo que
-no esté commiteado no viaja.
+**Motivo del cierre:** la sección de Lectura del Simulador queda terminada en las cuatro
+variantes y el operador abre sesión nueva para Redacción.
+
+**Modo de la sesión: CONECTADO DEGRADADO.** `device_bash` no monta el workspace desde la
+actualización de Windows del 8 de septiembre (`no Plan9 drive shares mounted`). Se lee con
+`device_stage_files`, se escribe con `device_commit_files` y **la cabina NO puede ejecutar
+git ni borrar ficheros**. Mientras dure, commit y push son del operador.
 
 ---
 
 ## 0. LO PRIMERO AL ABRIR
 
-**Estamos en `#2` «Review ARI-FA-Fracciones against the rubric, as the pilot», `active`,
-esperando QA humana.** Es el único run `ATTENDED` del roadmap: **el juicio del operador es la
-ENTRADA, no el sello**, y sin él no cierra.
-
-**La QA está redactada y entregada en el chat de la sesión anterior, en 5 pasos.** Si el operador
-no la conserva, se vuelve a redactar desde el record
-`context/cantu-quizzes-latex/records/PILOTO-FRACCIONES-Y-QA-PENDIENTE.md`, que la contiene entera.
-
-**Su Paso 1 es de parada:** si el operador no está de acuerdo con los dos movimientos de nivel,
-el criterio no sirve y hay que reescribir la rúbrica antes de los otros 39 runs. Los otros cuatro
-pasos no importan si el primero falla.
-
----
-
-## 1. Qué es este proyecto, en una línea
-
-Quizzes y exámenes de Método Cantu para la PAA, en LaTeX. **5 727 preguntas** en cuatro unidades
-autocontenidas bajo `PAA/`. Su verificación natural es la compilación, y **esa verificación aún
-no existe**.
+1. **Volver a probar el montaje.** Si `device_bash` monta, la cabina recupera git y borrado
+   y este relevo deja de aplicarse en ese punto.
+2. **Este hilo NO tiene run propio.** Las 180 preguntas de Lectura se transcribieron sin
+   run en el roadmap. No se abrió ninguno y no se tocó la consola en toda la sesión.
+3. **OTRO HILO TRABAJA EN ESTE MISMO PROYECTO.** El roadmap pasó de **64 runs a las 06:41
+   UTC a 73 a las 00:45 CST**, sin intervención de este hilo. El activo al cierre es
+   **`#64` «Write the Statistics block of the fifth form»**. Los runs `#59`–`#67` son un
+   bloque nuevo de «quinta forma» de Matemáticas que **no es de este hilo**: se nombra y
+   no se toca.
+4. **Lo pendiente del operador está en el §7.**
 
 ---
 
-## 2. El estado del canónico — medido al cierre
+## 1. Qué se hizo, y es el entregable
 
-`roadmap/roadmap.json` — **el md5 se declara en sus DOS lecturas**, porque el repo tiene
-`.gitattributes` con `* text=auto` y el fichero se normaliza a LF dentro de git pero se saca a
-CRLF en un clon de Windows:
+**La sección 1 (Lectura) del `Examen Simulador PAA (Aprende Libre)` queda transcrita
+completa en las CUATRO variantes: 180 preguntas, 23 pasajes, 4 figuras reconstruidas.**
 
-- **`f2797026b691ed252f1919fbbd7c6c0e`** — árbol de trabajo en Windows (CRLF, 714 líneas). **Es
-  el que verá la sesión siguiente en la laptop nueva.**
-- `1e1a287471721a64d9e695a07fd169e7` — el blob normalizado dentro de git (LF). Aparecería en un
-  clon sobre Linux o WSL.
+| variante | fichero | bytes | md5 | pasajes | figura |
+|---|---|---|---|---|---|
+| Amarilla | `Secciones/1. Lectura/Amarilla-Lectura.tex` | 262 714 | `f5056438787a97213d88fd19ef79ccfa` | 5 | sectores |
+| Verde | `Secciones/1. Lectura/Verde-Lectura.tex` | 319 093 | `a8bc2f92db0743278eafb56fa0ef5374` | 6 | sectores |
+| Azul | `Secciones/1. Lectura/Azul-Lectura.tex` | 281 320 | `cfea3fb05f61dbd4994b61a6cb503c60` | 6 | tabla |
+| Violeta | `Secciones/1. Lectura/Violeta-Lectura.tex` | 319 334 | `021d4719efc6d7cb769924813f13fb8c` | 6 | barras |
 
-**Si el md5 no coincide con ninguno de los dos, el canónico cambió y hay que averiguar por qué
-antes de tocar nada.**
+Verificación de cada una, con el examen compilado en sandbox: **0 errores de LaTeX**, 45
+`multichoice`, códigos correlativos `LEC-<COLOR>-001..045`, 4 opciones y 1 clave por
+pregunta, **cero fugas de LaTeX al XML**, cero retros que nombren opciones por letra, cero
+etiquetas dentro de delimitadores de MathJax, cero bytes NUL, y **todas las copias de cada
+pasaje idénticas entre sí**. Totales de anclas comprobadas: Amarilla 688, Verde 814, Azul
+902, Violeta 934.
 
-**5 objetivos · 16 fases · 42 runs · `checkInvariants` 0 errores · 0 sin clasificar.**
+**Los `.tex` NO están commiteados.** Ver §7.
 
-| | |
-|---|---|
-| `O1` The repository stands on its own | 3 fases, 0 runs |
-| `O2` A green or a red exists | 4 fases, 0 runs |
-| `O3` The content is legible from outside | 3 fases, 0 runs |
-| `O4` The content can be trusted | 1 fase, **1 run — `#1`, `completed`** |
-| `O5` Mathematics is reviewed, subtopic by subtopic | 5 fases (`Arithmetic` 7 · `Algebra` 14 · `Functions` 8 · `Statistics and probability` 5 · `Geometry` 7), **41 runs** |
+---
 
-**`#2` es BARRERA GLOBAL:** nada de la cola arranca hasta que cierre.
-**Clasificación:** 41 `SEMI_ATTENDED` y 1 `ATTENDED` (el piloto). `SILENT` en todos, y no es
-adorno: una pregunta mal clasificada no anuncia nada al fallar.
+## 2. El parche de `components/aleph-moodle.sty` — aplicado y verificado
 
-## 3. La rúbrica es el criterio de aceptación de los 40 runs
+Dos cambios, aplicados a **las cinco copias** del repo, que quedan byte a byte idénticas
+entre sí en `fe86bbc7d4488c689af1f16925ec0bb1` (antes `8357f2ff762e086bda70f628470e708e`):
 
-**`docs/RUBRICA-DE-NIVELES.md`, v2**, primer y único `.md` del repositorio. El emisor ya la
-indexa (`docs_index.json` pasó de 0 a 1 entrada).
+1. **Guarda de la limpieza de figuras.** `\AtEndDocument` ya no borra `*-tikztemp-*.png`
+   dentro de un sub-job de externalización. Era la causa de
+   `El modificador no es válido` + `system returned with code 1`, una vez por figura.
+2. **Entorno `pasaje`.** Mueve a la hoja de estilo la maquetación del pasaje, que escrita
+   en el cuerpo se filtraba literal al XML (regla 1.10). `\scriptsize` (8 pt), hueco
+   número-texto de 1 em, `\parshape 2` al ancho completo y sangría francesa. Se hace
+   transparente en el XML con
+   `\html@newenvironment{pasaje}{\xdef\htmlize@afteraction@hook{\expandonce\BODY}}`, el
+   mecanismo documentado que usa `center`.
 
-**Los runs la REFERENCIAN, no la repiten.** Cambiarla no obliga a tocar el roadmap. Y funciona
-hoy sin ninguna función nueva de la consola, porque **el `# Scope` de `aiw` restringe escritura,
-no lectura** (`kernel.mjs`, `evaluateGuards` compara contra `git status --porcelain`).
+**8 pt es el tope medido, no una elección conservadora:** a 8,5 pt vuelven a partirse 64
+líneas. `\small` parte 89; `\footnotesize`, 2.
 
-### Su §2, el ancla, es lo que el piloto está probando
+`Amarilla-Lectura.tex` se reescribió en el mismo acto para envolver sus 45 pasajes en el
+entorno; su md5 pasó de `1e6ec5588c8030da677529e6b0d94ca3` a
+`f5056438787a97213d88fd19ef79ccfa`, con **90 líneas añadidas y cero quitadas**.
 
-La v1 definía el ancla como «las preguntas del Banco que aparecen en los exámenes», calculada
-como intersección de códigos. **Era falsa: el código es un espacio de nombres LOCAL.**
-`ARI-FA-Fracciones-Medio-001` designa tres preguntas distintas en Banco, Diagnóstico y Simulador
-— verificado en texto crudo. La intersección medía colisión de nombres.
+El operador compiló Amarilla con el parche: **0 errores, 56 páginas, XML correcto**.
+Verde, Azul y Violeta solo se han compilado en el sandbox de la cabina.
 
-**La v2 la reconstruye como CORPUS DE REFERENCIA:** se compara contra las preguntas de examen del
-mismo subtema, sin exigir identidad. Cobertura medida: mín 10, mediana 20, máx 50. Fracciones
-tiene 40.
+---
 
-**El error lo escribió la cabina; lo encontró el taller.** Es la separación adversaria
-funcionando, y es la razón de que la cabina NO ejecute los runs que ella misma especifica.
+## 3. El método, que es lo que más cuesta redescubrir
 
-### Lo que la v3 tiene que arreglar, ya identificado por el piloto
+### 3.1 La numeración de líneas SE MIDE EN CADA PASAJE
 
-1. **§6.4 cita «88 de 90» y esa cifra no es reproducible** — el taller obtiene 1 en lectura
-   estricta y 5 en amplia, porque **la §6.4 no define qué cuenta como explicar una distractora**.
-   La conclusión se sostiene; la cifra no debe citarse como medición.
-2. **§5, la prueba de INFLADA, es inejecutable como está**: dice «más pasos que cualquier pregunta
-   del ancla», y la que sí estaba inflada no supera ese techo. Lo que la delata es la §3.4.
-   Reescribir la viñeta en términos de las cinco dimensiones, no de pasos.
-3. **§7.2 + cantidades fijas obligan a reclasificar POR PAREJAS.** En Fracciones hubo suerte: una
-   inflada y una desinflada se cancelaron. Un subtema con tres infladas y ninguna desinflada deja
-   al run sin jugada legal, y la rúbrica no dice qué hacer.
-4. **§8.4 pide «antes y después del texto» y en un movimiento no cambia texto**, cambia el código.
-5. **§8.7 (retroalimentaciones sobre el p90) es casi ruido**: el filtro útil sería longitud
-   relativa al número de pasos, no absoluta.
-6. **§2 no dice qué hacer con ancla pequeña.** «Preséntalo como más débil» no es un procedimiento.
-7. **Falta la política de numeración al mover** — el taller la inventó y va al Paso 4 de la QA.
-8. **Falta el criterio «dos opciones con el mismo valor»** — lo inventó el taller y encontró 3 de
-   sus 5 correcciones. Va al Paso 2 de la QA.
+No es propiedad de la variante ni del examen. **Azul lo demuestra dentro de un mismo
+fichero:** su pasaje A numera las líneas en blanco (los marcadores `(10)` y `(15)` caen
+sobre líneas vacías) y su pasaje B no las numera. Se comprueba con dos evidencias
+independientes: los marcadores `(5)`, `(10)`… de la captura y las citas de línea de las
+propias preguntas.
 
-**Aviso del piloto que vale para los 39:** el ancla dice si una OPERACIÓN es de nivel PAA, no si
-una PRESENTACIÓN lo es. **Sobrepromociona el nivel Fácil sistemáticamente.** Y sus veredictos se
-apoyan en los EXTREMOS del ancla, no en su centro: con 40 el juicio es firme, **con 10 se degrada
-más rápido de lo que sugiere el recuento**.
+### 3.2 Los pasajes dobles tienen DOS comportamientos, y `[[ignorarNumeracion]]` los separa
 
-## 4. Lo cerrado y lo abierto
+Cuando un pasaje trae «Lectura A» y «Lectura B», la numeración puede ser continua o
+reiniciar en la B. **Hipótesis con cinco casos a favor y ninguno en contra:** la marca
+literal `[[ignorarNumeracion]]` delante del rótulo indica numeración **continua**; su
+ausencia indica **reinicio**.
 
-**`#1` `completed`** — dos familias de código reparadas: `ARI-PI-Interteres` (15 comentarios) y
-`GEO-GP-Triangulo` (104 sitios: 45 comentarios, 45 ids de `multi`, 14 rutas de figura) más **14
-PNG renombrados**. Las 21 figuras siguen resolviendo, 0 fallan. Recuentos intactos.
+| pasaje | marca | numeración |
+|---|---|---|
+| Azul C | sí | continua 1..32 |
+| Azul F | sí | continua 1..44 |
+| Verde C | no | reinicia (24 + 24) |
+| Verde F | no | reinicia (27 + 16) |
+| Violeta C | no | reinicia (21 + 19) |
+| Violeta F | no | reinicia (20 + 20) |
 
-**Tres hallazgos suyos SIN DUEÑO, y el operador aprobó run propio para los tres:**
+La marca es una directiva de plataforma, no contenido: **se omite del texto** y se
+implementa haciendo que el rótulo no consuma número, que es exactamente lo que pide.
+**Falta confirmarla con un sexto caso antes de tratarla como regla.**
 
-1. **`\end{m}` en `GEO-GP-Triangulos-Facil-005`** — rompe el fichero entero al compilar. Es un
-   carácter. Está latente porque el 100 % de los `\input` de los maestros está comentado.
-2. **Dos cuadernos generadores siguen emitiendo los nombres de PNG antiguos.** Si alguien los
-   reejecuta, los retoques de figura dejan de verse.
-3. **8 PNG huérfanos** sin referencia en ningún `.tex`.
+### 3.3 Herramientas, en `_scratch\cql-lectura-simulador\` (fuera de todo repo)
 
-**`#2` `active`** — el piloto entregó. Cambios ya en disco y commiteados: dos reclasificaciones
-(`Dificil-001`→`Medio-046` desinflada, `Medio-033`→`Dificil-021` inflada) y cinco correcciones,
-la mayor de ellas `Facil-014`, que tenía **tres respuestas correctas**. Recuentos **25/45/20**
-antes y después, **cero bajas**. Falta solo el veredicto humano.
+- `generar.py` — genera el `.tex` desde los datos. **El pasaje existe UNA vez y se repite
+  en cada pregunta que lo usa**, que es la única forma de que las copias no diverjan.
+  Sabe de rótulos, de rótulos que reinician (`('rotulo', texto, n)`), de líneas en blanco
+  numeradas o no, de notas al pie y de figura.
+- `datos_amarilla.py`, `datos_verde.py`, `datos_azul.py`, `datos_violeta.py` — fuente
+  única de cada variante.
+- `verificar_pasajes.py` — comprueba que en el XML cada copia del pasaje está entera,
+  numerada sin huecos, idéntica a las demás, que cada ancla cae en su línea y que toda
+  cita «línea N» o «verso N» existe.
+- `validar_xml.py` — conteos, tipos y decodificación de las imágenes embebidas.
 
-## 5. Adjudicaciones tomadas en esta sesión, que no hay que reabrir
+### 3.4 Figuras y tablas: TikZ, nunca `tabular`
 
-- **El Reto se queda en todos los subtemas.** El operador lo habilita o deshabilita por alumno.
-  Ningún run propone eliminarlo. Con eso **desaparece del roadmap la deliberación
-  esencial/complementario**: sigue siendo criterio pedagógico, no entrada de un run.
-- **La revisión es de clasificación y calidad, no de reestructuración.**
-- **El orden de fases es de temario, no de coste.** Geometría queda last y es la más cara
-  (189 figuras); Álgebra es 14 subtemas con **cero** figuras y queda segunda. Reordenar es `move`
-  y es barato, si el piloto muestra que el coste manda.
-- **Adjudicación C (higiene del árbol) va primero** entre las tres del relevo inaugural.
+Está **medido en `Azul-Matematicas` P13 y P24** que `tabular` se fuga al XML y que TikZ
+dentro del cuerpo sí se externaliza a PNG. Las cuatro figuras de Lectura son TikZ base:
+colores **muestreados de la captura**, ángulos y alturas **derivados de los datos**. La
+de barras se calibró con los dos valores que la propia retro declara (95 000 y 20 000) y
+la medición coincidió al 1 %.
 
-## 6. Lo que sigue bloqueando a `aiw`, medido en solo lectura
+### 3.5 Dos trampas de maquetación, las dos medidas
 
-- **El puente roadmap→ticket NO EXISTE.** Es el run **#31** de `aiw`, `planned`:
-  *«Build the bridge that does not exist»*. Hoy `aiw` lee `objectives/pending/*.md`.
-- **La verificación es obligatoria:** `kernel.mjs:279` aborta sin comando. El de este repo sería
-  `O2.P3`, y el taller lo midió en **~1,2 s** sobre 12,9 MB — el 0,25 % del presupuesto de
-  600 000 ms. **`O2.P3` es la llave, y es de este hilo.**
-- **`cantu-quizzes-latex` no está en `aiw/config.json`** — solo `sandbox` y `console`.
-- **`push: false`** en ambos; activarlo es el run #30 de `aiw`, `planned`.
-- **Los 41 `SEMI_ATTENDED` están listos en FORMA, no en VÍA.**
-- **Convergencia NOMBRADA, no tocada:** el run **#22 de `aiw` está `active`** y pide *«un
-  repositorio grande con red de pruebas real»*, con la medición como entregable.
+- **`\underline` no parte línea.** De 150 frases subrayadas, **cuatro** no caben en una
+  línea en Montserrat (hasta el 140 %). Se parten en dos `\underline` consecutivos, que es
+  lo que hace un subrayado real al saltar de línea.
+- **Las opciones largas SÍ parten.** 21 de 600 opciones exceden el ancho, la mayor al
+  154 %; en el compilado real del operador esas líneas se parten con guion y dejan un
+  residuo de 5,68 pt. **No hay nada que arreglar ahí.** El desbordamiento de 21,6 pt que
+  aparece en el sandbox es un artefacto de la fuente de prueba.
 
-## 7. Defectos de la CABINA medidos en esta sesión — leer antes de repetirlos
+### 3.6 El `%` y otros caracteres
 
-1. **Cada `git status` que corre la cabina deja un `.git/index.lock` que la cabina NO PUEDE
-   BORRAR.** El de este repo, creado a la 01:15, bloqueó las escrituras de git del operador
-   durante **12 horas y media** sin que nadie lo viera: leer sigue funcionando, y solo se rompe al
-   commitear. Al cierre había locks en tres de cinco repos. **Es transversal y pertenece a las
-   reglas de cabina; se NOMBRA desde aquí y no se corrige.**
-2. **`git status` NO acepta `--ignore-cr-at-eol`** en el git de la cabina: devuelve
-   `error: unknown option` y `exit=129`. Con `2>/dev/null` eso se convierte en «0 modificados»,
-   que es justo la mentira que la regla quería evitar. **La forma que funciona es
-   `git diff --ignore-cr-at-eol`**, y con `--numstat`, nunca con `--name-only` — este último
-   lista el árbol entero en un repo sin `.gitattributes`.
-3. **Tres extractores de la cabina produjeron artefactos en una sola sesión** —el emparejador por
-   conjunto de opciones, el resolutor de `\includegraphics` y el lector de bloques `multi`—. Los
-   tres se atraparon mirando el texto **en crudo** antes de publicar. **Ninguna cifra derivada de
-   un parser propio se publica sin verla cruda primero.**
-4. **La cabina escribió el canónico mientras el operador ejecutaba un bloque de git**, dejando su
-   guarda describiendo un estado que ya no existía. La superficie de escritura de la cabina cuenta
-   como una más.
-5. **Una cifra se cita con su unidad y su alcance, o no se cita.** La cabina publicó «989
-   preguntas que elegiste para el examen» cuando eran 989 **códigos coincidentes**, y sobre esa
-   frase construyó la rúbrica v1 entera.
+Todo porcentaje va escapado. Es exactamente el defecto que `#68` tiene documentado: un `%`
+sin escapar se come el resto de la línea y el `.tex` compila en verde. En Violeta hay uno
+**al principio de línea**. Los superíndices de nota al pie van como carácter (`¹ ²`), no
+como comando. `\_` llega al XML como `&#95;`, que es correcto.
 
-## 8. Notas de topología para la laptop nueva
+---
 
-- **`aiw/config.json` lleva rutas absolutas de Windows** (`C:\Users\chris\Documents\AIW_Workspace\…`)
-  para `sandbox` y `console`. Si la laptop nueva usa otro usuario o ruta, `aiw` no arranca.
-  **Es de `aiw`; se nombra aquí porque bloquea la puesta en marcha.**
-- **`_backups/` y `_scratch/` están fuera de todo repo y NO VIAJAN.** Es correcto: son
-  desechables.
-- **Los cuatro repos y `cantu-lessons` estaban sincronizados al cierre.** `aiw-console` tenía
-  trabajo real en vuelo de otro hilo (+279 en `roadmap-core.mjs`, +119 en `project-console.js`,
-  y tres ficheros sin rastrear) — **eso es suyo, no de este hilo.**
+## 4. Los defectos DEL ORIGINAL, inventario completo para la fase 2
+
+**35 preguntas de las 180 traen alguna incidencia del original.** Las marcas `>>>` de los
+ficheros son más —Amarilla 105, Verde 103, Azul 85, Violeta 96— porque incluyen también
+las notas de método. Todas las cifras de esta tabla están medidas sobre los ficheros en
+disco al cierre, no contadas de memoria.
+
+| clase | cuántas | dónde |
+|---|---|---|
+| Depende «del ejercicio anterior», sin referente al barajar | **26** | Amarilla 7, 18, 31, 36 · Verde 5, 12, 16, 20, 28, 32, 40, 42 · Azul 7, 13, 21, 25, 34, 42 · Violeta 4, 6, 12, 18, 21, 28, 34, 42 |
+| Cita «no encontrada/o» de la plataforma | **3** | Verde 5 (son las líneas 18-19) · Verde 24 (es el verso 20) · Azul 13 (son las 5-6) |
+| Opción basura insertada por la plataforma | **2** | Azul 6 («9») y Azul 11 («4») |
+| La retro nombra una letra que no es la opción que describe | **4** | Verde 7 · Azul 28 · Violeta 6 y 11 |
+| La retro cita un texto que NO está en la lectura | **4** | Violeta 17, 18, 23 («abarcadora extensión territorial») y 40 («30,000» por «300,000») |
+| **CLAVE EQUIVOCADA** | **1** | **Violeta 12** |
+
+Suman 40 entradas sobre **35 preguntas distintas**: cinco caen en dos clases a la vez
+(Verde 5, Azul 13, Violeta 6, Violeta 12 y Violeta 18).
+
+**Violeta P12 es la única que cambia la nota de un alumno.** La opción marcada es la B
+(«Líneas 13 - 14») pero la retro argumenta, cita y declara correcta la D («Líneas 18 - 19»)
+y **descarta la B por escrito**. Se respetó la marcada, que es la clave del original.
+**Recomendación de la cabina: cambiarla a la D en fase 2**, porque la retro es
+internamente coherente y la marca no lo es. **Es decisión del operador.**
+
+---
+
+## 5. Defectos de la CABINA medidos en ESTA sesión
+
+**Cuatro veces una sonda mal escrita produjo un dato falso, y dos de ellas se publicaron.**
+Es la quinta forma de fallar de «papel ≠ disco», y en esta sesión fue la dominante.
+
+1. **`grep -c 'Overfull \\\\hbox'`** con una barra de más: devolvió «0 desbordamientos»
+   donde había **46**. Publicado.
+2. **`data:image/png;base64,([A-Za-z0-9+/=]+)`**: el base64 del XML lleva saltos de línea
+   dentro, así que la captura se detenía en el primero. Se reportaron **«7 imágenes de 48
+   bytes, rotas»** cuando medían 41 009 y estaban perfectas. Publicado, y costó dos turnos
+   y una tarea inútil al operador. Corregido en
+   `_scratch\cql-lectura-simulador\RECORD-20260912-correccion-imagenes.md`.
+3. **Búsqueda literal de `_`** donde el XML escribe `&#95;`. Cazado antes de publicar.
+4. **`tex_a_plano` del verificador** no quitaba `\textbf{\textit{...}}` anidado: diez
+   falsos negativos. Cazado antes de publicar.
+
+**Regla que queda:** antes de publicar un conteo, contrastar la sonda con un caso cuya
+respuesta se conozca. En el caso 2 bastaba decodificar **una** imagen y abrirla, que es lo
+que acabó destapándolo.
+
+**Y un sexto, de herramienta, encontrado al escribir este mismo relevo:**
+`device_commit_files` escribió en el equipo **la versión ANTERIOR** de un fichero que
+se acababa de editar en el sitio: el local medía 15 584 bytes y en disco aparecieron
+15 272, los de antes de la corrección. Se detectó porque se comprobó el tamaño con
+`device_list_dir` después de escribir. **La vuelta que funciona es copiar el fichero a
+una ruta nueva y comitear desde ahí.** Mientras dure el modo degradado: *editar en el
+sitio y volver a comitear la misma ruta puede publicar contenido viejo en silencio;
+toda escritura se verifica leyendo tamaño o md5 después.*
+
+Un quinto, de razonamiento: se afirmó que había que esperar a que cerrara el run `#57`
+cuando ya estaba `completed`. **Una coordenada de run medida al abrir envejece dentro de
+la misma sesión.**
+
+---
+
+## 6. Lo que NO es de este hilo
+
+- **Runs `#59`–`#67`, el bloque de «quinta forma» de Matemáticas.** Aparecieron durante
+  esta sesión. `#64` está `active` al cierre. **No medido, no tocado.**
+- **`#68` `RUN-QUIZZES-MOODLE-EXPORT-001`** cerró durante la sesión. Su
+  `full_description` contiene dos afirmaciones que ya eran falsas al cerrarlo: «La cabina
+  no puede: su entorno no compila este proyecto» —esta cabina compiló Lectura y
+  Matemáticas en sandbox— y «sus 4 fallas están en Lectura y Redacción, que nadie ha
+  tocado». Se nombran; no se enmiendan.
+- **`#69` `RUN-QUIZZES-TREE-SOURCE-VS-PRODUCT-001`**, `planned`.
+- **Once respaldos `roadmap-cql-*.json` del 12 y 13 de septiembre en `_backups\`** que no
+  creó este hilo.
+
+---
+
+## 7. LO QUE LE QUEDA AL OPERADOR
+
+1. **Commit.** La cabina no pudo ejecutar git en toda la sesión. Ficheros a incluir, con
+   `add` dirigido por nombre:
+   - `PAA/Examen Simulador PAA (Aprende Libre)/Secciones/1. Lectura/Amarilla-Lectura.tex`
+   - `…/Secciones/1. Lectura/Verde-Lectura.tex`
+   - `…/Secciones/1. Lectura/Azul-Lectura.tex`
+   - `…/Secciones/1. Lectura/Violeta-Lectura.tex`
+   - las **cinco** copias de `components/aleph-moodle.sty`
+   - y en `aiw-console`, **solo** `context/handoffs/cantu-quizzes-latex.md`
+2. **Push.** Sigue habiendo commits sin publicar.
+3. **Autorizar el `.tex` principal.** `Examen_Simulador_PAA_Aprende_libre.tex` quedó
+   intacto porque el encargo lo prohibía expresamente. Para compilar cualquier variante
+   hay que comentar una línea `\input` y descomentar otra. **La cabina puede hacerlo si se
+   la autoriza**, y entonces deja de ser trabajo del operador.
+4. **Compilar las tres variantes nuevas y dar el veredicto visual de las cuatro figuras.**
+   La cabina no ve interfaces ni PDF renderizados: la gráfica de sectores de Verde, la
+   tabla de Azul y la gráfica de barras de Violeta **solo las ha juzgado el operador en
+   Amarilla**.
+5. **Limpieza pendiente, que la cabina NO pudo hacer.** Sin `device_bash` no hay borrado
+   ni movimiento de ficheros. Quedan en `_backups\` **quince respaldos de esta sesión**:
+   - **Consumidos, se pueden borrar:** las doce `*-TANDA[1-4]-ANTES-20260912.tex` de Verde,
+     Azul y Violeta. Cada una está superada por la siguiente y por el fichero final ya
+     verificado.
+   - **Vivos, no borrar todavía:** `aleph-moodle-ANTES-8357f2ff-20260912.sty` y
+     `Amarilla-Lectura-ANTES-1e6ec558-20260912.tex`, hasta que el operador confirme que
+     las cuatro variantes compilan en su máquina; y los tres `*-MOLDE-ANTES-*.tex`, que
+     son la única copia de los moldes vacíos originales.
+   - **Los once `roadmap-cql-*.json` no son de este hilo y no se tocan.**
+
+---
+
+## 8. Lo siguiente, ya encuadrado
+
+- **Redacción**, sección 2. Su carpeta `Secciones/2. Redacción/` **está completamente
+  vacía**: no hay ni moldes, aunque el `.tex` principal ya tiene sus cuatro `\input`
+  comentados. Habrá que crear los ficheros. El método del §3 se aplica tal cual; lo que
+  cambia es qué trae el original.
+- **Fase 2 de Lectura:** un solo encargo con las 36 incidencias del §4, para que el
+  criterio se decida una vez para las cuatro variantes. **La P12 de Violeta se decide
+  aparte.**
+
+---
+
+## 9. Qué se trae del relevo del 2026-08-06, y qué caducó
+
+**Caducado:**
+- Su §0 entero: `#2` cerró hace semanas.
+- Su §7.1, «cada `git status` deja un `.git/index.lock` que la cabina NO PUEDE BORRAR»:
+  desde el 2026-08-12 la cabina sí puede borrarlos, cuando tiene montaje.
+- Sus md5 del canónico: el roadmap ha cambiado decenas de veces desde entonces.
+
+**Sigue vigente y se repite aquí porque cuesta redescubrirlo:**
+- **`git status` NO acepta `--ignore-cr-at-eol`**; la forma que funciona es
+  `git diff --ignore-cr-at-eol --numstat`.
+- **Ninguna cifra derivada de un parser propio se publica sin ver el texto en crudo
+  primero.** Esta sesión volvió a demostrarlo cuatro veces (§5).
+- **Una cifra se cita con su unidad y su alcance, o no se cita.**
+- **`_backups/` y `_scratch/` están fuera de todo repo y no viajan.**
+- **El fork descartado de la CONSOLA en `aiw-console` no se extiende al motor de roadmap.**

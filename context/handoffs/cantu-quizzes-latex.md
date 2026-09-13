@@ -8,6 +8,11 @@ vigente se ha traído aquí; lo que caducó se declara caducado en el §9.
 > arranque y encontró dos cosas que este documento daba por ciertas y no lo eran. Está
 > todo en el **§10**, que es lo primero que hay que leer después del §0.
 >
+> **Ampliado otra vez el 2026-09-12 a las 19:08 CST por la sesión de Redacción (tanda 2)**,
+> que corrió el experimento del §10.2 y lo DESMINTIÓ: el montaje no depende de cuándo se
+> concede la carpeta. La cabina sigue sin shell, sin borrado, y commiteando por GitHub
+> Desktop. Y midió que el §7.5 cuenta mal los respaldos consumidos: son DIEZ, no doce.
+>
 > **Y este mismo encabezado llevaba mal la fecha.** Decía «2026-09-13, 01:05 CST»: era la
 > hora UTC etiquetada como CST, con el día corrido. El `mtime` del fichero en disco dice
 > 2026-09-12 18:18 CST. No cambia ningún contenido, pero envejecía mal todas sus
@@ -261,9 +266,12 @@ la misma sesión.**
    Amarilla**.
 5. **Limpieza pendiente, que la cabina NO pudo hacer.** Sin `device_bash` no hay borrado
    ni movimiento de ficheros. Quedan en `_backups\` **quince respaldos de esta sesión**:
-   - **Consumidos, se pueden borrar:** las doce `*-TANDA[1-4]-ANTES-20260912.tex` de Verde,
-     Azul y Violeta. Cada una está superada por la siguiente y por el fichero final ya
-     verificado.
+   - **Consumidos, se pueden borrar:** las **diez** `*-TANDA[1-4]-ANTES-20260912.tex`
+     —Azul 1-4, Verde 1-3, Violeta 1-3—. Cada una está superada por la siguiente y por el
+     fichero final ya verificado. **Este relevo dijo «doce» y eran diez**, medido con
+     `device_list_dir` sobre `_backups\` el 2026-09-12 a las 19:08 CST; con doce, el total
+     de quince de la línea de arriba no cuadraba. Es la tercera forma de fallar de
+     «papel ≠ disco»: una medición correcta comprimida mal.
    - **Vivos, no borrar todavía:** `aleph-moodle-ANTES-8357f2ff-20260912.sty` y
      `Amarilla-Lectura-ANTES-1e6ec558-20260912.tex`, hasta que el operador confirme que
      las cuatro variantes compilan en su máquina; y los tres `*-MOLDE-ANTES-*.tex`, que
@@ -353,15 +361,33 @@ comandos —solo lo que la interfaz enseña— y **no llega a `_backups\` ni a `
 que están fuera de todo repo. **El borrado sigue siendo del operador mientras no haya
 montaje.**
 
-### 10.2 Por qué no monta: hipótesis abierta, y cómo probarla
+### 10.2 Por qué no monta: la hipótesis SE PROBÓ Y ES FALSA
 
-La sesión de Redacción **abrió sin ninguna carpeta conectada** («no folder is connected
-yet») y la carpeta se concedió a mitad. `device_list_dir`, `device_stage_files` y
+La sesión de Redacción (tanda 1) **abrió sin ninguna carpeta conectada** («no folder is
+connected yet») y la carpeta se concedió a mitad. `device_list_dir`, `device_stage_files` y
 `device_commit_files` funcionan contra ella; solo el montaje de `device_bash` falla.
 
-**Hipótesis: el montaje se establece al crear la máquina de la sesión, y una carpeta
-concedida después ya no lo alcanza.** Se prueba abriendo una sesión **con la carpeta ya
-conectada antes del primer mensaje**. No confirmada.
+**La hipótesis que quedó escrita aquí:** el montaje se establece al crear la máquina de la
+sesión, y una carpeta concedida después ya no lo alcanza.
+
+**DESMENTIDA el 2026-09-12 a las 19:08 CST.** La sesión de Redacción (tanda 2) se abrió con
+`C:\Users\chris\Documents\AIW_Workspace` **ya conectada antes del primer mensaje** —que es
+exactamente el experimento que pedía este párrafo— y `echo hi` falló igual:
+
+    sandbox-helper: no Plan9 drive shares mounted under /mnt/.virtiofs-root/shared
+    [Note: mnt/AIW_Workspace failed to mount and cannot be reached from this shell.]
+    A Windows update released September 8 prevents Claude's workspace from reaching
+    your files. We're tracking this issue. Claude Code is unaffected.
+
+**El momento de conceder la carpeta NO es la causa.** Y el aviso trae ahora la causa
+declarada por la propia herramienta —la actualización de Windows del 8 de septiembre— y dice
+que está en seguimiento. **No es configuración ni permisos: es un fallo conocido del
+puente**, y no hay nada que la cabina pueda hacer salvo volver a probar `echo hi` al abrir.
+
+**Consecuencia, y es la que importa:** el modo sigue siendo **CONECTADO DEGRADADO**. La
+cabina NO recupera shell, NO recupera el borrado, y **el §10.1 (GitHub Desktop) sigue siendo
+la vía PRINCIPAL para commitear y publicar**, no la de respaldo. El §10.3 sigue sin poder
+verificarse.
 
 ### 10.3 Cuando el montaje vuelva: cómo commitear en el shell
 

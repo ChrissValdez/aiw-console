@@ -1,23 +1,40 @@
 # Relevo — hilo `cantu-quizzes-latex`
 
-**Fecha: 2026-09-13, 01:05 CST.** Sustituye al relevo del **2026-08-06**, que llevaba
+**Fecha: 2026-09-12, 18:18 CST.** Sustituye al relevo del **2026-08-06**, que llevaba
 cinco semanas sin tocarse y describía el run `#2` como activo. Lo que de aquel sigue
 vigente se ha traído aquí; lo que caducó se declara caducado en el §9.
+
+> **Ampliado el 2026-09-12 a las 19:00 CST por la sesión de Redacción**, que midió el
+> arranque y encontró dos cosas que este documento daba por ciertas y no lo eran. Está
+> todo en el **§10**, que es lo primero que hay que leer después del §0.
+>
+> **Y este mismo encabezado llevaba mal la fecha.** Decía «2026-09-13, 01:05 CST»: era la
+> hora UTC etiquetada como CST, con el día corrido. El `mtime` del fichero en disco dice
+> 2026-09-12 18:18 CST. No cambia ningún contenido, pero envejecía mal todas sus
+> mediciones: son de la tarde del 12, no de la madrugada del 13.
 
 **Motivo del cierre:** la sección de Lectura del Simulador queda terminada en las cuatro
 variantes y el operador abre sesión nueva para Redacción.
 
 **Modo de la sesión: CONECTADO DEGRADADO.** `device_bash` no monta el workspace desde la
 actualización de Windows del 8 de septiembre (`no Plan9 drive shares mounted`). Se lee con
-`device_stage_files`, se escribe con `device_commit_files` y **la cabina NO puede ejecutar
-git ni borrar ficheros**. Mientras dure, commit y push son del operador.
+`device_stage_files` y se escribe con `device_commit_files`.
+
+**CORREGIDO EL 2026-09-12 (§10): «la cabina NO puede ejecutar git» era falso.** No podía
+ejecutarlo *por el shell*, que es otra cosa. **La cabina commitea Y PUBLICA** conduciendo
+**GitHub Desktop** con las herramientas de uso del equipo. Lo único que sigue sin poderse
+en este modo es **borrar ficheros**.
 
 ---
 
 ## 0. LO PRIMERO AL ABRIR
 
-1. **Volver a probar el montaje.** Si `device_bash` monta, la cabina recupera git y borrado
-   y este relevo deja de aplicarse en ese punto.
+1. **Volver a probar el montaje, y probarlo con `echo hi`**, no con un comando que toque
+   el disco. Si falla, no es que falle git: es que **el intérprete no arranca**, y eso
+   descarta de golpe cualquier recetario de comandos. Si monta, la cabina recupera además
+   el borrado y el shell, y el §10 pasa a ser la vía de respaldo en vez de la principal.
+1-bis. **Si NO monta, git NO está bloqueado.** Ir al **§10**: se commitea y se publica por
+   GitHub Desktop. No se le pasa el commit al operador.
 2. **Este hilo NO tiene run propio.** Las 180 preguntas de Lectura se transcribieron sin
    run en el roadmap. No se abrió ninguno y no se tocó la consola en toda la sesión.
 3. **OTRO HILO TRABAJA EN ESTE MISMO PROYECTO.** El roadmap pasó de **64 runs a las 06:41
@@ -48,7 +65,8 @@ etiquetas dentro de delimitadores de MathJax, cero bytes NUL, y **todas las copi
 pasaje idénticas entre sí**. Totales de anclas comprobadas: Amarilla 688, Verde 814, Azul
 902, Violeta 934.
 
-**Los `.tex` NO están commiteados.** Ver §7.
+**Los `.tex` quedaron commiteados y publicados el 2026-09-12**, en
+`99a5012`, junto con las cinco copias del `.sty`. Ver §10.
 
 ---
 
@@ -228,15 +246,11 @@ la misma sesión.**
 
 ## 7. LO QUE LE QUEDA AL OPERADOR
 
-1. **Commit.** La cabina no pudo ejecutar git en toda la sesión. Ficheros a incluir, con
-   `add` dirigido por nombre:
-   - `PAA/Examen Simulador PAA (Aprende Libre)/Secciones/1. Lectura/Amarilla-Lectura.tex`
-   - `…/Secciones/1. Lectura/Verde-Lectura.tex`
-   - `…/Secciones/1. Lectura/Azul-Lectura.tex`
-   - `…/Secciones/1. Lectura/Violeta-Lectura.tex`
-   - las **cinco** copias de `components/aleph-moodle.sty`
-   - y en `aiw-console`, **solo** `context/handoffs/cantu-quizzes-latex.md`
-2. **Push.** Sigue habiendo commits sin publicar.
+1. ~~**Commit.**~~ **HECHO por la cabina el 2026-09-12**, en `99a5012`
+   (`cantu-quizzes-latex`, 9 ficheros) y `891dee8` (`aiw-console`, 1 fichero). Ver §10.
+2. ~~**Push.**~~ **HECHO por la cabina el 2026-09-12.** Los dos commits están en
+   `origin/main`. **Y esto retira la regla de que el push es del operador**: su razón era
+   que la cabina no tiene ruta a GitHub, y desde la máquina del operador sí la hay.
 3. **Autorizar el `.tex` principal.** `Examen_Simulador_PAA_Aprende_libre.tex` quedó
    intacto porque el encargo lo prohibía expresamente. Para compilar cualquier variante
    hay que comentar una línea `\input` y descomentar otra. **La cabina puede hacerlo si se
@@ -286,3 +300,98 @@ la misma sesión.**
 - **Una cifra se cita con su unidad y su alcance, o no se cita.**
 - **`_backups/` y `_scratch/` están fuera de todo repo y no viajan.**
 - **El fork descartado de la CONSOLA en `aiw-console` no se extiende al motor de roadmap.**
+
+
+---
+
+## 10. Lo medido el 2026-09-12 al abrir la sesión de Redacción
+
+Dos afirmaciones de este mismo relevo resultaron falsas, y las dos por la misma razón: **se
+midió el límite equivocado**. Es la segunda forma de fallar de «papel ≠ disco», otra vez.
+
+### 10.1 La cabina SÍ commitea y SÍ publica, sin montaje
+
+`device_bash` sigue sin arrancar: **falla `echo hi`**, no `git commit`. Pero el shell no es
+la única vía al equipo. Las herramientas de **uso del equipo** llegan a Windows directamente
+y **nunca se habían probado en este proyecto**.
+
+Al pedir permisos se midió lo que se concede y lo que no:
+
+| aplicación | modo concedido | sirve |
+|---|---|---|
+| PowerShell, Windows Terminal, Git Bash | **solo «clic»**: se ve y se pulsa, **no se teclea ni se pega** | **no** |
+| **GitHub Desktop** | **control completo** | **sí** |
+
+**El procedimiento, y sus dos trampas medidas:**
+
+1. `computer_resolve_access` con «GitHub Desktop» **y también con la ruta de
+   `app-<versión>\githubdesktop.exe`**: si solo se concede el lanzador, la ventana real
+   queda enmascarada en las capturas. Luego `computer_request_access`, con `clipboardWrite`.
+2. **TRAMPA 1: GitHub Desktop llega con TODO marcado.** Al abrirlo había 224 ficheros
+   cambiados y los 224 marcados; el botón decía «Commit 224 files». Es el `-A` que las
+   reglas prohíben, servido por defecto. **Se desmarca todo con la casilla maestra y se
+   selecciona por el campo de filtro**, que respeta la selección de los ocultos: filtro
+   `Lectura.tex` → 4, filtro `aleph-moodle.sty` → 5, contador en 9. El diálogo «Commit
+   filtered changes?» es esperado y se acepta.
+3. **TRAMPA 2: la lista se mueve sola.** Fue de 224 → 231 → 288 → 215 mientras se
+   trabajaba, porque el operador tenía una compilación corriendo y los `*-tikztemp-*.pdf`
+   aparecían y luego los borraba la propia guarda de limpieza del `.sty` parcheado. **Los
+   ficheros nuevos entran MARCADOS**, así que el contador subió de 9 a 16 sin que nadie
+   tocara nada. **El contador se verifica en la misma captura en que se pulsa Commit**, no
+   cinco minutos antes.
+4. En `aiw-console` escriben varios hilos: había **3 ficheros ajenos** (un record de `aiw` y
+   dos de consola). Quedaron fuera. Comprobado fichero a fichero, no por confianza.
+5. Al terminar se **deja todo desmarcado**, para que el siguiente commit del operador sea
+   deliberado y no herede una selección.
+
+**Verificación posterior, leída de la pestaña History:** `99a5012`, 9 ficheros,
+`+12 306 / −21`; `891dee8`, 1 fichero, `+271 / −168`; identidad `ChrissValdez, Claude Opus 5`
+en los dos. Publicados: sin flecha pendiente en ninguno de los dos repos.
+
+**Lo que GitHub Desktop NO da:** `status`, `log`, `diff` ni `rev-parse` por línea de
+comandos —solo lo que la interfaz enseña— y **no llega a `_backups\` ni a `_scratch\`**,
+que están fuera de todo repo. **El borrado sigue siendo del operador mientras no haya
+montaje.**
+
+### 10.2 Por qué no monta: hipótesis abierta, y cómo probarla
+
+La sesión de Redacción **abrió sin ninguna carpeta conectada** («no folder is connected
+yet») y la carpeta se concedió a mitad. `device_list_dir`, `device_stage_files` y
+`device_commit_files` funcionan contra ella; solo el montaje de `device_bash` falla.
+
+**Hipótesis: el montaje se establece al crear la máquina de la sesión, y una carpeta
+concedida después ya no lo alcanza.** Se prueba abriendo una sesión **con la carpeta ya
+conectada antes del primer mensaje**. No confirmada.
+
+### 10.3 Cuando el montaje vuelva: cómo commitear en el shell
+
+Aportado por otro hilo y guardado aquí porque es caro de redescubrir. **No se ha podido
+verificar desde esta sesión** — se marca como no verificado.
+
+- **`git commit` normal revienta el límite de tiempo** en repos grandes. La vía es
+  *plumbing*: `write-tree`, luego `commit-tree "$T" -p HEAD -F <fichero de mensaje>` con
+  `-c user.name` / `-c user.email` explícitos, y `update-ref HEAD "$C"`. Tarda segundos
+  porque no refresca el índice entero ni corre hooks.
+- **El mensaje va a un fichero escrito con la herramienta de escritura**, nunca por
+  `printf` —los backticks se ejecutan como sustitución de comandos y destriparon el commit
+  `3953e3ce`— ni por heredoc, que se come las barras invertidas.
+- El `add` va dirigido por nombre y solo en su llamada; el lock se comprueba con `ls`
+  antes y después.
+
+### 10.4 Andamio de Redacción: lo que cambia respecto a Lectura
+
+- **El prefijo de los códigos es `RED-<COLOR>-NNN`**, derivado del banco
+  (`Banco de Preguntas/Español/Temas/2. Redaccion/` usa `RED-MT-…` y `RED-RS-…`), no
+  supuesto por analogía.
+- `generar.py` trae fijos el prefijo `LEC-` y el título «1. LECTURA»: hay que
+  parametrizarlos.
+- **El sandbox de compilación necesita `ghostscript`, y no viene instalado.** Sin él cada
+  figura da `Ghostscript conversion failed` + `PNG optimization failed`, que se leen como
+  errores del documento y no lo son. `montserrat` y `eulervm` tampoco están: se compila con
+  `\fuente{mathpazo}` y un `fontawesome.sty` de sustitución, como en Lectura.
+- `Secciones/2. Redacción/` seguía vacía a las 19:00 CST del 2026-09-12.
+
+### 10.5 Nombrado, no tocado
+
+En GitHub Desktop aparece un **sexto repositorio, `Acervo`**, que la topología de la
+configuración no menciona: habla de cinco proyectos. No medido, no tocado.

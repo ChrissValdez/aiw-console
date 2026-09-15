@@ -39,7 +39,7 @@
 
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, normalize, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -312,25 +312,39 @@ test("[#64] two quotes separated by a blank line stay TWO blocks", () => {
 });
 
 // ---------------------------------------------------------------------------
-// NOTHING INSIDE A QUOTE IS RE-PARSED — the operator's call, recorded.
+// WHAT A QUOTE RE-PARSES, AND WHAT IT DOES NOT — the operator's call, recorded, and CORRECTED.
 //
-// The corpus carries both constructs, measured on 2026-09-02: ONE nested-quote run (two lines,
-// context/aiw-console/records/HALLAZGOS-67-SUPERFICIE-DEL-REPORTE.md:5) and ELEVEN runs across
-// eight files whose quote contains what looks like a list. The unfixed renderer parsed neither —
-// the inner ">" printed escaped and the "- " printed as a dash — and the operator's decision was
-// to invent no rule for either: grouping changes how many boxes there are, and nothing else.
+// Re-measured 2026-09-08 through the real entry point, over the 376 markdown files the repository
+// ships, of which 244 carry a quote this renderer paints (727 blocks): ONE nested-quote run
+// (context/aiw-console/records/HALLAZGOS-67-SUPERFICIE-DEL-REPORTE.md:5-6) and FOURTEEN runs
+// across NINE files whose quote contains what looks like a list. The 2026-09-02 pass recorded
+// eleven in eight; the disk wins, and the corpus grew.
+//
+// The 2026-09-02 pass left BOTH literal. The operator reopened that on 2026-09-08 — the first
+// answer had been given without the question having been understood — and split them:
+//
+//   D-A · a quote inside a quote  -> NESTED FOR REAL. The test below was REPLACED, see its stone.
+//   D-B · a list inside a quote   -> STAYS LITERAL. Its test below is untouched.
 // ---------------------------------------------------------------------------
 
-test("[#64] a nested quote (>>) is LITERAL TEXT inside the one block — no nested blockquote", () => {
+// THE STONE OF A REPLACED TEST, and it is the only test of this file that changed.
+//
+// Until 2026-09-08 this slot held «[#64] a nested quote (>>) is LITERAL TEXT inside the one block
+// — no nested blockquote», which asserted ONE box and the inner marker printed as escaped text.
+// It was not adjusted to pass and it did not regress: decision D-A REVOKED the behaviour it
+// guarded, so it could not stay green and stay honest at the same time. What it guarded that is
+// still true — that the whole run, nested lines included, is consumed as a SINGLE outer block —
+// is asserted below over the very same input, now spelled out as full output instead of a count.
+// The old expectation is written out in the comment above, so what was given up is on the record.
+test("[#64] a nested quote (>>) is a BOX INSIDE THE BOX — one outer block, no marker as text", () => {
   const html = render(lines(
     "> > «no lo abras, ese run es cuando acabemos los arreglos pendientes, doy una revisada",
     "> > general y te traigo una lista completa de feedback»"
   ));
-  assert.equal(countOf(html, "<blockquote>"), 1, "one block, as for any other quote run");
-  const inside = /<blockquote>([\s\S]*?)<\/blockquote>/.exec(html)[1];
-  assert.equal(inside,
-    "&gt; «no lo abras, ese run es cuando acabemos los arreglos pendientes, doy una revisada<br>&gt; general y te traigo una lista completa de feedback»",
-    "the inner > is the escaped character it always was, not a second block");
+  assert.equal(html,
+    "<blockquote><blockquote>«no lo abras, ese run es cuando acabemos los arreglos pendientes, doy una revisada<br>general y te traigo una lista completa de feedback»</blockquote></blockquote>",
+    "the run is still ONE outer block; the inner quote is a block of its own inside it");
+  assert.ok(!html.includes("&gt;"), "and the marker that used to print in front of the words is gone");
 });
 
 test("[#64] a list inside a quote is LITERAL TEXT inside the one block — no <ul> is grown", () => {
@@ -482,5 +496,213 @@ test("[#64] the two surfaces paint the SAME quote — the fix landed once, not t
   const { body } = await openInModalReader(LONG_QUOTE_DOC, "docs/CITA-LARGA.md");
   const modal = /<article class="docs-body">([\s\S]*)<\/article>/.exec(body)[1].replace(/ id="dsr-h-\d+"/g, "");
   const tab = renderBody({ path: "docs/CITA-LARGA.md" }, LONG_QUOTE_DOC);
+  assert.equal(modal, tab, "byte for byte, but for the positional ids the reader stamps on headings");
+});
+
+// ---------------------------------------------------------------------------
+// A QUOTE INSIDE A QUOTE IS A BOX INSIDE A BOX — the operator's decision D-A.
+//
+// Recorded in context/aiw-console/records/DECISION-CITAS-ANIDADAS-Y-LISTAS-EN-CITA.md, and it
+// CORRECTS the answer this file first shipped. The 2026-09-02 pass measured the corpus, stopped
+// as its ticket told it to, and asked; the answer it got back was given without the question
+// having been understood, and «literal text in both» was written down as a verdict it never was.
+// The operator reopened it on 2026-09-08 choosing between drawings of what each option looks
+// like, and split the two cases that had been answered as one:
+//
+//   D-A · a quote inside a quote  -> NESTED FOR REAL. The inner ">" stops being text.
+//   D-B · a list inside a quote   -> STAYS LITERAL. Unchanged, and its tests below stay.
+//
+// The reason the two split, in the operator's own terms: a leftover ">" is NOISE — it means
+// nothing to whoever reads it — while a leftover "-" is a poor but HONEST bullet, it means
+// exactly what it looks like. And the one case in the corpus is not a curiosity: it is a
+// decision of the operator quoted verbatim inside the context the cabin wrote, which is the
+// shape every one of his verdicts is stored in. A ">" hanging in front of his voice is noise
+// in front of the one line of the document that matters most.
+//
+// DEPTH IS UNLIMITED, and that is a decision, not an oversight: nesting is the SAME grouping
+// rule applied again to the peeled lines, so ">>>" and deeper need no new rule and get none.
+// It terminates by construction — every level eats one ">" off every line of the run.
+// ---------------------------------------------------------------------------
+
+test("[#64] nesting: a quote inside a quote paints a blockquote INSIDE the blockquote", () => {
+  const html = render(lines(
+    "> la cabina explica algo",
+    "> > y aquí habla el operador",
+    "> > en dos líneas",
+    "> y la cabina sigue"
+  ));
+  assert.equal(countOf(html, "<blockquote>"), 2, "two boxes: the outer one, and the inner one");
+  assert.equal(countOf(html, "</blockquote>"), 2, "both closed");
+  // The INNER box is inside the OUTER one, not a sibling after it.
+  assert.equal(html,
+    "<blockquote>la cabina explica algo<blockquote>y aquí habla el operador<br>en dos líneas</blockquote>y la cabina sigue</blockquote>",
+    "the inner block opens and closes strictly inside the outer block, and carries NO marker");
+});
+
+test("[#64] nesting: the inner > never survives as text — not at the start of any painted line", () => {
+  const html = render(lines("> fuera", "> > dentro", "> fuera otra vez"));
+  for (const chunk of html.split(/<br>|<blockquote>|<\/blockquote>/)) {
+    assert.ok(!chunk.startsWith("&gt;"), `no painted line opens with an escaped marker: «${chunk}»`);
+  }
+  assert.ok(!html.includes("&gt; dentro"), "and specifically the marker of the nested line is gone");
+});
+
+test("[#64] nesting: THE REAL CASE — the operator's words quoted verbatim inside the cabin's block", () => {
+  // context/aiw-console/records/HALLAZGOS-67-SUPERFICIE-DEL-REPORTE.md:3-14, read off disk, not
+  // retyped: the ONE nested quote the corpus carries today. If that record is ever rewritten the
+  // assertion below fails LOUD rather than silently testing nothing.
+  const real = readFileSync(join(REPO_ROOT, "context", "aiw-console", "records", "HALLAZGOS-67-SUPERFICIE-DEL-REPORTE.md"), "utf8");
+  assert.ok(real.includes("> > «no lo abras, ese run es cuando acabemos los arreglos pendientes"),
+    "the real nested quote is still in that record — if this fails, find the new home of the case, do not delete the test");
+  const painted = paintAsDocsTab(real);
+  // Three quote blocks in that record; exactly one of them holds a box of its own.
+  assert.equal(countOf(painted, "<blockquote>"), 4, "three quote blocks, one of which holds a nested box");
+  const outer = /<blockquote>(?:(?!<\/blockquote>)[\s\S])*<blockquote>[\s\S]*?<\/blockquote>(?:(?!<blockquote>)[\s\S])*?<\/blockquote>/.exec(painted);
+  assert.ok(outer, "the cabin's block wraps the operator's block");
+  const block = outer[0];
+  assert.ok(block.includes("<strong>DECISIÓN DEL OPERADOR, 2026-08-27"), "the cabin's own words open the outer box");
+  assert.ok(block.includes("materia de esa revisión general"), "and close it");
+  const inner = /<blockquote>((?:(?!<blockquote>)[\s\S])*?)<\/blockquote>/.exec(block)[1];
+  assert.equal(inner,
+    "«no lo abras, ese run es cuando acabemos los arreglos pendientes, doy una revisada<br>general y te traigo una lista completa de feedback»",
+    "the operator's voice sits in its own box, whole, with no marker in front of it");
+  assert.ok(!painted.includes("&gt; «no lo abras"), "and the marker is nowhere on the page as text");
+});
+
+test("[#64] nesting: NOT ONE painted quote line in the whole corpus opens with a marker", () => {
+  // Measured, not asserted: every .md the repository ships, through the real entry point.
+  const files = [];
+  const walk = (dir) => {
+    for (const name of readdirSync(dir)) {
+      if (name === ".git" || name === "node_modules") continue;
+      const p = join(dir, name);
+      if (statSync(p).isDirectory()) walk(p);
+      else if (/\.(md|markdown)$/i.test(name)) files.push(p);
+    }
+  };
+  walk(REPO_ROOT);
+  assert.ok(files.length > 300, `the corpus is there to sweep (${files.length} markdown files)`);
+  const offenders = [];
+  for (const file of files) {
+    const painted = renderBody({ path: file }, readFileSync(file, "utf8"));
+    for (const [, body] of painted.matchAll(/<blockquote>([\s\S]*?)<\/blockquote>/g)) {
+      for (const chunk of body.split("<br>")) {
+        if (chunk.startsWith("&gt;")) offenders.push(`${file}: ${chunk.slice(0, 60)}`);
+      }
+    }
+  }
+  assert.deepEqual(offenders, [], "no quote in the corpus paints a marker as text");
+});
+
+test("[#64] nesting: depth is UNLIMITED — >>> and deeper are the same rule applied again", () => {
+  const html = render(lines("> uno", "> > dos", "> > > tres", "> > > > cuatro"));
+  assert.equal(countOf(html, "<blockquote>"), 4, "four levels, four boxes");
+  assert.equal(countOf(html, "</blockquote>"), 4);
+  assert.equal(html,
+    "<blockquote>uno<blockquote>dos<blockquote>tres<blockquote>cuatro</blockquote></blockquote></blockquote></blockquote>",
+    "each level holds the next; no marker at any depth");
+  // No ceiling was invented, and none is needed: every level eats one marker off every line, so
+  // a run of N markers terminates after N levels.
+  const deep = render(`${"> ".repeat(60)}hondo`);
+  assert.equal(countOf(deep, "<blockquote>"), 60, "sixty levels are sixty boxes, not a thrown error");
+  assert.ok(deep.endsWith(`hondo${"</blockquote>".repeat(60)}`), "and the text sits at the bottom");
+});
+
+test("[#64] nesting: a marker without a space (>>) nests the same as one with a space", () => {
+  assert.equal(render(lines(">> pegado", ">> segunda")),
+    "<blockquote><blockquote>pegado<br>segunda</blockquote></blockquote>",
+    "«>>» and «> >» are the same quote to a reader, and to this renderer");
+});
+
+test("[#64] nesting: escape-first holds INSIDE the nested box", () => {
+  const html = render(lines("> fuera", "> > <script>alert(1)</script> y <b>x</b>", "> > </blockquote>"));
+  for (const live of ["<script", "</script>", "<b>", "</b>"]) {
+    assert.ok(!html.includes(live), `«${live}» never reaches the page as markup from inside a nested quote`);
+  }
+  assert.ok(html.includes("&lt;script&gt;alert(1)&lt;/script&gt;"), "it is shown, escaped, as text");
+  assert.equal(countOf(html, "</blockquote>"), 2, "the document cannot write a closing tag to escape the box");
+  assert.ok(html.includes("&lt;/blockquote&gt;"), "its attempt is shown as text");
+  // Every tag on the page is one this code wrote.
+  assert.deepEqual(html.match(/<[^>]+>/g),
+    ["<blockquote>", "<blockquote>", "<br>", "</blockquote>", "</blockquote>"]);
+});
+
+test("[#64] nesting: an EMPTY nested quote paints no box, the same way an empty quote never did", () => {
+  assert.equal(render(lines("> >", "> >")), "", "a nested quote with no words at all paints nothing");
+  assert.equal(render(lines("> texto", "> >")), "<blockquote>texto</blockquote>",
+    "and an empty nested run inside a real quote adds no empty box");
+});
+
+test("[#64] nesting: blank quote lines around a nested box do not become stray breaks", () => {
+  const html = render(lines("> antes", ">", "> > dentro", ">", "> después"));
+  assert.equal(html, "<blockquote>antes<blockquote>dentro</blockquote>después</blockquote>",
+    "the box is its own separation; the gaps that framed it do not print as breaks");
+  assert.ok(!/<br><blockquote>/.test(html), "no break is left hanging before the inner box");
+  assert.ok(!/<\/blockquote><br>/.test(html), "nor after it");
+});
+
+test("[#64] nesting: D-B still holds AT EVERY DEPTH — a list inside a nested quote stays literal", () => {
+  const html = render(lines("> la cabina dice", "> > - primero", "> > - segundo"));
+  assert.equal(countOf(html, "<ul>"), 0, "no list is invented inside a nested quote either");
+  assert.equal(countOf(html, "<li>"), 0);
+  assert.equal(html, "<blockquote>la cabina dice<blockquote>- primero<br>- segundo</blockquote></blockquote>",
+    "the dashes stay the honest bullets they are, one level down too");
+});
+
+test("[#64] nesting: a quote WITHOUT nesting is byte-for-byte what the grouping already shipped", () => {
+  // The whole point of the change being one rule reused: with no nested line in the run, the new
+  // path collapses onto the old one.
+  for (const source of [
+    "> una sola línea",
+    lines("> a", "> b", "> c"),
+    lines("> antes", ">", "> después"),
+    lines("> **cruza", "> la negrita**"),
+    lines("> - uno", "> - dos")
+  ]) {
+    const html = render(source);
+    assert.equal(countOf(html, "<blockquote>"), 1, `«${source.split("\n")[0]}…» is still exactly one box`);
+    assert.ok(!/<blockquote>[\s\S]*<blockquote>/.test(html), "and it holds no box of its own");
+  }
+});
+
+// --- the two surfaces, for the nested case specifically ---
+
+const NESTED_DOC = lines(
+  "# Un record con la voz del operador dentro",
+  "",
+  "> **DECISIÓN DEL OPERADOR, 2026-08-27 · el `#67` NO se adelanta.** Verbatim:",
+  ">",
+  "> > «no lo abras, ese run es cuando acabemos los arreglos pendientes, doy una revisada",
+  "> > general y te traigo una lista completa de feedback»",
+  ">",
+  "> La cabina había preparado el dry-run del movimiento.",
+  "",
+  "Después."
+);
+
+test("[#64] nesting, surface 1 — the DOCS TAB route paints the box inside the box", () => {
+  const painted = paintAsDocsTab(NESTED_DOC);
+  assert.equal(countOf(painted, "<blockquote>"), 2, "outer and inner");
+  assert.ok(!painted.includes("&gt;"), "and no marker as text anywhere on the tab");
+  const inner = /<blockquote>((?:(?!<blockquote>)[\s\S])*?)<\/blockquote>/.exec(painted)[1];
+  assert.ok(inner.startsWith("«no lo abras"), "the operator's voice starts the inner box");
+  assert.equal(countOf(painted, "<strong>"), 1, "and the cabin's bold around it still resolves");
+});
+
+test("[#64] nesting, surface 2 — the MODAL READER route paints the same box inside the box", async () => {
+  const { opened, body } = await openInModalReader(NESTED_DOC, "docs/CITA-ANIDADA.md");
+  assert.equal(opened.ok, true, "the reader opened the document");
+  assert.equal(opened.view, "document");
+  const painted = /<article class="docs-body">([\s\S]*)<\/article>/.exec(body)[1];
+  assert.equal(countOf(painted, "<blockquote>"), 2, "outer and inner, in the modal too");
+  assert.ok(!painted.includes("&gt;"), "no marker as text in the modal");
+  const inner = /<blockquote>((?:(?!<blockquote>)[\s\S])*?)<\/blockquote>/.exec(painted)[1];
+  assert.ok(inner.startsWith("«no lo abras"), "the operator's voice in its own box");
+});
+
+test("[#64] nesting: the two surfaces paint the SAME nested quote — one fix, not two", async () => {
+  const { body } = await openInModalReader(NESTED_DOC, "docs/CITA-ANIDADA.md");
+  const modal = /<article class="docs-body">([\s\S]*)<\/article>/.exec(body)[1].replace(/ id="dsr-h-\d+"/g, "");
+  const tab = renderBody({ path: "docs/CITA-ANIDADA.md" }, NESTED_DOC);
   assert.equal(modal, tab, "byte for byte, but for the positional ids the reader stamps on headings");
 });

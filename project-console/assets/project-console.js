@@ -2627,6 +2627,49 @@ function renderDocMarkdownLite(rawText) {
     }).join("");
     return `<div class="docs-table-wrap"><table class="docs-table"><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
   };
+  // Blockquote body, and the ONE rule that makes a quote inside a quote a BOX INSIDE A BOX.
+  // The lines of a quote block are walked here the same way the block itself is consumed below: a
+  // run of consecutive lines that opens with another "&gt;" is peeled one level and handed back to
+  // this same function, so depth needs no ceiling and gets none - "&gt;&gt;&gt;" and deeper are this rule
+  // applied again, and it terminates by construction because every level eats one marker off every
+  // line of the run. What is NOT a nested run is joined with <br> and passed to inline() exactly as
+  // the grouping already did, so a quote with no nesting at all comes out of here byte-for-byte
+  // what it was. Blank lines are trimmed at the edges of every chunk, not just of the whole block,
+  // so the gaps that frame a nested quote in the source do not print as stray breaks around a tag
+  // that is already a block. An inner run with no words paints no box, the same way an empty quote
+  // never did. Nothing else inside a quote is re-parsed: a "- " bullet stays the literal dash it
+  // is, at every depth - the operator's decision, recorded in
+  // context/aiw-console/records/DECISION-CITAS-ANIDADAS-Y-LISTAS-EN-CITA.md, on the grounds that a
+  // leftover marker is noise while a leftover dash is a poor but honest bullet.
+  const trimBlankEdges = (chunk) => {
+    while (chunk.length && !chunk[0]) chunk.shift();
+    while (chunk.length && !chunk[chunk.length - 1]) chunk.pop();
+    return chunk;
+  };
+  const renderQuoteBody = (quoteLines) => {
+    const parts = [];
+    let plain = [];
+    const flushPlain = () => {
+      if (trimBlankEdges(plain).length) parts.push(inline(plain.join("<br>")));
+      plain = [];
+    };
+    for (let k = 0; k < quoteLines.length; k += 1) {
+      if (!quoteLines[k].trim().startsWith("&gt;")) {
+        plain.push(quoteLines[k]);
+        continue;
+      }
+      flushPlain();
+      const nested = [];
+      for (; k < quoteLines.length && quoteLines[k].trim().startsWith("&gt;"); k += 1) {
+        nested.push(quoteLines[k].trim().replace(/^&gt;\s?/, ""));
+      }
+      k -= 1;
+      const body = renderQuoteBody(trimBlankEdges(nested));
+      if (body) parts.push(`<blockquote>${body}</blockquote>`);
+    }
+    flushPlain();
+    return parts.join("");
+  };
   const segments = safe.split("```");
   const html = [];
   segments.forEach((segment, index) => {
@@ -2731,8 +2774,10 @@ function renderDocMarkdownLite(rawText) {
       // blank line INSIDE the block - and lets inline() see the whole quote at once, so a bold or
       // code span that opens on one line closes on the next. Leading and trailing blank quote
       // lines are dropped, and a quote with no words at all paints nothing rather than an empty
-      // box. Nothing inside a quote is re-parsed as a block: a nested ">" and a "- " bullet stay
-      // the literal text they already were, escaped, exactly as the per-line branch left them.
+      // box. A nested quote is NOT literal text: renderQuoteBody paints it as a box inside this
+      // box, so the operator's voice quoted inside a record of the cabin's reads as its own block
+      // and no marker is printed in front of it. A "- " bullet inside a quote DOES stay the
+      // literal text it always was, at every depth - see renderQuoteBody for both, and why.
       if (trimmed.startsWith("&gt;")) {
         flushParagraph();
         flushList();
@@ -2746,7 +2791,8 @@ function renderDocMarkdownLite(rawText) {
         i = j - 1;
         while (quoteLines.length && !quoteLines[0]) quoteLines.shift();
         while (quoteLines.length && !quoteLines[quoteLines.length - 1]) quoteLines.pop();
-        if (quoteLines.length) html.push(`<blockquote>${inline(quoteLines.join("<br>"))}</blockquote>`);
+        const quoteBody = renderQuoteBody(quoteLines);
+        if (quoteBody) html.push(`<blockquote>${quoteBody}</blockquote>`);
         continue;
       }
       // Continuation of the current list item: a non-blank line that opens no new block while a

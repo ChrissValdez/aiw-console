@@ -29,6 +29,21 @@ miro.
    repo delante, o con su contenido transcrito dentro. Si el taller lo necesita para
    trabajar, TRANSCRIBELO: no le mandes a un sitio que no puede abrir.
 
+(C) `write-tree` FOTOGRAFIA EL INDICE ENTERO, NO LO QUE ACABAS DE ANADIR.
+El `add` dirigido por nombre protege de meter trabajo ajeno AL INDICE. No protege del
+trabajo ajeno QUE YA ESTABA ALLI: `write-tree` se lleva el indice completo, asi que un
+fichero que otro hilo dejo staged se monta en tu commit bajo un mensaje que solo habla de
+lo tuyo. Es el mismo defecto que el `add` dirigido existe para impedir, entrando por la
+puerta de al lado. En `aiw-console` escriben VARIOS hilos, asi que alli es probable, no
+hipotetico. El 2026-09-14 el commit `b9373704` salio limpio -- por suerte, no por
+construccion: el indice estaba vacio y nadie lo habia comprobado.
+ - LA GUARDA, entre el `add` y el `commit-tree`:
+       git --no-optional-locks diff --cached --name-only HEAD
+   Su salida tiene que ser EXACTAMENTE el conjunto de ficheros que nombraste. Si sobra
+   uno, NO SE COMMITEA: se para, se declara de quien parece y se pregunta.
+ - Y no se arregla reescribiendo historia. Un commit que ya arrastro algo ajeno se corrige
+   HACIA ADELANTE, con otro que lo declare.
+
 ARRANQUE, en este orden y midiendo, no suponiendo:
 1. Deriva la ruta de montaje del workspace. No la heredes de ningun documento.
 2. Comprueba .git/index.lock en los cinco repos CON ls, nunca corriendo git para

@@ -149,6 +149,92 @@ gráficos, la mitad está hecha **y con la puerta puesta**.
 
 ---
 
+## PARADA DE ANÁLISIS DEL 2026-09-15 — lo que el operador imaginó, y el requisito que puso
+
+Surgió a mitad de `#197`, midiendo la guarda de HTML en prosa, y **es la conversación que
+convierte este run de una idea en un encargo con requisitos**. Se escribe aquí porque en el
+chat se pierde.
+
+### Cómo lo imagina, en sus palabras
+
+> *«si quiero poder insertar html de forma libre y a gusto… quisiera que fuera insertando json
+> (quizás dentro de un campo de json como bloque html) y lo que me imagino es un componente que
+> tal cual sea un campo que me permita ahí pegar html libremente»*
+
+### ⚠ EL ARGUMENTO FUERTE, Y NO ES «FLEXIBILIDAD»
+
+**Lo que hace peligrosa la prosa no es el HTML: es que nadie puede distinguir dos cosas.** Un
+`<br>` en una descripción puede ser «el autor lo quiso» o «nadie lo impidió», y **desde fuera se
+ven idénticos**. Por eso `#197` cierra esos campos: no porque el HTML sea malo, sino porque ahí
+**es indistinguible de un accidente**.
+
+**Un bloque de HTML declarado invierte exactamente eso.** El autor lo eligió, tiene nombre, sale
+en el JSON, sale en el editor y **se puede censar**. El mismo marcado que es un agujero en una
+descripción es **una decisión visible** en un bloque que se llama «HTML».
+
+**Y de ahí sale lo que no es obvio: cerrar la prosa hace esta válvula MÁS necesaria, no menos.**
+Los dos runs son complementarios y en este orden — primero la puerta, después la válvula.
+
+### Tres cosas de diseño, medidas
+
+1. **Bloque con nombre propio, no campo escondido dentro de otro.** Todo su valor está en que se
+   vea. Un campo enterrado lo vuelve invisible otra vez, que es el defecto que `#197` acaba de
+   encontrar.
+2. **No parte de cero: existe a medias.** El motor de diapositiva ya pinta `case 'html'`
+   (`renderColumnsSlide.js:144`), pero el selector no lo ofrece, el esquema no lo admite y
+   `compileSlideItem` **lanza**. En diapositiva es **terminar**; en Web es **construir**.
+3. **La posición de seguridad se escribe, no se deja implícita.** Un bloque de HTML es un sitio
+   donde la guarda de `#197` **deliberadamente no aplica**. Si no está dicho con su razón, dentro
+   de seis meses alguien lo lee como un hueco más y lo tapa.
+
+### La etiqueta obligatoria, y qué contestó el operador
+
+La cabina propuso que cada bloque lleve **etiqueta obligatoria** —*«esto es mi prototipo
+`tabla-v2`»*— para que «¿esto merece componente?» se conteste **contando y no recordando**, y
+nombró como riesgo que un bloque de HTML no se migra solo.
+
+**Él reencuadró el riesgo, y su reencuadre es mejor:**
+
+> *«cuando se crea un componente nuevo es para replicar digamos tabla-v2, entonces ahí lo recreo
+> y borro el html viejo. Eso no es grave. Lo que sí es grave es que insertar un html cuando
+> compile mi js a json y eventualmente se genere el html final truene la lección.»*
+
+**La migración no es el riesgo: él recrea y borra.** El riesgo es **que la lección no se
+construya**.
+
+### ⚠ EL REQUISITO QUE ESE REENCUADRE IMPONE, con lo medido
+
+**Lo que NO puede pasar si el bloque se admite bien:** `compileSlideItem` lanza hoy con `html`,
+pero **porque el tipo no está admitido**, no porque el HTML le haga daño. Admitirlo de verdad
+elimina ese fallo.
+
+**Lo que SÍ puede pasar, y es más silencioso y peor.** Medido: el motor hace
+`content = col.content || ''` y lo mete **crudo en una plantilla de texto**. **No parsea:
+concatena.** Entonces:
+
+- Un `<div>` **sin cerrar** no lanza nada y **se traga el resto de la diapositiva**. El compilador
+  dice que todo fue bien y la página sale rota.
+- Un `</section>` de más **cierra algo que el autor no abrió**.
+- Un `<style>` sin cerrar se come el resto como CSS.
+
+**LA FORMA DE LA GUARDA, Y ES LA RESPUESTA A SU REQUISITO: se valida la FORMA, no el
+CONTENIDO.** Etiquetas balanceadas, nada que cierre lo que no abrió, nada que se escape de su
+contenedor. Se comprueba **al guardar**, se lo dice **antes de compilar**, y **no le limita el
+diseño en absoluto**: sigue pudiendo pegar cualquier tabla, cualquier `<style>`, cualquier
+maquetación. **Segunda red barata:** que el motor **envuelva** el bloque en un contenedor propio,
+para que un HTML mal formado se quede en su celda en vez de derramarse.
+
+**Requisito, no sugerencia:** *el bloque de HTML no puede romper la construcción ni derramarse
+fuera de su contenedor, y eso se garantiza con una guarda de FORMA, no de contenido.*
+
+### La decisión que queda abierta y se le traerá con la medición delante
+
+**Qué pasa con `<script>`.** Balancear no dice nada de si se ejecuta. Un bloque declarado de HTML
+es a la vez **el sitio donde tendría más sentido permitirlo** y **el sitio donde más cuesta si
+sale mal en Moodle**. No se decide aquí.
+
+---
+
 ## Lo que la cabina opinó, y queda escrito porque el operador lo pidió
 
 Que la idea es correcta y el momento de construirla no. Que **terminar la válvula que ya existe a

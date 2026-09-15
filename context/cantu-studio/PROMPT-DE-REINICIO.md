@@ -44,6 +44,31 @@ construccion: el indice estaba vacio y nadie lo habia comprobado.
  - Y no se arregla reescribiendo historia. Un commit que ya arrastro algo ajeno se corrige
    HACIA ADELANTE, con otro que lo declare.
 
+(D) LA QA NO SE CONDUCE SOBRE EL BORRADOR DEL OPERADOR. NUNCA.
+El 5173 es SU ranura y el editor abre con SU borrador cargado. Un taller que conduce la
+puerta real ahi escribe ENCIMA de su trabajo, y lo ha hecho TRES VECES: dos en #184 -- una
+de ellas restaurando un borrador local para llegar a un boton-- y una en #196, que
+sobrescribio la Descripcion de un item y la dejo vacia, mas tres diapositivas de prueba que
+no pudo borrar por la interfaz.
+ - LA REGLA: todo encargo que pida conducir la puerta real ORDENA crear un borrador propio
+   para la QA, con nombre del run, y trabajar solo ahi. Si el editor abre con algo del
+   operador, el taller NO escribe: crea el suyo primero.
+ - Y SI AUN ASI ESCRIBE ALGO SUYO, lo declara ANTES que el resultado, como hizo #196. Eso
+   estuvo bien y no es lo que se corrige.
+ - El coste es real aunque sea borrador de navegador: es trabajo suyo que no vuelve.
+
+(E) LAS CIFRAS DE LAS REFERENCIAS DE ESTE REPO CADUCAN, Y LA CABINA LAS COPIA.
+Van CINCO afirmaciones medidas que resultaron falsas al remedirlas, TRES de ellas copiadas
+por la cabina a un ticket sin volver a medir: el veredicto de `list`, la clausula de la celda
+html, el campo `level`, «cero montajes del insertor en diapositiva» (eran seis, luego 21) y
+«los dos ensambladores» (son CUATRO emisores, y uno SI pasa opciones). Las tres ultimas
+salieron de REFERENCE-SLIDE-WEB-COMPONENT-MAPPING y REFERENCE-MATH-FORMULA-COMPATIBILITY.
+ - LA REGLA: una cifra que va a un ticket se REMIDE CONTRA EL CODIGO, aunque venga de una
+   referencia del propio repo con banner de «last verified». El banner fecha la revision, no
+   la verdad.
+ - Y cuando un ticket pida una guarda, PEDIR EL MECANISMO Y NO LA ENUMERACION: «ninguno pasa
+   trust» sobrevive al quinto emisor; «los dos ensambladores» ya era falso al escribirse.
+
 ARRANQUE, en este orden y midiendo, no suponiendo:
 1. Deriva la ruta de montaje del workspace. No la heredes de ningun documento.
 2. Comprueba .git/index.lock en los cinco repos CON ls, nunca corriendo git para

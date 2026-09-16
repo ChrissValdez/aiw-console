@@ -1,245 +1,192 @@
 # HANDOFF — hilo `cantu-studio` (el proyecto)
 
-> Escrito por la cabina al cerrar la sesión del **2026-09-01**. **Sustituye al relevo del
-> 2026-08-28**, cuyas cifras ya están obsoletas.
+> Escrito por la cabina al cerrar la sesión del **2026-09-15/16**. **Sustituye al relevo del
+> 2026-09-01**, cuyas cifras ya están obsoletas.
 >
 > **Todo lo de aquí está medido y lleva fecha. Contrástalo contra el canónico al abrir. Gana el
 > disco.**
 
 ---
 
-## ⚠ LA LECCIÓN DE ESTA SESIÓN, Y VA PRIMERA PORQUE SON CUATRO CASOS DE LA MISMA FALTA
+## ⚠ LA LECCIÓN DE ESTA SESIÓN: OCHO CIFRAS CAYERON, Y EL PATRÓN CAMBIÓ
 
-> **LA CABINA MIDIÓ POCO Y COPIÓ MUCHO. Las cuatro cifras falsas de esta sesión salieron de
-> RE-PUBLICAR el número de otro, y en las cuatro lo que se perdió fue EL SUSTANTIVO QUE LO ACOTA.**
+El relevo anterior cerró con dos guardas sobre **copiar cifras ajenas**. Esta sesión demuestra
+que aquello era solo una cara: **cayeron OCHO, y las cuatro peores no eran copias de documentos
+viejos.**
 
-| lo que publicó la cabina | lo que era | de dónde salió el fallo |
+| lo que publicó la cabina | lo que era | la falta, y es nueva |
 |---|---|---|
-| «quedan 1435,9 KiB = **79,3 % en SLIDE**» | 79,3 % **de un fichero**; 32,8 % del corpus | el reporte de origen decía *«sobre el fichero ya deduplicado»* y **la cabina dejó caer el sustantivo al citarlo**. Efecto: subestimar lo alcanzable a la mitad |
-| «**16** huérfanos de `author_lite`» | **27** | su primera medición no miró dentro de `dist/_moodle/` |
-| «**4** fallos preexistentes» | **11** | **tenía los dos números delante** —`#173` decía 11, `#174` decía 4— y **copió el más reciente sin ver que se contradecían** |
-| «**2** árboles se mueven» | **3** | copió un renglón que contaba **pruebas** y lo publicó como si contara **árboles** |
+| «la Tarjeta «Código» pinta HTML crudo» | `compiler.js:635` ya lo escapaba **desde antes** | **heredó la conclusión de `#198` sin remedirla** y la escribió en el ticket de `#199` |
+| «85 apariciones» de `jame-` | **85 LÍNEAS**; ocurrencias 92 | **midió con `grep -c`, que cuenta líneas, y lo rotuló «occurrences»**. Medición PROPIA y FRESCA, con el modo equivocado de la herramienta |
+| «una regla real se recorta» | **nunca se recortaba** — el relleno del cuerpo se traga los 4,2 px y el borde está 88,2 px más afuera | **relevó una cifra de un informe RECIÉN ESCRITO, sin comprobarla, y se la puso al operador DELANTE MIENTRAS DECIDÍA** |
+| «el hueco es la pista de la Regla» | la pista ya era exacta; el mando **no pinta rótulo ninguno** | **le dio al operador tres opciones con TRES MECANISMOS SUYOS dentro** y tomó su elección por una medición |
+| «~2 115 ficheros en `QA/temp`» | git ve **291 entradas** | repetida toda la sesión sin remedir. **No se vuelve a decir hasta medirla** |
+| «13 reglas del corpus» | correcto, pero contaba **instancias**: son **7 declaradas, 13 pintadas** | el sustantivo otra vez |
+| «los 691,60 px del campo vecino» | **no es una constante** — depende del ancho de la columna de previa, que vive en `localStorage` | publicó como propiedad del montaje algo que era de **una configuración de pantalla** |
+| «este commit trae la apertura y el cierre de `#199`» | traía **CUATRO runs** sin commitear | declaró de memoria un alcance **que se podía contar** |
 
-**Ninguna la detectó la cabina.** Tres las desmintió el taller y una salió al ir a cerrar.
+**Ninguna la detectó la cabina sola.** Seis las desmintió el taller, una salió al ir a commitear
+y una la cazó una guarda propia.
 
-**LAS DOS GUARDAS QUE SALEN, y son mecánicas, no disciplina:**
+### LAS CUATRO GUARDAS NUEVAS, y están escritas en `PROMPT-DE-REINICIO.md` como (F), (G) y (H)
 
-1. **Toda cifra copiada de un reporte ajeno viaja con el sustantivo que la acota —*de este
-   fichero*, *del corpus*, *de esta escena*— EN LA MISMA FRASE, o no se copia.**
-2. **Cuando dos reportes dan números distintos de lo mismo, NO gana el más reciente: se mide.**
-   Una contradicción no mirada no es una cifra envejecida, es una decisión de no mirar.
+1. **(F) UN TICKET NO VIAJA EN EL MISMO MENSAJE QUE EL SCRIPT QUE CREA SU RUN.** Pasó DOS veces
+   —la enmienda D-061 de `#194` y el `#200`— y las dos costó un encargo entero. El operador pega
+   lo más pegable, y el ticket siempre lo es. **El ticket va en el turno SIGUIENTE, después de
+   que el parte demuestre que el run existe.** Las dos veces la guarda de título del ticket
+   convirtió el error en una parada barata: por eso esa cláusula es estructural y no higiene.
+2. **(G) EL ALCANCE DE UN COMMIT SE CUENTA CONTRA HEAD, NO SE RECUERDA.** Todo script de commit
+   del canónico deriva el delta con `git show HEAD:<ruta>` y **lo escribe en el mensaje**.
+3. **(H) CUANDO EL OPERADOR ES EL INSTRUMENTO, PREGÚNTALE QUÉ VE, NO CUÁL DE TUS EXPLICACIONES
+   LE ENCAJA.** Una sonda a la que le das tres hipótesis te devuelve una de las tres. **Un «sí»
+   del operador a una opción que la cabina redactó NO es una medición: es un acuerdo sobre un
+   relato.** Las opciones con mecanismo dentro solo valen cuando la cabina YA midió el mecanismo
+   y pregunta por la PREFERENCIA.
+4. **Y la que no tiene letra todavía: ANTES DE PUBLICAR UNA SONDA, COMPROBAR QUÉ UNIDAD
+   DEVUELVE.** No si devuelve un número.
 
-### Y una sonda propia que sí se cazó a tiempo — el contraejemplo que enseña
+### La falta que no es de cifras, y es la más incómoda porque PASÓ DOS VECES
 
-Para contar huérfanos la cabina escribió un comparador de nombres entre `dist/` y `src/content/`
-y **devolvió 57, incluyendo ficheros vivos**. **No se publicó y no se borró por él**: el borrado
-se limitó a lo que se sostiene *por estructura* —`src/content/author_lite` ya no existe—. **Esa
-es la forma correcta**, y es la misma familia que los peldaños contados sobre prosa y los
-`<head>` que eran `<header>`.
+**La cabina anunció una decisión de diseño por escrito y codificó la contraria media hora
+después.** Al abrir `#202` declaró que no daría commit de apertura porque el script de cierre
+derivaría la forma —lógica que ya había construido y probado en `#201`— y luego escribió
+`if (nuevos.length) parar()`. **La guarda la cazó.**
 
-### La tercera falta, que no es de cifras
+**Y VOLVIÓ A PASAR AL CERRAR LA SESIÓN**, con el `#203` y el mismo renglón exacto. O sea: la
+cabina **construye la lógica de doble forma, la usa, y la siguiente vez la reescribe de cero
+asumiendo una sola.** Dos veces en una sesión no es un descuido.
 
-**La cabina cerró `#174` SIN QA ejecutada y NO LO DECLARÓ.** La regla permite cerrar sin QA; lo
-que prohíbe es callarlo. Lo encontró ella al preparar la hoja siguiente y **metió la superficie
-huérfana como paso 4 de la QA de `#175`**, que el operador aprobó. **Deuda saldada, no
-acumulada.** Guarda propuesta: que todo `closeout_result` lleve una línea explícita
-`QA: ejecutada` / `QA: NO ejecutada, superficie sin mirar: …`.
+> **LA GUARDA QUE SALE, Y ES MECÁNICA: la comprobación de doble forma es la FORMA POR DEFECTO de
+> todo script de commit del canónico, no una opción que se decide cada vez.** La apertura de un
+> run **a menudo llega sin commitear** —pasó en `#201`, `#202` y `#203`— porque el cierre la
+> absorbe por diseño. Un script que solo contempla «traigo el cierre» **está mal escrito de
+> origen**.
+>
+> **Y el arreglo de verdad es dejar de escribirla a mano**: extraer el delta a un ayudante
+> compartido en `_scratch\` que todos los guiones importen. Mientras se copie y pegue, se va a
+> volver a olvidar — que es exactamente por qué este proyecto prefiere el mecanismo a la
+> disciplina.
 
-### Y la cuarta: emitir un ticket sin abrir el run
-
-**`#174` nunca se puso en `active`.** La cabina emitió el ticket saltándose la mitad de apertura
-del turno 1, así que durante todo el encargo el canónico decía que nadie trabajaba en él **y la
-cabina hizo dos escrituras estructurales creyendo que no había encargo en vuelo**. No hubo daño
-porque no había otro hilo: **suerte, no diseño**. Se cerró de `planned` a `completed`
-directamente en vez de fabricar un paso que no ocurrió.
-**Guarda:** antes de emitir un ticket, leer el `status` del run del canónico y **abortar si no es
-`active`**.
+No fue un error de medición: fue una contradicción con lo dicho, y contra eso no vale medir
+mejor — vale que la guarda exista.
 
 ---
 
-## ESTADO DEL CANÓNICO — medido el 2026-09-01
+## ESTADO DEL CANÓNICO — medido el 2026-09-16
 
 | | |
 |---|---|
-| ruta | `projects/cantu-studio/.aiw/roadmap/roadmap.json` |
-| md5 al cerrar | `b17c055fe58fe2e32ce7d9b0308b48a0` |
-| runs | **190**, `queue_order` denso `1..190`, ids únicos |
-| `completed` | **176** · `active` **0** · `planned` **14** |
-| validador | **0 errores, 0 avisos**, motor de `aiw-console` |
-| arista colgante | **1, PREEXISTENTE** — `RUN-JAME-DOCUMENTATION-METHODOLOGY-ROADMAP-FIRST-001` → `RUN-CANTU-ROADMAP-CONTENT-AUDIT-001`. **Es la causa de los 11 fallos de `tools/roadmap`** |
-| `.project/` | re-emitido por `serve.mjs` en cada escritura |
+| ruta | `projects/cantu-studio/.aiw/roadmap/roadmap.json` — **con `.aiw/`** |
+| forma | `objectives[].phases[].runs[]`. **Leer `obj.runs` devuelve 0: es una sonda mal escrita** |
+| md5 al cerrar | `9463f9a0e8e7bdba98c0e7e8a453f1fe` |
+| runs | **209**, `queue_order` denso `1..209` |
+| `completed` | **203** · `active` **1** · `planned` **5** |
+| validador | **EXIT 0** con **217** `externalRunIds` reales, motor de `aiw-console` |
+| ⚠ `checkInvariants` | **exige un `Set`**, no un array. Con un array la rama se salta en silencio y publica un verde falso |
+| `.project/` | re-emitido por `serve.mjs` en cada escritura, 7 ficheros |
 
-### Lo que cerró esta sesión — TRES runs
-
-| # | run | veredicto |
-|---|---|---|
-| **173** | emitir cada hoja una vez por fichero | «pass» (5 pasos) |
-| **174** | el guion una vez por fichero + configuración | **sin QA** — su superficie se miró en la QA de `#175` |
-| **175** | asentar el reparto: previa, guardas, arneses, árboles | «pass» (6 pasos) |
-
-### La cola: el siguiente es `#176`
-
-`#176` **«Design the Asset Registry»**, y **llega con un piloto ya hecho** — ver el record
-`HALLAZGO-EL-PILOTO-LE-ENSENA-CUATRO-COSAS-AL-ASSET-REGISTRY.md`, que es lo primero que hay que
-leer antes de emitir ese ticket. Después: `#177` contrato `ctx.assets`, `#178`/`#179` integración
-y validación, `#180` auditoría de UX, `#181` historial por campo.
+**El único run activo es `#208 RUN-JAME-AUTHORING-WORKSPACE-UX-AUDIT-001`**, y lleva activo
+desde **antes** de esta sesión esperando revisión manual del operador. No se tocó.
 
 ---
 
-## ⚠ LO PRIMERO DE LA PRÓXIMA SESIÓN
+## ⚠ LA CABINA NO TIENE SHELL, Y ESO DEFINE CÓMO SE TRABAJA
 
-**Nada está a medias. Cero `active`. Árbol limpio salvo `.claude/launch.json`, que ya venía sin
-rastrear.**
+**Desde la actualización de Windows del 8 de septiembre, el workspace de bash está caído**
+(`Plan9 share "c" which is not mounted`). Read, Write, Edit, Grep y Glob funcionan. **`git`,
+`node`, las pruebas y la consola NO.**
 
-**Lo que conviene hacer antes de encadenar `#176`:** leer el record del piloto. Contiene **cuatro
-sitios donde un contrato general se habría equivocado**, los cuatro medidos sobre un caso real, y
-uno de ellos —que parametrizar fue *reescribir* el componente y no *configurarlo*— cambia el
-presupuesto del diseño entero.
+**Consecuencia, y es la forma de trabajo de toda esta sesión:** cada operación se entrega como un
+`.mjs` en `_scratch\` que el operador pega en PowerShell. Funciona bien y el patrón está maduro:
 
----
-
-## LO QUE ESTA SESIÓN CONSIGUIÓ, EN CIFRAS MEDIDAS
-
-```
-   corpus SLIDE publicado    4384,3 → 1596,8 KiB    −63,6 %
-   documento de la PREVIA    2397,6 →  227,9 KiB    −90,5 %   (35 ms de coste)
-   WEB / MOODLE              −24,2 % / −24,4 %
-```
-
-**Y el hallazgo que nadie buscaba:** en la previa se repetían **21 copias de la hoja de estilos
-desde antes del reparto**. La regresión del 6,6 % que abrió `#175` fue el hilo del que tirar.
-**La lección: una regresión pequeña en una superficie no medida suele ser la punta de una grande.**
+- **Dos pasadas**: sin bandera no escribe nada; con `--apply` escribe. **Y desde esta sesión,
+  cualquier bandera que no sea exactamente `--apply` ABORTA** — un `--appply` con tres pes corrió
+  como dry-run y la salida era indistinguible de la correcta.
+- **Respaldo byte a byte** verificado por md5 antes de escribir.
+- **Dry-run con el `remap` publicado**, sacado del dry-run y no razonado.
+- **Verificación campo a campo** con la lista DECLARADA de qué debía cambiar.
+- **Guardas que abortan ANTES de escribir**, y esta sesión pararon **siete veces**, todas con
+  razón.
 
 ---
 
-## LO QUE QUEDA VIVO Y ES DEL OPERADOR
+## LO QUE SE HIZO — `#196` a `#203`
 
-Nombrado, medido, **sin run**:
+Todos `completed`. El canónico llegó a esta sesión con **cuatro runs sin commitear** (`#196`
+a `#199`): eso lo descubrió la guarda (G), no la cabina.
 
-- **Los 11 fallos de `tools/roadmap`** son por la **arista colgante del canónico**, no por código.
-  Medidos idénticos antes y después de tres runs. **Arreglarlos es una decisión, no un bug.**
-- **Los +7,2 KiB del fichero de una sola instancia** (`staging/1_propiedades_numeros_slide`). La
-  pasada no los recupera y recuperarlos sería cambiar la conducta del reparto. **Declarado fuera
-  de alcance, no arreglado a escondidas.**
-- **Los filtros de Moodle**: el de emoticonos convierte `8-.` dentro de un `path` SVG en un PNG
-  «tímido» y `(y)` en «Sí»; el de autoenlace inyecta `<a>` en sus encabezados. **Se desactivan
-  desde la administración de Moodle. Ofrecido, no tomado.**
-- **`renderStackSlide.js` tiene un ternario cuyas dos ramas son idénticas.** Nombrado **cuatro
-  veces**. Sigue sin tocar por la misma razón: movería árboles fijados.
-- **`contentScale`**, **el respaldo a nivel de BLOQUE del tamaño de fórmula**, **el suelo de 14 px
-  de decremento (D-071)**, **vaciar un enum tira el error a la raíz (18 casos)**, y **el mapa
-  `REFERENCE-SLIDE-WEB-COMPONENT-MAPPING.md` con cuatro afirmaciones obsoletas**. Todos siguen
-  vivos y sin run, sin cambios desde el relevo anterior.
-- **El texto visible de las dos marcas** — preguntado **cinco veces sin respuesta**. Declarado
-  como deuda nombrada; **no se vuelve a preguntar.**
+| run | qué dejó |
+|---|---|
+| `#199` **Declared HTML block** | La válvula de escape **con nombre** en Web: `tag` obligatorio, guarda de forma sin dependencias (`DOMParser` NO EXISTE EN NODE), y `data-html-block` que viaja al artefacto para que el censo funcione **sobre lo publicado** |
+| `#200` **Slide HTML cell** | La misma válvula en diapositiva. **Abrió una puerta que el esquema cerraba a propósito**, y enmendó la frase que decía lo contrario |
+| `#201` **Rename `jame-` → `cs-`** | Ocho identificadores, nueve ficheros, y una guarda que **deriva los dos lados del disco y exige igualdad de conjuntos** |
+| `#202` **Rótulos de alcance** (3 rondas) | Siete tipos derivados del árbol zod, **tres pistas que mentían** corregidas, y nombre visible en los siete mandos de fila compartida del despachador |
+| `#203` **Ancla de la Regla** (2 rondas) | «Mediano» pasa a valer lo que valía «Extra grande», y **la invariante de no regresión** con su guarda |
 
----
+### Y el actor que nadie había nombrado, que es lo que más vale de `#203`
 
-## MÉTODOS QUE FUNCIONARON ESTA SESIÓN Y CONVIENE REUSAR
+**`src/builders/slides/helpers/fitEngine.js`** encoge la celda en tiempo de ejecución según el
+déficit vertical, con suelo. **Subir un tamaño NO es una promesa global: es por celda.** En una
+rejilla densa se come casi toda el alza y llegó a **invertirla** —una celda salía más pequeña que
+antes—.
 
-- **⭐ MEDIR LA HIPÓTESIS ANTES DE CONSTRUIR SOBRE ELLA, escrito como criterio 1 del ticket.** En
-  `#175` la hipótesis de la previa salió cierta y **por mucho más de lo esperado**, y de paso
-  destapó el desperdicio de las hojas. Si hubiera salido falsa, se habría ahorrado el run entero.
-  **El ticket decía literalmente «es una hipótesis: mídela, no la asumas».**
-- **⭐ EL ORDEN DENTRO DEL TICKET COMO PARTE DEL ENCARGO.** «Primero la previa, porque lo que se
-  decida ahí cambia código y re-fijar antes sería tirar el re-fijado.» El taller lo respetó y no
-  hubo trabajo tirado.
-- **⭐ EL PILOTO ANTES DEL CONTRATO.** `#174` se programó **antes** del diseño del registro para
-  que el diseño se hiciera contra un caso real. **Rindió cuatro hallazgos que el abstracto no
-  habría dado**, y tres contradicen lo que un contrato general habría asumido.
-- **La invariante ATADA en vez de comprobada.** `dedupeEmittedBlocks` **re-expande su propio
-  resultado en cada llamada y lanza si no reproduce la entrada**. No es un test: es el código
-  negándose a mentir.
-- **Bancos de sabotaje sobre el propio arnés.** En `#175`, 7 de 7 cazados **y el caso 3 salió
-  ciego**, destapando que el arnés reconocía por subcadena y dejaba pasar un renombrado. **Una
-  prueba que no puede fallar no prueba nada, y ésta lo descubrió de sí misma.**
-- **Fijadores que SE NIEGAN A ESCRIBIR** si aparece una forma que no esperaban.
-- **Dibujarle las opciones.** Va **dieciséis veces**. En esta sesión, tres opciones dibujadas
-  —aceptar, revertir, aceptar arreglando la previa— y contestó «procede con tu recomendación».
-- **Equivalencia demostrada EJECUTANDO, no leyendo.** 219 412 escrituras al DOM comparadas entre
-  el motor de git y el nuevo, en 4 geometrías × 2 regímenes.
+**La regla que salió de ahí, y vale para cualquier cambio de tamaño futuro: PARA QUE ALGO PUEDA
+VOLVER A LO DE AYER, TODO LO QUE SUBIÓ TIENE QUE PODER BAJAR.** De ahí que el armazón viaje en
+línea y no en la hoja.
+
+**La guarda `slideRuleLiftNoRegression.test.mjs` es la pieza que sobrevive**: sin ella, el
+siguiente run que toque tamaños redescubre el `fitEngine` desde cero, exactamente como este.
 
 ---
 
-## EL VEHÍCULO PARA ESCRIBIR EL CANÓNICO — usado **seis veces** el 2026-09-01, sin un fallo
+## DECISIONES DEL OPERADOR — todas en `context/cantu-studio/records/`
 
-**El CLI de `cantu-studio` no escribe.** La vía es la consola:
-
-```
-cd projects/aiw-console && PORT=8788 node project-console/serve.mjs &
-POST http://127.0.0.1:8788/projects/cantu-studio/__project-console/roadmap/edit
-     { op, args, apply:false }            → devuelve baseline y remap
-     { op, args, apply:true, baseline }   → aplica
-```
-
-**⚠ LA FORMA DEL CUERPO ES `{op, args, apply, baseline}` — UNA SOLA OP POR PETICIÓN.** Mandar
-`{ops:[…]}` devuelve `unknown op undefined`. Costó una llamada averiguarlo; está en
-`project-console/serve.mjs:~500`.
-
-**⚠ EL SERVIDOR NO SOBREVIVE ENTRE LLAMADAS DE BASH.** Levantarlo y hacer el POST **en la misma
-llamada**, esperando con `curl`/`/dev/tcp` en bucle, no con `sleep` a ciegas.
-
-**Ops usadas esta sesión:** `set-status {run, status, closeoutResult}` ×4,
-`insert {runId, title, summary, fullDescription, status, before}` ×2.
-
-### `checkInvariants` — dónde vive de verdad
-
-**`tools/roadmap/` en `aiw-console` sólo tiene `roadmap-core.mjs` y `roadmap-plan.mjs`. NO HAY
-`roadmap-cli.mjs`.** Se invoca así:
-
-```js
-import { checkInvariants } from './tools/roadmap/roadmap-core.mjs';
-checkInvariants(JSON.parse(fs.readFileSync(canonico,'utf8')));
-```
-
-### Los runs NO viven en la raíz
-
-Se recorre `objectives[].phases[].runs[]`. Leer `obj.runs` devuelve **0**, que es una sonda mal
-escrita y no un canónico vacío. **Pasó otra vez esta sesión.**
+| decisión | dónde |
+|---|---|
+| `<script>` fuera (un renglón reversible), `<iframe>` dentro nombrado como deuda | `DECISION-2026-09-15-EL-SCRIPT-SIGUE-FUERA-Y-EL-IFRAME-ENTRA-NOMBRADO.md` |
+| El desborde **se queda visible** (opción A), y no costó código | `VEREDICTO-200-EL-DESBORDE-SE-QUEDA-VISIBLE-Y-LA-UNION-PLANA-NO-ATRIBUYE.md` |
+| Prefijo `cs-`, el arnés de calibración entra, y la octava clase va dentro del run de Core | `DECISION-2026-09-15-EL-PREFIJO-ES-CS-Y-EL-ARNES-ENTRA.md` |
+| La escalera de la Regla sube entera, aceptando perder el peldaño pequeño | en el `full_description` de `#203` |
 
 ---
 
-## LÍMITES DE LA CABINA — RE-MEDIDOS EL 2026-09-01
+## LA COLA, Y LO QUE ESPERA
 
-- **`add` y `commit` funcionan. CERO locks** en toda la sesión, en ocho commits.
-- **`git commit` normal REVIENTA el tope de tiempo** (23 191 ficheros). La vía es plumbing:
-  `write-tree` → `commit-tree -p HEAD -F fichero` → `update-ref HEAD`. **Ocho de ocho sin fallo.**
-- **`git push`: sin ruta a GitHub. Es del operador. NO SE LE RECUERDA. NUNCA.**
-- **Tope de una llamada de bash: ~180 s.** Un `grep -r` sin acotar sobre `src tools` **lo
-  reventó** esta sesión. **Acotar siempre con rutas y `timeout`.**
-- **`git status` sin acotar revienta.** Acotar con `-- ruta`.
-- **La suite completa NO cabe.** Sus números son del taller y se declaran como suyos.
-- **BORRAR funciona sin pedir permiso** — `rm -rf` sobre `dist/` y sobre respaldos, verificado.
-- **La cabina NO VE INTERFACES.** Todo juicio visual es del operador.
-- **`_scratch/` NO es todo de la cabina.** Se borra lo suyo y se lista lo que no.
+**`#204` es el renombrado del `j-` de Core**, y es **el único de la cola que puede mover el
+corpus sin que nadie lo haya pedido**. Lleva esperando desde agosto. **Dentro de su texto va
+escrita una parada declarada**: `jame-inline-formula-field` (`InlineFormulaField.jsx:253`) es una
+octava clase que el contrato no lista y **sin matcher CSS en ningún sitio** — y `j-` ES PREFIJO
+DE `jame-`, así que un barrido la arrastra sin que nadie lo decida. Lo que ese run debe contestar
+**no es cómo renombrarla sino si esa clase debe existir**.
+
+### Deuda nombrada, con ubicación
+
+| qué | dónde |
+|---|---|
+| **Cuatro mandos de tamaño sin rótulo**, fuera del despachador. Tres van SEGUIDOS en la Portada diciendo los tres «MEDIANO» | `SlideTitleSlideEditor.jsx:142`, `:163`, `:189` y `SlideStackEditor.jsx:1440` |
+| **La unión plana de Web no atribuye**: seis tipos dan «Invalid input» pelado. Diapositiva usa `discriminatedUnion` y sí atribuye | `WebBlockSchema` |
+| **Moodle: DESCONOCIDO DECLARADO por CUARTO run consecutivo.** La sonda está construida y su premisa verificada; falta una instancia | `QA/temp/RUN-CANTU-DECLARED-HTML-BLOCK-AND-CODE-ESCAPE-001/moodle-sonda.MOODLE.html` |
+| **La QA de rótulos del `#202` NO se ejecutó**, y está declarada en su cierre con la superficie exacta | los seis mandos, si se entienden sin pasar el ratón |
+| `QA/temp` sin commitear — **291 entradas según git**, cifra a remedir | triage, **no mover**: ≥40 documentos lo citan |
+| `tools/roadmap/tests`: **11 de 173 en rojo**, preexistente, otro carril | no tocado |
+| Lint: **2 errores + 1 aviso preexistentes** | `TextAreaField.jsx`, `SlideSplitFields.jsx` |
 
 ---
 
-## REGLAS DEL OPERADOR VIGENTES
+## LO QUE SE APRENDIÓ DEL TALLER, Y ES LO MEJOR DE LA SESIÓN
 
-- **D-070 SIGUE SUSPENDIDO.** No se abre hilo nuevo por emitir un ticket. **Él avisa.**
-- **NO SE LE RECUERDA EL PUSH. NUNCA.** Regla suya, explícita.
-- **SIEMPRE se declara MODELO + ESFUERZO + SESIÓN antes de un ticket**, los tres juntos.
-- **D-072** — *«trata de pedir sesión nueva siempre que se pueda»*; misma sesión sólo si el taller
-  siguiente necesita el razonamiento del anterior. **Esta sesión pidió sesión nueva las dos
-  veces, y las dos con razón escrita.**
-- **El operador decide cuándo se cierra la sesión.**
-- **Toda petición de revisión en lista numerada de pasos cortos**, con el nombre que él ve en
-  pantalla, y **con el formato literal de respuesta que se le pide**.
-- **Las decisiones que no son pasos van numeradas aparte y con recomendación explícita.**
-- **Dibujarle las opciones antes de pedirle que decida.**
-- **Agrupar los arreglos del mismo componente EN UN SOLO RUN.** *«por eso se alarga el trabajo
-  enormemente.»*
-- **Su autocontención es que un componente no rompa a OTRO.** Repartir código y datos DENTRO de
-  un componente **no la viola** — encuadre suyo, aceptado y usado dos veces.
-- **Mensajes de commit y textos largos POR FICHERO**, nunca por línea de shell. **El shell ya ha
-  destrozado prosa con acentos cuatro veces.**
-- **`add` dirigido por nombre, nunca `-A`. El trabajo del taller y el cierre del roadmap van en
-  commits SEPARADOS.** Cumplido las cuatro veces esta sesión.
-- **El taller nunca toca git.** La cabina commitea; el operador publica.
-- **⚠ LA FRASE DEL TICKET, CORREGIDA:** decir *«no ejecutes ningún comando de git que escriba —
-  ni `add`, ni `commit`, ni `push`. Deja el árbol sucio. El commit lo hace la cabina después»*.
-  La antigua decía a la vez «escrituras no» y «commitea la cabina», y **se leía de dos formas**.
-- **La ranura del operador (`localhost:5173`) no se toca**, y **`preview_start` no se llama**.
-- **⚠ TODA HOJA DE QA QUE TOQUE `compiler-api` EMPIEZA POR CERRAR Y REABRIR EL LANZADOR.** Se
-  cachea por proceso. Sin ese paso 0 el operador mide el motor viejo y da un falso negativo.
+**Los cinco talleres contradijeron su propio encargo en un punto que lo sostenía, y las cinco
+veces el disco les dio la razón.** No es ruido: es la separación adversaria funcionando.
+
+Y dos que merecen quedar escritas:
+
+- **Un taller retiró una opción ANTES de ofrecerla** porque medir demostró que destruía
+  información —quitar el prefijo a secas habría fusionado dos atributos distintos en uno, en
+  silencio—. Un ejecutor que hace eso está haciendo exactamente su trabajo.
+- **Otro declaró que su propia pieza principal no hace nada.** El piso que construyó no llega a
+  actuar sobre el corpus actual; lo que arregla los casos medidos es el armazón en línea. Podría
+  no haberlo dicho y nadie lo habría notado. **Eso vale más que el piso.**
+
+**La regla de la QA funcionó CINCO veces seguidas**: ningún taller escribió en el `5173` del
+operador; todos levantaron ranura propia. Se paga desde que `#196` destruyó la Descripción de un
+ítem suyo.

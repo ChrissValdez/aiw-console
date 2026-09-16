@@ -69,6 +69,44 @@ salieron de REFERENCE-SLIDE-WEB-COMPONENT-MAPPING y REFERENCE-MATH-FORMULA-COMPA
  - Y cuando un ticket pida una guarda, PEDIR EL MECANISMO Y NO LA ENUMERACION: «ninguno pasa
    trust» sobrevive al quinto emisor; «los dos ensambladores» ya era falso al escribirse.
 
+(F) UN TICKET NO VIAJA EN EL MISMO MENSAJE QUE EL SCRIPT QUE CREA SU RUN. NUNCA.
+El operador pega lo mas pegable, y en una respuesta el ticket SIEMPRE lo es: va en bloque
+de codigo, listo para copiar, y una lista de instrucciones al final no compite con eso.
+PASO DOS VECES: la enmienda D-061 -la dependencia iba en una oracion subordinada- y el
+#200, cuyo ticket se pego antes de existir el run. Las dos veces costo un encargo entero,
+y las dos veces el taller hizo lo correcto: derivo, la guarda de titulo aborto, y no toco
+el arbol. La disciplina ya fallo dos veces; esto es lo que la sustituye.
+ - LA REGLA: la respuesta que trae el script de apertura NO LLEVA TICKET. El ticket va en
+   el turno SIGUIENTE, despues de que el parte de consola demuestre que el run existe.
+ - Y el ticket manda SIEMPRE derivar el run del canonico por queue_order con guarda de
+   titulo que aborta. Esa guarda es lo que convierte este error en una parada barata en
+   vez de un taller trabajando sobre un run inventado.
+
+(G) EL ALCANCE DE UN COMMIT SE CUENTA CONTRA HEAD, NO SE RECUERDA.
+La cabina escribio un mensaje que afirmaba traer «la apertura y el cierre de #199» y el
+canonico llevaba CUATRO runs sin commitear: HEAD tenia 202 y el arbol 206. Lo cazo el
+taller de #200 al medir HEAD contra el arbol para explicar por que el 200 estaba ocupado.
+ - LA REGLA: todo script de commit del canonico DERIVA el delta -runs nuevos, cambios de
+   estado, renumerados- leyendo `git show HEAD:<ruta>` y lo ESCRIBE en el mensaje. Un
+   alcance que se puede contar no se declara de memoria.
+ - Y el numero de runs de HEAD no es el que la cabina cree. Nunca lo ha sido.
+
+(H) CUANDO EL OPERADOR ES EL INSTRUMENTO, PREGUNTALE QUE VE, NO CUAL DE TUS EXPLICACIONES
+LE ENCAJA. La cabina no ve interfaces, asi que para los hechos de pantalla el operador es la
+UNICA sonda. Y una sonda a la que le das tres hipotesis TE DEVUELVE UNA DE LAS TRES, aunque
+la verdadera sea una cuarta.
+PASO en #202: el operador dijo que a la Regla le faltaba el control de tamaño del titulo. La
+cabina le ofrecio tres mecanismos -rotulo incompleto / control ausente / lista desincronizada-
+y el eligio el primero. Se abrio un run entero sobre esa premisa. EL MECANISMO REAL ERA UN
+CUARTO: en `enFilaCompartida` el mando NO PINTA ROTULO NINGUNO -lo dice SizeStepper.jsx en
+prosa- y aparece colgando del rotulo del campo VECINO. El operador habia leido bien la
+pantalla; la cabina le habia dado un menu equivocado.
+ - LA REGLA: la pregunta visual se hace en crudo -«¿que ves ahi?», «leemelo literal»- y la
+   cabina deduce DESPUES, contra el codigo. Las opciones con mecanismo dentro solo valen
+   cuando la cabina YA midio el mecanismo y pregunta por la PREFERENCIA, no por el hecho.
+ - Y el corolario: un «si» del operador a una opcion que la cabina redacto NO es una
+   medicion. Es un acuerdo sobre un relato. Se marca como tal.
+
 ARRANQUE, en este orden y midiendo, no suponiendo:
 1. Deriva la ruta de montaje del workspace. No la heredes de ningun documento.
 2. Comprueba .git/index.lock en los cinco repos CON ls, nunca corriendo git para

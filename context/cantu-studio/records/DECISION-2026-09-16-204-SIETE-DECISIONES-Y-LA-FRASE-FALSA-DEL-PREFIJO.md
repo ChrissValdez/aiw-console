@@ -43,3 +43,14 @@ de hacerlo en silencio.
 del ancho del panel **no existe** —navegador nuevo, no solo renombrado— `Number(null) === 0` pasa la
 guarda `Number.isFinite` y el panel abre al **mínimo** (896 px), no al valor por defecto. Defecto
 preexistente, independiente de `#204`. Abrirlo es decisión del operador.
+
+## La subpregunta de D3, cerrada
+
+La cabina la llevó aparte con dos opciones dibujadas y recomendación A. El operador contestó, VERBATIM:
+
+> «A»
+
+**D3 queda: las nueve clases `.j-author-lite-*` de `previewRenderer.js` pasan a `cs-studio-*`** —por
+ejemplo `j-author-lite-preview-shell` → `cs-studio-preview-shell`—, quitando también «author-lite».
+Medido el 2026-09-16 a las 23:13 UTC: nueve tokens, en `tools/studio/compiler-api/services/previewRenderer.js`
+y `tools/studio/compiler-api/tests/slideBuildOutputPath.test.mjs`.

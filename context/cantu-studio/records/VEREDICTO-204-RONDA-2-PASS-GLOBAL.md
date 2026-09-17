@@ -24,3 +24,13 @@ a una QA no es una respuesta a ellas:
 1. Ratificar la ampliación del taller a `src/content`, `tools/dev/tests` y
    `tools/studio/editor-ui/src/schemas/draftSchema.js` (D-061 exige la palabra del operador).
 2. Reconstruir o no `dist/` de la raíz en este run.
+
+## Las dos decisiones, contestadas después — VERBATIM
+
+El operador contestó en un mensaje de dos líneas:
+
+> «si
+> no»
+
+1. **Ampliación del taller: RATIFICADA** (D-061) — «si».
+2. **`dist/` NO se reconstruye en este run** — «no». Queda como deuda nombrada, para `#206`.

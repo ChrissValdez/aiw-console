@@ -107,6 +107,35 @@ pantalla; la cabina le habia dado un menu equivocado.
  - Y el corolario: un «si» del operador a una opcion que la cabina redacto NO es una
    medicion. Es un acuerdo sobre un relato. Se marca como tal.
 
+(I) TU SHELL FUNCIONA. EL RELEVO ANTERIOR DECIA QUE NO, Y ERA UNA MEDICION VENCIDA.
+Medido el 2026-09-16 a las 20:06 UTC: node v22.23.2 y git 2.34.1 responden. La cabina
+corrio sola toda la sesion: validador, consola, motor, builders, suites acotadas y
+commits. Los 58 guiones de _scratch siguen siendo la plantilla buena, PERO LOS CORRE
+LA CABINA. El operador no pega guiones: pega tickets.
+ - EL BORRADO CADUCA AL RECONECTAR. Paso TRES veces: rm empieza a fallar con
+   «Operation not permitted» a media sesion. Se vuelve a pedir el permiso y sigue.
+ - Y GIT DEJA BASURA: tras varios commit-tree/update-ref quedaron `.git/HEAD.lock` y
+   hasta diez `tmp_obj_*` en `.git/objects`. UN HEAD.lock QUE SE QUEDA BLOQUEA EL
+   SIGUIENTE COMMIT DE CUALQUIER HILO. Se comprueba y se borra despues de cada commit,
+   igual que el index.lock, y se declara.
+
+(J) UNA SONDA QUE NO DESACOTA MIENTE IGUAL QUE UNA QUE NO MIDE.
+El 2026-09-18 la cabina comparo selector a selector el artefacto Web contra el de Moodle
+y publico «siguen faltando reglas». Su sonda no quitaba el `:where(.cs-lesson-wrapper)`
+con que las reglas viajan ahora, asi que ningun selector casaba. Corregida, el resultado
+se INVIRTIO: cero. ESTUVO A UN PASO DE PUBLICAR UN ROJO FALSO SOBRE TRABAJO CORRECTO.
+ - REGLA: antes de publicar una comparacion, comprobar que los dos lados estan en la
+   MISMA FORMA. Y si el resultado acusa al taller, remedir antes de escribirlo.
+
+(K) EL CRITERIO DE LA QA ES DEL OPERADOR, Y SOBRE SU CONTENIDO REAL.
+Sus palabras, 2026-09-18: «no se trata de si la leccion se ve bien sino que pierde
+formatos cuando genera la version moodle». La cabina le ofrecia juzgar una leccion de
+laboratorio y el lo rechazo. Ese criterio destapo el hueco de una ronda entera.
+ - REGLA: la QA de una salida se hace SOBRE SU LECCION REAL, construida desde una copia
+   fuera de los repos, declarando la huella del borrador y la hora. Y antes de pedirsela,
+   se le explica EN LLANO que hace el run: ya pregunto «que estamos haciendo en este run,
+   no entiendo que quieres que revise».
+
 ARRANQUE, en este orden y midiendo, no suponiendo:
 1. Deriva la ruta de montaje del workspace. No la heredes de ningun documento.
 2. Comprueba .git/index.lock en los cinco repos CON ls, nunca corriendo git para
@@ -121,19 +150,23 @@ ARRANQUE, en este orden y midiendo, no suponiendo:
    .project/roadmap.json es la proyeccion, no la fuente.
 6. Reporta el estado en una tabla, con la hora de medicion.
 
-DONDE QUEDAMOS -- medido el 2026-09-01, contrastalo:
-CERO RUNS ACTIVOS. 190 runs, 176 completed, 14 planned. md5 del canonico
-b17c055fe58fe2e32ce7d9b0308b48a0. Validador 0 errores y 0 avisos.
-Cerraron #173, #174 y #175: la deduplicacion de bloques identicos, el reparto del guion
-del procedimiento en cuerpo compartido mas configuracion, y su asentamiento. Resultado
-medido: corpus SLIDE -63,6 %, y el DOCUMENTO DE LA PREVIA -90,5 %.
+DONDE QUEDAMOS -- medido el 2026-09-18 a las 04:16 UTC, contrastalo:
+211 runs, 206 completed, 2 active, 3 planned. md5 del canonico (arbol, CRLF)
+815ddf9b3a52cd758c6b5f788fffde52. Validador 0 errores con 217 externalRunIds.
+HEAD de cantu-studio 608a4695; HEAD de aiw-console f47b6f0.
 
-EL SIGUIENTE ES #176 «Design the Asset Registry». ANTES DE EMITIR SU TICKET, LEE:
-projects/aiw-console/context/cantu-studio/records/HALLAZGO-EL-PILOTO-LE-ENSENA-CUATRO-COSAS-AL-ASSET-REGISTRY.md
-Ese record es el veredicto de un PILOTO REAL que se ejecuto a proposito antes del diseño.
-Trae cuatro sitios donde un contrato general se habria equivocado, los cuatro medidos, y
-uno de ellos -que parametrizar fue REESCRIBIR el componente y no configurarlo- cambia el
-presupuesto del diseño entero. Emitir #176 sin leerlo tira el piloto.
+ACTIVOS: #207 «Stop compile from overwriting a different lesson», ENCARGADO la noche del
+17 al 18 y con su informe esperando; y #210 la auditoria de interfaz, activa desde antes
+y esperando al operador.
+
+Cerraron #204 (el renombrado j- -> cs-), #205 (la validacion del flujo de produccion, que
+descubrio que el camino NUNCA se habia estrenado) y #206 (el artefacto de Moodle
+autosuficiente, en dos rondas: primero las variables, despues las reglas globales).
+
+LEE EL RELEVO ENTERO ANTES DE TOCAR NADA: context/handoffs/cantu-studio.md. Ahi estan los
+cuatro defectos que #205 encontro, cual esta resuelto, cual esta encargado, cual es deuda
+y cual esta BLOQUEADO esperando una respuesta del operador -el color de las formulas en
+Moodle, preguntado TRES veces-.
 
 TU PATRON DE FALLO DOMINANTE, Y ES DE ESTA SESION: COPIAS CIFRAS AJENAS SIN SU ALCANCE.
 Cuatro casos el 2026-09-01, ninguno detectado por ti:

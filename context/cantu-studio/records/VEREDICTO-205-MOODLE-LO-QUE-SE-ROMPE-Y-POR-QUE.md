@@ -65,3 +65,41 @@ Moodle: es que el artefacto de Moodle nace incompleto.
 
 Cuatro cosas, y ninguna se toca en `#205`: el color de las fórmulas en Moodle; la hoja de tokens
 que falta en la salida de Moodle; el respaldo `j-` del tema del operador; y el escapado de `=>`.
+
+## La medición del operador que cierra el caso, y su decisión — 2026-09-18
+
+El operador abrió `A1-l01_los_signos.MOODLE.html` **en su máquina, sin Moodle de por medio**, y
+vio lo mismo: los dibujos sin color. VERBATIM:
+
+> «sabes, el archivo : A1-l01_los_signos.MOODLE desde antes de subirlo a moodle si abro el html
+> local ya desde ahi no detecta los colores de las lineas»
+
+**Eso saca a Moodle de la ecuación.** El defecto es de la salida de Moodle de Cantu Studio, y el
+propio motor lo tiene escrito: `src/builders/web/buildSingleWebLesson.js:316-320` dice que el
+fragmento se sirve sin `1_tokens.css`, que *«su contrato de entrega es: el tema anfitrión pone la
+base»*, y lo declara **«hallazgo abierto, dueño el operador»**. Mismo bloque: el fragmento
+tampoco carga la tipografía Inter.
+
+### Decisión, VERBATIM
+
+> «es correcto procede con A»
+
+**A = la lección se lleva su base dentro.** El artefacto de Moodle pasa a ser autosuficiente: las
+variables `--n-*` viajan en él y se ve igual en cualquier Moodle, sin preparar el tema.
+
+**Fuera de esta decisión, por acuerdo explícito:** la tipografía Inter. Si el fragmento debe
+pedirla a internet depende de la salida a internet del campus y de la política de peticiones a
+terceros; se trata aparte.
+
+### Lo que la cabina le entregó mientras tanto, y NO es el arreglo
+
+`cantu-studio/QA/temp/RUN-JAME-PRODUCTION-LESSON-VALIDATION-001/A1-PARCHE-PARA-MOODLE.MOODLE.html`
+(sha256 `5cc50e53…`): el mismo artefacto con las variables inyectadas dentro y los dos scripts en
+línea reescritos sin `=>` ni `<` `>`, que son los caracteres que Moodle escapaba al guardar.
+Es un parche sobre UN fichero; el siguiente `Generate` vuelve a producir el artefacto incompleto.
+
+### Sigue SIN RESPUESTA, preguntado dos veces
+
+Qué cambió el operador entre las dos importaciones para que las fórmulas del ejemplo guiado
+pasaran de error a componerse. Las fórmulas del HTML servido son idénticas en las dos pruebas y
+el motor no se tocó. **No se abre el run del color hasta saberlo.**

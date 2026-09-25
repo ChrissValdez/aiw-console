@@ -1,148 +1,174 @@
 # HANDOFF — hilo `cantu-studio` (el proyecto)
 
-> Escrito por la cabina al cerrar la sesión del **2026-09-16/18**. **Sustituye al relevo del
-> 2026-09-16.**
+> Escrito por la cabina al cerrar la sesión del **2026-09-18/25**, que termina con una **MUDANZA
+> DE COMPUTADORA**. **Sustituye al relevo del 2026-09-16/18.**
 >
 > **Todo lo de aquí está medido y lleva fecha. Contrástalo contra el canónico al abrir. Gana el
 > disco.**
 
 ---
 
-## ⚠ LO PRIMERO, PORQUE CAMBIA CÓMO TRABAJAS: LA CABINA TIENE SHELL
+## ⚠ LO PRIMERO: ESTA SESIÓN CIERRA PARA MUDARSE DE MÁQUINA
 
-El relevo anterior decía que el workspace de bash estaba caído desde el 8 de septiembre y que
-todo iba en guiones `.mjs` que pegaba el operador. **Falso el 2026-09-16 a las 20:06 UTC:**
-`node` v22.23.2 y `git` 2.34.1 responden, y la cabina corrió TODA esta sesión sola — validador,
-consola, motor de roadmap, builders, suites acotadas, commits.
+El operador sigue en **otra computadora**, con la misma estructura de carpetas y los mismos repos.
+Al cerrar, los cinco repos quedaron **sin nada real pendiente de commitear**. Lo que hay que saber
+del otro lado:
 
-**Consecuencia:** los 58 guiones de `_scratch\` siguen siendo la plantilla buena, pero **los corre
-la cabina**, no el operador. Al operador le quedan cuatro cosas: pegar tickets, hacer push, dar
-veredictos y mirar pantallas.
-
-**El borrado caduca al reconectar.** Pasó tres veces: `rm` empieza a fallar con `Operation not
-permitted` a media sesión. Se vuelve a pedir el permiso y sigue.
-
-**Y git deja basura que HAY QUE BARRER:** después de varios `commit-tree`/`update-ref` quedaron
-`.git/HEAD.lock` y hasta diez `tmp_obj_*` en `.git/objects`. **Un `HEAD.lock` que se queda bloquea
-el siguiente commit de cualquier hilo.** Se borra y se declara, igual que el `index.lock`.
+- **`QA/temp/` NO VIAJA ENTERO.** Se commitearon sus **29 documentos `.md`** (368 KB, el rastro de
+  por qué se hizo cada cosa) y las **5 hojas de QA** al nivel de `QA/`. Los otros **1 045 ficheros
+  y 39 MB** —copias del motor de antes de cada sabotaje, renders del corpus, volcados— **se quedan
+  atrás a propósito**: son andamio reproducible por los guiones que sí viajan.
+- **`dist/` ESTÁ EN `.gitignore`** (`**/dist/`). El HTML de Moodle reemitido por el `#213` **no
+  viaja**. No hace falta: el operador ya lo pegó en su curso y le dio pass.
+- **`_scratch\` y `_backups\` están fuera de todo repo** y tampoco viajan. Los guiones de consola
+  (`_STUDIO_*.mjs`) hay que rehacerlos o copiarlos a mano; su forma está descrita más abajo.
 
 ---
 
-## ESTADO DEL CANÓNICO — medido el 2026-09-18, 04:16 UTC
+## LA CABINA TIENE SHELL, Y CORRE TODO ELLA
 
-| | |
-|---|---|
-| ruta | `projects/cantu-studio/.aiw/roadmap/roadmap.json` — **con `.aiw/`** |
-| md5 al cerrar (árbol, CRLF) | `815ddf9b3a52cd758c6b5f788fffde52` |
-| runs | **211**, `queue_order` denso `1..211` |
-| `completed` | **206** · `active` **2** · `planned` **3** |
-| activos | **`#207`** el del compilado que pisa otra lección, **encargado y corriendo esta noche**; **`#210`** la auditoría de interfaz, activa desde antes y esperando al operador |
-| validador | **0 errores** con **217** `externalRunIds`, motor de `aiw-console` |
-| ⚠ `checkInvariants` | **exige un `Set`**. Con un array LANZA `TypeError` (medido: NO se salta en silencio, como decía el relevo anterior); sin el campo devuelve 1 error, la arista colgante preexistente |
-| HEAD `cantu-studio` | `608a4695` |
-| HEAD `aiw-console` | `f47b6f0` |
+Medido de nuevo toda esta sesión: `node` v22.23.2 y `git` responden, y la cabina corrió sola el
+validador, la consola, los motores, suites acotadas, borrados y commits. **Al operador le quedan
+cuatro cosas:** pegar tickets, hacer `push`, dar veredictos de pantalla y aportar lo que vive fuera
+del montaje.
 
----
+**Ojo con dos trampas de medición que mordieron esta sesión:**
 
-## LO QUE SE HIZO — `#204`, `#205`, `#206`, y `#207` abierto
-
-| run | qué dejó |
-|---|---|
-| `#204` **Rename the Core j-prefix render namespace** | `j-` → `cs-` y `j-author-lite-` → `cs-studio-`, 235 ficheros, con transformador en un módulo y dos guardas. **Y desmintió la frase que sostenía su propia parada**: `j-` NO es prefijo de `jame-` |
-| `#205` **Validate the production lesson workflow** | Replanteado antes de correr sobre el flujo REAL. Encontró cuatro defectos, todos medidos, y demostró que el camino **nunca se había estrenado** |
-| `#206` **Make the Moodle lesson output self-contained** | En dos rondas: el artefacto de Moodle se lleva dentro sus variables y las reglas globales que usa. **13 de 38 lecciones del corpus perdían formato** y ahora cero |
-| `#207` **Stop compile from overwriting a different lesson** | ABIERTO Y ENCARGADO la noche del 17 al 18. Su informe estará esperando |
-
-### El flujo de producción real del operador, medido, porque el roadmap lo describía mal
-
-Escribe el borrador en **`cantu-lessons`** (repo hermano, `drafts/web/…`), le da Generate en el
-editor, y el `.MOODLE.html` resultante **lo pega a mano en su Moodle** (metodocantu.com). El
-camino `main.js` → `dist/` sobre `src/content` **NO es su camino**.
-
-⚠ **En `cantu-lessons` escribe OTRO HILO, continuamente.** Commiteó cinco veces mientras esta
-sesión medía. **Es solo lectura para este hilo**, y lo que se lea se lee desde un commit.
+1. **Un comando de git que muere a mitad no dice «nada»: no dice nada.** Un `git diff --name-only
+   HEAD` en `cantu-studio` se quedó sin salida porque git estaba renormalizando finales de línea y
+   el comando agotó su tiempo. La cabina estuvo a un paso de publicar «el taller no tocó nada»
+   sobre 20 ficheros modificados. Con `status --porcelain -uno` salió la verdad.
+2. **`git status` en `aiw` engaña, y esta vez casi cuesta un commit falso de 8 778 líneas.** Ese
+   repo **no tiene `.gitattributes`**: mostraba 125 ficheros modificados con +8 778/−8 778, simetría
+   exacta que es la firma del ruido de finales de línea. Medido con
+   `git diff --ignore-cr-at-eol --numstat`: **solo 6 ficheros tenían cambio real.**
 
 ---
 
-## ⚠ LOS CUATRO DEFECTOS QUE `#205` ENCONTRÓ, Y DÓNDE ESTÁN
+## DÓNDE QUEDAMOS — estado al 2026-09-25
 
-1. **RESUELTO en `#206`:** el artefacto de Moodle nacía sin la base de estilos.
-2. **ABIERTO, es `#207`:** compilar nombra el artefacto desde `lesson.title` y no desde el
-   fichero (`server.js:779`), así que dos lecciones con el mismo título **se sobrescriben en
-   silencio**. En la configuración del operador, esas lecciones son las suyas.
-3. **DEUDA NOMBRADA:** Moodle **escapa las flechas `=>`** de los scripts en línea de la lección al
-   guardar, y eso mata el control `A- A+` y el ajuste de fórmulas anchas. La cabina le entregó un
-   fichero parcheado a mano; el arreglo de motor no se ha hecho.
-4. **BLOQUEADO, y no se abre sin respuesta:** el color de las fórmulas en Moodle. El `#` del
-   hexadecimal de `\textcolor{#D08770}` hizo fallar tres fórmulas; en la segunda importación del
-   operador **se compusieron solas, con el fichero byte a byte idéntico**. Se le preguntó TRES
-   VECES qué cambió y no ha contestado. **La primera explicación de la cabina sobre ese fallo ya
-   fue falsa una vez.**
+**221 runs · completed=214 · active=2 · planned=5 · densidad 1..221 OK · validador 0 errores con
+217 externalRunIds.**
 
-Y fuera del montaje: **el tema de Moodle del operador tenía un script de accesibilidad escrito con
-los nombres `j-`, muerto desde `#204`.** La cabina se lo reescribió y él lo instaló.
+| | run | estado |
+|---|---|---|
+| **#215** | The author picks the formula alignment in Web, as Slide already allows | **`active` — SOLO FALTA LA QA DE PANTALLA** |
+| **#216** | A published lesson can be brought back into the editor | `planned` |
+| #217 | ANALYSIS STOP — las cinco peticiones de componentes | `planned` |
+| #218 | Flujo de exportación de producción | `planned` |
+| #219 | Plan de hosting y despliegue | `planned` |
+| **#220** | Auditoría de UX de Cantu Studio | **`active`, esperando al operador desde hace semanas** |
+| #221 | Historial de edición por campo | `planned` |
 
----
+### Lo único pendiente del operador ahora mismo
 
-## LO QUE ESTA SESIÓN APRENDIÓ, Y VALE MÁS QUE LOS RUNS
+**La QA del `#215`, y son tres desplegables.** Arranca el editor (`npm --prefix tools/studio run
+dev`, API en `localhost:3000`, interfaz en `http://localhost:5173`) y comprueba que en los TRES
+sitios el desplegable **«Alineación de las fórmulas»** dice **«Centradas (por defecto)»** y **«A la
+izquierda, en bloque»**:
 
-### El criterio de la QA lo puso ÉL, y era mejor que el de la cabina
+1. Web → **«Procedimiento matemático»**
+2. Web → **«Explicación guiada»** (con el bloque en modo fórmulas)
+3. Diapositiva → **«Procedimiento matemático»**
 
-La cabina le ofrecía juzgar una lección de laboratorio. Él lo rechazó: *«no se trata de si la
-lección se ve bien sino que pierde formatos cuando genera la version moodle»*. **Esa frase es el
-criterio de QA de todo lo que toque salidas**, y fue lo que destapó el hueco de la ronda 2.
+**Trampa declarada por el taller:** hay **dos** bloques llamados «Procedimiento matemático», uno por
+carril. No son el mismo.
 
-**Corolario operativo:** cuando se pueda, la QA se hace **sobre SU lección real**. La cabina la
-construyó desde una copia fuera de los repos, con la huella del borrador declarada.
-
-### Tres errores de medición de la CABINA en esta sesión, los tres declarados
-
-1. **«`j-` es prefijo de `jame-`»** — copiada de una referencia del repo sin medir, escrita en la
-   enmienda de un run. La desmintió el taller.
-2. **La causa de las fórmulas** — la cabina culpó a `\def\hl#1{#1}` y la pantalla del operador lo
-   desmintió: fallaban solo las tres con color hexadecimal.
-3. **Una sonda que no desacotaba `:where()`** — dijo que la ronda 2 seguía rota. **Estuvo a un
-   paso de publicar un rojo falso sobre trabajo correcto.**
-
-**Los tres se corrigieron en público.** El patrón es siempre el mismo: **publicar sin remedir en
-el punto de uso.**
-
-### Los talleres contradijeron sus encargos DOCE veces y ganaron doce
-
-`#204`: el alcance se quedaba corto en tres sitios. `#205`: el encargo pedía medir dos caminos y
-solo uno era el del operador. `#206`: no eran 94 usos sino 92; los 63 árboles no se movieron; hay
-**dos** ensambladores de Moodle y el encargo nombraba uno; y **un taller corrigió su propia
-justificación publicada** tras medirla en navegador.
-
-**Regla que sale: el encargo se escribe invitando a contradecirlo, y esa invitación se cobra.**
-
-### La guarda ve lo que el ojo no puede
-
-En `#206` el peligro real era emitir una regla `body`, que repintaría el curso entero del
-operador. **Medido: el artefacto con esa regla se ve idéntico abierto suelto.** Ninguna QA humana
-lo habría cazado. La guarda sí.
+Con su `ok`, el `#215` cierra y sigue el `#216`.
 
 ---
 
-## DEUDA VIVA, CON UBICACIÓN
+## LO QUE SE CERRÓ EN ESTA SESIÓN, Y LO QUE ENSEÑÓ
 
-| qué | dónde |
-|---|---|
-| **Escapado de `=>` por Moodle** | scripts en línea de la lección; parche a mano en `QA/temp/RUN-JAME-PRODUCTION-LESSON-VALIDATION-001/A1-PARCHE-PARA-MOODLE.MOODLE.html` |
-| **Color de fórmulas en Moodle** | BLOQUEADO, esperando al operador |
-| **La tipografía Inter no viaja al fragmento de Moodle** | fuera de `#206` **por decisión explícita del operador**: pedir una fuente a internet es política institucional |
-| **Una regla global cuyo sujeto lo creara un script en tiempo de ejecución** | quedaría fuera y **la guarda no lo vería**: usa el mismo criterio |
-| `editor-ui`: **cinco `API_BASE` fijos a `localhost:3000`**, cero `import.meta.env` | la interfaz servida en otro puerto habla con la API del operador |
-| `tools/dev/start-editor.ps1` **mata los puertos 3000/5173/5174/5175** | usarlo con su editor abierto se lo cierra |
-| `dist/` de la raíz, desalineado | **puede no importarle a nadie**: no es el camino del operador. Revisar cuando llegue `#208` |
-| `QA/temp` sin commitear | tres carpetas de esta sesión, más la deuda antigua |
-| `tools/roadmap`: 11 de 173 en rojo, arista colgante preexistente | otro carril |
+**`#208` a `#215`, ocho runs.** Lo que merece sobrevivir no son los arreglos, son los patrones:
+
+- **`#208`–`#209` · El arreglo era MEMORIA, no otra parada.** La parada del `#207` ya existía y
+  bastaba en cuanto el origen viajara; lo que faltaba era que la ranura local recordara de qué
+  fichero salió el borrador. *Cuando la solución parece pedir un guardia nuevo, preguntarse primero
+  si lo que falta es un dato.* Y con eso **la parada del `#207` la vio por fin un humano** — aquel
+  run había cerrado declarando que nadie podía provocarla.
+- **`#210` · Dos casos que comparten mecanismo son un censo, no una pareja.** Los dos que el recado
+  reportaba estaban **mal localizados los dos**; el censo real derivado del esquema eran cinco
+  campos en seis renglones, más **una capa entera que nadie había mirado** (el compilador), que
+  necesitó autorización explícita del operador porque `CLAUDE.md:490` la protege.
+- **`#211` · La parada de análisis desmintió la premisa de su propio encargo**, por segunda vez en
+  este proyecto. El ancla no se perdía dentro de la fórmula sino **entre pasos**, y el `#170` ya lo
+  había arreglado así para Slide.
+- **`#212` · La red de no-regresión estaba CERTIFICANDO el defecto**: el árbol fijado llevaba los
+  ocho `undefined` como salida esperada. Y la lección publicada **no regresó: nació rota** —
+  `rowSpan` nunca existió en el motor de Web.
+- **`#213` · La huella de un hueco es un pliegue a mano.** Web no dibujaba el `result`, y lo que lo
+  decidió no fue el historial ni los records: fue que **el fixture de referencia lo plegaba a mano**
+  porque el motor no lo leía.
+- **`#214` · El operador revocó un contrato ya aprobado, y la medición le dio la razón por escrito.**
+  El ADR-006 se aprobó en forma (a) —regla siempre activa— y **Slide ya tenía la forma (b)
+  construida y aprobada desde antes**, con su campo y su control montado. **Nadie midió si (b) ya
+  existía antes de elegir (a).** Regla nueva: *antes de elegir entre dos formas, preguntar si una de
+  las dos ya está en disco y aprobada.*
+- **`#214` r3 y `#215` · Las guardas subieron de categoría dos veces.** Una pasó de comprobar que
+  una cadena aparece en el código a **extraer el ajustador emitido y ejecutarlo** —un sabotaje que
+  resta un solo relleno deja verde la comprobación de cadena y solo enrojece la que ejecuta—. Otra
+  demostró que una palabra llega a tres mandos **renderizando la pieza real con React** y contando
+  en el bundle construido.
 
 ---
 
-## LO QUE EL OPERADOR PIDIÓ Y NO SE LE HA DADO
+## LOS ERRORES DE LA CABINA EN ESTA SESIÓN, Y LA GUARDA QUE SALIÓ DE CADA UNO
 
-**Que le expliquen en qué consiste un run antes de pedirle QA.** Lo dijo con estas palabras: *«que
-estamos haciendo en este run, no entiendo que quieres que revise»*. Se le reescribió en llano y
-funcionó. **La QA se pide en lenguaje de pantalla, con pasos cortos y el formato de respuesta
-literal.**
+1. **Emitió el ticket del `#211` sin abrir el run.** El canónico decía `planned` mientras el taller
+   trabajaba. Lo cazó **la guarda de estado del guion de cierre**, no la disciplina.
+2. **Republicó coordenadas ajenas como medición propia** (`renderRule.js:80/96/108`: solo la `:96`
+   es la fórmula). *Un dato ajeno que se republica sin medir es un dato inventado con mejor letra.*
+3. **Escribió el `Scope` del `#214` de memoria** y dejó fuera una de las cuatro superficies del ADR.
+   *El `Scope` se DERIVA del contrato.*
+4. **Dejó un fichero huérfano al commitear el `#215`**: `FormulaAlignmentField.jsx`, la pieza que
+   los tres mandos importan, sin versionar y sin ignorar — en un clon limpio el editor no
+   construiría. Lo encontró el taller, no la cabina.
+   **GUARDA NUEVA, YA EN USO EN TODOS LOS COMMITS:** después de preparar el índice, listar los
+   ficheros **sin versionar y no ignorados** bajo los directorios tocados:
+   `git ls-files --others --exclude-standard <dirs>`. *El `add` dirigido protege de arrastrar lo que
+   no toca; no protege de dejarse algo fuera.*
+5. **Compuso un mensaje de commit con `-m`** y el shell se comió las comillas invertidas, dejando un
+   hueco a mitad de una frase. *Los mensajes van por fichero, siempre.*
+6. **Hizo una pregunta sin recomendación** (si el `result` debía dibujarse). Se corrigió midiendo:
+   el gemelo de Slide sí lo dibuja.
+
+---
+
+## DEUDA VIVA, NOMBRADA Y SIN DUEÑO
+
+- **Tres ficheros de `dist/`** siguen enseñando `undefined`, por las otras dos causas del `#210`: un
+  `rule` de Slide sin `description` requerido, y un módulo que no exporta el `title` de la lección.
+- **Un fichero huérfano en `dist/staging`** sin fuente con ese nombre.
+- **`renderStepGrid.js`**: parcial completo que no invoca nadie. Tres auditorías del repo lo
+  registran y una pide revisión de seguridad antes de exponerlo (emite manejadores de ratón en
+  línea). **Nombrado, no abierto: es del operador.**
+- **`LessonContextBar`, `LessonBreadcrumbBar`, `EditorShell` y `ThreePaneLayout`**: cero
+  importadores. Código muerto medido.
+- **El defecto F2 de ancho del `#43`**, medido en el `#214` y no disparado.
+- **Dos cajas del corpus** que siguen saliéndose 5 px: es el suelo de 0,5 mordiendo, no el defecto.
+- **El comentario de `SlideStackEditor.jsx:987`** aún dice que la pregunta del rótulo no se ha
+  contestado. Ya se contestó el 2026-09-21.
+- **La hoja de QA de la ronda 1 del `#215`** dice la palabra vieja en seis sitios.
+- **Moodle usa MathJax** y todo lo de esta tanda se midió con **KaTeX**.
+
+---
+
+## CÓMO SE TRABAJA AQUÍ (lo que no cambia)
+
+- **El ciclo:** turno 1 abre el run **y** emite el ticket; turno 2 mide, cierra y commitea; turno 3
+  encadena. El operador solo pega el ticket.
+- **La consola:** `projects/aiw-console/project-console/serve.mjs` en un puerto libre, POST a
+  `/projects/cantu-studio/__project-console/roadmap/edit` con `{op,args,apply,baseline}`. Dry-run
+  siempre antes de aplicar, con el `remap` publicado. `serve.mjs` re-emite `.project/` solo.
+- **El canónico:** `projects/cantu-studio/.aiw/roadmap/roadmap.json`. El motor que lo conoce es el
+  de `aiw-console` (2 479 líneas, sabe de `lane` y `barrier`), **no** el de `cantu-studio`.
+- **El validador** `checkInvariants` **devuelve un ARRAY** de cadenas, no un objeto con `.errors`.
+  Leerlo mal da un verde falso sobre un canónico sucio.
+- **Los guiones de `_scratch`** tienen la forma madura: guardas de identidad, título y estado que
+  abortan; respaldo byte a byte antes de escribir; dry-run; verificación campo a campo contra el
+  estado anterior con la lista de cambios permitidos; y borrado del respaldo al cerrar el run.
+- **`git stash` NO es byte-seguro en `cantu-studio`** (`* text=auto` devuelve LF donde había CRLF).
+  Las restauraciones se verifican **por hash**.
+- **Commits:** `add` dirigido por nombre, nunca `-A`, más la guarda de huérfanos. Identidad
+  explícita en cada commit. **El `push` es del operador y no bloquea nada — y no se le recuerda.**

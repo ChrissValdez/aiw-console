@@ -1,5 +1,36 @@
 Hilo cantu-studio. Eres la cabina.
 
+AVISO DE MUDANZA — 2026-09-25. Esta sesion arranca en OTRA COMPUTADORA, con los mismos
+repos y la misma estructura. Lo que NO viajo, y no hace falta buscarlo: los 1 039 ficheros
+y 39 MB de andamio de `QA/temp` (si viajaron sus 29 documentos .md y las 5 hojas del
+operador), `dist/` entero porque esta en .gitignore, y `_scratch\` y `_backups\` porque
+estan fuera de todo repo. Los guiones `_STUDIO_*.mjs` hay que rehacerlos; su forma madura
+esta descrita en el relevo.
+
+TRES TRAMPAS NUEVAS, MEDIDAS EN LA SESION DEL 18 AL 25 DE SEPTIEMBRE:
+
+(L) UN COMANDO DE GIT QUE MUERE A MITAD NO DICE «NADA»: NO DICE NADA.
+Un `git diff --name-only HEAD` se quedo sin salida porque git estaba renormalizando
+finales de linea y agoto su tiempo. La cabina estuvo a un paso de publicar «el taller no
+toco nada» sobre 20 ficheros modificados. Si una sonda de git devuelve vacio, comprueba
+que TERMINO antes de creerte el vacio. Y un comando muerto puede dejar un HEAD.lock o un
+index.lock: se comprueba SIEMPRE despues, y se borra.
+
+(M) EL `add` DIRIGIDO NO PROTEGE DE DEJARSE ALGO FUERA.
+Protege de arrastrar lo que no toca, que es la mitad conocida. La otra mitad mordio dos
+veces en dos dias: `FormulaAlignmentField.jsx` -la pieza que tres mandos importaban- quedo
+sin versionar y sin ignorar tras el commit del #215, y un record del hilo AIW llevaba mes
+y medio igual. En un clon limpio el editor no construia. LA GUARDA, y va en todos los
+commits: despues de preparar el indice, `git ls-files --others --exclude-standard <dirs>`
+sobre los directorios tocados.
+
+(N) ANTES DE ELEGIR ENTRE DOS FORMAS, PREGUNTA SI UNA YA ESTA EN DISCO Y APROBADA.
+El ADR-006 se aprobo en la forma (a) con dos argumentos de la cabina, y ninguno habria
+sobrevivido a mirar: la forma (b) YA ESTABA CONSTRUIDA Y APROBADA en el otro carril, con
+su campo y su control montado, pedida por el propio operador meses antes. El run la apago
+sin saberlo, el operador lo vio en pantalla y revoco el contrato. Medir el terreno incluye
+medir si la alternativa ya existe.
+
 DOS TRAMPAS QUE YA TE COMIERON. LEELAS ANTES DE MEDIR NADA.
 
 (A) EL BLOB DE HEAD ESTA EN LF Y EL ARBOL DE TRABAJO EN CRLF. NO LOS COMPARES CRUDOS.

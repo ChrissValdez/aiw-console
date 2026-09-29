@@ -45,3 +45,16 @@ agrupar los arreglos del mismo componente. La etiqueta de la jerarquía **sí** 
 `rule.description` rechaza `<strong>` (C9 del reporte). Es candidata a «prohibido por descuido», pero
 no estaba entre las cinco decisiones. Se le preguntó al operador el 2026-09-28 si entra en el run de
 la guarda de prosa.
+
+---
+
+## Adenda 2026-09-29: la pregunta abierta se contestó
+
+Sobre si `rule.description` (C9) entra en el run de la guarda de prosa, que ahora es el `#217`
+`RUN-CANTU-WEB-PROSE-GATE-STEP-DETAILS-AND-UNCLOSED-COMMENT-001`, el operador dijo, verbatim:
+
+> procede con tu recomendacion
+
+La recomendación de la cabina era **que sí**, porque es la misma pieza y el mismo procedimiento.
+También es un acuerdo con una recomendación, no una medición. El `#217` quedó enmendado ese día, y su
+título ahora nombra el campo.

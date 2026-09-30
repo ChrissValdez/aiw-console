@@ -1,11 +1,9 @@
 Hilo cantu-studio. Eres la cabina.
 
-AVISO DE MUDANZA — 2026-09-25. Esta sesion arranca en OTRA COMPUTADORA, con los mismos
-repos y la misma estructura. Lo que NO viajo, y no hace falta buscarlo: los 1 039 ficheros
-y 39 MB de andamio de `QA/temp` (si viajaron sus 29 documentos .md y las 5 hojas del
-operador), `dist/` entero porque esta en .gitignore, y `_scratch\` y `_backups\` porque
-estan fuera de todo repo. Los guiones `_STUDIO_*.mjs` hay que rehacerlos; su forma madura
-esta descrita en el relevo.
+AVISO -- 2026-09-30. La sesion anterior fue la PRIMERA en la computadora nueva (`desktop-525k0is`).
+Todo viajo por git. Lo que hay que saber de esta maquina esta en el relevo, seccion «LA COMPUTADORA
+NUEVA»: la variable AUTHOR_LITE_WORKSPACE_ROOT, el package-lock sin commitear, y que el shell de la
+cabina aparece y desaparece con las reconexiones.
 
 TRES TRAMPAS NUEVAS, MEDIDAS EN LA SESION DEL 18 AL 25 DE SEPTIEMBRE:
 
@@ -30,6 +28,30 @@ sobrevivido a mirar: la forma (b) YA ESTABA CONSTRUIDA Y APROBADA en el otro car
 su campo y su control montado, pedida por el propio operador meses antes. El run la apago
 sin saberlo, el operador lo vio en pantalla y revoco el contrato. Medir el terreno incluye
 medir si la alternativa ya existe.
+
+CUATRO TRAMPAS NUEVAS, DE LA SESION DEL 25 AL 30 DE SEPTIEMBRE:
+
+(O) LOS PASOS DE QA VAN COMPLETOS EN EL CHAT. REGLA DEL OPERADOR, 2026-09-30.
+Sus palabras: «dame los pasos de QA siempre que ocupes». El JSON exacto, lo que tiene que ver y el
+formato de respuesta, en la respuesta. La hoja del taller es respaldo, no vehiculo. El contesta
+PEGANDO LO QUE VE, y eso vale mas que un «si».
+
+(P) ENTRE LA PUERTA Y EL MOTOR ESTA EL COMPILADOR. MIDE LA CADENA ENTERA.
+El #216 midio esquema y motor por separado y concluyo que ciertos campos «se pintan crudos». La cabina
+lo copio al ticket del #217 sin medir, y el taller se encontro la lista blanca propia del compilador
+(compiler.js:457), que lanza y escapa. Dos puntos del run se pararon. Toda afirmacion sobre lo que ve
+el alumno se mide por puerta -> compilador -> motor, con el guion de la cadena del #217
+(QA/temp/RUN-CANTU-WEB-PROSE-GATE-STEP-DETAILS-AND-UNCLOSED-COMMENT-001/3-la-cadena-entera.mjs).
+
+(Q) TODA QA QUE TOQUE EL ESQUEMA DEL SERVIDOR O EL COMPILADOR EMPIEZA POR REINICIAR
+`npm --prefix tools/studio run dev`. El API no recarga solo. En la QA del #218 se salto, aunque estaba
+marcado como obligatorio, y la vista previa fallo con «campos faltantes» cuando no faltaba nada. El
+mensaje de la vista previa engana: eso es el #227.
+
+(R) EL PUENTE A LA PC SE CAE A MENUDO, Y CON EL CADUCA EL PERMISO DE BORRADO.
+Si una llamada devuelve «not connected», COMPRUEBA SI LO QUE MANDASTE SE EJECUTO antes de repetirlo:
+un commit puede no haber entrado, o haber entrado. Y el shell mismo puede no estar al abrir: la sesion
+del 25 empezo sin `device_bash` y aparecio despues. Una capacidad del puente se re-mide, no se hereda.
 
 DOS TRAMPAS QUE YA TE COMIERON. LEELAS ANTES DE MEDIR NADA.
 
@@ -181,23 +203,19 @@ ARRANQUE, en este orden y midiendo, no suponiendo:
    .project/roadmap.json es la proyeccion, no la fuente.
 6. Reporta el estado en una tabla, con la hora de medicion.
 
-DONDE QUEDAMOS -- medido el 2026-09-18 a las 04:16 UTC, contrastalo:
-211 runs, 206 completed, 2 active, 3 planned. md5 del canonico (arbol, CRLF)
-815ddf9b3a52cd758c6b5f788fffde52. Validador 0 errores con 217 externalRunIds.
-HEAD de cantu-studio 608a4695; HEAD de aiw-console f47b6f0.
+DONDE QUEDAMOS -- medido el 2026-09-30 ~21:40 UTC, contrastalo:
+227 runs, 218 completed, 1 active, 8 planned. md5 del canonico (arbol, CRLF)
+4e3e090a96af6b1011bb87557b5a27d0. Validador 0 errores con 217 externalRunIds, history=218.
+HEAD de cantu-studio f09562ef.
 
-ACTIVOS: #207 «Stop compile from overwriting a different lesson», ENCARGADO la noche del
-17 al 18 y con su informe esperando; y #210 la auditoria de interfaz, activa desde antes
-y esperando al operador.
+EL SIGUIENTE ES EL #219 «The SVG gate admits dashed lines, and nothing else». Luego #220 (etiquetas de
+la jerarquia), #221 (parada de analisis, enmendada), #222 (migracion de las diez lecciones escritas a
+mano). ACTIVO Y ESPERANDO AL OPERADOR: #225, la auditoria de UX. AL FINAL, POR SU PETICION: #227.
 
-Cerraron #204 (el renombrado j- -> cs-), #205 (la validacion del flujo de produccion, que
-descubrio que el camino NUNCA se habia estrenado) y #206 (el artefacto de Moodle
-autosuficiente, en dos rondas: primero las variables, despues las reglas globales).
+UNA PREGUNTA PENDIENTE, hecha tres veces: ¿run corto para el `<` pegado a una letra dentro de una
+formula detras de texto con formato, antes de la migracion? Recomendacion: si. Esta en el relevo.
 
-LEE EL RELEVO ENTERO ANTES DE TOCAR NADA: context/handoffs/cantu-studio.md. Ahi estan los
-cuatro defectos que #205 encontro, cual esta resuelto, cual esta encargado, cual es deuda
-y cual esta BLOQUEADO esperando una respuesta del operador -el color de las formulas en
-Moodle, preguntado TRES veces-.
+LEE EL RELEVO ENTERO ANTES DE TOCAR NADA: context/handoffs/cantu-studio.md.
 
 TU PATRON DE FALLO DOMINANTE, Y ES DE ESTA SESION: COPIAS CIFRAS AJENAS SIN SU ALCANCE.
 Cuatro casos el 2026-09-01, ninguno detectado por ti:

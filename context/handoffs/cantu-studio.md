@@ -1,174 +1,120 @@
 # HANDOFF — hilo `cantu-studio` (el proyecto)
 
-> Escrito por la cabina al cerrar la sesión del **2026-09-18/25**, que termina con una **MUDANZA
-> DE COMPUTADORA**. **Sustituye al relevo del 2026-09-16/18.**
+> Escrito por la cabina al cerrar la sesión del **2026-09-25/30**, la primera en la **computadora
+> nueva** (`desktop-525k0is`). **Sustituye al relevo del 2026-09-18/25.**
 >
 > **Todo lo de aquí está medido y lleva fecha. Contrástalo contra el canónico al abrir. Gana el
 > disco.**
 
 ---
 
-## ⚠ LO PRIMERO: ESTA SESIÓN CIERRA PARA MUDARSE DE MÁQUINA
+## DÓNDE QUEDAMOS — medido el 2026-09-30 ~21:40 UTC
 
-El operador sigue en **otra computadora**, con la misma estructura de carpetas y los mismos repos.
-Al cerrar, los cinco repos quedaron **sin nada real pendiente de commitear**. Lo que hay que saber
-del otro lado:
-
-- **`QA/temp/` NO VIAJA ENTERO.** Se commitearon sus **29 documentos `.md`** (368 KB, el rastro de
-  por qué se hizo cada cosa) y las **5 hojas de QA** al nivel de `QA/`. Los otros **1 045 ficheros
-  y 39 MB** —copias del motor de antes de cada sabotaje, renders del corpus, volcados— **se quedan
-  atrás a propósito**: son andamio reproducible por los guiones que sí viajan.
-- **`dist/` ESTÁ EN `.gitignore`** (`**/dist/`). El HTML de Moodle reemitido por el `#213` **no
-  viaja**. No hace falta: el operador ya lo pegó en su curso y le dio pass.
-- **`_scratch\` y `_backups\` están fuera de todo repo** y tampoco viajan. Los guiones de consola
-  (`_STUDIO_*.mjs`) hay que rehacerlos o copiarlos a mano; su forma está descrita más abajo.
-
----
-
-## LA CABINA TIENE SHELL, Y CORRE TODO ELLA
-
-Medido de nuevo toda esta sesión: `node` v22.23.2 y `git` responden, y la cabina corrió sola el
-validador, la consola, los motores, suites acotadas, borrados y commits. **Al operador le quedan
-cuatro cosas:** pegar tickets, hacer `push`, dar veredictos de pantalla y aportar lo que vive fuera
-del montaje.
-
-**Ojo con dos trampas de medición que mordieron esta sesión:**
-
-1. **Un comando de git que muere a mitad no dice «nada»: no dice nada.** Un `git diff --name-only
-   HEAD` en `cantu-studio` se quedó sin salida porque git estaba renormalizando finales de línea y
-   el comando agotó su tiempo. La cabina estuvo a un paso de publicar «el taller no tocó nada»
-   sobre 20 ficheros modificados. Con `status --porcelain -uno` salió la verdad.
-2. **`git status` en `aiw` engaña, y esta vez casi cuesta un commit falso de 8 778 líneas.** Ese
-   repo **no tiene `.gitattributes`**: mostraba 125 ficheros modificados con +8 778/−8 778, simetría
-   exacta que es la firma del ruido de finales de línea. Medido con
-   `git diff --ignore-cr-at-eol --numstat`: **solo 6 ficheros tenían cambio real.**
-
----
-
-## DÓNDE QUEDAMOS — estado al 2026-09-25
-
-**221 runs · completed=214 · active=2 · planned=5 · densidad 1..221 OK · validador 0 errores con
-217 externalRunIds.**
+**227 runs · completed=218 · active=1 · planned=8 · densidad 1..227 OK · validador 0 errores con 217
+externalRunIds · history=218 · md5 del canónico (árbol, CRLF) `4e3e090a96af6b1011bb87557b5a27d0`.**
+HEAD de `cantu-studio`: `f09562ef`.
 
 | | run | estado |
 |---|---|---|
-| **#215** | The author picks the formula alignment in Web, as Slide already allows | **`active` — SOLO FALTA LA QA DE PANTALLA** |
-| **#216** | A published lesson can be brought back into the editor | `planned` |
-| #217 | ANALYSIS STOP — las cinco peticiones de componentes | `planned` |
-| #218 | Flujo de exportación de producción | `planned` |
-| #219 | Plan de hosting y despliegue | `planned` |
-| **#220** | Auditoría de UX de Cantu Studio | **`active`, esperando al operador desde hace semanas** |
-| #221 | Historial de edición por campo | `planned` |
+| **#219** | The SVG gate admits dashed lines, and nothing else | `planned` — **EL SIGUIENTE** |
+| #220 | The hierarchy's published labels are silently dropped | `planned` |
+| #221 | ANALYSIS STOP — the component petitions, read together | `planned` (enmendado: suma `calculation` y el HTML dentro de columnas) |
+| #222 | The ten hand-written lessons move, once, to the editor's vocabulary | `planned`, depende de #217, #218 y #219 |
+| #223 · #224 | Flujo de exportación · Plan de hosting | `planned` |
+| **#225** | Auditoría de UX de Cantu Studio | **`active`, esperando al operador desde hace semanas** |
+| #226 | Historial de edición por campo | `planned` |
+| **#227** | The preview names the field that fails, and a procedure step without its formula is caught | `planned`, **al final por petición del operador** |
 
-### Lo único pendiente del operador ahora mismo
+### Una pregunta pendiente del operador, hecha tres veces sin respuesta
 
-**La QA del `#215`, y son tres desplegables.** Arranca el editor (`npm --prefix tools/studio run
-dev`, API en `localhost:3000`, interfaz en `http://localhost:5173`) y comprueba que en los TRES
-sitios el desplegable **«Alineación de las fórmulas»** dice **«Centradas (por defecto)»** y **«A la
-izquierda, en bloque»**:
-
-1. Web → **«Procedimiento matemático»**
-2. Web → **«Explicación guiada»** (con el bloque en modo fórmulas)
-3. Diapositiva → **«Procedimiento matemático»**
-
-**Trampa declarada por el taller:** hay **dos** bloques llamados «Procedimiento matemático», uno por
-carril. No son el mismo.
-
-Con su `ok`, el `#215` cierra y sigue el `#216`.
+**El `<` pegado a una letra dentro de una fórmula, detrás de un texto con formato**
+(`<b>Ojo:</b> \(a<b\)`). Desde el `#218`, esos dos campos admiten formato, y el navegador lee
+`<b\)` como una etiqueta: se come un cierre del motor y la fórmula se pierde sin aviso. Lo midió el
+taller del `#218` en un navegador real. La cabina recomienda **un run corto antes de la migración
+(`#222`)** que lo cierre en la compuerta de forma. **El operador no ha contestado.** Pregúntalo una
+vez más, con la recomendación, al abrir; si no contesta, no insistas.
 
 ---
 
-## LO QUE SE CERRÓ EN ESTA SESIÓN, Y LO QUE ENSEÑÓ
+## LO QUE SE HIZO EN ESTA SESIÓN — `#215` a `#218`, y dos runs nuevos en la cola
 
-**`#208` a `#215`, ocho runs.** Lo que merece sobrevivir no son los arreglos, son los patrones:
-
-- **`#208`–`#209` · El arreglo era MEMORIA, no otra parada.** La parada del `#207` ya existía y
-  bastaba en cuanto el origen viajara; lo que faltaba era que la ranura local recordara de qué
-  fichero salió el borrador. *Cuando la solución parece pedir un guardia nuevo, preguntarse primero
-  si lo que falta es un dato.* Y con eso **la parada del `#207` la vio por fin un humano** — aquel
-  run había cerrado declarando que nadie podía provocarla.
-- **`#210` · Dos casos que comparten mecanismo son un censo, no una pareja.** Los dos que el recado
-  reportaba estaban **mal localizados los dos**; el censo real derivado del esquema eran cinco
-  campos en seis renglones, más **una capa entera que nadie había mirado** (el compilador), que
-  necesitó autorización explícita del operador porque `CLAUDE.md:490` la protege.
-- **`#211` · La parada de análisis desmintió la premisa de su propio encargo**, por segunda vez en
-  este proyecto. El ancla no se perdía dentro de la fórmula sino **entre pasos**, y el `#170` ya lo
-  había arreglado así para Slide.
-- **`#212` · La red de no-regresión estaba CERTIFICANDO el defecto**: el árbol fijado llevaba los
-  ocho `undefined` como salida esperada. Y la lección publicada **no regresó: nació rota** —
-  `rowSpan` nunca existió en el motor de Web.
-- **`#213` · La huella de un hueco es un pliegue a mano.** Web no dibujaba el `result`, y lo que lo
-  decidió no fue el historial ni los records: fue que **el fixture de referencia lo plegaba a mano**
-  porque el motor no lo leía.
-- **`#214` · El operador revocó un contrato ya aprobado, y la medición le dio la razón por escrito.**
-  El ADR-006 se aprobó en forma (a) —regla siempre activa— y **Slide ya tenía la forma (b)
-  construida y aprobada desde antes**, con su campo y su control montado. **Nadie midió si (b) ya
-  existía antes de elegir (a).** Regla nueva: *antes de elegir entre dos formas, preguntar si una de
-  las dos ya está en disco y aprobada.*
-- **`#214` r3 y `#215` · Las guardas subieron de categoría dos veces.** Una pasó de comprobar que
-  una cadena aparece en el código a **extraer el ajustador emitido y ejecutarlo** —un sabotaje que
-  resta un solo relleno deja verde la comprobación de cadena y solo enrojece la que ejecuta—. Otra
-  demostró que una palabra llega a tres mandos **renderizando la pieza real con React** y contando
-  en el bundle construido.
+- **`#215`** (alineación de fórmulas en Web) cerró con el pass de pantalla de los tres desplegables.
+- **`#216`** (¿vuelve una lección publicada al editor?) midió y propuso: **17 de 42** entradas del
+  corpus se importan, y **ninguna** de las dos lecciones publicadas. El problema grande no es el HTML:
+  las lecciones están escritas en el vocabulario de Core, que es anterior al esquema del editor, y el
+  compilador traduce del editor a Core pero no al revés. Guarda nueva `publishedLessonIsImportable`.
+  El operador eligió las cinco recomendaciones: sus tres runs más una enmienda al `#221`.
+- **`#217`** entregó el cierre del **comentario HTML sin cerrar** (`<!--`), que pasaba en 178 de 204
+  campos y ahora en ninguno. Los otros dos puntos **se pararon por medición**: entre la puerta y el
+  motor está la **lista blanca propia del compilador**, que el `#216` no midió y la cabina copió al
+  ticket sin medir. QA 4/4.
+- **`#218`** abrió esos dos campos (`timeline.details` y `rule.description` de Web) **en la puerta y
+  en el compilador a la vez**, con una sola regla que el compilador ahora importa. Esto se hizo con
+  autorización explícita del operador para tocar el compilador. QA en dos pasadas: la primera falló
+  porque el servidor no se había reiniciado.
+- **`#227`**, pedido por el operador al final de la cola: que la vista previa **nombre el campo que
+  falla** (hoy dice «campos faltantes» aunque no falte nada) y que un paso sin fórmula no se vea
+  «amontonado». Él mismo nombró el mecanismo: el panel gris desaparece (`renderTimeline.js:101`,
+  `.no-math`, a propósito).
 
 ---
 
-## LOS ERRORES DE LA CABINA EN ESTA SESIÓN, Y LA GUARDA QUE SALIÓ DE CADA UNO
+## LA COMPUTADORA NUEVA — lo que se midió y hay que saber
 
-1. **Emitió el ticket del `#211` sin abrir el run.** El canónico decía `planned` mientras el taller
-   trabajaba. Lo cazó **la guarda de estado del guion de cierre**, no la disciplina.
-2. **Republicó coordenadas ajenas como medición propia** (`renderRule.js:80/96/108`: solo la `:96`
-   es la fórmula). *Un dato ajeno que se republica sin medir es un dato inventado con mejor letra.*
-3. **Escribió el `Scope` del `#214` de memoria** y dejó fuera una de las cuatro superficies del ADR.
-   *El `Scope` se DERIVA del contrato.*
-4. **Dejó un fichero huérfano al commitear el `#215`**: `FormulaAlignmentField.jsx`, la pieza que
-   los tres mandos importan, sin versionar y sin ignorar — en un clon limpio el editor no
-   construiría. Lo encontró el taller, no la cabina.
-   **GUARDA NUEVA, YA EN USO EN TODOS LOS COMMITS:** después de preparar el índice, listar los
-   ficheros **sin versionar y no ignorados** bajo los directorios tocados:
-   `git ls-files --others --exclude-standard <dirs>`. *El `add` dirigido protege de arrastrar lo que
-   no toca; no protege de dejarse algo fuera.*
-5. **Compuso un mensaje de commit con `-m`** y el shell se comió las comillas invertidas, dejando un
-   hueco a mitad de una frase. *Los mensajes van por fichero, siempre.*
-6. **Hizo una pregunta sin recomendación** (si el `result` debía dibujarse). Se corrigió midiendo:
-   el gemelo de Slide sí lo dibuja.
+- **Modo del editor:** `AUTHOR_LITE_WORKSPACE_ROOT` = `C:\Users\chris\Documents\AIW_Workspace\projects\cantu-lessons`,
+  como variable **de usuario de Windows**. Sin ella, el editor entra en modo interno y el explorador
+  sale casi vacío. Al arrancar tiene que decir `[Storage] Mode: external`.
+- **`editor-ui/package-lock.json` sale modificado** por el `npm install` de esta computadora
+  (`@emnapi/wasi-threads` 1.2.2 → 1.2.3). No es de ningún run y **no se ha commiteado**. Decisión
+  del operador si entra.
+- **El shell de la cabina aparece y desaparece.** La sesión empezó SIN `device_bash`: solo podía
+  listar, copiar a la nube y escribir. A mitad de sesión apareció. Las herramientas del puente se
+  desconectan y vuelven a menudo: si una llamada falla con «not connected», **comprueba si lo que
+  mandaste se ejecutó** (un commit puede no haber entrado) antes de repetirlo.
+- **El permiso de borrado caduca en cada reconexión.** Pasó cuatro veces. Se vuelve a pedir.
+- **Sin shell, el `stage` no llega a más de 7 carpetas de profundidad.** El código del editor está a
+  9 o 10.
+- **Las suites largas no caben en la cabina:** tope de 180 s por llamada, y un proceso lanzado en
+  segundo plano muere con la llamada. La guarda del `#217` no se pudo correr desde aquí. Sus cifras
+  son del taller.
+- **El operador tiene Claude Code instalado en la PC** (`claude` 2.1.284) y maneja sesiones de Remote
+  Control desde la laptop. **Queda pendiente** probar si se pueden lanzar tickets de taller así.
 
 ---
 
-## DEUDA VIVA, NOMBRADA Y SIN DUEÑO
+## LOS ERRORES DE LA CABINA EN ESTA SESIÓN, Y SU GUARDA
 
-- **Tres ficheros de `dist/`** siguen enseñando `undefined`, por las otras dos causas del `#210`: un
-  `rule` de Slide sin `description` requerido, y un módulo que no exporta el `title` de la lección.
-- **Un fichero huérfano en `dist/staging`** sin fuente con ese nombre.
-- **`renderStepGrid.js`**: parcial completo que no invoca nadie. Tres auditorías del repo lo
-  registran y una pide revisión de seguridad antes de exponerlo (emite manejadores de ratón en
-  línea). **Nombrado, no abierto: es del operador.**
-- **`LessonContextBar`, `LessonBreadcrumbBar`, `EditorShell` y `ThreePaneLayout`**: cero
-  importadores. Código muerto medido.
-- **El defecto F2 de ancho del `#43`**, medido en el `#214` y no disparado.
-- **Dos cajas del corpus** que siguen saliéndose 5 px: es el suelo de 0,5 mordiendo, no el defecto.
-- **El comentario de `SlideStackEditor.jsx:987`** aún dice que la pregunta del rótulo no se ha
-  contestado. Ya se contestó el 2026-09-21.
-- **La hoja de QA de la ronda 1 del `#215`** dice la palabra vieja en seis sitios.
-- **Moodle usa MathJax** y todo lo de esta tanda se midió con **KaTeX**.
+1. **Dijo «no tengo shell» y era una medición que caducó en la misma sesión.** El shell apareció
+   después. Se corrigió en voz alta. *Una capacidad del puente se vuelve a medir cuando algo cambia.*
+2. **Copió al ticket del `#217` que esos campos «se pintan crudos»**, medido por el `#216` solo contra
+   la puerta y el motor. El compilador escapa y lanza. Es la trampa (E) otra vez. *Una afirmación
+   sobre lo que ve el alumno se mide contra la CADENA ENTERA: puerta → compilador → motor.*
+3. **Borró el respaldo del canónico de un run todavía abierto** (el `#218`). Lo declaró.
+4. **Hizo un `add` en la misma llamada que otro commit.** Terminó bien, pero la regla dice que cada
+   uno va solo.
+5. **`set-deps` con `addDep: [id]` falla** con «not a known run»: recibe una CADENA, no una lista. Lo
+   cazó el dry-run sobre copia.
 
 ---
 
 ## CÓMO SE TRABAJA AQUÍ (lo que no cambia)
 
-- **El ciclo:** turno 1 abre el run **y** emite el ticket; turno 2 mide, cierra y commitea; turno 3
-  encadena. El operador solo pega el ticket.
-- **La consola:** `projects/aiw-console/project-console/serve.mjs` en un puerto libre, POST a
-  `/projects/cantu-studio/__project-console/roadmap/edit` con `{op,args,apply,baseline}`. Dry-run
-  siempre antes de aplicar, con el `remap` publicado. `serve.mjs` re-emite `.project/` solo.
-- **El canónico:** `projects/cantu-studio/.aiw/roadmap/roadmap.json`. El motor que lo conoce es el
-  de `aiw-console` (2 479 líneas, sabe de `lane` y `barrier`), **no** el de `cantu-studio`.
-- **El validador** `checkInvariants` **devuelve un ARRAY** de cadenas, no un objeto con `.errors`.
-  Leerlo mal da un verde falso sobre un canónico sucio.
-- **Los guiones de `_scratch`** tienen la forma madura: guardas de identidad, título y estado que
-  abortan; respaldo byte a byte antes de escribir; dry-run; verificación campo a campo contra el
-  estado anterior con la lista de cambios permitidos; y borrado del respaldo al cerrar el run.
-- **`git stash` NO es byte-seguro en `cantu-studio`** (`* text=auto` devuelve LF donde había CRLF).
-  Las restauraciones se verifican **por hash**.
-- **Commits:** `add` dirigido por nombre, nunca `-A`, más la guarda de huérfanos. Identidad
-  explícita en cada commit. **El `push` es del operador y no bloquea nada — y no se le recuerda.**
+- **Los pasos de QA van COMPLETOS en el chat**, con el JSON exacto, lo que tiene que ver y el formato
+  de respuesta. **Regla del operador del 2026-09-30.** La hoja del taller es el respaldo; el vehículo
+  es la respuesta. **Primer paso de toda QA que toque el compilador o el esquema del servidor:
+  reiniciar `npm --prefix tools/studio run dev`.**
+- **El operador contesta pegando lo que ve.** Eso vale más que un «SÍ».
+- **La consola:** `projects/aiw-console/project-console/serve.mjs` con `PC_PORT`, POST a
+  `/projects/cantu-studio/__project-console/roadmap/edit` con `{op,args,apply,baseline}`.
+  `serve.mjs` re-emite `.project/` solo.
+- **Dry-run de TODA la cadena, antes de aplicar:** con `planEdit` de `roadmap-plan.mjs` sobre una
+  copia del canónico, paso a paso, escribiendo el `serialized` de cada uno. La plantilla solo valida
+  el primer paso; esto valida todos. Se usó en todas las inserciones de esta sesión.
+- **El canónico:** `projects/cantu-studio/.aiw/roadmap/roadmap.json`. Motor: el de `aiw-console`.
+  `checkInvariants` **devuelve un array**.
+- **Commits por plumbing** (`write-tree` / `commit-tree` / `update-ref`), mensaje por fichero, `add`
+  dirigido, `diff --cached --name-only HEAD` exacto, `ls-files --others --exclude-standard` sobre lo
+  tocado, y después borrar `tmp_obj_*` y comprobar locks.
+- **Los guiones del taller en `QA/temp/<run>/` entran con `add -f`** (`.mjs` y `.salida.txt`). Los
+  `.json` y `.html` de salida no entran.
+- **El `push` es del operador y no se le recuerda.**

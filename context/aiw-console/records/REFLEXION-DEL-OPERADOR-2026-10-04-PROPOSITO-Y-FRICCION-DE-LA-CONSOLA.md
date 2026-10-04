@@ -70,3 +70,61 @@ esto es un tema de la interaz no para que cambies los tipos de runs, eso tendria
 2. **El panel «Care budget · project configuration» no le gustó, no lo usa, se ve mal y genera ruido.**
 
 Todo lo demás es replanteamiento abierto: el operador declara que está batallando para definirlo.
+
+---
+
+## Segunda intervención, mismo día — respuesta a la lectura de la cabina
+
+La cabina le había dicho que el care budget «sólo tiene sentido si AIW delega trabajo; como no
+delega, en tu consola es ruido», y que la capa de AIW (clasificación, care budget, reportes con
+el formato del piloto de CQL) era la que generaba la fricción. Verbatim de su respuesta:
+
+```text
+* Sólo tiene sentido si AIW delega trabajo. Como no delega, en tu consola es ruido.
+
+eso es interesante, cuando lo pones asi, tiene sentido tenerlo para cuando ese momento llegue
+realmente el problema es que no me gusta como se ve visualmente esta en la pantalla principal de forma grande y llamativa en vez de una configuiracion escondida en un boton de config por ejemplo donde configure todos esos parametros del proyecto, me entiendes? 
+
+
+* Capa B, la maquinaria para que AIW delegue: clasificación, care budget, y reportes con el formato del piloto de CQL. CQL es hoy el único proyecto con carpeta de reportes; lo medí.
+
+
+si eso pasa porque CQL fue el piloto, pero como era algo vital de terminar, no queria experimentar sobre ese material un mecanismo nuevo
+mismo problema con CL
+no quiero experimentar aiw con CL 
+
+cantu studio esta con pocos runs faltantes
+
+Entonces... 
+no hay proyecto en el cual experimetnar como hacer funcionar AIW
+
+y por eso esta atorado ese hilo muchas funciones de aiw console estan pensadas para despues implementarse de forma compatible con AIW
+
+la consola y mi metodologia de trabajo me esta permitiendo trabajar en multiples proyectos en paralelo eso lo tengo bien trabajado ,puede mejorar pero funciona
+lo que aiw me debe de arreglar es el trabajo secuencial
+
+asi este trabajando en 6 proyectos, si se atora un run por algo, se detiene el trabajo completamente
+si me separo de la computadora el trabajo se de tiene
+aumente mi productividad cuando estoy trabajando pero no he logrado que funcoine el delegar trabajo secuencial cuadno me alejo
+para eso es aiw
+
+pero estoy en fases finales y criticas de mis proyectos actuales
+por eso me atore con eso
+no tengo en donde probarlo, 
+
+console sigue teniendo muchos detalles, sobre todo de diseño visual y ux, pero a grandes rasgos funciona bien  y a cumplido su proposito
+
+entonces... aiw es mi mayor hueco actualmente
+que recomiendas?
+```
+
+### Lo que la cabina registra como decisión explícita
+
+3. **El care budget SE QUEDA** — tiene sentido para cuando AIW delegue. Lo que no le gusta es
+   **dónde y cómo**: hoy está grande y llamativo en la pantalla principal; lo quiere **escondido
+   detrás de un botón de configuración del proyecto**, donde vivan todos esos parámetros. Esto
+   **corrige** la lectura de la cabina, que había propuesto ocultarlo o quitarlo.
+4. **Lo que AIW debe resolver, en sus palabras: el trabajo SECUENCIAL** — que el trabajo no se
+   detenga cuando un run se atora o cuando él se aleja de la computadora. El trabajo en
+   paralelo entre proyectos ya lo tiene resuelto con la consola y su metodología.
+5. **No quiere experimentar AIW con CQL ni con CL.**

@@ -363,3 +363,30 @@ vamos con tus recomendaciones
     runs), con PARADA DE ANÁLISIS → run de la CONSOLA que lo muestra → vista del lote de
     contenido. Los runs `#65`–`#71` se repasan después.
 20. **Aprobado que el paso 2 de la QA del `#64` se haga por `cantu-quizzes-latex`.**
+
+---
+
+## Décima intervención, mismo día — que cada hilo haga su propio reporte en HTML
+
+Dicha en medio de la QA del `#64`. Verbatim:
+
+```text
+otra cosa creo que ya lo habia mecnionado pero es buen momento para mecnionarlo de nuevo
+
+cantu lessons estoy trabajando en dos fases en el proyecto
+primero es en un html que genera, equivalente a un reporte, pero hecho por el mismo run, la segunda es como un draft en cantuy studio ese lo leeria directamente en cantu studio
+y la verdad  me esta gustando la idea de que cada hilo cree su propio html con su reporte
+asi no me limito a un formato especifico como el de la consola, que dependiendo del proyecto es o no es compatible
+
+que opinas? estos reportes se hicieron pensando en CQL y al final lo termine sin usarlos 
+por eso surgio este comentario
+```
+
+### Lo que la cabina registra como decisión explícita
+
+21. **`cantu-lessons` trabaja en dos fases:** primero un HTML que genera el propio run
+    (equivalente a un reporte) y después un borrador en Cantu Studio, que lee directamente ahí.
+22. **Le está gustando que cada hilo cree su propio HTML con su reporte**, para no limitarse al
+    formato de reporte de la consola, que según el proyecto es o no es compatible. Lo plantea
+    como pregunta («¿qué opinas?»), no como decisión cerrada.
+23. **Los reportes de la consola se hicieron pensando en CQL y al final no los usó.**

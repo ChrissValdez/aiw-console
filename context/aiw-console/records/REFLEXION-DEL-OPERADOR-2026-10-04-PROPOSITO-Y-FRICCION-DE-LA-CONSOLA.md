@@ -128,3 +128,56 @@ que recomiendas?
    detenga cuando un run se atora o cuando él se aleja de la computadora. El trabajo en
    paralelo entre proyectos ya lo tiene resuelto con la consola y su metodología.
 5. **No quiere experimentar AIW con CQL ni con CL.**
+
+---
+
+## Tercera intervención, mismo día — qué trabajo conviene delegar a AIW
+
+La cabina había recomendado usar `aiw-console` como banco de pruebas de AIW (ya recibió seis
+objetivos aprobados) y lanzar el objetivo `007` pendiente. Verbatim de su respuesta:
+
+```text
+es que sabes que, no me termina de encnatar aiw para temas de diseño
+porqeu trabajo de UI y UX tiende a tener mucha dependencia de criterio humano, entonces delegar mucho trabajo suele ser contraproducente
+Y aiw console esta en fase justo de de diseño visual
+
+justo eso es lo que estoy batallando definir que trabajo conviene delegar a aiw
+
+cantu studio hubiera tenido mucho trabajo de codigo que pudiera delegar, pero en fases anteriores
+
+todo lo de docs puede servir, pero no me encnatna tampoco en las fases que estoy de cada proyecto
+
+aiw console lo mismo
+
+es como, tengo que organizar el trabajo en lanes, batches, runs y objectives de tal manera que pueda delegar de forma eficiente trabajo a aiw al inciiar un proyecto y abra fases en las que me ayude muchisimo y otras que no. 
+
+para eso diseño semi attended attenden y unattended
+
+pero es mas que eso
+
+puedo hacer multiples runs unattended pero eventualmente tiene que haber una verificacion humana
+organizar el trabajo para poer dejar corriendo aiw por 8 horas, y luego tener una verificacion humana larga en la mañana es la parte importante
+en vez de 8 revisiones humansa cada hora. 
+
+y creo que ya tenemos los mecanismos para eso, lo importante es organizar el proyecto, objectives, phases, runs y lanes,  con la debida clasifiacicon de cada run, de tal manera que podamos aprovecahr estas funciones, pero todos mis proyectos actuales estan muy avanzados para esto, ya ahorita no busco reorganizar el plan de trabajo de cada proyecto estan en fases finales, busco acabarlos con mi metodologia actual
+Y no estoy en posicion de iniciar un nuevo proyecto
+
+pero lo importante es mientras mas trabajo pueda manejar unnatended y semiattended
+sin tener bloqueos secuenciales, mas facil sera delegar a aiw
+
+creo que necesitamos un proyecto de prueba para esto, y probar aiw ahi, porque estamos construyendo aiw, y probarlo mientras lo construimos en un proyecto vivo es demasiado delicado  y propoenso  a fallar
+ por eso me estoy atorando 
+que propones
+```
+
+### Lo que la cabina registra como decisión explícita
+
+6. **`aiw-console` NO es banco de pruebas de AIW ahora**: está en fase de diseño visual, que
+   depende de criterio humano. Esto **rechaza** la recomendación de la cabina.
+7. **El valor de AIW, en sus palabras: dejarlo correr ~8 horas y hacer UNA verificación humana
+   larga en la mañana**, en vez de ocho revisiones cada hora. Lo que lo hace posible es
+   **organizar** objetivos, fases, runs y lanes con su clasificación, más que mecanismo nuevo.
+8. **Los proyectos actuales se terminan con la metodología actual**; no se reorganizan.
+9. **El operador propone un proyecto de prueba** dedicado a probar AIW, porque probarlo
+   mientras se construye sobre un proyecto vivo es delicado y propenso a fallar. Y declara que
+   **no está en posición de iniciar un proyecto nuevo** — la propuesta tiene que respetar eso.

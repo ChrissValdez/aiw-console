@@ -390,3 +390,24 @@ por eso surgio este comentario
     formato de reporte de la consola, que según el proyecto es o no es compatible. Lo plantea
     como pregunta («¿qué opinas?»), no como decisión cerrada.
 23. **Los reportes de la consola se hicieron pensando en CQL y al final no los usó.**
+
+---
+
+## Undécima intervención, mismo día — el veredicto puede vivir en el HTML
+
+La cabina había dicho que, con reportes HTML propios de cada hilo, «el veredicto ya no se
+registraría dentro de la consola; seguiría como ahora: me lo dices y yo lo guardo verbatim a
+disco». Verbatim de su respuesta:
+
+```text
+* El veredicto ya no se registraría dentro de la consola. Seguiría como ahora: me lo dices y yo lo guardo verbatim a disco.
+
+no necesariamente se puede registrar en el html si se incluye las preguntas en el html 
+pero incluso si no es asi siempre tenemos la opcion de en cabina mostrar resultados
+```
+
+### Lo que la cabina registra como decisión explícita
+
+24. **El veredicto puede registrarse dentro del propio HTML del reporte**, si el HTML incluye
+    las preguntas. Y si no, **siempre queda la opción de mostrar resultados en cabina.** Corrige
+    a la cabina, que daba la cabina como única vía.

@@ -287,3 +287,27 @@ entoinces el caso mas frecuente es de funcionalidad, luego de documentacion y oc
     ocasionalmente** (secuencial por lo descubierto, con un reporte completo al final, aunque
     en investigación de conceptos suele quedarse involucrado); **UX sólo a veces**, según cómo
     se organice.
+
+---
+
+## Séptima intervención, mismo día — la clasificación de contenido
+
+Verbatim:
+
+```text
+otro tipo de clasificacion de run que nos falta es la de contenido
+CQL era asi
+cantu lessons es asi
+Esta generando contenido
+lecciones, quizes
+entonces nada es dpedendiente de otra cosa
+Este caso como te dije funciona mucho sobre trabajo en paralelo entonces no lo tengo en el radar para aiw
+pero es importante mencionarlo y eficientarlo
+```
+
+### Lo que la cabina registra como decisión explícita
+
+16. **Falta una clasificación de run para CONTENIDO** — generar lecciones, quizzes: CQL era
+    así y `cantu-lessons` es así. Ningún ítem depende de otro.
+17. **El contenido se trabaja en PARALELO y no está en el radar de AIW**, pero es importante
+    nombrarlo y hacerlo eficiente.

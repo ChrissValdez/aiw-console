@@ -231,3 +231,59 @@ entiendes?
     lo producen; UI/UX normalmente no.
 12. **`cantu-lessons` se trabaja en PARALELO, no con AIW**: una vez definido cómo hacer
     lecciones, conviene mandar 10–20 en paralelo.
+
+---
+
+## Quinta intervención, mismo día — el segundo caso secuencial
+
+Escrita a disco con retraso: cuando la dijo, la conexión con su computadora se había caído. Verbatim:
+
+```text
+Hay otro caso en el que sirve AIW para trabajar secuencial mente
+Una serie de runs que no tiene dependencia una de otro, pero no se pueden trabajar en simultáneo porque se trabaja sobre la misma superficie
+```
+
+### Lo que la cabina registra como decisión explícita
+
+13. **Segundo caso de trabajo secuencial para AIW:** runs SIN dependencia entre sí que no se
+    pueden trabajar en simultáneo porque escriben sobre la misma superficie.
+
+---
+
+## Sexta intervención, mismo día — dónde rinde AIW, por tipo de trabajo
+
+La cabina había argumentado que el segundo caso aparece en UX (definir de día, ejecutar de
+noche, revisar en la mañana). Verbatim de su respuesta:
+
+```text
+masomenos, poruqe ese segundo caso de ux, no es imposible que sirva con aiw, pero es raro el caso con attended que me sirva
+porque no es como que mi feedback es instantaneo
+
+digamos que doy feedback, tecnicamente puedo dar feedback de 5 cosas y dejar las correcciones de las 5 cosas visuales en la noche
+pero regularmente el ritmo de trabajo va mas 
+
+doy feedback, mando ejecutar,
+mientras ejecuta feedback del siguiente
+
+de nuevo, depende que tan largo sea el feedback, y que tan en paralelo vayan las correcciones, ademas hay correcciones mas faciles que otras. pero en general con ux, la tendencia es que no las maneej con aiw
+no porque no  se puede, sino porque organizar que el diseño y las correcciones visuales funcionene entre si, tambien tiene su chiste
+
+regularmente cada correccion requiere varias rondas de correcciones mias, entonces tener 5 cosas funcionando  a la vez y cada cosa con varias rondas de correcciones mias, que es muy comun en ux
+
+no lo hace un candidato ideal para usar aiw
+
+no es imposible que suceda, los mecanismos y la consola tecnicamente si lo permiten, pero en mi experiencia, no es tan comun. 
+lso casos donde mas provecho le saco son de funcionalidad y en segundo caso de documentacion 
+tambien de investigacion puede jalar, porque es secuencial en base a lo descubierto en la primera ronda o run, puede trabajar en lo siguiente y al final traerme un reporte completo. Pero para investigacion de conceptos no suelo dejarlo solo tanto tiempo suelo estar involucrado en el proceso, no es un caso de uso muy frecuente tampoco
+entoinces el caso mas frecuente es de funcionalidad, luego de documentacion y ocasionalmente podria dejar algo de trabajo de ux dependiend de como organize, que opinas?
+```
+
+### Lo que la cabina registra como decisión explícita
+
+14. **UX rara vez es candidata a AIW**, no porque no se pueda sino porque cada corrección suele
+    requerir **varias rondas** de feedback suyo, y su ritmo real es intercalado: da feedback,
+    manda ejecutar, y mientras ejecuta prepara el feedback del siguiente.
+15. **Dónde rinde AIW, en su orden: funcionalidad, luego documentación; investigación
+    ocasionalmente** (secuencial por lo descubierto, con un reporte completo al final, aunque
+    en investigación de conceptos suele quedarse involucrado); **UX sólo a veces**, según cómo
+    se organice.

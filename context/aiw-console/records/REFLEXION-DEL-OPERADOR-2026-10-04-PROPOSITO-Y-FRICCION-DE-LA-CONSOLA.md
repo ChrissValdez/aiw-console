@@ -341,3 +341,25 @@ no crees?
 18. **Se actualiza la clasificación de runs con dos ejes: la CLASE de trabajo y cómo se
     RELACIONA con otros runs**, y **la consola se actualiza para mostrarlos**. Cómo y en qué
     orden queda por decidir.
+
+---
+
+## Novena intervención, mismo día — aprueba el orden
+
+La cabina había recomendado (1) hacer la actualización de la clasificación en DOS runs —el
+contrato primero, con parada de análisis antes de emitir su ticket, y la consola después— y
+(2) cerrar primero el `#64` con su QA visual, luego dos runs chicos (abrir en Roadmap; el care
+budget detrás de un botón de configuración), luego el contrato, luego la consola, luego la
+vista del lote de contenido. Verbatim de su respuesta:
+
+```text
+vamos con tus recomendaciones
+```
+
+### Lo que la cabina registra como decisión explícita
+
+19. **Aprobado el orden:** cerrar el `#64` → abrir en Roadmap y care budget detrás de un botón
+    de configuración → run del CONTRATO de clasificación (clase de trabajo y relación entre
+    runs), con PARADA DE ANÁLISIS → run de la CONSOLA que lo muestra → vista del lote de
+    contenido. Los runs `#65`–`#71` se repasan después.
+20. **Aprobado que el paso 2 de la QA del `#64` se haga por `cantu-quizzes-latex`.**

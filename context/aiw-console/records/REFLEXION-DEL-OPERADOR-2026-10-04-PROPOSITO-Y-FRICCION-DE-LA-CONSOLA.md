@@ -181,3 +181,53 @@ que propones
 9. **El operador propone un proyecto de prueba** dedicado a probar AIW, porque probarlo
    mientras se construye sobre un proyecto vivo es delicado y propenso a fallar. Y declara que
    **no está en posición de iniciar un proyecto nuevo** — la propuesta tiene que respetar eso.
+
+---
+
+## Cuarta intervención, mismo día — qué hace secuencial a un trabajo
+
+La cabina había propuesto, como criterio del proyecto de prueba, «que la corrección la decida un
+oráculo, no tu gusto», y un renderizador CommonMark como candidato. Verbatim de su respuesta:
+
+```text
+Que la corrección la decida un oráculo, no tu gusto. Si cada mañana tienes que juzgar diseño, volvemos a lo de `aiw-console`.
+
+eso no es problema como tal, porque, digamos uqe tengo 5 cosas que correjir visuales, no pasa nada si las dejo corriendo de forma secuencial en la noche y en la mañana las reviso las 5, es mas eficiente que toda la noche no avanzsar y en la mañana mandar las 5 
+
+el problema es que casi todo el trabajo que queda de console es attended
+
+necesito yo analizar y definir cada cambio de ux, sobre eso ejecutar el run
+
+no puedo decirle "ya tengo definid oque tienes que hacer esto con esta referencia de como debe quedar de 20 cosas, haz las 20 toda la noche de forma secuencial"
+que es justo el problema, ux es muy dado a ser attended especialmente en fases finales
+y ahora mismo es justo lo que es inadecuado para terminar de probar aiw en un caso real
+
+me entiendes?
+
+tecnicamente cantu lessons si podria probarlo, pero cantu lessons tiene otra situacion diferente
+cantu lessons jala excelentemente en paralelo
+una ves defina bien como hacer lecciones, me sirve mas madnar 10-20 lecciones en paralelo que en secuencial con aiw
+
+de nuevo aiw resuelve trabajo secuecnial 
+
+trabajo que mi aprobacion se puede posponer, pero que necesita el run 1 para trabajar en el run 2
+
+ux / UI no suele sacar eso a relucir. 
+
+las cosas de codigo y funcionalidad si
+
+entiendes?
+```
+
+### Lo que la cabina registra como decisión explícita
+
+10. **Corrige el criterio de la cabina:** juzgar resultados visuales en la mañana NO es el
+    problema — cinco correcciones visuales corridas de noche y revisadas juntas en la mañana
+    son más eficientes que no avanzar. **Lo que impide delegar es que cada cambio de UX
+    necesita que él lo analice y lo defina ANTES del run.** El cuello está en la definición,
+    no en la verificación.
+11. **La definición de trabajo para AIW, en sus palabras: trabajo cuya aprobación se puede
+    posponer, pero donde el run 2 necesita al run 1 para trabajar.** Código y funcionalidad
+    lo producen; UI/UX normalmente no.
+12. **`cantu-lessons` se trabaja en PARALELO, no con AIW**: una vez definido cómo hacer
+    lecciones, conviene mandar 10–20 en paralelo.

@@ -3128,3 +3128,146 @@ dirección, no como lista.
 
 **Criterio de borrado:** la sustituye una decisión que retire el blueprint como estándar común, o
 que lo reemplace por un estándar propio escrito para los cinco proyectos.
+
+---
+
+## D-074 — AIW RESUELVE TRABAJO SECUENCIAL, Y SE PRUEBA EN UN PROYECTO DE PRUEBA, NO EN UNO VIVO
+
+**Fecha:** 2026-10-04 · **Proyecto:** transversal (`aiw` y los cinco proyectos) · **Origen:** hilo
+`aiw-console`, en la revisión general del roadmap de la consola.
+
+Decidido por **Christopher Valdez Cantu** el **2026-10-04**, en una conversación de doce
+intervenciones guardadas verbatim en
+`context/aiw-console/records/REFLEXION-DEL-OPERADOR-2026-10-04-PROPOSITO-Y-FRICCION-DE-LA-CONSOLA.md`.
+Lo que sigue cita de ahí; **el record manda** si algo de aquí lo resume mal.
+
+### Lo que AIW tiene que resolver
+
+> «lo que aiw me debe de arreglar es el trabajo secuencial»
+
+El trabajo en paralelo entre proyectos ya lo resuelven la consola y la metodología de cabina y
+taller. AIW es para que el trabajo **no se detenga** cuando un run se atora o cuando el operador se
+aleja: dejarlo correr unas 8 horas y hacer **una** revisión humana larga en la mañana, en vez de
+ocho revisiones cada hora.
+
+### Los dos casos secuenciales
+
+1. **Cadena** — «trabajo que mi aprobacion se puede posponer, pero que necesita el run 1 para
+   trabajar en el run 2»
+2. **Misma superficie** — «Una serie de runs que no tiene dependencia una de otro, pero no se
+   pueden trabajar en simultáneo porque se trabaja sobre la misma superficie»
+
+### Dónde rinde, por clase de trabajo
+
+> «entoinces el caso mas frecuente es de funcionalidad, luego de documentacion y ocasionalmente
+> podria dejar algo de trabajo de ux dependiend de como organize»
+
+- **Funcionalidad**, luego **documentación**; **investigación** ocasionalmente.
+- **UX rara vez:** no porque no se pueda, sino porque cada corrección suele pedir **varias rondas**
+  de feedback del operador, y lo que la hace attended es **definirla**, no verificarla.
+- **Contenido** (lecciones, quizzes) **va en paralelo, no con AIW.**
+
+### Dónde se prueba
+
+> «creo que necesitamos un proyecto de prueba para esto, y probar aiw ahi, porque estamos
+> construyendo aiw, y probarlo mientras lo construimos en un proyecto vivo es demasiado delicado
+> y propoenso  a fallar»
+
+- **AIW no se prueba en proyectos vivos.** `cantu-quizzes-latex` y `cantu-lessons` quedan fuera
+  por decisión del operador, y **`aiw-console` tampoco es banco de pruebas** mientras esté en fase
+  de diseño visual.
+- **Se prueba en un proyecto de prueba dedicado**, conducido por el hilo `aiw`. Debe poder
+  definirse entero por adelantado y tener **los dos casos secuenciales**. Escogerlo es del hilo
+  `aiw` con el operador; un renderizador CommonMark quedó como candidato de la cabina, **no como
+  decisión**.
+- **Medido el 2026-10-04 y dicho al operador:** el kernel crea la rama de cada objetivo desde
+  `base_branch` y nunca integra (`kernel.mjs:277-282`). Para los dos casos falta que el run N
+  arranque del resultado del run N-1, que es el `#28` de `aiw` «Let consecutive runs share one
+  working branch so their work chains», `planned`.
+
+**Lo que esta decisión NO hace:** no reorganiza el roadmap de ningún proyecto vivo —el operador los
+termina con su metodología actual— y no autoriza a ningún hilo a escribir en el repo de otro.
+
+**Criterio de borrado:** se elimina si el proyecto de prueba demuestra que alguno de los dos casos
+no es delegable, o si el operador decide probar AIW en un proyecto vivo.
+
+---
+
+## D-075 — LA CONSOLA MUESTRA LO QUE YA EXISTE Y NO PIDE QUE SE FABRIQUE NADA PARA ALIMENTARLA
+
+**Fecha:** 2026-10-04 · **Proyecto:** `aiw-console` (la consola sirve a los cinco) · **Origen:**
+el mismo record que la D-074.
+
+Decidido por **Christopher Valdez Cantu** el **2026-10-04**.
+
+### Para qué es la consola
+
+> «todo este proyecto surgio de tratar de tener una consola donde puedo ver el estado del proyecto
+> en tiempo real, y que sea como un punto medio de comunicacion entre cabina y yo»
+
+La fricción que la motivó: cada función que la consola exige alimentar obliga a la cabina a
+producir algo extra, y si no lo hace la pantalla queda vacía o en «no configurado».
+
+### La regla
+
+- **La consola muestra lo que ya existe en disco por el trabajo normal.** No pide a la cabina
+  fabricar un artefacto sólo para alimentarla, y lo que un proyecto no produce no aparece — ni como
+  «no configurado».
+- **La capa de AIW** —la clasificación de riesgo y el care budget— **se queda, pero va detrás de un
+  botón de configuración del proyecto**, no en la pantalla principal:
+  > «esta en la pantalla principal de forma grande y llamativa en vez de una configuiracion
+  > escondida en un boton de config por ejemplo donde configure todos esos parametros del
+  > proyecto»
+- **Los proyectos abren en Roadmap, no en Overview:**
+  > «quisiera que cuadno abro un proyecto la primera pestaña sea roadmap no overview»
+
+**Ejecución:** los runs «Projects open on the Roadmap tab» y «Care budget and the unclassified note
+move behind a project configuration button», insertados el mismo día.
+
+**Criterio de borrado:** se elimina si una función de la consola demuestra valer lo bastante como
+para justificar que la cabina produzca un artefacto sólo para ella, y el operador lo decide.
+
+---
+
+## D-076 — CADA HILO HACE SU PROPIO REPORTE EN HTML; LA CONSOLA LO ENCUENTRA Y LO ENLAZA
+
+**Fecha:** 2026-10-04 · **Proyecto:** transversal · **Origen:** el mismo record que la D-074.
+
+Decidido por **Christopher Valdez Cantu** el **2026-10-04**.
+
+### Lo que lo motivó
+
+> «me esta gustando la idea de que cada hilo cree su propio html con su reporte
+> asi no me limito a un formato especifico como el de la consola, que dependiendo del proyecto es o
+> no es compatible»
+>
+> «estos reportes se hicieron pensando en CQL y al final lo termine sin usarlos»
+
+**Medido el 2026-10-04:** sólo `cantu-quizzes-latex` tiene carpeta `reports/` (un run), y
+`cantu-lessons` ya escribe HTML bajo `docs/guiones/`.
+
+### La regla
+
+- **Cada hilo escribe el reporte de su run en HTML, con el formato que su proyecto necesite.**
+- **La consola no lo interpreta: lo encuentra y lo enlaza.** Lo único común es **dónde vive** el
+  reporte y **cómo se enlaza**, no cómo es por dentro.
+- **El veredicto vuelve a disco, verbatim**, por una de tres vías:
+  > «no necesariamente se puede registrar en el html si se incluye las preguntas en el html
+  > pero incluso si no es asi siempre tenemos la opcion de en cabina mostrar resultados»
+
+  Un HTML abierto desde disco no puede escribir en el repo por sí solo, así que la base es un botón
+  de copiar (como ya hace `cantu-lessons`), un fichero descargado a la carpeta del proyecto para
+  veredictos largos, y la cabina siempre.
+- **El formato de reporte actual de la consola se CONGELA, no se borra**, hasta que el contrato
+  nuevo esté probado.
+
+**Ejecución:** el run «Each thread's HTML report: where it lives, how the console links it, how the
+verdict comes back — the contract», con `cantu-lessons` como piloto. **Ese run también le da una
+puerta propia al lector modal de documentos**, que hoy sólo se abre desde la vista de reporte que se
+congela.
+
+**Lo que esta decisión NO hace:** no escribe en el repo de ningún hilo; cada uno adopta la
+convención en el suyo.
+
+**Criterio de borrado:** se elimina si el piloto demuestra que un formato común de reporte sirve
+mejor que los HTML por hilo, y el operador lo decide.

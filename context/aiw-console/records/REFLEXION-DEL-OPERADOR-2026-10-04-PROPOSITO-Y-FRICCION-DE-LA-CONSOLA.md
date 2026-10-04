@@ -435,3 +435,21 @@ como recomiendas actualizar el roadmap y desiciones en base a todo esto
     veredicto de vuelta por copiar / descargar / cabina; el buscador de títulos como el primero
     de los runs chicos.
 26. **Pide a la cabina la propuesta de cómo actualizar el roadmap y las decisiones.**
+
+---
+
+## Decimotercera intervención, mismo día — aprueba decisiones e inserciones
+
+La cabina había propuesto tres decisiones numeradas (D-074 qué trabajo va a AIW, D-075 para qué es
+la consola, D-076 reportes HTML por hilo) y siete runs nuevos justo después del `#64`, y preguntó
+si insertarlos sin esperar a cerrar el `#64` (ningún taller corriendo; los runs van después y no lo
+tocan). Verbatim de su respuesta:
+
+```text
+si a ambos
+```
+
+### Lo que la cabina registra como decisión explícita
+
+27. **Aprobadas las tres decisiones y los siete runs, en ese orden.**
+28. **Aprobado insertar ya, con el `#64` todavía activo.**

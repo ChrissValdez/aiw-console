@@ -1,27 +1,761 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-09-03T01:59:09.045Z",
+  "generated_at": "2026-10-04T21:50:16.566Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-09-03T01:49:08.019Z"
+      "mtime": "2026-10-04T21:34:52.223Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-09-03T01:59:09.018Z"
+      "mtime": "2026-10-04T21:50:16.539Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "c78b53d12dd11c9ec1d2706b7b85645139099dd9",
+  "head": "3f68fad161b51e9d4de534baafaa4931f539c4fb",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 385,
+  "commit_total": 458,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "3f68fad",
+      "full_sha": "3f68fad161b51e9d4de534baafaa4931f539c4fb",
+      "date": "2026-10-04T21:34:51+00:00",
+      "parents": "bf35b8f",
+      "subject": "context(aiw-console): duodecima intervencion del operador, verbatim -- aprueba el contrato de reportes HTML y el buscador primero, y pide el plan de roadmap y decisiones",
+      "body": "Solo este fichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "bf35b8f",
+      "full_sha": "bf35b8f4e0d3b3bc15b7d2a3fe0b437942903651",
+      "date": "2026-10-04T21:29:27+00:00",
+      "parents": "f4e86e0",
+      "subject": "context(aiw-console): undecima intervencion del operador, verbatim -- el veredicto puede vivir en el propio HTML del reporte, y si no, en cabina",
+      "body": "Solo este fichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f4e86e0",
+      "full_sha": "f4e86e0db50f03e0dc130ab0491615378f170181",
+      "date": "2026-10-04T21:24:09+00:00",
+      "parents": "33a77c0",
+      "subject": "context(aiw-console): decima intervencion del operador, verbatim -- que cada hilo cree su propio reporte en HTML en vez del formato de reporte de la consola, pensado para CQL y no usado",
+      "body": "Lo plantea como pregunta, no como decision cerrada. Solo este fichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "33a77c0",
+      "full_sha": "33a77c04223fbc0039d3e4efc7994232d21f4d4c",
+      "date": "2026-10-04T21:10:25+00:00",
+      "parents": "d17413e",
+      "subject": "#64 RUN-CONSOLE-SHARED-RENDERER-QUOTES-001: el veredicto visual del operador, primera pasada PARCIAL, verbatim y con su captura",
+      "body": "Los pasos 1 y 3 no se pudieron ejecutar: la pestana Docs de aiw-console lista 326 documentos sin\nbuscador y el operador no encontro los dos documentos. El paso 2 se hizo solo del lado del lector\nmodal. El operador pide un buscador de titulos en Docs, y senala anchos desiguales en el modal;\nla cabina midio que vienen del limite de 66ch que fijo el #63 para parrafos, listas y citas, que\nno alcanza a las tablas, no del #64. El run sigue ACTIVO.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-SHARED-RENDERER-QUOTES-001"
+    },
+    {
+      "branch": "main",
+      "sha": "d17413e",
+      "full_sha": "d17413e73a01215862de163d782d0a6bbb12dbdc",
+      "date": "2026-10-04T20:59:30+00:00",
+      "parents": "b5c3b03",
+      "subject": "context(aiw-console): novena intervencion del operador, verbatim -- aprueba el orden: cerrar el #64, dos runs chicos, contrato de clasificacion con parada de analisis, consola, lote de contenido",
+      "body": "Aprueba tambien que el paso 2 de la QA del #64 vaya por cantu-quizzes-latex. Solo este\nfichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b5c3b03",
+      "full_sha": "b5c3b039a33c18b52de94665f421e6911c630140",
+      "date": "2026-10-04T20:57:17+00:00",
+      "parents": "4e518e8",
+      "subject": "context(aiw-console): octava intervencion del operador, verbatim -- se actualiza la clasificacion con la clase de trabajo y la relacion entre runs, y la consola los muestra",
+      "body": "Solo este fichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4e518e8",
+      "full_sha": "4e518e8566261ae66c0bde090d477dcd62ef1c48",
+      "date": "2026-10-04T20:54:20+00:00",
+      "parents": "db86986",
+      "subject": "context(aiw-console): septima intervencion del operador, verbatim -- falta una clasificacion de run para CONTENIDO, que se trabaja en paralelo y no con AIW",
+      "body": "Solo este fichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "db86986",
+      "full_sha": "db869862f22158ca1606aaa7c8909ed5c3b781e5",
+      "date": "2026-10-04T20:50:20+00:00",
+      "parents": "78c4b64",
+      "subject": "context(aiw-console): quinta y sexta intervencion del operador, verbatim -- el caso secuencial de misma superficie, y donde rinde AIW: funcionalidad, documentacion, investigacion a veces, UX rara vez",
+      "body": "La quinta se escribe con retraso porque la conexion con la computadora del operador se cayo\ncuando la dijo. Solo este fichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "78c4b64",
+      "full_sha": "78c4b6470f7915e8e796110e4803e9fc543b0a38",
+      "date": "2026-10-04T09:17:24+00:00",
+      "parents": "7909509",
+      "subject": "context(cantu-studio): el encuadre del #221 decidido por el operador, verbatim",
+      "body": "«vamos con tus recomendaciones»: forma B, un contrato comun y tres\ncomponentes, y la peticion pequena de Lecciones cerrada. Marcado como acuerdo\nsobre opciones de la cabina, no como medicion. El orden de runs queda para la\norientacion que el operador pidio.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7909509",
+      "full_sha": "7909509f9f9511400bf7f1d0aa8e3c4287351ca0",
+      "date": "2026-10-04T09:14:58+00:00",
+      "parents": "2ee0bdb",
+      "subject": "context(aiw-console): cuarta intervencion del operador, verbatim -- lo que impide delegar UX es la definicion previa, no la verificacion; AIW es para trabajo cuya aprobacion se pospone pero donde el run 2 necesita al run 1",
+      "body": "Corrige el criterio de oraculo que propuso la cabina. Registra ademas que cantu-lessons se\ntrabaja en paralelo y no con AIW. Solo este fichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2ee0bdb",
+      "full_sha": "2ee0bdb6de90515f8ce02819f5d269d08c375338",
+      "date": "2026-10-04T08:55:37+00:00",
+      "parents": "ac1c0c6",
+      "subject": "context(aiw-console): tercera intervencion del operador, verbatim -- aiw-console no es banco de pruebas de AIW, el valor de AIW es una noche de 8 horas con una revision larga, y hace falta un proyecto de prueba",
+      "body": "Rechaza la recomendacion de la cabina de usar aiw-console. Solo este fichero; el canonico no\nse toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "ac1c0c6",
+      "full_sha": "ac1c0c6511b7cc0e32491702b0c7825e9314063a",
+      "date": "2026-10-04T08:47:15+00:00",
+      "parents": "fdee4df",
+      "subject": "context(aiw-console): segunda intervencion del operador, verbatim -- el care budget se queda pero escondido tras un boton de configuracion, y AIW debe resolver el trabajo secuencial",
+      "body": "Corrige la lectura de la cabina, que proponia ocultarlo o quitarlo. Registra ademas que no\nquiere experimentar AIW con CQL ni con CL. Solo este fichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fdee4df",
+      "full_sha": "fdee4df32043fd6f43dab74d73bbf9a2c2362e97",
+      "date": "2026-10-04T08:32:31+00:00",
+      "parents": "e0d9060",
+      "subject": "context(aiw-console): la reflexion del operador sobre el proposito y la friccion de la consola, verbatim, 2026-10-04",
+      "body": "Trae dos decisiones explicitas: al abrir un proyecto la primera pestana debe ser Roadmap y no\nOverview, y el panel Care budget / project configuration no se usa, se ve mal y hace ruido. El\nresto es replanteamiento abierto: el operador declara que aun lo esta definiendo. Solo este\nfichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e0d9060",
+      "full_sha": "e0d90605040799c429eaf681825e34e51a917b10",
+      "date": "2026-10-04T06:17:31+00:00",
+      "parents": "28c71c0",
+      "subject": "consola: se registra cantu-lessons en el registro de proyectos",
+      "body": "Autorizado por el operador el 2026-10-04 (veredicto en cantu-lessons:\ndocs/veredictos/2026-10-03-ninguna-leccion-frena-la-siguiente.md). Una linea, sin\notro cambio. projects.digest.json no se regenera: es derivado y ya estaba fechado el\n2026-08-08.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01LJgsZzwKQ1viz6hiuEkJ3A",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "28c71c0",
+      "full_sha": "28c71c029d8119dbd9342dfcc370f61e66058b75",
+      "date": "2026-10-03T04:49:29+00:00",
+      "parents": "be0adee",
+      "subject": "context(cantu-studio): la peticion del operador de orientarse tras el #221, verbatim",
+      "body": "Al cerrar el #221 la cabina no encadena: trae una orientacion del roadmap,\nmedida en el momento de usarla, con la coordinacion con el hilo cantu-lessons\ndentro.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "be0adee",
+      "full_sha": "be0adee9d528ed3a0fedfe072c4d45784a160690",
+      "date": "2026-10-03T04:36:23+00:00",
+      "parents": "15656cb",
+      "subject": "context(cantu-studio): la decision del #221, verbatim",
+      "body": "«vamos con tu recomendacion»: la parada de analisis se encarga en un solo\ntaller con las entradas corregidas por la medicion de la cabina (el\nprocedimiento ya esta hecho, calculation ya existe en el motor, y el criterio\ndel ancho de #61/#62 es el punto de partida). Marcado como acuerdo sobre\nopciones de la cabina, no como medicion.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "15656cb",
+      "full_sha": "15656cbb62be96147fcb5cda65cf1b351f732f0f",
+      "date": "2026-10-03T01:25:26+00:00",
+      "parents": "7b82604",
+      "subject": "context(cantu-studio): la decision del #220, verbatim",
+      "body": "«vamos con tu recomendacion»: el arreglo de las etiquetas de jerarquia es de la\nmigracion (#222), las siete etiquetas de L1 vuelven, y la migracion lleva una\nguarda por mecanismo. Marcado como acuerdo sobre opciones de la cabina, no como\nmedicion.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7b82604",
+      "full_sha": "7b82604e4da5505dc10af4581e1cf7451384dcc8",
+      "date": "2026-10-01T20:21:48+00:00",
+      "parents": "e919274",
+      "subject": "context(cantu-studio): el veredicto de pantalla del #219, verbatim",
+      "body": "pass global, sin detalle por paso, sobre los cuatro pasos entregados en el\nchat (reinicio, linea discontinua en Web, en Slide, y un valor hostil\nrechazado). Con lo que la QA no miro y los hallazgos H-1, H-A, H-B y H-C\nnombrados sin run.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e919274",
+      "full_sha": "e9192740576d6cd446741a16180096d58932e44a",
+      "date": "2026-09-30T21:28:07+00:00",
+      "parents": "386f4c4",
+      "subject": "context(handoffs): releva el hilo cantu-lessons al 2026-09-30, antes de pasar a la laptop",
+      "body": "Un fichero: context/handoffs/cantu-lessons.md. Sustituye al relevo del 2026-09-25.\n\nLleva el cambio de metodo que decidio el operador (guion de contenido -> variantes por seccion ->\nmontaje), donde viven el veredicto y el guion piloto, el estado medido de los cinco repos, y lo\nque espera al operador en orden. Registra tambien por que la terminal del equipo no aparecia en\nla PC: la app estaba instalada con el .exe antiguo, el .msix no instalaba por AllowAllTrustedApps=0\ncon un valor MdmHosts de Intune al lado, y el permiso de borrado caduca al reconectarse.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Cpsidd75JWhWBZzcr3Kmao",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "386f4c4",
+      "full_sha": "386f4c400319b0bae71eae075ab39b81cce735f1",
+      "date": "2026-09-30T21:27:28+00:00",
+      "parents": "1dc6bf7",
+      "subject": "context(cantu-studio): cierre de sesion 2026-09-25/30 -- relevo, prompt y la QA del #218",
+      "body": "Tres ficheros, todos del hilo cantu-studio:\n  context/handoffs/cantu-studio.md -- el relevo nuevo. Sustituye al del 2026-09-18/25. Estado:\n    227 runs, siguiente #219, #225 activo esperando al operador, #227 al final. Una pregunta\n    pendiente del operador, hecha tres veces. Lo que hay que saber de la computadora nueva.\n  context/cantu-studio/PROMPT-DE-REINICIO.md -- aviso nuevo, cuatro trampas nuevas (O: la QA va\n    completa en el chat; P: medir puerta -> compilador -> motor; Q: reiniciar el servidor antes de\n    una QA que toque el compilador; R: el puente se cae y el borrado caduca) y «donde quedamos».\n  context/cantu-studio/records/VEREDICTO-218-QA-RONDA-2-PASS.md -- la segunda pasada, verbatim.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01WY8asNuZGtDRsCxQf1aKc6",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1dc6bf7",
+      "full_sha": "1dc6bf78c9a79ac66dc29018b1e0576a8cb0601a",
+      "date": "2026-09-30T21:18:31+00:00",
+      "parents": "e75b132",
+      "subject": "context(cantu-studio): la QA del #218, primera pasada (parcial), verbatim",
+      "body": "Dos de cuatro pasos como se esperaba; los pasos 1 y 2 fallan en la vista previa, con la causa por\nconfirmar con el operador. Incluye sus dos peticiones nuevas. Un solo fichero, del hilo cantu-studio:\n  context/cantu-studio/records/VEREDICTO-218-QA-RONDA-1-PARCIAL.md\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01WY8asNuZGtDRsCxQf1aKc6",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e75b132",
+      "full_sha": "e75b132d8066034a01aea95d2ada967868ecf6fa",
+      "date": "2026-09-30T06:51:09+00:00",
+      "parents": "d8756c4",
+      "subject": "context(cantu-studio): la QA del #217, 4 de 4, con lo que vio el operador verbatim",
+      "body": "Un solo fichero, del hilo cantu-studio:\n  context/cantu-studio/records/VEREDICTO-217-QA-PASS-CUATRO-DE-CUATRO.md\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01WY8asNuZGtDRsCxQf1aKc6",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d8756c4",
+      "full_sha": "d8756c47b514a27c17e5ad09403e38e0559f7209",
+      "date": "2026-09-30T05:12:40+00:00",
+      "parents": "42023c2",
+      "subject": "context(cantu-studio): dos decisiones del operador en el #217, verbatim",
+      "body": "Se autoriza tocar el compilador para dos campos de Web, en un run propio. Y queda una regla de\ntrabajo permanente: los pasos de QA van SIEMPRE completos en el chat, no en una hoja a la que se\nle remite. Un solo fichero, del hilo cantu-studio:\n  context/cantu-studio/records/VEREDICTO-217-EL-COMPILADOR-SE-AUTORIZA-Y-LA-QA-VA-EN-EL-CHAT.md\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01WY8asNuZGtDRsCxQf1aKc6",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "42023c2",
+      "full_sha": "42023c2fa20fbb818cac95404594975533a0f4ec",
+      "date": "2026-09-29T11:20:31+00:00",
+      "parents": "fd43424",
+      "subject": "context(cantu-studio): adenda al registro del #216 -- C9 entra en el #217",
+      "body": "La pregunta que el registro dejaba abierta se contesto el 2026-09-29, verbatim: «procede con tu\nrecomendacion». Un solo fichero, del hilo cantu-studio:\n  context/cantu-studio/records/VEREDICTO-216-LAS-CINCO-DECISIONES-VAN-CON-LA-RECOMENDACION.md\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01WY8asNuZGtDRsCxQf1aKc6",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fd43424",
+      "full_sha": "fd43424bf2fa850f8561184e8bad7b40677c970f",
+      "date": "2026-09-29T01:24:25+00:00",
+      "parents": "bdaf2bd",
+      "subject": "context(cantu-studio): las cinco decisiones del #216, verbatim",
+      "body": "«vamos con tus recomendaciones», registrado como acuerdo con la recomendacion de la cabina y no como\nmedicion, con la tabla de lo decidido y la unica decision de la cabina al traducirlo a runs. Un solo\nfichero, del hilo cantu-studio:\n  context/cantu-studio/records/VEREDICTO-216-LAS-CINCO-DECISIONES-VAN-CON-LA-RECOMENDACION.md\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01WY8asNuZGtDRsCxQf1aKc6",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "bdaf2bd",
+      "full_sha": "bdaf2bdec362f9887bb3b110730b2cc1dce35c05",
+      "date": "2026-09-26T23:21:52+00:00",
+      "parents": "bc2455d",
+      "subject": "context(cantu-studio): el veredicto de pantalla del #215, verbatim",
+      "body": "«pass» global del operador sobre los tres desplegables «Alineacion de las formulas», con lo que la\nQA no miro declarado aparte. Un solo fichero, del hilo cantu-studio:\n  context/cantu-studio/records/VEREDICTO-215-PASS-LOS-TRES-DESPLEGABLES.md\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01WY8asNuZGtDRsCxQf1aKc6",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "bc2455d",
+      "full_sha": "bc2455d0701b6da9035c62092145fa3b48edc73c",
+      "date": "2026-09-25T23:27:09+00:00",
+      "parents": "9074d7c",
+      "subject": "context(cantu-studio): la PLANTILLA del guion de consola entra al repo, porque _scratch no viaja",
+      "body": "Un fichero. Es la forma mas madura a la que llego la sesion del 18 al 25 de septiembre, copiada\nde _scratch y documentada: varios pasos encadenados, cada uno con su dry-run, su lista de cambios\nPERMITIDOS y su verificacion campo a campo contra el estado anterior.\n\nPOR QUE AQUI Y NO EN _scratch: esa carpeta esta FUERA DE TODO REPO, asi que no viaja entre\ncomputadoras. Esta cabina dejo alli 185 ficheros (1,4 MB) de un solo uso -su contenido vive en el\ncanonico y en los mensajes de commit-, pero la FORMA valia y perderla costaba media sesion de\nredescubrimiento. SE GUARDA UNA, NO 185.\n\nLa cabecera dice que cambiar para reusarla (puerto, ruta del respaldo, constantes de identidad y\nla lista de pasos) y que NO tocar (las guardas que abortan, el respaldo byte a byte, el dry-run\nantes de cada apply). Y deja escritas las tres cosas que hace bien y que se perdieron una vez\ncada una: la guarda de estado que caza emitir un ticket sin abrir el run, el remap publicado\ndesde el dry-run en vez de razonado, y que en dry-run solo se valida el primer paso porque los\nsiguientes dependen de que el anterior se haya escrito.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeoKuJbN5GNtrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "9074d7c",
+      "full_sha": "9074d7c929b6efc1deb803d649956aa83a3886e2",
+      "date": "2026-09-25T15:29:10-06:00",
+      "parents": "04d2cde",
+      "subject": "context(handoffs): releva el hilo aiw-console para una MUDANZA DE COMPUTADORA, 2026-09-25. Sustituye al relevo del 2026-09-02, que cerraba con 70 runs y cero activos. Este deja 71 runs y el #64 ACTIVO, entregado y verde, esperando una sola cosa: el veredicto visual del operador sobre dos superficies. El #64 arreglo el renderizador compartido de citas en dos tandas, b2fdd8a abre, 7af9fcf agrupa las lineas consecutivas en un solo blockquote, 20d75fb registra la decision del operador y 4305d85 hace que una cita dentro de otra sea una caja dentro de una caja; los cuatro YA estan publicados. Suite verificada por la cabina en 841 tests, 841 pass, 0 fail, EXIT 0, y el fichero de citas paso de 28 a 46 tests. El relevo lleva la QA de cuatro pasos escrita con lo esperado en cada uno, y nombra ANTES de que el operador mire las tres cosas que vera y no son regresiones. TRES LECCIONES DE METODO quedan dentro: que una parada resuelta con una pregunta que el operador no puede contestar es una parada gastada, y que lo que funciono fue ensenarle los casos reales de sus propios records con un dibujo de cada opcion; que una sonda que no distingue cita de bloque cercado miente, y por eso el ticket afirmo 62 lineas donde eran 42, corregido por el taller y no por la cabina; y que el trabajo del taller estuvo SIETE DIAS en el arbol sin que nadie lo supiera, de donde sale la regla de que un hilo que se retoma tras dias empieza por un git status acotado y no por leer el relevo. El §7 es nuevo y es el de la mudanza: que viaja por git y que no. Nombra que aiw/sandbox NO TIENE REMOTO y por tanto no se clona, que _scratch tiene 792 entradas y casi todas son de otros hilos mientras que de este no queda ninguna, que el respaldo del #64 sigue vivo porque su run sigue abierto, y que aiw tenia quince ficheros modificados en git status y CERO cambios reales porque todo eran finales de linea. Tambien queda medido que el sandbox se cayo entre el 12 y el 15 de septiembre con un Plan9 share not mounted, que durante la caida las herramientas de fichero si funcionaban, y que el flag --port de serve.mjs no se respeta y el puerto va por PC_PORT",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "04d2cde",
+      "full_sha": "04d2cde66c821581de2f1e938e2dd72b24c6fd59",
+      "date": "2026-09-25T21:27:04+00:00",
+      "parents": "3ecdbb2",
+      "subject": "context(cantu-studio): el prompt de arranque gana el aviso de mudanza y tres trampas nuevas",
+      "body": "Un fichero. Entra al principio, donde se lee antes de medir nada.\n\nAVISO DE MUDANZA: la proxima sesion arranca en otra computadora, y se dice QUE NO VIAJO para\nque nadie lo busque -- los 1 039 ficheros y 39 MB de andamio de QA/temp (si viajaron sus 29\n.md y las 5 hojas del operador), dist/ entero por .gitignore, y _scratch y _backups por estar\nfuera de todo repo.\n\n(L) UN COMANDO DE GIT QUE MUERE A MITAD NO DICE «NADA»: NO DICE NADA. Un diff se quedo sin\nsalida por la renormalizacion de finales de linea y la cabina estuvo a un paso de publicar\n«no toco nada» sobre 20 ficheros. Y un comando muerto deja locks: se comprueba siempre.\n\n(M) EL add DIRIGIDO NO PROTEGE DE DEJARSE ALGO FUERA. Dos huerfanos en dos dias, uno de ellos\nla pieza que tres mandos importaban. La guarda va escrita.\n\n(N) ANTES DE ELEGIR ENTRE DOS FORMAS, PREGUNTA SI UNA YA ESTA EN DISCO Y APROBADA. Es la\nleccion del ADR-006: la forma (b) ya existia en el otro carril, pedida por el propio\noperador, y nadie lo midio antes de recomendar la (a).\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeoKuJbN5GNtrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "3ecdbb2",
+      "full_sha": "3ecdbb2ab1407c1c95e361b77696cc1301772b43",
+      "date": "2026-09-25T21:22:10+00:00",
+      "parents": "b5b9208",
+      "subject": "context(aiw): entra un record del hilo AIW que estaba sin versionar desde el 2026-08-08",
+      "body": "Un fichero, y NO ES DE ESTA CABINA: el record de una parada e informe de opciones del run 41 del\nhilo AIW, del 8 de agosto. Llevaba mes y medio en disco sin versionar y SIN IGNORAR, asi que no\nhabria viajado a la otra computadora.\n\nLo encontro LA GUARDA DE HUERFANOS que esta cabina estrena hoy -- listar lo que queda sin\nversionar y no ignorado bajo los directorios tocados, despues de preparar el indice --, corriendo\nsobre context/ al commitear el relevo. La misma guarda que nacio de que esta cabina dejara fuera\nFormulaAlignmentField.jsx en el #215. DOS HUERFANOS EN DOS DIAS: el mecanismo ya se pago solo.\n\nSe commitea a peticion expresa del operador, que se muda de maquina y necesita que no quede nada\nfuera. El contenido es del hilo AIW y esta cabina no lo juzga.\n\nNOTA DE HIGIENE: el commit anterior de este fichero se perdio porque el comando murio por tiempo\ny dejo un .git/HEAD.lock en este repo. La cabina pidio permiso de borrado, lo borro y lo declara:\nun HEAD.lock vivo bloquea en silencio los commits de CUALQUIER hilo que escriba aqui.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeoKuJbN5GNtrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b5b9208",
+      "full_sha": "b5b9208c5b41788e0c62e33f3fab80010dfb92af",
+      "date": "2026-09-25T21:17:08+00:00",
+      "parents": "c18de68",
+      "subject": "context(cantu-studio): el relevo del hilo, reescrito para una MUDANZA DE COMPUTADORA",
+      "body": "Sustituye al relevo del 2026-09-16/18. Un solo fichero.\n\nAbre con lo que hay que saber del otro lado: QA/temp NO viaja entero -- entran sus 29 documentos\n.md y las 5 hojas del operador, se quedan 1 045 ficheros y 39 MB de andamio reproducible-, dist/\nesta en .gitignore asi que el HTML de Moodle reemitido no viaja (y no hace falta, ya esta pegado\nen el curso), y _scratch y _backups estan fuera de todo repo.\n\nLleva el estado medido -221 runs, completed=214, y la lista de lo abierto-, y deja SOLO UNA COSA\npendiente del operador: la QA del #215, que son tres desplegables, con la trampa declarada de que\nhay DOS bloques llamados «Procedimiento matematico», uno por carril.\n\nY guarda lo que estos ocho runs ensenaron, que vale mas que los arreglos: que el arreglo era\nMEMORIA y no otra parada; que dos casos con el mismo mecanismo son un censo y no una pareja; que\nla parada de analisis desmintio la premisa de su propio encargo por segunda vez; que la red de\nno-regresion estaba CERTIFICANDO un defecto; que la huella de un hueco es un pliegue a mano; y\nque el operador revoco un contrato aprobado porque NADIE MIDIO SI LA OTRA FORMA YA ESTABA\nCONSTRUIDA.\n\nY los seis errores de la cabina con la guarda que salio de cada uno -- entre ellos el fichero\nhuerfano del #215, del que sale la guarda que ya corre en todos los commits: despues de preparar\nel indice, listar lo que queda sin versionar y no ignorado bajo los directorios tocados.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeoKuJbN5GNtrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c18de68",
+      "full_sha": "c18de681c680ebdc565f14417325c0500a380f20",
+      "date": "2026-09-25T21:10:09+00:00",
+      "parents": "473ff32",
+      "subject": "context(handoffs): nace el relevo del hilo `cantu-lessons`",
+      "body": "PRIMER relevo de este hilo. Habia cuatro handoffs —aiw, aiw-console,\ncantu-studio, cantu-quizzes-latex— y LECCIONES no tenia ninguno, en once dias,\ncinco rondas de variantes y ~25 reglas. Eso explica buena parte de lo que se\nperdio por el camino.\n\nTrae el estado medido el 2026-09-25: los cinco repos sin commits pendientes de\npublicar; el temario de Aritmetica cerrado en 25 lecciones con su guarda en\n25/0; la leccion viva en el esqueleto de 9 bloques; las cinco versiones de la\ncasilla 2 esperando QA; y las dos casillas de cierre bloqueadas por V13 hasta que\ncantu-studio abra el interior de la Tarjeta.\n\nY las cinco lecciones que mas caro costaron, por si el proximo hilo las repite:\nuna sonda que no ve lo que busca produce un VERDE —paso cinco veces—; un control\nnegativo prueba lo que MUTA y no lo que la guarda promete; no se redibuja lo que\nel motor ya tiene; un SVG con viewBox ESCALA su texto y getComputedStyle devuelve\nla unidad declarada, asi que el banco de render no podia verlo; y lo aprobado no\nse queda en _scratch, que vive fuera de todos los repos y no viaja con push.\n\nFICHEROS QUE ESTA CABINA ESCRIBIO EN ESTE REPO, por nombre completo y son uno:\n\n  context/handoffs/cantu-lessons.md\n\nNada mas de aiw-console se toca. El `context/aiw/records/` sin versionar que hay\nen el arbol es de otro carril y se deja como esta.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01BHnBLsVs32Sqxjop1DMzBo",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "473ff32",
+      "full_sha": "473ff32547f7df73e8905e74b60abb94eab02acc",
+      "date": "2026-09-21T03:50:53+00:00",
+      "parents": "d6c9a69",
+      "subject": "context(cantu-studio): el veredicto del #214 revoca la forma (a) del ADR-006, y la medicion le da la razon por escrito",
+      "body": "Un solo fichero, escrito por el hilo cantu-studio. Guarda el veredicto VERBATIM y, con el,\nel primer caso de esta tanda en que el operador REVOCA UNA DECISION DE CONTRATO YA APROBADA:\nel ADR-006 se aprobo en la forma (a) -regla siempre activa, sin campo y sin rotulo- y el\noperador, al VERLO, pide Slide revertido y los DOS MODOS en Web, seleccionables en el editor.\n\nY lo que aparecio midiendo despues lo confirma: SLIDE YA TENIA ESO DESDE ANTES.\nfocusAlignment ('centered' | 'left', por bloque) esta en el esquema (draftSchema.js:4366) y\nsu control esta montado en SlideStackEditor.jsx:981 con rotulo «Alineacion de las formulas» y\nopciones «Centradas (por defecto)» y «A la izquierda, balanceadas» -- y su comentario guarda\nla peticion que lo creo, del propio operador: «por DEFAULT CENTRADO y con la opcion de\nalinearlo a la izquierda (como esta ahorita)». La forma (b) ya estaba construida y aprobada en\nun carril, y el #214 la desactivo al implementar la (a).\n\nLa leccion queda escrita: antes de elegir entre dos formas, preguntar si una de las dos YA\nESTA EN DISCO Y APROBADA. Nadie lo midio cuando se decidio el ADR.\n\nY deja a la vista un error de la cabina: el Scope del ticket del #214 nombro tres ficheros\ncuando el ADR marcaba cuatro superficies. El veredicto lo vuelve irrelevante -si Slide se\nrevierte no hay nada que extender-, pero la regla se mantiene: el Scope se DERIVA del\ncontrato, no se teclea de memoria.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeoKuJbN5GNtrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d6c9a69",
+      "full_sha": "d6c9a69e5159434453c291ce346bbd8e43b58f96",
+      "date": "2026-09-19T07:29:35+00:00",
+      "parents": "1395363",
+      "subject": "context(cantu-studio): la parada de analisis del #211 desmintio su premisa, y el operador eligio (a)",
+      "body": "El ancla no se pierde dentro de la formula sino ENTRE PASOS: 32 saltos de nivel superior en\n918 campos, todos en fixtures y cero en produccion, y en dos de los tres procedimientos\nreales ninguna formula es multilinea y la dispersion es de 201,4 y 102,9 px. El #170 ya lo\nhabia arreglado asi para Slide.\n\nGuarda tambien los dos errores de la cabina en este run: las coordenadas de renderRule\nrepublicadas sin medir, y el ticket emitido SIN ABRIR EL RUN -- que cazo la guarda de estado\ndel guion de cierre, no la disciplina.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeoKuJbN5GNtrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1395363",
+      "full_sha": "139536340a764298a1108500f4212bd14a9a10d3",
+      "date": "2026-09-19T06:00:47+00:00",
+      "parents": "02ac00f",
+      "subject": "context(cantu-studio): el pass del #209 va a disco, con el texto de la parada que el operador vio",
+      "body": "Un solo fichero, escrito por el hilo cantu-studio:\n  context/cantu-studio/records/VEREDICTO-209-PASS-Y-LA-PARADA-VISTA.md\n\nGuarda el veredicto verbatim (\"pass todo\") y, lo que vale mas, EL TEXTO EXACTO DE LA PARADA\nque el operador pego desde su pantalla: es el mensaje que el #207 embarco y que aquel run\ncerro declarando que ningun ojo humano lo habia visto. Queda unido a este record para quien\nlea el cierre del #207 despues.\n\nRegistra tambien la leccion del run -el arreglo era MEMORIA y no otra parada; cuando la\nsolucion parece pedir un guardia nuevo, conviene preguntarse si lo que falta es un dato-,\nla hoja de QA inejecutable de la ronda 1 y como se corrigio midiendo los doce caminos, el\naviso que el taller retiro por haberlo medido en un banco y no en pantalla, y tres\ncomponentes mas sin importadores.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeoKuJbN5GNtrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "02ac00f",
+      "full_sha": "02ac00fd1f326c8ad3a3230c02ae33fdce307f1d",
+      "date": "2026-09-18T20:47:33+00:00",
+      "parents": "5074f4e",
+      "subject": "context(cantu-studio): el pass de pantalla del #208 va a disco, con el agujero que casi se cuela",
+      "body": "Un solo fichero, escrito por el hilo cantu-studio:\n  context/cantu-studio/records/VEREDICTO-208-PASS-DE-PANTALLA.md\n\nGuarda el veredicto verbatim (\"pass\"), los cinco pasos que ejecuto y por que la parte A\nde la hoja no se pidio.\n\nY guarda lo que el run enseno, que vale mas que el pass: el boton nuevo era el primer\nllamador capaz de pedir un renombrado SIN ruta de origen -alcanzable tras recuperar un\nborrador-, y por ese camino una comprobacion RECHAZADA (400 por no ser slug) se leia como\n\"el destino esta libre\" y la otra leccion se sobrescribia entera y en silencio. La regla\nque lo cierra: una comprobacion que no pudo hacerse no es un \"no existe\". Los dos\nsabotajes contestaron cual de los dos arreglos cierra: sin la parada la victima se\ndestruye; sin la forma, renombrar es imposible.\n\nTres correcciones registradas, la primera de la cabina: \"espacio o acento\" era compresion\nfalsa -isSafeSlug es /^[a-z0-9_]+$/, asi que cualquier MAYUSCULA fallaba y el caso era el\nnormal, no el raro-; el sexto eslabon que anadio el taller; y su propia honestidad sobre\nuna prueba que salio verde por la puerta equivocada.\n\nHallazgo de metodo para todos los hilos: git stash NO es byte-seguro en este repo -con\ntext=auto dos de tres ficheros volvieron con LF en vez de CRLF-, y lo caza la\nverificacion por hash, no el diff.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeoKuJbN5GNtrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "5074f4e",
+      "full_sha": "5074f4e1a648d00f88dc830caa68cdae5bf169d9",
+      "date": "2026-09-18T11:30:12+00:00",
+      "parents": "f3d60d8",
+      "subject": "context(cantu-studio): el veredicto del operador sobre el #208 va a disco -- \"B\", y M2.1 se queda",
+      "body": "Un solo fichero, escrito por el hilo cantu-studio:\n  context/cantu-studio/records/DECISION-2026-09-18-208-OPCION-B-M2-1-SE-QUEDA.md\n\nGuarda el veredicto VERBATIM (\"B\"), las cuatro opciones entre las que se dio, y el\nlinaje medido que obligo a preguntar: LessonContextBar no se quedo sin cablear, lo\nretiro el propio operador en 5a3026fd con \"M2.1 separar archivo y metadata\", y el hunk\nesta verificado contra disco.\n\nDeja declarado, para que no se relitigue, que con B la parada 409 del #207 es un seguro\nde servidor y no un flujo de pantalla: el cliente rechaza el choque antes, asi que su QA\nde pantalla se queda sin ejecutar de forma permanente y por diseno.\n\nY registra tres errores de medicion del turno, dos de la cabina: el separador del\nbreadcrumb, que el ticket escribio con el caracter de flecha cuando en TopBar.jsx es una\nbarra, una sonda de historial que busco en\nla ruta de HOY sobre un commit de MAYO y devolvio vacio, y un grep -l que dio por montado\nun componente cuya unica mencion es un comentario.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeoKuJbN5GNtrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f3d60d8",
+      "full_sha": "f3d60d82eb668bd6d315404c5c3fb0c0ae780c44",
+      "date": "2026-09-18T10:32:54+00:00",
+      "parents": "cc79fd6",
+      "subject": "context(cantu-studio): #207, la QA de pantalla no se puede ejecutar y por que",
+      "body": "Record nuevo, un solo fichero. El operador no encontraba el campo del titulo\nporque no existe en su pantalla: LessonContextBar dibuja ese campo y NO LO MONTA\nNADIE en todo editor-ui. La unica via de renombrado es Explorar y ya tiene su\npropia comprobacion, asi que el choque de #207 no se puede provocar desde la\ninterfaz. Decision del operador: cerrar #207 declarando la superficie sin mirar\ny abrir un run que ponga el campo y tape el agujero de la leccion recien creada.\nIncluye un error de la cabina: nombro dos veces un control que no existe.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeokujbn5gntrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "cc79fd6",
+      "full_sha": "cc79fd6f55332bbf7c7807c30b6305a82761d150",
+      "date": "2026-09-18T04:19:03+00:00",
+      "parents": "f47b6f0",
+      "subject": "context(cantu-studio): relevo y prompt de arranque de la sesion del 16 al 18",
+      "body": "Dos ficheros, los dos del hilo cantu-studio.\n\n- El relevo se reescribe entero. Abre con lo que mas cambia la forma de trabajar:\n  LA CABINA TIENE SHELL, medido, y corrio sola toda la sesion; el relevo anterior\n  daba eso por caido. Estado del canonico al cerrar: 211 runs, 206 completed,\n  #207 encargado esta noche y #210 esperando al operador. Y los cuatro defectos\n  que encontro #205, con cual esta resuelto, cual encargado, cual es deuda y cual\n  esta bloqueado esperando respuesta.\n- El prompt de arranque gana tres trampas nuevas: (I) el shell funciona, el\n  borrado caduca al reconectar y git deja HEAD.lock y temporales que hay que\n  barrer; (J) una sonda que no desacota miente igual que una que no mide -la\n  cabina estuvo a un paso de publicar un rojo falso-; y (K) el criterio de la QA\n  lo pone el operador y se prueba sobre su leccion real. Se sustituye ademas el\n  \"donde quedamos\", que seguia hablando de #176 y de cifras del 2026-09-01.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeokujbn5gntrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f47b6f0",
+      "full_sha": "f47b6f0135c27f476e443a0dff208505767091f8",
+      "date": "2026-09-18T04:11:33+00:00",
+      "parents": "ea105f1",
+      "subject": "context(cantu-studio): #206 ronda 2, pass del operador sobre su leccion",
+      "body": "Record nuevo, un solo fichero: el pass verbatim, la comparacion selector a\nselector antes/despues de las cuatro lecciones, las cero reglas de pagina, y un\nerror de sonda de la cabina declarado -casi publica un rojo falso-.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeokujbn5gntrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "ea105f1",
+      "full_sha": "ea105f12d25f1f4e0377304892e1453f6483e791",
+      "date": "2026-09-18T02:15:56+00:00",
+      "parents": "d0a7ada",
+      "subject": "context(cantu-studio): #206 ronda 1, pass sobre la leccion real del operador",
+      "body": "Record nuevo, un solo fichero: el operador corrigio el criterio de la QA -que\nla salida de Moodle no pierda formatos respecto a Web sobre contenido real-, la\ncabina construyo su leccion Operar con signos a los dos formatos y la comparo\nregla a regla, y el pass quedo dado. Incluye el hueco que la comparacion\ndestapo: las reglas globales de atoms.css no viajan al artefacto de Moodle.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeokujbn5gntrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d0a7ada",
+      "full_sha": "d0a7ada6eef02a4573a86b27897dfe5073cf3fd5",
+      "date": "2026-09-18T00:31:13+00:00",
+      "parents": "5686f1c",
+      "subject": "context(cantu-studio): #205 cerrado por el operador, la salida de Moodle se vuelve autosuficiente",
+      "body": "Se anade al veredicto la medicion del operador -el fichero ya falla abierto en\nlocal, sin Moodle- y su decision A: las variables --n-* viajan dentro del\nartefacto de Moodle. La tipografia queda fuera por acuerdo. Un solo fichero.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeokujbn5gntrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "5686f1c",
+      "full_sha": "5686f1c823f9140c62bd562facacbe72ea90da02",
+      "date": "2026-09-17T23:32:41+00:00",
+      "parents": "e32bdb7",
+      "subject": "context(cantu-studio): #205, la QA de Moodle ejecutada y sus cuatro causas",
+      "body": "Record nuevo, un solo fichero: el veredicto verbatim del operador, la pagina\nservida por su Moodle medida, y la CORRECCION de la cabina -la causa de las\nformulas no era la macro def-hl sino el # del color hexadecimal-.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeokujbn5gntrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e32bdb7",
+      "full_sha": "e32bdb7304adcb2a7cf4f6d092af8c8e1960dc30",
+      "date": "2026-09-17T09:00:09+00:00",
+      "parents": "d721a09",
+      "subject": "context(cantu-studio): #205, el flujo de produccion real es el editor sobre cantu-lessons",
+      "body": "Record nuevo, un solo fichero: las palabras del operador verbatim sobre como\nproduce una leccion, y lo que la cabina midio en cantu-lessons (solo lectura).\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeokujbn5gntrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d721a09",
+      "full_sha": "d721a093872cce728be7e138a45c1204a4949961",
+      "date": "2026-09-17T08:44:37+00:00",
+      "parents": "b20bb73",
+      "subject": "context(cantu-studio): #204, las dos decisiones tras el pass",
+      "body": "Se anade al veredicto la respuesta verbatim: ampliacion ratificada, dist/ no\nse reconstruye. Un solo fichero.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeokujbn5gntrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b20bb73",
+      "full_sha": "b20bb7332d8a45b61fbe14f894b3c45dfd150945",
+      "date": "2026-09-17T08:41:20+00:00",
+      "parents": "23ba917",
+      "subject": "context(cantu-studio): veredicto de #204 ronda 2, pass global",
+      "body": "Record nuevo, un solo fichero, con el veredicto verbatim, sin detalle por paso,\ny las dos decisiones que el pass no contesta.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeokujbn5gntrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "23ba917",
+      "full_sha": "23ba917116ebd4eb361f2079fca3cb14f13fce71",
+      "date": "2026-09-16T23:26:44+00:00",
+      "parents": "458721e",
+      "subject": "context(cantu-studio): #204 D3 cerrada, las clases de la previa pasan a cs-studio-*",
+      "body": "Se anade al record de las siete decisiones la respuesta del operador a la\nsubpregunta de D3 (\"A\"). Un solo fichero.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeokujbn5gntrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "458721e",
+      "full_sha": "458721e628fd6d1d5613ca53dc7470d8fa6e5239",
+      "date": "2026-09-16T23:12:37+00:00",
+      "parents": "8bf626c",
+      "subject": "context(cantu-studio): las siete decisiones de #204, y la frase falsa del prefijo",
+      "body": "Record nuevo, un solo fichero. El operador acepto en bloque las siete\nrecomendaciones de la cabina sobre el informe de la ronda 1 de #204; D3 deja\nuna subpregunta sin decidir. Incluye la correccion publica de \"j- es prefijo\nde jame-\", que la cabina escribio en la enmienda del run sin medirla.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01EJ1XGeokujbn5gntrneu4v",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8bf626c",
+      "full_sha": "8bf626cedcd767d7f1919fc59056490cb183ed45",
+      "date": "2026-09-16T14:02:22-06:00",
+      "parents": "d4d794a",
+      "subject": "context(cantu-studio): el relevo del 2026-09-16, y tres guardas nuevas del arranque",
+      "body": "handoffs/cantu-studio.md\nPROMPT-DE-REINICIO.md\n\nEL RELEVO SUSTITUYE AL DEL 2026-09-01 y abre con lo que de verdad pasó: OCHO CIFRAS\nCAYERON, y el patron CAMBIO. El relevo anterior cerro con dos guardas sobre COPIAR\ncifras ajenas; esta sesion demuestra que aquello era solo una cara, porque LAS CUATRO\nPEORES NO ERAN COPIAS DE DOCUMENTOS VIEJOS:\n\n  · una medicion PROPIA Y FRESCA hecha con el modo equivocado de la herramienta --\n    `grep -c` cuenta LINEAS y la cabina lo rotulo «occurrences»--;\n  · una cifra relevada de un informe RECIEN ESCRITO, sin comprobar, puesta delante del\n    operador MIENTRAS DECIDIA -- un recorte que nunca existio--;\n  · tres opciones ofrecidas al operador con TRES MECANISMOS DE LA CABINA dentro, y su\n    eleccion tomada por una medicion cuando el mecanismo real era un cuarto;\n  · y un alcance de commit declarado DE MEMORIA cuando se podia CONTAR: decia dos\n    escrituras y traia cuatro runs.\n\nTRES GUARDAS NUEVAS EN EL PROMPT DE ARRANQUE, y las tres pagadas con trabajo perdido:\n\n(F) UN TICKET NO VIAJA EN EL MISMO MENSAJE QUE EL SCRIPT QUE CREA SU RUN. Paso DOS\nveces y las dos costo un encargo entero. El operador pega lo mas pegable y el ticket\nsiempre lo es. Las dos veces la guarda de titulo del ticket convirtio el error en una\nparada barata: por eso esa clausula es ESTRUCTURAL y no higiene.\n\n(G) EL ALCANCE DE UN COMMIT SE CUENTA CONTRA HEAD, NO SE RECUERDA. Todo script de\ncommit del canonico deriva el delta con `git show HEAD:<ruta>` y LO ESCRIBE EN EL\nMENSAJE. Un alcance que se puede contar no se declara de memoria.\n\n(H) CUANDO EL OPERADOR ES EL INSTRUMENTO, PREGUNTALE QUE VE, NO CUAL DE TUS\nEXPLICACIONES LE ENCAJA. La cabina no ve interfaces, asi que para los hechos de pantalla\nel operador es la UNICA sonda -- y una sonda a la que le das tres hipotesis te devuelve\nuna de las tres. UN «SI» DEL OPERADOR A UNA OPCION QUE LA CABINA REDACTO NO ES UNA\nMEDICION: ES UN ACUERDO SOBRE UN RELATO, y se marca como tal.\n\nY LA FALTA QUE NO ES DE CIFRAS Y ES LA MAS INCOMODA, tambien en el relevo: la cabina\nANUNCIO UNA DECISION DE DISEÑO POR ESCRITO Y CODIFICO LA CONTRARIA media hora despues.\nLa guarda la cazo. Contra eso no vale medir mejor: vale que la guarda exista.\n\nEL RELEVO LLEVA ADEMAS: el estado del canonico medido hoy; que la cabina NO TIENE SHELL\ndesde el 8 de septiembre y como eso define la forma de trabajo; lo que dejaron #196 a\n#203; el motor de encaje que nadie habia nombrado y la regla que salio de el; las cuatro\ndecisiones del operador con su record; la cola con la parada declarada que espera dentro\ndel run de Core; y siete deudas nombradas CON UBICACION.\n\nY cierra con lo mejor de la sesion, que no es de la cabina: los CINCO talleres\ncontradijeron su propio encargo en un punto que lo sostenia y las cinco veces el disco\nles dio la razon. Uno RETIRO UNA OPCION ANTES DE OFRECERLA porque destruia informacion\nen silencio. Otro DECLARO QUE SU PROPIA PIEZA PRINCIPAL NO HACE NADA sobre el corpus de\nhoy, pudiendo callarlo sin que nadie lo notara.\n\nFicheros:\n  context/handoffs/cantu-studio.md\n  context/cantu-studio/PROMPT-DE-REINICIO.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d4d794a",
+      "full_sha": "d4d794a5c41a5a7fc71407553e933526e864b730",
+      "date": "2026-09-15T16:06:18-06:00",
+      "parents": "4305d85",
+      "subject": "context(cantu-studio): el prefijo es cs- y el arnes de calibracion entra",
+      "body": "DECISION-2026-09-15-EL-PREFIJO-ES-CS-Y-EL-ARNES-ENTRA.md\n\n⚠ LAS DOS DECISIONES SE TOMARON DENTRO DE LA SESION DEL TALLER, NO POR LA CABINA. El\nrecord esta TRANSCRITO de lo que el taller reporto, no de las palabras literales del\noperador, que la cabina no vio, y lo dice en su cabecera. Si el las escribio de otro\nmodo, manda su version.\n\nPOR QUE EXISTE: el contrato paro al taller dos veces y las dos paradas eran correctas.\nREFERENCE-NAMING-DISPOSITION-AND-EXCLUSION.md clasifica estos identificadores como\nRUNTIME/lockstep -entradas 19 y 20- y dice CON QUE se mueven, pero NO A QUE NOMBRE;\nsu §7: «It decides nothing... It renames nothing and authorizes no rename». UN\nCONTRATO QUE CONGELA LA DISPOSICION Y NO EL DESTINO ESTA BIEN ESCRITO, NO INCOMPLETO:\nsepara «que se mueve junto» de «como se llama», y la segunda es una decision de\nproducto. Pero entonces elegir el nombre no es ejecucion, y una decision que solo vive\nen el chat de una sesion de taller esta perdida.\n\nDECISION 1 - EL PREFIJO ES cs-. Ocho identificadores: siete clases y un atributo.\n\nY LA OPCION QUE EL TALLER DESCARTO ANTES DE PREGUNTAR, que es la parte que ensena:\n«quitar el prefijo a secas» NO era neutra y lo parecia. data-active-layout SIN prefijo\nYA EXISTE Y ESTA VIVO, y es un atributo DISTINTO del que se renombraba. Quitar el\nprefijo habria FUSIONADO DOS ATRIBUTOS EN UNO, en silencio, sin que ninguna prueba lo\nnotara. Un ejecutor que retira una opcion que destruye informacion en vez de ofrecerla\ncomo una mas esta haciendo exactamente su trabajo.\n\nDECISION 2 - LOS DOS FICHEROS DEL ARNES ENTRAN, y el argumento que decidio es el del\nPROPOSITO y no el del riesgo. Medido: el .html es autocontenido y el .js solo lleva\nesos nombres dentro de CADENAS DE CSS EMITIDO -nunca querySelector ni classList-, asi\nque renombrar no cambia lo que el arnes HACE, cambia el texto que IMPRIME. Su cabecera\ndice que REFLEJA los selectores de produccion: dejarlo fuera no lo rompia, LO\nCONVERTIA EN UN ESPEJO QUE YA NO REFLEJA, emitiendo CSS copiable con selectores que no\ncasan con nada. Un arnes que miente es peor que uno que no esta, porque sigue\npareciendo utilizable.\n\nLO QUE NO ENTRO Y ESTA BIEN: los 35 --jame-* de ese mismo .html son la entrada 22 del\ncontrato, aislada. Que dos cosas vivan en el mismo fichero no las hace el mismo\ncambio.\n\nLO QUE QUEDA NOMBRADO: jame-inline-formula-field, una OCTAVA clase que el contrato no\nlista y sin matcher CSS en ningun sitio. Fuera de este run con la razon correcta, pero\nEL RUN DEL j- DE CORE LA VA A ARRASTRAR SIN QUE NADIE LO DECIDA, porque j- ES PREFIJO\nDE jame-. Se resuelve antes o dentro de ese run, y va escrito en su texto.\n\nY UNA CIFRA DE LA CABINA QUE EL TALLER TUMBO: publico «85 apariciones» y eran 85\nLINEAS. grep -c cuenta lineas y la cabina lo rotulo «occurrences». No fue heredada:\nfue una medicion PROPIA Y FRESCA con el modo equivocado de la herramienta, publicada\ncon la etiqueta de otra cosa. La regla ya estaba escrita para otras herramientas y\nahora tambien para esta: antes de publicar el resultado de una sonda, comprobar QUE\nUNIDAD DEVUELVE, no solo si devuelve un numero.\n\nFichero:\n  context/cantu-studio/records/DECISION-2026-09-15-EL-PREFIJO-ES-CS-Y-EL-ARNES-ENTRA.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4305d85",
+      "full_sha": "4305d85713a06db9595f9a1e1f16790b984f592c",
+      "date": "2026-09-15T14:47:14-06:00",
+      "parents": "8fcd846",
+      "subject": "#64 RUN-CONSOLE-SHARED-RENDERER-QUOTES-001: una cita dentro de una cita pasa a ser una CAJA DENTRO DE UNA CAJA, y con eso el run queda tecnicamente completo a falta del veredicto visual. Este trabajo lo dejo el taller en el arbol el 2026-09-08 a las 12:09, justo despues de emitirse su ticket, y lleva SIETE DIAS sin commitear: la cabina no volvio a mirar el arbol y el operador no lo reporto, asi que nadie lo supo hasta que se midio hoy por otro motivo. Se commitea ahora y se declara el retraso en vez de disimularlo. QUE HACE: renderQuoteBody camina las lineas de un bloque de cita igual que el bloque se consume fuera -- un tramo de lineas que vuelve a abrir con > se pela un nivel y se entrega a la misma funcion, asi que la profundidad no necesita techo y no lo tiene, y termina por construccion porque cada nivel come un marcador de cada linea. Lo que no es tramo anidado se une con <br> y pasa por inline() exactamente como ya hacia el agrupado, de modo que una cita sin anidamiento sale de aqui byte a byte lo que era. Las lineas en blanco se recortan en los bordes de CADA tramo y no solo del bloque entero, para que los huecos que enmarcan una cita anidada en el origen no se pinten como saltos sueltos alrededor de una etiqueta que ya es un bloque. Un tramo interior sin palabras no pinta caja. LA OTRA DECISION SE RESPETA: la lista dentro de una cita sigue literal a cualquier profundidad, y el propio codigo cita el record del operador. GUARDA CORRIDA POR LA CABINA, no transcrita: suite completa 841 tests, 841 pass, 0 fail, EXIT 0, con la salida a fichero y no canalizada; el fichero de citas pasa de 28 a 46 tests. +49 -3 en el renderizador y +235 -13 en los tests. El canonico no se toco: md5 b681760b antes y despues. EL RUN SIGUE ACTIVO: el veredicto visual del operador sobre las dos superficies es lo unico que falta y sin el no cierra",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-SHARED-RENDERER-QUOTES-001"
+    },
+    {
+      "branch": "main",
+      "sha": "8fcd846",
+      "full_sha": "8fcd8465ca31d5e0940e7f3fbeb7caed96aa6ac1",
+      "date": "2026-09-15T13:28:28-06:00",
+      "parents": "a44d888",
+      "subject": "context(cantu-studio): el veredicto del desborde y los dos hallazgos de #200",
+      "body": "VEREDICTO-200-EL-DESBORDE-SE-QUEDA-VISIBLE-Y-LA-UNION-PLANA-NO-ATRIBUYE.md\n\nEL VEREDICTO DEL OPERADOR, en sus palabras: «A - HOY, sin regla de desborde». El\ntaller dibujo cuatro opciones sobre la misma tabla en una celda, con una celda vecina\nal lado, SIN TOCAR EL MOTOR: las cuatro se pintan desde un guion desechable y borrarlo\nno deja nada. Esa propiedad es la que hizo la pregunta barata.\n\nEL PRINCIPIO QUE LA SOSTIENE, y sobrevive al caso concreto: TODO ESTE CARRIL EXISTE\nPARA QUE EL FALLO NO SEA SILENCIOSO. #198 midio que la construccion NO PUEDE TRONAR --0\nde 40 etapas lanzan, ni con 5000 div anidados-- y que lo que si pasa es peor: reporta\nexito y la pagina sale rota sin que nadie se entere.\n\n  B (recortar) habria reintroducido ese modo de fallo DENTRO de la celda y por la\n  puerta de delante: truncar en silencio es producir una pagina que parece correcta.\n\n  C (scroll dentro) lo convierte en un fallo que SOLO EL AUTOR puede descubrir, y esa\n  es la parte que no es obvia: UNA DIAPOSITIVA PROYECTADA NO SE PUEDE ROLAR. Lo que\n  quede debajo del corte no existe para quien la mira. Una red que no esta ahi cuando\n  hace falta.\n\nY LO QUE LA ELECCION AHORRA CUENTA COMO RESULTADO: cero cambios de motor. Confirma lo\nque el run ya emitia, asi que no se escribe regla nueva, no se mueve un pixel del\ncorpus, y no hay nada que revertir. Una decision que no cuesta codigo es la mas barata\nde revocar.\n\nHALLAZGO 1 - LA UNION PLANA DE WEB NO ATRIBUYE, y esa era la causa real del «Invalid\ninput». LA HIPOTESIS DE LA CABINA ERA FALSA y el ticket la dejo sin diagnosticar a\nproposito. No faltaba un mensaje: WebBlockSchema es una z.union PLANA y cuando ningun\nmiembro encaja zod reporta a NIVEL DE UNION, sin ruta. El arreglo hace que el miembro\nENCAJE ESTRUCTURALMENTE -claves .optional() a nivel de tipo- para que su propio refine\npueda hablar con la ruta correcta. Queda deuda con nombre: el arreglo es LOCAL AL\nBLOQUE, no a la clase -- seis tipos de Web siguen dando `Invalid input` pelado--, y el\ncarril de diapositiva no tiene el problema porque usa z.discriminatedUnion.\n\nHALLAZGO 2 - UNA SONDA QUE SE LEE AL REVES. medir-costura-y-censo.mjs imprime\nPRESENCIA pero rotula EN NEGATIVO, asi que sus tres respuestas correctas se leen como\ntres defectos. Paro a la cabina un turno entero. La regla que sale: el rotulo de una\nsonda se redacta en la MISMA POLARIDAD que su medicion. Un verde falso no se cuestiona\ny un rojo falso cuesta un turno; los dos vienen del mismo descuido.\n\nY SE DECLARA QUE EL RUN NO DEJO INFORME. Lo que dejo, y es lo que permitio cerrar\nigual: siete sondas RE-EJECUTABLES, que la cabina volvio a correr para reconstituir el\npacket MIDIENDO en vez de recordando. Las autocorrecciones que el taller narro van\nmarcadas como TRANSCRIPCION DE SU REGISTRO, no como medicion de la cabina -- una\nmedicion propia y lo que otro dijo no tienen el mismo rango, y confundirlas es\nexactamente como la cabina promovio una deduccion marcada a hallazgo en el #195.\n\nFichero:\n  context/cantu-studio/records/VEREDICTO-200-EL-DESBORDE-SE-QUEDA-VISIBLE-Y-LA-UNION-PLANA-NO-ATRIBUYE.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "a44d888",
+      "full_sha": "a44d888c8abb958569c0b1d1dc3f939ab1520cca",
+      "date": "2026-09-15T10:06:48-06:00",
+      "parents": "8537553",
+      "subject": "context(cantu-studio): las dos decisiones que el #199 dejo abiertas",
+      "body": "DECISION-2026-09-15-EL-SCRIPT-SIGUE-FUERA-Y-EL-IFRAME-ENTRA-NOMBRADO.md\n\nEl taller del #199 MIDIO las dos y NO DECIDIO ninguna, que es lo correcto: nombro y\nparo. Este record existe porque si la respuesta del operador se queda en el chat,\ndentro de tres meses el false de una constante y la ausencia de un sandbox= son\nindistinguibles de un descuido -- que es EXACTAMENTE el argumento con el que nacio\neste bloque.\n\nSCRIPT SIGUE FUERA. DECLARED_HTML_ALLOWS_SCRIPT = false, un renglon. La asimetria que\ndecide no es «seguridad» en abstracto: negarse es reversible y admitir no. Lo que\nhabria que retirar dentro de tres meses no es la constante, son los script YA\nESCRITOS dentro de lecciones guardadas, que al retirar la puerta dejan de validar y\nrompen borradores del operador. Y ningun prototipo de maquetacion necesita script, asi\nque la puerta cerrada no bloquea el flujo que la justifico.\n\nY ESTO RATIFICA LA LECTURA DEL TALLER en vez de suponerla: rechazar script y admitir\ndiv onclick seria un rechazo que no rechaza nada, asi que la mitad de ejecucion entra\nENTERA. El taller la declaro diciendo que el operador no la pidio con esas palabras.\nAl mantener el rechazo, la mantiene.\n\nIFRAME ENTRA, NOMBRADO COMO DEUDA. La asimetria con renderVideo es real y se declara:\naquel emite iframes con sandbox= y referrerpolicy= acotados y este bloque no anade\nninguno. Entra igual porque sandbox sin allow-scripts mata justo los embeds\ninteractivos que la valvula existe para permitir, y afinarlo permiso a permiso es una\ndecision de producto que nadie ha tomado -- seria inventar un numero, que es el error\nque el propio #199 se nego a cometer con el tope .max(N).\n\nLO QUE HACE COHERENTES LAS DOS: iframe no ejecuta nada en el origen de la leccion --lo\nde dentro corre en el origen del tercero-- y script si. La frontera es el ORIGEN, no\n«etiquetas peligrosas». Las dos se vuelven a mirar juntas CON MOODLE MEDIDO.\n\nEl record lleva la tabla de por donde se revoca cada una y lo que cuesta, y las tres\nausencias escritas CON SU RAZON -- que es la leccion del #197: una ausencia sin razon\nescrita y un olvido son indistinguibles.\n\nFichero:\n  context/cantu-studio/records/DECISION-2026-09-15-EL-SCRIPT-SIGUE-FUERA-Y-EL-IFRAME-ENTRA-NOMBRADO.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8537553",
+      "full_sha": "8537553a11c34bee8fc7b62bb63ee3183dbfa0ff",
+      "date": "2026-09-15T07:33:47-06:00",
+      "parents": "c69ecbf",
+      "subject": "context(cantu-studio): la valvula de escape con su conversacion de diseno, y dos guardas nuevas en el arranque",
+      "body": "DECISION-2026-09-15-LA-VALVULA-DE-ESCAPE-SE-MIDE-ANTES-DE-CONSTRUIRSE.md\nPROMPT-DE-REINICIO.md\n\nEL RECORD DE LA VALVULA gana la parada de analisis del 2026-09-15, que es la\nconversacion que lo convirtio de idea en encargo con requisitos. Lleva dentro:\n\n- Como lo imagina el operador, en sus palabras: un componente que sea un campo\n  donde pegar HTML libremente, insertado por JSON.\n- El argumento fuerte, que no es «flexibilidad»: lo que hace peligrosa la prosa no\n  es el HTML, es que NADIE PUEDE DISTINGUIR si un br lo quiso el autor o nadie lo\n  impidio. Un bloque declarado invierte exactamente eso. Y de ahi sale lo que no es\n  obvio: CERRAR LA PROSA HACE LA VALVULA MAS NECESARIA, NO MENOS.\n- Su reencuadre del riesgo, que es mejor que el de la cabina: migrar no es grave\n  -- el recrea y borra-- y lo grave es QUE TRUENE LA LECCION.\n- Y el requisito que sale de ahi, con su mecanismo medido: el motor CONCATENA, NO\n  PARSEA, asi que un div sin cerrar se traga el resto sin lanzar nada. La respuesta\n  es validar LA FORMA Y NO EL CONTENIDO -- balanceadas, nada que cierre lo que no\n  abrio, nada que se escape de su contenedor-- comprobado al guardar y sin limitar\n  el diseno en absoluto.\n\nEL PROMPT DE ARRANQUE gana dos guardas, las dos pagadas con trabajo perdido:\n\n(D) LA QA NO SE CONDUCE SOBRE EL BORRADOR DEL OPERADOR. El 5173 es su ranura y el\neditor abre con su trabajo cargado. Paso TRES VECES en dos runs -- #196 sobrescribio\nla Descripcion de un item y la dejo vacia, y dejo tres diapositivas que no pudo\nborrar. La regla: el taller crea su propio borrador con el nombre del run, y si el\neditor abre con algo suyo NO ESCRIBE hasta hacer el propio. Desde que se escribio,\nfunciono tres veces seguidas.\n\n(E) LAS CIFRAS DE LAS REFERENCIAS DE ESTE REPO CADUCAN, Y LA CABINA LAS COPIA. Van\nCINCO afirmaciones medidas que resultaron falsas al remedirlas, TRES copiadas por la\ncabina a un ticket sin volver a medir. La regla: una cifra que va a un ticket se\nREMIDE CONTRA EL CODIGO aunque venga de una referencia del propio repo con banner de\n«last verified» -- el banner fecha la revision, no la verdad. Y cuando un ticket pida\nuna guarda, PEDIR EL MECANISMO Y NO LA ENUMERACION: «ninguno pasa trust» sobrevive al\nquinto emisor; «los dos ensambladores» ya era falso al escribirse.\n\nFicheros:\n  context/cantu-studio/records/DECISION-2026-09-15-LA-VALVULA-DE-ESCAPE-SE-MIDE-ANTES-DE-CONSTRUIRSE.md\n  context/cantu-studio/PROMPT-DE-REINICIO.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c69ecbf",
+      "full_sha": "c69ecbf5b7d655f3f5aa8c711111c7eee927e743",
+      "date": "2026-09-14T21:02:34-06:00",
+      "parents": "b937370",
+      "subject": "context(cantu-studio): dos decisiones del operador y la guarda del indice",
+      "body": "DECISION-2026-09-14-QA-TEMP-SE-TRIA-NO-SE-MUEVE.md\nDECISION-2026-09-15-LA-VALVULA-DE-ESCAPE-SE-MIDE-ANTES-DE-CONSTRUIRSE.md\nPROMPT-DE-REINICIO.md\n\nQA/temp SE TRIA, NO SE MUEVE. El operador noto 2115 ficheros sin seguimiento y\npropuso llevarlos a _scratch. Su incomodidad era correcta y su solucion no:\nQA/temp no esta en el .gitignore -- por eso se ven todos-- pero lo citan MAS DE\nCUARENTA documentos, entre ellos la referencia de disposicion de nombres, los\ndossiers de reescritura y decenas de paquetes de QA. Moverlo romperia esas citas\nde golpe, que es el defecto que esta sesion paso cuatro runs barriendo. Y\ngitignorarlo es peor disfrazado: las citas apuntarian a ficheros que solo existen\nen su maquina.\n\nLo que falla no es donde estan, es que nadie decidio QUE SON, y esa pregunta tiene\nrespuesta derivable: lo que un documento cita es evidencia y la politica de\nretencion la manda retener byte-stable; lo que nadie cita es trabajo intermedio y\nsale del repo. Citado o no citado. El run se encola cuando cierre el activo,\nporque su taller escribe ahi. Y una tercera cifra que la cabina sospecha y NO\nmidio: cuantos de los 2115 son artefactos derivados y regenerables. Declarada como\nsospecha, no como medicion.\n\nLA VALVULA DE ESCAPE SE MIDE ANTES DE CONSTRUIRSE. El operador quiere insertar\nHTML o disenos propios a mitad de leccion, y luego decidir si merecen componente.\nLa idea es correcta -- convierte esa pregunta de adivinanza en medicion, que es el\nprincipio del piloto-- y el momento de construirla no, porque YA EXISTE MEDIA\nVALVULA Y ESTA ROTA: el motor pinta case 'html', el selector no la ofrece,\nSlideItemSchema no tiene el miembro y compileSlideItem lanza. Esa ambiguedad ya\nprodujo una frase falsa en un documento de referencia.\n\nDOS CORRECCIONES DE LA CABINA DENTRO DE ESE MISMO RECORD, las dos suyas. Estiro\n«Recurso visual» diciendo que cubriria la mitad: acepta SVG, y un prototipo de\ntabla no es un grafico. Y planteo mal el criterio (a) -- medir que necesita que no\nexista es incontestable POR CONSTRUCCION, porque no lo sabe hasta que se lo topa.\nLo medible es el MURO, no la demanda: hoy, si el componente no lo hace, la leccion\nSE PARA. Con 886 lecciones por delante eso es el cuello de botella, no una\ncomodidad. El run corregido mide si existe hoy algun campo que deje pasar\ncontenido de autor sin escapar, y anade la tercera salida que el operador nombro y\nque hoy no llega a evaluarse nunca: ajustar un componente existente en vez de\ncrear otro.\n\nY el entregable del run no es la valvula: es su REGISTRO CON NOMBRE OBLIGATORIO.\nPrototipar, evaluar y promover solo funciona si se puede AGRUPAR; sin etiqueta,\ncuarenta inserciones no distinguen nueve intentos de la misma idea de nueve ideas\ndistintas.\n\nPROMPT-DE-REINICIO gana la guarda del indice: write-tree fotografia el indice\nENTERO, no lo que acabas de anadir, asi que el add dirigido no protege del trabajo\najeno que YA ESTABA staged. Entre el add y el commit-tree, git diff --cached\n--name-only HEAD tiene que devolver exactamente los ficheros nombrados. Este\ncommit la corre sobre si mismo.\n\nFicheros:\n  context/cantu-studio/records/DECISION-2026-09-14-QA-TEMP-SE-TRIA-NO-SE-MUEVE.md\n  context/cantu-studio/records/DECISION-2026-09-15-LA-VALVULA-DE-ESCAPE-SE-MIDE-ANTES-DE-CONSTRUIRSE.md\n  context/cantu-studio/PROMPT-DE-REINICIO.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b937370",
+      "full_sha": "b93737043b94926d6fdfd43a5a172bbf25a804f3",
+      "date": "2026-09-14T05:02:57-06:00",
+      "parents": "c18ff26",
+      "subject": "context(cantu-studio): dos decisiones del operador del 2026-09-14, y dos errores de la cabina",
+      "body": "DECISION-2026-09-14-LOS-DIECISIETE-PAQUETES-CUENTAN-Y-UN-ERROR-DE-LA-CABINA.md\nDECISION-2026-09-14-LA-LISTA-PLANA-ENTRA-EN-DIAPOSITIVA.md\n\nLos dos nacen de preguntas del hilo de LECCIONES, y los dos traen un error de la\ncabina cazado antes o despues de publicarlo.\n\nDECISION 1: los diecisiete paquetes cuentan. La regla de\ncantu-lessons/docs/AIW_AUTHORING_CONTRACTS.md:20 -- AIW no usa componentes no\ndocumentados en docs/components/*.md -- se satisface con los paquetes de\ncantu-studio/docs/components/web/, que son diecisiete y estan verificados por\nGlob directo. El hilo de lecciones pasa de un componente disponible a diecisiete.\nQueda un fleco declarado: la equivalencia no esta escrita en la norma que lleva\nla regla, y un acuerdo que no esta en la norma es el que la siguiente sesion no\nencuentra.\n\nY con ella un error de la cabina, que es su patron dominante con una variante\nnueva. Publico como defecto vivo, con triangulo de aviso, que el desplegable de\nvariantes del editor miente en tres de nueve. Era falso y al reves: VARIANT_OPTIONS\nno rotula la paleta, rotula la tabla VARIANTS del motor de diapositiva\n(src/builders/slides/helpers/commons.js:71-81), y contra esa tabla las etiquetas\nson exactas. El defecto que creyo descubrir existio y YA ESTABA ARREGLADO en el\ncarril Web, con la razon escrita en WebBlockEditor.jsx:12-15.\n\nEl mecanismo: el subagente entrego el cruce MARCADO como deduccion propia y sin\nverificar en pantalla. La cabina le quito la marca, le puso un aviso y lo publico\ncomo hallazgo, y encima construyo una pregunta al operador encima. No midio con la\nherramienta equivocada: ASCENDIO DE RANGO UNA MEDICION AJENA ETIQUETADA COMO\nPROVISIONAL. La guarda: una deduccion marcada por quien la hizo no cambia de rango\nal citarla; o la verifica la cabina, o se publica con su marca puesta.\n\nDECISION 2: la lista plana entra en diapositiva. El hilo de lecciones noto que\nlist -la lista de vinetas de Web- no existe en Slide. Es cierto, medido en cuatro\nsuperficies, y iconList no lo sustituye porque exige badge y title con min(1).\nHoy las vinetas planas en una diapositiva solo se alcanzan por la celda de HTML\ncrudo. Es la misma forma que el hallazgo de \\lt y \\gt: no hay manera de escribir\nuna cosa basica en ningun sitio del sistema.\n\nAqui la cabina estuvo A UN GREP de publicar que era un hueco que nadie nombro.\nEsta escrito, en REFERENCE-SLIDE-WEB-COMPONENT-MAPPING.md:347, con veredicto No\ndestination y su razon. Tercera vez en la semana que el instinto de nadie lo\nescribio habria sido falso, y las tres veces lo evito barrer antes de publicar.\n\nEl run se abre igual, porque el veredicto contesta otra pregunta: a que componente\nde Slide CORRESPONDE list, no si un autor puede escribir vinetas en una\ndiapositiva. Un veredicto de mapeo no es un veredicto de autoria. Y enmendar esa\nentrada con su razon es parte del entregable del run: contradecir un documento en\nsilencio es lo que hace que la siguiente sesion deje de fiarse de el.\n\nEl texto completo del run queda redactado dentro del record, pendiente de\ninsertar. El shell de la cabina no llega al disco desde el 2026-09-08 y no se\npuede escribir el canonico.\n\nFicheros:\n  context/cantu-studio/records/DECISION-2026-09-14-LOS-DIECISIETE-PAQUETES-CUENTAN-Y-UN-ERROR-DE-LA-CABINA.md\n  context/cantu-studio/records/DECISION-2026-09-14-LA-LISTA-PLANA-ENTRA-EN-DIAPOSITIVA.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c18ff26",
+      "full_sha": "c18ff26482f20a5a8225249427a661992b3ff0e1",
+      "date": "2026-09-12T19:23:15-06:00",
+      "parents": "410b817",
+      "subject": "Relevo CQL: la hipótesis del montaje se probó y es falsa",
+      "body": "Sesión de Redacción (tanda 2), abierta con la carpeta ya conectada antes del primer mensaje: ese era exactamente el experimento que pedía el §10.2. device_bash falla igual («no Plan9 drive shares mounted»). El momento de conceder la carpeta NO es la causa.\n\n- §10.2 pasa de hipótesis abierta a DESMENTIDA, con la salida verbatim.\n- §7.5 corrige el conteo de respaldos consumidos: son DIEZ, no doce (Azul 1-4, Verde 1-3, Violeta 1-3). Con doce, su propio total de quince no cuadraba.\n- Nota en la cabecera.\n\nMedido contra disco el 2026-09-12 a las 19:08 CST. Sigue el modo CONECTADO DEGRADADO: sin shell, sin borrado, y GitHub Desktop como vía principal para commitear.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01JUyF9kpzRUtACSGXCtzbE1",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "410b817",
+      "full_sha": "410b817edc70e923d882ace4bc9f3129b7978fb7",
+      "date": "2026-09-12T19:02:53-06:00",
+      "parents": "891dee8",
+      "subject": "Relevo CQL: la cabina SI commitea sin montaje, y se corrigen dos falsedades del propio relevo",
+      "body": "Anade el §10 con lo medido al abrir la sesion de Redaccion, y corrige dos\nafirmaciones que el propio relevo daba por ciertas.\n\n1. \"La cabina NO puede ejecutar git\" era falso. No podia ejecutarlo POR EL\n   SHELL, que es otra cosa: device_bash no arranca (falla `echo hi`, no\n   `git commit`). Las herramientas de uso del equipo si llegan a Windows.\n   Medido: los terminales solo se conceden en modo \"clic\" -no se puede\n   teclear- y GitHub Desktop se concede en control completo. Con el se\n   commitea Y SE PUBLICA, asi que cae tambien la regla de que el push es\n   del operador: su razon era que la cabina no tiene ruta a GitHub, y\n   desde la maquina del operador si la hay.\n\n2. El encabezado llevaba mal su propia fecha: daba la hora UTC etiquetada\n   como CST, con el dia corrido. Se corrige a 2026-09-12 18:18 CST, que es\n   el mtime del fichero.\n\nEl §10 recoge ademas las dos trampas medidas de GitHub Desktop (llega con\ntodos los ficheros marcados; y la lista se mueve sola si hay una\ncompilacion corriendo, con los nuevos entrando marcados), la hipotesis\nabierta de por que no monta, el recetario de plumbing para cuando el\nmontaje vuelva, y lo que cambia en el andamio de Redaccion.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01BMB7xMNL3cihtnGxYC5UnQ",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "891dee8",
+      "full_sha": "891dee898945e18e11a05ad12d6e0ffa03bf5a16",
+      "date": "2026-09-12T18:47:28-06:00",
+      "parents": "c9af95e",
+      "subject": "Relevo de cantu-quizzes-latex: cierra Lectura y abre Redaccion",
+      "body": "Sustituye al relevo del 2026-08-06, que llevaba cinco semanas sin tocarse.\n\nDeja la seccion 1, Lectura, del Examen Simulador PAA (Aprende Libre)\nterminada en las cuatro variantes. Su §3 recoge el metodo completo, que es\nlo que mas cuesta redescubrir: la numeracion de lineas se mide en cada\npasaje, los dos comportamientos del pasaje doble, TikZ en vez de tabular,\ny las trampas de \\underline y del %. Su §4 inventaria las 35 preguntas de\nlas 180 que traen alguna incidencia del original, que se deciden en la\nfase 2 y no antes.\n\nDeclara el modo CONECTADO DEGRADADO: device_bash no monta el workspace\ndesde la actualizacion de Windows del 8 de septiembre.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01BMB7xMNL3cihtnGxYC5UnQ",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c9af95e",
+      "full_sha": "c9af95efb33a9ff96c26c42484a4af3698d82ec5",
+      "date": "2026-09-09T01:08:10-06:00",
+      "parents": "20d75fb",
+      "subject": "context(cantu-studio): veredicto de #192 y dos guardas nuevas en el prompt de arranque",
+      "body": "VEREDICTO-192-EL-CANDADO-ERA-UNA-ASIMETRIA-QUE-YA-ESTABA-EN-UN-TEST.md\nPROMPT-DE-REINICIO.md\n\nEl hallazgo del run vale mas que su entregable. La guarda que escribio el taller\nde #190 ya excluia _historical_run_record con esta razon en su propio codigo,\nlineas 39-40, verificada verbatim: en estos cuatro la ruta muerta ES el dato, no\nun puntero que alguien vaya a seguir; reescribirla destruiria la medicion. Eso\nes el principio de procedencia, dentro de una prueba automatizada, DOS RUNS\nANTES de que la politica lo dijera. Los tests ya trataban la historia como\nhistoria mientras la politica seguia exigiendo reescribirla, y esa asimetria era\nla forma tecnica del candado. Estuvo a la vista todo el tiempo.\n\nEl prompt de arranque gana dos guardas, las dos por defectos de la cabina que\ndestapo el taller:\n\n(A) El blob de HEAD esta en LF y el arbol de trabajo en CRLF: no se comparan\ncrudos. La cabina cayo TRES VECES EN TRES RUNS SEGUIDOS -- 4229 lineas cambiadas\ncuando eran 257 en #190, y PREFIJO DIFIERE sobre un ledger que era append puro\nen #192. Escribio un record entero sobre esta trampa el 7 de septiembre y volvio\na caer el 9. Un record que hay que releer no es una guarda; un prompt de arranque\nsi. Se anade el delator: si el conteo es el doble exacto de las lineas del\nfichero, es esta trampa, porque un fichero no cambia entero.\n\n(B) Un puntero entre repos sin su repo es un puntero roto. El taller de un run de\ncantu-studio SOLO VE cantu-studio. La cabina cito dentro del texto de un run un\nrecord que vive en aiw-console sin decirlo; el taller lo busco donde podia mirar,\nno lo encontro, y reporto que no existia. Tenia razon para donde miro. La regla\nnueva: todo fichero citado en un ticket o en un full_description va con su repo\ndelante, o transcrito dentro.\n\nFicheros:\n  context/cantu-studio/records/VEREDICTO-192-EL-CANDADO-ERA-UNA-ASIMETRIA-QUE-YA-ESTABA-EN-UN-TEST.md\n  context/cantu-studio/PROMPT-DE-REINICIO.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "20d75fb",
+      "full_sha": "20d75fb3bd5bc43503de4447d305ae626e83c670",
+      "date": "2026-09-08T11:54:07-06:00",
+      "parents": "3ed3adc",
+      "subject": "#64: registra la decision del operador sobre citas anidadas y listas dentro de cita, y corrige hacia adelante una decision que se tomo sin entenderse. El ticket del #64 declaraba una parada: si aparecian citas anidadas o una cita con una lista dentro, preguntar antes de inventarles regla. El taller midio bien -- una cita anidada, once listas en ocho ficheros -- paro como debia y pregunto. La respuesta que recibio NO fue una decision: el operador respondio lo que se le recomendo para que el taller pudiera seguir, y el 2026-09-08 lo dijo con sus palabras, 'no entendi realmente la pregunta'. El taller registro 'texto literal en ambas' como veredicto suyo y lo clavo con tests, y la cabina lo transcribio al mensaje del commit 7af9fcf actuando sobre el relato del taller sin tener las palabras del operador -- lo declaro entonces y queda escrito aqui. La leccion no es del renderizador: una parada que se resuelve con una pregunta que el operador no puede contestar no es una parada respetada, es una parada gastada, y la pregunta llegaba en el vocabulario del taller y no en lo que el ve en pantalla. Reformulada con los casos reales de sus propios records y un dibujo de cada opcion, decidio en un turno. LAS DOS DECISIONES: la cita dentro de cita pasa a pintarse ANIDADA DE VERDAD, caja dentro de caja, porque ese unico caso de hoy es el patron con el que se guarda todo veredicto suyo y un > colgando delante de su voz es ruido; se descarto fundirla porque borraria la distincion entre lo que dijo el y lo que escribio la cabina. La lista dentro de cita SE QUEDA literal, porque el guion significa lo que parece y porque parsearla reabriria la interaccion entre el agrupado de citas y el corte de listas, que es la parada que el taller midio como no disparada y dejo clavada con goldens. El alcance del run no se amplia: el ticket ya mandaba decidir esto. El veredicto visual de QA sigue pendiente y el run no cierra sin el",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "3ed3adc",
+      "full_sha": "3ed3adc9d2f444d9d1a10b846fa6ba2ba3232c52",
+      "date": "2026-09-08T11:04:36-06:00",
+      "parents": "91e7f14",
+      "subject": "context(cantu-studio): registra la decision del operador que desbloquea la migracion documental",
+      "body": "DECISION-191-LA-CITA-EN-EVIDENCIA-CONGELADA-ES-PROCEDENCIA-NO-NAVEGACION.md\n\nGuarda verbatim los dos veredictos del turno: cerrar #191 sin leer los cinco\ncambios de prosa, y acotar la precondicion 4 de la politica de retencion a citas\nde prosa viva.\n\nEl candado que la decision resuelve estaba escrito en la propia politica: la\nprecondicion 4 exige que el run que mueve ficheros reescriba toda cita\nload-bearing del lote, y la clase de retencion de evidencia declara que la\nevidencia congelada no se reescribe nunca. Cuando las citas del lote viven en\nevidencia congelada, la precondicion 4 exige exactamente lo que la politica\nprohibe: no es un requisito dificil, es un requisito incumplible por\nconstruccion.\n\nSe midio dos veces por separado, y eso es lo que hace fiable la conclusion. El\ntaller de #191 lo dedujo sobre el lote de 7, donde 12 de sus citas caen en\nficheros congelados. El operador ya lo habia escrito en su firma del 2026-08-02\npara el caso mayor de las 462 citas: ruled out by the retention policy's freeze\non evidence, not merely deferred. El taller no lo copio; no habia leido esa\nlinea cuando lo dedujo.\n\nY el argumento que decide es el que #191 acababa de aplicar a otro fichero dos\nhoras antes: una cita dentro de evidencia congelada registra donde estaba algo,\nno donde encontrarlo. Es procedencia. Exigir que se reescriba antes de mover es\nexigir que se falsifique el registro historico.\n\nEl record deja tambien contado, y no descubierto, que este es el TERCER cierre\nseguido sin ojo humano sobre documentacion, y que esta vez cuatro de los cinco\ncambios son afirmaciones de gobernanza y no punteros: la afirmacion de vigencia\nque lee todo agente que abre el repo, y el peldano 4 de la escalera de autoridad\nque decide que fuente gana cuando dos se contradicen. Derivable no es lo mismo\nque leido.\n\nFicheros:\n  context/cantu-studio/records/DECISION-191-LA-CITA-EN-EVIDENCIA-CONGELADA-ES-PROCEDENCIA-NO-NAVEGACION.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "91e7f14",
+      "full_sha": "91e7f14f85c4560f1edc64b9b7b0f12b13a77b27",
+      "date": "2026-09-07T21:06:06-06:00",
+      "parents": "d8f914d",
+      "subject": "context(cantu-studio): corrige hacia adelante una cifra falsa del cierre de #190",
+      "body": "La cabina publico en el parte de #190 y en el commit ea745bf9 de cantu-studio:\ncheckInvariants 0 errores sin externalRunIds, que es la lectura mas estricta.\n\nLas dos mitades son falsas.\n\nLa sonda paso un array donde checkInvariants espera un Set. La rama que consulta\nesa coleccion hace .has(), asi que con un array habria lanzado -- y no lanzo,\nporque con el canonico de entonces nunca llego a esa rama. El 0 errores no era\nel resultado de la comprobacion: era el resultado de no haberla alcanzado. Se\ndestapo sola al abrir #191, cuando el mismo comando si llego y revento con\nexternalRunIds.has is not a function.\n\nY sin externalRunIds no es mas estricto, es incorrecto. Con el Set real del\nservidor son 159 ids y salen 0 errores. Con el Set vacio sale 1, y ese uno es\nuna arista legitima hacia un run que vive en otro proyecto. Vaciar la coleccion\nno endurece la prueba: fabrica un colgante donde no lo hay.\n\nEs la misma forma de fallar dos veces en un solo cierre, la quinta de la\nconstitucion. La primera fabrico un rojo, LF contra CRLF. La segunda fabrico un\nverde, que es la peligrosa, y encima lo vistio de rigor llamandolo la lectura\nmas estricta. La constitucion avisa de los verdes; no avisaba de que la cabina\nlos adorne.\n\nEl commit ea745bf9 queda con la frase dentro. No se reescribe historia.\n\nFicheros:\n  context/cantu-studio/records/CIERRE-190-LA-GUARDA-DEJA-DE-SER-UNA-LISTA-Y-PASA-A-SER-DOS-REGLAS.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d8f914d",
+      "full_sha": "d8f914d6773d4c4c5df83b373839c045a12982c0",
+      "date": "2026-09-07T20:37:10-06:00",
+      "parents": "6363b66",
+      "subject": "context(cantu-studio): registra el cierre de #190 y un error de sonda de la cabina",
+      "body": "CIERRE-190-LA-GUARDA-DEJA-DE-SER-UNA-LISTA-Y-PASA-A-SER-DOS-REGLAS.md\n\nDeja escrito lo que el closeout_result no cabe a decir con detalle: el censo y\npor que la cifra grande (3734 referencias que no resuelven) no era el trabajo\nsino el hallazgo, porque casi todo es archivo y un record no se repunta, se lee\ncon su fecha puesta.\n\nY registra un error de la cabina cazado y corregido en el sitio, con una\nvariante que merecia quedar escrita: la sonda comparo el blob de HEAD, que este\nrepo guarda normalizado a LF, contra el arbol de trabajo, que es CRLF. Dio 4229\nlineas cambiadas frente a 257 y marco DIFIEREN en doce de trece ficheros. Es la\nquinta forma de fallar de la constitucion -- medir con la herramienta\nequivocada -- pero al reves de como la constitucion la describe: produjo un\nROJO, no un verde. La herramienta equivocada tambien fabrica alarmas, y una\nalarma falsa sobre el trabajo del taller cuesta lo mismo que un verde falso.\n\nEl delator estuvo a la vista: AGENTS.md daba 1340 lineas cambiadas y el fichero\ntiene 670. Exactamente el doble. Un fichero no cambia entero.\n\nFicheros:\n  context/cantu-studio/records/CIERRE-190-LA-GUARDA-DEJA-DE-SER-UNA-LISTA-Y-PASA-A-SER-DOS-REGLAS.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6363b66",
+      "full_sha": "6363b66a8cb41451028e4ff4c6bbc866aad585a9",
+      "date": "2026-09-05T22:12:16-06:00",
+      "parents": "fb246b3",
+      "subject": "context(cantu-studio): la categoria de Docs se deriva del indice y el mapa paralelo se retira",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fb246b3",
+      "full_sha": "fb246b302787de98a48ef778521382a0c2670352",
+      "date": "2026-09-05T20:50:45-06:00",
+      "parents": "1cc4105",
+      "subject": "context(cantu-studio): el Blueprint no aparece categorizado en su propia vista de Docs",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1cc4105",
+      "full_sha": "1cc4105382bdc2904d9eeb353940cbc90089fa49",
+      "date": "2026-09-05T19:01:30-06:00",
+      "parents": "2efd1d2",
+      "subject": "context(cantu-studio): veredicto de #186, el primero con detalle por paso",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2efd1d2",
+      "full_sha": "2efd1d25af34df3ee5e974e39a979340e652a09b",
+      "date": "2026-09-05T16:53:27-06:00",
+      "parents": "8accbb5",
+      "subject": "context(cantu-studio): veredicto de #184 y el teclado que no coincide con el sanitizador",
+      "body": "",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8accbb5",
+      "full_sha": "8accbb5d867195bc2b2a3aab8d7c27f44c243fec",
+      "date": "2026-09-05T01:07:01-06:00",
+      "parents": "793f662",
+      "subject": "context(cantu-studio): hoy no se puede escribir «menor que», y se arregla antes de cerrar la puerta",
+      "body": "Decision del operador, verbatim: «vamos con tu recomendacion». Opcion A, ampliar\nla allowlist con los alias que faltan, y meter preMath en el alcance del run de\nparidad cuando se reanude.\n\nEl record guarda el hallazgo, que vale mas que el run que lo destapo: una\ndesigualdad estricta no se puede escribir HOY en ninguna formula del sistema. El\ncaracter crudo lo veta la seguridad y sus dos escapes LaTeX no estan admitidos.\nNo hay tercera via, y afecta a la puerta de EDICION.\n\nGuarda tambien por que A y no B -convertir contenido no cierra el problema,\nporque la pieza de la tabla no tiene salida sin ampliar-, el fleco que A deja\ndeclarado, y las DOS cifras de la cabina que el taller corrigio: la cobertura de\nla allowlist estaba sobreestimada, y los campos de formula son doce y no once.\n\nY deja escrito por que hay tres runs en active a la vez, para que no se lea como\ndescuido: uno lo trabaja un taller, otro espera su precondicion con la medicion\nhecha, y el tercero es la revision manual del operador.\n\nFichero escrito en este commit, por nombre completo:\n  context/cantu-studio/records/DECISION-184-NO-SE-PUEDE-ESCRIBIR-MENOR-QUE.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "793f662",
+      "full_sha": "793f6624e4c6267d4730124243f1027d8bf41495",
+      "date": "2026-09-04T17:25:31-06:00",
+      "parents": "3953e3c",
+      "subject": "context(cantu-studio): veredicto de #183, el color admitido y las formulas ya se editan",
+      "body": "Veredicto del operador: «pass», QA de pantalla ejecutada con el paso 0 de cerrar\ny reabrir el lanzador. Global, sin detalle por paso.\n\nEl record deja escrito que el material de la QA no se tecleo: la cabina derivo el\nbloque de la fabrica del repo y lo valido dos veces antes de entregarlo, contra\nel esquema del borrador y contra el validador que corre al editar, con control\nnegativo.\n\nY deja los TRES fallos de medicion de la cabina en este run, cazados antes de\npublicar. El primero vuelve sobre el mismo patron: un sed roto devolvio el md5 de\nla cadena vacia y la cabina concluyo «identico» comparando nada con nada. Tercera\nvez en la sesion.\n\nFichero escrito en este commit, por nombre completo:\n  context/cantu-studio/records/VEREDICTO-183-EL-COLOR-ADMITIDO-Y-LAS-FORMULAS-YA-SE-EDITAN.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "3953e3c",
+      "full_sha": "3953e3cef2ca5ed1badec0059169bfeaa3e9490d",
+      "date": "2026-09-02T22:55:39-06:00",
+      "parents": "7af9fcf",
+      "subject": "context(cantu-studio): el color de formula es \\textcolor, y la cabina lo genero mal",
+      "body": "LO ENCONTRO EL OPERADOR, NO LA CABINA. Reporto que no podia editar las formulas\nde los procedimientos que la cabina le genero en JSON: el editor las lee y las\ndibuja bien, pero al tocar cualquier cosa salta «el comando \\color no esta en la\nlista de comandos permitidos». Y que reescribiendolas a mano si funcionaban.\n\nMEDIDO en tools/studio/editor-ui/src/features/math-authoring/constants.js: la\nallowlist del editor tiene 230 comandos verificados uno a uno contra KaTeX\n0.16.9.  ESTA.  NO ESTA, ni colorbox ni fcolorbox.\n\nEL ERROR ES DE LA CABINA, NO DEL EDITOR. Genero contenido con \\color cuando el\ncontrato es \\textcolor{#RRGGBB}{...}.\n\nY explica las tres cosas que al operador le parecian contradictorias: se\nrenderiza porque KaTeX si soporta \\color y la allowlist es deliberadamente mas\nestrecha; falla al editar porque es entonces cuando corre el sanitizador; y\nparece arreglarse al reescribirla porque la UI emite \\textcolor, no \\color.\n\nALCANCE MEDIDO: 27 apariciones en 5 ficheros de src/content, DOS DE ELLOS\nLECCIONES PUBLICADAS. Cero ficheros del corpus usan \\textcolor: todo el color\nmatematico del corpus usa el comando que el editor rechaza. De las 27, 9 son\nliterales {\\color{#HEX}{...}} y 18 son plantillas JS {\\color{#HEX}} en\nsandbox/test_math_walkthrough.js. Las dos formas son convertibles.\n\nNO ES UN DEFECTO DE «procedimiento matematico», que es donde el operador lo vio.\nEs del contenido, y aparecera en cualquier componente que lleve una de esas 27.\n\nSe escribe en el prompt de arranque para que ninguna cabina vuelva a generarlo\nasi. Es el mismo mecanismo que la falsedad del CertUtil: un error de la cabina\nque se repite porque no estaba escrito en ningun sitio que ella lea al abrir.\n\nFichero escrito en este commit, por nombre completo:\n  context/cantu-studio/PROMPT-DE-REINICIO.md",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7af9fcf",
+      "full_sha": "7af9fcf2609aebf36d4d27e307f9c25209c8ab79",
+      "date": "2026-09-02T20:46:22-06:00",
+      "parents": "b2fdd8a",
+      "subject": "#64 RUN-CONSOLE-SHARED-RENDERER-QUOTES-001: una cita es un BLOQUE, no una linea -- el renderizador compartido agrupa las lineas de cita consecutivas en un solo blockquote. La rama de project-console.js:2726 emitia una caja por linea de origen, asi que una cita de N lineas pintaba N cajas, un > solo pintaba una caja vacia y una negrita que cruzaba dos lineas nunca cerraba dentro de su caja y sacaba los ** literales. El arreglo consume el run hacia delante igual que ya hace la rama de tablas, de modo que las demas reglas de bloque terminan exactamente como antes; une las lineas con <br>, lo que conserva la estructura de la cita y deja que inline() vea el bloque entero, que es lo que hace cerrar la negrita; descarta lineas de cita vacias al principio y al final; y una cita sin una sola palabra ya no pinta caja. +24 -1 en una sola rama. Tests nuevos en tests/docs-markdown-quotes.test.mjs, 486 lineas y 28 tests, escritos PRIMERO y corridos contra el fichero sin arreglar: 13 rojos y 7 verdes, y los 7 verdes eran justo las anclas de no regresion. Suite completa verificada por la cabina: 827 tests, 827 pass, 0 fail, EXIT 0, con la salida a fichero y no canalizada. DOS PARADAS DEL TICKET: la de listas y tablas NO se disparo, y la de citas anidadas >> y listas dentro de cita SI -- una cita anidada y once runs con lista en ocho ficheros -- y el operador decidio texto literal en ambas, sin regla nueva, clavado por test. LA CABINA SE EQUIVOCO EN UNA CIFRA Y EL TALLER LA CORRIGIO: el ticket decia que la cita mas larga eran 62 lineas en MEDICION-O4.md, y ese bloque empieza con una valla de codigo dentro de la cita, asi que el renderizador nunca lo trato como cita porque parte el texto por las vallas antes de mirar lineas. La mayor que de verdad se pinta son 42 lineas, en CONTENEDORES-SIN-RUNS-MANDA-EL-CODIGO.md, y queda clavada con su propio test. La sonda de la cabina no distinguia cita de bloque cercado. El run sigue ACTIVO: no cierra sin el veredicto visual del operador sobre las dos superficies",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-SHARED-RENDERER-QUOTES-001"
+    },
+    {
+      "branch": "main",
+      "sha": "b2fdd8a",
+      "full_sha": "b2fdd8aec64ec5eba63d6bee7c3ca1ebcb2e837b",
+      "date": "2026-09-02T20:01:13-06:00",
+      "parents": "c78b53d",
+      "subject": "abre el #64 RUN-CONSOLE-SHARED-RENDERER-QUOTES-001: crea el run del renderizador compartido de citas en O4.P17 y lo pone activo. El renderizador convierte CADA linea que empieza por > en su propio blockquote (project-console/assets/project-console.js:2726), y por eso una cita de N lineas se pinta como N cajas, un > solo da una caja vacia y una negrita que cruza dos lineas nunca cierra dentro de su caja. Medido hoy: 227 ficheros .md de este mismo repo llevan al menos una cita multilinea, la mayor de 62 lineas en context/aiw-console/records/MEDICION-O4.md, y CERO tests asertan el HTML que produce una cita -- las tres apariciones de blockquote en tests/doc-side-reader.test.mjs son una lista de tags permitidos y dos reglas de CSS de medida. Es codigo COMPARTIDO: lo alcanzan la pestana de Docs por renderDocBodyContent en project-console.js:2797 y el lector modal por scope.renderDocBodyContent en doc-side-reader.js:123, asi que el arreglo toca dos superficies con QA propia. Fue la condicion de parada que el #63 declaro y respeto en vez de cruzar. Insert anclado en el #63, que le dio a la vez la fase O4.P17 y la posicion 64; desplaza siete runs de 64-70 a 65-71 y el total pasa de 70 a 71; ninguna arista se rompe porque depends_on viaja por run_id. checkInvariants con el motor de este repo: 0 errores, history=71, un solo activo. .project re-emitido por serve.mjs, siete artefactos. context/aiw/records queda fuera del add porque es del hilo aiw",
+      "body": "",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-SHARED-RENDERER-QUOTES-001"
+    },
     {
       "branch": "main",
       "sha": "c78b53d",

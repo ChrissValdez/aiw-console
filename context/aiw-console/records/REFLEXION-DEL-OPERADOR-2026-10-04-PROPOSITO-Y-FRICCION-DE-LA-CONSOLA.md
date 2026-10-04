@@ -311,3 +311,33 @@ pero es importante mencionarlo y eficientarlo
     así y `cantu-lessons` es así. Ningún ítem depende de otro.
 17. **El contenido se trabaja en PARALELO y no está en el radar de AIW**, pero es importante
     nombrarlo y hacerlo eficiente.
+
+---
+
+## Octava intervención, mismo día — actualizar la clasificación y la consola
+
+La cabina había propuesto tres preguntas para clasificar un run —de qué CLASE es el trabajo
+(funcionalidad · documentación · investigación · diseño UX · contenido; no existe hoy), cómo se
+decide que ESTÁ BIEN (`SPECIFIED` · `JUDGED_ACCEPTS` · `JUDGED_DEFINES`; existe), y cómo se
+RELACIONA con los otros runs (cadena · misma superficie en serie · independiente en paralelo;
+existe sólo en parte, por lanes y lotes)— y escribir un borrador. Verbatim de su respuesta:
+
+```text
+respecto a esto:
+
+pregunta	valores	¿existe hoy?
+¿De qué clase es el trabajo?	funcionalidad · documentación · investigación · diseño UX · contenido	no
+¿Cómo se decide que está bien?	lo deciden los tests (SPECIFIED) · tú aceptas una vez (JUDGED_ACCEPTS) · tu juicio lo define en varias vueltas (JUDGED_DEFINES)	sí
+¿Cómo se relaciona con los otros runs?	cadena · misma superficie, en serie · independiente, en paralelo	sólo en parte (lanes y lotes)
+
+creo que es necesario actualizar la clase de trabajo y como se relaciona con otros runs
+actualizar esa infomracion y actualizar la consola para que tenga eso
+
+no crees?
+```
+
+### Lo que la cabina registra como decisión explícita
+
+18. **Se actualiza la clasificación de runs con dos ejes: la CLASE de trabajo y cómo se
+    RELACIONA con otros runs**, y **la consola se actualiza para mostrarlos**. Cómo y en qué
+    orden queda por decidir.

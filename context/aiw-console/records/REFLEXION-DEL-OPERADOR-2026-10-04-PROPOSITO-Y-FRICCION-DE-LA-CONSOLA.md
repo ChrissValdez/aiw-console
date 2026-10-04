@@ -411,3 +411,27 @@ pero incluso si no es asi siempre tenemos la opcion de en cabina mostrar resulta
 24. **El veredicto puede registrarse dentro del propio HTML del reporte**, si el HTML incluye
     las preguntas. Y si no, **siempre queda la opción de mostrar resultados en cabina.** Corrige
     a la cabina, que daba la cabina como única vía.
+
+---
+
+## Duodécima intervención, mismo día — aprueba y pide el plan
+
+La cabina había recomendado: (1) un contrato chico, con decisión numerada, sobre los reportes HTML
+de cada hilo —dónde vive el reporte, cómo lo enlaza la consola y cómo regresa el veredicto a disco
+(botón de copiar como base, descarga a la carpeta del proyecto cuando sea largo, cabina siempre
+como respaldo)—, con `cantu-lessons` como piloto y sin borrar todavía el formato de reporte de la
+consola; y (2) el buscador de títulos en Docs como tercer run chico, el primero de los tres.
+Verbatim de su respuesta:
+
+```text
+estoy deacuerdo con tus reocmendaiocnes
+
+como recomiendas actualizar el roadmap y desiciones en base a todo esto
+```
+
+### Lo que la cabina registra como decisión explícita
+
+25. **Aprobados:** el contrato chico de reportes HTML con `cantu-lessons` como piloto y el
+    veredicto de vuelta por copiar / descargar / cabina; el buscador de títulos como el primero
+    de los runs chicos.
+26. **Pide a la cabina la propuesta de cómo actualizar el roadmap y las decisiones.**

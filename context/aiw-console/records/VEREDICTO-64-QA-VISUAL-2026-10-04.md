@@ -67,3 +67,30 @@ líneas a la vista.
 ## Lo que queda para cerrar el `#64`
 
 Los pasos 1, 3 y 4, y el lado de la pestaña Docs del paso 2.
+
+---
+
+## Segunda pasada — el veredicto completo
+
+La cabina le entregó los cuatro pasos con detalle (dónde está cada documento en la lista, qué parte
+mirar y qué debe verse), con este formato de respuesta: `Paso 1: OK` … `Paso 4: OK`, o `FALLA —`
+y lo que vio. Para el paso 2 le indicó comparar «Estado del proyecto» (`PAA/ESTADO.md`, el mismo
+documento de su captura del modal) en la pestaña Docs de `cantu-quizzes-latex`. Verbatim de su
+respuesta:
+
+```text
+ok los pasos
+procedamos
+```
+
+### Cómo lo lee la cabina, y se declara porque es una lectura
+
+**Los cuatro pasos OK**, y la orden de seguir. No reportó ningún `FALLA`. Si quiso decir otra cosa,
+el cierre del `#64` se revierte con su palabra.
+
+### Lo que queda sin mirar, declarado
+
+- El paso 2 no se hizo sobre el documento que pedía la primera versión de la QA («Contrato —
+  Reporte de cambios de un run · v1») sino sobre «Estado del proyecto», que trae citas de varias
+  líneas en las dos superficies. Es la misma comparación.
+- Nadie tomó captura de la pestaña Docs: el juicio de esa superficie es su ojo, sin imagen a disco.

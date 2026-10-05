@@ -1,27 +1,57 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-04T21:50:16.566Z",
+  "generated_at": "2026-10-05T00:18:37.091Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-04T21:34:52.223Z"
+      "mtime": "2026-10-05T00:18:36.599Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-04T21:50:16.539Z"
+      "mtime": "2026-10-05T00:18:37.054Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "3f68fad161b51e9d4de534baafaa4931f539c4fb",
+  "head": "4b33850aa5623b861379a539860817ddfffbbe2e",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 458,
+  "commit_total": 461,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "4b33850",
+      "full_sha": "4b33850aa5623b861379a539860817ddfffbbe2e",
+      "date": "2026-10-05T00:18:36+00:00",
+      "parents": "27830f0",
+      "subject": "context(cantu-studio): el canal de vuelta contesta a Lecciones (45df184) y trae la cola escrita",
+      "body": "PETICIONES-DE-LECCIONES.md, segunda version: la Explicacion matematica basica\ndeja de ir primera (L01 ya no la usa); entra la Tabla de varias columnas\n(peticion 9, medicion de Lecciones confirmada); acuse de la nota junto a la\ntarjeta; las dos versiones de Lo que te llevas pasan al run, donde elige el\noperador; y la respuesta medida a su pregunta del Procedimiento matematico\n(peticion 10). Con la cola de cantu-studio tal como quedo en 385ff072.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "27830f0",
+      "full_sha": "27830f093f73d10340c8a938634bac37e31b2791",
+      "date": "2026-10-04T23:04:55+00:00",
+      "parents": "5210279",
+      "subject": "context(cantu-studio): la orientacion del 2026-10-04 y el canal de vuelta a Lecciones",
+      "body": "La decision del operador, verbatim («vamos con tus recomendaicnoes»): lo que\npide el hilo LECCIONES va primero, la migracion de las diez lecciones va\ndetras y empieza midiendo su alcance, y se abre el canal de vuelta.\n\nPETICIONES-DE-LECCIONES.md es ese canal: cada peticion de cantu-lessons a\nCantu Studio con su estado, mantenido por este hilo y leido por el otro.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "5210279",
+      "full_sha": "5210279eba2e36929f447d737d731533a8a67ef2",
+      "date": "2026-10-04T21:51:53+00:00",
+      "parents": "3f68fad",
+      "subject": "roadmap + decisiones: D-074, D-075 y D-076, y siete runs nuevos de la consola insertados detras del #64 (71 -> 78)",
+      "body": "Aprobado por el operador el 2026-10-04 (\"si a ambos\"), al cabo de una revision general del roadmap\nde la consola guardada verbatim en context/aiw-console/records/REFLEXION-DEL-OPERADOR-2026-10-04-\nPROPOSITO-Y-FRICCION-DE-LA-CONSOLA.md.\n\nDECISIONES: D-074, AIW resuelve trabajo SECUENCIAL (cadena y misma superficie), rinde en\nfuncionalidad y documentacion, rara vez en UX, el contenido va en paralelo, y se prueba en un\nproyecto de prueba dedicado, no en uno vivo. D-075, la consola muestra lo que ya existe y no pide\nque se fabrique nada para alimentarla; la capa de AIW va detras de un boton de configuracion y los\nproyectos abren en Roadmap. D-076, cada hilo hace su propio reporte en HTML y la consola solo lo\nencuentra y lo enlaza; el formato de reporte actual se congela, no se borra.\n\nRUNS NUEVOS, por la consola (serve.mjs, POST roadmap/edit, dry-run y apply con baseline, ocho\noperaciones): #65 Search document titles in Docs and in the reader's list; #66 Projects open on\nthe Roadmap tab; #67 Care budget and the unclassified note move behind a project configuration\nbutton; #68 Work class and run relation enter the classification -- the contract, en O4.P18 y con\nPARADA DE ANALISIS escrita dentro; #69 The console shows work class and run relation; #70 Each\nthread's HTML report: where it lives, how the console links it, how the verdict comes back -- the\ncontract; #71 A content batch reads as one unit. Los siete pendientes anteriores bajan siete\nposiciones sin otro cambio (65-71 -> 72-78).\n\nVERIFICADO por la cabina contra el respaldo byte a byte: 78 runs, densos 1..78, ids unicos, cero\naristas colgantes, los 71 runs previos identicos campo a campo salvo queue_order (+7 desde el 65),\nraiz y fases intactas; checkInvariants del motor de este repo (conoce barrier/lane/batch): 0\nerrores. completed 63 / planned 14 / active 1. El #64 sigue ACTIVO, sin tocar. .project/ re-emitido\npor serve.mjs (7 artefactos).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "3f68fad",

@@ -59,6 +59,8 @@ const PANEL_IDS = new Set([
   // [#63 QA·2] The section rail that used to sit under them is gone, and so is its id.
   // They are the reader's own chrome too, and everything outside this set stays forbidden.
   "doc-side-reader-index",
+  // [#65] The slot the console's title filter is painted into, above the list. Reader chrome too.
+  "doc-side-reader-filter",
   "doc-side-reader-docs",
   "doc-side-reader-scroll",
   "doc-side-reader-body"
@@ -99,7 +101,17 @@ function sharedDocRenderer() {
   if (typeof context.renderDocBodyContent !== "function") {
     throw new Error("the console script no longer declares renderDocBodyContent as a global");
   }
+  SHARED_CONSOLE_CONTEXT = context;
   return context.renderDocBodyContent;
+}
+
+// [#65] The same compiled console, kept so the title filter it declares can be handed to the
+// reader the way the page hands it over — as globals on `window` — where a test needs the page
+// as it really ships.
+let SHARED_CONSOLE_CONTEXT = null;
+const TITLE_FILTER_NAMES = ["docTitleMatchesFilter", "docTitleFilterIsActive", "docTitleFilterFieldHtml", "docTitleFilterStatusHtml", "docTitleFilterHandleEscape"];
+function sharedTitleFilterGlobals() {
+  return Object.fromEntries(TITLE_FILTER_NAMES.map((name) => [name, SHARED_CONSOLE_CONTEXT[name]]));
 }
 
 const SHARED_RENDERER = sharedDocRenderer();
@@ -524,7 +536,8 @@ test("criterion 3: the reader is READ ONLY — no write route, no write verb, no
   for (const verb of ["POST", "PUT", "PATCH", "DELETE", "method:", "__project-console", "FormData"]) {
     assert.ok(!source.includes(verb), `the reader must not contain ${verb}`);
   }
-  // And nothing that LOOKS like it could write, either in the code or on screen.
+  // And nothing that LOOKS like it could write, either in the code or on screen. [#65] Not even
+  // the one field the panel now shows: its markup is the console's title filter, not this file's.
   for (const affordance of ["<input", "<textarea", "<form", "contenteditable", "designMode", "execCommand"]) {
     assert.ok(!source.toLowerCase().includes(affordance.toLowerCase()), `no editing affordance: ${affordance}`);
   }
@@ -543,12 +556,34 @@ test("criterion 3: the reader is READ ONLY — no write route, no write verb, no
   });
 });
 
+test("[#65] criterion 3, amended: the panel's ONE field is the title filter, and it writes nothing", async () => {
+  // #62 pinned «no field» on this panel. #65 puts exactly one there, on purpose: the operator asked
+  // to find documents by title in this list. What the pin protected — that nothing in the reader
+  // can WRITE — is pinned here instead, on the panel as the page really paints it.
+  const harness = loadReader({ globals: sharedTitleFilterGlobals() });
+  harness.sandbox.setDocSideReaderSource({ docsIndex: DOCS_INDEX, base: "", indexPath: ".project/docs_index.json" });
+  await harness.sandbox.openDocSideReader({ path: "docs/REFERENCE-RULES.md" });
+  const painted = ["doc-side-reader-filter", "doc-side-reader-docs", "doc-side-reader-body"]
+    .map((id) => harness.element(id).innerHTML).join("\n");
+  const fields = painted.match(/<input[^>]*>/gi) || [];
+  assert.equal(fields.length, 1, "one field, and only one");
+  assert.ok(/type="search"/.test(fields[0]) && /data-doc-title-filter/.test(fields[0]), "a search box: the title filter");
+  assert.ok(!/\sname=/.test(fields[0]), "with no name — nothing to submit it under");
+  assert.ok(!/<(form|textarea|select)\b/i.test(painted), "no form for it to be submitted by, and no other field");
+  assert.ok(!/contenteditable/i.test(painted), "and no editable region");
+  assert.ok(harness.element("doc-side-reader-filter").innerHTML.includes("data-doc-title-filter"), "it sits in its own slot");
+  assert.ok(!harness.element("doc-side-reader-docs").innerHTML.includes("<input"), "never inside the list");
+});
+
 test("criterion 3: the page's own panel carries the read-only mark and offers no field either", () => {
   const html = readFileSync(INDEX_HTML, "utf8");
   const panel = /<aside id="doc-side-reader"[\s\S]*?<\/aside>/.exec(html);
   assert.ok(panel, "the panel is in the page");
   assert.ok(/Read only/.test(panel[0]), "and says so on screen, where the operator can see it");
-  assert.ok(!/<input|<textarea|<form|contenteditable/i.test(panel[0]), "no field, no form, no editable region");
+  // [#65] The static markup still carries no field: the title filter's one field is painted into
+  // its empty slot at runtime, and only when there is a list to filter (pinned above).
+  assert.ok(!/<input|<textarea|<form|contenteditable/i.test(panel[0]), "no field in the markup, no form, no editable region");
+  assert.ok(/<div id="doc-side-reader-filter" class="dsr-filter"><\/div>/.test(panel[0]), "and the filter's slot is there, empty");
   // It is a SIBLING of the report layer, not a child of it: nothing about opening one can
   // re-lay-out the other, which is the whole of criterion 1 expressed in the markup.
   const reportLayer = /<div id="run-report-view"[\s\S]*?\n    <\/div>/.exec(html);

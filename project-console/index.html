@@ -304,8 +304,10 @@
          It is still an OVERLAY and not a column the report is squeezed into: nothing beneath it
          is resized or re-laid-out when it opens, so the report cannot lose the operator's place.
          It is READ ONLY and no control in it says otherwise: rows and sections that navigate, one
-         button that closes, and no field, no form and no editable region anywhere. Inert until a
-         document is asked for; no document is ever pre-loaded here. -->
+         button that closes, no form and no editable region anywhere. [#65] Its one field is the
+         title filter above the list: a search box that writes nothing and submits nothing — what
+         is typed only decides which rows are painted. Inert until a document is asked for; no
+         document is ever pre-loaded here. -->
     <!-- [#62 QA] THE VEIL. The console's OWN overlay — the same element and the same
          `.drawer-overlay` class the run drawer dims the page with, and the same `.open` idiom —
          so this surface introduces no second pattern and `.drawer-overlay` itself is not touched.
@@ -336,6 +338,9 @@
              own block so that rewriting it never touches the column, whose scroll is the
              operator's place in a menu of hundreds. -->
         <div id="doc-side-reader-index" class="docs-nav dsr-nav">
+          <!-- [#65] The title filter, the console's own field, painted here by the reader and never
+               inside the list: the list is repainted on every keystroke, the field never is. -->
+          <div id="doc-side-reader-filter" class="dsr-filter"></div>
           <div id="doc-side-reader-docs"></div>
         </div>
         <div id="doc-side-reader-scroll" class="docs-reader dsr-scroll">

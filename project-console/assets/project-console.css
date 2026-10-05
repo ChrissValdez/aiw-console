@@ -1785,6 +1785,46 @@ textarea:disabled {
   color: var(--accent);
 }
 
+/* [#65] THE TITLE FILTER — one field and its one status line, worn by both lists of documents:
+   the Docs tab's tree (inside .docs-nav-controls) and the modal reader's list (inside its own
+   slot, doc-side-reader.css). Declared once, here. The field follows the console's existing input
+   idiom (.v3-edit-field); the status line sits on the rows' own 20px inset, like the reader's
+   count caption. */
+.doc-title-filter-input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  padding: 6px 8px;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  background: var(--bg-inset);
+  color: var(--text-primary);
+}
+
+.doc-title-filter-input::placeholder {
+  color: var(--text-faint);
+}
+
+.doc-title-filter-input:focus {
+  outline: none;
+  border-color: var(--accent-border);
+}
+
+.doc-title-filter-status {
+  margin-bottom: 6px;
+  padding: 0 20px;
+  color: var(--text-tertiary);
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+.doc-title-filter-none {
+  color: var(--text-secondary);
+}
+
 /* Item layout: the document title, and nothing else. The trailing tag slot the source console
    used (retention_class badge + nav-tier badge) is retired — see the RETIRED HERE note in
    project-console.js. The flex row is kept: it is what the layout is built on, and the new-era

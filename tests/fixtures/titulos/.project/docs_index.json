@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "project_id": "titulos",
+  "generated_at": "2026-10-04T12:00:00.000Z",
+  "generated_from": "hand-authored-test-fixture (NOT emitted by any projector; tests only) — RUN-CONSOLE-DOCS-TITLE-SEARCH-001",
+  "docs": [
+    { "title": "Leeme", "path": "LEEME.md" },
+    { "title": "Guía de instalación", "path": "guia/instalacion.md" },
+    { "title": "NOTAS DEL CODIGO FUENTE", "path": "guia/registros/notas-fuente.md" },
+    { "title": "Código de conducta · v2", "path": "guia/registros/conducta.md" },
+    { "title": "Año nuevo", "path": "notas/anio.md" },
+    { "title": "Reglas del índice", "path": "notas/indice/reglas.md" },
+    { "title": "Retirado del código", "path": "notas/archive/retirado.md" },
+    { "title": "Sin relación", "path": "registros/registros-especiales.md" }
+  ]
+}

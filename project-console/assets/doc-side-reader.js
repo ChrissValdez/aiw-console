@@ -273,10 +273,34 @@ function dsrResolveSection(headings, citation) {
 // THE MARKUP. Every branch below ends in words on screen; none of them ends in nothing.
 // ---------------------------------------------------------------------------
 
+// [#65] THE TITLE FILTER IS THE CONSOLE'S, looked up at call time like the renderer above. Both
+// lists of documents this console shows — the Docs tab's tree and this list — filter with the SAME
+// functions, so the rule, the field and the lines it prints exist once. When the page has no such
+// filter this reader grows none of its own: it offers no field, and lists every document as before.
+const DSR_FILTER_NAMES = ["docTitleMatchesFilter", "docTitleFilterIsActive", "docTitleFilterFieldHtml", "docTitleFilterStatusHtml", "docTitleFilterHandleEscape"];
+
+function dsrSharedFilter() {
+  const scope = typeof window !== "undefined" && window
+    ? window
+    : (typeof globalThis !== "undefined" ? globalThis : null);
+  if (!scope) return null;
+  const filter = {};
+  for (const name of DSR_FILTER_NAMES) {
+    if (typeof scope[name] !== "function") return null;
+    filter[name] = scope[name];
+  }
+  return filter;
+}
+
 function dsrDocListHtml(model, options) {
   const opts = options || {};
   const indexPath = dsrEsc(opts.indexPath || "");
   const activePath = typeof opts.activePath === "string" ? opts.activePath : "";
+  // [#65] A query only filters when the console's filter is on the page and the query has a word
+  // in it; otherwise every branch below paints exactly what it painted before the filter existed.
+  const filter = dsrSharedFilter();
+  const query = typeof opts.query === "string" ? opts.query : "";
+  const filtering = !!filter && filter.docTitleFilterIsActive(query);
   // [#63] Every branch is wrapped in the list's own block, so an absence sits where the list
   // would have sat and takes the column's inset with it rather than touching its edges.
   if (!model || !model.available) {
@@ -320,7 +344,11 @@ function dsrDocListHtml(model, options) {
   //
   // `active` is that rule's own word, marked here on the document that is open — the same fact
   // the tab marks on the document it is showing.
-  const rows = model.docs.map((doc) => {
+  //
+  // [#65] Filtering matches the WHOLE title — name and label, what the row prints — and never the
+  // path, which the row does not print.
+  const shown = filtering ? model.docs.filter((doc) => filter.docTitleMatchesFilter(doc.title, query)) : model.docs;
+  const rows = shown.map((doc) => {
     const split = dsrSplitTitle(doc.title);
     const active = activePath && doc.path === activePath ? " active" : "";
     // [#63 QA·2] TITLE AND LABEL, AND NOTHING ELSE. «que solo tenga titulo y nota, que no venga
@@ -335,9 +363,14 @@ function dsrDocListHtml(model, options) {
     </button>
   `;
   }).join("");
+  // While filtering, the count line says how many of how many — or, when nothing is kept, that
+  // nothing is — in the console's own words, the same line the Docs tab prints.
+  const head = filtering
+    ? filter.docTitleFilterStatusHtml(shown.length, model.docs.length, query)
+    : `<div class="dsr-doc-list-head">${dsrEsc(`${model.docs.length} document${model.docs.length === 1 ? "" : "s"} indexed by this project`)}</div>`;
   return `
     <div class="dsr-doc-list">
-      <div class="dsr-doc-list-head">${dsrEsc(`${model.docs.length} document${model.docs.length === 1 ? "" : "s"} indexed by this project`)}</div>
+      ${head}
       ${rows}
       ${indexPath ? `<div class="dsr-doc-list-source">Listed by <span class="mono">${indexPath}</span>, and nothing outside it can be opened here.</div>` : ""}
     </div>
@@ -448,6 +481,7 @@ const DSR_TITLE_ID = "doc-side-reader-title";
 const DSR_LABEL_ID = "doc-side-reader-label";
 const DSR_PATH_ID = "doc-side-reader-path";
 const DSR_INDEX_ID = "doc-side-reader-index";
+const DSR_FILTER_ID = "doc-side-reader-filter";
 const DSR_DOCS_ID = "doc-side-reader-docs";
 const DSR_SCROLL_ID = "doc-side-reader-scroll";
 const DSR_BODY_ID = "doc-side-reader-body";
@@ -457,6 +491,9 @@ const DSR_BODY_ID = "doc-side-reader-body";
 let dsrSource = { model: dsrDocsModel(null), base: "", indexPath: "" };
 let dsrState = null;
 let dsrWired = false;
+// [#65] What the operator typed into the title filter. It lives while the reader is open — a
+// document opened from a filtered list leaves the list filtered — and closing the reader clears it.
+let dsrFilterQuery = "";
 
 function dsrById(id) {
   return typeof document !== "undefined" ? document.getElementById(id) : null;
@@ -514,6 +551,44 @@ function dsrWire() {
     // rail that produced them is gone. `dsrScrollTo` stays, because the JUMP stays — it is what
     // a citation that resolves does, and it is driven by the citation, not by a control.
   });
+  // [#65] The title filter: each keystroke repaints the list, never the field it is typed into.
+  panel.addEventListener("input", (event) => {
+    const field = event.target && event.target.closest ? event.target.closest("[data-doc-title-filter]") : null;
+    if (field) dsrSetFilter(field.value);
+  });
+  // Escape on a field that holds text empties it and stops there, so the reader stays open; on an
+  // empty field it reaches the page, which closes the reader as it always has.
+  panel.addEventListener("keydown", (event) => {
+    const field = event.target && event.target.closest ? event.target.closest("[data-doc-title-filter]") : null;
+    const filter = field ? dsrSharedFilter() : null;
+    if (filter && filter.docTitleFilterHandleEscape(event)) dsrSetFilter("");
+  });
+}
+
+// The field, painted into its own slot above the list and ONLY when there is a list to filter. It
+// is written when the slot is empty and never rewritten while the reader is open: the list beneath
+// it is repainted on every keystroke and on every document opened, and replacing the field under
+// the operator's typing would drop the caret.
+function dsrPaintFilter(model) {
+  const slot = dsrById(DSR_FILTER_ID);
+  if (!slot) return;
+  const filter = dsrSharedFilter();
+  const offered = !!filter && !!model && model.available && model.docs.length > 0;
+  if (!offered) {
+    if (slot.innerHTML) slot.innerHTML = "";
+    return;
+  }
+  if (!slot.innerHTML) slot.innerHTML = filter.docTitleFilterFieldHtml(dsrFilterQuery);
+}
+
+function dsrSetFilter(query) {
+  const next = query == null ? "" : String(query);
+  if (next === dsrFilterQuery) return;
+  dsrFilterQuery = next;
+  dsrPaintIndex(dsrSource.model, dsrSource.indexPath, dsrState ? dsrState.path : "");
+  // A new filter shows its results from the top of the column, where the field is.
+  const column = dsrById(DSR_INDEX_ID);
+  if (column && column.scrollTop) column.scrollTop = 0;
 }
 
 function dsrShow(on) {
@@ -592,7 +667,7 @@ function dsrScrollTo(targetId) {
 function dsrPaintIndex(model, indexPath, activePath) {
   const docs = dsrById(DSR_DOCS_ID);
   if (docs) {
-    const html = dsrDocListHtml(model, { indexPath, activePath });
+    const html = dsrDocListHtml(model, { indexPath, activePath, query: dsrFilterQuery });
     if (docs.innerHTML !== html) {
       const column = dsrById(DSR_INDEX_ID);
       const place = column ? column.scrollTop : 0;
@@ -621,6 +696,7 @@ async function openDocSideReader(options) {
   if (scroll) scroll.scrollTop = 0;
   // The row of the document being opened is marked at once, before it is fetched, so the menu
   // answers the press immediately. A path nobody indexed marks nothing, because no row has it.
+  dsrPaintFilter(model);
   dsrPaintIndex(model, indexPath, path);
 
   // No document asked for: the index alone, and a reading column that points at it rather than
@@ -699,6 +775,10 @@ function closeDocSideReader() {
   if (body) body.innerHTML = "";
   const docs = dsrById(DSR_DOCS_ID);
   if (docs) docs.innerHTML = "";
+  // [#65] The filter goes with the reader: opened again, it starts from the whole list.
+  dsrFilterQuery = "";
+  const filterSlot = dsrById(DSR_FILTER_ID);
+  if (filterSlot && filterSlot.innerHTML) filterSlot.innerHTML = "";
   dsrSetHeader("", "");
   dsrShow(false);
   dsrState = null;

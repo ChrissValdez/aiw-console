@@ -2390,6 +2390,205 @@ function buildDocsNavTree(entries) {
     : root.subgroups;
 }
 
+// THE TITLE FILTER — ONE, for both lists of documents this console shows (#65).
+//
+// The operator could not find two documents during the QA of #64 — «son demasiados archivos
+// indexados» — and asked for a search over titles. There are two lists: the Docs tab's tree, and
+// the modal reader's flat list (doc-side-reader.js). Both filter with THESE functions: the reader
+// looks them up on `window` at call time, as it does the document renderer, and grows none of its
+// own. So the rule, the field and the lines it prints exist once.
+//
+// THE RULE. A document is kept when every word of the query appears somewhere in the TITLE THE ROW
+// PRINTS, compared without case and without accents (the text is decomposed and its combining
+// marks dropped, so «ó» meets «O», and «ñ» meets «n» like every other accent). Word order does not
+// matter; an empty or blank query keeps everything, and then the list is painted exactly as it was
+// before this filter existed.
+//
+// THE PATH IS NOT MATCHED, on purpose. Neither list prints the path on a row, so a row kept for a
+// word only its path carries would be kept for no reason the operator can see — and the shared
+// segments of a path match almost everything (measured 2026-10-04: the folder every record of this
+// console lives under is in 345 of its 371 paths, and a document's extension is in all of them).
+// The price, accepted: a document is found by the words of its title, not of its file name.
+//
+// Domain-blind: no project, folder or title is known here; only text is compared with text.
+function docTitleFilterKey(value) {
+  return String(value == null ? "" : value)
+    .normalize("NFD")
+    .replace(/\p{M}+/gu, "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function docTitleFilterTerms(query) {
+  const key = docTitleFilterKey(query);
+  return key ? key.split(" ") : [];
+}
+
+function docTitleFilterIsActive(query) {
+  return docTitleFilterTerms(query).length > 0;
+}
+
+function docTitleMatchesFilter(title, query) {
+  const terms = docTitleFilterTerms(query);
+  if (!terms.length) return true;
+  const key = docTitleFilterKey(title);
+  return terms.every((term) => key.includes(term));
+}
+
+// The field, the same markup above both lists. A search box that writes nothing: no form, no name,
+// nothing submitted; what is typed only decides which rows are painted.
+function docTitleFilterFieldHtml(value) {
+  return `<div class="doc-title-filter"><input type="search" class="doc-title-filter-input" data-doc-title-filter value="${escapeHtml(value)}" placeholder="Filter by title" aria-label="Filter documents by title" autocomplete="off" spellcheck="false"></div>`;
+}
+
+// The one line a filtering list carries: how many of how many, or — when nothing is kept — that
+// nothing is, naming what was typed. A list never goes silently empty.
+function docTitleFilterStatusHtml(shown, total, query) {
+  if (!shown) {
+    return `<div class="doc-title-filter-status doc-title-filter-none" role="status">No document title matches &ldquo;${escapeHtml(String(query == null ? "" : query).trim())}&rdquo;.</div>`;
+  }
+  return `<div class="doc-title-filter-status" role="status">${escapeHtml(shown)} of ${escapeHtml(total)} titles match</div>`;
+}
+
+// Escape on a field that holds text empties it and goes no further, so the page's own Escape (which
+// closes the reader, or the run drawer) does not fire with it. On an empty field Escape is the
+// page's, as always. Returns whether it emptied the field; the caller then repaints its list.
+function docTitleFilterHandleEscape(event) {
+  if (!event || event.key !== "Escape") return false;
+  const field = event.target;
+  if (!field || !text(field.value, "")) return false;
+  event.preventDefault();
+  event.stopPropagation();
+  field.value = "";
+  return true;
+}
+
+// The Docs tab's half. What is typed is local UI state, like the open/closed folders: never
+// persisted, reset with the rest of the per-project state.
+let docsTitleFilter = "";
+// The folders' open/closed state at the moment a filter started, by position in the unfiltered
+// tree, so clearing the filter gives back the tree the operator left. Null while no filter runs.
+let docsNavOpenBeforeFilter = null;
+
+// The tree with only the documents the filter keeps, and only the folders that still hold one.
+// It PRUNES the tree built from the whole list instead of building one from the matches: grouping
+// drops the folders every document shares, and a handful of matches share more of them than the
+// whole list does — a lone match would be promoted out of its own folder. Order is untouched; the
+// counts become the matches each folder holds.
+function filterDocsNavTree(tree, query) {
+  if (!docTitleFilterIsActive(query)) return tree;
+  const prune = (group) => {
+    const docs = group.docs.filter(({ doc }) => docTitleMatchesFilter(doc.title || doc.path, query));
+    const subgroups = group.subgroups.map(prune).filter(Boolean);
+    const count = docs.length + subgroups.reduce((total, sub) => total + sub.count, 0);
+    return count ? { ...group, docs, subgroups, count } : null;
+  };
+  return tree.map(prune).filter(Boolean);
+}
+
+// The tree's markup. With no filter and no remembered state it is, byte for byte, what renderDocsNav
+// painted before the filter existed (pinned by tests/docs-title-filter.test.mjs). `openFlags` closes
+// the folders that were closed, by position in document order; a filtering tree is all open.
+function docsNavTreeHtml(tree, options) {
+  const opts = options || {};
+  const query = opts.query || "";
+  const filtering = docTitleFilterIsActive(query);
+  const flags = !filtering && Array.isArray(opts.openFlags) ? opts.openFlags : [];
+  let position = 0;
+  const renderNavItem = ({ doc, index }) => {
+    // CLEAN TITLES, in every mode. The row carried two trailing badges in the source console — the
+    // retention_class tag (retired above: no data source in this project) and the nav-tier tag. The
+    // tier tag goes with it: it is a NAVIGATION VISIBILITY hint, and it only ever rendered in the
+    // mode this port opens on, so here it decorated every non-primary row (18 of 28 at the time of
+    // writing) with a word about the tier the group headings already express. The tier is still
+    // derived and still drives the Primary KB mode; it just stopped being painted on every row.
+    const active = text(doc.path, "") === docsActivePath ? "active" : "";
+    const label = `<span class="docs-nav-item-label">${escapeHtml(doc.title || doc.path)}</span>`;
+    return `<button class="docs-nav-item ${active}" type="button" data-doc-index="${index}">${label}</button>`;
+  };
+  // A group renders its OWN documents first, then its subgroups — the reading order of the folder
+  // it mirrors. Recursive, because the repository's folder hierarchy has no fixed depth: the
+  // former special case was one hand-written level for one project's folder, and it is replaced
+  // by this, which reaches whatever depth a repository has.
+  // `--docs-nav-depth` carries the nesting level to the stylesheet, so indentation is computed
+  // rather than enumerated per level.
+  const renderNavGroup = (group, depth) => {
+    const open = flags[position++] === false ? "" : " open";
+    return `
+      <details class="docs-nav-group${depth ? " docs-nav-subgroup" : ""}" style="--docs-nav-depth:${depth}"${open}>
+        <summary class="docs-nav-group-header">
+          <span class="docs-nav-group-label">${escapeHtml(group.label)}</span>
+          <span class="docs-nav-group-count">(${escapeHtml(group.count)})</span>
+        </summary>
+        ${group.docs.length ? `<div class="docs-nav-group-items">${group.docs.map(renderNavItem).join("")}</div>` : ""}
+        ${group.subgroups.map((sub) => renderNavGroup(sub, depth + 1)).join("")}
+      </details>
+    `;
+  };
+  const groupsHtml = tree.map((group) => renderNavGroup(group, 0)).join("");
+  if (filtering) {
+    const shown = tree.reduce((total, group) => total + group.count, 0);
+    return docTitleFilterStatusHtml(shown, opts.total, query) + groupsHtml;
+  }
+  return tree.length ? groupsHtml : emptyState("No documents match this view.");
+}
+
+function docsNavTreeGroups(nav) {
+  return nav ? [...nav.querySelectorAll(".docs-nav-tree details.docs-nav-group")] : [];
+}
+
+// Collapse all / Expand all reads the folders on screen when it is pressed, so it acts on the tree
+// the filter left: while filtering it opens or closes the matching folders only. With no folder on
+// screen (a filter that keeps nothing) there is nothing for it to do, and it steps aside.
+function syncDocsNavCollapseToggle(nav) {
+  const collapseToggle = nav ? nav.querySelector(".docs-nav-collapse-toggle") : null;
+  if (!collapseToggle) return;
+  const treeGroups = docsNavTreeGroups(nav);
+  collapseToggle.hidden = !treeGroups.length;
+  collapseToggle.textContent = treeGroups.every((group) => !group.open) ? "Expand all" : "Collapse all";
+}
+
+// Everything inside the tree that listens, wired again after each paint of the tree.
+function wireDocsNavTree(nav) {
+  if (!nav) return;
+  docsNavTreeGroups(nav).forEach((group) => group.addEventListener("toggle", () => syncDocsNavCollapseToggle(nav)));
+  syncDocsNavCollapseToggle(nav);
+  nav.querySelectorAll(".docs-nav-item").forEach((button) => {
+    button.addEventListener("click", () => {
+      nav.querySelectorAll(".docs-nav-item").forEach((item) => item.classList.remove("active"));
+      button.classList.add("active");
+      renderSelectedDoc(docsAllEntries[Number(button.dataset.docIndex)]);
+    });
+  });
+}
+
+// Repaints the TREE and only the tree. The field lives above it, in the controls, and is never
+// rewritten while the operator types into it: replacing a focused input drops the caret and breaks
+// an accent being composed on a dead key, which is exactly how «ó» gets typed.
+function paintDocsNavTree(openFlags) {
+  const container = byId("docs-nav-tree");
+  if (!container) return;
+  const tree = buildDocsNavTree(docsEntriesForMode());
+  const total = tree.reduce((sum, group) => sum + group.count, 0);
+  container.innerHTML = docsNavTreeHtml(filterDocsNavTree(tree, docsTitleFilter), { query: docsTitleFilter, total, openFlags });
+  wireDocsNavTree(byId("docs-nav-list"));
+}
+
+// The Docs tab's field calls this on every keystroke. Starting a filter remembers which folders were
+// open; clearing it paints the whole tree again with exactly that state.
+function setDocsTitleFilter(query) {
+  const next = query == null ? "" : String(query);
+  const wasActive = docTitleFilterIsActive(docsTitleFilter);
+  const isActive = docTitleFilterIsActive(next);
+  if (!wasActive && isActive) docsNavOpenBeforeFilter = docsNavTreeGroups(byId("docs-nav-list")).map((group) => group.open);
+  docsTitleFilter = next;
+  if (!wasActive && !isActive) return;
+  const restore = isActive ? null : docsNavOpenBeforeFilter;
+  if (!isActive) docsNavOpenBeforeFilter = null;
+  paintDocsNavTree(restore);
+}
+
 function renderDocs(data) {
   const docs = data.docsIndex?.docs || [];
   docsAllEntries = docs;
@@ -2486,36 +2685,12 @@ function renderDocsNav() {
   // the path decides where each one sits, so the shape of the navigation no longer depends on
   // which mode a project happens to open on.
   const tree = buildDocsNavTree(entries);
-  const renderNavItem = ({ doc, index }) => {
-    // CLEAN TITLES, in every mode. The row carried two trailing badges in the source console — the
-    // retention_class tag (retired above: no data source in this project) and the nav-tier tag. The
-    // tier tag goes with it: it is a NAVIGATION VISIBILITY hint, and it only ever rendered in the
-    // mode this port opens on, so here it decorated every non-primary row (18 of 28 at the time of
-    // writing) with a word about the tier the group headings already express. The tier is still
-    // derived and still drives the Primary KB mode; it just stopped being painted on every row.
-    const active = text(doc.path, "") === docsActivePath ? "active" : "";
-    const label = `<span class="docs-nav-item-label">${escapeHtml(doc.title || doc.path)}</span>`;
-    return `<button class="docs-nav-item ${active}" type="button" data-doc-index="${index}">${label}</button>`;
-  };
-  // A group renders its OWN documents first, then its subgroups — the reading order of the folder
-  // it mirrors. Recursive, because the repository's folder hierarchy has no fixed depth: the
-  // former Web/Slides special case was one hand-written level for one project's `components/`
-  // folder, and it is replaced by this, which reaches `context/aiw-console/records/` too.
-  // `--docs-nav-depth` carries the nesting level to the stylesheet, so indentation is computed
-  // rather than enumerated per level.
-  const renderNavGroup = (group, depth) => `
-      <details class="docs-nav-group${depth ? " docs-nav-subgroup" : ""}" style="--docs-nav-depth:${depth}" open>
-        <summary class="docs-nav-group-header">
-          <span class="docs-nav-group-label">${escapeHtml(group.label)}</span>
-          <span class="docs-nav-group-count">(${escapeHtml(group.count)})</span>
-        </summary>
-        ${group.docs.length ? `<div class="docs-nav-group-items">${group.docs.map(renderNavItem).join("")}</div>` : ""}
-        ${group.subgroups.map((sub) => renderNavGroup(sub, depth + 1)).join("")}
-      </details>
-    `;
-  const treeHtml = tree.length
-    ? tree.map((group) => renderNavGroup(group, 0)).join("")
-    : emptyState("No documents match this view.");
+  // [#65] The rows and folders are painted by docsNavTreeHtml, which the title filter repaints
+  // the tree with too. A filter still running when the nav is painted again (a reload of the same
+  // project) is applied, and the field below comes back holding it.
+  if (!docTitleFilterIsActive(docsTitleFilter)) docsNavOpenBeforeFilter = null;
+  const treeTotal = tree.reduce((sum, group) => sum + group.count, 0);
+  const treeHtml = docsNavTreeHtml(filterDocsNavTree(tree, docsTitleFilter), { query: docsTitleFilter, total: treeTotal });
   // Docs visibility toggle removed upstream (display only):
   // the Docs tab now always renders the new-era category-grouped view, so the former New era / Primary KB /
   // All registered control is no longer surfaced and the view shows with no name label. The visibility
@@ -2527,7 +2702,7 @@ function renderDocsNav() {
       <div class="docs-nav-head flex items-center justify-between" style="gap:12px; margin-bottom:10px;">
         <div class="docs-nav-title" style="padding:0;">Documentation</div>
         ${tree.length ? `<button type="button" class="docs-nav-collapse-toggle">Collapse all</button>` : ""}
-      </div>
+      </div>${tree.length ? `\n      ${docTitleFilterFieldHtml(docsTitleFilter)}` : ""}
       ${modeNote}
     </div>
     <div id="docs-nav-tree" class="docs-nav-tree">${treeHtml}</div>
@@ -2535,31 +2710,30 @@ function renderDocsNav() {
   nav.querySelectorAll(".docs-mode-btn[data-docs-mode]").forEach((button) => {
     button.addEventListener("click", () => setDocsVisibilityMode(button.dataset.docsMode));
   });
+  // [#65] The title filter. The field is painted with the controls and never again while the
+  // operator types: each keystroke repaints the tree beneath it (setDocsTitleFilter).
+  const filterField = nav.querySelector("[data-doc-title-filter]");
+  if (filterField) {
+    filterField.addEventListener("input", () => setDocsTitleFilter(filterField.value));
+    filterField.addEventListener("keydown", (event) => {
+      if (docTitleFilterHandleEscape(event)) setDocsTitleFilter("");
+    });
+  }
   // Collapse/Expand all acts only on the category groups currently rendered inside
   // the docs nav tree. Local session-only UI state: nothing is persisted, so a nav re-render
   // (visibility switch) restores the default open state. The label tracks the tree:
-  // it reads Expand all only while every group is closed.
+  // it reads Expand all only while every group is closed. [#65] The groups are read when the
+  // button is pressed, not when it is wired, because the title filter repaints the tree under it.
   const collapseToggle = nav.querySelector(".docs-nav-collapse-toggle");
   if (collapseToggle) {
-    const treeGroups = [...nav.querySelectorAll(".docs-nav-tree details.docs-nav-group")];
-    const syncCollapseToggleLabel = () => {
-      collapseToggle.textContent = treeGroups.every((group) => !group.open) ? "Expand all" : "Collapse all";
-    };
     collapseToggle.addEventListener("click", () => {
+      const treeGroups = docsNavTreeGroups(nav);
       const collapse = treeGroups.some((group) => group.open);
       treeGroups.forEach((group) => { group.open = !collapse; });
-      syncCollapseToggleLabel();
+      syncDocsNavCollapseToggle(nav);
     });
-    treeGroups.forEach((group) => group.addEventListener("toggle", syncCollapseToggleLabel));
-    syncCollapseToggleLabel();
   }
-  nav.querySelectorAll(".docs-nav-item").forEach((button) => {
-    button.addEventListener("click", () => {
-      nav.querySelectorAll(".docs-nav-item").forEach((item) => item.classList.remove("active"));
-      button.classList.add("active");
-      renderSelectedDoc(docsAllEntries[Number(button.dataset.docIndex)]);
-    });
-  });
+  wireDocsNavTree(nav);
 }
 
 function setDocsVisibilityMode(mode) {
@@ -5559,6 +5733,9 @@ function resetProjectScopedState() {
   // mode from its own index (docsResolveOpeningMode), never inheriting the previous project's.
   docsVisibilityMode = "all";
   docsOpeningModeResolved = false;
+  // [#65] What was typed into one project's title filter means nothing in the next one.
+  docsTitleFilter = "";
+  docsNavOpenBeforeFilter = null;
   historySelectedBranch = null;
   historyVersionMarker = null;
   stopHistoryAutoRefresh();

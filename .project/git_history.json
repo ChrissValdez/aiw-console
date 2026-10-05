@@ -1,27 +1,48 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-05T00:18:37.091Z",
+  "generated_at": "2026-10-05T04:24:46.257Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-05T00:18:36.599Z"
+      "mtime": "2026-10-05T01:18:41.464Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-05T00:18:37.054Z"
+      "mtime": "2026-10-05T04:24:46.210Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "4b33850aa5623b861379a539860817ddfffbbe2e",
+  "head": "00c2e06c2160b45dc9b9330d8f7a5353fbafe031",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 461,
+  "commit_total": 463,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "00c2e06",
+      "full_sha": "00c2e06c2160b45dc9b9330d8f7a5353fbafe031",
+      "date": "2026-10-05T01:18:41+00:00",
+      "parents": "66e8fc2",
+      "subject": "#65 RUN-CONSOLE-DOCS-TITLE-SEARCH-001: un filtro de titulos encima de las dos listas de documentos -- el arbol de la pestana Docs y la lista del lector modal -- con una sola regla y un solo campo",
+      "body": "Trabajo del taller, commiteado por la cabina. La regla vive una vez en project-console.js y el\nlector la toma de window, como ya toma el renderizador. Un documento se queda si cada palabra de lo\nescrito aparece en su TITULO, sin distinguir mayusculas ni acentos y sin importar el orden. La\nRUTA NO se compara, a proposito: ninguna lista la pinta en la fila, y sus segmentos comunes\ncoinciden con casi todo (medicion del taller: una carpeta en 345 de 371 rutas). Con el campo vacio\nel arbol es byte a byte el de antes, clavado por test; al empezar a filtrar se recuerda que\ncarpetas estaban abiertas y al vaciar se devuelven igual; mientras filtra, el arbol se poda y se\nqueda abierto, y Collapse all actua sobre lo que hay en pantalla. Sin coincidencias, una linea lo\ndice. Escape vacia el campo sin cerrar el lector. El campo nunca se repinta mientras se escribe,\npara no romper un acento compuesto con tecla muerta.\n\nVerificado por la cabina contra disco: solo ficheros del alcance (project-console/assets, su\nindex.html, tests); ni serve.mjs, ni el proyector, ni .project/, ni el canonico (md5 77113edf antes\ny despues). Suite completa corrida por la cabina en tres tandas con salida a fichero: 869 tests,\n868 pass, 1 fail -- el conocido roadmap-engine.test.mjs:93 de finales de linea, ajeno al run --;\nla linea base era 841 / 840 / 1, asi que el run suma 28 tests y ningun fallo nuevo.\n\nEL RUN SIGUE ACTIVO: falta la QA visual del operador en las dos superficies.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-DOCS-TITLE-SEARCH-001"
+    },
+    {
+      "branch": "main",
+      "sha": "66e8fc2",
+      "full_sha": "66e8fc2f8cce2e47b4991baf952ae15f76f65e4b",
+      "date": "2026-10-05T00:19:22+00:00",
+      "parents": "4b33850",
+      "subject": "#64 RUN-CONSOLE-SHARED-RENDERER-QUOTES-001 cierra con los cuatro pasos de la QA visual OK, y #65 RUN-CONSOLE-DOCS-TITLE-SEARCH-001 pasa a active",
+      "body": "El operador respondio \"ok los pasos / procedamos\" a los cuatro pasos detallados; la cabina lo lee\ncomo los cuatro OK y lo declara en el veredicto, que se guarda verbatim con su segunda pasada en\ncontext/aiw-console/records/VEREDICTO-64-QA-VISUAL-2026-10-04.md. El closeout_result corrige hacia\nadelante la cifra del fichero de tests de citas (37 tests, no 46; 23, no 28, en 7af9fcf) y deja\nnombrados dos hallazgos ajenos al run: el test de finales de linea que falla en la maquina nueva y\nel ancho desigual del lector modal (66ch del #63 para texto, sin limite para tablas).\n\nPor la consola (serve.mjs, dry-run y apply con baseline, dos set-status). Verificado contra la copia\nprevia: solo cambian status y closeout_result del #64 y status del #65; raiz identica; 78 runs,\ncompleted 64 / planned 13 / active 1; checkInvariants del motor de este repo: 0 errores. .project/\nre-emitido (7 artefactos).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "4b33850",

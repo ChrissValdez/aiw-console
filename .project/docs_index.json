@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-05T00:18:37.091Z",
+  "generated_at": "2026-10-05T04:24:46.257Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -775,6 +775,10 @@
     {
       "path": "context/aiw-console/records/VEREDICTO-64-QA-VISUAL-2026-10-04.md",
       "mtime": "2026-10-05T00:18:03.418Z"
+    },
+    {
+      "path": "context/aiw-console/records/VEREDICTO-65-QA-VISUAL-2026-10-04.md",
+      "mtime": "2026-10-05T04:24:06.911Z"
     },
     {
       "path": "context/aiw-console/records/VEREDICTO-QA-DEL-60-Y-CIERRE.md",
@@ -3076,6 +3080,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-10-05T00:18:03.418Z"
+    },
+    {
+      "title": "Veredicto visual del `#65` — 2026-10-04",
+      "path": "context/aiw-console/records/VEREDICTO-65-QA-VISUAL-2026-10-04.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-05T04:24:06.911Z"
     },
     {
       "title": "`#60` `RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001` — la QA del operador y el cierre",

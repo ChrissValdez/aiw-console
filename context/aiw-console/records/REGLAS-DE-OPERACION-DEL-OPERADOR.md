@@ -55,3 +55,17 @@ no hace es decirlo cada vez.
 **Por qué importa más de lo que parece:** la recomendación de modelo y esfuerzo existe para
 decidir dónde gastar el recurso escaso, que es el tiempo. Repetirla en una continuación no
 informa nada y **sugiere en falso que hay una decisión que tomar** donde no la hay.
+
+---
+
+## R-04 · Las rutas se dan completas, listas para pegar en el Explorador
+
+**2026-10-05.** Verbatim:
+
+> «dame los enlaces con la direccion completa no la acortes de context en adelante
+> Sino completa para pdoer pegarla en el explorador y lo abra»
+
+**En la práctica:** toda ruta de fichero que la cabina le da al operador va **completa, en forma
+Windows**, desde la unidad: `C:\Users\chris\Documents\AIW_Workspace\projects\aiw-console\…`. Nunca
+relativa al repo (`context/…`), nunca con la ruta de montaje de la cabina (`/sessions/…`). Dentro de
+un ticket de taller pueden ir relativas al repo, porque el taller trabaja desde la raíz del repo.

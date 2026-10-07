@@ -5775,11 +5775,14 @@ function resetProjectScopedState() {
   document.title = "Project Console";
 }
 
-// Chrome back to its opening defaults: Overview tab, Run Queue subview, Governance section,
+// Chrome back to its opening defaults: Roadmap tab, Run Queue subview, Governance section,
 // scroll at top. Same class toggling the click handlers perform; display-only.
+// [#66 · D-075] Projects open on Roadmap, not Overview — the shell runs this on EVERY project
+// open, the first one included. index.html marks the same tab (button AND section) for the
+// paint before any script runs; the two must agree.
 function resetChromeToDefaults() {
-  document.querySelectorAll("[data-tab]").forEach((item) => item.classList.toggle("active", item.dataset.tab === "overview"));
-  document.querySelectorAll(".tab-content").forEach((panel) => panel.classList.toggle("active", panel.id === "tab-overview"));
+  document.querySelectorAll("[data-tab]").forEach((item) => item.classList.toggle("active", item.dataset.tab === "roadmap"));
+  document.querySelectorAll(".tab-content").forEach((panel) => panel.classList.toggle("active", panel.id === "tab-roadmap"));
   document.querySelectorAll("[data-subview]").forEach((item) => item.classList.toggle("active", item.dataset.subview === "v3queue"));
   document.querySelectorAll(".roadmap-subview").forEach((panel) => panel.classList.toggle("active", panel.id === "roadmap-sub-v3queue"));
   const jumpLinks = Array.from(document.querySelectorAll(".status-jump-link"));

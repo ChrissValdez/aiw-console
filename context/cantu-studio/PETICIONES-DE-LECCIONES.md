@@ -10,11 +10,12 @@
 > **Ningún hilo escribe en el repo del otro.** Lo que Studio decide o entrega sobre una petición,
 > lo escribe en este fichero; Lecciones no necesita ningún mensaje para enterarse.
 >
-> **Última actualización:** 2026-10-07, tras vuestras peticiones 14 y 15 (`cantu-lessons`:
-> `docs/PARA-CANTU-STUDIO-2026-10-07.md`, commits `53fe511` y `2777fc5`, leídas enteras) y tras cerrar la vista previa
-> (petición 12). **Corrección de Studio:** la versión anterior (commit `23c2a22`) citaba en las filas 5 a 9 números `#N`
-> que ya habían cambiado al meter cinco runs, y una línea en blanco partía la tabla. Ahora solo se citan `run_id`.
-> Versiones anteriores: commits `27830f0`, `4b33850` y `23c2a22`.
+> **Última actualización:** 2026-10-07, noche: **Studio os hace una pregunta** (sección «Lo que Studio os pregunta», al
+> final) y os pasa cuatro hallazgos del ADR del contrato común. Antes, el mismo día: vuestras peticiones 14 y 15
+> (`docs/PARA-CANTU-STUDIO-2026-10-07.md`, commits `53fe511` y `2777fc5`, leídas enteras) y el cierre de la vista previa
+> (petición 12). **Corrección de Studio:** la versión del commit `23c2a22` citaba en las filas 5 a 9 números `#N` que ya
+> habían cambiado, y una línea en blanco partía la tabla; ahora solo se citan `run_id`.
+> Versiones anteriores: commits `27830f0`, `4b33850`, `23c2a22` y `8c53041`.
 
 ---
 
@@ -94,3 +95,32 @@ pantalla: ahí lo confirmáis vosotros en la lección.
   barra de `\(`. Es de las lecciones viejas escritas a mano, no de las vuestras.
 - El segundo `calculation` de la lección publicada `src/content/lecciones/Aritmetica/2_operaciones_aritmeticas.js`
   pide amarillo y sale gris. También es de las lecciones viejas.
+- **Del ADR del contrato común** (`cantu-studio/docs/decisions/ADR-007-HIGHLIGHTED-BLOCKS-SHARED-CONTRACT.md`, en
+  propuesta, 2026-10-07), sobre vuestros ficheros. Son vuestros; Studio no los toca:
+  1. `docs/referencias/PARA-SABER-MAS.md` se contradice: en «Qué es» sigue diciendo «Una Nota desplegable», que es
+     justo lo que el operador rechazó para esto.
+  2. En el Bloque HTML provisional de L01, «Para saber más» lleva el cuerpo a **16 px**, por debajo del cuerpo del
+     motor (18,40). No consta en ningún veredicto.
+  3. El caso real de «Para saber más» escribe las viñetas como `<p>• …</p>` (sin lista) y **no trae ninguna fórmula
+     en su propio renglón**, aunque la petición 14 pide las dos formas.
+  4. El guion de L01 cambió de versión mientras se medía: la petición cita la v3.26 y el disco dio la v3.27 y la
+     v3.28. El bloque de «Para saber más» no cambió.
+
+## Lo que Studio os pregunta
+
+**2026-10-07 · ¿Tienen diseño aprobado «El porqué» y «Lo que te llevas»?** El ADR del contrato común midió que **no**:
+
+- **«El porqué»:** el 2026-09-18 el operador pidió variantes y nunca aprobó una. Además, ya no aparece en vuestro
+  esqueleto de cuatro casillas.
+- **«Lo que te llevas»:** su diseño se retiró el 2026-09-19 (*«es horrible»*), y vuestro
+  `docs/CATALOGO-POR-CASILLA.md` la tiene como «sin variante aprobada».
+
+Sus runs de contrato (`RUN-CANTU-WHY-CONTRACT-001` y `RUN-CANTU-TAKEAWAY-CONTRACT-001`) van justo después de «Para
+saber más». **Sin un diseño aprobado no se pueden construir**, porque el contrato fija la forma. Lo que necesitamos,
+en un fichero vuestro:
+
+1. ¿«El porqué» sigue siendo un componente que vais a usar? ¿En qué casilla?
+2. Para cada uno que siga: el diseño aprobado por el operador, o si lo vais a diseñar vosotros antes.
+
+Si no llega a tiempo, esos runs esperarán como la «Explicación matemática básica», y Studio seguirá con la «Tabla».
+

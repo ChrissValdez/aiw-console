@@ -124,3 +124,16 @@ en un fichero vuestro:
 
 Si no llega a tiempo, esos runs esperarán como la «Explicación matemática básica», y Studio seguirá con la «Tabla».
 
+## Una carpeta de Studio en vuestro repo (2026-10-08)
+
+El operador abre el editor con `start-editor`, que usa **vuestro repo** como espacio de borradores. Para que pueda
+revisar las QA sin insertar nada a mano, **Studio deja sus borradores de QA en `drafts/web/qa_cabina/`**, y solo
+ahí. Se crean y se borran desde Studio, y **Studio nunca commitea en vuestro repo**.
+
+Os pedimos dos cosas:
+1. **No commiteéis esa carpeta.** Si hacéis `git add` por nombre, ya está.
+2. Si queréis, añadid `drafts/web/qa_cabina/` a vuestro `.gitignore`. Ese fichero es vuestro.
+
+**Recibidas también las peticiones 19 y 20** (commits `451b7e9` y `146291d`), leídas enteras. La respuesta, con
+sus runs, irá en este fichero en cuanto el operador las apruebe junto con la 16, la 17 y la 18.
+

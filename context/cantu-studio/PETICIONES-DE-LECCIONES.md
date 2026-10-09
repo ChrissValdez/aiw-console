@@ -10,7 +10,7 @@
 > **Ningún hilo escribe en el repo del otro.** Lo que Studio decide o entrega sobre una petición,
 > lo escribe en este fichero; Lecciones no necesita ningún mensaje para enterarse.
 >
-> **Última actualización:** 2026-10-08: **filas 16 a 20 contestadas, la 7 y la 8 cambiadas, y el orden nuevo.** Antes, 2026-10-07, noche: **Studio os hace una pregunta** (sección «Lo que Studio os pregunta», al
+> **Última actualización:** 2026-10-09: **fila 21 contestada.** Antes, 2026-10-08: **filas 16 a 20 contestadas, la 7 y la 8 cambiadas, y el orden nuevo.** Antes, 2026-10-07, noche: **Studio os hace una pregunta** (sección «Lo que Studio os pregunta», al
 > final) y os pasa cuatro hallazgos del ADR del contrato común. Antes, el mismo día: vuestras peticiones 14 y 15
 > (`docs/PARA-CANTU-STUDIO-2026-10-07.md`, commits `53fe511` y `2777fc5`, leídas enteras) y el cierre de la vista previa
 > (petición 12). **Corrección de Studio:** la versión del commit `23c2a22` citaba en las filas 5 a 9 números `#N` que ya
@@ -53,6 +53,7 @@
 | 18 | «Para saber más»: cuatro piezas, dos ya existentes | `PARA-CANTU-STUDIO-2026-10-07.md` §18 | **aplicada** | Ver fila 14 |
 | 19 | Respuesta sobre «El porqué» y «Lo que te llevas», y la regla 30 | `PARA-CANTU-STUDIO-2026-10-07.md` §19 | **aplicada** | Ver filas 7 y 8. Recibida la regla 30: la prueba de terminado de cada pieza sigue siendo vuestro caso de L01 |
 | 20 | Que un «Bloque HTML» vea la paleta ACTIVA | `PARA-CANTU-STUDIO-2026-10-07.md` §20 | **decidido, en cola** | `RUN-CANTU-PALETTE-AS-CSS-VARIABLES-001`: cada lección Web y cada artefacto Moodle declara la paleta activa como variables CSS, todos los tokens, con nombre estable por token. Los nombres los propone el run. La prueba de terminado es la vuestra: cambiar `def` y verlo cambiar dentro de vuestro «Para saber más» provisional, en Web y en Moodle |
+| 21 | «Procedimiento matemático»: cero, una o dos notas por paso, «Ver cálculo» y «Error común», lado a lado y sin HTML | `PARA-CANTU-STUDIO-2026-10-08.md` §21 | **decidido, en cola** | `RUN-CANTU-MATH-PROCEDURE-STEP-NOTES-CONTRACT-001` y `-EDITOR-001`, **justo después de «Para saber más» y antes de la «Tabla»**, por decisión del operador del 2026-10-09. Va transcrito todo lo vuestro: la L02 de staging como modelo, «Se obtiene:» siempre, la marca ✖/✔ con la palabra y no con la fórmula, los colores `err`/`res`, y el apilado en el móvil. Qué nota va a cada lado lo decide el operador en pantalla. La prueba de terminado es la vuestra: el ejemplo guiado `−|4 − 9|` de L01 |
 ## Lo que el operador decidió sobre la forma, y os afecta
 
 **El `#221`, decidido el 2026-10-04:**
@@ -71,7 +72,7 @@
   conectar. Es una decisión del operador y no está en cola.
 - **La «Nota desplegable» no se toca:** ya hace lo que se pedía.
 
-## El orden en que Studio construye lo vuestro (la cola de `cantu-studio`, a 2026-10-08)
+## El orden en que Studio construye lo vuestro (la cola de `cantu-studio`, a 2026-10-09)
 
 Studio trabaja en tres carriles a la vez: lo que cambia la lección publicada va en fila; el editor y los documentos, en
 paralelo.
@@ -83,6 +84,7 @@ paralelo.
 | «Tarjeta»: recuadro interior, insignia y negrita · interfaz (el contrato está en QA) | L01, «Pares e impares» (petición 4) |
 | Contrato común de los bloques destacados, ronda 2 | lo que comparte «Para saber más» |
 | «Para saber más» · contrato e interfaz | L01, «Lado y distancia» (peticiones 14, 16 y 18) |
+| «Procedimiento matemático» con dos notas por paso · contrato e interfaz | L01, el ejemplo guiado (petición 21) |
 | «Tabla» de varias columnas · contrato e interfaz | L01, y la tabla de «Para saber más» más adelante (petición 9) |
 | «Regla matemática» ajustada · contrato e interfaz | L01, «Principio de no negatividad» (petición 17) |
 | `calculation` y la migración de las lecciones viejas | no son vuestros |

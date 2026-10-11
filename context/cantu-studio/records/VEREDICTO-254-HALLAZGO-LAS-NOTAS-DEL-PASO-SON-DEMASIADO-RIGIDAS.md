@@ -69,3 +69,23 @@ y tu ya definiste un formato estremadamente inflexible de como presentar la info
 
 La recomendación de la cabina va en la conversación. **La decisión del operador está pendiente** y se escribe aparte,
 con sus palabras.
+
+## Aclaración del operador — LITERAL
+
+```
+bloque de código me referia a bloque de HTML 
+no a cosas distintas
+lo que si me referia algo distinto es a bloque de formula
+
+que igual que como esta en precedimiento matematica (en los pasos) 
+tener 
+Alineación de las fórmulas
+las centradas y a la izquierda en bloque
+
+siento que eso tambien aplica a las formulas dentro de detalle
+```
+
+**Medido por la cabina:** el mando ya existe. Se llama «Alineación de las fórmulas» y tiene dos opciones, «Centradas
+(por defecto)» y «A la izquierda, en bloque». Su campo es `focusAlignment`, va por bloque y, si no está, se entiende
+centrado. Lo usan hoy «Procedimiento matemático», «Explicación guiada» y la pila de diapositiva, y sus palabras están
+en `editor-ui/src/features/editor/constants/alineacionDeFormulas.js`. Las aprobó el operador el 2026-09-21.

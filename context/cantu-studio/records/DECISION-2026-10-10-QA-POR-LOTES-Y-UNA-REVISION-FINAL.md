@@ -59,3 +59,15 @@ algo breve pero que me facilite decirlo esto ya se hizo y esto falta, etc
    - un solo borrador con todos los componentes, en Explorar;
    - una lista navegable de qué mirar y qué esperar;
    - la página de L01 para el teléfono real, que cubre la duda de los márgenes.
+
+## Ajuste del operador al recibir la lista del lote — LITERAL (2026-10-10)
+
+```
+53 desiciones es demasiado
+
+mejor vamos una cosa a la vez
+```
+
+**Lo que cambia:** la revisión del lote no se entrega en bloque. La cabina la conduce en el chat, **un paso
+a la vez**, con su pregunta de clic, y guarda cada respuesta. La página publicada con la lista entera queda solo
+como referencia. Se empieza por los márgenes en el teléfono, que era la duda del operador.

@@ -39,3 +39,23 @@ algo breve pero que me facilite decirlo esto ya se hizo y esto falta, etc
    propio lote y no se agrupa con otras cosas.
 5. **La razón:** muchas QA pequeñas en varios hilos hacen que el operador se pierda y apruebe con prisa. Una revisión
    por lote debe ser igual de exhaustiva que las cinco rápidas, o más.
+
+## Confirmación del operador — LITERAL (componente de preguntas, 2026-10-10)
+
+| pregunta de la cabina | respuesta del operador |
+|---|---|
+| Mi lectura de tu flujo: los runs corren desatendidos; los arreglos visuales, de componentes y las peticiones de CL se agrupan en un run semi-atendido de QA por lote; lo de alta importancia o dificultad lleva su QA propia; el historial va en su propio lote. ¿Es así? | «Sí, así (Recommended)» |
+| #224 (panel de vista previa) y #253 (la vista previa nombra el campo que falla), ¿su QA va al lote final? | «Sí, al lote final (Recommended)» |
+| ¿Cómo quieres la revisión final de todo lo de L01? | «Un borrador + una lista (Recommended)» |
+| ¿Cuándo la preparo? | «Cuando vuelva #253 (Recommended)» |
+
+## Lo que queda decidido
+
+1. **La lectura de arriba es la regla**, confirmada.
+2. **`RUN-CANTU-PREVIEW-PANEL-OPENS-AT-ITS-WIDTH-001` y `RUN-CANTU-EDITOR-PREVIEW-NAMES-THE-FAILING-FIELD-001`**
+   cierran con **«QA diferida al lote»**, declarado en su `closeout_result`. Su superficie se mira en la revisión final.
+3. **Revisión final de todo lo de L01:** es un run propio, semi-atendido, al frente de la cola. Se inserta cuando
+   vuelva el taller en curso, junto con el movimiento al archivo. El vehículo tiene tres piezas:
+   - un solo borrador con todos los componentes, en Explorar;
+   - una lista navegable de qué mirar y qué esperar;
+   - la página de L01 para el teléfono real, que cubre la duda de los márgenes.

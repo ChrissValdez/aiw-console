@@ -3,19 +3,48 @@
 > Hilo `cantu-studio`. Escrito por la cabina el 2026-10-10 (UTC 2026-10-11 00:4x), mientras corría
 > `RUN-CANTU-EDITOR-PREVIEW-NAMES-THE-FAILING-FIELD-001`.
 
-## Lo que el operador planteó — RESUMEN NO LITERAL
+## Las palabras del operador — LITERALES
 
-**Aviso:** el mensaje original del operador **no se conserva literal**: se perdió al compactarse la conversación de la
-cabina. Lo que sigue es el resumen de la cabina, no sus palabras. Lo literal es el bloque siguiente.
+> **Corrección de la cabina, 2026-10-10:** la primera versión de este record (commit `6db667a`) traía aquí un
+> resumen marcado como NO literal, porque la cabina creía perdido el mensaje original. El mensaje volvió a llegar
+> entero y se transcribe ahora tal cual.
 
-- Pausó Lecciones hasta que Studio se pusiera al día, y lo revisa para reanudar.
-- Quiere que Studio quede sin trabajo pendiente, para que una petición nueva de Lecciones se haga rápido.
-- Lo vital eran los componentes base de mucha repetición: «Para saber más», los arreglos del procedimiento, el
-  «Bloque HTML» que sigue la paleta y A+/A-, y los márgenes. **No está seguro de que los márgenes hayan quedado bien.**
-- Lo no vital (arreglos pequeños de botones, historial de versiones, componentes no clave) queda **archivado**: baja
-  prioridad, se trabaja en tiempo muerto, y **sube rápido si Lecciones lo pide**.
-- Su flujo: una petición de componente nuevo se resuelve primero con un «Bloque HTML» aprobado, para que la lección
-  se termine sola; el componente se construye después sin bloquear, y la lección puede migrar luego con el mismo aspecto.
+```
+se esta ejectando, mientras analisemos en que vamos y varias cosas de mi flujo de trabajo 
+teniamos muchas peticiones pendientes de CL de compoenntes de alta repeticion com opara saber mas, correccion en procedimiento matematico y bloque de html que sea compatible con aumentar tamaño, etc
+
+Componentes base
+
+por eso pause CL de seguir avnaznado en lo que nos poniamos al dia
+ya nos pusimos al dia? 
+ahora mi ideal seria tener ya ningun trabajo pendiente en Cantu studio
+praa que encuanto salgan peticiones de cantu lessons 
+rapido las saquemos y no atoren el flujo de trabajo por tener tanto acumulado
+
+Entonces dime en que vamos y que sigue y que falta
+
+ademas si algun run no es necesario quisiera dejarlo como archivado , osea si trabajarlo como quiera porque si tenemos tiempo muerto en lo que trabaja Cantu lessons pues trabajar en eso
+pero, si surgen peticiones de cantu lessons subirlo de prioridad
+y rapido implementarlo
+
+lo de los margenes, que no estoy seguro si ya quedo bien
+pero eso... tambien era de alta prioridad porque afecta el diseñlo visual general de todas las lecciones
+
+pero arreglos pequeños de botones, o fucionalidades no vitales
+
+como historial de versiones (que si es importante, pero no frena crear las lecciones de calidad) puede estar como trabajo no vital
+
+componentes no clave tambien
+para saber mas lo usaremos muchisimo por eso era clave, igual procedimiento matematico y lo de los margenes por eso pause, pero componentes si no es tan vital la peticion de CL no tendria porque parar su flujo de tarbajo
+
+la idea es que peticiones sobre nuevos componentes se basen en bloques de html 
+de tal manera que la leccion se pueda terminar por si sola, y vemos que amerita un nuevo componente entonces lo puedes trabajar sin afectar esa leccion que ya tiene el bloque de html aprobado
+
+claro, mas adelante podria ocupar actualizar esa leccion a usar el componente, pero en teoria se veria igual el resultado final pero con componente  en vez de html, no bloqueo el diseño de la leccion. 
+
+esa es la idea general del flujo de trabajo que tenia en mente
+solo que con tantas cosas a la vez que es normal porque estoy terminando de pulir el flujo de trabajo que salieron tantas cosas al inicio, pues pause CL , y estoy terminando de revisar en que vamos aqwui para renaudar
+```
 
 ## Sus respuestas — LITERALES (componente de preguntas, 2026-10-10)
 

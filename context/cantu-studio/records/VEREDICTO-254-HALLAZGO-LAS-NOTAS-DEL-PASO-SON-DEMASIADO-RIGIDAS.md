@@ -89,3 +89,22 @@ siento que eso tambien aplica a las formulas dentro de detalle
 (por defecto)» y «A la izquierda, en bloque». Su campo es `focusAlignment`, va por bloque y, si no está, se entiende
 centrado. Lo usan hoy «Procedimiento matemático», «Explicación guiada» y la pila de diapositiva, y sus palabras están
 en `editor-ui/src/features/editor/constants/alineacionDeFormulas.js`. Las aprobó el operador el 2026-09-21.
+
+## Decisión del operador — LITERAL (2026-10-11)
+
+Respuesta a la propuesta de la cabina, que se resume aquí y que el operador leyó entera en la conversación:
+
+- las notas se hacen de piezas: Párrafo, Bloque de fórmula con «+ Línea» y «Alineación de las fórmulas», «Se obtiene:»,
+  «Incorrecto / Correcto» y Bloque HTML;
+- «+ Ver cálculo» y «+ Error común» salen con el formato de hoy ya puesto;
+- el autor elige el orden de las notas, y por defecto va primero «Ver cálculo»;
+- una nota sola también sale como pestaña unida;
+- las notas ya escritas se convierten solas y se ven idénticas;
+- todo va en dos runs, primero el contrato y luego el formulario, al frente de la cola.
+
+```
+me agrada esa recomendacion
+```
+
+La alineación de «Para saber más» **no** entra: la cabina la nombró como pregunta para otro momento, y el operador no la
+pidió.

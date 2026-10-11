@@ -71,3 +71,15 @@ mejor vamos una cosa a la vez
 **Lo que cambia:** la revisión del lote no se entrega en bloque. La cabina la conduce en el chat, **un paso
 a la vez**, con su pregunta de clic, y guarda cada respuesta. La página publicada con la lista entera queda solo
 como referencia. Se empieza por los márgenes en el teléfono, que era la duda del operador.
+
+## Corrección de la cabina — el operador dijo «un run a la vez», no «un paso a la vez» (LITERAL)
+
+```
+haber no, me refiero a un run a la vez
+pero dame el QA no solo la pregunta
+y dime que archivo abrir en el qA
+```
+
+**La cabina leyó mal el ajuste anterior** y lo escribió arriba como «un paso a la vez». Lo correcto: la revisión va
+**un run a la vez**. Cada entrega lleva la QA completa de ese run (sus pasos, qué esperar), **qué archivo abrir**, y
+después la pregunta de clic. Se empieza por «Diseño de página» (#234), la sección 1 de la lista.

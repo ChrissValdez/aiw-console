@@ -83,3 +83,17 @@ y dime que archivo abrir en el qA
 **La cabina leyó mal el ajuste anterior** y lo escribió arriba como «un paso a la vez». Lo correcto: la revisión va
 **un run a la vez**. Cada entrega lleva la QA completa de ese run (sus pasos, qué esperar), **qué archivo abrir**, y
 después la pregunta de clic. Se empieza por «Diseño de página» (#234), la sección 1 de la lista.
+
+## Segundo ajuste — sin preguntas de clic en la QA (LITERAL, 2026-10-10)
+
+```
+de nuevo me haces las preguntas
+
+dime los pasos
+Y al final yo te digo el resultado del QA
+porquie me das la pregunta aqui en el chat yu me saca de contexto
+```
+
+**Lo que cambia:** durante una QA la cabina **no lanza preguntas de clic**. Entrega los pasos del run y **espera a
+que el operador escriba el resultado**. Esto cambia la regla anterior, que pedía preguntas de clic, **solo para la
+QA**; las decisiones fuera de la QA no cambian.

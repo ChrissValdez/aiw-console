@@ -74,3 +74,25 @@ solo que con tantas cosas a la vez que es normal porque estoy terminando de puli
    Hasta hoy solo se habían aprobado con capturas de un móvil emulado.
 5. **Vital, y lo único que queda:** `RUN-CANTU-EDITOR-PREVIEW-NAMES-THE-FAILING-FIELD-001` (corriendo) y
    `RUN-CANTU-PREVIEW-PANEL-OPENS-AT-ITS-WIDTH-001` (espera la QA del operador).
+
+## Después: D-077 y D-078, y lo que el operador aclaró a la cabina — LITERAL (2026-10-11)
+
+CL comunicó D-077 y D-078 (`aiw-console/context/DECISIONES.md`, commits `3d42e60` y `c8db72b`). Cuando la cabina ofreció
+medir y ajustar cosas por su cuenta, el operador respondió:
+
+```
+no creo que sea necesario que tu hagas nada respecto alas lecciones CL esta manejando eso
+lo improtante es que sepas la metodologia de trabajo 
+
+como ordenes tu los runs no afecta a CL
+CL simplemente seguira trabjaando en la slecciones independientemente de tu ritmo de trabjao
+
+solo era un mensaje para que estes enterado
+```
+
+**Lo que la cabina se queda:**
+- Lecciones no espera a Studio, y el orden de la cola de Studio no le afecta.
+- Mientras dure la PAA, a la cola de Studio entran dos cosas: lo que pidan las lecciones, y lo que haga el editor
+  seguro para otra persona.
+- Lo demás espera al pulido de después de la PAA, cuyo objetivo es que un maestro corrija una lección sin ayuda.
+- La cabina no actúa por iniciativa propia sobre esto.

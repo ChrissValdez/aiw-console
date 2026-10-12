@@ -97,3 +97,23 @@ porquie me das la pregunta aqui en el chat yu me saca de contexto
 **Lo que cambia:** durante una QA la cabina **no lanza preguntas de clic**. Entrega los pasos del run y **espera a
 que el operador escriba el resultado**. Esto cambia la regla anterior, que pedía preguntas de clic, **solo para la
 QA**; las decisiones fuera de la QA no cambian.
+
+## Tercer ajuste — la forma fija de toda QA (LITERAL, 2026-10-11)
+
+```
+no se porque pero no entiendo tu QA
+
+empieza diciendmoe
+archivo para abirr
+luego pasos del QA y veredictos a tomar
+
+y asi siento que esta toda la informacion por todos lados
+```
+
+**La forma, desde ahora, para toda QA:** una QA por mensaje, de un solo run, y nada más en ese mensaje. Tres bloques
+y en este orden:
+1. **Archivo para abrir.**
+2. **Pasos de la QA**, cada uno con lo que se espera ver.
+3. **Veredictos a tomar.**
+
+Los avisos, los hallazgos y el estado del commit no van en ese mensaje.

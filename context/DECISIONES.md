@@ -3271,3 +3271,30 @@ convención en el suyo.
 
 **Criterio de borrado:** se elimina si el piloto demuestra que un formato común de reporte sirve
 mejor que los HTML por hilo, y el operador lo decide.
+
+## D-077 — LA PAUTA LA MARCAN LAS LECCIONES, NO CANTU STUDIO
+
+**Fecha:** 2026-10-11, 20:06 CDMX. **Origen:** hilo LECCIONES. **Afecta a:** `cantu-lessons` y `cantu-studio`.
+**Verbatim:** `cantu-lessons/docs/veredictos/2026-10-11-la-pauta-la-marcan-las-lecciones.md` y
+`cantu-lessons/docs/veredictos/2026-10-11-componente-bloque-html-o-ajuste-y-el-conteo-por-area.md`.
+
+> «la pauta la marcan las lecciones no el studio»
+> «para el alumno es imperceptible si hiciste el html manual o si use cantu studio»
+
+### La regla
+
+- **Ninguna lección espera a Cantu Studio.** Se usa siempre su compilador; su editor, cuando ayude. El borrador
+  existe siempre detrás.
+- **Si un componente limita el diseño, va un «Bloque HTML»** que sigue
+  `context/cantu-studio/REGLA-DEL-BLOQUE-HTML-PALETA-Y-TAMANO.md`. Aprobado por el operador, es una forma terminada.
+- **Si el componente existe pero le falta un ajuste,** la cabina de Lecciones pregunta al operador si se pide, y
+  mientras tanto va el «Bloque HTML».
+- **Studio sigue trabajando en paralelo, en su hilo, con las peticiones de Lecciones.** Nadie espera su respuesta.
+  Cuándo un bloque se vuelve componente: la regla del tres, o cuando el operador lo pide.
+- **Conteo de «Bloque HTML» al final de cada área**, acumulado con las anteriores.
+
+**Lo que esta decisión NO hace:** no cambia la cola de Studio ni sus reglas internas; no vuelve obsoleto a Studio.
+
+**Criterio de borrado:** cuando las lecciones de la PAA estén completas y Studio pase a ser la herramienta principal
+de edición, y el operador lo decida.
+

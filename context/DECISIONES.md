@@ -3298,3 +3298,32 @@ mejor que los HTML por hilo, y el operador lo decide.
 **Criterio de borrado:** cuando las lecciones de la PAA estén completas y Studio pase a ser la herramienta principal
 de edición, y el operador lo decida.
 
+## D-078 — EL EDITOR DE CANTU STUDIO NO SE ARCHIVA: SE TERMINA DESPUÉS DE LA PAA, PARA QUE EDITEN MAESTROS
+
+**Fecha:** 2026-10-11, 20:29 CDMX. **Origen:** hilo LECCIONES. **Afecta a:** `cantu-studio` y `cantu-lessons`.
+**Verbatim:** `cantu-lessons/docs/veredictos/2026-10-11-el-editor-de-studio-se-termina-despues-de-la-paa.md`.
+**Completa D-077.**
+
+> «me surgio la duda de si se volvio obsoleto para siempre o si en un futuro valdra la pena tenerlo»
+> «a un futuro si seria ideal poner maestros a trabajar en el material ya sea crearlo de cero o crear bocetos con
+> claude y que sean revisados y editados por maestros»
+
+### La regla
+
+- **El compilador** de Studio se usa siempre y no está en duda. **La duda era el editor.**
+- **El editor no se archiva.** Su propósito nuevo: que maestros revisen y editen material, propio o borradores de
+  Claude, en los cursos que siguen a la PAA (EXANI II, más exámenes, más cursos académicos).
+- **Mientras dure la PAA,** Studio no hace componentes nuevos por iniciativa propia. Solo: lo que pidan las lecciones
+  (D-077) y lo que haga el editor **seguro para otra persona** (abrir varias lecciones sin que se pisen, errores que
+  nombran el campo).
+- **Entre la PAA y el EXANI II:** el pulido grande del editor, con la PAA terminada como banco de pruebas. La meta:
+  abrir varias lecciones; editar texto, fórmula y color sin romper nada; ver lo que se publica; deshacer o volver a una
+  versión.
+- **Terminado = un maestro que nunca lo vio corrige una lección de la PAA sin ayuda y sin romperla.**
+- **Capacitaciones empresariales:** nada todavía.
+
+**Lo que esta decisión NO hace:** no reordena la cola actual de Studio; le dice qué entra a ella hasta que termine la
+PAA.
+
+**Criterio de borrado:** si el operador deja el plan de que editen maestros, el editor se archiva y esta decisión se
+retira.

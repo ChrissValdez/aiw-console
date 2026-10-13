@@ -17,6 +17,13 @@ Cantu Studio declara en cada lección (vista previa, WEB.html y MOODLE.html) la 
 como variables CSS, y el lector cambia el tamaño de letra con A+ y A−. Un bloque sigue a los dos si cumple
 esto:
 
+**Slide (desde el 2026-10-13, `RUN-CANTU-SLIDE-PALETTE-VARIABLES-001`, petición 27).** La salida slide (la vista
+previa Slide y el SLIDE.html) declara la paleta **activa de slide** del mismo modo («Paleta de colores» con una lección
+slide abierta): con los mismos nombres `--cs-palette-<id>-<rol>`, y las `--n-role-*-bd/-bg` también la siguen (punto
+3). **En slide no hay A+ ni A−:** la salida slide no define `--cs-scale` ni `--cs-text-*`, así que el punto 4 no se
+aplica allí, y un `var(--cs-text-*)` dentro de un bloque de slide no da ningún valor. *(Se contó en el código: no
+hay ninguna definición. No se midió en Chrome.)*
+
 1. **Color nuevo: siempre `var(--cs-palette-<id>-<rol>)`; nunca un hex.**
    - `<id>` es el id del token de la paleta: `def`, `ctx`, `ex`, `focus`, `str`, `res`, `wrn`, `err`, `meta`,
      `color` y `color_2` (y cualquier token que el operador añada, con su id).

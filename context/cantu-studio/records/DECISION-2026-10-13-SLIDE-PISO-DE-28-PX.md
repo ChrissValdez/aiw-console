@@ -12,3 +12,10 @@
   matemático».
 - No se añade ningún mando nuevo.
 - Cambian todas las slides a propósito, y el run nombra cuáles.
+
+## Corrección posterior (2026-10-13)
+
+**Esta decisión quedó revocada para la «Jerarquía» (28.1).** La cabina la recomendó sin medirla, y el taller del #262
+midió que a 28 px no cabe ningún árbol. El operador eligió la salida D: no se toca el motor. Lo dice
+`VEREDICTO-262-QA-PASS-Y-LA-JERARQUIA-SE-QUEDA.md`. **Para el número de paso (28.2) el piso sí se construyó y sigue en
+pie.**

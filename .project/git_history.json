@@ -1,27 +1,799 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-05T04:24:46.257Z",
+  "generated_at": "2026-10-19T22:32:54.915Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-05T01:18:41.464Z"
+      "mtime": "2026-10-18T08:00:18.293Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-05T04:24:46.210Z"
+      "mtime": "2026-10-19T22:32:54.857Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "00c2e06c2160b45dc9b9330d8f7a5353fbafe031",
+  "head": "d74a1133c0a171ab8853826bbb1caaa2f2d37cfa",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 463,
+  "commit_total": 540,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "d74a113",
+      "full_sha": "d74a1133c0a171ab8853826bbb1caaa2f2d37cfa",
+      "date": "2026-10-18T08:00:17+00:00",
+      "parents": "c111503",
+      "subject": "context/cantu-studio: veredicto del #265 (pass)",
+      "body": "- records/VEREDICTO-265-QA-PASS.md: «pass», literal.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c111503",
+      "full_sha": "c1115037642aabba6c56e1ff511ed8fada0ba987",
+      "date": "2026-10-18T06:59:49+00:00",
+      "parents": "4a6dc7f",
+      "subject": "context/cantu-studio: decision del operador (peticion 31 en dos runs) y la fila 31 de PETICIONES, en curso",
+      "body": "- records/DECISION-2026-10-18-PETICION-31-EN-DOS-RUNS.md: «que recomiendas» / «procede tu recomendacion», literal.\n- PETICIONES-DE-LECCIONES.md, fila 31: en curso (#265 y #266), con lo medido y lo que cambia para Lecciones.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4a6dc7f",
+      "full_sha": "4a6dc7f3e91a5cb92eec92e3183d2e3e0a5a3e83",
+      "date": "2026-10-18T06:55:42+00:00",
+      "parents": "79bdc74",
+      "subject": "context/cantu-studio: veredicto del #264 (pass) y la fila 30 de PETICIONES, con el nombre \"resultGreen\": \"strong\"",
+      "body": "- records/VEREDICTO-264-QA-PASS.md: «ok pass», literal.\n- PETICIONES-DE-LECCIONES.md, fila 30: construida y aprobada; el nombre, sus reglas y lo visto de paso.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "79bdc74",
+      "full_sha": "79bdc7429090c674d5dc20f2eb22c13b503e3738",
+      "date": "2026-10-18T03:39:26+00:00",
+      "parents": "bcfcc36",
+      "subject": "context/cantu-studio: fila 30 de PETICIONES (en curso, #264), con lo que midio Studio",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "bcfcc36",
+      "full_sha": "bcfcc36730bf1ffaefb5c053acd1f7f5ed57abd5",
+      "date": "2026-10-17T02:16:49+00:00",
+      "parents": "991d1bd",
+      "subject": "context/cantu-studio: veredicto del #263 (pass) y la fila 29 de PETICIONES, con la letra minima y cuando partir a mano",
+      "body": "- records/VEREDICTO-263-QA-PASS.md: «se ve bien pass», literal.\n- PETICIONES-DE-LECCIONES.md, fila 29: construida y aprobada; letra minima 60 %\n  (12,14 px a A 1,00; 15,79 px a A+ x3); tabla de signos por renglon.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "991d1bd",
+      "full_sha": "991d1bdea31797b1b9784cb888f7069b7e2adcfa",
+      "date": "2026-10-16T05:01:09+00:00",
+      "parents": "f0d9a1e",
+      "subject": "cantu-studio: PETICIONES, la 29 en curso",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f0d9a1e",
+      "full_sha": "f0d9a1e2549f8ce252f6a5435127c59130d47198",
+      "date": "2026-10-13T12:59:39+00:00",
+      "parents": "b9c5104",
+      "subject": "cantu-studio: decision literal, la revision por lote de L01 (#254) se cierra",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b9c5104",
+      "full_sha": "b9c51047ee12f2cbaf27d20de627bd656bd5404b",
+      "date": "2026-10-13T12:58:39+00:00",
+      "parents": "f62ba1f",
+      "subject": "cantu-studio: veredicto literal del #262; el piso de 28 px revocado para la Jerarquia; PETICIONES, la 28",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f62ba1f",
+      "full_sha": "f62ba1f3e16b8dc8c1e01a13d7c1833275635904",
+      "date": "2026-10-13T11:43:36+00:00",
+      "parents": "2a6aeaa",
+      "subject": "cantu-studio: veredicto literal del lote #259+#260 (pass); PETICIONES, la 25 y la 26 aprobadas",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2a6aeaa",
+      "full_sha": "2a6aeaa590d17d0b766dd6673c81c09f49482bb3",
+      "date": "2026-10-13T11:38:45+00:00",
+      "parents": "0dce60c",
+      "subject": "cantu-studio: veredicto literal del #261 (pass); PETICIONES, la 27 aprobada y la 28 en curso",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "0dce60c",
+      "full_sha": "0dce60cf600a48da5fd0bf66d20f446a1b69d927",
+      "date": "2026-10-13T11:29:05+00:00",
+      "parents": "a297ed7",
+      "subject": "cantu-studio: la regla del Bloque HTML vale tambien en slide (paleta de slide, sin A+/A-); PETICIONES, la 27 construida",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "a297ed7",
+      "full_sha": "a297ed79c6975ce527064fe64f7e60f0fbd3a3a2",
+      "date": "2026-10-13T11:18:14+00:00",
+      "parents": "446a1ab",
+      "subject": "cantu-studio: peticion 28 recibida y decision literal del operador (slide: piso de 28 px, sin mando)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "446a1ab",
+      "full_sha": "446a1abb8fdf80a5523ef27f48c0ba301fd6bb46",
+      "date": "2026-10-13T10:38:27+00:00",
+      "parents": "a224775",
+      "subject": "cantu-studio: PETICIONES, la 27 en curso",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "a224775",
+      "full_sha": "a224775591d12b681d9d97645dff30359817d818",
+      "date": "2026-10-13T10:09:32+00:00",
+      "parents": "6a50c93",
+      "subject": "cantu-studio: PETICIONES, la 27 recibida (paleta en slide)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6a50c93",
+      "full_sha": "6a50c931d7cf5dfb48bd41586cec0a2a701db3e5",
+      "date": "2026-10-13T07:33:39+00:00",
+      "parents": "50f53ec",
+      "subject": "cantu-studio: decision literal del operador sobre las peticiones 25 y 26; PETICIONES al dia",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "50f53ec",
+      "full_sha": "50f53ecc552abaf5099176d9f1d1d0a5d233aa7f",
+      "date": "2026-10-13T06:33:53+00:00",
+      "parents": "458b04b",
+      "subject": "cantu-studio: veredicto literal del #258 (pass); PETICIONES, la 24 construida y la 25 recibida",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "458b04b",
+      "full_sha": "458b04ba1c3ba8f5e370b466425af6b8e61ed12b",
+      "date": "2026-10-13T06:11:10+00:00",
+      "parents": "4b0609c",
+      "subject": "cantu-studio: veredicto literal de la QA del #257 (pass)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4b0609c",
+      "full_sha": "4b0609c98243b6169aca492beb33dccb0b5edb3f",
+      "date": "2026-10-13T00:48:27+00:00",
+      "parents": "4fc9eda",
+      "subject": "cantu-studio: veredicto literal de la QA del #256 (pass)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4fc9eda",
+      "full_sha": "4fc9edac151a000fb8cec89f97049f74151367a1",
+      "date": "2026-10-12T23:17:46+00:00",
+      "parents": "a757d38",
+      "subject": "cantu-studio: PETICIONES-DE-LECCIONES, filas 22, 23 y 24 (la 24 en curso)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "a757d38",
+      "full_sha": "a757d38fbb570cf24b2f10f87fae52df5882cc83",
+      "date": "2026-10-12T02:42:28+00:00",
+      "parents": "c8db72b",
+      "subject": "cantu-studio: D-077/D-078 y la aclaracion literal del operador sobre la metodologia",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "c8db72b",
+      "full_sha": "c8db72bdb8a013cf773cd5bb57ac4dc3d81ce848",
+      "date": "2026-10-12T02:30:32+00:00",
+      "parents": "af03b8b",
+      "subject": "context: D-078 -- el editor de Cantu Studio se termina despues de la PAA, para que editen maestros (hilo LECCIONES)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01LJgsZzwKQ1viz6hiuEkJ3A",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "af03b8b",
+      "full_sha": "af03b8b27cf0c1495b03c94a670e88a90c843dda",
+      "date": "2026-10-12T02:16:11+00:00",
+      "parents": "ed35956",
+      "subject": "cantu-studio: veredicto literal de la QA del #255 (pasa; el numero del paso)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "ed35956",
+      "full_sha": "ed35956526ea5f7009965c011c032f0dbd296444",
+      "date": "2026-10-12T02:09:02+00:00",
+      "parents": "3d42e60",
+      "subject": "cantu-studio: la forma fija de toda QA - archivo, pasos, veredictos (literal del operador)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "3d42e60",
+      "full_sha": "3d42e605d0d74254de06b3fd5cd485849bf78d38",
+      "date": "2026-10-12T02:08:07+00:00",
+      "parents": "7e8e8bf",
+      "subject": "context: D-077 -- la pauta la marcan las lecciones, no Cantu Studio (hilo LECCIONES)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01LJgsZzwKQ1viz6hiuEkJ3A",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7e8e8bf",
+      "full_sha": "7e8e8bf55ecbf8185e0cfe1221cf25d3ce8d2a08",
+      "date": "2026-10-11T05:58:46+00:00",
+      "parents": "1b70b32",
+      "subject": "cantu-studio: #254, decision literal del operador - las notas del paso se hacen de piezas",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1b70b32",
+      "full_sha": "1b70b32d6902f91a8b8d38a1d94b7ba84a9cc875",
+      "date": "2026-10-11T05:57:27+00:00",
+      "parents": "1915b84",
+      "subject": "cantu-studio: #254, aclaracion literal - bloque de formula con Alineacion de las formulas dentro de las notas",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1915b84",
+      "full_sha": "1915b84365e5c5eaf60344650182f974c5f95557",
+      "date": "2026-10-11T05:53:45+00:00",
+      "parents": "2996162",
+      "subject": "cantu-studio: #254, hallazgo literal del operador - las notas del paso son demasiado rigidas",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "2996162",
+      "full_sha": "29961624738d45efb9a16b37d5ac05fb56ab51dc",
+      "date": "2026-10-11T05:00:06+00:00",
+      "parents": "d0b54c2",
+      "subject": "cantu-studio: en la QA, pasos y el operador escribe el resultado; sin preguntas de clic (literal)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d0b54c2",
+      "full_sha": "d0b54c22404e0542b2d816d19344dca54013f5c5",
+      "date": "2026-10-11T03:40:00+00:00",
+      "parents": "1d76cad",
+      "subject": "cantu-studio: correccion, la revision del lote va un run a la vez (literal del operador)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1d76cad",
+      "full_sha": "1d76cad18f8cf1b08188e60228b7ba4b66e25787",
+      "date": "2026-10-11T03:37:52+00:00",
+      "parents": "9f703bd",
+      "subject": "cantu-studio: la revision del lote, un paso a la vez (ajuste literal del operador)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "9f703bd",
+      "full_sha": "9f703bd59405bfa237be6a4cacdd7363b628f3ab",
+      "date": "2026-10-11T00:55:13+00:00",
+      "parents": "5b3603a",
+      "subject": "cantu-studio: el mensaje del operador, literal, y la confirmacion del flujo por lotes",
+      "body": "Correccion: el record de la pieza nueva traia un resumen NO literal porque la\ncabina creia perdido el mensaje; volvio a llegar y se transcribe tal cual.\nEl record de la QA por lotes suma la confirmacion literal del operador y lo\ndecidido: QA de #224 y #253 diferida al lote, y la revision final como run propio.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "5b3603a",
+      "full_sha": "5b3603a813095084351e19b91bacfd4250c32a95",
+      "date": "2026-10-11T00:47:54+00:00",
+      "parents": "6db667a",
+      "subject": "cantu-studio: la QA se agrupa en lotes, y una revision final de todo",
+      "body": "Decision del operador del 2026-10-10, con su mensaje literal y la lectura\nde la cabina marcada como pendiente de confirmar.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "6db667a",
+      "full_sha": "6db667a91593fb5124cd89b61b7dfeb343473ddc",
+      "date": "2026-10-11T00:44:48+00:00",
+      "parents": "231831f",
+      "subject": "cantu-studio: pieza nueva primero como Bloque HTML, y lo no vital al archivo",
+      "body": "Decision del operador del 2026-10-10, con sus cuatro respuestas literales;\nel mensaje original se resume como NO literal (se perdio al compactar).\nPETICIONES-DE-LECCIONES.md: seccion nueva para Lecciones (podeis reanudar,\nla regla del Bloque HTML primero, que pasa al archivo) y filas 9, 11, 13 y\n17 marcadas como construidas, con la cola al dia.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "231831f",
+      "full_sha": "231831fe62507c6a126116a35b9b2480f88fe28e",
+      "date": "2026-10-11T00:28:11+00:00",
+      "parents": "1b1918b",
+      "subject": "context(cantu-studio): veredicto verbatim del #247 -- pasa; QA del #224 sin consola; sigue la vista previa que nombra el campo",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1b1918b",
+      "full_sha": "1b1918b0388ebe36de22b8db1899a6eacbb8aa26",
+      "date": "2026-10-10T22:59:30+00:00",
+      "parents": "7a084d2",
+      "subject": "context(cantu-studio): veredictos verbatim de #245 y #246 -- pasan; run corto para el escape de KaTeX",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7a084d2",
+      "full_sha": "7a084d29e4e405f3e8b39247bdbe53f291622c41",
+      "date": "2026-10-10T21:36:40+00:00",
+      "parents": "a84c6a8",
+      "subject": "context(cantu-studio): veredicto verbatim del #244 ronda 2 -- pasa",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "a84c6a8",
+      "full_sha": "a84c6a8a921d4011065d1330251d5091f40cdfe5",
+      "date": "2026-10-10T21:10:17+00:00",
+      "parents": "7acb3b2",
+      "subject": "context(cantu-studio): decision verbatim -- la «Regla» ajustada se construye igual (#244)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "7acb3b2",
+      "full_sha": "7acb3b2685cbed540a1e26fee3c943f7881db830",
+      "date": "2026-10-10T20:40:19+00:00",
+      "parents": "699176c",
+      "subject": "context(cantu-studio): veredicto verbatim del #241 -- pasa; run corto para la tabla de siempre",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "699176c",
+      "full_sha": "699176cf468f7ae6197db017980813f044cf02df",
+      "date": "2026-10-10T08:22:59+00:00",
+      "parents": "cce1e65",
+      "subject": "context(cantu-studio): veredictos verbatim de las rondas 2 (#236, #239, #240) y peticiones al dia",
+      "body": "- records/VEREDICTO-236-239-240-QA-RONDA-2-PASS.md: los tres «Sí, pasa».\n- PETICIONES-DE-LECCIONES.md: filas 14 («Para saber mas») y 21 (dos notas por paso)\n  construidas, con lo que Lecciones necesita para escribirlas desde el editor; fila 9\n  («Tabla»), contrato hecho y formulario en curso; cola al dia.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "cce1e65",
+      "full_sha": "cce1e651df0eaaf98dda217e7e1741fd823b5c08",
+      "date": "2026-10-10T07:46:17+00:00",
+      "parents": "fdfa35e",
+      "subject": "context(cantu-studio): veredicto verbatim del #240 ronda 1 -- pasa; en el movil se apila por filas",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "fdfa35e",
+      "full_sha": "fdfa35e402e10c61a7883c2b8f0134e25ba18013",
+      "date": "2026-10-10T06:34:34+00:00",
+      "parents": "17f707a",
+      "subject": "context(cantu-studio): veredicto verbatim del #239 -- pasa; la «Etiqueta» vacia con el numero de pista",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "17f707a",
+      "full_sha": "17f707a77c4186f2f7d9857cd26a7badaf0fa927",
+      "date": "2026-10-10T05:46:58+00:00",
+      "parents": "bbb7845",
+      "subject": "context(cantu-studio): veredicto verbatim del #238 ronda 3 -- pasa; run nuevo para el margen del movil",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "bbb7845",
+      "full_sha": "bbb78459806e40ac4f7c4174bad888850173f108",
+      "date": "2026-10-10T05:10:29+00:00",
+      "parents": "cc1e81c",
+      "subject": "context(cantu-studio): veredicto verbatim del #238 ronda 2 -- pestanas pasan, rojo oscuro, movil a arreglar",
+      "body": "Incluye la correccion de la cabina: «el texto oscuro de res» no era verde.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "cc1e81c",
+      "full_sha": "cc1e81c958b8f973db6f38d4788ae639cd41eb50",
+      "date": "2026-10-10T04:34:47+00:00",
+      "parents": "69c8e7b",
+      "subject": "context(cantu-studio): veredictos verbatim -- #238 como pestanas y verde oscuro; #236 solo el «+» blanco",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "69c8e7b",
+      "full_sha": "69c8e7b4ec5d6beeca472a22a8f03b3cd4e16371",
+      "date": "2026-10-10T03:38:18+00:00",
+      "parents": "8f4932a",
+      "subject": "context(cantu-studio): veredicto verbatim del #237 -- pasa; el «+» blanco va al contrato; alineacion A",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8f4932a",
+      "full_sha": "8f4932afdd10244e1232cdcf625081ec07e71106",
+      "date": "2026-10-10T02:04:40+00:00",
+      "parents": "4375a2c",
+      "subject": "context(cantu-studio): veredicto parcial verbatim del #236 -- errores de diseno sin precisar y el componente no se edita",
+      "body": "Paso 3 (A+) pasa; paso 4 sin Moodle donde probar; paso 2 no se entendio; paso 1 «tiene\nerrores de diseño» y «no me deja editarlo». La cabina pide la captura y abre #237.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4375a2c",
+      "full_sha": "4375a2c560a8e93c56760225f49408d5e20c8c20",
+      "date": "2026-10-10T00:37:01+00:00",
+      "parents": "cd8f847",
+      "subject": "context(cantu-studio): #230 pasa la ronda 3; la regla del «Bloque HTML» para Lecciones; peticion 20 construida",
+      "body": "- records/VEREDICTO-230-QA-RONDA-3-PASS.md: verbatim, «Sí, pasa (Recomendado)».\n- REGLA-DEL-BLOQUE-HTML-PALETA-Y-TAMANO.md (nuevo): la regla del taller (§R3.7),\n  transcrita sin cambios, para el hilo de lecciones.\n- PETICIONES-DE-LECCIONES.md: fila 20 construida, con la regla en corto y lo que cambia\n  en sus borradores; «Diseño de pagina» hecho.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "cd8f847",
+      "full_sha": "cd8f84734f65fdb93037fa27ad1843eb97c4a140",
+      "date": "2026-10-09T23:49:18+00:00",
+      "parents": "37f3a20",
+      "subject": "context(cantu-studio): veredictos verbatim -- #234 pasa, y #230 ronda 2 pasa y vuelve a la B",
+      "body": "- #234 RUN-CANTU-PAGE-DESIGN-EDITOR-001: QA de 4 pasos, «Pasa: los 4 pasos bien».\n- #230 RUN-CANTU-HTML-BLOCK-FOLLOWS-THE-PAGE-001: pasos 1-3 pasan; al ver\n  operar_con_signos, el operador sustituye la opcion C por la B (los -tx vuelven a\n  ser de fabrica). Abre ronda 3.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "37f3a20",
+      "full_sha": "37f3a202c0e4aef1deba83776f724f4d264f7277",
+      "date": "2026-10-09T22:46:59+00:00",
+      "parents": "57ce16a",
+      "subject": "context(cantu-studio): decision verbatim -- las variables de fabrica siguen a la paleta (opcion C) y dos decisiones del diseno",
+      "body": "- #230: las --n-role-* siguen a la paleta activa, texto incluido (opcion C, no la\n  recomendada por la cabina). Abre una ronda 2 del #230; cambia operar_con_signos.\n- #234: el titulo dentro de «Dos columnas» no recibe el espacio; la insignia «al lado»\n  va centrada contra todo el titulo. Ambas como estan construidas.\n- La carpeta cache suelta del taller del #234: borrada por la cabina con su palabra.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "57ce16a",
+      "full_sha": "57ce16a27036e3bf41ba4065ad6fc35e839c7c7b",
+      "date": "2026-10-09T18:47:13+00:00",
+      "parents": "49942f3",
+      "subject": "context(cantu-studio): peticiones al dia -- dos fusiones, la tarjeta construida y la cola",
+      "body": "- Fila 17: la «Regla matematica» ajustada pasa a un solo run,\n  RUN-CANTU-MATH-RULE-FITTED-WIDTH-001 (sustituye a -CONTRACT-001 y -EDITOR-001).\n- Fila 20: RUN-CANTU-HTML-BLOCK-FOLLOWS-THE-PAGE-001, en curso, sustituye a\n  RUN-CANTU-PALETTE-AS-CSS-VARIABLES-001 y suma el tamano de letra A+/A-.\n- Fila 4: la «Tarjeta» con recuadro interior, construida y aprobada (2026-10-09).\n- Tabla del orden: «Diseno de pagina» con contrato hecho e interfaz en curso; fuera\n  la fila de la tarjeta.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "49942f3",
+      "full_sha": "49942f37e24fa73c20ea9283889e49db4b8e81a8",
+      "date": "2026-10-09T18:31:57+00:00",
+      "parents": "60df743",
+      "subject": "context(cantu-studio): decision verbatim -- dos fusiones (paleta + A+/A-, y la Regla en un run)",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "60df743",
+      "full_sha": "60df743bf2a1cf955c5cef77e2eff0c5a7d90b1a",
+      "date": "2026-10-09T18:30:56+00:00",
+      "parents": "f908495",
+      "subject": "context(cantu-studio): decision verbatim -- el Bloque HTML sigue a A+ y A-",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f908495",
+      "full_sha": "f908495ddf64a7edaf09f9743310834765b99cc1",
+      "date": "2026-10-09T18:11:49+00:00",
+      "parents": "d414a8b",
+      "subject": "context(cantu-studio): QA del #232 verbatim -- pass",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d414a8b",
+      "full_sha": "d414a8b3405480b3eae2648ac2372b4819ca031f",
+      "date": "2026-10-09T17:08:59+00:00",
+      "parents": "5d1c529",
+      "subject": "context(cantu-studio): decision verbatim -- «Dos columnas» recupera su titulo",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "5d1c529",
+      "full_sha": "5d1c5298bd88f897a7d398c1b12b57069c6a218b",
+      "date": "2026-10-09T17:07:49+00:00",
+      "parents": "e667a5d",
+      "subject": "context(cantu-studio): QA del #231 verbatim -- pass",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "e667a5d",
+      "full_sha": "e667a5d9f1a6b8c7c0937887c7f8df4c087eedfa",
+      "date": "2026-10-09T01:40:49+00:00",
+      "parents": "4e3ed08",
+      "subject": "context(cantu-studio): Lecciones recibe la fila 21 -- dos notas por paso, en cola",
+      "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4e3ed08",
+      "full_sha": "4e3ed08d9f871868ada44e412d2a791e5df61111",
+      "date": "2026-10-09T01:19:37+00:00",
+      "parents": "d3169c7",
+      "subject": "context(cantu-studio): decision verbatim -- dos notas por paso, despues de Para saber mas",
+      "body": "Peticion 21 de Lecciones (commit f4f1227). Se escribe en la cola al terminar el\ntaller del #231.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "d3169c7",
+      "full_sha": "d3169c7b72e6b229e27f015343e972e40fc3b770",
+      "date": "2026-10-09T00:54:17+00:00",
+      "parents": "67bc479",
+      "subject": "context(cantu-studio): veredicto verbatim -- ADR-007 aprobado y QA de la Tarjeta en verde",
+      "body": "Respuestas del operador al componente de preguntas: ADR, sí a las 9; Tarjeta, se ve\nbien; el panel, sin probar todavía. Más su captura de la insignia «al lado», que ya\ncorrige RUN-CANTU-PAGE-DESIGN-CONTRACT-001.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "67bc479",
+      "full_sha": "67bc479243b0d647625b4fbe6cc32fc4f51811a4",
+      "date": "2026-10-08T11:01:22+00:00",
+      "parents": "3082673",
+      "subject": "context(cantu-studio): Diseño de pagina es un ajuste real; Lecciones recibe las filas 16 a 20",
+      "body": "Decision verbatim del operador («estoy deacuerdo procede») y PETICIONES-DE-LECCIONES.md\ncon las peticiones 16-20 aplicadas en la cola, la 7 (El porque, retirado) y la 8\n(Lo que te llevas, en espera) cambiadas, y el orden nuevo.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "3082673",
+      "full_sha": "30826739b19f14c1b7926d5ecfcc045ab0615061",
+      "date": "2026-10-08T02:23:38+00:00",
+      "parents": "90ae79a",
+      "subject": "context(cantu-studio): QA ronda 1 del control del aire (#225), verbatim",
+      "body": "Nombre, insignia al lado mal, demasiado texto, sin la casilla del primer titulo,\nla tarjeta de ancho fijo con el margen hacia dentro, y Generar Web que no uso\nsus cifras.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "90ae79a",
+      "full_sha": "90ae79a2404125d2e29715b81305db2eaadaac3e",
+      "date": "2026-10-08T02:13:04+00:00",
+      "parents": "f592696",
+      "subject": "context(cantu-studio): los borradores de QA van donde los abre start-editor",
+      "body": "start-editor.ps1 usa cantu-lessons como workspace, asi que Explorar no veia el\nborrador que la cabina puso en cantu-studio. Decision del operador, verbatim: un\nsolo lanzador. Los borradores de QA de Studio viven en\ncantu-lessons/drafts/web/qa_cabina/ (solo ahi, sin commitear en ese repo), y se\navisa a Lecciones en PETICIONES-DE-LECCIONES.md.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "f592696",
+      "full_sha": "f592696c8f56960b84ed072aae99fd3467d6b1a2",
+      "date": "2026-10-08T01:23:07+00:00",
+      "parents": "bd66f2d",
+      "subject": "context(cantu-studio): decision verbatim -- la QA se entrega en un borrador ya montado",
+      "body": "El operador: no mas «Insertar JSON» para cada QA, salvo cuando lo probado es el\npropio Insertar JSON. Toda QA de pantalla llega como un borrador que se abre desde\nExplorar; los tickets lo pediran desde ahora.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "bd66f2d",
+      "full_sha": "bd66f2ddaa724d6ce81cc66eea64c5b968bf5584",
+      "date": "2026-10-07T22:45:04+00:00",
+      "parents": "874e7be",
+      "subject": "context(cantu-studio): QA ronda 1 del aire de la pagina, verbatim -- el padding interno y un control",
+      "body": "El operador: la banda gris exterior no aporta, el problema es el margen interior,\nla insignia sigue sobre el titulo, no quiere QA con la consola, y pide un control\npara mover esas cosas y decidir sobre el. Se aplica en cantu-studio (commit del\nroadmap del mismo momento).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "874e7be",
+      "full_sha": "874e7bec31570f675f15a7016dca36825fdae4e2",
+      "date": "2026-10-07T22:24:51+00:00",
+      "parents": "8c53041",
+      "subject": "context(cantu-studio): Studio pregunta a Lecciones por el diseno de «El porque» y «Lo que te llevas»",
+      "body": "El ADR-007 del contrato comun (cantu-studio, en propuesta) midio que ninguno de los\ndos tiene diseno aprobado, y sus runs de contrato van justo despues de «Para saber\nmas». Se pregunta en PETICIONES-DE-LECCIONES.md, con cuatro hallazgos del ADR\nsobre ficheros de Lecciones.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8c53041",
+      "full_sha": "8c530410f44a85c8bcaf96b4dab945a94e7254f5",
+      "date": "2026-10-07T21:28:38+00:00",
+      "parents": "66a1b7b",
+      "subject": "context(cantu-studio): QA ronda 2 del #223 verbatim, y Lecciones recibe las filas 14 y 15",
+      "body": "VEREDICTO-223-QA-RONDA-2-OKK.md: «okk», aprobado global sin detalle por paso;\nel #223 se cierra. PETICIONES-DE-LECCIONES.md: la 12 hecha; la 14 («Para saber\nmas») en cola tras el contrato comun; la 15 aplicada (Pregunta retirada, la\nExplicacion matematica basica aplazada); la 11 fusionada con el margen interior;\nel orden nuevo en tres carriles. Corrige la version 23c2a22: citaba #N que ya\nhabian cambiado, y una linea en blanco partia la tabla.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "66a1b7b",
+      "full_sha": "66a1b7b4ebdab43526f8ab11919bf7432a3a0452",
+      "date": "2026-10-07T21:18:07+00:00",
+      "parents": "43e53c6",
+      "subject": "context(cantu-studio): decision verbatim -- tres carriles y dos fusiones",
+      "body": "Para acelerar: tres carriles (lo publicado, el editor, documentos) con superficies\ndisjuntas medidas; margen interior y espacio de titulos fusionados en «El aire de\nla pagina»; contratos de «El porque» y «Lo que te llevas» en un lote. Se aplica al\ncerrar el #223.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "43e53c6",
+      "full_sha": "43e53c643a8bcb16ae74119648c4de35247dc241",
+      "date": "2026-10-07T21:10:05+00:00",
+      "parents": "9bc8bb9",
+      "subject": "context(cantu-studio): decision verbatim -- el orden nuevo de la cola, y sale Pregunta",
+      "body": "El operador fija el orden tras el #223 (vista previa y margenes, Tarjeta, luego los\ncomponentes nuevos) y, en el hilo LECCIONES, saca «Una pregunta» del esqueleto\n(peticion 15, commit 2777fc5 de cantu-lessons). Se aplica al cerrar el #223, en\nuna sola escritura con el ritual.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "9bc8bb9",
+      "full_sha": "9bc8bb9a30da6be1dae24babd9ae3c20ac9aa6fc",
+      "date": "2026-10-07T21:02:11+00:00",
+      "parents": "4682c3b",
+      "subject": "context(cantu-studio): decision verbatim -- margen interior y ancho del panel",
+      "body": "El operador acepta dos runs nuevos que nacen de la QA ronda 1 del #223: mas\nmargen interior en la leccion publicada (la cifra la elige el en pantalla) y el\npanel de la vista previa que abre en su ancho minimo. Se escriben en la cola al\ncerrar el #223. Incluye, verbatim, su pregunta sobre cuantos runs faltan.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4682c3b",
+      "full_sha": "4682c3bf99687a51d5865119a2c271a1619e7c08",
+      "date": "2026-10-07T20:42:12+00:00",
+      "parents": "17cb905",
+      "subject": "context(cantu-studio): QA ronda 1 del #223, verbatim -- Expandir con doble fondo",
+      "body": "El veredicto del operador, palabra por palabra, con lo que la cabina midio en sus\ndos capturas: Expandir mete la pagina (banda gris + tarjeta) dentro del marco de\n1 240 px del editor; Abrir vista es la pagina publicada tal cual. La insignia y los\nmargenes de 60 px son de lo publicado, no de este run. QA parcial: pasos 2-4 sin\nrespuesta.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "17cb905",
+      "full_sha": "17cb9056c4d005dd1202f451e0a68798ec0f160e",
+      "date": "2026-10-07T08:05:31+00:00",
+      "parents": "9975e11",
+      "subject": "context(cantu-studio): decision verbatim -- «Para saber mas» entra en el contrato comun",
+      "body": "La decision del operador del 2026-10-07 sobre la peticion 14 del hilo LECCIONES\n(cantu-lessons, PARA-CANTU-STUDIO-2026-10-07.md, commit 53fe511): enmendar\nRUN-CANTU-HIGHLIGHTED-BLOCKS-SHARED-CONTRACT-001 e insertar dos runs (contrato e\ninterfaz) despues de RUN-CANTU-TAKEAWAY-EDITOR-001. Se aplica al cerrar el #223,\nno con su taller en vuelo. Este commit solo registra la decision.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "9975e11",
+      "full_sha": "9975e11fb6ee69c5c0e0bbeaf507a02b81aeea76",
+      "date": "2026-10-07T07:29:37+00:00",
+      "parents": "23c2a22",
+      "subject": "#66 RUN-CONSOLE-ROADMAP-DEFAULT-TAB-001: los proyectos abren en Roadmap, en la primera carga y en cada cambio de proyecto",
+      "body": "Trabajo del taller, commiteado por la cabina, con su reporte transcrito verbatim en\ncontext/aiw-console/records/REPORTE-TALLER-66-2026-10-07.md. Tres sitios asumian Overview como\ninicio y los tres pasan a Roadmap: el boton en index.html, la SECCION en index.html (que no estaba\nen las coordenadas del ticket: cambiar solo el boton habria marcado Roadmap mostrando Overview) y\nresetChromeToDefaults en project-console.js, que el shell corre en cada apertura de proyecto.\nOverview sigue y se abre con un clic. 8 tests nuevos, 6 rojos antes del cambio y por la razon\ncorrecta; ningun test de otro run tocado.\n\nVerificado por la cabina: solo ficheros del alcance; canonico intacto (md5 ee82169f); el\nlaunch.json del workspace, que el taller modifico y restauro, quedo identico (1029 bytes, mismas\ncinco entradas). Suite en tres tandas: 877 tests; el segundo fallo que salio en la VM de la cabina\n(projector.test.mjs, EPERM al limpiar su fixture) era del permiso de borrado caducado de la cabina,\nno del codigo -- con el permiso renovado ese fichero pasa 9/9. Equivale al 877/876/1 del taller.\n\nEL RUN SIGUE ACTIVO: falta la QA visual del operador.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-ROADMAP-DEFAULT-TAB-001"
+    },
+    {
+      "branch": "main",
+      "sha": "23c2a22",
+      "full_sha": "23c2a22b8c5baba587f33a5d4d0b0ee04608af85",
+      "date": "2026-10-06T07:57:17+00:00",
+      "parents": "12df337",
+      "subject": "context(cantu-studio): la nota va dentro de la tarjeta, y la revision de L01 entra en la cola",
+      "body": "La decision del operador del 2026-10-06, verbatim. PETICIONES-DE-LECCIONES.md\ncorrige la peticion 4 (Studio habia comunicado la forma B, el operador la\nrechazo en pantalla: va DENTRO, forma A1) y acusa las peticiones 11, 12 y 13\ncon sus runs y el orden.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "12df337",
+      "full_sha": "12df3371a8661b86c6520552a839fdfc77e7cf72",
+      "date": "2026-10-06T02:06:02+00:00",
+      "parents": "8ed206d",
+      "subject": "context(cantu-studio): QA ronda 2 del #222, verbatim -- pass al titulo",
+      "body": "pass global a los dos pasos del arreglo del titulo de la Nota destacada (Web y\nDiapositiva), sin detalle por paso. Cierra el #222 con el titulo entregado y la\nforma B rechazada en la ronda 1.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "8ed206d",
+      "full_sha": "8ed206d803a951f952cfe5c04a3a4cd2273e4ad3",
+      "date": "2026-10-05T23:52:19+00:00",
+      "parents": "66eaf2e",
+      "subject": "context(cantu-studio): QA ronda 1 del #222, verbatim -- la nota va dentro de la tarjeta",
+      "body": "El operador rechaza en pantalla la forma B para L01 (la nota debajo de la\ntarjeta): queria la nota destacada DENTRO de la tarjeta, como la\nClasificacion binaria de la leccion de referencia. Revoca para este caso el\nencuadre del #221. El paso 2 fallo por pegar en el carril Web (reproducido por\nla cabina con la funcion real); su mensaje no lo dice. Parcial: pasos 0, 1 y 4\nsin respuesta.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "66eaf2e",
+      "full_sha": "66eaf2e3da747f2c0df4907523a8fba25e6d9d5c",
+      "date": "2026-10-05T23:42:18+00:00",
+      "parents": "1864372",
+      "subject": "context(aiw-console): R-04 del operador, verbatim -- las rutas se dan completas en forma Windows, listas para pegar en el Explorador",
+      "body": "Solo este fichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1864372",
+      "full_sha": "186437277504074113fc333eb9c2d14b391ce844",
+      "date": "2026-10-05T23:16:49+00:00",
+      "parents": "1e91330",
+      "subject": "#65 RUN-CONSOLE-DOCS-TITLE-SEARCH-001: el reporte del taller, transcrito verbatim despues del cierre, y lo que la cabina mide sobre el",
+      "body": "El operador lo pego en la cabina el 2026-10-05, con el run ya cerrado. Tres correcciones hacia\nadelante: el 326 del ticket estaba vencido por las propias re-emisiones de la cabina (371 tras la\nde las 18:19, 372 hoy); la suite tarda ~7 s en el Windows del operador y mas de dos minutos en la VM\nde la cabina, y los dos numeros son ciertos; y la cabina no vio al leer el disco que el taller\nenmendo el test de regresion del #62 que exigia ningun campo en el lector modal -- dentro del\nalcance y mas estricto, pero el operador paso la QA sin saberlo. Quedan sin verificar la tecla\nmuerta de un teclado espanol fisico, el campo que no queda fijo al desplazar, y anchos estrechos.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-DOCS-TITLE-SEARCH-001"
+    },
+    {
+      "branch": "main",
+      "sha": "1e91330",
+      "full_sha": "1e9133038873c68365cf9881856dbc02a364be09",
+      "date": "2026-10-05T04:25:26+00:00",
+      "parents": "00c2e06",
+      "subject": "#65 RUN-CONSOLE-DOCS-TITLE-SEARCH-001 cierra con la QA visual del operador (\"pass\"), y #66 RUN-CONSOLE-ROADMAP-DEFAULT-TAB-001 pasa a active",
+      "body": "Veredicto verbatim en context/aiw-console/records/VEREDICTO-65-QA-VISUAL-2026-10-04.md: los cuatro\npasos y el juicio visual pasan. Por la consola (serve.mjs, dry-run y apply con baseline, dos\nset-status). Verificado contra la copia previa: solo cambian status y closeout_result del #65 y\nstatus del #66; raiz identica; 78 runs, completed 65 / planned 12 / active 1; checkInvariants del\nmotor de este repo: 0 errores. .project/ re-emitido (7 artefactos).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "00c2e06",

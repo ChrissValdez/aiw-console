@@ -75,6 +75,18 @@
                 <button class="tab" type="button" data-tab="docs">Docs</button>
                 <button class="tab tab-muted" type="button" data-tab="status">Status</button>
               </div>
+              <!-- [#67 · D-075] THE PROJECT CONFIGURATION CONTROL — one, and always here: the right end
+                   of the header band, which every project shares and every tab sits under. Not a
+                   tab, because it swaps no screen: it opens the dialog where the project's AIW
+                   parameters live (the care budget and the runs still waiting for a
+                   classification), off the main screens — «una configuracion escondida en un
+                   boton de config». An icon in the tabs' own resting colour, no fill, no badge.
+                   It starts HIDDEN: the renderer shows it only when the project's data has
+                   something to put behind it, so a project that produces nothing for it gets no
+                   control rather than a door onto an empty room. -->
+              <button class="project-config-btn" id="project-config-open" type="button" data-project-config-open aria-label="Project configuration" title="Project configuration" aria-haspopup="dialog" aria-controls="project-config" aria-expanded="false" hidden>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </button>
             </div>
 
             <main class="content">
@@ -140,15 +152,8 @@
             </div>
           </div>
 
-          <!-- [#43] CARE BUDGET slot — the console's FIRST per-project configuration surface.
-               It sits above the subviews and outside both, because what it edits belongs to the
-               PROJECT (root.care_budget) and not to any run, objective or phase: putting it
-               inside the run editor would say the opposite of what §5 says. The renderer fills
-               it from the emitted envelope (taxonomy_model.care_budget) and renders nothing at
-               all when there is no envelope to read; no severity level, model or effort value
-               lives in this file. -->
-          <div class="roadmap-care-budget-slot" id="roadmap-care-budget"></div>
-
+          <!-- [#67] The care budget slot that sat here (#43) moved into the project configuration
+               dialog (#project-config, below): D-075 keeps it, but off the main screen. -->
           <div id="roadmap-sub-v3queue" class="roadmap-subview active">
             <div id="run-queue-v3"></div>
           </div>
@@ -361,6 +366,35 @@
         <button id="edit-modal-close" class="btn btn-secondary btn-sm" type="button">Close</button>
       </div>
       <div id="edit-modal-body" class="drawer-body edit-modal-body"></div>
+    </aside>
+
+    <!-- [#67 · D-075] THE PROJECT CONFIGURATION DIALOG, opened by the one control at the right end
+         of the header band. COMPOSED FROM PATTERNS THIS PAGE ALREADY CARRIES: the `.edit-modal`
+         centred dialog (its layer, colours, radius and open idiom), the `.drawer-header` head and
+         `.drawer-body` scroller it already wears, and the `.drawer-overlay` veil. Only its width is
+         its own (`.project-config`): it holds a four-row table, not a run editor.
+
+         Two sections, each an EXISTING surface moved here unchanged:
+           1. the CARE BUDGET (#43) — the same slot id, so the same renderer, the same edit-mode
+              gate and the same write path; the project setting lives in the roadmap's root, which
+              is why the id keeps its name. Nothing in this dialog turns edit mode on: the write
+              still asks for the Roadmap toolbar's «Edit roadmap»;
+           2. the live runs with NO CLASSIFICATION (#43's note, from Overview), with the sentence
+              that says which classification it means.
+         An empty section is not painted; a project with neither gets no control at all. -->
+    <div id="project-config-overlay" class="drawer-overlay edit-modal-overlay"></div>
+    <aside id="project-config" class="edit-modal project-config" role="dialog" aria-modal="true" aria-labelledby="project-config-title" aria-hidden="true">
+      <div class="drawer-header">
+        <div>
+          <div id="project-config-title" class="drawer-header-title">Project configuration</div>
+          <div id="project-config-project" class="drawer-header-id"></div>
+        </div>
+        <button id="project-config-close" class="btn btn-secondary btn-sm" type="button" data-project-config-close>Close</button>
+      </div>
+      <div class="drawer-body project-config-body">
+        <div class="roadmap-care-budget-slot project-config-section" id="roadmap-care-budget"></div>
+        <div class="project-config-section" id="project-config-unclassified"></div>
+      </div>
     </aside>
 
     <!-- The ONE report renderer (#52), shipped whole and executed here for the first time, and

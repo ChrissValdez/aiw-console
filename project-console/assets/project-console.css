@@ -6451,8 +6451,10 @@ details[open] > summary > .v3-caret {
   font-size: 11px;
 }
 /* ---------------------------------------------------------------------------
-   [#43] The unclassified-live-runs note on Overview. INFORMATION, NOT AN ERROR: no red, no
-   alarm border, no icon. It is deliberately styled like the quiet notes around it and NOT
+   [#43] The unclassified-live-runs note — on Overview until #67, now in the project
+   configuration dialog (the dialog-only adjustments are at the end of this file).
+   INFORMATION, NOT AN ERROR: no red, no alarm border, no icon. It is deliberately styled like
+   the quiet notes around it and NOT
    like the source-absence banners, because those announce something broken and this announces
    something a human has not done yet.
    --------------------------------------------------------------------------- */
@@ -6510,9 +6512,19 @@ details[open] > summary > .v3-caret {
   color: var(--text-primary);
   border-color: var(--accent-border);
 }
+/* [#67] The line that says which classification the note means. It reads before the body, in
+   the body's own size, one step brighter: it is the definition the rest of the note leans on. */
+.v3-ov-note-meaning {
+  display: block;
+  margin-top: 6px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
 
 /* ---------------------------------------------------------------------------
-   [#43] CARE BUDGET — the per-project configuration panel of the Roadmap tab.
+   [#43] CARE BUDGET — the per-project configuration panel. Above the Roadmap subviews until
+   #67; now inside the project configuration dialog (adjustments at the end of this file).
 
    One rule governs every declaration below, and it comes from §5 rather than from taste:
    THIS IS ADVICE, SO IT MUST NOT LOOK LIKE ENFORCEMENT. No red, no amber, no alarm colour,
@@ -6713,4 +6725,110 @@ details[open] > summary > .v3-caret {
   border: 1px solid var(--border-default);
   border-radius: 4px;
   vertical-align: 1px;
+}
+
+/* ---------------------------------------------------------------------------
+   [#67 · D-075] PROJECT CONFIGURATION — the control and the dialog behind it.
+
+   THE CONTROL is the quietest thing in the header band: an icon in the tabs' own resting colour
+   (#838b9d) with the tabs' own hover wash, no fill, no border, no badge, no count. It must never
+   look like something that needs attention — D-075 moved these surfaces precisely because they
+   were «grande y llamativa». `[hidden]` is restated because `display` on a class beats the
+   attribute: without it the control would show for a project with nothing behind it.
+
+   THE DIALOG is the console's edit modal (`.edit-modal`: layer, colours, radius, open idiom),
+   wearing the `.drawer-header` and `.drawer-body` it already wears; only its WIDTH is its own,
+   because it holds a four-row table and a list, not a run editor. Inside it, the care budget and
+   the note stop being cards — the dialog is the frame, and they are its sections, divided by the
+   same subtle rule the run drawer's sections use. The care budget's «project configuration» tag
+   is not shown here: the dialog's title says it, and saying it twice is the noise this run removes.
+   --------------------------------------------------------------------------- */
+.project-config-btn {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: #838b9d;
+  cursor: pointer;
+  transition: color 0.12s, background 0.12s;
+}
+.project-config-btn:hover,
+.project-config-btn[aria-expanded="true"] {
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text-primary);
+}
+.project-config-btn:focus-visible {
+  outline: 1px solid var(--accent-border);
+  outline-offset: 1px;
+}
+.project-config-btn[hidden] {
+  display: none;
+}
+/* Same place at every width. At 1040px and below the header band stacks its children in a column
+   (see the 1040 query), which would drop the control onto a line of its own under the tabs. Here it
+   stays at the band's top right instead — level with the first row of tabs (14px band padding +
+   (38px tab - 30px control) / 2) — and the tabs keep a control's width free so a wrapped row never
+   runs under it. */
+@media (max-width: 1040px) {
+  .project-header {
+    position: relative;
+  }
+  .project-config-btn {
+    position: absolute;
+    top: 18px;
+    right: 16px;
+  }
+  .project-header .tabs {
+    padding-right: 38px;
+  }
+}
+.project-config {
+  width: min(680px, 94vw);
+}
+.project-config-section {
+  padding: 18px 28px 20px;
+}
+.project-config-section:empty {
+  display: none;
+}
+.project-config-section:not(:empty) ~ .project-config-section:not(:empty) {
+  border-top: 1px solid var(--border-subtle);
+}
+.project-config .care-budget-panel,
+.project-config .v3-ov-note {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.project-config .care-budget-scope {
+  display: none;
+}
+/* The note's label becomes a section head, in the care budget title's own size and weight, so the
+   two sections of one dialog read as siblings. */
+.project-config .v3-ov-note-label {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-primary);
+}
+/* On Overview the runs wrapped as chips beside the counters; in a 680px dialog long titles broke
+   those chips over two and three lines. Here they are a list, one run per line. */
+.project-config .v3-ov-note-runs {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  margin-top: 10px;
+}
+.project-config .v3-ov-note-run {
+  padding: 4px 8px;
+  text-align: left;
+  line-height: 1.45;
 }

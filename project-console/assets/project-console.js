@@ -4195,6 +4195,13 @@ function v3SetOverviewCurrentWorkVisible(visible) {
 // fills off the canonical — one computation of "who is unclassified", in the tool that owns the
 // roadmap, rather than a second opinion in the renderer. A snapshot from an older emitter
 // carries no such report and this surface simply does not appear.
+//
+// [#67 · D-075] It no longer renders on Overview: it lives in the project configuration dialog
+// (renderProjectConfig, below). And it now says WHICH classification it means, first, in one
+// sentence: the operator read «Unclassified live runs» in cantu-studio and asked whether those
+// runs belonged to no objective or phase. It is the risk classification of
+// context/CLASIFICACION-DE-RUNS.md; the sentence points at the run's own Classification section,
+// where the fields are, rather than naming them — their vocabulary is the next run's contract.
 function v3UnclassifiedNoteHtml(data) {
   const reports = data && data.snapshot && data.snapshot.validation_summary
     ? data.snapshot.validation_summary.reports
@@ -4207,6 +4214,7 @@ function v3UnclassifiedNoteHtml(data) {
   return `
     <div class="v3-ov-note" data-v3-unclassified>
       <span class="v3-ov-note-label">Unclassified live runs <span class="v3-ov-note-count">${runs.length}</span></span>
+      <span class="v3-ov-note-meaning">Classification here is AIW's risk classification of a run — the fields under <em>Classification</em> in the run's detail, from which its severity and closure mode are derived — and has nothing to do with objectives or phases.</span>
       <span class="v3-ov-note-body">These runs have no <code>classified_at</code> and are still live. This is information, not an error: nothing is blocked and nothing is refused. Closed runs are not listed — a run that will not execute again is not classified.</span>
       <span class="v3-ov-note-runs">
         ${runs.map((entry) => `<button class="v3-ov-note-run" type="button" data-v3-run="${escapeHtml(entry.run_id)}">#${escapeHtml(String(entry.queue_order))} ${escapeHtml(entry.title || entry.run_id)}</button>`).join("")}
@@ -4449,6 +4457,111 @@ async function careBudgetConfirm() {
   careBudgetSetPanel(`<div class="care-budget-preview-status is-refused">${escapeHtml(reason)}</div>`);
 }
 
+// ---------------------------------------------------------------------------
+// [#67 · D-075] PROJECT CONFIGURATION — the one place the project's AIW parameters live.
+//
+// The operator, 2026-10-04: the care budget stays, because it will matter when AIW delegates,
+// but not «en la pantalla principal de forma grande y llamativa»; he wants «una configuracion
+// escondida en un boton de config ... donde configure todos esos parametros del proyecto». So
+// the two surfaces of the AIW layer that sat on the main screens — the care budget above the
+// Roadmap subviews and the unclassified note on Overview — live in ONE dialog behind ONE control.
+//
+// WHAT MOVED AND WHAT DID NOT:
+//   - the care budget is still painted by renderCareBudget, UNCHANGED, into the SAME slot id.
+//     Its edit-mode gate and its dry-run -> confirm -> apply are #43's; nothing here writes, and
+//     nothing here turns edit mode on — the write still asks for the Roadmap toolbar's toggle;
+//   - the unclassified note is the same v3UnclassifiedNoteHtml, with its meaning line.
+//
+// THE CONTROL IS NOT THERE WHEN THERE IS NOTHING BEHIND IT. D-075: what a project does not
+// produce does not appear, not even as "not configured". A snapshot carrying neither the
+// care_budget block nor an unclassified live run gets no control, so the dialog is never an
+// empty room. Every emitter since #43 carries the block, so every current project shows the
+// control, and always in the same place: the right end of the project header band.
+// ---------------------------------------------------------------------------
+const PROJECT_CONFIG_ORIGIN = "Project configuration";
+
+function renderProjectConfig(data) {
+  const note = v3UnclassifiedNoteHtml(data);
+  const list = byId("project-config-unclassified");
+  if (list) list.innerHTML = note;
+  // The dialog names the project it configures, the same name the page title carries: the care
+  // budget it writes is THIS project's, and the operator moves between five.
+  const project = byId("project-config-project");
+  if (project) project.textContent = text(data?.roadmapV3?.title, "") || text(data?.snapshot?.project_id, "");
+  const hasContent = !!careBudgetBlock(data) || !!note;
+  const control = byId("project-config-open");
+  if (control) control.hidden = !hasContent;
+  if (!hasContent) closeProjectConfig(false);
+}
+
+function projectConfigIsOpen() {
+  const dialog = byId("project-config");
+  return !!(dialog && dialog.classList.contains("open"));
+}
+
+// Opens only through a VISIBLE control: a project with nothing to configure has no dialog to open.
+function openProjectConfig() {
+  const control = byId("project-config-open");
+  const dialog = byId("project-config");
+  if (!control || !dialog || control.hidden) return;
+  byId("project-config-overlay").classList.add("open");
+  dialog.classList.add("open");
+  dialog.setAttribute("aria-hidden", "false");
+  control.setAttribute("aria-expanded", "true");
+  const close = byId("project-config-close");
+  if (close) close.focus();
+}
+
+// `restoreFocus` is for the operator's own dismissals (Close, the veil, Escape). A close that
+// hands over to the run drawer leaves focus where the drawer puts it.
+function closeProjectConfig(restoreFocus) {
+  const dialog = byId("project-config");
+  if (!dialog || !dialog.classList.contains("open")) return;
+  dialog.classList.remove("open");
+  byId("project-config-overlay").classList.remove("open");
+  dialog.setAttribute("aria-hidden", "true");
+  const control = byId("project-config-open");
+  if (control) {
+    control.setAttribute("aria-expanded", "false");
+    if (restoreFocus && !control.hidden) control.focus();
+  }
+}
+
+// Capture-phase, like the edit modal's: an open dialog takes the Escape before the drawer's
+// handler does. Returns whether it took it.
+function projectConfigHandleEscape(event) {
+  if (!event || event.key !== "Escape" || !projectConfigIsOpen()) return false;
+  event.stopImmediatePropagation();
+  closeProjectConfig(true);
+  return true;
+}
+
+// A run in the list opens its detail, as it did from Overview. The drawer sits BELOW this dialog's
+// layer, so the dialog steps aside first; the detail's Back names the dialog, and v3BackRunDetail
+// brings it back. The origin is not a Roadmap one, so the drawer offers no Edit button — exactly
+// what a run opened from Overview's note offered before.
+function projectConfigOpenRun(runId) {
+  if (!runId) return;
+  closeProjectConfig(false);
+  v3DetailOrigin = PROJECT_CONFIG_ORIGIN;
+  v3OpenRunDetail(runId, "root");
+}
+
+function setupProjectConfig() {
+  const control = byId("project-config-open");
+  if (control) control.addEventListener("click", () => { openProjectConfig(); });
+  const close = byId("project-config-close");
+  if (close) close.addEventListener("click", () => { closeProjectConfig(true); });
+  const overlay = byId("project-config-overlay");
+  if (overlay) overlay.addEventListener("click", () => { closeProjectConfig(true); });
+  document.addEventListener("keydown", projectConfigHandleEscape, true);
+  const list = byId("project-config-unclassified");
+  if (list) list.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-v3-run]");
+    if (trigger && list.contains(trigger)) projectConfigOpenRun(trigger.dataset.v3Run);
+  });
+}
+
 function renderOverviewV3(data) {
   const currentWorkRoot = byId("project-overview");
   const nextActionRoot = byId("next-pending-runs");
@@ -4538,7 +4651,6 @@ function renderOverviewV3(data) {
     <div class="v3-ov-snapshot">
       ${snapshotCells.map((cell) => `<span class="v3-ov-snapshot-cell"><span class="v3-ov-snapshot-label">${escapeHtml(cell.label)}</span><span class="v3-ov-snapshot-num ${cell.cls}">${cell.n}</span></span>`).join("")}
     </div>
-    ${v3UnclassifiedNoteHtml(data)}
   `;
   v3AttachHandlers(byId("tab-overview"), { origin: "Overview" });
 }
@@ -5335,7 +5447,11 @@ function v3VerdictWriter(runId) {
 function v3BackRunDetail() {
   // At the stack root, Back returns to the origin surface by closing the drawer.
   if (v3DetailStack.length <= 1) {
+    // [#67] Except that the configuration dialog is not under the drawer — it stepped aside for
+    // it. Back names the dialog, so Back reopens it; closing onto the page would make the label lie.
+    const backToConfig = v3DetailOrigin === PROJECT_CONFIG_ORIGIN;
     closeDrawer();
+    if (backToConfig) openProjectConfig();
     return;
   }
   v3DetailStack.pop();
@@ -5393,12 +5509,21 @@ function renderAll(data) {
   }
   // [#43] The per-project care budget panel. Its own try/catch and its own slot: it reads the
   // ENVELOPE (taxonomy_model), not the tree, so a roadmap that fails to render must not take
-  // it down and a missing block must not take the roadmap down.
+  // it down and a missing block must not take the roadmap down. [#67] The slot now lives in the
+  // project configuration dialog; the call is the same.
   try {
     renderCareBudget(data);
   } catch (error) {
     const slot = byId("roadmap-care-budget");
     if (slot) slot.innerHTML = "";
+  }
+  // [#67] The rest of that dialog, and whether its control shows at all. Its own try/catch for the
+  // same reason; a failure leaves no control rather than a door onto a half-painted dialog.
+  try {
+    renderProjectConfig(data);
+  } catch (error) {
+    const control = byId("project-config-open");
+    if (control) control.hidden = true;
   }
   try {
     renderRunQueueV3(data);
@@ -5744,6 +5869,19 @@ function resetProjectScopedState() {
   historySyncState = { kind: "idle", text: "" };
   closeDrawer();
   v3CloseEditModal(true);
+  // [#67] The configuration dialog is per-project like the drawer and the modal: closed, its
+  // control hidden until the next project's data decides it, and both of its slots blanked — a
+  // care budget of the project being left must not be one click away in the next one, even when
+  // that one fails to load and renderAll never repaints the dialog.
+  closeProjectConfig(false);
+  const configControl = byId("project-config-open");
+  if (configControl) configControl.hidden = true;
+  const careBudgetSlot = byId("roadmap-care-budget");
+  if (careBudgetSlot) careBudgetSlot.innerHTML = "";
+  const unclassifiedSlot = byId("project-config-unclassified");
+  if (unclassifiedSlot) unclassifiedSlot.innerHTML = "";
+  const configProject = byId("project-config-project");
+  if (configProject) configProject.textContent = "";
   // Edit mode is per-project state; the flag above resets, and the TOGGLE's visual must follow
   // (O4.P12 — before the write path existed the toggle could never read "Editing on", so this
   // state was unreachable). A pressed toggle carried across a switch would claim edit mode is
@@ -7886,6 +8024,7 @@ function initConsoleChrome() {
   setupStatusSubnav();
   setupRoadmapEditMode();
   setupProjectEmit();
+  setupProjectConfig();
   setOverviewCardTitles();
 }
 

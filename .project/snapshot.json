@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-19T23:04:43.090Z",
+  "generated_at": "2026-10-19T23:24:28.338Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-19T22:32:54.857Z"
+      "mtime": "2026-10-19T23:24:28.275Z"
     },
     {
       "path": "package.json",
@@ -45,7 +45,7 @@
   ],
   "operational_status": "active",
   "project_summary": "AIW Console Roadmap: 2 objectives, 23 phases, 78 runs.",
-  "current_status_summary": "Active run: RUN-CONSOLE-PROJECT-CONFIG-BUTTON-001 (O4/O4.P17, queue 67).",
+  "current_status_summary": "Active run: RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001 (O4/O4.P18, queue 68).",
   "roadmap_tree": {
     "model": "roadmap_tree_v1",
     "roadmap_id": "roadmap",
@@ -1012,8 +1012,9 @@
                 "title": "Care budget and the unclassified note move behind a project configuration button",
                 "summary": "The care budget panel and the \"Unclassified live runs\" note leave the main screens and live behind one discreet project configuration button. They matter for when AIW delegates; today they are large, loud and unused.",
                 "full_description": "ORIGIN: the operator, 2026-10-04, in two steps, verbatim in context/aiw-console/records/REFLEXION-DEL-OPERADOR-2026-10-04-PROPOSITO-Y-FRICCION-DE-LA-CONSOLA.md (decisions 2 and 3). First: the care budget panel does not please him, he does not use it, it looks bad and adds noise. Then, correcting the cabin, which had proposed hiding or removing it: it makes sense to keep it for when AIW delegates; the problem is that it sits on the main screen, large and eye-catching, instead of in a configuration hidden behind a config button where all those project parameters live. Principle in D-075.\n\nMEASURED BY THE CABIN ON 2026-10-04: the care budget panel (#43) renders in its own slot above the Roadmap subviews (index.html, roadmap-care-budget); the unclassified note renders on Overview (v3UnclassifiedNoteHtml), read from validation_summary.reports. In cantu-studio the note listed four runs and the operator could not tell what \"unclassified\" meant: it is the AIW risk classification of context/CLASIFICACION-DE-RUNS.md, not objective or phase membership.\n\nWHAT: one discreet project-level configuration control that opens a surface holding the care budget (read and edit exactly as today) and the unclassified list, with one sentence saying what classification means. Nothing of either remains on the main screens.\n\nOUT OF SCOPE: changing the care budget model; the classification vocabulary (that is the contract run after this one); any project's runs.\n\nACCEPTANCE: the existing care-budget and classification tests stay green; the operator judges placement and look. Attended: expect rounds.",
-                "status": "active",
-                "depends_on": []
+                "status": "completed",
+                "depends_on": [],
+                "closeout_result": "QA visual del operador, 2026-10-19, 'pass': los cuatro pasos pasan y las tres preguntas de diseño quedan como estan (engrane sin texto, dialogo central, 'Not configured' dentro), lectura de la cabina declarada en el veredicto. ENTREGADO Y CERRADO dentro de su alcance (9b3b4b6). El care budget y la nota de runs sin clasificar salen de Roadmap y Overview y viven en un dialogo 'Project configuration' que abre un engrane al extremo derecho de la barra de pestanas, igual en los cinco proyectos y oculto si no hay nada que mostrar. El care budget se lee y se escribe igual que antes (golden de 5 estados del codigo sin cambiar) y escribir sigue pidiendo 'Edit roadmap'. La nota explica que la clasificacion es la de riesgo de AIW. 16 tests nuevos, 15 rojos antes; ningun test de otro run ajustado. Suite 893 / 892 / 1 (el conocido de finales de linea). Sin verificar, nombrado por el taller: 375 px de ancho (la consola ya se rompia ahi) y el borrador de care budget que no se limpia al cambiar de proyecto (preexistente, ya inalcanzable). Veredicto verbatim en context/aiw-console/records/VEREDICTO-67-QA-VISUAL-2026-10-19.md; reporte del taller en REPORTE-TALLER-67-2026-10-19.md."
               },
               {
                 "run_id": "RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-UI-001",
@@ -1122,7 +1123,7 @@
                 "title": "Work class and run relation enter the classification — the contract",
                 "summary": "Two new optional axes for every run: what CLASS of work it is (functionality, documentation, research, UX design, content) and how it RELATES to other runs (chain, same surface in series, independent in parallel), written into the doctrine, the schema, the validator and what the console receives. Contract only; the screen is the next run.",
                 "full_description": "ANALYSIS STOP. The operator approved, on 2026-10-04, that this run opens with an analysis stop, and it is written here so it does not depend on anyone's memory: when the queue reaches this run the cabin does NOT chain its ticket. It first measures the ground and brings the framing to the operator: what lane, batch and barrier already express under D-051 in the engine of this repo (tools/roadmap/roadmap-core.mjs knows all three; this canonical uses none), whether \"same surface, in series\" is already a lane, and what each existing classification field already covers. Only then is the ticket written. When the stop is held, this paragraph is transformed, not deleted: it says when the stop was held and what it produced.\n\nORIGIN: the operator, 2026-10-04, verbatim in context/aiw-console/records/REFLEXION-DEL-OPERADOR-2026-10-04-PROPOSITO-Y-FRICCION-DE-LA-CONSOLA.md (decisions 10 to 18): AIW solves SEQUENTIAL work in two cases, a chain (run 2 needs run 1) and the same surface (independent runs that cannot run at once); by class it pays off for functionality, then documentation, research occasionally, UX rarely; content such as lessons and quizzes runs in PARALLEL; and he asked to update the work class and how a run relates to others, and the console to show them. The AIW side is D-074.\n\nMEASURED BY THE CABIN ON 2026-10-04 (verify): work_type today is COSMETIC / FUNCTIONAL / FOUNDATIONAL, which measures depth, not class; in cantu-quizzes-latex 56 of 100 runs are FUNCTIONAL + JUDGED_ACCEPTS, mostly content reviews filed as code for lack of a value. correctness_model already maps to attendance (SPECIFIED to unattended or semi-attended, JUDGED_ACCEPTS to semi-attended, JUDGED_DEFINES to attended).\n\nWHAT: the two axes defined in context/CLASIFICACION-DE-RUNS.md with their values and what each implies for the vehicle (AIW at night, parallel workshops, attended cabin and workshop); optional keys in the schema; validator support; transport to the console artifacts.\n\nPILOT before freezing: classify a handful of real runs with it, and the pilot returns a verdict on the contract itself. The resulting decision is numbered when this run closes.\n\nOUT OF SCOPE: classifying any other project's runs (each thread does its own, when it wants); the console screen (next run); changing correctness_model. Every new key is optional: no existing canonical may turn invalid.",
-                "status": "planned",
+                "status": "active",
                 "depends_on": []
               },
               {
@@ -1237,17 +1238,8 @@
           "completed",
           "blocked"
         ],
-        "total": 5,
+        "total": 4,
         "runs": [
-          {
-            "run_id": "RUN-CONSOLE-PROJECT-CONFIG-BUTTON-001",
-            "queue_order": 67,
-            "status": "active",
-            "title": "Care budget and the unclassified note move behind a project configuration button",
-            "objective_id": "O4",
-            "phase_id": "O4.P17",
-            "stored_fields": []
-          },
           {
             "run_id": "RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-UI-001",
             "queue_order": 69,
@@ -1278,7 +1270,7 @@
           {
             "run_id": "RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001",
             "queue_order": 68,
-            "status": "planned",
+            "status": "active",
             "title": "Work class and run relation enter the classification — the contract",
             "objective_id": "O4",
             "phase_id": "O4.P18",

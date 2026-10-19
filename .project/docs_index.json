@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-19T23:04:43.090Z",
+  "generated_at": "2026-10-19T23:24:28.338Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -669,6 +669,10 @@
       "mtime": "2026-10-07T07:29:20.447Z"
     },
     {
+      "path": "context/aiw-console/records/REPORTE-TALLER-67-2026-10-19.md",
+      "mtime": "2026-10-19T23:07:48.355Z"
+    },
+    {
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "mtime": "2026-08-08T09:13:17.719Z"
     },
@@ -793,6 +797,10 @@
       "mtime": "2026-10-19T22:32:36.242Z"
     },
     {
+      "path": "context/aiw-console/records/VEREDICTO-67-QA-VISUAL-2026-10-19.md",
+      "mtime": "2026-10-19T23:24:18.467Z"
+    },
+    {
       "path": "context/aiw-console/records/VEREDICTO-QA-DEL-60-Y-CIERRE.md",
       "mtime": "2026-08-28T01:55:15.155Z"
     },
@@ -854,7 +862,7 @@
     },
     {
       "path": "context/cantu-studio/PETICIONES-DE-LECCIONES.md",
-      "mtime": "2026-10-18T06:59:30.093Z"
+      "mtime": "2026-10-19T23:07:20.191Z"
     },
     {
       "path": "context/cantu-studio/PROMPT-DE-REINICIO.md",
@@ -3106,6 +3114,14 @@
       "freshness": "2026-10-07T07:29:20.447Z"
     },
     {
+      "title": "Reporte del taller del `#67` — transcrito verbatim",
+      "path": "context/aiw-console/records/REPORTE-TALLER-67-2026-10-19.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-19T23:07:48.355Z"
+    },
+    {
       "title": "RESTITUCIÓN DE LAS 17 ARISTAS DE `#47` Y RE-ENCUADRE A AUDITORÍA AL CIERRE — CANTU",
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "nav_tier": "evidence",
@@ -3354,6 +3370,14 @@
       "freshness": "2026-10-19T22:32:36.242Z"
     },
     {
+      "title": "Veredicto visual del `#67` — 2026-10-19",
+      "path": "context/aiw-console/records/VEREDICTO-67-QA-VISUAL-2026-10-19.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-19T23:24:18.467Z"
+    },
+    {
       "title": "`#60` `RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001` — la QA del operador y el cierre",
       "path": "context/aiw-console/records/VEREDICTO-QA-DEL-60-Y-CIERRE.md",
       "nav_tier": "evidence",
@@ -3479,7 +3503,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/cantu-studio",
-      "freshness": "2026-10-18T06:59:30.093Z"
+      "freshness": "2026-10-19T23:07:20.191Z"
     },
     {
       "title": "PROMPT-DE-REINICIO.md",

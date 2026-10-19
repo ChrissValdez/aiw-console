@@ -1,27 +1,58 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-19T23:24:28.338Z",
+  "generated_at": "2026-10-19T23:29:39.880Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-19T23:08:10.201Z"
+      "mtime": "2026-10-19T23:27:31.989Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-19T23:24:28.275Z"
+      "mtime": "2026-10-19T23:29:39.838Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "9b3b4b6c89c10c45fbf550a9dd7b18fdfc7677d4",
+  "head": "bb65754ef84d7c15ccefd42e9efd1253c567b8bc",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 543,
+  "commit_total": 546,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "bb65754",
+      "full_sha": "bb65754ef84d7c15ccefd42e9efd1253c567b8bc",
+      "date": "2026-10-19T23:27:31+00:00",
+      "parents": "4c22768",
+      "subject": "context/cantu-studio: veredicto del #266 (pass) y decision sobre \\allowbreak; la fila 31 de PETICIONES, cerrada",
+      "body": "- records/VEREDICTO-266-QA-PASS-Y-ALLOWBREAK-NO-ENTRA.md: «pass procede», literal.\n- PETICIONES-DE-LECCIONES.md, fila 31: partes 1 a 4 aprobadas; \\allowbreak no entra.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "4c22768",
+      "full_sha": "4c22768333e1f8c721adb8ac2addefe4ab6aae31",
+      "date": "2026-10-19T23:27:19+00:00",
+      "parents": "98adafb",
+      "subject": "#68 RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001: el encuadre de su parada de analisis, a disco antes de emitir el ticket",
+      "body": "La medicion desmiente la mitad de la premisa: la CLASE de trabajo si falta, pero la RELACION entre\nruns ya esta casi entera en el dato (depends_on para la cadena, carriles de D-051 para lo que va en\nserie o en paralelo, y el lote de D-030 como rama compartida, sin uso). Cantu-studio y aiw ya usan\nlos carriles como clase de facto (DEVELOPMENT / DOCUMENTATION). Dos choques con la doctrina:\nCLASIFICACION 4 declara la delegabilidad por proyecto, y el operador la describio por fases; y 7\n(runs mixtos) es un hueco. Cuatro decisiones para el operador, con recomendacion. Sin ticket todavia.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001"
+    },
+    {
+      "branch": "main",
+      "sha": "98adafb",
+      "full_sha": "98adafb486e464da5a6586cb5c14dc2dd5180e8a",
+      "date": "2026-10-19T23:25:08+00:00",
+      "parents": "9b3b4b6",
+      "subject": "#67 RUN-CONSOLE-PROJECT-CONFIG-BUTTON-001 cierra con la QA visual del operador (\"pass\"), y #68 RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001 pasa a active para su PARADA DE ANALISIS",
+      "body": "Veredicto verbatim en context/aiw-console/records/VEREDICTO-67-QA-VISUAL-2026-10-19.md: los cuatro\npasos pasan y las tres preguntas de diseno quedan como estan (lectura de la cabina, declarada). El\n#68 se abre SIN ticket: su texto ordena una parada de analisis antes de emitirlo. Por la consola\n(serve.mjs, dry-run y apply con baseline, dos set-status). Verificado contra la copia previa: solo\ncambian status y closeout_result del #67 y status del #68; raiz identica; 78 runs, completed 67 /\nplanned 10 / active 1; checkInvariants: 0 errores. .project/ re-emitido (7 artefactos).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "9b3b4b6",

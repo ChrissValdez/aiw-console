@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-19T23:24:28.338Z",
+  "generated_at": "2026-10-19T23:29:39.880Z",
   "generated_from": "aiw-projector@0.12.0",
   "sources": [
     {
@@ -259,6 +259,10 @@
     {
       "path": "context/aiw-console/records/ENCADENAMIENTO-CONTRATOS-7-8-A-9-CANTU.md",
       "mtime": "2026-08-08T09:13:17.639Z"
+    },
+    {
+      "path": "context/aiw-console/records/ENCUADRE-PARADA-68-2026-10-19.md",
+      "mtime": "2026-10-19T23:29:20.933Z"
     },
     {
       "path": "context/aiw-console/records/ENDPOINT-DEL-VEREDICTO-CIERRE-Y-VEREDICTO-DEL-OPERADOR.md",
@@ -862,7 +866,7 @@
     },
     {
       "path": "context/cantu-studio/PETICIONES-DE-LECCIONES.md",
-      "mtime": "2026-10-19T23:07:20.191Z"
+      "mtime": "2026-10-19T23:27:01.485Z"
     },
     {
       "path": "context/cantu-studio/PROMPT-DE-REINICIO.md",
@@ -1681,6 +1685,10 @@
       "mtime": "2026-10-18T08:00:15.503Z"
     },
     {
+      "path": "context/cantu-studio/records/VEREDICTO-266-QA-PASS-Y-ALLOWBREAK-NO-ENTRA.md",
+      "mtime": "2026-10-19T23:26:43.910Z"
+    },
+    {
       "path": "context/cantu-studio/records/VEREDICTO-CONCEPTGRID-BADGE-INK-APROBADO.md",
       "mtime": "2026-08-27T06:16:24.920Z"
     },
@@ -2296,6 +2304,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-08T09:13:17.639Z"
+    },
+    {
+      "title": "Encuadre de la PARADA DE ANÁLISIS del `#68` — 2026-10-19",
+      "path": "context/aiw-console/records/ENCUADRE-PARADA-68-2026-10-19.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-19T23:29:20.933Z"
     },
     {
       "title": "`#57` `RUN-CONSOLE-VERDICT-POST-001` — cierre, con el veredicto del operador verbatim",
@@ -3503,7 +3519,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/cantu-studio",
-      "freshness": "2026-10-19T23:07:20.191Z"
+      "freshness": "2026-10-19T23:27:01.485Z"
     },
     {
       "title": "PROMPT-DE-REINICIO.md",
@@ -5136,6 +5152,14 @@
       "default_visible": false,
       "ia_bucket": "context/cantu-studio/records",
       "freshness": "2026-10-18T08:00:15.503Z"
+    },
+    {
+      "title": "Veredicto de QA del #266 — pasa; y `\\allowbreak` no entra",
+      "path": "context/cantu-studio/records/VEREDICTO-266-QA-PASS-Y-ALLOWBREAK-NO-ENTRA.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/cantu-studio/records",
+      "freshness": "2026-10-19T23:26:43.910Z"
     },
     {
       "title": "VEREDICTO DE QA — `RUN-CANTU-SLIDE-CONCEPTGRID-BADGE-INK-AND-TABLE-001`",

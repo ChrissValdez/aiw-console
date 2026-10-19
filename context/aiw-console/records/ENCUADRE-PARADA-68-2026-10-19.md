@@ -68,3 +68,32 @@ Ver la conversación del 2026-10-19 para el texto con ejemplos. En corto:
 
 Si el operador aprueba B, el `#68` queda con su identidad intacta —la relación sigue entrando en la
 clasificación, como regla escrita— y el texto del run se enmienda para decirlo.
+
+---
+
+## La decisión del operador — 2026-10-19
+
+La cabina le presentó las cuatro decisiones con ejemplos y su recomendación en cada una (A: la clase
+como dato nuevo, cinco valores fijos; B: opción 1, la relación se deriva de `depends_on` y carriles,
+más la regla «dos runs del mismo carril no corren a la vez», sin dato nuevo; C: un run mixto lleva la
+clase que decide cómo se revisa; D: el proyecto abre o cierra la puerta a AIW, y dentro de un proyecto
+abierto deciden la clase, la verificación y la relación). Verbatim de su respuesta:
+
+```text
+vamos con tus recomendaciones
+```
+
+### Lo que la cabina registra como decisión explícita
+
+- **A — sí:** la clase de trabajo entra como campo nuevo, opcional, con vocabulario cerrado de cinco
+  valores iguales para todos los proyectos.
+- **B — opción 1:** la relación NO entra como campo; se escribe que se deriva de `depends_on`
+  (cadena) y de los carriles de D-051 (misma superficie / paralelo), y se fija la regla **«dos runs
+  del mismo carril no corren a la vez»**.
+- **C — sí:** un run que mezcla clases lleva **la que decide cómo se revisa**. Cierra el hueco de
+  CLASIFICACIÓN §7 para este eje.
+- **D — sí:** **el proyecto abre o cierra la puerta a AIW; dentro de un proyecto abierto deciden la
+  clase, cómo se verifica (`correctness_model`) y la relación.** Enmienda CLASIFICACIÓN §4, que
+  declaraba la delegabilidad sólo por proyecto.
+
+**La parada queda CELEBRADA** el 2026-10-19 y el texto del `#68` se transforma para decirlo.

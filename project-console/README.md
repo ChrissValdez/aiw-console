@@ -62,7 +62,8 @@ verified inside the registered root after path resolution — by one of two mirr
 ## The project registry
 
 `project-console/projects.json` is the operator-maintained list of projects this console
-aggregates — the only place project identity lives outside the data:
+aggregates — the only place project identity lives outside the data. Its shape, as an
+illustrative excerpt (the list itself is the file):
 
 ```json
 {
@@ -122,7 +123,7 @@ rendered by the same conservative escape-first renderer as the source console. N
    roadmap engine was transplanted to `tools/roadmap/`, the server gained the two routes above,
    and the *Edit roadmap* button is visible again — exactly the one-attribute restoration O4.P11
    left prepared. Edit mode still probes the endpoint per project and refuses honestly where no
-   layout claims a roadmap (today: `aiw`, until O4.P6).
+   layout claims a roadmap.
 3. **Two retired Docs controls.** The grouping toggle (*By category* / *By retention class*), its
    note, the per-document `retention_class` badge and the per-row nav-tier badge are gone. The
    first three read a field of the source project's own retention policy, which this project's

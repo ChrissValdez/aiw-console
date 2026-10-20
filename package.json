@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "description": "AIW project console — verbatim fork of the JAME project console (zero dependencies).",
+  "description": "AIW project console — the multi-project console of the AIW workspace (zero dependencies).",
   "scripts": {
     "test": "node --test"
   }

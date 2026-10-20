@@ -15,9 +15,20 @@ puntero (`aiw/CONTEXTO.md`) hacia aquí.
 
 ## ⚠️ Este repo contiene un FORK DESCARTADO de la consola
 
-`aiw-console` **también** contiene un fork de la consola de Cantu que fue
-descartado por **D-035**. Ese código **NO es la consola viva** — la consola viva
-está en `projects/cantu-studio`.
+`aiw-console` contiene varios árboles de consola, y solo uno es el que este
+repo arranca:
+
+- `project-console/` — la consola multiproyecto: la que levanta
+  `start-console.ps1` (`node project-console/serve.mjs`) y la única con registro
+  de proyectos (`project-console/projects.json`).
+- `docs/project-console/` — el **fork de la consola de Cantu descartado por
+  D-035**. Ese código **NO es la consola viva**.
+- `console/` — el prototipo de la consola global, retirado por D-048; queda como
+  historia.
+
+La consola local de Cantu sigue en su repo (`projects/cantu-studio`) hasta el
+corte (`RUN-CONSOLE-CORTE-RETIRO-LOCAL-001`), que es también cuando D-035 manda
+borrar el fork.
 
 Ninguna sesión debe leer el fork creyendo que es la consola actual, ni citar su
 fuente como estado presente. Permanece en el árbol solo hasta su corte formal.
@@ -77,8 +88,8 @@ doctrina propia y sus `records/`.
 
 - `aiw/` — `ESTADO.md`, `AIW_CONTEXT.md`, `roadmap_AIW_temp.md`,
   `DELEGACION.md`, `records/`
-- `aiw-console/` — `records/` (el audit Phase 0 de O4). Todavía sin roadmap
-  propio: O4 vive hoy en el roadmap de AIW y migra aquí en el tramo 1.
+- `aiw-console/` — `records/` (el audit Phase 0 de O4). Su roadmap no vive en
+  esta carpeta: es el canónico del repo, `roadmap/roadmap.json`.
 - `cantu-studio/` — `CANTU_STUDIO_CONTEXT.md`
 
 ## Lo que NO se muda aquí, y por qué

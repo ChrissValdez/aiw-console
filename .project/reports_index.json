@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-19T23:29:39.880Z",
-  "generated_from": "aiw-projector@0.12.0",
+  "generated_at": "2026-10-20T02:49:22.592Z",
+  "generated_from": "aiw-projector@0.13.0",
   "sources": [],
   "reports_source": {
     "mode": "scanned",

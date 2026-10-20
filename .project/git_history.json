@@ -1,27 +1,89 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-19T23:29:39.880Z",
-  "generated_from": "aiw-projector@0.12.0",
+  "generated_at": "2026-10-20T02:49:22.592Z",
+  "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-19T23:27:31.989Z"
+      "mtime": "2026-10-20T02:43:01.037Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-19T23:29:39.838Z"
+      "mtime": "2026-10-20T02:48:33.682Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "bb65754ef84d7c15ccefd42e9efd1253c567b8bc",
+  "head": "9d8a935cd23c3116e0a0aad32acdb3b10f1aeb7f",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 546,
+  "commit_total": 552,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "9d8a935",
+      "full_sha": "9d8a935cd23c3116e0a0aad32acdb3b10f1aeb7f",
+      "date": "2026-10-20T02:43:00+00:00",
+      "parents": "b55fc0a",
+      "subject": "#68 RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001: la clase de trabajo entra al motor y a la doctrina, y la relacion entre runs queda escrita como derivada",
+      "body": "Trabajo del taller, commiteado por la cabina, con su reporte transcrito verbatim en\ncontext/aiw-console/records/REPORTE-TALLER-68-2026-10-19.md. Clave opcional work_class con\nFUNCTIONALITY / DOCUMENTATION / RESEARCH / UX_DESIGN / CONTENT, rechazo con el valor nombrado,\nset-classification la escribe y la borra, y escribir solo la clase no mueve classified_at. Viaja a\nlos artefactos; el emisor sube a 0.13.0. Doctrina +219/-0: enmienda fechada a la 4, nota en la 7 y\nsecciones 9 a 12 (la clase, la relacion derivada con \"dos runs del mismo carril no corren a la vez\",\nla tabla de vehiculos, procedencia). 34 tests nuevos, 29 rojos antes; dos pins de version del #43\najustados (0.12.0 -> 0.13.0), nombrados por el taller.\n\nVerificado por la cabina: el diff cuadra con el reporte; canonico intacto (md5 de6db2bc). Suite en\ntres tandas: 927 / 925 / 2 -- el conocido de finales de linea y registry-digest.test.mjs:645, ajeno:\nlo rompe el registro de phd-p2-experiment (21850d3, otro hilo), cuyo canonico no tiene runs.\nDECLARADO: el taller dice haber recibido del operador, en su propia sesion, UX_DESIGN en vez de\nDESIGN y que la marca no se mueva; esas palabras no estan en disco y se piden al operador.\n\nEL RUN SIGUE ACTIVO: falta la QA del operador (leer la doctrina y aprobar el piloto).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001"
+    },
+    {
+      "branch": "main",
+      "sha": "b55fc0a",
+      "full_sha": "b55fc0aa8a91b64dd531b76ae342f12d344c9778",
+      "date": "2026-10-20T01:30:55+00:00",
+      "parents": "21850d3",
+      "subject": "context/cantu-studio: cierre de sesion antes de la pausa (D-079) — relevo, prompt de reinicio y aviso a Lecciones",
+      "body": "- handoffs/cantu-studio.md: reescrito; sustituye al del 2026-09-25/30. Estado de pausa,\n  lo medido, lo nombrado sin construir, reglas vigentes y herramientas de la cabina.\n- cantu-studio/PROMPT-DE-REINICIO.md: bloque inicial con la pausa y la regla de QA vigente.\n- cantu-studio/PETICIONES-DE-LECCIONES.md: seccion «Desde el 2026-10-19: Studio esta en pausa».\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "21850d3",
+      "full_sha": "21850d3de6da2fb0972afa90a2811bb7f0849870",
+      "date": "2026-10-20T00:08:28+00:00",
+      "parents": "bdd7629",
+      "subject": "projects.json: se registra phd-p2-experiment (el experimento del Paper 2)",
+      "body": "Una linea nueva en el registro, root ../../phd-p2-experiment. Nada mas cambia.\nMedido con serve.mjs en un puerto libre: los seis proyectos sirven snapshot (200)\ny ruta de edicion (405 al sondeo); tests shell-model, reports-qa-fixture y\nreal-projects-smoke: 22/22. Hilo: desarrollo del Paper 2 (proyecto propio).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VUMuoM65tjgE9sxwR5Vf7M",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "bdd7629",
+      "full_sha": "bdd7629e24e77dc6032e94e49a50763605b36800",
+      "date": "2026-10-20T00:03:22+00:00",
+      "parents": "1afefc9",
+      "subject": "DECISIONES: D-079, Cantu Studio se pausa mientras Lecciones termina el material del PAA",
+      "body": "- context/DECISIONES.md: D-079 (completa D-077 y D-078).\n- context/cantu-studio/records/DECISION-2026-10-19-PAUSA-DE-CANTU-STUDIO-HASTA-TERMINAR-EL-PAA.md: literal.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1afefc9",
+      "full_sha": "1afefc9374242a54cc081ddbff87c6764f8d092a",
+      "date": "2026-10-19T23:51:26+00:00",
+      "parents": "b0ac6e1",
+      "subject": "context/cantu-studio: medicion del Moodle real (MathJax 3.2.2), desde una pagina pegada por el operador",
+      "body": "- records/MEDICION-2026-10-19-EL-MOODLE-REAL-USA-MATHJAX-3.2.2.md: la linea literal del\n  filtro; \\textcolor no esta en riesgo; el Moodle real conserva los guiones.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "b0ac6e1",
+      "full_sha": "b0ac6e178e2399dea22c6008b4710ea5d90eb6bf",
+      "date": "2026-10-19T23:30:28+00:00",
+      "parents": "bb65754",
+      "subject": "#68 RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001: la parada de analisis queda celebrada con la decision del operador, y el texto del run se transforma para decirlo",
+      "body": "El operador eligio las cuatro recomendaciones (\"vamos con tus recomendaciones\"), verbatim en\ncontext/aiw-console/records/ENCUADRE-PARADA-68-2026-10-19.md: (A) la clase de trabajo entra como\ncampo nuevo con cinco valores fijos; (B) la relacion NO entra como campo, se escribe derivada de\ndepends_on y de los carriles de D-051, con la regla nueva \"dos runs del mismo carril no corren a la\nvez\"; (C) un run mixto lleva la clase que decide como se revisa; (D) el proyecto abre o cierra la\npuerta a AIW y dentro deciden la clase, la verificacion y la relacion, enmienda a CLASIFICACION 4.\n\nEl parrafo de la parada no se borra: se transforma en la nota de que se celebro y que produjo, y el\nWHAT queda enmendado. Por la consola (set-text, dry-run y apply con baseline). Verificado contra la\ncopia previa: solo cambia el full_description del #68 y coincide con el texto propuesto; raiz\nidentica; checkInvariants: 0 errores. .project/ re-emitido.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001"
+    },
     {
       "branch": "main",
       "sha": "bb65754",

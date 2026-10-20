@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-19T23:29:39.880Z",
-  "generated_from": "aiw-projector@0.12.0",
+  "generated_at": "2026-10-20T02:49:22.592Z",
+  "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-19T23:29:39.838Z"
+      "mtime": "2026-10-20T02:48:33.682Z"
     }
   ],
   "model": "roadmap_tree_v1",
@@ -712,6 +712,7 @@
               "depends_on": [
                 "RUN-CANTU-PROJECT-CONSOLE-LATENT-DEFECTS-001"
               ],
+              "work_class": "FUNCTIONALITY",
               "correctness_model": "JUDGED_ACCEPTS",
               "work_type": "FUNCTIONAL",
               "blast_radius": "ADJACENT",
@@ -728,6 +729,7 @@
               "depends_on": [
                 "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001"
               ],
+              "work_class": "UX_DESIGN",
               "correctness_model": "JUDGED_ACCEPTS",
               "work_type": "FUNCTIONAL",
               "blast_radius": "ADJACENT",
@@ -742,6 +744,7 @@
               "full_description": "MEASURED BY THE CABIN ON 2026-07-30, from two independent sources, and it is the finding that made this run exist. Cantu-studio's CANONICAL roadmap lives at .aiw/roadmap/roadmap.json — verified on disk, and how many runs it holds is measured when this run executes, because that project is restructuring its roadmap right now — and this roadmap's own write-paths run states the same thing in writing, that in aiw-console the canonical is roadmap/roadmap.json while in cantu-studio it is .aiw/roadmap/roadmap.json. The cutover run declares that it deletes .aiw. AS WRITTEN, THE CUTOVER WOULD DELETE THAT PROJECT'S ENTIRE PLAN — not a derived copy, the source. Nothing anywhere in the three roadmaps moves that file first. THE HISTORICAL REASON THE TRAP EXISTS: .aiw/ was AIW's projection delivery area, and Cantu's roadmap was written into it before the folder contract separated canonical from derived. The contract now says .project/ is derived and is never a write destination, and that the canonical is written and re-emitted — but Cantu's canonical was left inside the folder that the additive coexistence was always going to end by removing. SCOPE: move that canonical out of .aiw to a path outside it, make the project's layout resolve it at the new path so the global console keeps reading and WRITING it, and verify the three write routes still reach it. THE SECOND HALF, and it belongs here because it is the same movement: that canonical declares schema_version jame.roadmap_v3.v0.2-progress while the other two declare roadmap_tree_v1. Whether it migrates here or the engine accepts both is decided with the measurement in hand. CROSS-REPOSITORY WRITE: this run writes in cantu-studio. There is precedent for runs of this roadmap doing so — that project's migration to lanes and the split of its packed runs both did — and the window is coordinated with that project's thread; it does not run while a workshop is live there. It executes BEFORE the cutover, and the cutover depends on it.",
               "status": "planned",
               "depends_on": [],
+              "work_class": "FUNCTIONALITY",
               "correctness_model": "JUDGED_DEFINES",
               "work_type": "FOUNDATIONAL",
               "blast_radius": "PROJECT_SHAPE",
@@ -763,6 +766,7 @@
                 "RUN-CONSOLE-UI-UX-001",
                 "RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001"
               ],
+              "work_class": "FUNCTIONALITY",
               "correctness_model": "JUDGED_ACCEPTS",
               "work_type": "FOUNDATIONAL",
               "blast_radius": "PROJECT_SHAPE",
@@ -984,10 +988,11 @@
               "title": "The console shows work class and run relation",
               "summary": "The two axes fixed by the contract run become visible where they help: small tags on roadmap rows, and filters if they earn their place, never large panels on the main screen. Attended: built with the operator looking, in rounds.",
               "full_description": "ORIGIN: the operator, 2026-10-04, asked that the console show the work class and the run relation (verbatim in context/aiw-console/records/REFLEXION-DEL-OPERADOR-2026-10-04-PROPOSITO-Y-FRICCION-DE-LA-CONSOLA.md, decision 18), under D-075: the console shows what exists, nothing large or loud on the main screen, and configuration lives behind the project configuration button.\n\nDEPENDS ON the contract run (RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001): this run renders what that run fixed, and when the screen stumbles it is measured against the contract, not the other way round.\n\nWHAT: show class and relation per run in Roadmap and Run Queue in the console's existing visual language; optional filters by class and relation if the operator wants them; an absent value renders as nothing, not as \"unclassified\".\n\nOUT OF SCOPE: changing the vocabulary (the contract run's job); any write path beyond what set-classification already offers, unless the contract run adds one.\n\nACCEPTANCE: tests for rendering and for absence; operator visual QA, several rounds expected (JUDGED_DEFINES).",
-              "status": "planned",
+              "status": "active",
               "depends_on": [
                 "RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001"
-              ]
+              ],
+              "work_class": "UX_DESIGN"
             },
             {
               "run_id": "RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001",
@@ -996,7 +1001,8 @@
               "summary": "Each thread writes its own HTML report in whatever format its project needs; the contract fixes only where that file lives, how the console finds and links it, and how the operator's verdict returns to disk. The console's current report format is frozen, not deleted. Pilot: cantu-lessons.",
               "full_description": "ORIGIN: the operator, 2026-10-04, verbatim in context/aiw-console/records/REFLEXION-DEL-OPERADOR-2026-10-04-PROPOSITO-Y-FRICCION-DE-LA-CONSOLA.md (decisions 21 to 25): cantu-lessons works in two phases, first an HTML the run itself produces, equivalent to a report, then a draft read in Cantu Studio; he likes each thread making its own HTML report so he is not limited to the console's report format, which some projects fit and others do not; the console's reports were designed for CQL and he ended up not using them; and the verdict can live inside the HTML if it carries the questions, with the cabin always available otherwise. Principle in D-076.\n\nMEASURED BY THE CABIN ON 2026-10-04 (verify): only cantu-quizzes-latex has a reports/ folder (one run); cantu-lessons already writes HTML under docs/guiones/, and L03 already carries a copy-to-clipboard button for a choice. A static HTML opened from disk cannot write to the repo by itself.\n\nWHAT: the location convention, per run; the link from the run's row or detail that opens the HTML in its own tab; and the verdict path (a copy button as the base, a downloaded file saved into the project folder for long verdicts, the cabin always available) so the verdict still reaches disk verbatim.\n\nALSO: the modal document reader's only door, the \"Documents\" button, lives inside the run report view this run freezes. Give the reader a door of its own.\n\nPILOT: cantu-lessons, a real case, and the pilot returns a verdict on the contract before it is frozen.\n\nOUT OF SCOPE: deleting the current report surface (decided after the pilot); dictating any report's content or style; writing in cantu-lessons (its own thread adopts the convention).",
               "status": "planned",
-              "depends_on": []
+              "depends_on": [],
+              "work_class": "FUNCTIONALITY"
             },
             {
               "run_id": "RUN-CONSOLE-CONTENT-BATCH-VIEW-001",
@@ -1008,7 +1014,8 @@
               "depends_on": [
                 "RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001",
                 "RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001"
-              ]
+              ],
+              "work_class": "UX_DESIGN"
             },
             {
               "run_id": "RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001",
@@ -1018,6 +1025,7 @@
               "full_description": "REWRITTEN ON 2026-07-31 BY THE ROADMAP AUDIT, WHICH MEASURED THAT THIS RUN'S ORIGINAL TEXT DESCRIBED WORK ALREADY DONE. The previous text said the tool \"has no operation to create or delete a phase or an objective\", that the two ghost phases could not be deleted, that the identity guard still had to be extended, and that the operator had not yet decided between refusing and cascading on deletion. ALL FOUR ARE FALSE ON DISK. Measured: roadmap-core.mjs exports createPhase, deletePhase, createObjective and deleteObjective; roadmap-plan.mjs carries the four verbs in KNOWN_OPS with their four dispatch branches and declares them identity ops alongside insert and remove; this roadmap holds zero empty phases; and deletion REFUSES a non-empty container rather than cascading, which is the precedent the original text itself proposed. The implementation landed twenty-eight queue positions before this run's own position, and nobody updated the text. WHAT IS ACTUALLY LEFT is one thing: the operations are CLI and endpoint only. A search for the four verbs across the console's frontend assets returns nothing, so a structural correction that the console can already authorize still has to be typed at the command line — which is the gap this run now closes. SCOPE: a console surface for the four operations over the same core the CLI calls, so both paths behave identically because both run the same code. THREE CONSTRAINTS THE SURFACE MUST RESPECT, EACH TO BE VERIFIED AGAINST THE CODE RATHER THAN ASSUMED FROM THIS TEXT: they are identity operations and are refused inside a batch, so the surface cannot fold them into a multi-edit; both create verbs make a legal EMPTY container and seed nothing; and the delete verbs refuse rather than cascade, with delete-objective additionally refusing to remove the last objective because the validator requires at least one, while delete-phase carries no last-phase guard since an objective with zero phases is legal. THE ORIGINAL MOTIVATION SURVIVES AND IS WORTH RE-MEASURING AT EXECUTION: the Project Console objective was said to lack a phase for meta-work, which is why the dev launchers landed in Roadmap Maintenance for want of a better home. Whether that is still true, and whether it should be fixed with this surface, is the operator's judgement and not this run's to assume. WHAT THIS RUN DOES NOT DO: it does not change the core, the plan layer or the CLI, all of which are implemented and tested; it does not decide the cascade question, which is already decided in code; and it makes no claim about the phases of any other project's roadmap.",
               "status": "planned",
               "depends_on": [],
+              "work_class": "FUNCTIONALITY",
               "correctness_model": "SPECIFIED",
               "work_type": "FUNCTIONAL",
               "blast_radius": "LOCAL",
@@ -1032,6 +1040,7 @@
               "full_description": "REFRAMED 2026-08-01 BY THE OPERATOR'S HUMAN AUDIT OF THIS ROADMAP. The previous text deferred this run until Cantu Studio was further developed and the console had accumulated real operational use. THAT MOMENT HAS ARRIVED and the operator declares it: the console now renders three projects, edits the canonical through three write routes, and has been operated daily for weeks. WHAT IT IS: the operator walks the console surface by surface and reports what should improve — not a defect list, an accumulated backlog of use. Each finding becomes its own run, sized and placed on its own. Repairs that are small and unambiguous may be resolved inside a single workshop session under this run; anything that needs a verdict or does not fit becomes a run. WHY IT IS DELIBERATELY LAST: it OPENS work rather than closing it, and the operator wants the outstanding queue cleared before adding a long list of improvements. That is a scheduling decision, not a judgement about its value. HOW IT DIFFERS FROM THE UI/UX GATE OF THE CUTOVER, and confusing them is expensive: that run is a GATE, and it asks only whether anything is WORSE than the local console gives today — a deliberately narrow question guarding an irreversible act, which is why desirable improvements must not be poured into it. This run asks the opposite: what could be BETTER. IT DEPENDS ON NOTHING, and that is kept: what decides when it runs is the operator, not an edge. SIX FINDINGS ALREADY MEASURED BY THE CABIN ON 2026-07-31, to be verified rather than trusted from this text: the classification counter shows a bare zero with no unit, where zero of six would read; an active run displays \"Current stage: Not started\", correct but reading as a contradiction; the list of live unclassified runs travels in validation_summary but was not found anywhere on screen; the modal's confirm fires when cancelling; a run deriving CRITICAL does not show its care_budget advice in its own detail even though the table travels in the same envelope, which the cabin judged the most valuable of the six; and the phases of an objective read out of order against queue_order, which is opaque identity and must NOT be renumbered, though the console could make it evident.",
               "status": "planned",
               "depends_on": [],
+              "work_class": "RESEARCH",
               "correctness_model": "JUDGED_DEFINES",
               "work_type": "FUNCTIONAL",
               "blast_radius": "ADJACENT",
@@ -1085,8 +1094,10 @@
               "title": "Work class and run relation enter the classification — the contract",
               "summary": "Two new optional axes for every run: what CLASS of work it is (functionality, documentation, research, UX design, content) and how it RELATES to other runs (chain, same surface in series, independent in parallel), written into the doctrine, the schema, the validator and what the console receives. Contract only; the screen is the next run.",
               "full_description": "ANALYSIS STOP — HELD on 2026-10-19 by the cabin, before any ticket. It measured the ground and the operator decided the four questions it raised; framing and verbatim decision in context/aiw-console/records/ENCUADRE-PARADA-68-2026-10-19.md. WHAT IT PRODUCED: half of this run's original premise was false. The work CLASS is genuinely missing. The RELATION between runs is already almost entirely in the data: depends_on is the chain, the lanes of D-051 separate what runs in parallel (so what shares a lane is what does not), and the batch of D-030 is the shared branch, unused. cantu-studio and aiw already use lanes as a two-value class (DEVELOPMENT / DOCUMENTATION). THE OPERATOR'S DECISIONS ('vamos con tus recomendaciones'): (A) the work class enters as a NEW optional field with a closed vocabulary of five values, the same for every project; (B) the relation does NOT enter as a field: it is written down as DERIVED from depends_on and lanes, plus one rule that was never stated — two runs of the same lane do not run at the same time; (C) a run that mixes classes carries the class that decides how it will be reviewed, which closes CLASIFICACION-DE-RUNS section 7 for this axis; (D) the project opens or closes the door to AIW, and inside an open project the class, the correctness model and the relation decide which runs go to it — an amendment to CLASIFICACION-DE-RUNS section 4, which declared delegability per project only. The WHAT below is amended accordingly; where it and this paragraph disagree, this paragraph wins.\n\nORIGIN: the operator, 2026-10-04, verbatim in context/aiw-console/records/REFLEXION-DEL-OPERADOR-2026-10-04-PROPOSITO-Y-FRICCION-DE-LA-CONSOLA.md (decisions 10 to 18): AIW solves SEQUENTIAL work in two cases, a chain (run 2 needs run 1) and the same surface (independent runs that cannot run at once); by class it pays off for functionality, then documentation, research occasionally, UX rarely; content such as lessons and quizzes runs in PARALLEL; and he asked to update the work class and how a run relates to others, and the console to show them. The AIW side is D-074.\n\nMEASURED BY THE CABIN ON 2026-10-04 (verify): work_type today is COSMETIC / FUNCTIONAL / FOUNDATIONAL, which measures depth, not class; in cantu-quizzes-latex 56 of 100 runs are FUNCTIONAL + JUDGED_ACCEPTS, mostly content reviews filed as code for lack of a value. correctness_model already maps to attendance (SPECIFIED to unattended or semi-attended, JUDGED_ACCEPTS to semi-attended, JUDGED_DEFINES to attended).\n\nWHAT (amended 2026-10-19 by the analysis stop): in context/CLASIFICACION-DE-RUNS.md, as NEW sections added forward without rewriting what is published: the work class with its five values; the relation as derived from depends_on and lanes, with the rule that two runs of one lane never run at once; the mixed-run rule for the class; and the amendment to section 4. In the engine and the plan: the class as an optional run key with a closed vocabulary, refused outside it, and settable through set-classification. Validator support and transport to the console artifacts.\n\nPILOT before freezing: classify a handful of real runs with it, and the pilot returns a verdict on the contract itself. The resulting decision is numbered when this run closes.\n\nOUT OF SCOPE: classifying any other project's runs (each thread does its own, when it wants); the console screen (next run); changing correctness_model. Every new key is optional: no existing canonical may turn invalid.",
-              "status": "active",
-              "depends_on": []
+              "status": "completed",
+              "depends_on": [],
+              "work_class": "DOCUMENTATION",
+              "closeout_result": "QA del operador, 2026-10-19, 'pass': la doctrina nueva se aprueba como esta y el piloto tal cual. ENTREGADO Y CERRADO (9d8a935). La parada de analisis desmintio media premisa: la clase faltaba y la relacion ya estaba en el dato. Decision numerada D-080. work_class opcional con FUNCTIONALITY / DOCUMENTATION / RESEARCH / UX_DESIGN / CONTENT; la relacion se deriva de depends_on y carriles, con 'dos runs del mismo carril no corren a la vez'; un run mixto lleva la clase que decide como se revisa; el proyecto abre la puerta a AIW y dentro deciden clase, verificacion y relacion (enmienda a CLASIFICACION 4); escribir solo la clase no mueve classified_at. Doctrina +219/-0. 34 tests nuevos; dos pins de version del #43 ajustados. Piloto escrito por la cabina en los runs 68 a 78 tras la aprobacion. DECLARADO: UX_DESIGN y la marca que no se mueve vienen de la sesion del taller y sus palabras no estan en disco; el 'pass' se lee como ratificacion de la doctrina que los escribe. Suite 927 / 925 / 2: el conocido de finales de linea y registry-digest.test.mjs:645, ajeno, por el registro de phd-p2-experiment sin runs (21850d3, otro hilo). Veredicto en context/aiw-console/records/VEREDICTO-68-QA-2026-10-19.md."
             },
             {
               "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-001",
@@ -1096,6 +1107,7 @@
               "full_description": "FIVE TEXTS, all measured on disk with their line, all in this repository, none of them touched by the runs that made them false. This is not hygiene: two of the five live in the document that describes the system's topology to every session that opens, and one of them contradicts the file this run is written in. (1) context/README.md says of this repository \"Todavía sin roadmap propio: O4 vive hoy en el roadmap de AIW y migra aquí en el tramo 1\". This roadmap has 51 runs. (2) context/README.md carries the discarded-fork warning saying that \"la consola viva está en projects/cantu-studio\". Measured: this repository holds THREE console trees — the fork discarded by D-035 at docs/project-console/, the retired prototype at console/, and the LIVE one at project-console/, which is the one the launcher starts and the only one with a project registry. The warning names neither which of the three is the fork nor that the console rendering three projects now lives here. (3) project-console/README.md states that edit mode \"refuses honestly where no layout claims a roadmap (today: aiw, until O4.P6)\". Measured: that layout resolves and the edit button is enabled for aiw; the parenthesis describes no project. (4) project-console/README.md shows a project registry example listing TWO projects, while the real registry declares three, the third being aiw. (5) package.json describes the package as a \"verbatim fork of the JAME project console\", which D-035 already declared false of the bytes and which four later runs of modification make falser. WHAT THIS RUN DOES NOT DO: it does not touch any run's full_description, and it does not rewrite history. A stale premise inside a CLOSED run is corrected by APPENDING a dated note, never by rewriting the paragraph — which is the form three closed runs of this roadmap already use — and the seven dated premises reported by an earlier closeout stay as they are for exactly that reason.",
               "status": "planned",
               "depends_on": [],
+              "work_class": "DOCUMENTATION",
               "correctness_model": "SPECIFIED",
               "work_type": "COSMETIC",
               "blast_radius": "LOCAL",

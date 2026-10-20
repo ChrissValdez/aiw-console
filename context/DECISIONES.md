@@ -3348,3 +3348,47 @@ retira.
 **Lo que esta decisión NO hace:** no retira nada del roadmap; los runs del archivo O8 siguen ahí.
 
 **Criterio de borrado:** se retira cuando Lecciones termine el material del PAA y el operador reabra Studio.
+
+---
+
+## D-080 — LA CLASE DE TRABAJO ENTRA A LA CLASIFICACIÓN; LA RELACIÓN ENTRE RUNS SE DERIVA, NO SE ALMACENA
+
+**Fecha:** 2026-10-19 · **Proyecto:** transversal (la doctrina y el motor sirven a los cinco
+proyectos y a `phd-p2-experiment`) · **Origen:** hilo `aiw-console`, cierre del `#68`.
+
+Decidido por **Christopher Valdez Cantu** el **2026-10-19**, en dos actos guardados verbatim:
+
+- la parada de análisis del `#68`, en
+  `context/aiw-console/records/ENCUADRE-PARADA-68-2026-10-19.md` — «vamos con tus recomendaciones»
+  sobre las cuatro decisiones A–D;
+- el veredicto del run, en `context/aiw-console/records/VEREDICTO-68-QA-2026-10-19.md` — «pass»
+  sobre la doctrina escrita y el piloto.
+
+### La regla
+
+- **(A) La clase de trabajo es un campo nuevo, opcional:** `work_class`, con vocabulario cerrado y
+  común a todos los proyectos: `FUNCTIONALITY` · `DOCUMENTATION` · `RESEARCH` · `UX_DESIGN` ·
+  `CONTENT`. El motor rechaza cualquier otro valor nombrándolo.
+- **(B) La relación entre runs NO es un campo: se deriva.** Cadena → `depends_on`. Misma superficie,
+  en serie → mismo carril declarado (D-051). Independiente, en paralelo → carriles distintos o sin
+  aristas. Y una regla que nunca se había escrito: **dos runs del mismo carril no corren a la vez.**
+- **(C) Un run que mezcla clases lleva la que decide cómo se va a revisar.**
+- **(D) El proyecto abre o cierra la puerta a AIW; dentro de un proyecto abierto deciden la clase, el
+  `correctness_model` y la relación.** Enmienda CLASIFICACIÓN §4, que declaraba la delegabilidad
+  sólo por proyecto.
+- **Escribir sólo la clase no mueve `classified_at`.**
+
+**Dos puntos que vienen de la sesión del taller y no de la cabina** —`UX_DESIGN` en vez de `DESIGN`,
+y que la clase no mueva la marca—: el taller dice haberlos recibido del operador; esas palabras **no
+están en disco**. Lo que está es la doctrina que los escribe (CLASIFICACIÓN §9, §9.3) y el «pass» del
+operador sobre ella. Se declara como lectura de la cabina.
+
+**Doctrina:** `context/CLASIFICACION-DE-RUNS.md` §4 (enmienda), §7 (nota), §9–§12. **Motor:**
+`tools/roadmap/roadmap-core.mjs` y `tools/classification/classification.mjs`, en `9d8a935`.
+
+**Lo que esta decisión NO hace:** no clasifica los runs de ningún otro proyecto; cada hilo lo hace en
+el suyo. No hace que el kernel de AIW obedezca la regla del carril: eso es del hilo `aiw`. **El motor
+local de `cantu-studio` rechaza la clave** mientras su hilo no la tolere (CLASIFICACIÓN §9.6).
+
+**Criterio de borrado:** se elimina si el piloto en otros proyectos demuestra que cinco clases no
+alcanzan, o si la relación necesita guardarse como dato porque derivarla no basta.

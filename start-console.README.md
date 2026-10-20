@@ -31,11 +31,15 @@ From a PowerShell prompt:
 
     $env:PC_PORT = 8790; .\start-console.ps1
 
-## Read-only
+## What the server writes
 
-This console's server is read-only: GET and HEAD only, 405 for every other method, no edit
-endpoint, and no code path that opens a file for writing. Starting the console cannot change
-this repository or any project it reads.
+This console's server is not read-only. It serves every path with GET and HEAD, and it also has
+write routes: POST endpoints under `/projects/<key>/__project-console/` that the console's own
+buttons call. Starting the console writes nothing. A file changes only when a local request
+reaches one of those routes, and only inside the root of a project registered in
+`project-console/projects.json`; on any other path, every method other than GET and HEAD is
+refused. Which write routes exist, and what each one writes, is documented in the header of
+`project-console/serve.mjs`.
 
 ## Notes
 

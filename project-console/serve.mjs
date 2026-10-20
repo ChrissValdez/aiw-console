@@ -804,8 +804,8 @@ async function handleProjectEmit(req, res, key) {
   const project = await resolveEditableProject(key);
   if (project.status) {
     const payload = { ok: false, reason: project.reason, ...(project.detail ? { detail: project.detail } : {}) };
-    // A root no layout claims is the case an operator actually meets (today: the `aiw` kernel),
-    // so the refusal says which files were looked for and what was wrong with each.
+    // When no layout claims the root, the refusal says which files were looked for and what
+    // was wrong with each, so the operator can see what the root is missing.
     if (project.reason === "project_not_editable_no_layout") {
       const root = (await readRegistry()).entries.get(key);
       if (root) payload.candidates = diagnoseCanonicalCandidates(root);

@@ -39,11 +39,13 @@ fuente como estado presente. Permanece en el árbol solo hasta su corte formal.
 context/
   README.md              este archivo
   DECISIONES.md          log del SISTEMA — transversal, append-only
+  *.md                   otros documentos transversales: no son de un solo proyecto
   handoffs/              relevos de sesión — EFÍMEROS, uno por hilo
-  aiw/                   el kernel como proyecto
-  aiw-console/           la consola como proyecto
-  cantu-studio/          Cantu Studio como proyecto
+  <proyecto>/            la carpeta de un proyecto: su contexto permanente
 ```
+
+Qué proyectos tienen carpeta aquí, y qué documentos hay en la raíz, lo dice la
+propia carpeta: este árbol da la forma, no la lista.
 
 **La regla que ordena todo:** contexto de proyecto es **permanente** y va en la
 carpeta del proyecto; relevo de sesión es **efímero** y va en `handoffs/`. Ante
@@ -62,11 +64,10 @@ segundo.
 ### `handoffs/` — uno por hilo, siempre sobrescrito
 
 ```text
-handoffs/orquestacion.md    hilo meta: topología, metodología, decisiones de sistema
-handoffs/aiw.md             hilo del kernel
-handoffs/aiw-console.md     hilo de la consola
-handoffs/cantu-studio.md    hilo de Cantu Studio
+handoffs/<hilo>.md    el relevo de un hilo; el fichero lleva el nombre del hilo
 ```
+
+Qué hilos tienen relevo lo dice la carpeta `handoffs/`, no este README.
 
 Un archivo por conversación en curso. **Se sobrescribe, nunca se acumula**: no
 hay sufijos de tramo ni de fecha, así que nunca hay ambigüedad sobre cuál es el
@@ -83,10 +84,12 @@ leído.
 
 ### Las carpetas de proyecto
 
-Cada una contiene lo permanente de ese proyecto: su roadmap, su estado, su
-doctrina propia y sus `records/`.
+Cada una contiene lo permanente que ese proyecto tenga: su estado, su doctrina
+propia, sus `records/`. El roadmap de un proyecto no vive aquí: es el
+canónico de su propio repo.
 
-- `aiw/` — `ESTADO.md`, `AIW_CONTEXT.md`, `roadmap_AIW_temp.md`,
+- `aiw/` — `ESTADO.md`, `AIW_CONTEXT.md`, `roadmap_AIW_temp.md` (RETIRADO: lo
+  dice su cabecera; el canónico es `aiw/roadmap/roadmap.json`),
   `DELEGACION.md`, `records/`
 - `aiw-console/` — `records/` (el audit Phase 0 de O4). Su roadmap no vive en
   esta carpeta: es el canónico del repo, `roadmap/roadmap.json`.

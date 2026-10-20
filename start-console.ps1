@@ -7,9 +7,13 @@ $ErrorActionPreference = "Stop"
 #
 # Serves: http://127.0.0.1:8788/project-console/index.html   (PC_PORT overrides the port)
 #
-# That server is strictly READ-ONLY. It answers GET and HEAD, replies 405 to every other
-# method, has no edit endpoint, and opens no file for writing. Starting it cannot modify this
-# repository or any project it reads.
+# That server is NOT read-only. It serves every path with GET and HEAD, and it also has write
+# routes: POST endpoints under /projects/<key>/__project-console/ that the console's own
+# buttons call. Starting it writes nothing. A file changes only when a local request reaches
+# one of those routes, and only inside the root of a project registered in
+# project-console/projects.json; on any other path, every method other than GET and HEAD is
+# refused. Which write routes exist, and what each one writes, is documented in the header of
+# project-console/serve.mjs.
 #
 # This launcher exists to make two failures impossible, because both have happened:
 #   1. Being started from the wrong directory. The repo root is derived from this file's own
@@ -207,7 +211,7 @@ if ($stopped.Count -gt 0) {
 
 Write-Host ""
 Write-Host "Console URL: $url"
-Write-Host "Read-only console: the server answers GET and HEAD only and writes nothing."
+Write-Host "The server writes files only when you use a write action in the console; see project-console/serve.mjs."
 Write-Host "Leave this window open while you use the console; closing it stops the server."
 Write-Host ""
 

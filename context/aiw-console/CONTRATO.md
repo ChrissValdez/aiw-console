@@ -710,7 +710,11 @@ Más las dos claves RESERVADAS de §16 (`category`, `batch`), que hoy no existen
 ningún run y nacen ausentes. Y las dos OPCIONALES de §10.e (`lane`, `barrier`),
 añadidas por D-051: también ausentes en los tres roadmaps reales al enmendar — la
 tabla de arriba conserva sus 9 claves medidas porque reproduce una medición
-fechada; el conjunto admitido vigente es 9 + estas 2.
+fechada; el conjunto admitido vigente no es esa tabla: lo fija el motor, que lista
+las requeridas en `RUN_REQUIRED_FIELDS` y las opcionales en `RUN_OPTIONAL_FIELDS`
+(`tools/roadmap/roadmap-core.mjs`), y en ese orden las serializa. (Corregido el
+2026-10-20 por `RUN-CONSOLE-STALE-TEXTS-REPAIR-002`: la cifra que daba aquí caducó con
+las opcionales que se añadieron después de D-051.)
 
 **`report_html` — OPCIONAL, añadida por el `#70` (D-076; aprobada por el operador el
 2026-10-20).** Dice **dónde vive el reporte HTML** que el hilo escribió para ese run: una
@@ -1225,9 +1229,12 @@ es MALFORMADO — quien no declara carriles omite la clave (la disciplina de
   mientras su `status` no sea `completed`, BLOQUEA el arranque de lo posterior a
   él en su alcance. No existe un tercer alcance.
 
-Con esto el run admite **11 claves** (las 9 de §10.a más estas dos opcionales),
-en orden canónico de serialización tras `depends_on` y antes de los campos de
-cierre.
+Con esto `lane` y `barrier` entran entre las claves opcionales del run, en orden
+canónico de serialización tras `depends_on` y antes de los campos de cierre. La
+lista vigente de opcionales, y su orden, vive en `RUN_OPTIONAL_FIELDS`
+(`tools/roadmap/roadmap-core.mjs`); este contrato no la cuenta. (Corregido el
+2026-10-20 por `RUN-CONSOLE-STALE-TEXTS-REPAIR-002`: la cifra que daba aquí caducó
+con las opcionales que se añadieron después de D-051.)
 
 #### `queue_order` sigue GLOBAL; la posición en el carril se DERIVA
 

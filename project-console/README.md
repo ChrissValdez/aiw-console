@@ -120,7 +120,8 @@ rendered by the same conservative escape-first renderer as the source console. N
    a field this project's emitter does not emit because it means "a run recorded an operator
    review" and no run recorded one. The field stays absent; the opening mode moves instead.
 2. **The write path travelled in O4.P12** (this list recorded its absence while it lasted). The
-   roadmap engine was transplanted to `tools/roadmap/`, the server gained the two routes above,
+   roadmap engine was transplanted to `tools/roadmap/`, the server gained its first write routes
+   (roadmap edit and history sync, both listed above),
    and the *Edit roadmap* button is visible again — exactly the one-attribute restoration O4.P11
    left prepared. Edit mode still probes the endpoint per project and refuses honestly where no
    layout claims a roadmap.

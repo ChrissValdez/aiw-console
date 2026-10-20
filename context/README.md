@@ -88,12 +88,14 @@ Cada una contiene lo permanente que ese proyecto tenga: su estado, su doctrina
 propia, sus `records/`. El roadmap de un proyecto no vive aquí: es el
 canónico de su propio repo.
 
-- `aiw/` — `ESTADO.md`, `AIW_CONTEXT.md`, `roadmap_AIW_temp.md` (RETIRADO: lo
-  dice su cabecera; el canónico es `aiw/roadmap/roadmap.json`),
-  `DELEGACION.md`, `records/`
-- `aiw-console/` — `records/` (el audit Phase 0 de O4). Su roadmap no vive en
-  esta carpeta: es el canónico del repo, `roadmap/roadmap.json`.
-- `cantu-studio/` — `CANTU_STUDIO_CONTEXT.md`
+Qué ficheros hay en cada carpeta lo dice la propia carpeta: esta sección no los
+enumera. Sólo señala lo que un fichero no dice con su nombre:
+
+- `aiw/` — `roadmap_AIW_temp.md` está RETIRADO (lo dice su cabecera); el
+  canónico es `aiw/roadmap/roadmap.json`.
+- `aiw-console/` — `CONTRATO.md` es norma viva, no un record (lo dice su
+  sección «Cómo se mantiene este documento»). Su roadmap es el canónico del
+  repo, `roadmap/roadmap.json`.
 
 ## Lo que NO se muda aquí, y por qué
 

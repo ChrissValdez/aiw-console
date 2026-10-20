@@ -108,3 +108,94 @@ Después de lanzar la suite cambié el redactado de una frase de `context/README
 - Las copias de los ficheros tal como estaban están en `C:\Users\chris\AppData\Local\Temp\claude\C--Users-chris-Documents-AIW-Workspace\6176b1ee-78c4-4fcd-acab-609f17a062d5\scratchpad\antes`.
 - No usé git para escribir, no cambié el status del run ni re-emití nada.
 - El CONTRATO pide anotar cada corrección en la decisión que la motiva. Eso es `DECISIONES.md`, fuera del alcance: le toca a la cabina.
+
+---
+
+## Ampliación — transcrita verbatim
+
+Aprobada por el operador por escrito el 2026-10-20 («pass procedamos»,
+`VEREDICTO-75-QA-2026-10-20.md`) bajo D-061. Pegada por el operador en el chat de la cabina y
+transcrita a disco por la cabina en el mismo turno, sin editar.
+
+Guarda coincide. Ahora la suite de línea base.
+Línea base confirmada: 982 / 981 / 1, el mismo fallo de EOL. Ahora los textos contra disco.
+(a) sigue falso. Busco si hay restricciones de codificación declaradas o probadas para los tres ficheros.
+Confirmado que `.cmd` sigue siendo de solo lectura y debe mantenerse en ASCII puro con LF, ya que cmd.exe lee en página OEM. Ahora reviso `project-console/README.md`.
+(b), (c), (d) aún presentes en el texto. Los mido contra `serve.mjs`.
+Confirmo que (b) y (c) siguen siendo falsos: `.project/` tiene siete artefactos pese a que `serve.mjs` anuncia "ALL SEVEN" (con `git_history` ausente si la raíz no es su propio repo), y `pathNamesGitDir` devuelve 403 antes de validar ruta o método (`serve.mjs:1246-1249`). Ahora reviso `context/README.md`.
+(e) sigue incompleto: faltan ficheros en aiw/, aiw-console/, cantu-studio/ y cantu-quizzes-latex/ no aparece en el reporte. Voy a revisar CONTRATO a continuación.
+Ahora mido qué decisiones/runs añadieron campos opcionales del run tras D-051.
+Voy a buscar las decisiones correspondientes a esos campos opcionales nuevos (#43, #45, #48, #68 y #70) identificados en `RUN_OPTIONAL_FIELDS`.
+Sigo revisando: ya identifiqué qué runs y decisiones sumaron opcionales, y veo que la hipótesis de la cabina no cuadra del todo (faltan `#45` y `#70`, y `#48` no tiene decisión propia). Ahora voy a medir `batch` en los canónicos hermanos para el punto (f).
+Confirmo que `batch` y `category` no aparecen en ninguno de los seis runs canónicos, y que lo marcado como "ausente" en :709-710 en realidad está "RESERVADA" ya que `batch` es opcional desde `#48`. Ahora reviso la §16 para ver qué indica actualmente.
+Mido las fechas de `#45` y `#48` para confirmar que caen después de D-051 (2026-07-27).
+Medición completa. Paso a editar.
+Ahora `context/README.md` (e).
+Ahora `CONTRATO.md`: (f) y las dos notas de (g).
+Ediciones hechas. Compruebo codificación, finales de línea y la suite.
+Suite idéntica: 982 / 981 / 1, el mismo fallo de EOL. Reviso el diff final.
+Una frase del `.cmd` promete más de lo que dice el `.ps1` (el `.ps1` dice cuándo escribe y remite a `serve.mjs` para el qué). La ajusto.
+Suite final: 982 / 981 / 1. Guardo la memoria.
+Reporte del taller: ampliación del #75 (`RUN-CONSOLE-STALE-TEXTS-REPAIR-002`)
+Los siete textos de la enmienda, (a) a (g), seguían siendo falsos y los corregí todos sin conteos. La suite no cambió. No he commiteado, re-emitido ni cambiado el status.
+Guarda: coincide. `queue_order` 75 tiene `run_id` `RUN-CONSOLE-STALE-TEXTS-REPAIR-002`, el título exacto, `status` `active`, y su `full_description` termina en «SCOPE AMENDED 2026-10-20 BY THE OPERATOR … ('pass procedamos' …)».
+Suite (`node --test`):
+
+* Antes: 982 / 981 / 1.
+* Después: 982 / 981 / 1.
+* El fallo: es el de EOL de siempre, «round-trip: the two real canonicals do NOT share a line-ending convention», que salta en `tests/roadmap-engine.test.mjs:98`.
+
+Texto por texto
+(a) `start-console.cmd:2`: seguía siendo falso.
+
+* Antes: `rem Double-clickable entry point for the read-only multi-project console of this repository.`
+* Después: `rem Double-clickable entry point for the multi-project console of this repository. The` / `rem server it starts is not read-only: the header of start-console.ps1 says when it writes.`
+* Codificación: el `.cmd` no declara restricciones propias, pero es ASCII y LF. El README de los lanzadores dice «ASCII only» y cmd.exe lee en la página OEM, así que lo dejé en ASCII (0 bytes no ASCII) y en LF (`i/lf w/lf`).
+
+(b) `project-console/README.md:34`: seguía siendo falso. `.project/` tiene siete artefactos, y la cabecera de `serve.mjs` ya dice «ALL SEVEN».
+
+* Antes: «re-emits all six artifacts of that project's `.project/` folder…»
+* Después: «re-emits every artifact of that project's `.project/` folder from its canonical roadmap (O4.P14); the list is `PROJECT_EMIT_ARTIFACT_PATHS` in `serve.mjs`, and `git_history.json` is left out where the root is not its own repository.» Lo medí en `serve.mjs:162-170` y `:866-877`.
+
+(c) `:55`: seguía siendo falso. `pathNamesGitDir` responde 403 antes de cualquier ruta o puerta de método (`serve.mjs:1246-1249`).
+
+* Antes: «Every other method on every other route still answers 405; escaping a registered root answers 403; `.git` is never served or written. All four write routes refuse…»
+* Después: «On every other path, any method other than GET and HEAD is refused: with 405, except that a path naming `.git` is refused with 403 before any route is matched, so `.git` is never served or written. Escaping a registered root answers 403. Every write route refuses…»
+* «All four» estaba en la frase siguiente del mismo párrafo y lo quité con la misma regla de no contar.
+
+(d) `:1` y `:23`: seguían contando.
+
+* Antes, línea 1: «read-only plus four write routes». Después: «read-only except its write routes».
+* Antes, línea 23: «exactly four since #57 (three between O4.P14 and it)». Después: «documented, with what each one writes, in the header of `project-console/serve.mjs`».
+
+(e) `context/README.md:91-96`: seguía siendo incompleto.
+
+* Faltaban: los dos `Audit_Report_*` de `aiw/`, el `CONTRATO.md` de `aiw-console/`, cinco ficheros y `records/` de `cantu-studio/`, y la carpeta `cantu-quizzes-latex/` entera.
+* Antes: listas fichero a fichero por carpeta.
+* Después: «Qué ficheros hay en cada carpeta lo dice la propia carpeta: esta sección no los enumera. Sólo señala lo que un fichero no dice con su nombre», seguido de dos puntos:
+   * `roadmap_AIW_temp.md` está RETIRADO.
+   * `CONTRATO.md` es norma viva y no un record, y el roadmap de aiw-console es el canónico del repo.
+
+(f) `CONTRATO.md:709-710`: seguía siendo falso, pero solo en «RESERVADA».
+
+* Medí los seis canónicos del registro, resolviendo cada uno con `detectRootLayout`: ningún run lleva `batch` ni `category`, y ninguna raíz declara `batches`. «Ausente» sigue siendo cierto hoy.
+* Lo falso es que `batch` ya no es solo una reserva: el `#48` la admitió en `RUN_OPTIONAL_FIELDS`.
+* Antes: «Más las dos claves RESERVADAS de §16 (`category`, `batch`), que hoy no existen en ningún run y nacen ausentes.»
+* Después: «`batch` ya no es sólo una reserva: el `#48` la admitió como opcional del run, sobre el modelo de D-030, y nombra un `batch_id` que la raíz del roadmap declara en `batches`; qué runs la llevan lo dice cada canónico, no este contrato.» Añadí además una nota de corrección que apunta al `#48`.
+* El «también ausentes» de `lane` y `barrier` pierde el «también», porque se quedó sin antecedente.
+
+(g) Las dos notas de corrección (`:720-724` y `:1243-1247`): apuntaban al run y ahora apuntan a las decisiones. Lo medí en los comentarios de `RUN_OPTIONAL_FIELDS` y en `DECISIONES.md`. La nota nueva, idéntica en los dos sitios:
+(Corregido el 2026-10-20: la cifra que daba aquí caducó con las opcionales del run añadidas después de D-051 — las de clasificación del `#43` (D-059), `depends_on_human_approved` del `#45`, `batch` del `#48` sobre el modelo de D-030, `work_class` del `#68` (D-080) y `report_html` del `#70` (D-076). El `#45` y el `#48` no tienen decisión propia en `context/DECISIONES.md`: su puntero es el run.)
+Dónde contradigo a la cabina
+
+1. La hipótesis de (g) se queda corta. Faltan el `#45` y el `#70`/D-076. Además, el `#48` no tiene decisión propia: D-030 diseñó el modelo de `batch` antes de D-051, y en `DECISIONES.md` no hay ninguna entrada que nombre el `#48` ni el `#45`.
+2. «`CONTRATO.md:46` no pide anotar en `DECISIONES.md`» es cierto para la línea 46: pide el puntero, y ahí estaba mi error. Pero mi frase anterior citaba la línea 55, que dice literalmente «Cada corrección de esta clase queda anotada en la decisión que la motiva». Esa mitad sigue sin hacer, porque `DECISIONES.md` está fuera del alcance. Decidir eso le toca a la cabina.
+
+Textos falsos nuevos (nombrados, sin tocar)
+
+* CONTRATO §16 (`:1728` en adelante): el título dice «reservados, nacen vacíos» y el cuerpo dice que de `batch` no se fija «ni siquiera el tipo». Ambas cosas son falsas desde el `#48`.
+* CONTRATO §16, «un consumidor que no las entienda las ignora»: el motor rechaza `category`, porque no está en `RUN_ALLOWED_FIELDS` (`roadmap-core.mjs:635`).
+* `start-console.cmd:6`: «All behaviour, and all documentation, is in the .ps1». También existe `start-console.README.md`.
+
+Siguen fuera del alcance, como estaban: `context/CLASIFICACION-DE-RUNS.md:3`, `context/PROCEDIMIENTO-DE-CLASIFICACION.md` y `serve.mjs:1-3`.
+Ficheros tocados: [start-console.cmd](https://claude.ai/epitaxy/start-console.cmd), [project-console/README.md](https://claude.ai/epitaxy/project-console/README.md), [context/README.md](https://claude.ai/epitaxy/context/README.md) y [context/aiw-console/CONTRATO.md](https://claude.ai/epitaxy/context/aiw-console/CONTRATO.md). Los cuatro siguen en LF y en la codificación que tenían.

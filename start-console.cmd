@@ -1,5 +1,6 @@
 @echo off
-rem Double-clickable entry point for the read-only multi-project console of this repository.
+rem Double-clickable entry point for the multi-project console of this repository. The
+rem server it starts is not read-only: the header of start-console.ps1 says when it writes.
 rem It only hands over to start-console.ps1, which lives beside it: -NoProfile keeps the
 rem operator's PowerShell profile out of the way, and %~dp0 makes the current directory
 rem irrelevant. All behaviour, and all documentation, is in the .ps1.

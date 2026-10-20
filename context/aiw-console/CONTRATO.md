@@ -706,15 +706,22 @@ el audit: MEDICION:268-270):**
 | `closeout_result` | 9/65 | string | OPCIONAL — §14 |
 | `progress` | 1/65 | array de objetos | OPCIONAL — §15 |
 
-Más las dos claves RESERVADAS de §16 (`category`, `batch`), que hoy no existen en
-ningún run y nacen ausentes. Y las dos OPCIONALES de §10.e (`lane`, `barrier`),
-añadidas por D-051: también ausentes en los tres roadmaps reales al enmendar — la
+Más las dos claves que §16 reservó (`category`, `batch`). `batch` ya no es sólo una
+reserva: el `#48` la admitió como opcional del run, sobre el modelo de D-030, y nombra
+un `batch_id` que la raíz del roadmap declara en `batches`; qué runs la llevan lo dice
+cada canónico, no este contrato. (Corregido el 2026-10-20: este párrafo la llamaba
+reservada y ausente de todo run; caducó con el `#48`, que no tiene decisión propia en
+`context/DECISIONES.md`.) Y las dos OPCIONALES de §10.e (`lane`, `barrier`),
+añadidas por D-051: ausentes en los tres roadmaps reales al enmendar — la
 tabla de arriba conserva sus 9 claves medidas porque reproduce una medición
 fechada; el conjunto admitido vigente no es esa tabla: lo fija el motor, que lista
 las requeridas en `RUN_REQUIRED_FIELDS` y las opcionales en `RUN_OPTIONAL_FIELDS`
 (`tools/roadmap/roadmap-core.mjs`), y en ese orden las serializa. (Corregido el
-2026-10-20 por `RUN-CONSOLE-STALE-TEXTS-REPAIR-002`: la cifra que daba aquí caducó con
-las opcionales que se añadieron después de D-051.)
+2026-10-20: la cifra que daba aquí caducó con las opcionales del run añadidas después
+de D-051 — las de clasificación del `#43` (D-059), `depends_on_human_approved` del
+`#45`, `batch` del `#48` sobre el modelo de D-030, `work_class` del `#68` (D-080) y
+`report_html` del `#70` (D-076). El `#45` y el `#48` no tienen decisión propia en
+`context/DECISIONES.md`: su puntero es el run.)
 
 **`report_html` — OPCIONAL, añadida por el `#70` (D-076; aprobada por el operador el
 2026-10-20).** Dice **dónde vive el reporte HTML** que el hilo escribió para ese run: una
@@ -1233,8 +1240,11 @@ Con esto `lane` y `barrier` entran entre las claves opcionales del run, en orden
 canónico de serialización tras `depends_on` y antes de los campos de cierre. La
 lista vigente de opcionales, y su orden, vive en `RUN_OPTIONAL_FIELDS`
 (`tools/roadmap/roadmap-core.mjs`); este contrato no la cuenta. (Corregido el
-2026-10-20 por `RUN-CONSOLE-STALE-TEXTS-REPAIR-002`: la cifra que daba aquí caducó
-con las opcionales que se añadieron después de D-051.)
+2026-10-20: la cifra que daba aquí caducó con las opcionales del run añadidas después
+de D-051 — las de clasificación del `#43` (D-059), `depends_on_human_approved` del
+`#45`, `batch` del `#48` sobre el modelo de D-030, `work_class` del `#68` (D-080) y
+`report_html` del `#70` (D-076). El `#45` y el `#48` no tienen decisión propia en
+`context/DECISIONES.md`: su puntero es el run.)
 
 #### `queue_order` sigue GLOBAL; la posición en el carril se DERIVA
 

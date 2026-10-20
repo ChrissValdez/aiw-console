@@ -1,4 +1,4 @@
-# Project Console (transplanted, multi-project; read-only plus four write routes)
+# Project Console (transplanted, multi-project; read-only except its write routes)
 
 The Project Console of `cantu-studio`, transplanted onto this project's own sources (O4.P11), now
 wrapped by a **multi-project shell** (O4.P3): a persistent sidebar lists every registered project,
@@ -20,8 +20,8 @@ never edited for QA.
 The server serves the repository root read-only, plus one **virtual namespace**
 `/projects/<key>/**` that maps onto the roots listed in the registry — that is how sibling
 repositories' `.project/` folders and doc bodies are read. Since O4.P12 (D-050) it also exposes
-write routes per registered project — **exactly four** since #57 (three between O4.P14 and it) —
-and nothing else accepts a write:
+write routes per registered project — documented, with what each one writes, in the header of
+`project-console/serve.mjs` — and nothing else accepts a write:
 
 - `POST /projects/<key>/__project-console/roadmap/edit` — bounded roadmap edits with the
   dry-run→confirm contract (`apply:false` previews and writes nothing; `apply:true` requires the
@@ -31,8 +31,10 @@ and nothing else accepts a write:
   that project's `.project/` folder so the console's next read matches what was written.
 - `POST /projects/<key>/__project-console/history/sync` — re-emits `.project/git_history.json`
   from the project's own repository (read-only Git), so the History tab refreshes live.
-- `POST /projects/<key>/__project-console/project/emit` — re-emits **all six** artifacts of that
-  project's `.project/` folder from its canonical roadmap (O4.P14). This is the endpoint behind
+- `POST /projects/<key>/__project-console/project/emit` — re-emits **every** artifact of that
+  project's `.project/` folder from its canonical roadmap (O4.P14); the list is
+  `PROJECT_EMIT_ARTIFACT_PATHS` in `serve.mjs`, and `git_history.json` is left out where the root
+  is not its own repository. This is the endpoint behind
   the **Re-emit `.project/`** button in the Roadmap toolbar, and it exists because `.project/` is
   a projection of a canonical the console does not own: under parallel lanes the workshop runs
   deliberately do not re-emit, so the projection falls behind and had no way to catch up. The
@@ -52,8 +54,9 @@ and nothing else accepts a write:
   and touches nothing else: no re-emission (the index's `verdict_present` catches up on the next
   emission the operator asks for), no status change, no Git.
 
-Every other method on every other route still answers **405**; escaping a registered root answers
-403; `.git` is never served or written. All four write routes refuse, with a named reason, a
+On every other path, any method other than GET and HEAD is refused: with **405**, except that a
+path naming `.git` is refused with 403 before any route is matched, so `.git` is never served or
+written. Escaping a registered root answers 403. Every write route refuses, with a named reason, a
 project the registry does not list or whose root no layout claims, and every write destination is
 verified inside the registered root after path resolution — by one of two mirror-image guards:
 `resolveCanonicalWritePath` (inside the root, never inside the derived `.project/`) and

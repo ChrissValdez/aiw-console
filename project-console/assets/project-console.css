@@ -5297,6 +5297,20 @@ details[open] > summary > .v3-caret {
   padding: 5px 10px;
   max-width: 280px;
 }
+/* [#69] TWO PICKERS IN ONE ROW. The row is already full at 1280 with ONE picker (O4.P14, above).
+   A project that declares lanes AND carries a work class adds the class picker beside the lane
+   one, and measured at 1280 on `aiw` with classes written in memory (no real project is in that
+   state yet) the pickers took 352 + 236 px and pushed the row to 1119 of 962, cutting "Re-emit
+   .project/" and "Edit roadmap" off the right edge. So while two or more pickers share the row —
+   lane, batch, class, any pair — each gives back most of its side margin and the select caps
+   narrower; the closed select still names its filter ("All lanes (46)"). With one picker, or
+   none, nothing here applies and the row is exactly as before. */
+.roadmap-toolbar:has(.roadmap-lane-slot:not(:empty) ~ .roadmap-lane-slot:not(:empty)) .v3-lane-picker {
+  margin: 0 6px;
+}
+.roadmap-toolbar:has(.roadmap-lane-slot:not(:empty) ~ .roadmap-lane-slot:not(:empty)) .v3-lane-select {
+  max-width: 160px;
+}
 /* [D-051] Lane label chip (`<lane_id>-03`): lane KEY + derived in-lane position. Appears
    only in projects that declare lanes. Mono like every identity-bearing chip.
    [D-051 QA-A] The global-order tag (`#8 global`) is the SAME chip: while a lane filter is
@@ -6444,6 +6458,32 @@ details[open] > summary > .v3-caret {
 .v3-derived-row .data-value .is-faint {
   color: var(--text-tertiary);
   font-style: italic;
+}
+/* [#69] The work class tag (§9). The row's tag-line metrics — 10px type, 16px line, 4px radius,
+   the 7px gap — and NO colour: severity owns the row's one chromatic signal (#47), and a class
+   is not a level of anything. Sentence case and no letter-spacing, unlike the derived chips
+   beside it: the class is a stored word a person chose; they are tokens computed at read time.
+   No per-value modifier, so no class can be singled out by colour later. */
+.v3-class-tag {
+  display: inline-block;
+  margin-left: 7px;
+  padding: 0 6px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 16px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+/* In the drawer the class is a plain stored row, like its siblings; the stored token follows the
+   label, quiet and mono like every identity the drawer shows. */
+.v3-class-token {
+  margin-left: 8px;
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 11px;
+  color: var(--text-tertiary);
 }
 /* The live derivation readout inside the editor block. */
 .v3-edit-derived-note code {

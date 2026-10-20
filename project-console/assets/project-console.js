@@ -163,6 +163,50 @@ function v3StoredClassification(run) {
   return v3ClassificationStoredFields().filter((field) => run && field in run);
 }
 
+// [#69] THE WORK CLASS ON SCREEN — context/CLASIFICACION-DE-RUNS.md §9.
+//
+// One label per value, declared HERE because a label is display policy, like every other label
+// in this file: never stored, never sent back. Each is the name §9 gives the class, in the
+// console's language, and says nothing the value does not — "UX design" keeps its UX for the
+// same reason the token does, and no label borrows the depth words of work_type. The VOCABULARY
+// is the engine's (classification.mjs, WORK_CLASSES): the suite checks this table covers it
+// exactly, so a value added there without a label here fails a test, and on screen it falls back
+// to its own token instead of vanishing.
+const V3_WORK_CLASS_LABELS = {
+  FUNCTIONALITY: "Functionality",
+  DOCUMENTATION: "Documentation",
+  RESEARCH: "Research",
+  UX_DESIGN: "UX design",
+  CONTENT: "Content"
+};
+
+// The class a run carries, or null. ABSENT IS NOT A VALUE (D-075): no key, null, an empty or
+// blank string, or anything that is not a string all read as no class, and nothing is painted
+// for it — not "unclassified", not "undefined", not an empty tag.
+function v3WorkClassOf(run) {
+  const value = run ? run.work_class : undefined;
+  return typeof value === "string" && value.trim() ? value : null;
+}
+
+// The declared label of a token, or null for a token outside the vocabulary.
+function v3WorkClassLabel(token) {
+  return Object.prototype.hasOwnProperty.call(V3_WORK_CLASS_LABELS, token) ? V3_WORK_CLASS_LABELS[token] : null;
+}
+
+// The small tag, or "" for a run with no class. NO COLOUR and no per-value modifier: colour is the
+// row's one chromatic signal and it belongs to severity (#47). A token outside the vocabulary (the
+// validator refuses it, so it should never arrive) is shown as stored and said to be outside,
+// rather than hidden or relabelled.
+function v3WorkClassTag(run) {
+  const token = v3WorkClassOf(run);
+  if (!token) return "";
+  const label = v3WorkClassLabel(token);
+  const title = label
+    ? `Work class ${token} — the kind of work this run is, not what it is about; stored on the run`
+    : `Work class ${token} — outside the work_class vocabulary; the validator refuses it`;
+  return `<span class="v3-class-tag" title="${escapeHtml(title)}">${escapeHtml(label || token)}</span>`;
+}
+
 // NO BAKED IDENTITY. The source console kept, right here, a parent run id and four
 // lifecycle-stage run ids of its own project, plus a per-run display-copy table keyed by twelve
 // more. Every one of them named runs of another project: they matched nothing here and, worse,
@@ -254,6 +298,10 @@ let v3SelectedLane = null;
 // filter's sibling, same lifecycle: UI-only, never persisted, reset on project switch.
 // The two compose (a run must pass both), because lane and batch are independent claims.
 let v3SelectedBatch = null;
+// [#69] Selected work-class filter (a work_class token, or null for all classes) — the batch
+// filter's sibling, same lifecycle: UI-only, never persisted, reset on project switch. It
+// composes with both, because the class is a claim independent of lane and batch.
+let v3SelectedClass = null;
 // Roadmap editing (Run B). Edit mode is OFF by default and only reachable from the Roadmap
 // tab; it never appears on Overview/History/Docs/Status. v3EditPending holds the operation
 // whose dry-run preview is on screen, awaiting an explicit confirm before any write.
@@ -3701,6 +3749,11 @@ function v3RunRowTags(model, run) {
   if (run.barrier === "global" || run.barrier === "lane") {
     tags.push(`<span class="v3-barrier-tag is-${escapeHtml(run.barrier)}" title="${run.barrier === "global" ? "Global barrier: bars every later run in every lane until completed" : "Lane barrier: bars later runs on its own lane until completed"}">Barrier · ${run.barrier === "global" ? "GLOBAL" : "lane"}</span>`);
   }
+  // [#69] The work class, STORED (§9), where the run carries one — and nothing at all where it
+  // does not (D-075). It leads the classification cluster: what kind of work, before the two
+  // chips derived from how it is judged. One function paints both surfaces, as with the chips.
+  const classTag = v3WorkClassTag(run);
+  if (classTag) tags.push(classTag);
   // [#43] The severity chip, DERIVED at read time. It appears only when the run actually has a
   // severity — an unclassified run gets no chip at all, because a chip reading MINOR over a run
   // nobody has classified would be a claim the file does not make.
@@ -3869,7 +3922,14 @@ function v3BatchFilterActive(model) {
 // two compose by construction (a run must pass both). With neither active this returns its
 // input untouched, exactly as before batches existed.
 function v3AnyRunFilterActive(model) {
-  return v3LaneFilterActive(model) || v3BatchFilterActive(model);
+  return v3LaneFilterActive(model) || v3BatchFilterActive(model) || v3ClassFilterActive(model);
+}
+
+// [#69] The class filter's predicate. There is no declared list to check the selection against,
+// as lanes and batches have: the options are the classes the runs CARRY, so a selection stays
+// active only while some run still carries it.
+function v3ClassFilterActive(model) {
+  return !!(model && v3SelectedClass && model.allRuns.some((run) => v3WorkClassOf(run) === v3SelectedClass));
 }
 
 function v3VisibleRuns(model, runs) {
@@ -3878,6 +3938,8 @@ function v3VisibleRuns(model, runs) {
   // [#48] The batch filter has no default to resolve through: batchOf is the run's own
   // stored key or null, so only runs genuinely IN the selected batch survive it.
   if (v3BatchFilterActive(model)) visible = visible.filter((run) => model.batchOf(run) === v3SelectedBatch);
+  // [#69] Nor has the class: a run with no class never survives a class filter.
+  if (v3ClassFilterActive(model)) visible = visible.filter((run) => v3WorkClassOf(run) === v3SelectedClass);
   return visible;
 }
 
@@ -3991,6 +4053,77 @@ function renderBatchSelector(model) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// [#69] Class selector — the batch selector copied onto the work class (§9): same toolbar
+// row, same gesture, same per-project lifecycle, composed with lane and batch through
+// v3VisibleRuns. Two divergences, each with its reason:
+//   - the options are the classes the runs CARRY, in the vocabulary's order — never the five
+//     of the vocabulary. A class no run carries would be an option that only empties the view,
+//     and the console shows what exists (D-075);
+//   - it renders only while at least one run carries a class, and its slot is removed
+//     otherwise, so a project that classifies nothing renders the toolbar it always rendered.
+// There is no "no class" option, for the reason there is no "no batch" one: absence is not a
+// value, and a filter for it would print the "unclassified" D-075 rules out.
+// ---------------------------------------------------------------------------
+
+function v3PresentWorkClasses(model) {
+  const counts = new Map();
+  (model ? model.allRuns : []).forEach((run) => {
+    const token = v3WorkClassOf(run);
+    if (token) counts.set(token, (counts.get(token) || 0) + 1);
+  });
+  const order = Object.keys(V3_WORK_CLASS_LABELS);
+  const rank = (token) => (order.includes(token) ? order.indexOf(token) : order.length);
+  return [...counts.keys()]
+    .sort((a, b) => rank(a) - rank(b) || a.localeCompare(b))
+    .map((token) => ({ token, count: counts.get(token) }));
+}
+
+function renderClassSelector(model) {
+  let slot = byId("roadmap-class-slot");
+  const present = v3PresentWorkClasses(model);
+  if (!present.length) {
+    if (slot) slot.remove();
+    return;
+  }
+  if (!slot) {
+    // After the batch slot when there is one, else after the lane slot: lane, batch, class.
+    const anchor = byId("roadmap-batch-slot") || byId("roadmap-lane-slot");
+    if (!anchor || !anchor.parentNode) return;
+    slot = document.createElement("div");
+    slot.className = "roadmap-lane-slot";
+    slot.id = "roadmap-class-slot";
+    anchor.parentNode.insertBefore(slot, anchor.nextSibling);
+  }
+  // A selected class that no run carries any more falls back to all classes.
+  if (v3SelectedClass && !present.some((entry) => entry.token === v3SelectedClass)) v3SelectedClass = null;
+  const options = [
+    `<option value=""${v3SelectedClass ? "" : " selected"}>All classes (${model.allRuns.length})</option>`,
+    ...present.map(({ token, count }) =>
+      `<option value="${escapeHtml(token)}"${v3SelectedClass === token ? " selected" : ""}>${escapeHtml(V3_WORK_CLASS_LABELS[token] || token)} (${count})</option>`)
+  ].join("");
+  slot.innerHTML = `
+    <label class="v3-lane-picker">
+      <span class="v3-lane-picker-label">Class</span>
+      <select id="v3-class-select" class="v3-lane-select" aria-label="Filter roadmap by work class">${options}</select>
+    </label>
+  `;
+  if (slot.dataset.classWired !== "true") {
+    slot.dataset.classWired = "true";
+    slot.addEventListener("change", (event) => {
+      const select = event.target.closest("#v3-class-select");
+      if (!select) return;
+      v3SelectedClass = select.value || null;
+      // Re-render both Roadmap subviews in place, the lane selector's own gesture.
+      if (appData) {
+        renderRunQueueV3(appData);
+        renderRoadmapV3(appData);
+        if (v3EditMode) v3DecorateTreeEditAffordances();
+      }
+    });
+  }
+}
+
 function v3ToggleQueueGroup(toggle) {
   const expanded = toggle.getAttribute("aria-expanded") === "true";
   toggle.setAttribute("aria-expanded", expanded ? "false" : "true");
@@ -4079,6 +4212,7 @@ function renderRoadmapV3(data) {
   roadmapV3ModelCache = model;
   renderLaneSelector(model);
   renderBatchSelector(model);
+  renderClassSelector(model);
   // [#48] Either filter (lane or batch) switches the tree into filtered display: empty
   // phases/objectives are omitted and stats derive from the visible subset, exactly as
   // the lane filter alone always did.
@@ -4123,9 +4257,13 @@ function renderRoadmapV3(data) {
     : "";
   const cards = liveObjectives.map(objectiveCard).join("") + archiveHtml;
   // [#48] The empty note names the filter that emptied the view: lane, batch, or both.
-  const emptyNote = v3LaneFilterActive(model) && v3BatchFilterActive(model)
-    ? "No runs on this lane in this batch yet."
-    : v3BatchFilterActive(model) ? "No runs in this batch yet." : "No runs on this lane yet.";
+  // [#69] With a class selected it names every filter that is on. The class alone never empties
+  // the view (its options are the classes runs carry); it does with a lane or a batch beside it.
+  const emptyNote = v3ClassFilterActive(model)
+    ? `No runs ${[v3LaneFilterActive(model) ? "on this lane" : "", v3BatchFilterActive(model) ? "in this batch" : "", "of this class"].filter(Boolean).join(" ")} yet.`
+    : v3LaneFilterActive(model) && v3BatchFilterActive(model)
+      ? "No runs on this lane in this batch yet."
+      : v3BatchFilterActive(model) ? "No runs in this batch yet." : "No runs on this lane yet.";
   container.innerHTML = cards || (filtering
     ? `<div class="v3-empty-note">${emptyNote}</div>`
     : cards);
@@ -4992,6 +5130,7 @@ function renderRunQueueV3(data) {
   roadmapV3ModelCache = model;
   renderLaneSelector(model);
   renderBatchSelector(model);
+  renderClassSelector(model);
   // [D-051] The lane filter narrows which runs the queue lists; grouping semantics are
   // untouched. Sub-tab counts follow the same visible subset: the surface counts what
   // it shows. [#48] The batch filter rides the same subset.
@@ -5115,10 +5254,41 @@ function v3HumanApprovalSection(run, model) {
   `;
 }
 
+// [#69] THE WORK CLASS IN THE SECTION. A stored row, first — what kind of work, before how it is
+// judged — and never inside the derived block, because nothing derives it. Plain text like the
+// stored rows below it (inside this section a chip is what the DERIVED rows wear): the label the
+// row tag shows, then the token as it is stored. It counts in the section's number like any
+// stored field. A run carrying ONLY the class is not "not classified": it shows its class and
+// says what is still missing (§9.3: the class does not move the mark, so §1 stays unjudged, and
+// severity and closure mode stay absent). A run with no class renders exactly the section it
+// rendered before #69.
 function v3ClassificationSection(run) {
   const stored = v3StoredClassification(run);
   const measured = stored.filter((field) => field !== "classified_at");
   const derived = v3DerivedClassification(run);
+  const workClass = v3WorkClassOf(run);
+  const workClassLabel = workClass ? v3WorkClassLabel(workClass) : null;
+  const classRow = workClass ? `
+      <div class="data-row v3-class-row">
+        <div class="data-label">Work class</div>
+        <div class="data-value">${workClassLabel
+          ? `${escapeHtml(workClassLabel)}<span class="v3-class-token">${escapeHtml(workClass)}</span>`
+          : `<span class="mono">${escapeHtml(workClass)}</span><span class="v3-class-token">outside the work_class vocabulary</span>`}</div>
+      </div>` : "";
+
+  if (!measured.length && workClass) {
+    return `
+    <div class="drawer-section">
+      <details class="v3-section-details" open>
+        <summary><span class="v3-caret">${v3Chevron(11)}</span>Classification <span class="v3-section-count">1</span></summary>
+        <div class="v3-section-body">
+          <div class="v3-detail-rows">${classRow}</div>
+          <div class="v3-empty-note">No risk classification yet — this run carries none of the six stored risk fields, so it has no severity and no closure mode. The work class does not stand in for them; open the editor to classify it.</div>
+        </div>
+      </details>
+    </div>
+  `;
+  }
 
   const label = {
     correctness_model: "Correctness model",
@@ -5181,9 +5351,9 @@ function v3ClassificationSection(run) {
   return `
     <div class="drawer-section">
       <details class="v3-section-details" open>
-        <summary><span class="v3-caret">${v3Chevron(11)}</span>Classification <span class="v3-section-count">${measured.length}</span></summary>
+        <summary><span class="v3-caret">${v3Chevron(11)}</span>Classification <span class="v3-section-count">${measured.length + (workClass ? 1 : 0)}</span></summary>
         <div class="v3-section-body">
-          <div class="v3-detail-rows">${storedRows}</div>
+          <div class="v3-detail-rows">${classRow}${storedRows}</div>
           <div class="v3-classification-derived">
             <div class="v3-classification-derived-head">Derived — computed at read time, never stored, not editable</div>
             <div class="v3-detail-rows">
@@ -5845,6 +6015,10 @@ function resetProjectScopedState() {
   v3SelectedBatch = null;
   const batchSlot = byId("roadmap-batch-slot");
   if (batchSlot) batchSlot.remove();
+  // [#69] The class filter too: per-project state, and a slot the renderer creates.
+  v3SelectedClass = null;
+  const classSlot = byId("roadmap-class-slot");
+  if (classSlot) classSlot.remove();
   v3EditMode = false;
   v3EndpointReachable = null;
   v3EditPending = null;

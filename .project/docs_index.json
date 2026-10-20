@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T03:57:10.196Z",
+  "generated_at": "2026-10-20T22:24:39.125Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
@@ -34,7 +34,7 @@
     },
     {
       "path": "context/aiw-console/CONTRATO.md",
-      "mtime": "2026-08-08T09:13:17.559Z"
+      "mtime": "2026-10-20T20:30:34.602Z"
     },
     {
       "path": "context/aiw-console/records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md",
@@ -549,6 +549,10 @@
       "mtime": "2026-08-08T09:13:17.703Z"
     },
     {
+      "path": "context/aiw-console/records/PROPUESTA-FASE-1-70-REPORTES-HTML-DE-CADA-HILO-2026-10-19.md",
+      "mtime": "2026-10-20T04:40:46.072Z"
+    },
+    {
       "path": "context/aiw-console/records/PROYECTOR-BANCOS-DE-CASOS.md",
       "mtime": "2026-08-08T09:13:17.703Z"
     },
@@ -685,6 +689,10 @@
       "mtime": "2026-10-20T03:51:45.975Z"
     },
     {
+      "path": "context/aiw-console/records/REPORTE-TALLER-70-2026-10-20.md",
+      "mtime": "2026-10-20T21:45:34.044Z"
+    },
+    {
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "mtime": "2026-08-08T09:13:17.719Z"
     },
@@ -819,6 +827,10 @@
     {
       "path": "context/aiw-console/records/VEREDICTO-69-QA-VISUAL-2026-10-19.md",
       "mtime": "2026-10-20T03:56:59.422Z"
+    },
+    {
+      "path": "context/aiw-console/records/VEREDICTO-70-2026-10-20.md",
+      "mtime": "2026-10-20T22:24:23.813Z"
     },
     {
       "path": "context/aiw-console/records/VEREDICTO-QA-DEL-60-Y-CIERRE.md",
@@ -1757,6 +1769,10 @@
       "mtime": "2026-10-20T01:30:07.355Z"
     },
     {
+      "path": "docs/CONTRATO-REPORTE-HTML-DE-CADA-HILO-v1.md",
+      "mtime": "2026-10-20T20:38:46.541Z"
+    },
+    {
       "path": "docs/SOBRE-DEL-REPORTE-v1.md",
       "mtime": "2026-08-15T17:11:01.178Z"
     },
@@ -1879,7 +1895,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw-console",
-      "freshness": "2026-08-08T09:13:17.559Z"
+      "freshness": "2026-10-20T20:30:34.602Z"
     },
     {
       "title": "ACABADO VISUAL de Docs y EMISOR de `git_history` — cierre del port de la consola",
@@ -2906,6 +2922,14 @@
       "freshness": "2026-08-08T09:13:17.703Z"
     },
     {
+      "title": "Propuesta de la Fase 1 del `#70` — el reporte HTML de cada hilo — 2026-10-19",
+      "path": "context/aiw-console/records/PROPUESTA-FASE-1-70-REPORTES-HTML-DE-CADA-HILO-2026-10-19.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-20T04:40:46.072Z"
+    },
+    {
       "title": "EL PROYECTOR Y LOS BANCOS DE CASOS DE EVALUACIÓN DE AIW",
       "path": "context/aiw-console/records/PROYECTOR-BANCOS-DE-CASOS.md",
       "nav_tier": "evidence",
@@ -3178,6 +3202,14 @@
       "freshness": "2026-10-20T03:51:45.975Z"
     },
     {
+      "title": "Reporte del taller del `#70` — Fase 2, transcrito verbatim",
+      "path": "context/aiw-console/records/REPORTE-TALLER-70-2026-10-20.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-20T21:45:34.044Z"
+    },
+    {
       "title": "RESTITUCIÓN DE LAS 17 ARISTAS DE `#47` Y RE-ENCUADRE A AUDITORÍA AL CIERRE — CANTU",
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "nav_tier": "evidence",
@@ -3448,6 +3480,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-10-20T03:56:59.422Z"
+    },
+    {
+      "title": "Veredicto y decisión del operador sobre el `#70` — 2026-10-20",
+      "path": "context/aiw-console/records/VEREDICTO-70-2026-10-20.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-20T22:24:23.813Z"
     },
     {
       "title": "`#60` `RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001` — la QA del operador y el cierre",
@@ -5320,6 +5360,14 @@
       "default_visible": false,
       "ia_bucket": "context/handoffs",
       "freshness": "2026-10-20T01:30:07.355Z"
+    },
+    {
+      "title": "El reporte HTML de cada hilo · v1 — dónde vive, cómo lo enlaza la consola, cómo vuelve el veredicto",
+      "path": "docs/CONTRATO-REPORTE-HTML-DE-CADA-HILO-v1.md",
+      "nav_tier": "secondary",
+      "default_visible": false,
+      "ia_bucket": "docs",
+      "freshness": "2026-10-20T20:38:46.541Z"
     },
     {
       "title": "Sobre del reporte de run · v1 — `report.json`, su resumen, y lo que la consola promete pintar",

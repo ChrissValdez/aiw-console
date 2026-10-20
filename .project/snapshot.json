@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T03:57:10.196Z",
+  "generated_at": "2026-10-20T22:24:39.125Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-20T03:57:10.165Z"
+      "mtime": "2026-10-20T22:24:39.088Z"
     },
     {
       "path": "package.json",
@@ -43,9 +43,9 @@
       "path": ".project/snapshot.json"
     }
   ],
-  "operational_status": "active",
+  "operational_status": "idle",
   "project_summary": "AIW Console Roadmap: 2 objectives, 23 phases, 78 runs.",
-  "current_status_summary": "Active run: RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001 (O4/O4.P17, queue 70).",
+  "current_status_summary": "No active run; 71 of 78 runs completed.",
   "roadmap_tree": {
     "model": "roadmap_tree_v1",
     "roadmap_id": "roadmap",
@@ -1039,9 +1039,10 @@
                 "title": "Each thread's HTML report: where it lives, how the console links it, how the verdict comes back — the contract",
                 "summary": "Each thread writes its own HTML report in whatever format its project needs; the contract fixes only where that file lives, how the console finds and links it, and how the operator's verdict returns to disk. The console's current report format is frozen, not deleted. Pilot: cantu-lessons.",
                 "full_description": "ORIGIN: the operator, 2026-10-04, verbatim in context/aiw-console/records/REFLEXION-DEL-OPERADOR-2026-10-04-PROPOSITO-Y-FRICCION-DE-LA-CONSOLA.md (decisions 21 to 25): cantu-lessons works in two phases, first an HTML the run itself produces, equivalent to a report, then a draft read in Cantu Studio; he likes each thread making its own HTML report so he is not limited to the console's report format, which some projects fit and others do not; the console's reports were designed for CQL and he ended up not using them; and the verdict can live inside the HTML if it carries the questions, with the cabin always available otherwise. Principle in D-076.\n\nMEASURED BY THE CABIN ON 2026-10-04 (verify): only cantu-quizzes-latex has a reports/ folder (one run); cantu-lessons already writes HTML under docs/guiones/, and L03 already carries a copy-to-clipboard button for a choice. A static HTML opened from disk cannot write to the repo by itself.\n\nWHAT: the location convention, per run; the link from the run's row or detail that opens the HTML in its own tab; and the verdict path (a copy button as the base, a downloaded file saved into the project folder for long verdicts, the cabin always available) so the verdict still reaches disk verbatim.\n\nALSO: the modal document reader's only door, the \"Documents\" button, lives inside the run report view this run freezes. Give the reader a door of its own.\n\nPILOT: cantu-lessons, a real case, and the pilot returns a verdict on the contract before it is frozen.\n\nOUT OF SCOPE: deleting the current report surface (decided after the pilot); dictating any report's content or style; writing in cantu-lessons (its own thread adopts the convention).",
-                "status": "active",
+                "status": "completed",
                 "depends_on": [],
-                "work_class": "FUNCTIONALITY"
+                "work_class": "FUNCTIONALITY",
+                "closeout_result": "CERRADO por decision del operador, 2026-10-20 ('si a amba scosas procede'). ENTREGADO dentro de su alcance (90cc4ee): clave opcional report_html en el run, enlace 'HTML report' en el detalle con la pagina que falta en ambar, pagina servida aislada (sandbox con allow-forms), puerta propia del lector de documentos, y report.json de CQL congelado. El operador vio la seccion en la superficie de prueba, sin veredicto paso por paso. EL CONTRATO QUEDA EN BORRADOR, SIN PILOTO: cantu-lessons no lo adopta por decision del operador ('no quisiera modificarlo innecesariamente pero habilitar html report igual es bueno haberlo agregado'); queda como capacidad para el primer proyecto que quiera usarla. DECLARADO: la Fase 1, incluido el cambio de esquema, se aprobo en la sesion del taller y esas palabras no estan en disco; su 'es bueno haberlo agregado' se lee como ratificacion. Dos tests del #53 ajustados (D-075). Suite 982 / 981 / 1. Veredicto y decision en context/aiw-console/records/VEREDICTO-70-2026-10-20.md."
               },
               {
                 "run_id": "RUN-CONSOLE-CONTENT-BATCH-VIEW-001",
@@ -1049,12 +1050,13 @@
                 "title": "A content batch reads as one unit",
                 "summary": "A batch of content runs (lessons, quizzes) reads in the console as one unit, with its progress, its items and each item's HTML report, so the operator can review a parallel batch in one concentrated pass.",
                 "full_description": "ORIGIN: the operator, 2026-10-04, verbatim in context/aiw-console/records/REFLEXION-DEL-OPERADOR-2026-10-04-PROPOSITO-Y-FRICCION-DE-LA-CONSOLA.md: the console exists so he can see the lessons in order and tied to their run (first intervention), and content is worked in parallel: once the way to make lessons is defined, sending 10 to 20 lessons in parallel serves him better than sequential work with AIW (decision 12). The content pattern he already uses: a supervised pilot defines the mould, a batch runs in parallel, one concentrated review follows.\n\nDEPENDS ON the classification contract (content as a class, independent in parallel as a relation) and on the HTML report contract (where each item's file lives).\n\nWHAT: a batch shown as one unit, with counts by status and the list of its items, each linking to its report; nothing invented when a project has no batches.\n\nOUT OF SCOPE: creating batches from the console; any project-specific rule.\n\nACCEPTANCE: tests; operator visual QA in rounds.",
-                "status": "planned",
+                "status": "completed",
                 "depends_on": [
                   "RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001",
                   "RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001"
                 ],
-                "work_class": "UX_DESIGN"
+                "work_class": "UX_DESIGN",
+                "closeout_result": "RETIRADO SIN EJECUTAR, 2026-10-20, por decision del operador ('si a amba scosas procede'). No se construyo nada. Motivo: la vista del lote de contenido se apoyaba en que cantu-lessons declarara sus paginas con report_html (#70), y el operador decidio que CL no adopta el contrato porque su flujo actual le funciona. Sin proyecto que la use, no tiene a quien servir. Medido antes de retirar: ningun run depende de este y no hay barreras. Si un proyecto de contenido adopta los reportes HTML, se abre un run nuevo. Decision en context/aiw-console/records/VEREDICTO-70-2026-10-20.md."
               },
               {
                 "run_id": "RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001",
@@ -1251,31 +1253,8 @@
           "completed",
           "blocked"
         ],
-        "total": 2,
-        "runs": [
-          {
-            "run_id": "RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001",
-            "queue_order": 70,
-            "status": "active",
-            "title": "Each thread's HTML report: where it lives, how the console links it, how the verdict comes back — the contract",
-            "objective_id": "O4",
-            "phase_id": "O4.P17",
-            "stored_fields": [
-              "work_class"
-            ]
-          },
-          {
-            "run_id": "RUN-CONSOLE-CONTENT-BATCH-VIEW-001",
-            "queue_order": 71,
-            "status": "planned",
-            "title": "A content batch reads as one unit",
-            "objective_id": "O4",
-            "phase_id": "O4.P17",
-            "stored_fields": [
-              "work_class"
-            ]
-          }
-        ]
+        "total": 0,
+        "runs": []
       }
     ]
   },

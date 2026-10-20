@@ -1,27 +1,59 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T03:57:10.196Z",
+  "generated_at": "2026-10-20T22:24:39.125Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-20T03:51:54.640Z"
+      "mtime": "2026-10-20T22:23:10.121Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-20T03:57:10.165Z"
+      "mtime": "2026-10-20T22:24:39.088Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "69c68db6a8dee4aee187e1f910179209d78102d9",
+  "head": "4b26f1aa49aa3dbbe05a31c745cb929060d0cd8e",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 554,
+  "commit_total": 557,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "4b26f1a",
+      "full_sha": "4b26f1aa49aa3dbbe05a31c745cb929060d0cd8e",
+      "date": "2026-10-20T22:23:09+00:00",
+      "parents": "90cc4ee",
+      "subject": "#70 RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001: la decision del operador, verbatim -- cantu-lessons no adopta el contrato y la capacidad se queda",
+      "body": "Vio la seccion HTML report en la superficie de prueba sin dar veredicto paso por paso. Decide que\nCL no modifica su flujo; lo construido se conserva. El contrato queda en BORRADOR sin piloto. Solo\neste fichero; el canonico no se toco.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001"
+    },
+    {
+      "branch": "main",
+      "sha": "90cc4ee",
+      "full_sha": "90cc4ee7c995d8e4574bc8b5eb9dfe95360e497e",
+      "date": "2026-10-20T21:46:43+00:00",
+      "parents": "5f5c3e5",
+      "subject": "#70 RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001: el reporte HTML de cada hilo -- la clave report_html en el run, el enlace en el detalle, la pagina aislada y el veredicto de vuelta -- en BORRADOR hasta el piloto de CL",
+      "body": "Trabajo del taller, commiteado por la cabina, con su reporte transcrito verbatim en\ncontext/aiw-console/records/REPORTE-TALLER-70-2026-10-20.md y su propuesta de Fase 1 en\nPROPUESTA-FASE-1-70-REPORTES-HTML-DE-CADA-HILO-2026-10-19.md. Contrato v1 en\ndocs/CONTRATO-REPORTE-HTML-DE-CADA-HILO-v1.md, marcado BORRADOR. Clave opcional report_html (lista\nde rutas .html relativas a la raiz del proyecto) en el motor y en CONTRATO 10.a; el detalle del run\nla enlaza y marca en ambar la que no esta en disco; serve.mjs sirve esas paginas con cabecera de\naislamiento (sandbox, con allow-forms); el lector de documentos gana una puerta propia en el detalle\nde cualquier run; el formato report.json queda congelado. 37 tests nuevos; dos tests del #53\najustados para que la seccion de reportes no aparezca sin reportes (D-075), nombrados.\n\nVerificado por la cabina: el diff cuadra; canonico intacto (md5 8bd7f1c7). Suite en siete tandas:\n982 / 981 / 1, el conocido de finales de linea; el de registry-digest desaparecio porque\nphd-p2-experiment ya tiene runs. DECLARADO: la Fase 1 -- incluido el cambio de esquema -- se aprobo\nen la sesion del taller y esas palabras no estan en disco; la cita de \"Copiar ruta\" del contrato no\nse da por verbatim.\n\nEL RUN SIGUE ACTIVO: falta la QA del operador.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001"
+    },
+    {
+      "branch": "main",
+      "sha": "5f5c3e5",
+      "full_sha": "5f5c3e5ab7e5cca8702490168d74fd066a0bfa3b",
+      "date": "2026-10-20T03:57:50+00:00",
+      "parents": "69c68db",
+      "subject": "#69 RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-UI-001 cierra con la QA visual del operador (\"pass\"), y #70 RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001 pasa a active",
+      "body": "Veredicto verbatim en context/aiw-console/records/VEREDICTO-69-QA-VISUAL-2026-10-19.md: los cuatro\npasos y el juicio de diseno pasan. Por la consola (serve.mjs, dry-run y apply con baseline, dos\nset-status). Verificado contra la copia previa: solo cambian status y closeout_result del #69 y\nstatus del #70; raiz identica; 78 runs, completed 69 / planned 8 / active 1; checkInvariants: 0\nerrores. .project/ re-emitido (7 artefactos) y comprobado: el #70 sale active en lo emitido.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "69c68db",

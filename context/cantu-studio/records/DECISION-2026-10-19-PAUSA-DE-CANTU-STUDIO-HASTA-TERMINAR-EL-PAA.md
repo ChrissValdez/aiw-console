@@ -29,3 +29,22 @@ procede con tus reocmiendaciones
    queda.
 4. **Se retoma** cuando Lecciones termine el material del PAA (D-078 sigue: el pulido grande del editor va entre la
    PAA y el EXANI II).
+
+---
+
+## Precisión del operador, 2026-10-20 — LITERAL
+
+```
+solo para dejarlo listo le aviso a CL que pondremos en pausa CS hata terminar el temario de CL
+pero que sigua actualizando las peticiones para que cuando llegue el momento de reaundarlo este actualizado
+```
+
+### Lo que precisa
+
+- **La pausa dura hasta que Lecciones termine el temario.**
+- **Durante la pausa nadie atiende las peticiones en este hilo:** la cabina de Studio no está abierta. **Lecciones las
+  mantiene al día ella misma** en sus `docs/PARA-CANTU-STUDIO-*.md`: escribe las nuevas y marca las que ya no hagan
+  falta (resueltas con un Bloque HTML, superadas, o retiradas).
+- **Al reanudar, la cabina lee todas esas peticiones del disco** y las pasa a `PETICIONES-DE-LECCIONES.md`.
+  Sustituye a lo que el punto 2 de arriba decía sobre «se anota en PETICIONES»: no se anota durante la pausa, se
+  reconcilia al volver.

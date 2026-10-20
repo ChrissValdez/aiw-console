@@ -3349,6 +3349,11 @@ retira.
 
 **Criterio de borrado:** se retira cuando Lecciones termine el material del PAA y el operador reabra Studio.
 
+**Precisión del operador, 2026-10-20** (literal en el mismo record): la pausa dura hasta que Lecciones termine el
+temario. Durante la pausa **Lecciones mantiene sus peticiones al día** en sus `docs/PARA-CANTU-STUDIO-*.md` (las
+nuevas, y marcando las que ya no hagan falta); **la cabina de Studio las reconcilia en `PETICIONES-DE-LECCIONES.md` al
+reanudar**, no durante la pausa.
+
 ---
 
 ## D-080 — LA CLASE DE TRABAJO ENTRA A LA CLASIFICACIÓN; LA RELACIÓN ENTRE RUNS SE DERIVA, NO SE ALMACENA

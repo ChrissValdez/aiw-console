@@ -34,8 +34,11 @@
 El operador pausó Cantu Studio mientras termináis el material del PAA. Mientras dure la pausa:
 
 - **Studio no abre trabajo nuevo.** Lo nuevo que necesitéis, hacedlo con un **Bloque HTML**, como ya hacéis.
-- **Podéis seguir escribiendo peticiones** en vuestro `PARA-CANTU-STUDIO-…`. La cabina las anota aquí como
-  **«para después de la pausa»** y no las construye hasta que el operador reabra Studio.
+- **La pausa dura hasta que terminéis el temario.**
+- **Seguid escribiendo peticiones y mantenedlas al día vosotros**, en vuestros `docs/PARA-CANTU-STUDIO-*.md`: las
+  nuevas, y marcando en cada una si ya no hace falta (resuelta con un Bloque HTML, superada o retirada). Durante la
+  pausa nadie las lee en Studio. **Al reanudar, la cabina las lee todas del disco** y las pasa a este fichero; cuanto
+  más al día estén, menos habrá que preguntar.
 - **La excepción es un fallo que rompa una lección ya publicada.** Eso sí se atiende: decidlo así en la petición.
 - **Dato medido que os sirve:** el Moodle real usa **MathJax 3.2.2** y conserva los guiones, así que `\textcolor` se ve
   bien en el curso.

@@ -13,11 +13,15 @@
 y en `DECISIONES.md` como D-079): Studio se pausa mientras Lecciones termina el material del PAA.
 
 - **Studio no abre trabajo nuevo.**
-- **Lo nuevo que pida Lecciones se resuelve con un Bloque HTML**, y su petición se anota en
-  `cantu-studio/PETICIONES-DE-LECCIONES.md` como **«para después de la pausa»**.
+- **Lo nuevo que pida Lecciones se resuelve con un Bloque HTML.** Precisión del operador, 2026-10-20: **Lecciones
+  mantiene sus peticiones al día ella misma** en sus `docs/PARA-CANTU-STUDIO-*.md`, y **la cabina las reconcilia en
+  `PETICIONES-DE-LECCIONES.md` al reanudar**, no durante la pausa.
+- **La pausa dura hasta que Lecciones termine el temario.**
 - **Solo se atiende un fallo que rompa una lección ya publicada.** Ese sí abre run, con el ritual de siempre.
 - **Se retoma** cuando Lecciones termine el PAA y el operador reabra Studio. Lo que toca entonces lo dice D-078:
   el pulido grande del editor, entre la PAA y el EXANI II, para que lo usen maestros.
+
+**Para reanudar:** el prompt está en `cantu-studio/PROMPT-PARA-REANUDAR-TRAS-LA-PAUSA.md`.
 
 **Si abres este hilo durante la pausa:** mide el arranque, lee PETICIONES por si Lecciones anotó algo, y no
 emitas tickets salvo un fallo de una lección publicada.

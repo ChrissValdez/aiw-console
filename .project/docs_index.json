@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T22:31:49.060Z",
+  "generated_at": "2026-10-20T23:04:06.691Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
@@ -18,7 +18,7 @@
     },
     {
       "path": "context/DECISIONES.md",
-      "mtime": "2026-10-20T02:45:22.742Z"
+      "mtime": "2026-10-20T22:39:00.130Z"
     },
     {
       "path": "context/MIGRATION-REPORT.md",
@@ -30,7 +30,7 @@
     },
     {
       "path": "context/README.md",
-      "mtime": "2026-08-08T09:13:17.559Z"
+      "mtime": "2026-10-20T22:37:41.651Z"
     },
     {
       "path": "context/aiw-console/CONTRATO.md",
@@ -697,6 +697,10 @@
       "mtime": "2026-10-20T21:45:34.044Z"
     },
     {
+      "path": "context/aiw-console/records/REPORTE-TALLER-74-2026-10-20.md",
+      "mtime": "2026-10-20T23:01:39.171Z"
+    },
+    {
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "mtime": "2026-08-08T09:13:17.719Z"
     },
@@ -837,6 +841,10 @@
       "mtime": "2026-10-20T22:24:23.813Z"
     },
     {
+      "path": "context/aiw-console/records/VEREDICTO-74-QA-2026-10-20.md",
+      "mtime": "2026-10-20T23:03:03.249Z"
+    },
+    {
       "path": "context/aiw-console/records/VEREDICTO-QA-DEL-60-Y-CIERRE.md",
       "mtime": "2026-08-28T01:55:15.155Z"
     },
@@ -898,11 +906,15 @@
     },
     {
       "path": "context/cantu-studio/PETICIONES-DE-LECCIONES.md",
-      "mtime": "2026-10-20T01:30:28.476Z"
+      "mtime": "2026-10-20T22:39:00.157Z"
     },
     {
       "path": "context/cantu-studio/PROMPT-DE-REINICIO.md",
       "mtime": "2026-10-20T01:30:16.543Z"
+    },
+    {
+      "path": "context/cantu-studio/PROMPT-PARA-REANUDAR-TRAS-LA-PAUSA.md",
+      "mtime": "2026-10-20T22:39:14.960Z"
     },
     {
       "path": "context/cantu-studio/REGLA-DEL-BLOQUE-HTML-PALETA-Y-TAMANO.md",
@@ -1106,7 +1118,7 @@
     },
     {
       "path": "context/cantu-studio/records/DECISION-2026-10-19-PAUSA-DE-CANTU-STUDIO-HASTA-TERMINAR-EL-PAA.md",
-      "mtime": "2026-10-19T23:54:18.162Z"
+      "mtime": "2026-10-20T22:38:30.526Z"
     },
     {
       "path": "context/cantu-studio/records/DECISION-220-LA-MIGRACION-RECUPERA-LAS-SIETE-ETIQUETAS.md",
@@ -1770,7 +1782,7 @@
     },
     {
       "path": "context/handoffs/cantu-studio.md",
-      "mtime": "2026-10-20T01:30:07.355Z"
+      "mtime": "2026-10-20T22:39:14.990Z"
     },
     {
       "path": "docs/CONTRATO-REPORTE-HTML-DE-CADA-HILO-v1.md",
@@ -1786,7 +1798,7 @@
     },
     {
       "path": "project-console/README.md",
-      "mtime": "2026-08-14T00:27:20.540Z"
+      "mtime": "2026-10-20T22:37:33.668Z"
     },
     {
       "path": "start-console.README.md",
@@ -1867,7 +1879,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-10-20T02:45:22.742Z"
+      "freshness": "2026-10-20T22:39:00.130Z"
     },
     {
       "title": "MIGRATION-REPORT — Centralización del contexto de gobernanza en aiw-console",
@@ -1891,7 +1903,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-08-08T09:13:17.559Z"
+      "freshness": "2026-10-20T22:37:41.651Z"
     },
     {
       "title": "CONTRATO DE LA CARPETA — Capa 1: el archivo requerido",
@@ -3222,6 +3234,14 @@
       "freshness": "2026-10-20T21:45:34.044Z"
     },
     {
+      "title": "Reporte del taller del `#74` — transcrito verbatim",
+      "path": "context/aiw-console/records/REPORTE-TALLER-74-2026-10-20.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-20T23:01:39.171Z"
+    },
+    {
       "title": "RESTITUCIÓN DE LAS 17 ARISTAS DE `#47` Y RE-ENCUADRE A AUDITORÍA AL CIERRE — CANTU",
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "nav_tier": "evidence",
@@ -3502,6 +3522,14 @@
       "freshness": "2026-10-20T22:24:23.813Z"
     },
     {
+      "title": "Veredicto del `#74` — 2026-10-20",
+      "path": "context/aiw-console/records/VEREDICTO-74-QA-2026-10-20.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-20T23:03:03.249Z"
+    },
+    {
       "title": "`#60` `RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001` — la QA del operador y el cierre",
       "path": "context/aiw-console/records/VEREDICTO-QA-DEL-60-Y-CIERRE.md",
       "nav_tier": "evidence",
@@ -3627,7 +3655,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/cantu-studio",
-      "freshness": "2026-10-20T01:30:28.476Z"
+      "freshness": "2026-10-20T22:39:00.157Z"
     },
     {
       "title": "PROMPT-DE-REINICIO.md",
@@ -3636,6 +3664,14 @@
       "default_visible": true,
       "ia_bucket": "context/cantu-studio",
       "freshness": "2026-10-20T01:30:16.543Z"
+    },
+    {
+      "title": "Prompt para abrir el hilo `cantu-studio` al terminar la pausa (D-079)",
+      "path": "context/cantu-studio/PROMPT-PARA-REANUDAR-TRAS-LA-PAUSA.md",
+      "nav_tier": "primary",
+      "default_visible": true,
+      "ia_bucket": "context/cantu-studio",
+      "freshness": "2026-10-20T22:39:14.960Z"
     },
     {
       "title": "Regla de los «Bloque HTML»: la paleta activa y el tamaño de letra del lector",
@@ -4043,7 +4079,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/cantu-studio/records",
-      "freshness": "2026-10-19T23:54:18.162Z"
+      "freshness": "2026-10-20T22:38:30.526Z"
     },
     {
       "title": "#220 · La decisión del operador: el arreglo es de la migración, y las siete etiquetas vuelven",
@@ -5371,7 +5407,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "context/handoffs",
-      "freshness": "2026-10-20T01:30:07.355Z"
+      "freshness": "2026-10-20T22:39:14.990Z"
     },
     {
       "title": "El reporte HTML de cada hilo · v1 — dónde vive, cómo lo enlaza la consola, cómo vuelve el veredicto",
@@ -5403,7 +5439,7 @@
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "project-console",
-      "freshness": "2026-08-14T00:27:20.540Z"
+      "freshness": "2026-10-20T22:37:33.668Z"
     },
     {
       "title": "start-console (.cmd / .ps1)",

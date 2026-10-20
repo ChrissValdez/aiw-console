@@ -1,27 +1,58 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T22:31:49.060Z",
+  "generated_at": "2026-10-20T23:04:06.691Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-20T22:25:21.058Z"
+      "mtime": "2026-10-20T23:01:50.075Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-20T22:31:49.035Z"
+      "mtime": "2026-10-20T23:04:06.668Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "b83a1092dbe8b6b7199c0027637904a9c422e16c",
+  "head": "779aa6705f8e9f190f7f1085d68bc91569dd09bc",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 558,
+  "commit_total": 561,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "779aa67",
+      "full_sha": "779aa6705f8e9f190f7f1085d68bc91569dd09bc",
+      "date": "2026-10-20T23:01:49+00:00",
+      "parents": "f089973",
+      "subject": "#74 RUN-CONSOLE-STALE-TEXTS-REPAIR-001: los cinco textos que describian este repo en falso, corregidos sin meter cifras que envejezcan",
+      "body": "Trabajo del taller, commiteado por la cabina, con su reporte transcrito verbatim en\ncontext/aiw-console/records/REPORTE-TALLER-74-2026-10-20.md. context/README.md: el repo ya tiene\ncanonico propio, y el aviso del fork dice cual de los arboles de consola es cual y que la consola\nlocal de Cantu sigue hasta el corte (D-035 d). project-console/README.md: fuera el parentesis vencido\nde aiw, y el ejemplo del registro se presenta como extracto. package.json: ya no se describe como\nfork verbatim. Los cinco seguian siendo falsos.\n\nVerificado por la cabina: el diff cuadra; canonico intacto (md5 a1e1b4ed). Suite: la cabina corrio\nsolo los cinco ficheros que citan estos textos (49/49), y la completa la dio el taller (982 / 981 /\n1, igual antes y despues). El taller nombra once textos falsos mas, sin tocarlos, incluido uno que\neste mismo run vuelve falso: governance/no_claims.json:45.\n\nEL RUN SIGUE ACTIVO: falta la QA del operador.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-001"
+    },
+    {
+      "branch": "main",
+      "sha": "f089973",
+      "full_sha": "f0899737dd251913493152ea915d327c81e68763",
+      "date": "2026-10-20T22:39:26+00:00",
+      "parents": "1aff6cd",
+      "subject": "context/cantu-studio: precision del operador a la pausa (D-079) — Lecciones mantiene sus peticiones; la cabina las reconcilia al reanudar; prompt para reanudar",
+      "body": "- records/DECISION-2026-10-19-PAUSA-...: precision del 2026-10-20, literal.\n- DECISIONES.md, D-079: la precision, dentro de su entrada.\n- PETICIONES-DE-LECCIONES.md: la seccion de la pausa dice ahora que Lecciones mantiene sus peticiones al dia.\n- handoffs/cantu-studio.md: lo mismo, y donde esta el prompt para reanudar.\n- cantu-studio/PROMPT-PARA-REANUDAR-TRAS-LA-PAUSA.md: nuevo.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GHmDxNLDLUGDSkDXdrNvty",
+      "is_merge": false
+    },
+    {
+      "branch": "main",
+      "sha": "1aff6cd",
+      "full_sha": "1aff6cd122e0c1c6704a9e1d7502efd85ef44a08",
+      "date": "2026-10-20T22:32:36+00:00",
+      "parents": "b83a109",
+      "subject": "roadmap: repaso de la cola #72-#78 aprobado por el operador -- tres runs retirados, el corte espera a la auditoria, Cantu al final por su pausa, y los textos falsos pasan a active",
+      "body": "Decision verbatim en context/aiw-console/records/REPASO-COLA-72-78-2026-10-20.md (\"si procede\").\nRetirados sin ejecutar: RUN-CONSOLE-PARIDAD-RENDER-CANTU-001 y RUN-CONSOLE-UI-UX-001 (absorbidos\npor la auditoria; el primero ademas dependia de un run de cantu-studio que ya no existe) y\nRUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001 (mas funciones en la consola, D-075). El corte\nRUN-CONSOLE-CORTE-RETIRO-LOCAL-001 pasa a depender de la auditoria y del traslado del canonico, para\nque el acto irreversible siga esperando una revision del operador. El traslado y el corte van al\nfinal, esperando a que cantu-studio salga de la pausa (D-079); los textos de los tres runs lo dicen.\n\nPor la consola, en tres tandas porque el motor rechazo dos ordenes intermedias (una arista que\napuntaba hacia adelante): ninguna se escribio. Orden final: retiros, mover el corte tras la\nauditoria, mover el traslado antes del corte, set-deps, tres set-text, set-status. Verificado contra\nel respaldo byte a byte: solo cambian los campos declarados; las fases no se movieron; 78 runs\ndensos; checkInvariants: 0 errores. Cola nueva: #74 textos falsos (active) -> #76 auditoria ->\n#77 traslado -> #78 corte. Los retirados conservan su sitio salvo el corrimiento que causo mover\nlos otros: el de fases y objetivos queda en el #75.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "b83a109",

@@ -1,27 +1,48 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T23:04:06.691Z",
+  "generated_at": "2026-10-20T23:12:03.568Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-20T23:01:50.075Z"
+      "mtime": "2026-10-20T23:09:19.395Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-20T23:04:06.668Z"
+      "mtime": "2026-10-20T23:12:03.534Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "779aa6705f8e9f190f7f1085d68bc91569dd09bc",
+  "head": "3366734ca2bba3d7cd159c01372c32a2a95e243b",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 561,
+  "commit_total": 563,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "3366734",
+      "full_sha": "3366734ca2bba3d7cd159c01372c32a2a95e243b",
+      "date": "2026-10-20T23:09:19+00:00",
+      "parents": "7be2b0f",
+      "subject": "#74 RUN-CONSOLE-STALE-TEXTS-REPAIR-001: la ampliacion -- el motivo de la entrada 'verbatim fork' en governance/no_claims.json deja de citar a package.json",
+      "body": "Trabajo del mismo taller, commiteado por la cabina; su reporte se anade verbatim a\ncontext/aiw-console/records/REPORTE-TALLER-74-2026-10-20.md. La afirmacion sigue DISALLOWED; el\nmotivo nuevo se apoya en la auditoria (A.3 y A.4), verificado por la cabina contra ese record, y\npackage.json sale de source_refs porque ya no contiene la frase. Ningun test lee el fichero en vivo:\nla suite igual antes y despues no prueba el texto, y se declara.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-001"
+    },
+    {
+      "branch": "main",
+      "sha": "7be2b0f",
+      "full_sha": "7be2b0f25eaf62eef2748693f16935dc95912613",
+      "date": "2026-10-20T23:04:48+00:00",
+      "parents": "779aa67",
+      "subject": "#74 RUN-CONSOLE-STALE-TEXTS-REPAIR-001: QA del operador (\"pass procede\"), alcance ampliado a no_claims.json bajo D-061, y run nuevo #75 RUN-CONSOLE-STALE-TEXTS-REPAIR-002 para los otros textos falsos",
+      "body": "Veredicto verbatim en context/aiw-console/records/VEREDICTO-74-QA-2026-10-20.md: los cinco cambios\npasan; si a ampliar el #74 con governance/no_claims.json (cuyo motivo vuelve falso el propio arreglo\nde package.json); si al run nuevo. El texto del #74 se enmienda en el mismo encargo (D-061). El run\nnuevo, insertado tras el #74 en O4.P18 y clasificado DOCUMENTATION, lista los siete textos que nombro\nel taller, con el lanzador que se dice de solo lectura primero; el cambio de nombre de\ndoc-side-reader.js queda fuera, para la auditoria.\n\nPor la consola (set-text, insert y set-classification; dry-run y apply con baseline). Remap del\ninsert: el retirado de fases 75->76, la auditoria 76->77, el traslado 77->78, el corte 78->79.\nVerificado contra el respaldo: solo esos campos; ninguna fase movida; 79 runs densos;\ncheckInvariants: 0 errores. El #74 sigue ACTIVO para el arreglo de no_claims.json.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "779aa67",

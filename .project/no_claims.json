@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T23:04:06.691Z",
+  "generated_at": "2026-10-20T23:12:03.568Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": "governance/no_claims.json",
-      "mtime": "2026-08-08T09:13:17.815Z"
+      "mtime": "2026-10-20T23:07:11.697Z"
     }
   ],
   "claims": [
@@ -53,10 +53,9 @@
       "claim": "aiw-console is a verbatim fork of the JAME console",
       "status": "DISALLOWED",
       "allowed_only_if": "Never: it was measured false.",
-      "current_reason": "package.json still describes this repo that way; the audit measured that it is not. The description is stale text, not a fact about the repo.",
+      "current_reason": "The audit compared the bytes and measured that they are not a verbatim copy: the console here was copied from Cantu's before Cantu retired its legacy roadmap, and the projector was added on top. The phrase survived only as stale self-description in package.json, which RUN-CONSOLE-STALE-TEXTS-REPAIR-001 removed.",
       "source_refs": [
-        "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md (Bloque A.4)",
-        "package.json"
+        "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md (Bloque A.4)"
       ]
     }
   ]

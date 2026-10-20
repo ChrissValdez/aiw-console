@@ -1,27 +1,48 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T02:49:22.592Z",
+  "generated_at": "2026-10-20T03:57:10.196Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-20T02:43:01.037Z"
+      "mtime": "2026-10-20T03:51:54.640Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-20T02:48:33.682Z"
+      "mtime": "2026-10-20T03:57:10.165Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "9d8a935cd23c3116e0a0aad32acdb3b10f1aeb7f",
+  "head": "69c68db6a8dee4aee187e1f910179209d78102d9",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 552,
+  "commit_total": 554,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "69c68db",
+      "full_sha": "69c68db6a8dee4aee187e1f910179209d78102d9",
+      "date": "2026-10-20T03:51:54+00:00",
+      "parents": "0aa1b50",
+      "subject": "#69 RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-UI-001: la consola muestra la clase de trabajo -- etiqueta en las filas, fila en el detalle y un filtro por clase -- y la relacion se mide como ya legible",
+      "body": "Trabajo del taller, commiteado por la cabina, con su reporte transcrito verbatim en\ncontext/aiw-console/records/REPORTE-TALLER-69-2026-10-19.md. Etiquetas Functionality /\nDocumentation / Research / UX design / Content, sin color (el color es de la severidad); un run sin\nclase sale byte a byte igual que antes, contra un golden. En el detalle, texto plano. La relacion no\nse pinta como dato: \"Waiting on\" y la etiqueta de carril ya la dicen, conforme a la D-080. El filtro\ncopia el selector de lote, solo aparece si hay clases y se reinicia por proyecto; trae una regla\ncompacta para la barra con dos o mas selectores, porque a 1280 px se desbordaba 157 px (medido en\nsimulacion; tambien cubre el desborde latente del selector de lote del #48). 18 tests nuevos, 14\nrojos antes; ningun test de otro run ajustado.\n\nVerificado por la cabina: el diff cuadra; canonico intacto (md5 8b5667a0); sin caracteres de\ncontrol. Suite en tres tandas: 945 / 943 / 2, los dos fallos conocidos.\n\nEL RUN SIGUE ACTIVO: falta la QA visual del operador.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-UI-001"
+    },
+    {
+      "branch": "main",
+      "sha": "0aa1b50",
+      "full_sha": "0aa1b50f4e4da0505191edf2ba098e04c54d3550",
+      "date": "2026-10-20T02:49:58+00:00",
+      "parents": "9d8a935",
+      "subject": "#68 RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001 cierra con la QA del operador (\"pass\"); D-080; el piloto de work_class escrito en los runs 68 a 78; y #69 RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-UI-001 pasa a active",
+      "body": "Veredicto verbatim en context/aiw-console/records/VEREDICTO-68-QA-2026-10-19.md: la doctrina se\naprueba como esta y el piloto tal cual. Se registra la D-080 (numero medido: la ultima era la D-079,\ndel hilo cantu-studio): la clase de trabajo entra como campo, la relacion se deriva, un run mixto\nlleva la clase que decide como se revisa, y el proyecto abre la puerta a AIW. DECLARADO en el\nveredicto y en la D-080: UX_DESIGN y la marca que no se mueve vienen de la sesion del taller y sus\npalabras no estan en disco.\n\nPor la consola (serve.mjs, dry-run y apply con baseline): once set-classification con workClass\n(68 DOCUMENTATION, 69 UX_DESIGN, 70 FUNCTIONALITY, 71 UX_DESIGN, 72 FUNCTIONALITY, 73 UX_DESIGN,\n74 FUNCTIONALITY, 75 FUNCTIONALITY, 76 DOCUMENTATION, 77 FUNCTIONALITY, 78 RESEARCH) y dos\nset-status. Verificado contra la copia previa: solo cambian work_class en los once, status y\ncloseout_result del #68 y status del #69; classified_at intacto donde existia (la regla del motor\nnuevo, medida en uso real); raiz identica; checkInvariants: 0 errores. INCIDENTE DECLARADO: la\nllamada de la cabina agoto su tiempo tras aplicar el ultimo set-status y la re-emision quedo a\nmedias (.project/roadmap.json mostraba el #69 planned); se re-emitieron los siete artefactos por la\nruta manual (project/emit, 200) y se verifico el #69 active en lo emitido. Sin servidor huerfano ni\ntemporales.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "9d8a935",

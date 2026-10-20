@@ -3327,3 +3327,24 @@ PAA.
 
 **Criterio de borrado:** si el operador deja el plan de que editen maestros, el editor se archiva y esta decisión se
 retira.
+
+## D-079 — CANTU STUDIO SE PAUSA MIENTRAS LECCIONES TERMINA EL MATERIAL DEL PAA
+
+**Fecha:** 2026-10-19. **Origen:** hilo CANTU-STUDIO. **Afecta a:** `cantu-studio` y `cantu-lessons`.
+**Verbatim:** `aiw-console/context/cantu-studio/records/DECISION-2026-10-19-PAUSA-DE-CANTU-STUDIO-HASTA-TERMINAR-EL-PAA.md`.
+**Completa D-077 y D-078.**
+
+> «quiero darle pausa a cantu studio en lo que termino de desarrollar cantu lessons […] antes de pausar temporalmente
+> este proyecto quiero acbar los pendientes urgentes y digamos dejarlo en un estado estable»
+
+### La regla
+
+- **Antes de pausar:** la suite queda en verde (un run para la roja H-1) y el relevo del hilo se reescribe.
+- **Durante la pausa, Studio no abre trabajo nuevo.** Lo nuevo que pida Lecciones se resuelve con un **Bloque HTML**
+  y su petición se anota en `PETICIONES-DE-LECCIONES.md` como «para después de la pausa».
+- **Solo se atiende un fallo que rompa una lección ya publicada.**
+- **El Moodle real usa MathJax 3.2.2** (medido el 2026-10-19): `\textcolor` no está en riesgo.
+
+**Lo que esta decisión NO hace:** no retira nada del roadmap; los runs del archivo O8 siguen ahí.
+
+**Criterio de borrado:** se retira cuando Lecciones termine el material del PAA y el operador reabra Studio.

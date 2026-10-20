@@ -110,6 +110,26 @@ Esa declaración es del proyecto, está escrita, y no se re-decide run por run.
 una sola vez, en `context/DECISIONES.md`, y **se ejecuta en cada hilo por
 separado**.
 
+> **Enmienda del 2026-10-19 — decisión (D) del operador, run `#68`.** Se numera en
+> `context/DECISIONES.md` al cerrar el run; el encuadre y el verbatim están en
+> `context/aiw-console/records/ENCUADRE-PARADA-68-2026-10-19.md`. **El texto de arriba se
+> conserva tal como se publicó**; esta enmienda lo completa y, donde choca, manda ella.
+>
+> **El proyecto abre o cierra la puerta a AIW; dentro de un proyecto abierto deciden la clase
+> de trabajo (§9), cómo se verifica (`correctness_model`, §1) y la relación con los otros runs
+> (§10).** La delegabilidad deja de ser SOLO del proyecto. El proyecto sigue declarando una vez,
+> por escrito, si AIW puede entrar —y lo que AIW declaró arriba sobre su propio roadmap sigue en
+> pie—, pero con la puerta abierta no todo run del proyecto va a AIW. §11 dice qué combinación
+> apunta a qué vehículo.
+>
+> **Por qué:** un proyecto tiene fases donde AIW rinde mucho y fases donde no ([[D-074]]). AIW
+> resuelve trabajo SECUENCIAL —cadena y misma superficie—, rinde en funcionalidad y
+> documentación, ocasionalmente en investigación y rara vez en UX; el contenido va en paralelo.
+>
+> **Lo que NO cambia: siguen siendo dos ejes.** El CIERRE se sigue DERIVANDO solo de §2, y ni la
+> clase ni la relación entran en ninguna tabla de derivación. Lo que se decide dentro del
+> proyecto es a quién va el run, no qué hace falta para cerrarlo.
+
 ## 5. `care_budget` — CONFIGURACIÓN POR PROYECTO, no regla dura
 
 **`care_budget` es configuración POR PROYECTO, editable desde la consola.** Se
@@ -149,6 +169,13 @@ que dice que existen y que se publican, pero no dice cuáles son. La búsqueda
 practicada y su resultado están registrados en
 `context/aiw-console/records/PUBLICACION-CLASIFICACION-DE-RUNS.md`.
 
+> **Nota hacia adelante, 2026-10-19 (run `#68`).** **Para el eje de la CLASE de trabajo el hueco
+> queda CERRADO:** un run que mezcla clases lleva la clase que decide cómo se va a revisar
+> —decisión (C) del operador, escrita en §9.2—. **Para los campos de §1 el hueco sigue
+> abierto:** las tres reglas mecánicas de la auditoría del 2026-07-29/30 siguen sin localizarse.
+> La regla (C) no es una de ellas reconstruida y no se aplica a `correctness_model`, `work_type`,
+> `blast_radius` ni `failure_surfaces`.
+
 ## 8. Procedencia
 
 El sistema **nació en el hilo de `cantu-studio`**, que midió que **el tipo de
@@ -174,3 +201,195 @@ la clasificación el de después.
 
 **Los punteros a este documento en `aiw` y en `cantu-studio` son trabajo de SUS
 hilos.** Aquí solo se nombran.
+
+---
+
+## 9. La clase de trabajo — `work_class`
+
+> **Añadida hacia adelante el 2026-10-19** (run `#68`, decisiones (A) y (C) del operador). No
+> reescribe nada de §1–§8.
+
+**Es la pregunta que faltaba: ¿de qué CLASE es el trabajo?** `work_type` (§1) no la contesta:
+mide qué tan PROFUNDO es el cambio (`COSMETIC` · `FUNCTIONAL` · `FOUNDATIONAL`), no de qué clase
+es. Leerlo como clase es lo que archivó revisiones de contenido como `FUNCTIONAL` por falta de otro
+valor. Son dos preguntas independientes y ninguna se infiere de la otra.
+
+Es un campo ALMACENADO nuevo, **OPCIONAL y ausente por defecto** como los de §1, con un
+**vocabulario cerrado de cinco valores, iguales para todos los proyectos**:
+
+| token | clase | qué es | cómo se revisa, de ordinario |
+|---|---|---|---|
+| `FUNCTIONALITY` | funcionalidad | código o configuración que cambia lo que el sistema HACE: motor, emisor, operaciones, rutas, migraciones del dato, retiro de herramientas | por su comportamiento: tests, invariantes, validador |
+| `DOCUMENTATION` | documentación | texto que describe o norma el sistema: doctrina, contratos, records, README, gobernanza, la prosa del roadmap | leyéndolo contra el disco |
+| `RESEARCH` | investigación | medir, auditar o explorar para producir hallazgos; el entregable es lo descubierto (un record, una lista de hallazgos, runs nuevos), no un cambio | leyendo los hallazgos y su evidencia |
+| `UX_DESIGN` | diseño UX | cómo se ve y se usa una superficie; se define con el ojo del operador, de ordinario en varias rondas | QA visual del operador |
+| `CONTENT` | contenido | piezas del producto que consume el usuario final del proyecto —lecciones, quizzes, reactivos—; ningún ítem depende de otro | ítem por ítem, contra el criterio de contenido de su proyecto |
+
+**`UX_DESIGN` lleva su `UX` a propósito.** El diseño de un esquema, de un plan o de una
+arquitectura NO es esta clase: se revisa leyendo, y es `DOCUMENTATION` (o `RESEARCH`, si su
+producto son hallazgos). Un token de «diseño» a secas lo atraería.
+
+**`FUNCTIONALITY` no es `FUNCTIONAL`.** El primero es una clase (§9), el segundo una profundidad
+(`work_type`, §1). Los dos vocabularios no comparten ningún token, así que un valor escrito en el
+campo equivocado se RECHAZA nombrándolo, en vez de pasar en silencio.
+
+### 9.1 La clase es del TRABAJO, no del TEMA
+
+Es una precisión de lectura de la decisión (A), no una regla nueva: el campo es la clase del
+trabajo. Un run que construye una pantalla de la consola para revisar lotes de contenido no es
+`CONTENT`, porque su trabajo es una pantalla. Un run que traduce la prosa del roadmap tampoco es
+`CONTENT`, porque el roadmap no es producto para el usuario final. Se clasifica lo que el run hace,
+no de qué habla.
+
+### 9.2 Runs mixtos — la regla (C)
+
+**Un run que mezcla clases lleva la clase que decide cómo se va a revisar.** Si en un run de
+código y su documentación lo que decide es que pasen los tests, es `FUNCTIONALITY`. Si en un run
+de doctrina y del código mecánico que la traduce lo que decide es leer la doctrina, es
+`DOCUMENTATION`. Esta regla cierra el hueco de §7 para este eje.
+
+**Lo que la regla NO decide, medido en el piloto del `#68`. Este documento no lo rellena:**
+
+- Cuando dos revisiones pesan igual y las dos son obligatorias, «la que decide» no elige sola.
+  Queda a juicio de quien clasifica: no hay regla, y no se infiere ninguna.
+- Un run que no mezcla clases, pero que se revisa de una forma que no es la ordinaria de su clase
+  (por ejemplo, una verificación de funcionalidad hecha con QA visual), no es un run mixto: lleva
+  la clase de su trabajo (§9.1). Si la clase se leyera como «el modo de revisión», sería una copia
+  de `correctness_model`.
+
+### 9.3 La clase NO mueve `classified_at`
+
+**`classified_at` sigue siendo la marca de §1:** cuándo se juzgaron los campos de los que se deriva
+el cierre. Escribir o limpiar la clase no la estampa ni la borra. Consecuencias:
+
+- escribir la clase en un run clasificado hace semanas no borra cuándo se hizo su juicio de §1;
+- un run vivo que solo lleva la clase sigue en la lista de §1 de runs sin clasificar, y la lista
+  dice que lleva `work_class` (no lo reporta como intacto).
+
+Decidido por el operador el 2026-10-19.
+
+### 9.4 Lo que la clase NO hace
+
+- **No entra en ninguna derivación de §2:** ni `severity` ni `closure_mode` la leen.
+- **No añade ninguna combinación ilegal a §3:** toda clase es legal junto a cualquier valor de §1.
+- **No es la relación entre runs:** esa se deriva (§10) y no se almacena.
+
+### 9.5 Cómo se valida y cómo se escribe
+
+- **Ausente es legal**, y el validador no reporta nada por su ausencia.
+- **Presente fuera del vocabulario se RECHAZA, nombrando el valor**, igual que las claves de §1.
+  Eso incluye `null`, la cadena vacía y un token en minúsculas.
+- Se escribe con la misma operación que las de §1 (`set-classification`); `null` o vacío la borran
+  entera.
+- Viaja con el run, y su vocabulario viaja declarado en el envelope como los de §1.
+- **Clasificar con la clase un run `completed` sigue §6:** solo como calibración declarada.
+
+### 9.6 Herramientas con allowlist propia
+
+Una clave nueva del motor global no llega sola a las herramientas locales que llevan su propia lista
+de claves. **Medido al publicar esta sección:** el motor y el validador locales de `cantu-studio`
+rechazan `work_class` si un run suyo la llevara, como ya rechazan `batch` y
+`depends_on_human_approved`. Tolerarla es trabajo de su hilo, cuando quiera clasificar sus runs.
+Desde aquí no se clasifica ningún run de otro proyecto.
+
+## 10. La relación entre runs — DERIVADA, no almacenada
+
+> **Añadida hacia adelante el 2026-10-19** (run `#68`, decisión (B) del operador, en la lectura
+> que eligió tras la parada del taller). No reescribe nada de §1–§8 ni de [[D-051]].
+
+**La relación NO es un campo.** Casi entera ya estaba en el dato; esta sección escribe qué
+significa:
+
+| relación | de dónde se deriva | qué significa |
+|---|---|---|
+| **cadena** | `depends_on` (y `depends_on_human_approved`) | el run 2 necesita al run 1: van en serie, en ese orden |
+| **misma superficie, en serie** | el mismo carril DECLARADO (`lane`, [[D-051]]) | no dependen uno del otro, pero no corren a la vez |
+| **independiente, en paralelo** | carriles distintos con superficies de escritura disjuntas; o, en un proyecto que no declara carriles, runs sin aristas entre ellos | pueden correr a la vez |
+
+### 10.1 La regla: dos runs del mismo carril no corren a la vez
+
+**Dos runs del mismo carril no corren a la vez.** «Correr» se refiere al ARRANQUE: un taller o AIW
+trabajando en el run. El `status` almacenado no distingue un run en ejecución de uno que espera
+revisión (un run `active` puede estar esperando al operador). Por eso la regla no se deduce del
+dato, ningún validador la comprueba y la obedece quien lanza el trabajo. Que el kernel de AIW la
+obedezca es trabajo del hilo `aiw`.
+
+**Obliga solo a los carriles DECLARADOS.** Un proyecto que no declara `lanes` no declara ninguna
+serie. El carril implícito de [[D-051]] resuelve la posición y la etiqueta al leer, pero no obliga a
+esta regla. Si obligara, todo proyecto sin carriles quedaría en serie, incluidos los de contenido,
+que corren en paralelo ([[D-074]]).
+
+**Como disciplina no es nueva.** El run `#37` ya la escribió el 2026-07-27 como disciplina de
+proceso de `cantu-studio` («ONE run at a time PER LANE»; record
+`context/aiw-console/records/DISCIPLINA-UN-RUN-POR-CARRIL.md`). Aquí pasa a ser doctrina transversal
+para todo proyecto que declare carriles.
+
+### 10.2 El carril no autoriza la colisión
+
+**Dos carriles solo son paralelos si sus superficies de escritura son disjuntas.** Si dos runs
+tocarían el mismo archivo, van en serie aunque estén en carriles distintos y, en un proyecto sin
+carriles, aunque no tengan aristas. Es la condición que escribió el `#37`; sin ella, «carriles
+distintos = paralelo» lo contradiría. El carril solo dice que el trabajo no compite.
+
+### 10.3 Lo que no cambia
+
+- **El barrier** ([[D-051]], CONTRATO §10.e) no es una relación entre dos runs: es un punto de
+  sincronía que retiene el arranque de lo posterior en su alcance. Sigue igual.
+- **El lote** ([[D-030]], run `#48`) es **la rama compartida**: runs que van a la misma rama y se
+  aprueban o rechazan juntos. Es lo que AIW necesita para que el run N arranque del resultado del
+  run N−1. **Estado al publicar esta sección: existe en el motor** (`root.batches`, `run.batch`, la
+  operación `set-batch` y el invariante del interbloqueo con `depends_on_human_approved`) **y ningún
+  proyecto lo usa.** Esta sección no lo cambia.
+- La relación no viaja como campo: quien la necesite la deriva de `depends_on` y `lane`, que ya
+  viajan.
+
+## 11. Qué combinación apunta a qué vehículo
+
+> **Añadida hacia adelante el 2026-10-19** (run `#68`), conforme a [[D-074]] y a la enmienda de §4.
+
+**Precondición: la puerta.** Las filas de AIW solo aplican dentro de un proyecto que abrió la puerta
+(enmienda de §4). Y mientras rija [[D-074]], **AIW no se prueba en proyectos vivos**: corre en el
+proyecto de prueba que conduce el hilo `aiw`. Para la cadena, AIW necesita además la rama compartida
+(el lote, §10.3), que el kernel todavía no obedece.
+
+La tabla se lee en orden, y **gana la primera fila que encaja**:
+
+| # | clase | `correctness_model` | relación | vehículo |
+|---|---|---|---|---|
+| 1 | cualquiera | `JUDGED_DEFINES` | cualquiera | **cabina y taller supervisados**: definir es el trabajo |
+| 2 | `UX_DESIGN` | `SPECIFIED` · `JUDGED_ACCEPTS` | cualquiera | **cabina y taller supervisados**; AIW solo si el operador ya definió las correcciones antes del run |
+| 3 | `CONTENT` | cualquiera | independiente | **talleres en paralelo**, en lote: un piloto supervisado define el molde, el lote corre en paralelo y al final hay una revisión concentrada |
+| 4 | cualquiera | `SPECIFIED` · `JUDGED_ACCEPTS` | independiente | **talleres en paralelo** |
+| 5 | `FUNCTIONALITY` · `DOCUMENTATION` | `SPECIFIED` · `JUDGED_ACCEPTS` | cadena, o mismo carril | **AIW de noche**, con una revisión larga en la mañana |
+| 6 | `RESEARCH` | `SPECIFIED` · `JUDGED_ACCEPTS` | cadena, o mismo carril | **AIW de noche, ocasional**, con un reporte completo al final |
+
+**La tabla APUNTA; no ejecuta ni bloquea nada.** El operador decide qué manda a dónde. Un run sin
+clase, o una combinación que ninguna fila cubre (por ejemplo, contenido en cadena), no apunta a
+ningún vehículo: decide la cabina. El cierre se sigue derivando de §2 sin cambios.
+
+## 12. Procedencia de §9–§11 y de las enmiendas del 2026-10-19
+
+- **Origen:** el operador, el 2026-10-04 (verbatim en
+  `context/aiw-console/records/REFLEXION-DEL-OPERADOR-2026-10-04-PROPOSITO-Y-FRICCION-DE-LA-CONSOLA.md`,
+  decisiones 10 a 18; principio en [[D-074]]). Pidió la clase de trabajo y la relación entre runs, y
+  nombró las cinco clases («funcionalidad · documentación · investigación · diseño UX · contenido»).
+- **Parada de análisis de la cabina**, el 2026-10-19: midió que la clase faltaba y que la relación
+  ya estaba casi entera en el dato. El operador aprobó las cuatro recomendaciones (A–D) con «vamos
+  con tus recomendaciones» (`context/aiw-console/records/ENCUADRE-PARADA-68-2026-10-19.md`).
+- **Parada del taller del `#68`**, el mismo día, antes de escribir nada. Midió tres cosas: que el
+  tooling local de `cantu-studio` rechaza la clave nueva (§9.6); que la regla del carril ya existía
+  en el `#37`, con la condición de las superficies disjuntas (§10.2); y que aplicarla al carril
+  implícito pondría en serie a los proyectos sin carriles (§10.1). El operador eligió, verbatim:
+
+  ```text
+  Retoma el #68 con la opción A (seguir sin tocar Cantu, como con batch) y B1 (la regla del carril obliga solo a carriles declarados, más la condición del #37 sobre superficies disjuntas). Usa UX_DESIGN y la marca que no se mueve.
+  ```
+
+- **La decisión se numera** en `context/DECISIONES.md` cuando el `#68` cierre.
+
+**Lo que estas secciones NO hacen, y es deliberado:**
+
+- no clasifican ningún run (el piloto del `#68` es una propuesta en su reporte; la clase la escribe la
+  cabina con `set-classification` cuando el operador la apruebe);
+- no cambian `work_type`, `correctness_model`, los carriles, los barriers ni el lote;
+- no pintan nada en la consola: eso es del run siguiente.

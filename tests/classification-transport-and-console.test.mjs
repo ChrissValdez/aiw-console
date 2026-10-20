@@ -146,9 +146,11 @@ test("E.3: the version marks the envelope carries, and the fact that the emitter
   // the envelope gained §5's per-project `care_budget` block, which is behaviour, so §6 moves
   // the version. Registering the new number here is the point of the assertion — it fails on
   // the NEXT undeclared drift exactly as it failed on this declared one.
-  assert.equal(PROJECTOR_VERSION, "0.12.0");
+  // [#68] Moved again, 0.12.0 -> 0.13.0, and registered the same way: the envelope now also
+  // declares `run.work_class` (CLASIFICACION-DE-RUNS §9).
+  assert.equal(PROJECTOR_VERSION, "0.13.0");
   assert.equal(snapshot.generated_from, GENERATED_FROM);
-  assert.equal(snapshot.generated_from, "aiw-projector@0.12.0");
+  assert.equal(snapshot.generated_from, "aiw-projector@0.13.0");
   // The second mark: the identifier the TREE gives itself, carried verbatim and never
   // relabelled — which is why a project on another model name gets its own declaration of the
   // same tables rather than being refused for its name.

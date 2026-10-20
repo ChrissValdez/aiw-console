@@ -2,6 +2,8 @@
 //
 // Publishes what `context/CLASIFICACION-DE-RUNS.md` specifies: the closed vocabularies of
 // §1, the two derivation tables of §2, and the two functions that EXECUTE those tables.
+// [#68] Also the closed vocabulary of the work CLASS (§9), a stored key that no table derives
+// from and that derives nothing.
 // `severity` and `closure_mode` are DERIVED and NEVER stored (§2): they are computed here,
 // at read time, from the stored fields, and no caller writes the result anywhere.
 //
@@ -41,17 +43,31 @@ export const WORK_TYPES = ["COSMETIC", "FUNCTIONAL", "FOUNDATIONAL"];
 export const BLAST_RADII = ["LOCAL", "ADJACENT", "SYSTEMIC", "PROJECT_SHAPE"];
 export const FAILURE_SURFACES = ["LOUD", "VISIBLE", "SILENT"];
 
-// The four closed-vocabulary fields in one table, so every consumer loops instead of
-// repeating itself four times.
+// [#68] §9 — the work CLASS: WHAT KIND of work a run is, the question `work_type` never
+// answered (`work_type` measures DEPTH — COSMETIC / FUNCTIONAL / FOUNDATIONAL — and reading it
+// as a class is what filed content reviews as FUNCTIONAL). Five values, the same for every
+// project, decided by the operator on 2026-10-19. `UX_DESIGN` carries its `UX` on purpose: the
+// design of a schema, a plan or an architecture is NOT this class, and a bare "design" token
+// would attract it. No token is shared with WORK_TYPES (`FUNCTIONALITY` is not `FUNCTIONAL`),
+// so a value typed into the wrong field is refused by name instead of landing silently.
+export const WORK_CLASSES = ["FUNCTIONALITY", "DOCUMENTATION", "RESEARCH", "UX_DESIGN", "CONTENT"];
+
+// The closed-vocabulary fields in one table, so every consumer loops instead of repeating
+// itself once per field: the four of §1, and the class of §9 appended after them.
 export const CLASSIFICATION_VOCABULARIES = {
   correctness_model: CORRECTNESS_MODELS,
   work_type: WORK_TYPES,
   blast_radius: BLAST_RADII,
   failure_surfaces: FAILURE_SURFACES,
+  work_class: WORK_CLASSES,
 };
 
 // The six STORED keys of §1, in the order the specification enumerates them. `severity` and
 // `closure_mode` are absent from this list BY CONSTRUCTION: they are never stored.
+// [#68] `work_class` is absent from it too, and that is a decision, not an omission: this list
+// is §1's, it drives the mark (`classified_at` stands while one of THESE is stored, and §9 says
+// the class does not move it), and the console's drawer walks it with a label for each of the
+// six. The class joins the list below instead.
 export const CLASSIFICATION_STORED_FIELDS = [
   "correctness_model",
   "work_type",
@@ -60,6 +76,11 @@ export const CLASSIFICATION_STORED_FIELDS = [
   "external_effects",
   "classified_at",
 ];
+
+// [#68] EVERY classification key a run can store, in serialization order: the class of §9
+// first (what kind of work, before how it is verified), then the six of §1. Used wherever the
+// question is "which classification keys does this run carry" rather than "is §1 judged".
+export const CLASSIFICATION_RUN_FIELDS = ["work_class", ...CLASSIFICATION_STORED_FIELDS];
 
 // ---------------------------------------------------------------------------
 // §2 — the two DERIVED vocabularies, and the tables that produce them.
@@ -231,11 +252,13 @@ export function isClassified(run) {
   return !!(run && typeof run === "object" && typeof run.classified_at === "string" && run.classified_at);
 }
 
-// Which of the six STORED fields this run actually carries. Used by the console to tell a
-// PARTIALLY classified run from an unclassified one without inventing either.
+// Which of the STORED classification keys this run actually carries. Used to tell a PARTIALLY
+// classified run from an unclassified one without inventing either.
+// [#68] It reads the class too: a live run carrying only `work_class` stays on the §1 list
+// (the class does not move the mark), and reporting it there as untouched would be false.
 export function storedClassificationFields(run) {
   if (!run || typeof run !== "object") return [];
-  return CLASSIFICATION_STORED_FIELDS.filter((field) => field in run);
+  return CLASSIFICATION_RUN_FIELDS.filter((field) => field in run);
 }
 
 // ---------------------------------------------------------------------------
@@ -286,6 +309,9 @@ export function buildClassificationTaxonomy(options = {}) {
     // the project's rather than the specification's. See buildCareBudgetDeclaration.
     care_budget: buildCareBudgetDeclaration(options.careBudget),
     vocabularies: {
+      // [#68] §9 — the work class, declared exactly as the other stored closed vocabularies are.
+      // No `derived_by`: no table produces it, and no table reads it.
+      "run.work_class": { axis: "run", stored: true, optional: true, tokens: WORK_CLASSES },
       "run.correctness_model": { axis: "run", stored: true, optional: true, tokens: CORRECTNESS_MODELS },
       "run.work_type": { axis: "run", stored: true, optional: true, tokens: WORK_TYPES },
       "run.blast_radius": { axis: "run", stored: true, optional: true, tokens: BLAST_RADII },

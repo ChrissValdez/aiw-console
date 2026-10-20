@@ -31,8 +31,11 @@ import {
   WORK_TYPES,
   BLAST_RADII,
   FAILURE_SURFACES,
+  // [#68] §9 — the work class vocabulary, and every classification key a run can store.
+  WORK_CLASSES,
   CLASSIFICATION_VOCABULARIES,
   CLASSIFICATION_STORED_FIELDS,
+  CLASSIFICATION_RUN_FIELDS,
   // [#43] §5 `care_budget` — PER-PROJECT configuration at the ROOT, not a run field. The form
   // checker is imported rather than restated so the invariant below and the write operation
   // refuse the same shapes in the same words.
@@ -139,11 +142,19 @@ export const RUN_REQUIRED_FIELDS = ["run_id", "queue_order", "title", "summary",
 // It sits beside `lane` and `barrier` because it is the same kind of statement: a planning
 // key about where the work rides, not about its outcome. What the batch DETERMINES — the
 // branch the kernel commits to — is stored on the batch entry (root.batches), never here.
+// [#68] `work_class` (context/CLASIFICACION-DE-RUNS.md §9): WHAT KIND of work the run is, a
+// closed vocabulary shared by every project. OPTIONAL and ABSENT BY DEFAULT on exactly the terms
+// of the six above -- membership here, never in RUN_REQUIRED_FIELDS, so no canonical turns
+// invalid. It opens the classification block (what kind of work, then how it is verified), and
+// it is NOT one of the six of §1: writing or clearing it never moves `classified_at`.
+// The RELATION between runs (§10) is deliberately NOT a key: it is derived from `depends_on`
+// and `lane`, which already exist.
 export const RUN_OPTIONAL_FIELDS = [
   "depends_on_human_approved",
   "lane",
   "barrier",
   "batch",
+  "work_class",
   "correctness_model",
   "work_type",
   "blast_radius",
@@ -167,13 +178,17 @@ export const BARRIER_SCOPES = ["lane", "global"];
 // What did NOT move is the enforcement: `checkInvariants` below is still the only thing
 // that refuses an illegal value, and the derivation is still not called anywhere in this
 // engine. The engine validates what is STORED; it does not derive.
+// [#68] The work class vocabulary of §9 joins them under the same discipline: declared in the
+// leaf, re-exported here, enforced only by `checkInvariants`.
 export {
   CORRECTNESS_MODELS,
   WORK_TYPES,
   BLAST_RADII,
   FAILURE_SURFACES,
+  WORK_CLASSES,
   CLASSIFICATION_VOCABULARIES,
   CLASSIFICATION_STORED_FIELDS,
+  CLASSIFICATION_RUN_FIELDS,
 };
 // [#46] The frozen `progress` shape (CONTRATO §15.b) and the §15.c predicate, re-exported
 // under the same discipline: the vocabulary lives in the leaf both runtimes can load
@@ -623,6 +638,9 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
         // that is PRESENT carrying a value outside its closed vocabulary: `work_type:
         // "FUNCIONAL"` is not an absent field, it is an invalid one, and the two must not
         // collapse into each other.
+        // [#68] The loop covers `work_class` (§9) with no branch of its own: it is one more entry
+        // of the table, so it is refused in the same words, naming the value and the vocabulary.
+        // §9 adds NO illegal combination to §3, so nothing below changes for it.
         for (const [field, vocabulary] of Object.entries(CLASSIFICATION_VOCABULARIES)) {
           if (field in run && !vocabulary.includes(run[field])) {
             errors.push(`${runLabel} ${field} must be one of ${vocabulary.join(", ")}; found ${JSON.stringify(run[field])}`);
@@ -1626,6 +1644,13 @@ export function setBatch(obj, opts) {
 // It changes no *_id, so it needs no identity sanction, and it is BATCHABLE alongside
 // set-lane / set-barrier / set-text / set-status: classifying a run and moving it are one
 // edit of one run in the operator's head, and should be one preview and one write.
+//
+// [#68] THE WORK CLASS (§9) TRAVELS BY THE SAME PATH: option `workClass`, refused outside its
+// closed vocabulary by name, cleared WHOLE by null / "". One thing differs, by decision of the
+// operator (2026-10-19), and it is the mark: the class does NOT move `classified_at`. The mark is
+// the date §1 was judged; a call that only writes or clears the class neither stamps it nor
+// clears it, so writing classes onto runs classified weeks ago does not erase when their §1
+// judgement was made, and a live run that carries only a class stays on §1's to-do list.
 // ---------------------------------------------------------------------------
 
 export function setClassification(obj, opts) {
@@ -1637,14 +1662,15 @@ export function setClassification(obj, opts) {
   const entry = run ? findRunEntry(obj, run) : null;
   if (run && !entry) errors.push(`set-classification: run ${run} not found`);
 
-  // The four closed-vocabulary fields, read from the caller's option names. A field the
-  // caller does not mention at all is LEFT EXACTLY AS IT IS: this op assigns what it was
-  // handed and never clears by omission.
+  // The closed-vocabulary fields, read from the caller's option names. A field the caller
+  // does not mention at all is LEFT EXACTLY AS IT IS: this op assigns what it was handed and
+  // never clears by omission. [#68] `workClass` is the fifth, and needs no branch of its own.
   const fieldByOption = {
     correctnessModel: "correctness_model",
     workType: "work_type",
     blastRadius: "blast_radius",
     failureSurfaces: "failure_surfaces",
+    workClass: "work_class",
   };
   const assignments = new Map();
   for (const [option, field] of Object.entries(fieldByOption)) {
@@ -1687,9 +1713,11 @@ export function setClassification(obj, opts) {
     return { errors, warnings, run, before: null, after: null };
   }
 
+  // [#68] The before/after snapshots name EVERY classification key the run carries, the class
+  // included, so a preview of a class write shows what it changed.
   const snapshot = (target) => {
     const out = {};
-    for (const field of CLASSIFICATION_STORED_FIELDS) {
+    for (const field of CLASSIFICATION_RUN_FIELDS) {
       if (field in target) out[field] = target[field];
     }
     return out;
@@ -1702,14 +1730,19 @@ export function setClassification(obj, opts) {
   }
 
   // THE MARK, written by the operation and never by the operator. It stands only while some
-  // classification is actually stored; clearing the last field clears the mark with it.
-  const stillClassified = CLASSIFICATION_STORED_FIELDS.some(
-    (field) => field !== "classified_at" && field in entry.run
-  );
-  if (stillClassified) {
-    entry.run.classified_at = opts.now != null ? opts.now : new Date().toISOString();
-  } else {
-    delete entry.run.classified_at;
+  // §1 classification is actually stored; clearing the last field clears the mark with it.
+  // [#68] Only a call that touched a §1 field reaches it. A call that wrote or cleared nothing
+  // but the class leaves the mark exactly as it found it — stamped, or absent.
+  const touchedSection1 = [...assignments.keys()].some((field) => CLASSIFICATION_STORED_FIELDS.includes(field));
+  if (touchedSection1) {
+    const stillClassified = CLASSIFICATION_STORED_FIELDS.some(
+      (field) => field !== "classified_at" && field in entry.run
+    );
+    if (stillClassified) {
+      entry.run.classified_at = opts.now != null ? opts.now : new Date().toISOString();
+    } else {
+      delete entry.run.classified_at;
+    }
   }
 
   normalizeRunKeyOrder(entry.run);

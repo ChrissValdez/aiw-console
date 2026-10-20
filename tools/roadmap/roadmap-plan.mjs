@@ -188,8 +188,13 @@ const OP_DESCRIPTORS = [
     //
     // `classified_at` is deliberately NOT relayed: the core writes the mark itself, so the
     // console cannot type an instant and no request body can carry one.
+    //
+    // [#68] `workClass` — the work class of §9 — rides the same op, not an op of its own: it is
+    // one more optional key on one run, refused by the core outside its vocabulary, cleared by
+    // null/"". KNOWN_OPS is unchanged.
     apply: (obj, args) => core.setClassification(obj, {
       run: args.run,
+      workClass: args.workClass,
       correctnessModel: args.correctnessModel,
       workType: args.workType,
       blastRadius: args.blastRadius,

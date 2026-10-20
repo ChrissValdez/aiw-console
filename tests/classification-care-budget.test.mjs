@@ -320,9 +320,11 @@ test("E.1/E.3: `declared` and `declared_reason` travel TOGETHER, and absent mean
 });
 
 test("E.2: the emitter version moved, and the move is behaviour", () => {
-  assert.equal(PROJECTOR_VERSION, "0.12.0");
+  // [#68] REGISTERED, not absorbed: 0.12.0 -> 0.13.0, because the envelope now also declares
+  // `run.work_class` (CLASIFICACION-DE-RUNS §9). The care_budget block asserted below is unchanged.
+  assert.equal(PROJECTOR_VERSION, "0.13.0");
   const snapshot = buildRoadmapTreeSnapshot(LANES_ROOT, { now: NOW });
-  assert.equal(snapshot.generated_from, "aiw-projector@0.12.0");
+  assert.equal(snapshot.generated_from, "aiw-projector@0.13.0");
   // The behaviour that moved it: a block the 0.11.0 envelope did not carry.
   assert.ok("care_budget" in snapshot.taxonomy_model);
 });

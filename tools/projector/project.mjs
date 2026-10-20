@@ -124,7 +124,15 @@ export const SCHEMA_VERSION = 1;
 // that declares none emits `declared: null` with its reason rather than the defaults.
 // An emitter that carries a per-project configuration it did not carry before is not the
 // emitter of 0.11.0, so the version moves (§6).
-export const PROJECTOR_VERSION = "0.12.0";
+// 0.13.0 (RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001, #68) moves once, and it is
+// behaviour: `taxonomy_model` now also declares `run.work_class`, the closed vocabulary of the
+// work CLASS (CLASIFICACION-DE-RUNS §9), and the §1 report's `stored_fields` names the class
+// when a listed run carries one. The key itself needed no emitter change — runs travel verbatim
+// in `roadmap_tree` — and nothing is derived from it. The RELATION between runs (§10) adds
+// nothing here: it is derived from `depends_on` and `lane`, which already travel.
+// A tree that carries no class emits what 0.12.0 emitted, save the one vocabulary entry and this
+// version string.
+export const PROJECTOR_VERSION = "0.13.0";
 export const GENERATED_FROM = `aiw-projector@${PROJECTOR_VERSION}`;
 export const SNAPSHOT_RELATIVE_PATH = join(".aiw", "views", "project_console.snapshot.json");
 // Optional emitted view (§3 enrichment): the console's Roadmap tab reads this file
@@ -1048,6 +1056,8 @@ function buildTaxonomyModel(root, layout) {
       // the four above: `stored` says whether the token is on disk, and the two that are not
       // name the table that produces them (`derived_by`). Nothing here is a literal — the
       // entries come from the classification module itself.
+      // [#68] That is also how `run.work_class` (§9) arrives: one more entry of the module's
+      // table, with no line of its own in this emitter.
       ...classification.vocabularies
     },
     // Executable declaration: evaluate `precedence` in order against the `status` of the runs in

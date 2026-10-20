@@ -1,0 +1,62 @@
+/* RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001 (#70) — the section a run detail shows about the
+   HTML report its thread wrote. Built from the console's own tokens; its own file so the
+   domain-blindness veto covers it as well as the script. */
+
+.rhr-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.rhr-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+}
+
+.rhr-link {
+  justify-self: start;
+  color: var(--blue-link);
+  font-weight: 600;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.rhr-link:hover,
+.rhr-link:focus-visible {
+  color: var(--blue-link-hover);
+  text-decoration: underline;
+}
+
+.rhr-arrow {
+  font-weight: 400;
+}
+
+.rhr-path {
+  color: var(--text-tertiary);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.rhr-status:empty {
+  display: none;
+}
+
+.rhr-status {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.rhr-status.is-missing {
+  color: var(--amber);
+}
+
+.rhr-skipped,
+.rhr-note {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-tertiary);
+}

@@ -149,6 +149,12 @@ export const RUN_REQUIRED_FIELDS = ["run_id", "queue_order", "title", "summary",
 // it is NOT one of the six of §1: writing or clearing it never moves `classified_at`.
 // The RELATION between runs (§10) is deliberately NOT a key: it is derived from `depends_on`
 // and `lane`, which already exist.
+// [#70] `report_html` (CONTRATO §10.a; docs/CONTRATO-REPORTE-HTML-DE-CADA-HILO-v1.md): WHERE the
+// HTML report a thread wrote for this run lives -- a list of paths relative to the project root.
+// D-076: each thread writes its report in the format its project needs, and the one thing in
+// common is where it lives. OPTIONAL and ABSENT BY DEFAULT on the same terms as every key above;
+// it serializes LAST, after the outcome keys, because it names what the run left behind. No op
+// of this engine writes it: the thread declares its own pages, and the console only links them.
 export const RUN_OPTIONAL_FIELDS = [
   "depends_on_human_approved",
   "lane",
@@ -163,8 +169,29 @@ export const RUN_OPTIONAL_FIELDS = [
   "classified_at",
   "closeout_result",
   "progress",
+  "report_html",
 ];
 export const BARRIER_SCOPES = ["lane", "global"];
+
+// [#70] The shape of ONE `report_html` entry: what is wrong with it, or null when it is a path to
+// a page inside the project. The console holds the same rule for the links it paints
+// (project-console/assets/run-html-reports.js), and tests/run-html-reports.test.mjs keeps the two
+// in agreement case by case. EXISTENCE is deliberately not checked: a project's pages are often
+// generated and ignored by Git, so a fresh clone lacks them; the console says so per path.
+const REPORT_HTML_EXTENSION = /\.html$/i;
+export function reportHtmlPathProblem(entry) {
+  if (typeof entry !== "string" || !entry) return "must be a non-empty string";
+  if (entry.includes("\\") || entry.includes(":") || entry.startsWith("/")) {
+    return "must be relative to the project root, with / separators";
+  }
+  const segments = entry.split("/");
+  if (segments.some((segment) => segment === "" || segment === "." || segment === "..")) {
+    return "must not contain empty, . or .. segments";
+  }
+  if (segments[0] === ".git" || segments[0] === ".project") return "must not point inside .git/ or .project/";
+  if (!REPORT_HTML_EXTENSION.test(entry)) return "must end in .html";
+  return null;
+}
 // [#43] The four closed vocabularies of §1 are RE-EXPORTED, not declared here.
 //
 // They were declared in this file when the stored fields landed, and they moved out the
@@ -654,6 +681,25 @@ export function checkInvariants(obj, { externalRunIds = null } = {}) {
             errors.push(`${runLabel} external_effects must be an array when present; a run with no external effects omits the key`);
           } else if (run.external_effects.some((e) => typeof e !== "string" || !e)) {
             errors.push(`${runLabel} external_effects must contain only non-empty strings`);
+          }
+        }
+        // [#70] `report_html` — a non-empty list of page paths, each named when refused. An empty
+        // list is refused rather than read as "no report": that absence is the key being absent.
+        if ("report_html" in run) {
+          if (!Array.isArray(run.report_html) || run.report_html.length === 0) {
+            errors.push(`${runLabel} report_html must be a non-empty array of page paths when present; a run with no HTML report omits the key`);
+          } else {
+            const seen = new Set();
+            for (const entry of run.report_html) {
+              const problem = reportHtmlPathProblem(entry);
+              if (problem) {
+                errors.push(`${runLabel} report_html entry ${JSON.stringify(entry)} ${problem}`);
+              } else if (seen.has(entry)) {
+                errors.push(`${runLabel} report_html lists ${JSON.stringify(entry)} twice`);
+              } else {
+                seen.add(entry);
+              }
+            }
           }
         }
         // §1 declares `classified_at` "the mark of when it was classified" and declares NO

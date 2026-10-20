@@ -247,6 +247,20 @@ export function verdictPanelHtml(indexEntries, api) {
   return scope.pendingVerdictPanelHtml(scope.pendingVerdictAcrossProjects(indexEntries));
 }
 
+// [#70] THE FREEZE, at the shell's seam. The `report.json` surface keeps counting for the
+// projects that HAVE reports/, and the Portfolio stops listing every other project as "no reports
+// emitted" (D-075: what a project does not produce does not appear). Whether a project has
+// reports/ is the mount's own reading of its index — asked, never re-derived here — and with the
+// mount absent nothing is counted rather than everything.
+export function projectsWithReportsDir(indexEntries, api) {
+  const scope = api || (typeof window !== "undefined" ? window : globalThis);
+  if (!scope || typeof scope.reportsIndexModel !== "function") return [];
+  return (Array.isArray(indexEntries) ? indexEntries : []).filter((entry) => {
+    const model = entry ? scope.reportsIndexModel(entry.index) : null;
+    return !!(model && model.available && model.directoryPresent === true);
+  });
+}
+
 // Contract §20 at shell level: the announcement names the file that failed.
 export function projectAbsenceMessage(record) {
   const path = snapshotUrlForKey(record.key).replace(/^\//, "");
@@ -462,7 +476,7 @@ function renderShellChrome() {
     board.innerHTML = shellRegistryNotice() + portfolioBoardHtml(shellState.records);
   }
   const verdicts = shellById("shell-verdicts");
-  if (verdicts) verdicts.innerHTML = verdictPanelHtml(shellState.reportIndexes);
+  if (verdicts) verdicts.innerHTML = verdictPanelHtml(projectsWithReportsDir(shellState.reportIndexes));
   const brand = shellById("shell-brand-title");
   if (brand) brand.textContent = shellState.registryTitle || "Project Console";
   const portfolioTitle = shellById("shell-portfolio-title");

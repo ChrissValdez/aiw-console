@@ -16,6 +16,9 @@
     <!-- [#62] The read-only side reader: the panel a cited document opens in, beside the report
          and never instead of it. Its own file so the same mechanical veto covers it too. -->
     <link rel="stylesheet" href="assets/doc-side-reader.css">
+    <!-- [#70] The section a run detail shows about the HTML report its thread wrote. Its own file
+         so the same mechanical veto covers it. -->
+    <link rel="stylesheet" href="assets/run-html-reports.css">
   </head>
   <body>
     <!-- MULTI-PROJECT SHELL (O4.P3). The sidebar and the Portfolio view are NEW chrome, styled
@@ -404,6 +407,8 @@
     <script src="assets/run-report-surface.js" defer></script>
     <!-- [#62] The side reader, before the console that hands it the active project's docs index. -->
     <script src="assets/doc-side-reader.js" defer></script>
+    <!-- [#70] The link to a thread's own HTML report, before the console that paints it. -->
+    <script src="assets/run-html-reports.js" defer></script>
     <script src="assets/project-console.js" defer></script>
     <!-- The shell module runs after the deferred renderer script, so the renderer's globals
          (setActiveProjectBase / resetProjectScopedState / loadActiveProject) exist when it boots. -->

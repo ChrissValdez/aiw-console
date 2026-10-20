@@ -90,9 +90,13 @@ test("a run with no report says so in its own detail, and offers nothing to open
   assert.ok(!html.includes("data-run-report-open"), "a run with no report offered one anyway");
 });
 
-test("a project whose reports index is honestly EMPTY says it of every run, and never stays silent", async () => {
-  // Today's state of every real repository in this workspace: the index exists, is readable,
-  // and lists nothing. That is a measurement, and every run detail reports it as one.
+test("[#70] a project whose reports index says reports/ is ABSENT shows no run-report section at all (D-075)", async () => {
+  // ADJUSTED BY #70 (RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001), approved by the operator on
+  // 2026-10-20. This test used to demand the opposite — «says it of every run, and never stays
+  // silent». D-075 decided that what a project does not produce does not appear, and #70 froze
+  // the report surface to speak only where a project HAS reports/. The index is still read and
+  // still measured; it is the run detail that stops repeating an absence the operator never asked
+  // about. What still holds is kept: nothing is offered to open.
   const { harness, result } = await openProject("reports-empty");
   assert.equal(result.ok, true);
   const runIds = [...harness.sandbox.v3Model({
@@ -102,8 +106,8 @@ test("a project whose reports index is honestly EMPTY says it of every run, and 
   for (const runId of runIds) {
     harness.sandbox.v3OpenRunDetail(runId, "root");
     const html = drawer(harness);
-    assert.match(html, /Run report/, `${runId}: the section is missing`);
-    assert.match(html, /No report has been emitted for this run/, `${runId}: the absence is not stated`);
+    assert.ok(!/Run report/.test(html), `${runId}: the frozen section spoke in a project with no reports/`);
+    assert.ok(!/No report has been emitted for this run/.test(html), `${runId}: an absence nobody asked about was stated`);
     assert.ok(!html.includes("data-run-report-open"), `${runId}: offered a report that does not exist`);
   }
 });
@@ -216,11 +220,14 @@ test("switching project tears the report down WITHOUT walking back into the proj
   assert.equal(harness.sandbox.v3ReportsIndexModel(), null);
 });
 
-test("a project with NO reports index at all says the index could not be read — never that there is no report", async () => {
-  // The distinction that matters most, driven end to end, against a real emitted folder that
-  // predates the index (the frozen neighbour, captured before O4.P17). Saying "no report" here
-  // would be the console answering a question nobody measured — and the operator would read it
-  // as a fact about the run instead of a fact about the emission.
+test("[#70] a project with NO reports index at all shows no run-report section either — and never claims there is no report", async () => {
+  // ADJUSTED BY #70 (RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001), approved by the operator on
+  // 2026-10-20. This test used to demand that the run detail say the index «could not be read»
+  // and name the file. Under D-075 and the freeze the section speaks only where an index says
+  // reports/ exists, so an unread index shows nothing in the run detail. The distinction this
+  // test was written to protect still holds and is kept: an unread index is NEVER reported as a
+  // measured absence of the run's report. The index source itself stays declared in Console
+  // Diagnostics, where the load test above still finds it.
   const { harness, result } = await openProject("aiw-console");
   assert.equal(result.ok, true);
   const runIds = [...harness.sandbox.v3Model({
@@ -228,11 +235,9 @@ test("a project with NO reports index at all says the index could not be read �
   }).runsById.keys()];
   harness.sandbox.v3OpenRunDetail(runIds[0], "root");
   const html = drawer(harness);
-  assert.match(html, /could not be read/);
+  assert.ok(!/Run report/.test(html), "the frozen section spoke in a project with no index");
   assert.ok(!/No report has been emitted/.test(html), "an unread index was reported as a measured absence");
   assert.ok(!html.includes("data-run-report-open"));
-  // And the file it could not read is named, so the operator knows where to look (§20).
-  assert.match(html, /reports_index\.json/);
 });
 
 test("only a run listed by the index can be opened: an identifier alone opens nothing", async () => {

@@ -171,6 +171,24 @@ const PROJECT_EMIT_ARTIFACT_PATHS = [
 const PORT = Number(process.env.PC_PORT) || 8788;
 const HOST = "127.0.0.1";
 
+// [#70] A PROJECT'S OWN PAGE IS SERVED ISOLATED FROM THE CONSOLE.
+//
+// A page under /projects/<key>/ is served on the console's OWN origin, beside the four routes
+// that write, and the run detail now links a thread's HTML report in a new tab. #56 measured the
+// exposure for the preview frame; a top-level tab is the same exposure with nothing in the way.
+// Another port or host name does NOT close it: the gate admits any loopback origin. An OPAQUE
+// origin does: a document served with `sandbox` and WITHOUT `allow-same-origin` is forced to send
+// `Origin: null`, which `isLocalOrigin` refuses at 403 before any route runs.
+//
+// So every `.html` response in the per-project namespace carries this policy. Kept:
+// scripts, forms, new tabs (which INHERIT the sandbox, so `allow-popups-to-escape-sandbox` is
+// absent on purpose), downloads and dialogs — what a report needs to show questions, copy an
+// answer and save a long verdict. Lost: the console's origin and, with it, browser storage; the
+// operator is told so beside each link. The console's own page is outside this namespace and is
+// never touched, and nothing the console READS from a project (JSON, Markdown) carries it.
+const PROJECT_PAGE_POLICY = "sandbox allow-scripts allow-forms allow-popups allow-downloads allow-modals";
+const PROJECT_PAGE_EXTENSIONS = new Set([".html"]);
+
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
@@ -1261,6 +1279,7 @@ const server = http.createServer(async (req, res) => {
   }
 
   let absPath;
+  let projectPage = false;
   if (urlPath === REGISTRY_URL_PATH) {
     // The registry URL is fixed for the client; the file behind it honours PC_REGISTRY.
     absPath = activeRegistryPath();
@@ -1272,6 +1291,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
     absPath = resolved.absPath;
+    projectPage = PROJECT_PAGE_EXTENSIONS.has(extname(absPath).toLowerCase());
   } else {
     const rel = urlPath === "/" ? ENTRY : urlPath;
     absPath = normalize(join(REPO_ROOT, rel));
@@ -1284,10 +1304,12 @@ const server = http.createServer(async (req, res) => {
 
   try {
     const data = await readFile(absPath);
-    res.writeHead(200, {
+    const headers = {
       "Content-Type": MIME[extname(absPath).toLowerCase()] || "application/octet-stream",
       "Cache-Control": "no-store"
-    });
+    };
+    if (projectPage) headers["Content-Security-Policy"] = PROJECT_PAGE_POLICY;
+    res.writeHead(200, headers);
     res.end(req.method === "HEAD" ? undefined : data);
   } catch {
     res.writeHead(404);

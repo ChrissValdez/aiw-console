@@ -5488,6 +5488,11 @@ function v3OpenRunDetail(runId, mode) {
   const existingBack = drawerHeader.querySelector(".v3-back");
   if (existingBack) existingBack.remove();
   drawerHeader.insertAdjacentHTML("afterbegin", backControl);
+  // [#70] The document reader's own door, beside the close control. Re-injected per detail like
+  // the Back pill, and removed with it on close and when a legacy detail opens.
+  const existingDocsDoor = drawerHeader.querySelector(".v3-docs-door");
+  if (existingDocsDoor) existingDocsDoor.remove();
+  drawerClose.insertAdjacentHTML("beforebegin", v3DocsDoorHtml());
   // Roadmap-v3-scoped drawer presentation modifier; removed on close and when a legacy
   // (non-v3) detail opens, so it never leaks into Overview or other tabs.
   byId("run-drawer").classList.add("v3-detail");
@@ -5521,11 +5526,15 @@ function v3OpenRunDetail(runId, mode) {
         </div>
       </details>
     </div>
+    ${v3RunHtmlReportSection(run)}
     ${v3RunReportSection(run)}
     ${v3HumanApprovalSection(run, model)}
     ${v3ClassificationSection(run)}
     ${v3ProgressTimeline(run)}
   `;
+  // [#70] One HEAD per page the run declares, filled in when they answer. Never awaited: the
+  // detail is on screen at once, and a page that is not on disk says so a moment later.
+  if (typeof wireRunHtmlReports === "function") wireRunHtmlReports(drawerBody);
   v3AttachHandlers(byId("run-drawer"), { nested: true });
   v3MountRunEditor(runId);
   byId("drawer-overlay").classList.add("open");
@@ -5533,13 +5542,35 @@ function v3OpenRunDetail(runId, mode) {
   byId("run-drawer").setAttribute("aria-hidden", "false");
 }
 
+// [#70] THE HTML REPORT A THREAD WROTE FOR THIS RUN (D-076). The run says where its pages live
+// (`report_html`, CONTRATO §10.a); the link module paints one link per page against THIS
+// project's base, and nothing at all for a run that declares none (D-075).
+function v3RunHtmlReportSection(run) {
+  if (typeof runHtmlReportSectionHtml !== "function") return "";
+  return runHtmlReportSectionHtml(run, { base: REPO_BASE });
+}
+
+// [#70] The document reader's door in the run detail. The reader listens for the attribute on
+// the whole document, so this markup is the entire door: nothing here wires or opens anything.
+function v3DocsDoorHtml() {
+  return '<button class="v3-docs-door" type="button" data-doc-reader-open aria-label="Open this project\'s documents" title="Open this project\'s documents without leaving the run">Documents</button>';
+}
+
 // [#53] THE DOOR INTO THE REPORT, and there is no other one. It is a section of the run's own
 // detail: the report belongs to the run, and that is how the operator looks for it. The section
 // is built by the mount from the index alone — this function passes an identifier and a file
 // path to name in an absence, and receives finished markup.
+//
+// [#70] FROZEN, and speaking only where a project HAS reports/. The `report.json` surface keeps
+// working exactly as it did for the project that uses it; in the projects whose index says
+// reports/ is absent — or that have no index at all — the section is not painted, instead of
+// stating in every run an absence nobody asked about (D-075). Decided here, at the call site,
+// so the frozen mount is not edited.
 function v3RunReportSection(run) {
   if (typeof runReportSectionHtml !== "function") return "";
-  return runReportSectionHtml(v3ReportsIndexModel(), run.run_id, {
+  const reportsModel = v3ReportsIndexModel();
+  if (!reportsModel || !reportsModel.available || reportsModel.directoryPresent !== true) return "";
+  return runReportSectionHtml(reportsModel, run.run_id, {
     indexPath: PATHS ? displaySourcePath(PATHS.reportsIndex) : ""
   });
 }
@@ -5768,6 +5799,8 @@ function openRunDrawer(runId) {
   legacyDrawerClose.removeAttribute("aria-label");
   const legacyInjectedBack = byId("run-drawer").querySelector(".drawer-header .v3-back");
   if (legacyInjectedBack) legacyInjectedBack.remove();
+  const legacyInjectedDocsDoor = byId("run-drawer").querySelector(".drawer-header .v3-docs-door");
+  if (legacyInjectedDocsDoor) legacyInjectedDocsDoor.remove();
   byId("drawer-title").textContent = operator.displayTitle;
   byId("drawer-id").textContent = `${operator.group} / ${operator.statusLabel} / ${operator.kindLabel}`;
   byId("drawer-body").innerHTML = `
@@ -5898,6 +5931,8 @@ function closeDrawer() {
   drawerClose.removeAttribute("aria-label");
   const injectedBack = byId("run-drawer").querySelector(".drawer-header .v3-back");
   if (injectedBack) injectedBack.remove();
+  const injectedDocsDoor = byId("run-drawer").querySelector(".drawer-header .v3-docs-door");
+  if (injectedDocsDoor) injectedDocsDoor.remove();
   // Closing safely resets the local Roadmap v3 Run Detail navigation stack.
   v3DetailStack = [];
   v3DetailOrigin = "";

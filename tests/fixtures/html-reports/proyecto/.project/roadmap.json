@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "project_id": "html_reports_qa_fixture",
+  "generated_at": "2026-10-20T12:00:00.000Z",
+  "generated_from": "aiw-projector@0.13.0",
+  "sources": [
+    {
+      "path": "roadmap/roadmap.json",
+      "mtime": "2026-10-20T20:33:45.830Z"
+    }
+  ],
+  "model": "roadmap_tree_v1",
+  "roadmap_id": "html-reports-qa",
+  "title": "HTML reports QA",
+  "objectives": [
+    {
+      "objective_id": "HQ-O1",
+      "title": "Reportes HTML del hilo",
+      "phases": [
+        {
+          "phase_id": "HQ-O1.P1",
+          "title": "Piloto",
+          "runs": [
+            {
+              "run_id": "RUN-HTMLQA-TWO-PAGES-001",
+              "queue_order": 1,
+              "title": "Dos páginas declaradas: una en disco, otra nunca generada",
+              "summary": "Dos páginas declaradas: una en disco, otra nunca generada",
+              "full_description": "Dos páginas declaradas: una en disco, otra nunca generada — fixture del #70.",
+              "status": "active",
+              "depends_on": [],
+              "report_html": [
+                "paginas/primera-entrega/reporte.html",
+                "paginas/segunda-entrega/nunca-generada.html"
+              ]
+            },
+            {
+              "run_id": "RUN-HTMLQA-SAME-PAGE-001",
+              "queue_order": 2,
+              "title": "Otro run que apunta a la misma página",
+              "summary": "Otro run que apunta a la misma página",
+              "full_description": "Otro run que apunta a la misma página — fixture del #70.",
+              "status": "active",
+              "depends_on": [],
+              "report_html": [
+                "paginas/primera-entrega/reporte.html"
+              ]
+            },
+            {
+              "run_id": "RUN-HTMLQA-NOTHING-001",
+              "queue_order": 3,
+              "title": "No declara ninguna página",
+              "summary": "No declara ninguna página",
+              "full_description": "No declara ninguna página — fixture del #70.",
+              "status": "active",
+              "depends_on": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

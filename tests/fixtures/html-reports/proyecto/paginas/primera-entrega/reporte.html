@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reporte de prueba · RUN-HTMLQA-TWO-PAGES-001</title>
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 46rem; margin: 2rem auto; padding: 0 1rem; color: #1f2933; }
+  fieldset { margin: 1rem 0; }
+  button { font: inherit; padding: .3rem .8rem; margin-right: .4rem; }
+  code { background: #f1f3f5; padding: .1rem .3rem; }
+  #aviso { margin-left: .5rem; }
+</style>
+</head>
+<body data-run="RUN-HTMLQA-TWO-PAGES-001" data-pagina="paginas/primera-entrega/reporte.html" data-version="1.0">
+<h1>Reporte de prueba del hilo</h1>
+<p>Página de fixture del <code>#70</code>. La escribe «el hilo», con el formato que quiera; la consola sólo la enlaza.</p>
+
+<fieldset>
+  <legend>¿Se entiende la propuesta?</legend>
+  <label><input type="radio" name="p1" value="si" checked> Sí</label>
+  <label><input type="radio" name="p1" value="no"> No</label>
+</fieldset>
+<p><label>Comentario largo<br><textarea id="comentario" rows="4" cols="60">Sin comentario.</textarea></label></p>
+
+<p>
+  <button type="button" id="copiar">Copiar veredicto</button>
+  <button type="button" id="descargar">Descargar veredicto</button>
+  <span id="aviso" role="status"></span>
+</p>
+<p>Veces que abriste esta página en este navegador: <strong id="contador">—</strong>
+  <small>(abierta desde la consola, no se guarda: la página está aislada)</small></p>
+
+<script>
+(function () {
+  var cuerpo = document.body;
+  // Lo copiado empieza por el run y la página: un veredicto pegado dice qué juzgó.
+  function veredicto() {
+    var p1 = document.querySelector('input[name="p1"]:checked').value;
+    return cuerpo.dataset.run + ' · ' + cuerpo.dataset.pagina + ' v' + cuerpo.dataset.version + '\n' +
+      'P1 = ' + p1 + '\n' + document.getElementById('comentario').value;
+  }
+  function avisar(t) { var a = document.getElementById('aviso'); a.textContent = t; setTimeout(function () { a.textContent = ''; }, 2500); }
+  document.getElementById('copiar').addEventListener('click', function () {
+    var t = veredicto();
+    function aMano() {
+      var ta = document.createElement('textarea'); ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      ta.remove(); return ok;
+    }
+    var hecho = navigator.clipboard && navigator.clipboard.writeText
+      ? navigator.clipboard.writeText(t).then(function () { return true; }, function () { return aMano(); })
+      : Promise.resolve(aMano());
+    hecho.then(function (ok) { avisar(ok ? 'Copiado ✓' : 'No se pudo copiar'); });
+  });
+  document.getElementById('descargar').addEventListener('click', function () {
+    var ahora = new Date();
+    var dos = function (n) { return String(n).padStart(2, '0'); };
+    var sello = ahora.getFullYear() + '-' + dos(ahora.getMonth() + 1) + '-' + dos(ahora.getDate()) + '-' + dos(ahora.getHours()) + dos(ahora.getMinutes());
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([veredicto() + '\n'], { type: 'text/markdown' }));
+    a.download = 'veredicto-' + cuerpo.dataset.run + '-' + sello + '.md';
+    document.body.appendChild(a); a.click(); a.remove();
+    avisar('Descargado: ' + a.download);
+  });
+  // El contador vive en el almacenamiento del navegador; aislada, la página no lo tiene y lo dice.
+  var n = '—';
+  try {
+    var guardado = Number(localStorage.getItem('qa70:visitas') || '0') + 1;
+    localStorage.setItem('qa70:visitas', String(guardado));
+    n = String(guardado);
+  } catch (e) {
+    n = 'sin almacenamiento (aislada)';
+  }
+  document.getElementById('contador').textContent = n;
+})();
+</script>
+</body>
+</html>

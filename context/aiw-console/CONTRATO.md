@@ -712,6 +712,18 @@ añadidas por D-051: también ausentes en los tres roadmaps reales al enmendar �
 tabla de arriba conserva sus 9 claves medidas porque reproduce una medición
 fechada; el conjunto admitido vigente es 9 + estas 2.
 
+**`report_html` — OPCIONAL, añadida por el `#70` (D-076; aprobada por el operador el
+2026-10-20).** Dice **dónde vive el reporte HTML** que el hilo escribió para ese run: una
+lista **no vacía** de rutas **relativas a la raíz del proyecto**, con `/`, sin segmentos
+vacíos, `.` ni `..`, fuera de `.git/` y de `.project/`, y terminadas en `.html` (sin distinguir
+mayúsculas). Un run sin reporte HTML **omite la clave**: la lista vacía se
+rechaza. Una ruta repetida se rechaza. **El motor no comprueba que el fichero exista**,
+porque las páginas que un proyecto genera suelen estar fuera de Git; lo dice la consola,
+ruta por ruta. Se serializa **la última**, después de `progress`. **Ningún op del motor la
+escribe:** la escribe el hilo en su propio canónico, y la consola sólo la lee y la enlaza.
+El contrato entre hilos —cómo se abre la página, cómo vuelve el veredicto— vive en
+`docs/CONTRATO-REPORTE-HTML-DE-CADA-HILO-v1.md`. Al enmendar, ningún canónico real la lleva.
+
 ### 10.b Objetivos y fases NO llevan `status` ni contadores
 
 **Ningún campo derivable se almacena. En ningún nivel.** Ni `status` de objetivo,

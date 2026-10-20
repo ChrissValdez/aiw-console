@@ -1,0 +1,7 @@
+{
+  "registry_model": "project_registry_v1",
+  "title": "AIW Console — HTML reports QA (#70)",
+  "projects": [
+    { "key": "html-reports-qa", "root": "./proyecto" }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T22:24:39.125Z",
+  "generated_at": "2026-10-20T22:31:49.060Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
@@ -667,6 +667,10 @@
     {
       "path": "context/aiw-console/records/REPARACIONES-QA-DEL-REPORTE-CINCO-HALLAZGOS-DEL-OPERADOR.md",
       "mtime": "2026-08-13T21:31:05.219Z"
+    },
+    {
+      "path": "context/aiw-console/records/REPASO-COLA-72-78-2026-10-20.md",
+      "mtime": "2026-10-20T22:29:45.203Z"
     },
     {
       "path": "context/aiw-console/records/REPORTE-TALLER-65-2026-10-04.md",
@@ -3160,6 +3164,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-13T21:31:05.219Z"
+    },
+    {
+      "title": "Repaso de la cola `#72`–`#78` y la decisión del operador — 2026-10-20",
+      "path": "context/aiw-console/records/REPASO-COLA-72-78-2026-10-20.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-20T22:29:45.203Z"
     },
     {
       "title": "Reporte del taller del `#65` — transcrito verbatim",

@@ -1,27 +1,37 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T22:24:39.125Z",
+  "generated_at": "2026-10-20T22:31:49.060Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-20T22:23:10.121Z"
+      "mtime": "2026-10-20T22:25:21.058Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-20T22:24:39.088Z"
+      "mtime": "2026-10-20T22:31:49.035Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "4b26f1aa49aa3dbbe05a31c745cb929060d0cd8e",
+  "head": "b83a1092dbe8b6b7199c0027637904a9c422e16c",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 557,
+  "commit_total": 558,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "b83a109",
+      "full_sha": "b83a1092dbe8b6b7199c0027637904a9c422e16c",
+      "date": "2026-10-20T22:25:20+00:00",
+      "parents": "4b26f1a",
+      "subject": "#70 RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001 cierra con el contrato en borrador sin piloto, y #71 RUN-CONSOLE-CONTENT-BATCH-VIEW-001 se retira sin ejecutar",
+      "body": "Decision del operador, verbatim en context/aiw-console/records/VEREDICTO-70-2026-10-20.md (\"si a\namba scosas procede\"): cantu-lessons no adopta el contrato de reportes HTML porque su flujo actual\nle funciona; la capacidad construida se queda. El #71 se apoyaba en ese piloto y no tiene a quien\nservir: se retira como completed con closeout_result que lo declara, sin mover su queue_order.\nMedido antes: ningun run depende del #71 y no hay barreras. Por la consola (dos set-status, dry-run\ny apply con baseline). Verificado contra la copia previa: solo cambian status y closeout_result de\nlos dos; raiz identica; 78 runs, completed 71 / planned 7 / active 0; checkInvariants: 0 errores.\n.project/ re-emitido y comprobado. No se abre el siguiente: la cabina repasa antes los #72 a #78.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "4b26f1a",

@@ -6,6 +6,7 @@
     { "key": "cantu-studio", "root": "../../cantu-studio" },
     { "key": "cantu-quizzes-latex", "root": "../../cantu-quizzes-latex" },
     { "key": "cantu-lessons", "root": "../../cantu-lessons" },
-    { "key": "aiw", "root": "../../../aiw" }
+    { "key": "aiw", "root": "../../../aiw" },
+    { "key": "phd-p2-experiment", "root": "../../phd-p2-experiment" }
   ]
 }

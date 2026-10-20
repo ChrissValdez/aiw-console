@@ -29,6 +29,18 @@
 
 ---
 
+## Desde el 2026-10-19: Studio está en pausa (D-079)
+
+El operador pausó Cantu Studio mientras termináis el material del PAA. Mientras dure la pausa:
+
+- **Studio no abre trabajo nuevo.** Lo nuevo que necesitéis, hacedlo con un **Bloque HTML**, como ya hacéis.
+- **Podéis seguir escribiendo peticiones** en vuestro `PARA-CANTU-STUDIO-…`. La cabina las anota aquí como
+  **«para después de la pausa»** y no las construye hasta que el operador reabra Studio.
+- **La excepción es un fallo que rompa una lección ya publicada.** Eso sí se atiende: decidlo así en la petición.
+- **Dato medido que os sirve:** el Moodle real usa **MathJax 3.2.2** y conserva los guiones, así que `\textcolor` se ve
+  bien en el curso.
+- **La suite de Studio quedó en verde** (3000 / 3000) y todas vuestras peticiones hasta la 31 están cerradas.
+
 ## Desde el 2026-10-10: Studio está al día, y así se pide una pieza nueva
 
 **Decisión del operador** (record `context/cantu-studio/records/DECISION-2026-10-10-PIEZA-NUEVA-PRIMERO-BLOQUE-HTML-Y-LO-NO-VITAL-AL-ARCHIVO.md`).

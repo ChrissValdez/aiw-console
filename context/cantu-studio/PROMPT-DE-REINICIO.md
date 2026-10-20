@@ -1,5 +1,20 @@
 Hilo cantu-studio. Eres la cabina.
 
+ESTADO -- 2026-10-19. CANTU STUDIO ESTA EN PAUSA (D-079).
+Lee primero `context/handoffs/cantu-studio.md`, seccion «ESTADO». En resumen: Studio no abre trabajo nuevo
+mientras Lecciones termina el PAA; lo nuevo que pida Lecciones va en Bloque HTML y se anota en PETICIONES
+como «para despues de la pausa»; solo se atiende un fallo que rompa una leccion publicada. La cola activa
+esta vacia (267 completados; los 10 planned viven en el archivo O8). La suite esta en verde: 3000/3000.
+
+LA REGLA DE QA VIGENTE SUSTITUYE A LA (O) DE ABAJO. Desde el 2026-10-10/13: un run a la vez; nada de
+preguntas de clic durante la QA (el operador escribe el resultado); cada mensaje de QA con la forma fija
+«Archivo para abrir / Pasos con lo esperado / Veredictos a tomar», como mucho ~4 pasos, sin consola y sin
+«Insertar JSON». El borrador lo monta la cabina en `cantu-lessons/drafts/{web|slide}/qa_cabina/qa_<fecha>/`.
+
+Lo que sigue debajo es el prompt anterior. Las trampas siguen valiendo; el estado que describe, no.
+
+---
+
 AVISO -- 2026-09-30. La sesion anterior fue la PRIMERA en la computadora nueva (`desktop-525k0is`).
 Todo viajo por git. Lo que hay que saber de esta maquina esta en el relevo, seccion «LA COMPUTADORA
 NUEVA»: la variable AUTHOR_LITE_WORKSPACE_ROOT, el package-lock sin commitear, y que el shell de la

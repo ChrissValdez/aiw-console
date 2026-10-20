@@ -1,27 +1,48 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T23:12:03.568Z",
+  "generated_at": "2026-10-20T23:29:07.134Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-20T23:09:19.395Z"
+      "mtime": "2026-10-20T23:25:18.722Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-20T23:12:03.534Z"
+      "mtime": "2026-10-20T23:29:07.094Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "3366734ca2bba3d7cd159c01372c32a2a95e243b",
+  "head": "3d3fcdc97c9ac25154b375055d55bba7db471568",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 563,
+  "commit_total": 565,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "3d3fcdc",
+      "full_sha": "3d3fcdc97c9ac25154b375055d55bba7db471568",
+      "date": "2026-10-20T23:25:18+00:00",
+      "parents": "ab40771",
+      "subject": "#75 RUN-CONSOLE-STALE-TEXTS-REPAIR-002: los siete textos falsos que encontro el #74, corregidos sin cifras que envejezcan",
+      "body": "start-console.ps1 y start-console.README.md dejan de decir que el servidor\nes de solo lectura; CONTRATO.md deja de contar las claves del run y apunta a\nRUN_REQUIRED_FIELDS / RUN_OPTIONAL_FIELDS; serve.mjs cambia solo un\ncomentario; project-console/README.md y context/README.md dejan de afirmar\nrutas, ficheros y carpetas que no existen. Suite del taller 982/981/1 antes\ny despues. Reporte verbatim en\ncontext/aiw-console/records/REPORTE-TALLER-75-2026-10-20.md. Sin QA aun.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-002"
+    },
+    {
+      "branch": "main",
+      "sha": "ab40771",
+      "full_sha": "ab407713601737d3264bb90126c24ecb4eb1d4cd",
+      "date": "2026-10-20T23:13:16+00:00",
+      "parents": "3366734",
+      "subject": "#74 RUN-CONSOLE-STALE-TEXTS-REPAIR-001 cerrado; #75 RUN-CONSOLE-STALE-TEXTS-REPAIR-002 abierto",
+      "body": "#74 pasa a completed con su closeout: los cinco textos (779aa67), la\nampliacion a governance/no_claims.json bajo D-061 (3366734), QA \"pass\nprocede\", suite del taller 982/981/1 antes y despues. #75 pasa de planned\na active. .project/ re-emitido por serve.mjs; no_claims.json emitido ya\nlleva el motivo nuevo.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "3366734",

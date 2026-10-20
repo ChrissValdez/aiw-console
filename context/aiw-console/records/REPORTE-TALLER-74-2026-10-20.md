@@ -109,3 +109,63 @@ No hice nada con git, no cambié el status del run ni re-emití `.project/`. Apa
    falsos más, todos nombrados y sin tocar.
 6. **El «índice de memoria» que menciona** es la memoria de las sesiones de Claude Code, fuera del
    repo: el árbol no muestra ningún fichero suyo.
+
+---
+
+## Ampliación — el arreglo de `governance/no_claims.json`, transcrito verbatim
+
+Aprobada por el operador por escrito el 2026-10-20 («pass procede», `VEREDICTO-74-QA-2026-10-20.md`)
+bajo la D-061. El operador pegó el reporte del mismo taller en la cabina:
+
+````text
+Guarda cumplida (#74 `active`, enmienda leída). Busco qué tests leen el `governance/no_claims.json` real antes de tocarlo.
+Entrada editada; ahora compruebo que solo cambió esa entrada y vuelvo a correr los tests.
+He corregido el motivo de la entrada «verbatim fork» en `governance/no_claims.json`. La afirmación sigue `DISALLOWED` y ningún otro sitio del fichero ha cambiado. Corrí la suite completa antes y después y da lo mismo, pero ningún test lee ese fichero en vivo, así que el texto nuevo no lo comprueba ninguno. Nada está commiteado.
+Guarda: el run con `queue_order` 74 es `RUN-CONSOLE-STALE-TEXTS-REPAIR-001` y está `active`. La enmienda al final de su `full_description` está leída.
+Antes ([no_claims.json:45-48](https://claude.ai/epitaxy/projects/aiw-console/governance/no_claims.json:45)):
+
+```json
+"current_reason": "package.json still describes this repo that way; the audit measured that it is not. The description is stale text, not a fact about the repo.",
+"source_refs": [
+  "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md (Bloque A.4)",
+  "package.json"
+]
+
+```
+
+Después:
+
+```json
+"current_reason": "The audit compared the bytes and measured that they are not a verbatim copy: the console here was copied from Cantu's before Cantu retired its legacy roadmap, and the projector was added on top. The phrase survived only as stale self-description in package.json, which RUN-CONSOLE-STALE-TEXTS-REPAIR-001 removed.",
+"source_refs": [
+  "context/aiw-console/records/AUDIT-CONSOLE-O4-PHASE0.md (Bloque A.4)"
+]
+
+```
+
+* El motivo: se apoya en lo que midió la auditoría (Bloques A.3 y A.4), contado en pasado. No lleva cifras ni nada que dependa del estado de hoy; `package.json` solo aparece como historia, con el run que lo arregló.
+* `source_refs`: he quitado `package.json`. Ya no contiene la frase, así que citarlo como prueba engañaría. La prueba que queda es la auditoría, que copia la línea vieja de `package.json:6`.
+* Lo que no cambia: la afirmación y `allowed_only_if` siguen igual.
+
+Tests:
+
+* Suite completa (`node --test`): 982 tests, 981 pasan y 1 falla, igual antes y después. El fallo es el ya conocido de `tests/roadmap-engine.test.mjs`, que ahora salta en la línea 98 y no en la 93; no tiene relación con este cambio.
+* Los tests que leen algún `no_claims.json`: `registry-digest`, `projector-roadmap-tree`, `projector-cantu`, `shell-switch`, `emitted-artifacts-declaration`, `serve-project-emit` y `shell-two-real-projects`. Dan 94 de 94 antes y después.
+* Tests de otro run: no he ajustado ninguno.
+
+Lo que no pude verificar:
+
+* Ningún test lee el `governance/no_claims.json` en vivo: todos usan fixtures. Por eso que la suite siga igual no demuestra nada sobre el texto nuevo.
+* El fixture congelado `tests/fixtures/neighbours/aiw-console/.project/no_claims.json` conserva el motivo viejo. Lo dejé así, porque está congelado a propósito.
+* `.project/no_claims.json` seguirá con el motivo viejo hasta que la cabina lo re-emita.
+
+He añadido una línea con esta ampliación a la ficha de memoria del #74.
+````
+
+### Lo que la cabina mide — 2026-10-20 17:08 CST
+
+- El diff toca sólo esa entrada (el motivo y una referencia menos); el JSON sigue válido.
+- **El motivo nuevo dice la verdad según la auditoría:** su Bloque A.3 mide que la copia es una foto
+  anterior al retiro del roadmap legacy de Cantu, más el proyector nuevo, y su A.4 que «verbatim» era
+  falso respecto a los bytes.
+- `.project/no_claims.json` se re-emite con el cierre del run.

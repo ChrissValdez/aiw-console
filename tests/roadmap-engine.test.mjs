@@ -74,10 +74,10 @@ test.after(() => {
 
 // ---------------------------------------------------------------- 1. byte-exact round-trip
 
-// The two REAL canonical roadmaps, read-only. They differ in layout, in schema identifier and
-// in line endings (one LF, one CRLF) — measured, which is why serialize() takes the file's own
-// detected EOL. If either assertion ever fails, an edit of that file would churn bytes the
-// operation never touched.
+// The two REAL canonical roadmaps, read-only. They differ in layout and in schema identifier;
+// their line endings are whatever the checkout wrote (`* text=auto` since #49, with the EOL left
+// to each machine's git config), which is why serialize() takes the file's own detected EOL. If
+// this assertion ever fails, an edit of that file would churn bytes the operation never touched.
 const REAL_ROOTS = [REPO_ROOT, SIBLING_ROOT].filter((root) => detectRootLayout(root));
 
 test("round-trip: parse + serialize(detectEol) reproduces every real canonical byte-identical", () => {
@@ -90,12 +90,57 @@ test("round-trip: parse + serialize(detectEol) reproduces every real canonical b
   }
 });
 
-test("round-trip: the two real canonicals do NOT share a line-ending convention (why detectEol exists)", { skip: existsSync(SIBLING_ROOT) ? false : "sibling project not present" }, () => {
-  const eols = REAL_ROOTS.map((root) => {
-    const layout = detectRootLayout(root);
-    return core.detectEol(readFileSync(resolve(root, layout.paths.roadmap), "utf8"));
-  });
-  assert.deepEqual(new Set(eols).size, 2, "both real roadmaps now share one EOL; the parameter is no longer load-bearing (update the record, keep the test)");
+// Why detectEol exists, proven on in-memory strings rather than on the real canonicals. This
+// used to be a pin that the two real files DIFFER in EOL; #49 (.gitattributes `* text=auto`)
+// made them agree by design, and since then their EOL is a fact about the checkout, not about
+// the engine. No tripwire on real data is kept: `text=auto` leaves the working-tree EOL to each
+// machine's core.eol/core.autocrlf, so any assertion on which EOL the real files carry could
+// fail on a correct checkout, and the property the engine owes them — byte-exact round-trip
+// with their own EOL, whichever it is — is already asserted by the test above. The strings are
+// written out by hand (not produced by serialize) and kept out of tests/fixtures/ on purpose: a
+// committed fixture would itself be rewritten by `text=auto` on checkout.
+const LF_ROADMAP = [
+  "{",
+  '  "schema_version": "roadmap_tree_v1",',
+  '  "roadmap_id": "roadmap",',
+  '  "title": "EOL fixture",',
+  '  "objectives": [',
+  "    {",
+  '      "objective_id": "OF-1",',
+  '      "title": "Only objective",',
+  '      "phases": [',
+  "        {",
+  '          "phase_id": "OF-1.P1",',
+  '          "title": "Only phase",',
+  '          "runs": [',
+  "            {",
+  '              "run_id": "RUN-FIX-EOL-001",',
+  '              "queue_order": 1,',
+  '              "title": "Only run",',
+  '              "summary": "s",',
+  '              "full_description": "line one\\nline two",',
+  '              "status": "planned",',
+  '              "depends_on": []',
+  "            }",
+  "          ]",
+  "        }",
+  "      ]",
+  "    }",
+  "  ]",
+  "}",
+  ""
+].join("\n");
+const CRLF_ROADMAP = LF_ROADMAP.replaceAll("\n", "\r\n");
+
+test("round-trip: an LF roadmap and a CRLF roadmap each survive byte-identical, and only with their own EOL (why detectEol exists)", () => {
+  assert.equal(CRLF_ROADMAP.split("\r\n").length, LF_ROADMAP.split("\n").length, "the two strings differ only in line endings");
+  for (const [raw, own, wrong, label] of [[LF_ROADMAP, "\n", "\r\n", "lf"], [CRLF_ROADMAP, "\r\n", "\n", "crlf"]]) {
+    assert.equal(core.detectEol(raw), own, `${label}: detectEol must read the file's own convention`);
+    const tree = core.parseRoadmap(raw);
+    assert.equal(tree.objectives[0].phases[0].runs[0].full_description, "line one\nline two", `${label}: an escaped newline inside a value is data, not structure`);
+    assert.equal(core.serialize(tree, core.detectEol(raw)), raw, `${label}: parse + serialize(detectEol) must be byte-identical`);
+    assert.notEqual(core.serialize(tree, wrong), raw, `${label}: serializing with the other EOL must NOT reproduce the file — that is what detectEol prevents`);
+  }
 });
 
 // ---------------------------------------------------------------- 2. admission by shape

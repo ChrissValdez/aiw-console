@@ -49,3 +49,17 @@ mejor dime que mas podemos avanzar ? y pausar este run ?
 `planned` conservando la guía y lo medido, y se reanuda cuando el operador quiera hacer el
 recorrido. El corte (`#79`) sigue dependiendo de él, así que se ejecuta, como tarde, antes del
 corte. La guía envejece: al reanudar, sus diez hallazgos se vuelven a medir antes de recorrer.
+
+### Lo que se avanza mientras el `#77` espera — 2026-10-21
+
+La cabina propuso tres runs nuevos, delante del `#77`: **A** sustituir el test de finales de línea
+cuya premisa retiró `RUN-CONSOLE-LINE-ENDINGS-001`; **B** los textos falsos que el cierre de
+`RUN-CONSOLE-STALE-TEXTS-REPAIR-002` dejó nombrados; **C** (opcional, no recomendado) sacar del
+`#77` los hallazgos H4 y H2. Recomendación: A y B, en ese orden. El operador respondió:
+
+```text
+avanza con tu recomendacion
+```
+
+**Lectura de la cabina:** A y B, en ese orden; C no. Dados de alta como
+`RUN-CONSOLE-EOL-TEST-PREMISE-REPAIR-001` y `RUN-CONSOLE-STALE-TEXTS-REPAIR-003`.

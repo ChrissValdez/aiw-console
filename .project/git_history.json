@@ -1,27 +1,38 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T10:32:47.042Z",
+  "generated_at": "2026-10-21T10:37:27.305Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-21T01:20:58.858Z"
+      "mtime": "2026-10-21T10:33:33.418Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-21T10:32:47.012Z"
+      "mtime": "2026-10-21T10:37:27.275Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "04b0bff08ac40cb1bdfedf529500d4dff0404075",
+  "head": "42de1fd6f6f5f0f9c4b3505d96dd844e837750ef",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 570,
+  "commit_total": 571,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "42de1fd",
+      "full_sha": "42de1fd6f6f5f0f9c4b3505d96dd844e837750ef",
+      "date": "2026-10-21T10:33:33+00:00",
+      "parents": "04b0bff",
+      "subject": "#77 RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001: pausado por el operador tras el primer tiempo",
+      "body": "Palabras del operador verbatim en\ncontext/aiw-console/records/ENCUADRE-PARADA-77-2026-10-20.md. El #77 vuelve de\nactive a planned; su full_description gana un parrafo fechado: el primer\ntiempo (la guia) esta hecho, el recorrido espera sin fecha, el corte sigue\ndependiendo de el, y al reanudar se vuelve a medir la guia. .project/\nre-emitido.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001"
+    },
     {
       "branch": "main",
       "sha": "04b0bff",

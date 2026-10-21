@@ -2,7 +2,10 @@
 
 **Estado:** vigente. Emitido por el run piloto de `aiw-console`, «Classify
 aiw-console's live runs as the pilot, and rule on the procedure itself».
-**Alcance:** los tres proyectos.
+**Alcance:** todos los proyectos que lista el registro de la consola
+(`project-console/projects.json`). (Enmienda del 2026-10-21,
+`RUN-CONSOLE-STALE-TEXTS-REPAIR-003`: decía «los tres proyectos», y el registro ya
+lista más.)
 
 Este documento dice **CÓMO** se clasifica un run.
 `context/CLASIFICACION-DE-RUNS.md` dice **QUÉ SIGNIFICAN** los campos y es el

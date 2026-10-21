@@ -1735,12 +1735,20 @@ El detalle de run de la consola deriva su "Current stage" de este array (Anexo
 B.1) — para los runs sin `progress` no hay de dónde derivar, y eso sigue siendo
 correcto: ausencia es un estado, no un hueco.
 
-## 16. `category` (D-029) y `batch` (D-030) — reservados, nacen vacíos
+## 16. `category` (D-029) y `batch` (D-030) — reservadas; `batch`, admitida después por el `#48`
 
 Se reservan dos claves **OPCIONALES a nivel de run**: `category` y `batch`.
 Ausentes por defecto — reservarlas no escribe un byte en ningún repo. **NUNCA
-requeridas.** Un consumidor de este contrato que no las entienda las ignora; su
-ausencia no degrada nada y su presencia no obliga a nada.
+requeridas.** Su ausencia no degrada nada. Su presencia, en cambio, sólo pasa si el
+motor la admite: las claves que un run puede llevar las fija `RUN_ALLOWED_FIELDS`
+(`tools/roadmap/roadmap-core.mjs`), y el motor rechaza como campo inesperado
+cualquier clave que no esté ahí. `batch` está ahí desde el `#48`; `category`, no.
+(Corregido el 2026-10-21: el título las daba a las dos por reservadas y nacidas
+vacías, y este párrafo decía que un consumidor que no las entendiera las ignoraba.
+Lo primero caducó con el `#48`, que admitió `batch` entre las opcionales del run y no
+tiene decisión propia en `context/DECISIONES.md`; lo segundo no vale para el motor,
+que ya rechazaba por allowlist todo campo no admitido antes de D-051 —adjudicación
+`z`— y por eso rechaza `category`.)
 
 Qué función esperan: D-029 clasifica cada run por lo que pasa en su cierre —
 manual / semi-autónomo / autónomo — asignado por el humano al crear el run
@@ -1774,12 +1782,19 @@ AUDIT:617) y en aiw (la semilla Markdown se declara "futuro
 `.aiw/roadmap/roadmap.json` (v3)", AUDIT:646-650). Una clave introducida más tarde
 atraviesa los tres; una clave reservada hoy no toca ninguno.
 
-Sin enum y **sin forma fijada — ni siquiera el tipo**. Es el criterio de §14
-llevado a su caso límite: `closeout_result` fija "string" porque hay 9 ejemplares
-en disco que lo son; de `category` y `batch` hay CERO ejemplares, así que fijar hoy
-hasta el tipo sería inventar. Se reserva el nombre y la posición (clave opcional de
-run); tipo y forma los trae el primer emisor con su ejemplo. D-029 nombra tres
+`category` va sin enum y **sin forma fijada — ni siquiera el tipo**. Es el criterio
+de §14 llevado a su caso límite: `closeout_result` fija "string" porque hay 9
+ejemplares en disco que lo son; de `category` y `batch` la medición de esta capa halló
+CERO ejemplares (MEDICION:343-352), así que fijar hasta el tipo habría sido inventar.
+Se reserva el nombre y la posición (clave opcional de run); tipo y forma los trae el
+primer emisor con su ejemplo. Con `batch` eso ya pasó: el `#48` le dio tipo y forma
+—nombra un `batch_id` que la raíz del roadmap declara en `batches`, sobre el modelo de
+D-030—, y lo que se valida de ella vive en el motor (`tools/roadmap/roadmap-core.mjs`),
+no en este contrato; qué runs la llevan lo dice cada canónico. D-029 nombra tres
 categorías, pero congelarlas aquí como enum sería §3.b: schema sin emisor.
+(Corregido el 2026-10-21: este párrafo negaba a las dos hasta el tipo y contaba sus
+ejemplares en presente; para `batch` caducó con el `#48`, que no tiene decisión propia
+en `context/DECISIONES.md`: su puntero es el run.)
 
 ## 17. `taxonomy_model` es función del modelo transportado
 
@@ -2191,7 +2206,8 @@ orden de aparición.
 
 Ninguna decisión de la capa 2 queda abierta. Lo que la capa deja sin fijar —
 forma interna de `progress` (§15), estructura futura de `closeout_result` (§14),
-tipo y forma de `category`/`batch` (§16), claves de la declaración v3 en
+tipo y forma de `category`/`batch` (§16; los de `batch` los fijó después el `#48`),
+claves de la declaración v3 en
 `taxonomy_model` (§17), clave portadora del identificador del modelo dentro de
 `roadmap_tree` en el snapshot (§10.c), forma calificada de una entrada de
 `depends_on` (§10.d) — no está pendiente de deliberación: está deliberadamente

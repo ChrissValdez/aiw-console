@@ -1,9 +1,12 @@
 # CLASIFICACIÓN DE RUNS — especificación canónica
 
-> **Documento normativo y TRANSVERSAL a los tres proyectos** (`aiw`, `aiw-console`,
-> `cantu-studio`). Vive en `context/` y no en la carpeta de ningún proyecto porque
+> **Documento normativo y TRANSVERSAL a todos los proyectos**: los que lista el
+> registro de la consola (`project-console/projects.json`). Vive en `context/` y no en
+> la carpeta de ningún proyecto porque
 > **la clasificación es del RUN, no del repo que lo aloja**: un run se clasifica
-> igual viva en el roadmap que viva, y el mismo vocabulario rige en los tres.
+> igual viva en el roadmap que viva, y el mismo vocabulario rige en todos. (Enmendado
+> el 2026-10-21 por `RUN-CONSOLE-STALE-TEXTS-REPAIR-003`: nombraba «los tres
+> proyectos» `aiw`, `aiw-console` y `cantu-studio`, y el registro ya lista más.)
 >
 > **Es DOCTRINA, no estado.** Aquí no hay una sola cifra de cuántos runs existen,
 > cuántos están clasificados ni en qué status están: **el estado vive en el

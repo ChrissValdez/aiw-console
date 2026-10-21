@@ -1,6 +1,6 @@
-// Project Console — local server for N projects: read-only static serving plus EXACTLY FOUR
-// write routes (O4.P12 opened two; O4.P14 added the third; #57 — RUN-CONSOLE-VERDICT-POST-001 —
-// adds the fourth).
+// Project Console — local server for N projects: read-only static serving plus a closed set of
+// write routes. Each route is described in the write-routes block below; the ones the server
+// actually dispatches are the `*_SUFFIX` constants (ROADMAP_EDIT_SUFFIX and its siblings).
 //
 // Serves two namespaces:
 //

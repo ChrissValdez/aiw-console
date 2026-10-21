@@ -32,3 +32,20 @@ vamos con tu recomendacion
 
 **Lectura de la cabina:** sí a las tres cosas: la compuerta pasa al `#79`, el `#77` queda como
 auditoría de mejora, y el plan en tres tiempos.
+
+---
+
+## Pausa del `#77` — 2026-10-21
+
+Hecho el primer tiempo (guía en `GUIA-RECORRIDO-77-2026-10-20.md`, commit `04b0bff`), la cabina
+pidió el recorrido. El operador respondió:
+
+```text
+no quiero hacer ahora mismo una revision del ux general muchos detalles pendiente a revisar no urgentes
+mejor dime que mas podemos avanzar ? y pausar este run ?
+```
+
+**Lectura de la cabina:** el segundo tiempo (el recorrido) se aplaza sin fecha; el `#77` vuelve a
+`planned` conservando la guía y lo medido, y se reanuda cuando el operador quiera hacer el
+recorrido. El corte (`#79`) sigue dependiendo de él, así que se ejecuta, como tarde, antes del
+corte. La guía envejece: al reanudar, sus diez hallazgos se vuelven a medir antes de recorrer.

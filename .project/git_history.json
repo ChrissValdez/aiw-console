@@ -1,27 +1,38 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T01:20:02.930Z",
+  "generated_at": "2026-10-21T10:32:47.042Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-21T01:17:53.481Z"
+      "mtime": "2026-10-21T01:20:58.858Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-21T00:53:28.764Z"
+      "mtime": "2026-10-21T10:32:47.012Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "e6662b3b8fdd8008a9db9569ff4879b17fcea2ac",
+  "head": "04b0bff08ac40cb1bdfedf529500d4dff0404075",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 569,
+  "commit_total": 570,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "04b0bff",
+      "full_sha": "04b0bff08ac40cb1bdfedf529500d4dff0404075",
+      "date": "2026-10-21T01:20:58+00:00",
+      "parents": "e6662b3",
+      "subject": "#77 RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001: primer tiempo -- la guia de recorrido y los diez hallazgos vueltos a medir",
+      "body": "El taller escribio context/aiw-console/records/GUIA-RECORRIDO-77-2026-10-20.md:\ncomo arrancar, los botones que escriben, 18 superficies en orden de\nrecorrido, los diez hallazgos medidos contra el codigo de hoy (ocho siguen,\nH3 resuelto, H10 no visible con los datos de hoy) y el formato de respuesta.\nReporte verbatim en REPORTE-TALLER-77-2026-10-20.md. .project/ re-emitido para\nque la guia aparezca en la busqueda de documentos de la consola. Canonico sin\ncambios.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001"
+    },
     {
       "branch": "main",
       "sha": "e6662b3",

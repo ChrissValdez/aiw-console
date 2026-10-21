@@ -40,3 +40,20 @@ fuera de eso a grandes largos se ve bien
   muestra»: se trata como **ampliación bajo D-061** (lo pide el operador por escrito, cae sobre la
   superficie que la QA ejercitó, no cambia la identidad del run —pulido visual de la consola— y el
   texto del run se enmienda en el mismo encargo).
+
+---
+
+## Segunda QA — la ampliación del Portfolio (`e61e36a`)
+
+Se le pidió mirar una pantalla —`_scratch\pulido-ui-78\ampliacion\comparacion-portfolio.html` o el
+Portfolio en vivo— y contestar `pass / revertir`. Antes se le dijo lo que se pierde: la palabra de
+estado de cada objetivo no se ve en ninguna parte, y el recuento de veredictos pendientes entre
+proyectos desaparece.
+
+### Lo que dijo el operador
+
+```text
+pass
+```
+
+**Lectura de la cabina:** la ampliación pasa; no se revierte nada. El `#78` cierra.

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T13:00:37.747Z",
+  "generated_at": "2026-10-21T20:29:33.438Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
@@ -685,6 +685,10 @@
       "mtime": "2026-10-20T22:29:45.203Z"
     },
     {
+      "path": "context/aiw-console/records/REPORTE-AMPLIACION-78-2026-10-21.md",
+      "mtime": "2026-10-21T13:57:13.000Z"
+    },
+    {
       "path": "context/aiw-console/records/REPORTE-TALLER-65-2026-10-04.md",
       "mtime": "2026-10-05T23:08:48.993Z"
     },
@@ -882,7 +886,7 @@
     },
     {
       "path": "context/aiw-console/records/VEREDICTO-78-QA-2026-10-21.md",
-      "mtime": "2026-10-21T13:00:32.304Z"
+      "mtime": "2026-10-21T20:29:29.713Z"
     },
     {
       "path": "context/aiw-console/records/VEREDICTO-QA-DEL-60-Y-CIERRE.md",
@@ -3250,6 +3254,14 @@
       "freshness": "2026-10-20T22:29:45.203Z"
     },
     {
+      "title": "Reporte del taller — ampliación del `#78` bajo D-061 (Project Portfolio)",
+      "path": "context/aiw-console/records/REPORTE-AMPLIACION-78-2026-10-21.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-21T13:57:13.000Z"
+    },
+    {
       "title": "Reporte del taller del `#65` — transcrito verbatim",
       "path": "context/aiw-console/records/REPORTE-TALLER-65-2026-10-04.md",
       "nav_tier": "evidence",
@@ -3647,7 +3659,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-10-21T13:00:32.304Z"
+      "freshness": "2026-10-21T20:29:29.713Z"
     },
     {
       "title": "`#60` `RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001` — la QA del operador y el cierre",

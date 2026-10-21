@@ -1,27 +1,60 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T13:00:37.747Z",
+  "generated_at": "2026-10-21T20:29:33.438Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-21T12:40:17.896Z"
+      "mtime": "2026-10-21T20:27:41.087Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-21T13:00:37.654Z"
+      "mtime": "2026-10-21T20:29:33.391Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "a54b0a2540bf6afc1535ec8f1a98654f0d7814f9",
+  "head": "96e1bf6f012b54a83043ac026a27eab39ea18d4b",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 579,
+  "commit_total": 582,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "96e1bf6",
+      "full_sha": "96e1bf6f012b54a83043ac026a27eab39ea18d4b",
+      "date": "2026-10-21T20:27:40+00:00",
+      "parents": "e61e36a",
+      "subject": "#78 RUN-CONSOLE-UI-POLISH-001: reporte de la ampliacion a records",
+      "body": "Copia byte a byte de _scratch/pulido-ui-78/ampliacion/REPORTE-AMPLIACION-78-2026-10-21.md,\nseparada de e61e36a para que revertir la ampliacion no arrastre el reporte.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-UI-POLISH-001"
+    },
+    {
+      "branch": "main",
+      "sha": "e61e36a",
+      "full_sha": "e61e36acc7f5c5455a8d38db3c0ec67fa418b69d",
+      "date": "2026-10-21T20:27:06+00:00",
+      "parents": "d7c18ab",
+      "subject": "#78 RUN-CONSOLE-UI-POLISH-001: ampliacion -- Project Portfolio sin la lista de objetivos ni el panel \"Awaiting a verdict\" (commit propio, revertible solo)",
+      "body": "Los dos elementos salen del render (no se ocultan): el bloque de objetivos de\nla tarjeta en project-shell.js y el contenedor #shell-verdicts de index.html,\ncon la lectura de reports_index.json que solo los alimentaba y sus reglas\nCSS. Las funciones del panel se quedan porque las usan tests. Repulido del\nPortfolio solo en CSS: tarjetas de altura igual por fila. Ningun test\neditado; suite del taller 982/982/0 antes y despues. Revertir este commit\ndevuelve los dos elementos sin tocar el pulido de 8992b6d.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-UI-POLISH-001"
+    },
+    {
+      "branch": "main",
+      "sha": "d7c18ab",
+      "full_sha": "d7c18abe56244c56a2b36e8c7e69d4d433d69cd6",
+      "date": "2026-10-21T13:02:23+00:00",
+      "parents": "a54b0a2",
+      "subject": "#78 RUN-CONSOLE-UI-POLISH-001: QA visual del operador y alcance ampliado bajo D-061 (Project Portfolio)",
+      "body": "Veredicto verbatim en context/aiw-console/records/VEREDICTO-78-QA-2026-10-21.md:\nel pulido pasa en todo; en Project Portfolio el operador pide quitar la lista\nde objetivos de cada tarjeta y el panel \"Awaiting a verdict\". El\nfull_description del #78 gana la enmienda fechada. .project/ re-emitido.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-UI-POLISH-001"
+    },
     {
       "branch": "main",
       "sha": "a54b0a2",

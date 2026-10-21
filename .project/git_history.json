@@ -1,27 +1,59 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T11:45:02.916Z",
+  "generated_at": "2026-10-21T13:00:37.747Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-21T11:37:57.748Z"
+      "mtime": "2026-10-21T12:40:17.896Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-21T11:45:02.875Z"
+      "mtime": "2026-10-21T13:00:37.654Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "a5bc6a44b4156682cc521ecda8e64b04cc3ea309",
+  "head": "a54b0a2540bf6afc1535ec8f1a98654f0d7814f9",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 576,
+  "commit_total": 579,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "a54b0a2",
+      "full_sha": "a54b0a2540bf6afc1535ec8f1a98654f0d7814f9",
+      "date": "2026-10-21T12:40:17+00:00",
+      "parents": "8992b6d",
+      "subject": "#78 RUN-CONSOLE-UI-POLISH-001: reporte del taller a records",
+      "body": "Copia byte a byte del reporte que el taller escribio en\n_scratch/pulido-ui-78/REPORTE-TALLER-78-2026-10-21.md (fuera del repo y\ndesechable), para que quede versionado. Las capturas y comparacion.html se\nquedan en _scratch. Commit separado del pulido para que revertir 8992b6d no\narrastre el reporte.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-UI-POLISH-001"
+    },
+    {
+      "branch": "main",
+      "sha": "8992b6d",
+      "full_sha": "8992b6dbbcc64655352f8807c1e4551ab18a401d",
+      "date": "2026-10-21T12:39:38+00:00",
+      "parents": "c2be3dd",
+      "subject": "#78 RUN-CONSOLE-UI-POLISH-001: pulido visual de la consola (commit propio, revertible entero)",
+      "body": "Solo presentacion: un bloque [#78] VISUAL POLISH al final de\nproject-console.css, dos bloques cortos en doc-side-reader.css y\nrun-report-surface.css, y una linea de project-console.js que envuelve en dos\nspan el \"run closed\" del progreso. Sin cambios de comportamiento, datos,\nrutas, servidor, motor ni tests; textos de etiquetas intactos. Resuelve H1\n(contador como pildora) y H8 (filtro fijo en Docs y en el lector) de la\nauditoria pausada; H7 renunciado porque lo fijan tests. Suite del taller\n982/982/0 antes y despues. Para deshacerlo entero: git revert de este commit.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-UI-POLISH-001"
+    },
+    {
+      "branch": "main",
+      "sha": "c2be3dd",
+      "full_sha": "c2be3dd9758cad13bda26e9ac0a729d5a0b68d13",
+      "date": "2026-10-21T11:45:38+00:00",
+      "parents": "a5bc6a4",
+      "subject": "#78 RUN-CONSOLE-UI-POLISH-001: alta y apertura del pulido visual de la consola",
+      "body": "Peticion del operador verbatim en\ncontext/aiw-console/records/PETICION-PULIDO-UI-2026-10-21.md. Insertado tras\nRUN-CONSOLE-STALE-TEXTS-REPAIR-003 en la fase \"The console as a product\",\nwork_class UX_DESIGN, y abierto. Desplazados: el retirado\nRUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001 78->79, la auditoria 79->80, el\nmovimiento del canonico de Cantu 80->81 y el corte 81->82. Este commit es la\nlinea base limpia desde la que trabaja el taller. .project/ re-emitido.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "a5bc6a4",

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T11:45:02.916Z",
+  "generated_at": "2026-10-21T13:00:37.747Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
@@ -729,6 +729,10 @@
       "mtime": "2026-10-21T11:31:34.914Z"
     },
     {
+      "path": "context/aiw-console/records/REPORTE-TALLER-78-2026-10-21.md",
+      "mtime": "2026-10-21T12:22:30.000Z"
+    },
+    {
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "mtime": "2026-08-08T09:13:17.719Z"
     },
@@ -875,6 +879,10 @@
     {
       "path": "context/aiw-console/records/VEREDICTO-75-QA-2026-10-20.md",
       "mtime": "2026-10-21T00:48:17.777Z"
+    },
+    {
+      "path": "context/aiw-console/records/VEREDICTO-78-QA-2026-10-21.md",
+      "mtime": "2026-10-21T13:00:32.304Z"
     },
     {
       "path": "context/aiw-console/records/VEREDICTO-QA-DEL-60-Y-CIERRE.md",
@@ -3330,6 +3338,14 @@
       "freshness": "2026-10-21T11:31:34.914Z"
     },
     {
+      "title": "Reporte del taller — `#78` `RUN-CONSOLE-UI-POLISH-001` — 2026-10-21",
+      "path": "context/aiw-console/records/REPORTE-TALLER-78-2026-10-21.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-21T12:22:30.000Z"
+    },
+    {
       "title": "RESTITUCIÓN DE LAS 17 ARISTAS DE `#47` Y RE-ENCUADRE A AUDITORÍA AL CIERRE — CANTU",
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
       "nav_tier": "evidence",
@@ -3624,6 +3640,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-10-21T00:48:17.777Z"
+    },
+    {
+      "title": "Veredicto del `#78` — 2026-10-21",
+      "path": "context/aiw-console/records/VEREDICTO-78-QA-2026-10-21.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-21T13:00:32.304Z"
     },
     {
       "title": "`#60` `RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001` — la QA del operador y el cierre",

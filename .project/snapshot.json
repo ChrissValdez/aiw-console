@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T23:29:07.134Z",
+  "generated_at": "2026-10-21T00:48:21.402Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-20T23:29:07.094Z"
+      "mtime": "2026-10-21T00:48:21.377Z"
     },
     {
       "path": "package.json",
@@ -43,9 +43,9 @@
       "path": ".project/snapshot.json"
     }
   ],
-  "operational_status": "active",
+  "operational_status": "idle",
   "project_summary": "AIW Console Roadmap: 2 objectives, 23 phases, 79 runs.",
-  "current_status_summary": "Active run: RUN-CONSOLE-STALE-TEXTS-REPAIR-002 (O4/O4.P18, queue 75).",
+  "current_status_summary": "No active run; 76 of 79 runs completed.",
   "roadmap_tree": {
     "model": "roadmap_tree_v1",
     "roadmap_id": "roadmap",
@@ -1164,9 +1164,10 @@
                 "title": "Repair the false texts the stale-texts run found",
                 "summary": "The workshop of the stale-texts run found more texts in this repo that describe it falsely — the console launcher claiming to be read-only first among them — and left them untouched; this run repairs them, without figures that age.",
                 "full_description": "ORIGIN: the workshop of RUN-CONSOLE-STALE-TEXTS-REPAIR-001 (#74) repaired its five texts and found more false ones, named with path and line and left untouched; its report is verbatim in context/aiw-console/records/REPORTE-TALLER-74-2026-10-20.md. The operator approved this run on 2026-10-20 ('pass procede'; context/aiw-console/records/VEREDICTO-74-QA-2026-10-20.md).\n\nTHE TEXTS, measured by that workshop on 2026-10-20 — VERIFY EACH ONE AGAINST DISK BEFORE TOUCHING IT, and leave alone any that is no longer false: (1) start-console.ps1 lines 10-12 and 210, and start-console.README.md lines 34-38, say the console is strictly read-only, has no edit endpoint and writes nothing; project-console/serve.mjs accepts POST on four routes (roadmap edit, history sync, project emit, verdict write). This is the most misleading of all, because it is the first text whoever starts the console reads. (2) context/aiw-console/CONTRATO.md line 713 ('9 + estas 2') and line 1228 ('el run admite 11 claves') do not match RUN_OPTIONAL_FIELDS in tools/roadmap/roadmap-core.mjs. (3) project-console/serve.mjs line 807, '(today: the aiw kernel)': the same expired premise #74 removed from the README, here in a code comment. (4) project-console/README.md line 123, 'the server gained the two routes above': there are four. (5) context/README.md line 65 lists handoffs/orquestacion.md, which does not exist. (6) context/README.md line 86 says every project folder holds 'su roadmap': false for aiw-console, and for aiw the file named at line 89 is marked RETIRED. (7) context/README.md lines 39-46, the structure tree, omits cantu-quizzes-latex/ and the root files: more incomplete than false.\n\nHOW: correct a false statement by REMOVING it or replacing it with a true one that does not age — no counts of runs, routes, keys or projects; say where something lives, not how many there are. A stale premise inside a CLOSED run is corrected by appending a dated note, never by rewriting.\n\nOUT OF SCOPE: renaming project-console/assets/doc-side-reader.js, whose name still says 'side reader' though it is a modal since #63 — renaming code touches tests and imports, and it goes to the deep audit; any run's full_description; roadmap/ and .project/. New false texts found on the way are NAMED, not fixed.\n\nSCOPE AMENDED 2026-10-20 BY THE OPERATOR, in writing ('pass procedamos'; context/aiw-console/records/VEREDICTO-75-QA-2026-10-20.md), under D-061: the QA passed the seven repairs, and this run also repairs the false texts its workshop found on the same files the QA read — (a) start-console.cmd line 2, which still calls the console read-only, the same falsehood as text (1); (b) project-console/README.md line 34, 'all six' artifacts; (c) line 55, that every other method answers 405, while a POST to .git gets 403; (d) lines 1 and 23, the count of write routes; (e) context/README.md lines 91-96, the per-folder file lists, which are incomplete; (f) context/aiw-console/CONTRATO.md lines 709-710, which call batch reserved and absent; (g) the two corrections this run made to CONTRATO.md point to this run instead of to the decisions that made the figure stale, as CONTRATO.md line 46 requires: they must point to the decisions. Same HOW as above: no figures that age. Not added, named and left untouched: context/CLASIFICACION-DE-RUNS.md line 3 and context/PROCEDIMIENTO-DE-CLASIFICACION.md ('the three projects'), and the header of project-console/serve.mjs lines 1-3 ('EXACTLY FOUR').",
-                "status": "active",
+                "status": "completed",
                 "depends_on": [],
-                "work_class": "DOCUMENTATION"
+                "work_class": "DOCUMENTATION",
+                "closeout_result": "CERRADO 2026-10-20. Los siete textos del encargo corregidos en 3d3fcdc sin cifras que envejezcan (start-console.ps1, start-console.README.md, context/aiw-console/CONTRATO.md, project-console/serve.mjs solo un comentario, project-console/README.md, context/README.md); QA del operador 'pass procedamos'. Ampliado bajo D-061 en e9fefa1 (start-console.cmd, project-console/README.md, context/README.md, CONTRATO.md: batch deja de ser reserva y las dos notas de correccion apuntan a las decisiones y runs que anadieron opcionales tras D-051); QA del operador 'pass'. Las dos notas de CONTRATO.md no tienen QA humana: las verifico la cabina contra DECISIONES.md y RUN_OPTIONAL_FIELDS. Suite del taller 982 / 981 / 1 antes y despues en las dos rondas (el fallo conocido de finales de linea). HUECO DE LA CABINA, corregido hacia adelante aqui: CONTRATO.md linea 55 pide que la decision que caduca un texto del contrato anote esa correccion; D-076 y D-080, escritas por esta cabina, no lo hicieron, y DECISIONES.md es append-only, asi que no se reescriben. QUEDAN NOMBRADOS, SIN TOCAR (la pregunta de ampliar otra vez no tuvo respuesta explicita; la cabina aplico su recomendacion de no ampliar): CONTRATO.md seccion 16 (titulo 'reservados, nacen vacios' y 'ni siquiera el tipo' de batch, falsos desde el #48; 'un consumidor que no las entienda las ignora', cuando el motor rechaza category); start-console.cmd linea 6 ('all documentation is in the .ps1'); context/CLASIFICACION-DE-RUNS.md linea 3 y context/PROCEDIMIENTO-DE-CLASIFICACION.md ('los tres proyectos'); la cabecera de project-console/serve.mjs lineas 1-3 ('EXACTLY FOUR'). Reportes y veredictos verbatim en context/aiw-console/records/REPORTE-TALLER-75-2026-10-20.md y VEREDICTO-75-QA-2026-10-20.md."
               }
             ]
           },
@@ -1266,20 +1267,8 @@
           "completed",
           "blocked"
         ],
-        "total": 1,
-        "runs": [
-          {
-            "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-002",
-            "queue_order": 75,
-            "status": "active",
-            "title": "Repair the false texts the stale-texts run found",
-            "objective_id": "O4",
-            "phase_id": "O4.P18",
-            "stored_fields": [
-              "work_class"
-            ]
-          }
-        ]
+        "total": 0,
+        "runs": []
       }
     ]
   },

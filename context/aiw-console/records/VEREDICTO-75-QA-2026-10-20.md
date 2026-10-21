@@ -25,3 +25,24 @@ no cambia la identidad del run, y el texto del run se enmienda en el mismo encar
 ampliación, nombrados y sin tocar: `context/CLASIFICACION-DE-RUNS.md:3`,
 `context/PROCEDIMIENTO-DE-CLASIFICACION.md` («los tres proyectos») y la cabecera de
 `project-console/serve.mjs:1-3` («EXACTLY FOUR»).
+
+---
+
+## Segunda QA — la ampliación (`e9fefa1`)
+
+Se le pidió: (1) `start-console.cmd:2` (paso de parada); (2) `project-console/README.md` líneas
+1, 23, 34 y 57; (3) `context/README.md` desde la línea 91; y decidir si los últimos textos falsos
+nombrados por el taller (`CONTRATO.md` §16 dos veces, `start-console.cmd:6`) se dejaban nombrados o
+se ampliaba otra vez. Recomendación de la cabina: dejarlos nombrados. Las dos notas de corrección
+de `CONTRATO.md` (punteros a decisión) se declararon sin QA humana: verificadas por la cabina
+contra `DECISIONES.md` y `RUN_OPTIONAL_FIELDS`.
+
+### Lo que dijo el operador
+
+```text
+pass
+```
+
+**Lectura de la cabina:** los tres pasos pasan. La pregunta sobre los restantes **no recibió
+respuesta explícita**; la cabina aplica su recomendación —dejarlos nombrados, sin ampliar— y lo
+declara como lectura suya, no como palabra del operador.

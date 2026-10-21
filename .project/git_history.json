@@ -1,27 +1,49 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T23:29:07.134Z",
+  "generated_at": "2026-10-21T00:48:21.402Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-20T23:25:18.722Z"
+      "mtime": "2026-10-20T23:58:16.611Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-20T23:29:07.094Z"
+      "mtime": "2026-10-21T00:48:21.377Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "3d3fcdc97c9ac25154b375055d55bba7db471568",
+  "head": "e9fefa156069d3bb730afd0401bb926f01774fca",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 565,
+  "commit_total": 567,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "e9fefa1",
+      "full_sha": "e9fefa156069d3bb730afd0401bb926f01774fca",
+      "date": "2026-10-20T23:58:16+00:00",
+      "parents": "d768a54",
+      "subject": "#75 RUN-CONSOLE-STALE-TEXTS-REPAIR-002: la ampliacion -- los textos falsos de los mismos ficheros, y los punteros a decision del CONTRATO",
+      "body": "start-console.cmd deja de llamar de solo lectura a la consola;\nproject-console/README.md deja de contar artefactos y rutas y dice el 403 de\n.git; context/README.md deja de enumerar ficheros por carpeta; CONTRATO.md\ndeja de llamar reservada a batch y sus dos notas de correccion apuntan a las\ndecisiones y runs que anadieron opcionales tras D-051. Suite del taller\n982/981/1 antes y despues. Reporte verbatim anadido a\ncontext/aiw-console/records/REPORTE-TALLER-75-2026-10-20.md. Sin QA aun.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-002"
+    },
+    {
+      "branch": "main",
+      "sha": "d768a54",
+      "full_sha": "d768a5469b5b8a5051f406e1692d3d6e7cd3109e",
+      "date": "2026-10-20T23:29:58+00:00",
+      "parents": "3d3fcdc",
+      "subject": "#75 RUN-CONSOLE-STALE-TEXTS-REPAIR-002: QA del operador (\"pass procedamos\") y alcance ampliado bajo D-061",
+      "body": "Veredicto verbatim en context/aiw-console/records/VEREDICTO-75-QA-2026-10-20.md.\nEl full_description del #75 gana una enmienda fechada: el run repara tambien\nlos textos falsos que su taller encontro en los mismos ficheros que la QA\nleyo (start-console.cmd:2, project-console/README.md:1/23/34/55,\ncontext/README.md:91-96, CONTRATO.md:709-710 y los punteros a decision de sus\ndos correcciones). .project/ re-emitido por serve.mjs.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-002"
+    },
     {
       "branch": "main",
       "sha": "3d3fcdc",

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-20T23:29:07.134Z",
+  "generated_at": "2026-10-21T00:48:21.402Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
@@ -30,11 +30,11 @@
     },
     {
       "path": "context/README.md",
-      "mtime": "2026-10-20T23:18:02.004Z"
+      "mtime": "2026-10-20T23:35:11.177Z"
     },
     {
       "path": "context/aiw-console/CONTRATO.md",
-      "mtime": "2026-10-20T23:17:35.263Z"
+      "mtime": "2026-10-20T23:35:30.322Z"
     },
     {
       "path": "context/aiw-console/records/ACABADO-DOCS-Y-EMISOR-GIT-HISTORY.md",
@@ -702,7 +702,7 @@
     },
     {
       "path": "context/aiw-console/records/REPORTE-TALLER-75-2026-10-20.md",
-      "mtime": "2026-10-20T23:24:49.229Z"
+      "mtime": "2026-10-20T23:57:54.547Z"
     },
     {
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
@@ -850,7 +850,7 @@
     },
     {
       "path": "context/aiw-console/records/VEREDICTO-75-QA-2026-10-20.md",
-      "mtime": "2026-10-20T23:28:48.857Z"
+      "mtime": "2026-10-21T00:48:17.777Z"
     },
     {
       "path": "context/aiw-console/records/VEREDICTO-QA-DEL-60-Y-CIERRE.md",
@@ -1806,7 +1806,7 @@
     },
     {
       "path": "project-console/README.md",
-      "mtime": "2026-10-20T23:17:37.839Z"
+      "mtime": "2026-10-20T23:34:57.172Z"
     },
     {
       "path": "start-console.README.md",
@@ -1911,7 +1911,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context",
-      "freshness": "2026-10-20T23:18:02.004Z"
+      "freshness": "2026-10-20T23:35:11.177Z"
     },
     {
       "title": "CONTRATO DE LA CARPETA — Capa 1: el archivo requerido",
@@ -1919,7 +1919,7 @@
       "nav_tier": "primary",
       "default_visible": true,
       "ia_bucket": "context/aiw-console",
-      "freshness": "2026-10-20T23:17:35.263Z"
+      "freshness": "2026-10-20T23:35:30.322Z"
     },
     {
       "title": "ACABADO VISUAL de Docs y EMISOR de `git_history` — cierre del port de la consola",
@@ -3255,7 +3255,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-10-20T23:24:49.229Z"
+      "freshness": "2026-10-20T23:57:54.547Z"
     },
     {
       "title": "RESTITUCIÓN DE LAS 17 ARISTAS DE `#47` Y RE-ENCUADRE A AUDITORÍA AL CIERRE — CANTU",
@@ -3551,7 +3551,7 @@
       "nav_tier": "evidence",
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
-      "freshness": "2026-10-20T23:28:48.857Z"
+      "freshness": "2026-10-21T00:48:17.777Z"
     },
     {
       "title": "`#60` `RUN-CONSOLE-REPORT-ENVELOPE-RENDER-001` — la QA del operador y el cierre",
@@ -5458,12 +5458,12 @@
       "freshness": "2026-08-08T09:13:17.812Z"
     },
     {
-      "title": "Project Console (transplanted, multi-project; read-only plus four write routes)",
+      "title": "Project Console (transplanted, multi-project; read-only except its write routes)",
       "path": "project-console/README.md",
       "nav_tier": "secondary",
       "default_visible": false,
       "ia_bucket": "project-console",
-      "freshness": "2026-10-20T23:17:37.839Z"
+      "freshness": "2026-10-20T23:34:57.172Z"
     },
     {
       "title": "start-console (.cmd / .ps1)",

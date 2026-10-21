@@ -1,27 +1,48 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T10:37:27.305Z",
+  "generated_at": "2026-10-21T11:00:29.471Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-21T10:33:33.418Z"
+      "mtime": "2026-10-21T10:59:49.023Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-21T10:37:27.275Z"
+      "mtime": "2026-10-21T11:00:29.438Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "42de1fd6f6f5f0f9c4b3505d96dd844e837750ef",
+  "head": "632b298b863eec332b2cd8289d06f6cb23698520",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 571,
+  "commit_total": 573,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "632b298",
+      "full_sha": "632b298b863eec332b2cd8289d06f6cb23698520",
+      "date": "2026-10-21T10:59:48+00:00",
+      "parents": "0f7138d",
+      "subject": "#76 RUN-CONSOLE-EOL-TEST-PREMISE-REPAIR-001: el test de finales de linea deja de exigir que los canonicos reales difieran",
+      "body": "tests/roadmap-engine.test.mjs: el pin \"the two real canonicals do NOT share a\nline-ending convention\" se sustituye por un test sobre cadenas en memoria (un\nroadmap LF y su copia CRLF: detectEol, round-trip byte a byte, y el EOL\nequivocado no reproduce). Sin alarma sobre datos reales, con el motivo\nescrito. Comentario del round-trip real corregido. Suite del taller 982/981/1\nantes, 982/982/0 despues. Reporte verbatim en\ncontext/aiw-console/records/REPORTE-TALLER-76-2026-10-21.md.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-EOL-TEST-PREMISE-REPAIR-001"
+    },
+    {
+      "branch": "main",
+      "sha": "0f7138d",
+      "full_sha": "0f7138d39dbaf74a6eafd06d4cbcbbb6086d02f5",
+      "date": "2026-10-21T10:38:31+00:00",
+      "parents": "42de1fd",
+      "subject": "#76 RUN-CONSOLE-EOL-TEST-PREMISE-REPAIR-001 y #77 RUN-CONSOLE-STALE-TEXTS-REPAIR-003: alta, y #76 abierto",
+      "body": "Aprobados por el operador (\"avanza con tu recomendacion\", verbatim en\ncontext/aiw-console/records/ENCUADRE-PARADA-77-2026-10-20.md). Insertados tras\nRUN-CONSOLE-STALE-TEXTS-REPAIR-002, en la fase \"Cockpit: classification,\ndigest, and the truth of the texts\". Desplazados: el retirado\nRUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001 76->78, la auditoria 77->79, el\nmovimiento del canonico de Cantu 78->80 y el corte 79->81. work_class\nFUNCTIONALITY y DOCUMENTATION. #76 pasa a active. .project/ re-emitido.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "42de1fd",

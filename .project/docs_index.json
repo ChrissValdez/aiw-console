@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T11:37:11.922Z",
+  "generated_at": "2026-10-21T11:45:02.916Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
@@ -519,6 +519,10 @@
     {
       "path": "context/aiw-console/records/PARTICION-IMPLEMENTACION-Y-DOCUMENTACION-CANTU.md",
       "mtime": "2026-08-08T09:13:17.687Z"
+    },
+    {
+      "path": "context/aiw-console/records/PETICION-PULIDO-UI-2026-10-21.md",
+      "mtime": "2026-10-21T11:42:48.288Z"
     },
     {
       "path": "context/aiw-console/records/PETICIONES-ABIERTAS-AL-EMISOR-2026-08-15.md",
@@ -2908,6 +2912,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-08-08T09:13:17.687Z"
+    },
+    {
+      "title": "Petición del operador: pulido visual de la consola — 2026-10-21",
+      "path": "context/aiw-console/records/PETICION-PULIDO-UI-2026-10-21.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-21T11:42:48.288Z"
     },
     {
       "title": "Peticiones abiertas al emisor `cantu-quizzes-latex` — 2026-08-15",

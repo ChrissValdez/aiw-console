@@ -1,27 +1,38 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T11:37:11.922Z",
+  "generated_at": "2026-10-21T11:45:02.916Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-21T11:31:55.474Z"
+      "mtime": "2026-10-21T11:37:57.748Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-21T11:37:11.884Z"
+      "mtime": "2026-10-21T11:45:02.875Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "7e7bf81727df668b2ddfa4d7a9110eb3bb6b7e80",
+  "head": "a5bc6a44b4156682cc521ecda8e64b04cc3ea309",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 575,
+  "commit_total": 576,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "a5bc6a4",
+      "full_sha": "a5bc6a44b4156682cc521ecda8e64b04cc3ea309",
+      "date": "2026-10-21T11:37:57+00:00",
+      "parents": "7e7bf81",
+      "subject": "#77 RUN-CONSOLE-STALE-TEXTS-REPAIR-003 cerrado sin QA humana; regla R-05 del operador",
+      "body": "R-05 verbatim en context/aiw-console/records/REGLAS-DE-OPERACION-DEL-OPERADOR.md:\nun run sin superficie visual se cierra sin QA humana; la QA se pide solo para\nlo que se mira en pantalla o para un punto critico, acotada. #77 pasa a\ncompleted bajo esa regla, con lo que verifico la cabina y los textos que\nquedan nombrados sin tocar. .project/ re-emitido.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-003"
+    },
     {
       "branch": "main",
       "sha": "7e7bf81",

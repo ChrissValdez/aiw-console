@@ -6227,29 +6227,6 @@ details[open] > summary > .v3-caret {
   text-align: right;
 }
 
-.portfolio-objectives { display: flex; flex-direction: column; }
-
-.portfolio-objective-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 5px 2px;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.portfolio-objective-row:last-child { border-bottom: none; }
-
-.portfolio-objective-title {
-  font-size: 13px;
-  color: var(--text-secondary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.portfolio-objective-status-none { color: var(--text-faint); }
-
 .portfolio-next {
   display: flex;
   flex-direction: column;
@@ -7030,10 +7007,6 @@ details[open] > summary > .v3-caret {
   padding-top: 10px;
 }
 
-.portfolio-objective-row {
-  padding: 6px 2px;
-}
-
 .portfolio-stat-label {
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -7058,6 +7031,47 @@ details[open] > summary > .v3-caret {
     flex: none;
     margin-top: 0;
     padding-top: 0;
+  }
+}
+
+/* [#78, amended under D-061] With the objectives list and the "Awaiting a verdict" panel gone,
+   what set a card's height was the "Current status" sentence: its column was the narrowest
+   (≈300 px at 1440) and a long run id broke it into three or four lines, while the middle
+   column kept the width the objectives list had needed. Measured at 1440: 193 / 193 / 193 /
+   235 / 214 / 193 px. Three rules:
+   - the board is a one-column grid whose rows are all 1fr, so every card takes the height of
+     the tallest one and the list reads as one even column of cards;
+   - the width moves from the middle column to the status one (the middle keeps room for four
+     status cells side by side: 4 × 96 px + gaps + padding = 460 px);
+   - the Roadmap line pins to the foot of its column, so it ends on the same line as
+     "Open Project" in the column beside it.
+   Below 1300 px the status row wraps under the other two; there the extra height goes to that
+   last row only, so the line between the rows falls at the same height in every card. */
+.portfolio-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: 1fr;
+}
+
+.portfolio-project {
+  grid-template-columns: minmax(200px, 0.65fr) minmax(460px, 1.25fr) minmax(300px, 1.1fr);
+}
+
+.portfolio-roadmap {
+  margin-top: auto;
+}
+
+@media (max-width: 1300px) {
+  .portfolio-project {
+    grid-template-columns: minmax(200px, 0.7fr) minmax(340px, 1.3fr);
+    grid-template-rows: auto 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .portfolio-project {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
   }
 }
 

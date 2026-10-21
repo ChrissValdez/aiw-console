@@ -153,11 +153,9 @@
   margin-top: 12px;
 }
 
-/* The Portfolio's count. A count and never a list of links: the door into a report is the run. */
-.portfolio-verdicts:empty {
-  display: none;
-}
-
+/* The cross-project count. A count and never a list of links: the door into a report is the run.
+   [#78, amended under D-061] No page paints it any more (the operator removed it from the
+   Portfolio); its builder stays in the mount because the suite still exercises it. */
 .rrs-verdict-panel {
   margin-bottom: 20px;
   border: 1px solid var(--border-default);

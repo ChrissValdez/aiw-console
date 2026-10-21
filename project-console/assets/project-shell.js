@@ -224,6 +224,8 @@ export function snapshotUrlForKey(key) {
 }
 
 // [#53] The derived reports index of one project, at the route its emitter declares.
+// [#78, amended under D-061] The shell no longer fetches it: the only reader was the Portfolio's
+// "Awaiting a verdict" panel, which the operator removed. Kept because the suite still pins it.
 export function reportsIndexUrlForKey(key) {
   return `${projectBaseForKey(key)}.project/reports_index.json`;
 }
@@ -239,6 +241,11 @@ export function reportsIndexUrlForKey(key) {
 //
 // NOT LOADED IS NOT ZERO. With the mount absent this returns "" and the Portfolio simply shows
 // no such panel — it never prints a total nothing measured.
+//
+// [#78, amended under D-061] The Portfolio no longer paints this panel: the operator found it a
+// notification that added nothing there. A run's verdict state is read in that run's detail
+// ("Run report"). This seam and the filter below stay because the suite still exercises them;
+// nothing in the page calls them.
 export function verdictPanelHtml(indexEntries, api) {
   const scope = api || (typeof window !== "undefined" ? window : globalThis);
   if (!scope) return "";
@@ -301,12 +308,9 @@ function portfolioOkCard(record) {
       <div class="portfolio-stat-value">${count}</div>
     </div>
   `).join("");
-  const objectiveRows = summary.objectives.map((objective) => `
-    <div class="portfolio-objective-row">
-      <span class="portfolio-objective-title">${escapeShellHtml(objective.title)}</span>
-      ${objective.status ? `<span class="badge badge-gray portfolio-objective-status">${escapeShellHtml(objective.status)}</span>` : '<span class="portfolio-objective-status-none">&mdash;</span>'}
-    </div>
-  `).join("");
+  // [#78, amended under D-061] The card no longer lists the project's objectives: the operator
+  // found that the list made some cards needlessly long. `summary.objectives` is still computed
+  // (the model is unchanged); the objectives themselves are read in the project's Roadmap.
   return `
     <section class="portfolio-project" data-portfolio-key="${escapeShellHtml(record.key)}">
       <div class="portfolio-main">
@@ -322,10 +326,6 @@ function portfolioOkCard(record) {
         <div class="portfolio-roadmap">
           <div class="portfolio-stat-label">Roadmap</div>
           <div class="portfolio-roadmap-value">${summary.counts.objectives} objectives &middot; ${summary.counts.phases} phases &middot; ${summary.counts.runs} runs</div>
-        </div>
-        <div class="portfolio-objectives">
-          <div class="portfolio-section-label">Objectives</div>
-          ${objectiveRows || '<div class="portfolio-objective-row"><span class="portfolio-objective-title">none</span></div>'}
         </div>
       </div>
       <div class="portfolio-next">
@@ -385,10 +385,7 @@ const shellState = {
   records: [],
   recordsByKey: new Map(),
   activeKey: null,
-  view: "portfolio",
-  // [#53] One parsed reports index per registered project, or null where none could be read.
-  // Boot-time and read-only: the shell counts them and never opens a report from here.
-  reportIndexes: []
+  view: "portfolio"
 };
 
 function rendererGlobals() {
@@ -432,26 +429,6 @@ async function fetchSnapshotRecord(entry) {
   return record;
 }
 
-// One project's reports index, fetched the same fail-soft way its snapshot is: an unreadable or
-// absent index yields `index: null`, which the aggregation reports as "no reports index" — a
-// different sentence from "nothing awaiting a verdict", and the difference is the point.
-async function fetchReportsIndexEntry(record) {
-  const entry = { key: record.key, label: record.summary?.label || record.key, index: null };
-  let response;
-  try {
-    response = await fetch(reportsIndexUrlForKey(record.key), { cache: "no-store" });
-  } catch {
-    return entry;
-  }
-  if (!response.ok) return entry;
-  try {
-    entry.index = await response.json();
-  } catch {
-    entry.index = null;
-  }
-  return entry;
-}
-
 function shellRegistryNotice() {
   const registryPath = "project-console/projects.json";
   if (shellState.registryFailed) {
@@ -475,8 +452,6 @@ function renderShellChrome() {
   if (board) {
     board.innerHTML = shellRegistryNotice() + portfolioBoardHtml(shellState.records);
   }
-  const verdicts = shellById("shell-verdicts");
-  if (verdicts) verdicts.innerHTML = verdictPanelHtml(projectsWithReportsDir(shellState.reportIndexes));
   const brand = shellById("shell-brand-title");
   if (brand) brand.textContent = shellState.registryTitle || "Project Console";
   const portfolioTitle = shellById("shell-portfolio-title");
@@ -581,11 +556,6 @@ async function shellBoot() {
   const records = await Promise.all(projects.map((entry) => fetchSnapshotRecord(entry)));
   shellState.records = records;
   shellState.recordsByKey = new Map(records.map((record) => [record.key, record]));
-  // [#53] One more small file per project, at boot, for the same reason the snapshot is fetched
-  // at boot: the Portfolio states what is waiting for a person across every registered project,
-  // and it cannot state it from a project it has not read. It is an index, not a report — no
-  // report is fetched here, and none can be opened from this view.
-  shellState.reportIndexes = await Promise.all(records.map((record) => fetchReportsIndexEntry(record)));
   renderShellChrome();
   shellShowView("portfolio");
 }

@@ -1,10 +1,11 @@
 # Relevo — hilo `aiw-console`
 
-**Fecha:** 2026-09-25 · **Sustituye** al relevo del 2026-09-02.
-**Escrito para una MUDANZA DE COMPUTADORA.** El §7 dice qué viaja por git y qué no.
+**Fecha:** 2026-10-21 · **Sustituye** al relevo del 2026-09-25 (mudanza de computadora, `#64` activo).
+Esta sesión corrió en la **máquina nueva**, del 2026-10-04 al 2026-10-21.
 
-Aquella sesión cerró con **70 runs** y **cero activos**. Ésta deja **71 runs** y **el `#64`
-ACTIVO**, entregado y verde, **esperando una sola cosa: el veredicto visual del operador**.
+Aquella sesión cerró con **71 runs** y el `#64` activo. Ésta deja **82 runs** y **cero activos**:
+**la cola no tiene nada ejecutable**. Lo que queda espera a una decisión del operador (la auditoría
+pausada) o a que Cantu Studio salga de su pausa (D-079).
 
 La sustancia va DENTRO. Los punteros a records son procedencia, no respuesta.
 
@@ -12,283 +13,172 @@ La sustancia va DENTRO. Los punteros a records son procedencia, no respuesta.
 
 ## 1. DÓNDE ESTAMOS
 
-**UN run activo, el `#64`, y su trabajo está TERMINADO y COMMITEADO.** Lo único que falta
-es que el operador mire dos pantallas.
+`projects/aiw-console/roadmap/roadmap.json` · md5 **`3e088141bcb1b7196f0540b8b10a1067`** (2026-10-21,
+tras cerrar el `#78`) · **82 runs** · `completed 79 · planned 3 · active 0` · densidad `1..82` ·
+`checkInvariants` sin errores. Árbol de trabajo **limpio**. Cero `index.lock`.
 
-`projects/aiw-console/roadmap/roadmap.json` · md5 **`b681760b39d6d081e1f2301e1e2c2642`**
-**71 runs** · `completed 63 · planned 7 · active 1` · densidad `1..71` · ids únicos.
-Cero candados `index.lock` en ningún repo. Árbol de trabajo **limpio**.
+**Suite: 982 / 982 / 0** (2026-10-21, dada por el taller del `#78`). **Es la primera vez en semanas
+que sale limpia**: el fallo «conocido» de finales de línea lo retiró el `#76`. Desde ahora **cualquier
+fallo es nuevo** y no se esconde detrás del de siempre.
 
-| | run | estado |
-|---|---|---|
-| **#64** | `RUN-CONSOLE-SHARED-RENDERER-QUOTES-001` | **ACTIVE** · entregado, 841 tests verdes · **falta SU QA** |
-| #65 | `RUN-CONSOLE-PARIDAD-RENDER-CANTU-001` | una de las dos compuertas del cutover · **es QA del operador** |
-| #66 | `RUN-CONSOLE-UI-UX-001` | espera al #65 |
-| #67 | `RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001` | ⚠ escribe en `cantu-studio`, muy activo |
-| #68 | `RUN-CONSOLE-CORTE-RETIRO-LOCAL-001` | el cutover |
-| #69 | `RUN-CONSOLE-STALE-TEXTS-REPAIR-001` | textos falsos |
-| #70 | `RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001` | las cuatro ops de contenedor |
-| #71 | `RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001` | la auditoría visual · **el operador decidió que va la última** |
+| # | run | estado | por qué espera |
+|---|---|---|---|
+| 80 | `RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001` «Deep visual audit of the console, led by the operator» | planned | **PAUSADO por el operador** tras su primer tiempo. Se reanuda cuando él quiera recorrer la consola |
+| 81 | `RUN-CONSOLE-CANTU-CANONICAL-OUT-OF-AIW-001` | planned | Cantu Studio pausado (D-079). Escribe en `cantu-studio` |
+| 82 | `RUN-CONSOLE-CORTE-RETIRO-LOCAL-001` | planned | depende de los dos de arriba. **Su primer paso es ahora la compuerta** («¿algo es PEOR que en la consola local de Cantu?»), que salió del `#80` |
 
-**Todos los `#N` de esta tabla son COORDENADAS del 2026-09-25.** El `#64` nació en esta
-sesión y empujó siete runs una posición. Derívalos del canónico, no de aquí.
+**Los `#N` son COORDENADAS del 2026-10-21.** Esta sesión insertó cinco runs y la auditoría pasó de
+`#77` a `#80` en dos días. Derívalos del canónico.
 
-**Siguen sin existir, de sesiones anteriores:** el catálogo de criterios del piloto de
-quizzes (por la excepción de piloto de la D-069) y el ancla externa de nivel PAA.
+### Al reanudar el `#80`
 
----
-
-## 2. EL `#64` — qué es y qué falta exactamente
-
-**El defecto, medido en código el 2026-09-02:** el renderizador compartido de Markdown
-convertía **cada línea que empieza por `>` en su propio `<blockquote>`**. Una cita de N
-líneas se pintaba como N cajas; un `>` solo daba una caja vacía; y una negrita que cruzaba
-dos líneas nunca cerraba dentro de su caja, así que los `**` salían literales.
-
-**Por qué nadie lo había visto:** los documentos de `cantu-studio` sólo usan la cita de UNA
-línea de su cabecera de estado, y una cita de una línea se ve igual rota que entera. **Una
-capacidad que nunca se ejercitó no estaba probada, aunque el verde dijera que sí.**
-
-**Es código COMPARTIDO** — lo alcanzan la pestaña de Docs (`renderDocBodyContent`,
-`project-console.js:2797`) y el lector modal (`scope.renderDocBodyContent`,
-`doc-side-reader.js:123`). Dos superficies, una sola función.
-
-### Lo entregado, en dos tandas
-
-| commit | qué |
-|---|---|
-| `b2fdd8a` | abre el run: lo crea en `O4.P17` en la posición 64 y lo pone `active` |
-| `7af9fcf` | **el agrupado**: N líneas consecutivas → UN `<blockquote>` |
-| `20d75fb` | el record de la decisión del operador sobre citas anidadas y listas |
-| `4305d85` | **el anidamiento**: una cita dentro de otra → **caja dentro de caja** |
-
-**Medido por la cabina, no transcrito:** suite completa **841 tests, 841 pass, 0 fail,
-EXIT 0**, salida a fichero y nunca canalizada. El fichero `tests/docs-markdown-quotes.test.mjs`
-pasó de 28 a **46 tests**. Barrido del corpus por el taller: **3 196 → 723** cajas pintadas,
-**282 → 0** cajas vacías, **360 → 7** citas con `**` literal.
-
-### ⚠ LO ÚNICO QUE FALTA: la QA visual, y son cuatro pasos
-
-La consola normal basta con nombrarla (`start-console.cmd`, R-01). No es superficie de
-fixtures.
-
-1. **PARADA.** Proyecto `aiw-console` → **Docs** → `CONTENEDORES SIN RUNS — MANDA EL CÓDIGO`.
-   **Esperado:** la cita larga es **una sola caja** de 42 líneas, con los huecos dentro y las
-   negritas cerradas. Si sigue partida, es del run y paramos.
-2. El **mismo documento en el lector modal**. **Esperado:** pintura idéntica al paso 1. Si
-   difiere, el arreglo no llegó a las dos superficies.
-3. Un documento con **cita dentro de cita** — `HALLAZGOS-67-SUPERFICIE-DEL-REPORTE.md`.
-   **Esperado:** una caja **dentro** de otra, y **ni un `>` visible como texto**.
-4. Listas, tablas y bloques de código de esos documentos **como siempre**.
-
-**Tres cosas que va a ver y NO son regresiones — nombradas antes de que mire:**
-- En `MEDICION-O4.md`, el bloque de 62 líneas **no** se pinta como cita. Correcto: va dentro
-  de un cercado. Ver §5.
-- Quedan **7 `**` literales** en todo el corpus. Son de `inline()`, no de las citas:
-  `**negrita con *cursiva* dentro**` falla igual en un párrafo. Pre-existente.
-- El **validador de estado sale 1**, con 25 fallos por `.aiw/…` ausente — carpeta que este
-  repo no tiene. El taller comprobó que falla **idéntico** antes y después. Ajeno.
-
-**Lo que el taller NO pudo verificar:** ninguna captura de pantalla; el panel del navegador
-no estaba desplegado. Verificó ambas superficies leyendo el DOM, que es legítimo pero **no
-es mirar**. Todo el juicio visual es del operador, sin red.
+Su primer tiempo está hecho: `context/aiw-console/records/GUIA-RECORRIDO-77-2026-10-20.md` (18
+superficies, cómo llegar a cada una, los diez hallazgos vueltos a medir). **Pero la guía es una
+medición fechada y el `#78` ya cambió la consola**: resolvió H1 y H8, quitó del Portfolio dos
+superficies (la lista de objetivos y el panel «Awaiting a verdict») y renunció a H7. **Antes de que
+el operador recorra nada, un taller vuelve a medir la guía.** Lo dice el propio texto del run
+(párrafo «PAUSED 2026-10-21»).
 
 ---
 
-## 3. LAS DECISIONES DE ESTA SESIÓN
+## 2. LO QUE HIZO ESTA SESIÓN
 
-A disco en `context/aiw-console/records/DECISION-CITAS-ANIDADAS-Y-LISTAS-EN-CITA.md`.
+| # | run | clase | en una línea |
+|---|---|---|---|
+| 64 | `RUN-CONSOLE-SHARED-RENDERER-QUOTES-001` | — | citas multilínea; QA visual cerrada |
+| 65 | `RUN-CONSOLE-DOCS-TITLE-SEARCH-001` | — | buscar títulos de documentos en Docs y en el lector |
+| 66 | `RUN-CONSOLE-ROADMAP-DEFAULT-TAB-001` | — | los proyectos abren en Roadmap (D-075) |
+| 67 | `RUN-CONSOLE-PROJECT-CONFIG-BUTTON-001` | — | care budget y nota de sin-clasificar detrás de un botón de configuración (D-075) |
+| 68 | `RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-CONTRACT-001` | DOCUMENTATION | `work_class` entra a la clasificación; la relación entre runs se deriva (D-080) |
+| 69 | `RUN-CONSOLE-CLASSIFICATION-CLASS-RELATION-UI-001` | UX_DESIGN | la consola muestra clase y relación |
+| 70 | `RUN-CONSOLE-THREAD-HTML-REPORTS-CONTRACT-001` | FUNCTIONALITY | el reporte HTML de cada hilo, fase 1 (D-076). **El contrato sigue en BORRADOR, sin piloto**, y el operador decidió que CL no lo adopta |
+| 71 | `RUN-CONSOLE-CONTENT-BATCH-VIEW-001` | UX_DESIGN | un lote de contenido se lee como unidad |
+| 72, 73 | paridad y UI/UX | — | **RETIRADOS sin ejecutar** (repaso de cola); absorbidos por la auditoría |
+| 74, 75, 77 | `RUN-CONSOLE-STALE-TEXTS-REPAIR-001/002/003` | DOCUMENTATION | textos que describían el repo en falso; el lanzador ya no dice ser de sólo lectura |
+| 76 | `RUN-CONSOLE-EOL-TEST-PREMISE-REPAIR-001` | FUNCTIONALITY | el test de finales de línea caducado, sustituido: suite limpia |
+| 78 | `RUN-CONSOLE-UI-POLISH-001` | UX_DESIGN | **pulido visual** (Fable 5.1, Max) en `8992b6d`; **ampliación** del Portfolio en `e61e36a`. Cada uno se revierte solo |
+| 79 | `RUN-CANTU-ROADMAP-PHASE-OBJECTIVE-OPS-001` | FUNCTIONALITY | **RETIRADO sin ejecutar**: la cabina ya hace esas operaciones |
 
-- **Cita dentro de cita → CAJA DENTRO DE CAJA.** Un solo caso en el repo hoy, pero es **el
-  patrón con el que se guarda todo veredicto del operador**: sus palabras verbatim dentro
-  del bloque que escribió la cabina. Un `>` colgando delante de su voz es ruido.
-  **Descartado** fundir las dos citas: borraría la distinción entre las dos voces.
-- **Lista dentro de cita → SE QUEDA LITERAL.** El `>` sobrante es ruido; el `-` sobrante es
-  una **viñeta pobre pero honesta**. Y parsearla reabriría la interacción entre el agrupado
-  de citas y el corte de listas, que es la parada que el taller midió como **no disparada**
-  y dejó clavada con goldens.
+### Lo que el `#78` quitó, y no está en ninguna otra parte
 
-**Ninguna decisión numerada nueva.** La última en `context/DECISIONES.md` sigue siendo la
-**D-073**, y **el número siguiente se MIDE, no se supone**: en este repo escriben cuatro
-hilos y ya pasó una vez que las D-070..D-072 existían sin que este relevo lo supiera.
+- La **palabra de estado de cada objetivo** (COMPLETED / ACTIVE / PLANNED): el segmento «Roadmap»
+  sólo muestra recuentos y porcentaje.
+- El **recuento de veredictos pendientes entre proyectos**. El de cada run sigue en su detalle,
+  sección «Run report», píldora «no verdict yet».
 
----
-
-## 4. TRES LECCIONES DE MÉTODO, y las tres costaron
-
-### 4a · Una parada que se resuelve con una pregunta que el operador no puede contestar es una parada GASTADA
-
-El ticket del `#64` mandó parar y preguntar si aparecían citas anidadas o listas dentro de
-cita. El taller midió bien, paró como debía y preguntó — **en su vocabulario**: `>>`, parseo,
-regla. El operador respondió lo que se le recomendó **para que el taller pudiera seguir**.
-Verbatim suyo, seis días después: **«no entendí realmente la pregunta»**.
-
-El taller registró «texto literal en ambas» como veredicto del operador y lo clavó con tests.
-**La cabina lo transcribió al mensaje de un commit actuando sobre el relato del taller, sin
-tener las palabras del operador.** Lo declaró en el mismo turno, y aquí queda escrito.
-
-**Lo que funcionó la segunda vez:** enseñarle **los casos reales de sus propios records** y
-**un dibujo de cómo se vería cada opción**. Decidió en un turno.
-
-### 4b · Una sonda que no distingue cita de bloque cercado miente
-
-El ticket afirmó «la cita más larga son 62 líneas en `MEDICION-O4.md`». **Falso.** Ese bloque
-empieza con una valla de código dentro de la cita, y el renderizador **parte el texto por las
-vallas antes de mirar líneas**, así que nunca fue una cita para él. La mayor real son **42
-líneas**, en `CONTENEDORES-SIN-RUNS-MANDA-EL-CODIGO.md`. **Lo encontró el taller, no la
-cabina**, y está clavado con su propio test. La cifra de 227 ficheros sí se sostuvo al
-rehacer la sonda — era correcta **por accidente, no por método**.
-
-### 4c · El trabajo del taller estuvo SIETE DÍAS en el árbol sin que nadie lo supiera
-
-El taller del anidamiento entregó el **2026-09-08 a las 12:09**, minutos después de recibir
-su ticket. **Nadie volvió a mirar el árbol hasta el 2026-09-15**, y se descubrió por otro
-motivo. La cabina no lo comprobó al retomar y el operador no lo reportó.
-
-**Regla que sale de aquí, y va al arranque:** cuando un hilo se retoma después de días, **lo
-primero es un `git status` acotado del repo**, no leer el relevo. El relevo dice lo que se
-sabía; el árbol dice lo que hay.
+Se le dijo al operador antes de su «pass».
 
 ---
 
-## 5. SEMILLAS PARA EL `#69` (textos falsos), no su inventario
+## 3. DECISIONES
 
-De sesiones anteriores, siguen vivas:
-- **El fichero se llama `doc-side-reader.js` y el lector lateral ya no existe.** Lo retiró
-  el `#63`. Un nombre que miente.
-- **La copia `CASO-1` dejó de seguir al piloto.** Le faltan el bloque `compilation` y la
-  verificación que el emisor añadió el 2026-08-15. Su identidad declarada —«copia byte a
-  byte»— hoy es falsa.
+Escritas por esta cabina en `context/DECISIONES.md`:
 
----
+- **D-074** — AIW resuelve trabajo **secuencial**, y se prueba en un **proyecto de prueba**, no en uno
+  vivo. **No tiene run todavía.**
+- **D-075** — la consola muestra lo que ya existe; la capa AIW va detrás de configuración; los
+  proyectos abren en Roadmap.
+- **D-076** — cada hilo hace su propio reporte HTML y la consola lo enlaza.
+- **D-080** — `work_class` entra a la clasificación; la relación entre runs se deriva.
 
-## 6. LO QUE ESTÁ ABIERTO CON `cantu-quizzes-latex`
+D-077 a D-079 las escribió el hilo `cantu-studio`. **D-079 pausa Cantu Studio**, y por eso esperan el
+`#81` y el `#82`. **Mide el siguiente número antes de escribir una D**: escriben varios hilos.
 
-`context/aiw-console/records/PETICIONES-ABIERTAS-AL-EMISOR-2026-08-15.md`, más una cuarta:
-
-1. **Que commiteen la adopción del sobre.** Su árbol la tiene sin versionar y nuestros
-   fixtures copian ese disco.
-2. **`QZ-R-06`** — dicen citarla y hay cero apariciones en el reporte. Sin confirmar.
-3. **`verification.command` lleva una nota pegada dentro** — el paréntesis es una
-   precondición, y el comando así no se puede copiar. Hay casa: `verification_note`.
-4. **El ítem `declared_gap` no se entiende.** Verbatim del operador: «no me deja claro qué
-   error fue, qué decisión se tomó, o qué necesita de mí».
-
-**El patrón, y ya son DOS casos medidos:** campos que prometen dato y llevan prosa dentro.
-Es material del contrato de la cita.
+**Hueco propio, declarado en el cierre del `#75`:** `CONTRATO.md:55` pide que la decisión que hace
+caducar un texto del contrato anote esa corrección. D-076 y D-080 no lo hicieron; `DECISIONES.md` es
+append-only y no se reescriben. La próxima D que caduque un texto del CONTRATO lo anota al escribirse.
 
 ---
 
-## 7. ⚠ LA MUDANZA DE COMPUTADORA — qué viaja y qué NO
-
-**Medido el 2026-09-25 a las 15:0x CST.**
-
-### Lo que viaja por git, en cuanto se haga `push`
-
-| repo | sin publicar |
-|---|---|
-| `projects/aiw-console` | **3** |
-| `aiw` | **1** |
-| `projects/cantu-studio` | **1** |
-| `Acervo` · `cantu-lessons` · `cantu-quizzes-latex` | 0 — al día |
-
-**Todo el `#64` YA ESTÁ PUBLICADO**: los cuatro commits del §2 están en `origin/main`. Lo
-que falta por publicar en este repo son tres commits **de otros hilos**.
-
-### Lo que NO viaja por git, y hay que decidir
-
-- **`aiw/sandbox` NO TIENE REMOTO.** `origin/main` no resuelve. Ese repo **no se pushea y no
-  se clona**: si se quiere en la otra máquina, va por USB o no llega.
-- **`_scratch/` — 792 entradas**, y la mayoría **no son de este hilo**: hay material vivo de
-  septiembre de otros hilos (`ALG-*`, `CAP-*`, `CABINA-*`, `ANEXO-*`). **De este hilo no
-  queda nada ahí**: su único fichero fue un payload que la cabina ya borró.
-- **`_backups/` — 56 entradas.** El respaldo del `#64`
-  (`roadmap-aiw-console-ANTES-DE-CREAR-QUOTES-20260902-1950.json`) **sigue vivo porque su run
-  sigue abierto**; se borra al cerrar.
-- **`PHD/`** — no es repo. No viaja.
-- **`.claude/launch.json`** en la raíz del workspace: el taller le añadió una entrada
-  `aiw-console` que se engancha al 8788 en vez de levantar un segundo servidor. **Ese fichero
-  ahora lo tocan dos hilos** — el otro es `cantu-studio`. No está versionado.
-
-### Lo que la máquina nueva NO necesita
-
-`aiw` tenía 15 ficheros «modificados» en `git status` y **cero cambios reales**: todo eran
-finales de línea. **`aiw` no tiene `.gitattributes` y su `status` ENGAÑA** — se pasa siempre
-por `git diff --ignore-cr-at-eol --numstat`. No hay nada que rescatar ahí.
-
----
-
-## 8. LA MÁQUINA Y GIT
-
-**Modo COWORK CONECTADO.** La ruta de montaje **se deriva cada sesión**.
-
-**El borrado hay que PEDIRLO** con la herramienta cuando `rm` dé `Operation not permitted`;
-se habilita por carpeta y persiste en la sesión.
-
-**⚠ EL SANDBOX SE CAYÓ ENTRE EL 12 Y EL 15 DE SEPTIEMBRE.** El error decía
-`Plan9 share "c" which is not mounted`, con un aviso que lo atribuía a una actualización de
-Windows del 8 de septiembre. **Dos cosas medidas que acotan esa atribución:** el 8 de
-septiembre a mediodía el bash funcionaba con normalidad en este mismo disco, y **durante la
-caída las herramientas de fichero (Read, Write, Grep) seguían funcionando**. O sea: no era
-que Claude no alcanzara los ficheros, era que **el sandbox Linux** no los alcanzaba. El 15
-volvió solo. **Si vuelve a pasar: se puede leer y escribir, pero no correr git ni node**, así
-que no se puede commitear ni verificar suites.
-
-**No hay CLI de roadmap en este repo.** La escritura del canónico va **por la consola**:
-levantar `project-console/serve.mjs` en un puerto libre y hacer POST a
-`/projects/aiw-console/__project-console/roadmap/edit` — dry-run primero, luego apply con el
-baseline del dry-run. **`serve.mjs` re-emite los siete artefactos de `.project/` él solo.**
-
-**Medido el 2026-09-02, y ahorra media hora:** el flag `--port` **no se respeta**; el puerto
-se pasa por la variable `PC_PORT`. Y el op de inserción es `insert`, anclado con `after`,
-que **hereda la fase del run ancla** — así se elige posición y fase en una sola operación.
-
-**`insert` pide exactamente uno de `after` / `before` / `endOfPhase`, y el `depends_on` viaja
-por `run_id`**, así que desplazar runs **no rompe ninguna arista**.
-
-**Este canónico NO usa `barrier`, `lane` ni `batch`** — cero apariciones. Sólo `depends_on`.
-El motor que conduce es `tools/roadmap/roadmap-core.mjs` de **este** repo, 2 479 líneas.
-
-**Dos trampas de sonda que ya mordieron:** un `node -e` que carga `project-console.js` en un
-sandbox pobre cae en una rama de texto plano y devuelve algo que parece medición y no lo es
-—para preguntar por el renderizador, **leer el código gana**—; y **canalizar un validador a
-`tail` hace que `$?` sea del `tail`**.
-
-**`git status` acotado a rutas.** El completo sobre `cantu-quizzes-latex` (327 MB) excede el
-tiempo, y canalizarlo a `head` convierte el timeout en «cero modificados». **`origin/main` se
-resuelve por NOMBRE**, nunca desde `packed-refs`: en este repo el loose ref y el packed
-discrepan y gana el loose.
-
-**`context/aiw/records/` está sin versionar y es del hilo `aiw`: no entra en ningún `add`.**
-
-**La falsa consola.** La viva es `project-console/`. `docs/project-console/` es un fork
-descartado por D-035 y `console/` un prototipo retirado. Y `start-console.ps1` **miente sobre
-sí mismo**: dice ser de sólo lectura y tiene cuatro rutas de escritura.
-
----
-
-## 9. LAS REGLAS DE OPERACIÓN DEL OPERADOR
+## 4. LAS REGLAS DEL OPERADOR
 
 Verbatim en `context/aiw-console/records/REGLAS-DE-OPERACION-DEL-OPERADOR.md`. En vigor:
 
-- **R-01** — la superficie de QA de **fixtures** se abre con los comandos que la cabina
-  entrega **completos, cada vez** (`PC_REGISTRY`, `PC_PORT`, `start-console.cmd`). La consola
-  **normal** sólo se nombra.
-- **R-02** — **el push NO se recuerda** salvo cuando el operador declare que se cierra el
-  hilo. Quién lo declara es él.
-- **R-03** — todo ticket termina con un bloque `# Sesión` diciendo si es el mismo taller o
-  uno nuevo, **y sólo recomienda modelo y esfuerzo cuando es nuevo**.
+- **R-01** — QA de fixtures con los comandos completos, cada vez.
+- **R-02** — el push **no se recuerda** salvo cuando el operador declare que se cierra el hilo.
+- **R-03** — todo ticket termina con `# Sesión`: mismo taller (sin modelo) o nuevo (con modelo y
+  esfuerzo).
+- **R-04** (2026-10-05) — **rutas completas en forma Windows**, listas para pegar en el Explorador.
+- **R-05** (2026-10-21) — **no se pide QA en runs sin superficie que mirar.** Textos, contratos, `.md`,
+  tests: la cabina verifica en disco y cierra declarando que no hubo QA. La QA humana es para lo que
+  se ve en pantalla o para un punto crítico, y acotada. **Ésta es la que más cambia el ritmo.**
 
 ---
 
-## 10. RECORDS DE ESTA SESIÓN
+## 5. NOMBRADO Y SIN TOCAR
 
-```
-context/aiw-console/records/
-  DECISION-CITAS-ANIDADAS-Y-LISTAS-EN-CITA.md     ← nuevo
-  REGLAS-DE-OPERACION-DEL-OPERADOR.md
-  PETICIONES-ABIERTAS-AL-EMISOR-2026-08-15.md
-  HALLAZGOS-67-SUPERFICIE-DEL-REPORTE.md
-tests/
-  docs-markdown-quotes.test.mjs                    ← nuevo, 46 tests
-```
+Ninguno es urgente. Juntos podrían ser un run de documentación cuando haga falta, **no por goteo**:
+tres rondas de textos falsos demostraron que cada una encuentra otra capa.
+
+- `project-console/serve.mjs` líneas 16, 135 y 1252 («four write routes»), y 27 y 778 («ALL SEVEN
+  artifacts», falso donde la raíz no es su propio repo).
+- `context/aiw-console/CONTRATO.md` §16, «Qué función esperan»: describe D-029 sin el reencuadre de
+  D-057.
+- `docs/CONTRATO-REPORTE-HTML-DE-CADA-HILO-v1.md:138`: dice dónde aparece el panel que el `#78` quitó.
+- Títulos de `tests/run-report-surface.test.mjs:281` y `tests/run-html-reports.test.mjs:227`: dicen
+  que el Portfolio cuenta veredictos.
+- Tests que fijan el estado de datos reales y pueden caducar como caducó el de finales de línea:
+  `tests/roadmap-batches.test.mjs:101`, `tests/roadmap-lanes.test.mjs:87`,
+  `tests/roadmap-engine.test.mjs:160`.
+- Propuestas del `#78` no aplicadas: la palabra de unidad del contador de clasificación, y H7 (el
+  lector limita la prosa a 66ch y las tablas no; lo fijan dos tests de `doc-side-reader`).
+- Renombrar `project-console/assets/doc-side-reader.js` (dice «side reader» y es un modal desde el `#63`).
+- La raíz `/` de `serve.mjs` pinta la consola sin estilos.
+- El taller del `#78` añadió dos entradas a `AIW_Workspace\.claude\launch.json` (fuera de todo repo):
+  se dejaron.
+
+---
+
+## 6. LA MÁQUINA Y EL OFICIO
+
+**Modo COWORK CONECTADO.** La ruta de montaje se deriva cada sesión.
+
+**El permiso de borrado CADUCA a menudo** en esta máquina. Síntoma: `rm` da `Operation not
+permitted`, o `git add` deja ficheros `tmp_obj_*` en `.git/objects/`. Se vuelve a pedir y se limpian
+los restos. Comprobar `index.lock` **y** `tmp_obj_*` después de cada escritura de git.
+
+**Escribir el canónico.** Por la consola: `PC_PORT=<puerto> node project-console/serve.mjs` (el flag
+`--port` se ignora) y POST a `/projects/aiw-console/__project-console/roadmap/edit` con
+`{op,args,apply:false}`, luego `{…,apply:true,baseline}`. **El servidor muere entre llamadas de
+shell**: arrancarlo en la misma llamada que el driver. Nombres de argumentos medidos: `set-status`
+→ `run`, `status`, `closeoutResult`; `set-text` → `targetType:"run"`, `targetId`, `fullDescription`;
+`insert` → `runId`, `title`, `summary`, `fullDescription` y uno de `after`/`before`/`endOfPhase`
+(hereda la fase del ancla); `move` → `run` y uno de `after`/`before`/`toOrder`, con `toPhase` para
+cambiar de fase (**`move … before` de un run de otra fase NO cambia la fase: fue un no-op**);
+`set-classification` → `run`, `workClass`. Re-emitir a mano: POST
+`/projects/aiw-console/__project-console/project/emit`.
+
+**`pkill -f serve.mjs` mata la propia shell** de la cabina (el patrón casa con su línea de comando).
+
+**Verificar tras escribir:** diff campo a campo contra la copia de `_scratch`, raíz idéntica,
+densidad, `checkInvariants` (importado por un script en `$HOME`, nunca en el repo) y el `.project/`
+emitido. **Parsear el JSON, no buscar con ventanas de texto**: dos sondas de este tipo dieron
+resultados falsos esta sesión (leían la entrada siguiente).
+
+**La suite en la VM de la cabina es lenta**: se parte en tandas con timeout, y un test de historia de
+git tarda unos 80 s solo. Normalmente la da el taller.
+
+**La consola del operador en el 8788** se arrancó con un `serve.mjs` anterior. Las hojas de estilo se
+leen del disco, así que un cambio visual se ve con Ctrl+F5; un cambio de servidor necesita relanzar
+`start-console.cmd`, que para lo que haya en el 8788.
+
+---
+
+## 7. RECORDS DE ESTA SESIÓN
+
+Todos en `context/aiw-console/records/`:
+
+- `REFLEXION-DEL-OPERADOR-2026-10-04-PROPOSITO-Y-FRICCION-DE-LA-CONSOLA.md` (origen de D-074 a D-076)
+- `REGLAS-DE-OPERACION-DEL-OPERADOR.md` (R-04, R-05 añadidas)
+- `REPASO-COLA-72-78-2026-10-20.md`
+- `ENCUADRE-PARADA-68-2026-10-19.md`, `ENCUADRE-PARADA-77-2026-10-20.md` (encuadre y pausa de la
+  auditoría, y la aprobación de los runs `#76`/`#77`)
+- `PROPUESTA-FASE-1-70-REPORTES-HTML-DE-CADA-HILO-2026-10-19.md`
+- `GUIA-RECORRIDO-77-2026-10-20.md`
+- `PETICION-PULIDO-UI-2026-10-21.md`
+- Reportes de taller: `REPORTE-TALLER-65` a `-70`, `-74`, `-75`, `-76`, `-77` (es la guía de la
+  auditoría), `-77-STALE-TEXTS`, `-78`, y `REPORTE-AMPLIACION-78`
+- Veredictos: `VEREDICTO-64` a `-70`, `-74`, `-75`, `-78`
+
+Las capturas y comparaciones del `#78` están fuera del repo, en
+`C:\Users\chris\Documents\AIW_Workspace\_scratch\pulido-ui-78\`, y son desechables.

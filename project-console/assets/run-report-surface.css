@@ -221,3 +221,15 @@
   color: var(--text-tertiary);
   font-size: 12px;
 }
+
+/* [#78] The count sits beside the name it counts. The row's three columns were 1fr / auto / 2fr,
+   which floated the number in the middle of the panel, far from the project it belongs to. The
+   name takes its own width, the number follows it, the note takes what is left. */
+.rrs-verdict-row {
+  grid-template-columns: minmax(140px, max-content) auto minmax(0, 1fr);
+  gap: 14px;
+}
+
+.rrs-verdict-row.is-unavailable {
+  grid-template-columns: minmax(140px, max-content) minmax(0, 1fr);
+}

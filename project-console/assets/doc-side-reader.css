@@ -480,3 +480,23 @@
    measure, and the Docs tab's grid carries its own breakpoints — 260px of index below 1040px,
    and the two zones stacked below 720px, where a screen that narrow has no second column to
    give. Adding a breakpoint of this reader's own would be a fifth pattern. */
+
+/* [#78] The title filter stays put. Measured before this rule: after scrolling the index 1000px
+   the field sat 884px above the visible edge. The slot now sticks to the top of its own scrolling
+   column, on the column's background, and carries the column's top inset itself (the shared column
+   rule gives that inset up, because a sticky box cannot leave its scroller's content box). The
+   field itself, its list and its words are untouched. */
+.dsr-filter:not(:empty) {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bg-panel);
+  padding: 24px 20px 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 8px;
+}
+
+/* With no field to paint (nothing to filter), the list keeps the inset the slot would have carried. */
+.dsr-filter:empty + * {
+  padding-top: 24px;
+}

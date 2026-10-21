@@ -6902,3 +6902,554 @@ details[open] > summary > .v3-caret {
   text-align: left;
   line-height: 1.45;
 }
+
+/* ==========================================================================
+   [#78] VISUAL POLISH — RUN-CONSOLE-UI-POLISH-001.
+
+   One section, at the end, so the whole pass can be read in one place and undone in one revert.
+   Every rule below restates a value a rule above already owns, or adds a state that was missing
+   (hover, focus). Nothing here changes what the console does: same data, same clicks, same
+   routes, same order, same keyboard; the on-screen words are untouched. Existing tokens only;
+   no new colour, no new font, no dependency.
+
+   Measured in a 1440×900 browser against the real registry and the test fixtures, before and
+   after (the pairs are in the run's comparison page). The measurements that drove each group
+   are noted beside it.
+   ========================================================================== */
+
+/* ---------- Controls: the states that were missing ----------------------------------------
+   Buttons had a transition and no hover; fields and buttons took the browser's white focus
+   ring. One accent ring for every control, keyboard and pointer alike. */
+.btn:focus-visible,
+.tab:focus-visible,
+.segment:focus-visible,
+.nav-item:focus-visible,
+.collapse-btn:focus-visible,
+.status-jump-link:focus-visible,
+.docs-nav-item:focus-visible,
+.docs-nav-group-header:focus-visible,
+.docs-nav-collapse-toggle:focus-visible,
+.docs-meta-details > summary:focus-visible,
+.v3-ov-note-run:focus-visible,
+.v3-lane-select:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: 2px;
+}
+
+.btn-primary:hover {
+  background: var(--accent-underline);
+}
+
+.btn-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.26);
+  background: var(--bg-inset);
+}
+
+.btn-secondary[aria-pressed="true"] {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent-hover);
+}
+
+.v3-edit-field input:focus-visible,
+.v3-edit-field textarea:focus-visible,
+.v3-edit-field select:focus-visible,
+.v3-edit-picker-search:focus-visible,
+.care-budget-input:focus-visible,
+.doc-title-filter-input:focus-visible {
+  outline: 2px solid var(--accent-underline);
+  outline-offset: 1px;
+  border-color: var(--accent-border);
+}
+
+/* The mono token the tags asked for (`--mono`) was never declared, so lane and class tags fell
+   back to the browser's monospace instead of the console's own. Same token as every other mono. */
+.v3-lane-tag,
+.v3-global-order-tag,
+.v3-class-token,
+.v3-edit-derived-note code {
+  font-family: var(--font-mono);
+}
+
+/* `--bg-default` was never declared either: the care budget inputs and preview rendered with no
+   background at all. The inset surface every other field uses. */
+.care-budget-input,
+.care-budget-preview {
+  background: var(--bg-inset);
+}
+
+.care-budget-preview-status.is-ok {
+  color: var(--green);
+}
+
+/* ---------- Shell ------------------------------------------------------------------------ */
+/* A long registry title was cut mid-letter in the brand bar; it now ends in an ellipsis. */
+.brand-logo > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The notices were a flex row of three sentences: with a long middle sentence the last one was
+   crushed into a narrow column at the right edge (measured on the fixture with 13 missing
+   files). They now read as one paragraph. */
+.readonly-banner {
+  display: block;
+  line-height: 1.55;
+}
+
+.readonly-banner > strong,
+.readonly-banner > span {
+  margin-right: 6px;
+}
+
+/* ---------- Project Portfolio ----------------------------------------------------------- */
+/* The identity and status columns centred themselves vertically, so in a tall card (eight
+   objectives) the project name floated mid-air and "Open Project" with it. Every column now
+   starts at the top; the action pins to the card's foot, where a card's action is expected. */
+.portfolio-main,
+.portfolio-ops,
+.portfolio-next {
+  justify-content: flex-start;
+}
+
+.portfolio-main {
+  gap: 6px;
+}
+
+.portfolio-title-row {
+  margin-bottom: 2px;
+}
+
+.portfolio-status-chip {
+  margin-top: 4px;
+}
+
+.portfolio-action-row {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.portfolio-objective-row {
+  padding: 6px 2px;
+}
+
+.portfolio-stat-label {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.portfolio-next-text {
+  font-weight: 500;
+}
+
+@media (max-width: 1300px) {
+  .portfolio-next {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .portfolio-next .portfolio-next-card {
+    flex: 1 1 auto;
+  }
+
+  .portfolio-next .portfolio-action-row {
+    flex: none;
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+
+/* ---------- Project header and Roadmap toolbar ----------------------------------------- */
+/* At 1024 the toolbar overflowed: "Edit roadmap" was cut off at the pane edge (segmented tabs
+   293px + class picker + two buttons do not fit in 712px). Below 1180px the controls take a
+   second line, right-aligned, and the tabs keep their own underline. */
+@media (max-width: 1180px) {
+  .roadmap-toolbar {
+    flex-wrap: wrap;
+    row-gap: 8px;
+    border-bottom: 0;
+  }
+
+  .roadmap-toolbar .segmented-control {
+    flex: 1 1 100%;
+    border-bottom-color: var(--border-subtle);
+  }
+
+  .roadmap-toolbar .roadmap-lane-slot:first-of-type .v3-lane-picker {
+    margin-left: 0;
+  }
+
+  .roadmap-toolbar .roadmap-edit-controls {
+    margin-left: auto;
+  }
+}
+
+/* ---------- Run Queue and Roadmap tree rows ---------------------------------------------- */
+/* THE TAGS. Class, severity, closure and lane tags trailed the title as inline text, so when a
+   title wrapped (every row at 1024, two rows at 1440) the tags broke mid-line, one on each line.
+   The title is now a wrapping flex line: a short title keeps its tags beside it, a long one
+   wraps as text and the tags follow as a group, centred on the line they land on. The markup is
+   untouched (it is pinned by the goldens); only the layout of what is already there. */
+.v3-run-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 7px;
+  row-gap: 4px;
+}
+
+.v3-run-title > .v3-run-order {
+  margin-right: 0;
+}
+
+.v3-run-title > .v3-lane-tag,
+.v3-run-title > .v3-global-order-tag,
+.v3-run-title > .v3-barrier-tag,
+.v3-run-title > .v3-class-tag,
+.v3-run-title > .v3-severity-tag {
+  margin-left: 0;
+  vertical-align: baseline;
+}
+
+/* The faintest text that carries information: sub-tab counts, empty notes, zero counts. One
+   step up (#565e6e → #666e7e / #8b93a5), still recessed, now readable. */
+.v3-subtab-count {
+  color: var(--text-faint);
+}
+
+.v3-queue-group-count.is-zero {
+  color: var(--text-faint);
+}
+
+.v3-empty-note {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+/* The phase ratio drifted to the middle of the band in edit mode, because the Edit / Add run
+   group also asked for `margin-left: auto`. The ratio stays at the right; the buttons follow it. */
+.v3-phase-header .v3-edit-affordance-group {
+  margin-left: 14px;
+}
+
+/* ---------- Run detail (the drawer) ------------------------------------------------------ */
+/* THE CROWDED TEXT. The stored classification rows gave their label 72px in 10px mono with
+   0.08em tracking: "Correctness model", "Failure surfaces" and "Classified at" wrapped to two
+   lines and the derived rows wrapped a third time to fit the "derived" mark. 128px holds the
+   longest label on one line (measured: "CORRECTNESS MODEL" at 10.5px mono ≈ 121px); the mark
+   drops under its label on purpose, on both derived rows alike. */
+.drawer.v3-detail .data-row {
+  gap: 14px;
+  padding: 8px 0;
+}
+
+.drawer.v3-detail .data-label {
+  width: 128px;
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
+  line-height: 1.5;
+  color: var(--text-faint);
+}
+
+.drawer.v3-detail .data-value {
+  line-height: 1.45;
+}
+
+.v3-derived-mark {
+  display: block;
+  width: max-content;
+  margin: 4px 0 0;
+}
+
+.v3-classification-derived {
+  padding: 10px 12px 4px;
+}
+
+.v3-classification-derived-head {
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+/* The run id is identity and the thing most often copied; it was the faintest text in the
+   header (#666e7e). One step up. */
+.v3-detail-runid {
+  color: var(--text-tertiary);
+}
+
+/* Section counts (Dependencies 0, Classification 5) were a bare mono number beside the title;
+   [H1] a bare zero read like a level. The number is now a counter pill, the same idiom the queue
+   groups already use for their counts, so a zero reads as "zero items" wherever it appears. */
+.v3-section-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 9px;
+  background: var(--bg-inset-2);
+  color: var(--text-tertiary);
+  font-size: 11.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  margin-left: 2px;
+}
+
+/* The sentences inside a section ("none — this run has no upstream dependencies", the
+   not-classified-yet paragraph) were 12.5px mono at #565e6e — 2.6:1 on the panel. They read
+   as sentences now: sans, 13px, tertiary. The queue's quiet mono one-liners keep their look. */
+.drawer.v3-detail .v3-section-body .v3-empty-note {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-tertiary);
+}
+
+/* The metadata cells clipped a long value with an ellipsis the button inside could not draw:
+   "Held by barrier" was cut mid-word. Values wrap to a second line instead. */
+.v3-detail-cell-value {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+}
+
+.v3-barrier-link {
+  white-space: normal;
+}
+
+/* The Progress note of a closed run printed its whole closeout text — a paragraph, sometimes
+   fifteen lines — in 12.5px green mono. The lead ("run closed") keeps the mono and the green;
+   the closeout text is a sentence and is set like one. */
+.v3-progress-note-line {
+  color: var(--text-faint);
+}
+
+.v3-progress-note-line.is-closed {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-tertiary);
+}
+
+.v3-progress-note-lead {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: #3ea877;
+}
+
+@media (min-width: 1600px) {
+  .drawer.v3-detail .data-label {
+    width: 156px;
+  }
+}
+
+/* ---------- Overview and History --------------------------------------------------------- */
+.v3-ov-label {
+  color: var(--text-faint);
+}
+
+.v3-hist-sha,
+.v3-hist-time {
+  color: var(--text-tertiary);
+}
+
+.v3-hist-group-label {
+  color: var(--text-faint);
+}
+
+/* ---------- Docs tab ---------------------------------------------------------------------- */
+/* [H8] The title filter scrolled away with the tree (measured: 691px above the viewport after
+   scrolling 800px). The controls block — title, Collapse all, the field — now stays at the top of
+   the column while the tree scrolls under it. It carries the column's own top inset so that,
+   stuck, it keeps the same breathing room it had at rest. */
+.docs-nav {
+  padding-top: 0;
+}
+
+.docs-nav-controls {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bg-panel);
+  padding-top: 24px;
+}
+
+/* The one navigation without a controls block (no documents indexed) keeps the inset it had. */
+#docs-nav-list > .docs-nav-title {
+  padding-top: 24px;
+}
+
+/* ---------- Status tab -------------------------------------------------------------------- */
+/* "NOT EMITTED" wrapped onto two lines in a 92px column. */
+.source-status-item {
+  grid-template-columns: 112px minmax(0, 1fr);
+}
+
+/* ---------- Project configuration dialog ------------------------------------------------- */
+/* A 680px dialog set in 11px. One step up across the board (11 → 12, 11.5 → 12.5): the advice,
+   the table, the note and the run list read without leaning in. The table keeps its shape. */
+.care-budget-advice,
+.care-budget-defaults,
+.care-budget-preview-status,
+.care-budget-preview-table,
+.v3-ov-note-meaning {
+  font-size: 12.5px;
+}
+
+.care-budget-reason,
+.care-budget-readonly,
+.care-budget-defaults-note,
+.care-budget-preview-note,
+.care-budget-preview-errors,
+.care-budget-state {
+  font-size: 12px;
+}
+
+.care-budget-table {
+  font-size: 12.5px;
+}
+
+.care-budget-table th,
+.care-budget-table td {
+  padding: 6px 8px;
+}
+
+.care-budget-table thead th {
+  font-size: 10.5px;
+}
+
+.care-budget-level,
+.care-budget-input {
+  font-size: 12px;
+}
+
+.care-budget-input {
+  padding: 4px 8px;
+}
+
+.v3-ov-note-body {
+  font-size: 12.5px;
+}
+
+.project-config .v3-ov-note-run {
+  font-size: 12.5px;
+  padding: 6px 10px;
+}
+
+/* ---------- The editor (modal) ----------------------------------------------------------- */
+/* THE BUTTONS AND THE LAYOUT. Measured on "Edit run #79" at 1440 and 1024:
+     · the number fields (Move to position, Position) matched no rule — `input[type="text"]`
+       only — so they rendered in the browser's own light box, 940px wide for a two-digit number;
+     · "Preview all changes", the editor's one main action, was stretched to the modal's full
+       width and dressed like every secondary button;
+     · a checkbox and its label stacked vertically (the field is a column);
+     · notes ran to ~150 characters a line and block titles were one point larger than labels. */
+.v3-edit-field input[type="number"],
+.v3-edit-field input[type="search"] {
+  width: 100%;
+  font: inherit;
+  padding: 6px 8px;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  background: var(--bg-inset);
+  color: var(--text-primary);
+}
+
+.v3-edit-field input[type="number"] {
+  max-width: 180px;
+}
+
+.v3-edit-field select,
+.v3-edit-picker-search {
+  cursor: pointer;
+}
+
+.v3-edit-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 9px;
+  margin-top: 8px;
+}
+
+.v3-edit-check input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  flex: none;
+  accent-color: var(--accent-solid);
+}
+
+.v3-edit-check .v3-edit-label {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-primary);
+}
+
+.v3-edit-block-title {
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+}
+
+.v3-edit-note {
+  font-size: 12.5px;
+  line-height: 1.5;
+  max-width: 78ch;
+}
+
+.v3-modal-edit > .v3-edit-note:first-child {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.v3-edit-actions {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin: 22px 0;
+}
+
+.v3-edit-actions > .btn {
+  border-color: transparent;
+  background: var(--accent-solid);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 7px 16px;
+  box-shadow: none;
+}
+
+.v3-edit-actions > .btn:hover {
+  background: var(--accent-underline);
+}
+
+.v3-edit-actions > .v3-edit-note {
+  flex: 1 1 320px;
+  margin: 0;
+}
+
+.v3-modal-edit .v3-edit-block > .btn {
+  margin-top: 12px;
+}
+
+.edit-modal .drawer-header {
+  padding: 18px 26px;
+}
+
+.edit-modal .drawer-header-title {
+  font-size: 19px;
+}
+
+.v3-edit-preview-title {
+  font-size: 15px;
+}
+
+.v3-edit-confirm-row .btn-primary {
+  font-weight: 600;
+}

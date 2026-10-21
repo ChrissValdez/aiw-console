@@ -3645,7 +3645,7 @@ function v3ProgressTimeline(run) {
   const progress = Array.isArray(run.progress) ? run.progress : null;
   if (!progress || !progress.length) {
     const note = run.status === "completed"
-      ? `<div class="v3-progress-note-line is-closed">run closed${"closeout_result" in run ? ` · ${escapeHtml(String(v3ResultText(run.closeout_result)).toLowerCase())}` : ""}</div>`
+      ? `<div class="v3-progress-note-line is-closed"><span class="v3-progress-note-lead">run closed</span>${"closeout_result" in run ? ` · <span class="v3-progress-note-text">${escapeHtml(String(v3ResultText(run.closeout_result)).toLowerCase())}</span>` : ""}</div>`
       : '<div class="v3-progress-note-line">not started · no progress recorded yet</div>';
     return `
     <div class="drawer-section">

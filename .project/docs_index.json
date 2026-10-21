@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T00:53:28.799Z",
+  "generated_at": "2026-10-21T01:20:02.930Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
@@ -315,6 +315,10 @@
     {
       "path": "context/aiw-console/records/GOBERNANZA-DECLARADA-AIW.md",
       "mtime": "2026-08-08T09:13:17.639Z"
+    },
+    {
+      "path": "context/aiw-console/records/GUIA-RECORRIDO-77-2026-10-20.md",
+      "mtime": "2026-10-21T01:17:40.743Z"
     },
     {
       "path": "context/aiw-console/records/HALLAZGOS-67-SUPERFICIE-DEL-REPORTE.md",
@@ -707,6 +711,10 @@
     {
       "path": "context/aiw-console/records/REPORTE-TALLER-75-2026-10-20.md",
       "mtime": "2026-10-20T23:57:54.547Z"
+    },
+    {
+      "path": "context/aiw-console/records/REPORTE-TALLER-77-2026-10-20.md",
+      "mtime": "2026-10-21T01:19:59.739Z"
     },
     {
       "path": "context/aiw-console/records/RESTITUCION-ARISTAS-47-Y-AUDITORIA-AL-CIERRE-CANTU.md",
@@ -2486,6 +2494,14 @@
       "freshness": "2026-08-08T09:13:17.639Z"
     },
     {
+      "title": "Guía de recorrido del `#77` — 2026-10-20",
+      "path": "context/aiw-console/records/GUIA-RECORRIDO-77-2026-10-20.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-21T01:17:40.743Z"
+    },
+    {
       "title": "Hallazgos del operador sobre la superficie del reporte — semilla del `#67`",
       "path": "context/aiw-console/records/HALLAZGOS-67-SUPERFICIE-DEL-REPORTE.md",
       "nav_tier": "evidence",
@@ -3268,6 +3284,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-10-20T23:57:54.547Z"
+    },
+    {
+      "title": "Reporte del taller del `#77` (primer tiempo) — 2026-10-20",
+      "path": "context/aiw-console/records/REPORTE-TALLER-77-2026-10-20.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-21T01:19:59.739Z"
     },
     {
       "title": "RESTITUCIÓN DE LAS 17 ARISTAS DE `#47` Y RE-ENCUADRE A AUDITORÍA AL CIERRE — CANTU",

@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T00:53:28.799Z",
+  "generated_at": "2026-10-21T01:20:02.930Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-21T00:49:01.041Z"
+      "mtime": "2026-10-21T01:17:53.481Z"
     },
     {
       "path": "roadmap/roadmap.json",
@@ -14,14 +14,24 @@
     }
   ],
   "model": "git_history_v1",
-  "head": "a9fb684557839d79e69acea67c9550e69218fa70",
+  "head": "e6662b3b8fdd8008a9db9569ff4879b17fcea2ac",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 568,
+  "commit_total": 569,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "e6662b3",
+      "full_sha": "e6662b3b8fdd8008a9db9569ff4879b17fcea2ac",
+      "date": "2026-10-21T00:54:22+00:00",
+      "parents": "a9fb684",
+      "subject": "#77 RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001: encuadre del operador, la compuerta del corte pasa al #79, y #77 abierto",
+      "body": "Encuadre verbatim en context/aiw-console/records/ENCUADRE-PARADA-77-2026-10-20.md\n(\"vamos con tu recomendacion\"). El full_description del #77 gana un parrafo\nfechado: deja de ser la compuerta del corte y queda como auditoria de mejora\nen tres tiempos. El del #79 RUN-CONSOLE-CORTE-RETIRO-LOCAL-001 gana la\ncompuerta como primer paso, preguntada justo antes del corte. depends_on sin\ncambios. #77 pasa de planned a active. .project/ re-emitido.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "a9fb684",

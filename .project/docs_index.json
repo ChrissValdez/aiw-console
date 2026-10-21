@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T00:48:21.402Z",
+  "generated_at": "2026-10-21T00:53:28.799Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
@@ -263,6 +263,10 @@
     {
       "path": "context/aiw-console/records/ENCUADRE-PARADA-68-2026-10-19.md",
       "mtime": "2026-10-19T23:29:20.933Z"
+    },
+    {
+      "path": "context/aiw-console/records/ENCUADRE-PARADA-77-2026-10-20.md",
+      "mtime": "2026-10-21T00:52:53.991Z"
     },
     {
       "path": "context/aiw-console/records/ENDPOINT-DEL-VEREDICTO-CIERRE-Y-VEREDICTO-DEL-OPERADOR.md",
@@ -2376,6 +2380,14 @@
       "default_visible": false,
       "ia_bucket": "context/aiw-console/records",
       "freshness": "2026-10-19T23:29:20.933Z"
+    },
+    {
+      "title": "Encuadre del `#77` — parada de la cabina antes del ticket — 2026-10-20",
+      "path": "context/aiw-console/records/ENCUADRE-PARADA-77-2026-10-20.md",
+      "nav_tier": "evidence",
+      "default_visible": false,
+      "ia_bucket": "context/aiw-console/records",
+      "freshness": "2026-10-21T00:52:53.991Z"
     },
     {
       "title": "`#57` `RUN-CONSOLE-VERDICT-POST-001` — cierre, con el veredicto del operador verbatim",

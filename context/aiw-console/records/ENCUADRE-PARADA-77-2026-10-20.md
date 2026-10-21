@@ -1,0 +1,34 @@
+# Encuadre del `#77` — parada de la cabina antes del ticket — 2026-10-20
+
+Run: `#77` `RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001` «Deep visual audit of the console, led by the
+operator». Escrito a disco por la cabina del hilo `aiw-console` en el mismo turno.
+
+## Lo que midió la cabina
+
+- Desde el repaso de la cola (`REPASO-COLA-72-78-2026-10-20.md`) el `#77` lleva **dos preguntas
+  opuestas**: la **compuerta del corte** —¿algo es PEOR que la consola local de Cantu?, estrecha y
+  guardando un acto irreversible— y la **auditoría** —¿qué podría estar MEJOR?, que abre trabajo.
+  Su propio texto avisa de que confundirlas «es caro».
+- La respuesta a la compuerta **envejece**: el corte (`#79`
+  `RUN-CONSOLE-CORTE-RETIRO-LOCAL-001`) espera a que Cantu Studio salga de la pausa (D-079), y para
+  entonces la consola habrá cambiado.
+
+## Lo que propuso la cabina
+
+1. El `#77` hace ahora **sólo la auditoría de «qué mejorar»** más los diez hallazgos pendientes
+   (seis de 2026-07-31 y cuatro de diseño de 2026-10-04 en adelante).
+2. **La compuerta pasa al `#79`** como su primer paso, preguntada justo antes del corte; se
+   enmiendan los textos de los dos runs y el corte sigue dependiendo del `#77`.
+3. **Tres tiempos:** (a) un taller re-mide los diez hallazgos contra el código de hoy y escribe una
+   guía de recorrido (superficies y cómo llegar), sin decidir qué es mejor; (b) el operador recorre
+   la consola con la guía y su veredicto se escribe verbatim a disco; (c) la cabina convierte cada
+   hallazgo en run o lo resuelve dentro del `#77` si es pequeño y sin ambigüedad.
+
+## Lo que dijo el operador
+
+```text
+vamos con tu recomendacion
+```
+
+**Lectura de la cabina:** sí a las tres cosas: la compuerta pasa al `#79`, el `#77` queda como
+auditoría de mejora, y el plan en tres tiempos.

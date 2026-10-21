@@ -1,27 +1,38 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T00:48:21.402Z",
+  "generated_at": "2026-10-21T00:53:28.799Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-20T23:58:16.611Z"
+      "mtime": "2026-10-21T00:49:01.041Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-21T00:48:21.377Z"
+      "mtime": "2026-10-21T00:53:28.764Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "e9fefa156069d3bb730afd0401bb926f01774fca",
+  "head": "a9fb684557839d79e69acea67c9550e69218fa70",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 567,
+  "commit_total": 568,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "a9fb684",
+      "full_sha": "a9fb684557839d79e69acea67c9550e69218fa70",
+      "date": "2026-10-21T00:49:00+00:00",
+      "parents": "e9fefa1",
+      "subject": "#75 RUN-CONSOLE-STALE-TEXTS-REPAIR-002 cerrado",
+      "body": "Segunda QA del operador (\"pass\") escrita verbatim en\ncontext/aiw-console/records/VEREDICTO-75-QA-2026-10-20.md. El #75 pasa a\ncompleted con su closeout: los siete textos (3d3fcdc), la ampliacion\n(e9fefa1), el hueco de la cabina con CONTRATO.md:55 corregido hacia adelante,\ny los textos falsos que quedan nombrados sin tocar. .project/ re-emitido.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-002"
+    },
     {
       "branch": "main",
       "sha": "e9fefa1",

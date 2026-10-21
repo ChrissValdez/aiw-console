@@ -69,3 +69,27 @@ informa nada y **sugiere en falso que hay una decisión que tomar** donde no la 
 Windows**, desde la unidad: `C:\Users\chris\Documents\AIW_Workspace\projects\aiw-console\…`. Nunca
 relativa al repo (`context/…`), nunca con la ruta de montaje de la cabina (`/sessions/…`). Dentro de
 un ticket de taller pueden ir relativas al repo, porque el taller trabaja desde la raíz del repo.
+
+---
+
+## R-05 · No se pide QA en runs sin superficie que mirar
+
+**2026-10-21.** Verbatim:
+
+> «no me pidas QA por runs en los que no hay una superficie que revisar
+> cotnratos y .md a revisar me toma demasiado tiempo cada ajuste
+> solo si es un punto critico y bien distribuido lo hacemos pero trata de avanzar sin eso porque sino detiene mi flujo de trabajo constanetemen
+> como ahora no hiciste un cambio de ux ui entonces para revisar tendria que leer muchismio para darte el ok y si eso pasa en cada run mi flujo se frena altamente»
+
+**En la práctica:**
+
+- **Un run sin superficie visual** —textos, contratos, `.md`, comentarios, tests, código sin
+  interfaz— **se cierra sin QA humana**. La cabina lee el cambio en disco, lo verifica con lo que
+  pueda medir, y el `closeout_result` declara que no hubo QA y qué verificó ella. No se pide «leer
+  el antes y el después».
+- **La QA humana se pide cuando hay algo que mirar en pantalla** (UX/UI) o **en un punto crítico**
+  —una decisión difícil de deshacer—, y entonces **acotada y bien repartida**: pocos pasos, lo justo
+  para decidir.
+- **El aviso del turno 1** («este run va a requerir QA») sólo se da cuando la QA es de esa clase.
+- **Las decisiones de alcance que sí necesitan al operador** (ampliar un run, abrir uno nuevo) se
+  preguntan en una línea con recomendación, sin pedir leer texto para contestarlas.

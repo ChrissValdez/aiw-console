@@ -1,27 +1,48 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T11:00:29.471Z",
+  "generated_at": "2026-10-21T11:37:11.922Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": ".git",
-      "mtime": "2026-10-21T10:59:49.023Z"
+      "mtime": "2026-10-21T11:31:55.474Z"
     },
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-21T11:00:29.438Z"
+      "mtime": "2026-10-21T11:37:11.884Z"
     }
   ],
   "model": "git_history_v1",
-  "head": "632b298b863eec332b2cd8289d06f6cb23698520",
+  "head": "7e7bf81727df668b2ddfa4d7a9110eb3bb6b7e80",
   "default_branch": "main",
   "branch_scope": "default_branch",
   "branches": [
     "main"
   ],
-  "commit_total": 573,
+  "commit_total": 575,
   "commits": [
+    {
+      "branch": "main",
+      "sha": "7e7bf81",
+      "full_sha": "7e7bf81727df668b2ddfa4d7a9110eb3bb6b7e80",
+      "date": "2026-10-21T11:31:55+00:00",
+      "parents": "42ce29e",
+      "subject": "#77 RUN-CONSOLE-STALE-TEXTS-REPAIR-003: los cuatro textos falsos que nombro el cierre del #75, corregidos sin cifras que envejezcan",
+      "body": "CONTRATO.md seccion 16 deja de dar a batch por reservada y de decir que se\nignora lo que el motor rechaza; start-console.cmd deja de decir que toda la\ndocumentacion esta en el .ps1; CLASIFICACION-DE-RUNS.md y\nPROCEDIMIENTO-DE-CLASIFICACION.md dejan de hablar de \"los tres proyectos\";\nla cabecera de serve.mjs deja de contar las rutas (solo comentario). Suite\ndel taller 982/982/0 antes y despues. Reporte verbatim en\ncontext/aiw-console/records/REPORTE-TALLER-77-STALE-TEXTS-2026-10-21.md. Sin QA aun.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false,
+      "run_id": "RUN-CONSOLE-STALE-TEXTS-REPAIR-003"
+    },
+    {
+      "branch": "main",
+      "sha": "42ce29e",
+      "full_sha": "42ce29ed8bd463635f63f875bea30141619f6fa5",
+      "date": "2026-10-21T11:01:16+00:00",
+      "parents": "632b298",
+      "subject": "#76 RUN-CONSOLE-EOL-TEST-PREMISE-REPAIR-001 cerrado sin QA humana (declarado); #77 RUN-CONSOLE-STALE-TEXTS-REPAIR-003 abierto",
+      "body": "#76 pasa a completed: el cambio es un test y su comentario, verificado por la\ncabina contra disco (14/14 en el fichero; suite del taller 982/982/0). El\ncloseout declara que no hubo QA humana y nombra tres tests sobre datos reales\nque pueden caducar igual. #77 pasa de planned a active. .project/ re-emitido.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VF8HUYWBeKiRejk4u75Zhr",
+      "is_merge": false
+    },
     {
       "branch": "main",
       "sha": "632b298",

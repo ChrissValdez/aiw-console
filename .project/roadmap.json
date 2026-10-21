@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "aiw_console",
-  "generated_at": "2026-10-21T11:00:29.471Z",
+  "generated_at": "2026-10-21T11:37:11.922Z",
   "generated_from": "aiw-projector@0.13.0",
   "sources": [
     {
       "path": "roadmap/roadmap.json",
-      "mtime": "2026-10-21T11:00:29.438Z"
+      "mtime": "2026-10-21T11:37:11.884Z"
     }
   ],
   "model": "roadmap_tree_v1",
@@ -1148,9 +1148,10 @@
               "title": "Repair the false texts the second stale-texts run named",
               "summary": "The second stale-texts run closed naming more false texts it left untouched — the contract calling batch reserved, a launcher comment, 'the three projects' in two classification documents, and a counted header in serve.mjs; this run repairs them, without figures that age.",
               "full_description": "ORIGIN: the closeout of RUN-CONSOLE-STALE-TEXTS-REPAIR-002 named these false texts and left them untouched; the operator approved this run on 2026-10-21 ('avanza con tu recomendacion'; context/aiw-console/records/ENCUADRE-PARADA-77-2026-10-20.md). Its workshop reports are verbatim in context/aiw-console/records/REPORTE-TALLER-75-2026-10-20.md. THE TEXTS, measured on 2026-10-20 — VERIFY EACH ONE AGAINST DISK BEFORE TOUCHING IT, and leave alone any that is no longer false: (1) context/aiw-console/CONTRATO.md section 16: its title says the keys are reserved and born empty, and its body says not even the type of batch is fixed — false since RUN-CONSOLE-BATCHES-001 admitted batch into RUN_OPTIONAL_FIELDS; and it says a consumer that does not understand them ignores them, while the engine rejects category because it is not in RUN_ALLOWED_FIELDS. (2) start-console.cmd line 6, 'All behaviour, and all documentation, is in the .ps1', while start-console.README.md also exists. (3) context/CLASIFICACION-DE-RUNS.md line 3 and context/PROCEDIMIENTO-DE-CLASIFICACION.md say 'the three projects', while the registry project-console/projects.json lists more. (4) the header of project-console/serve.mjs, lines 1-3, counts the write routes ('EXACTLY FOUR'): a figure that ages; measure first whether a test pins that text, and if one does, leave it and say so. HOW: the same as RUN-CONSOLE-STALE-TEXTS-REPAIR-002 — remove a false statement or replace it with a true one that does not age; say where something lives, not how many there are. CONTRATO.md is a living norm: a correction there carries a pointer to the decision or run that made the text stale (CONTRATO.md, section on how the document is kept). OUT OF SCOPE: any code — in serve.mjs only the comment; context/DECISIONES.md; roadmap/, .project/ and any run's full_description. New false texts found on the way are NAMED, not fixed.",
-              "status": "active",
+              "status": "completed",
               "depends_on": [],
-              "work_class": "DOCUMENTATION"
+              "work_class": "DOCUMENTATION",
+              "closeout_result": "CERRADO 2026-10-21, SIN QA HUMANA, bajo la regla R-05 del operador (context/aiw-console/records/REGLAS-DE-OPERACION-DEL-OPERADOR.md: un run sin superficie visual se cierra sin QA). La cabina leyo el diff en disco: cinco ficheros, todos en alcance; en serve.mjs solo el comentario de cabecera (node --check pasa; las constantes *_SUFFIX que cita existen); start-console.cmd sigue en ASCII. Los cuatro textos corregidos en 7e7bf81 sin cifras que envejezcan: CONTRATO.md seccion 16 (batch admitida por RUN-CONSOLE-BATCHES-001; el motor rechaza por allowlist lo no admitido, y por eso category), start-console.cmd linea 6, 'los tres proyectos' en context/CLASIFICACION-DE-RUNS.md y context/PROCEDIMIENTO-DE-CLASIFICACION.md, y la cabecera de project-console/serve.mjs. Suite del taller 982 / 982 / 0 antes y despues. QUEDAN NOMBRADOS, SIN TOCAR (la cabina recomendo no ampliar y el operador no pidio ampliar): project-console/serve.mjs lineas 16, 135 y 1252 ('four write routes') y lineas 27 y 778 ('ALL SEVEN artifacts', falso donde la raiz no es su propio repositorio); CONTRATO.md seccion 16, 'Que funcion esperan', que describe D-029 sin el reencuadre de D-057. Reporte verbatim en context/aiw-console/records/REPORTE-TALLER-77-STALE-TEXTS-2026-10-21.md."
             }
           ]
         },

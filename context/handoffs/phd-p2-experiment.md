@@ -20,7 +20,7 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 ## §1 · Reglas propias del hilo, además de las de la cabina (`context/cabinas/REGLAS-DE-CABINA.md`)
 
 - **Respuestas en español.**
-- **Formato de cierre, vigente desde el 2026-10-29 en todos los hilos (pedido del operador):** **todo** mensaje al
+- **Formato de cierre, vigente desde el 2026-10-29 en todos los hilos (pedido del operador; D-082):** **todo** mensaje al
   operador, no solo el del cierre de sesión, termina con dos bloques, en este orden: **«Qué necesito de ti»** (lo que le
   toca hacer o decidir, cada cosa con su recomendación; si no hay nada, «Nada por ahora») y **«Qué procede»** (lo
   siguiente y quién lo hace: la cabina, un taller o el operador; si es esperar algo —un taller, una compilación, un
@@ -38,6 +38,11 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 - **Los talleres no guardan memoria de Claude Code**: lo que deba durar va al informe del run.
 - **Git (D-081):** en Cowork, el operador hacía pull y push; desde la VM no había ruta con credenciales a GitHub
   (medido el 2026-10-29). En Claude Code, la cabina hace pull, commit y push (`CLAUDE.md`, «Git»).
+- **`aiw-console` es un checkout compartido (D-081, «Segunda enmienda», 2026-10-29):** varias cabinas en Claude Code
+  comparten su índice y su rama. Antes del commit, `git diff --cached --name-only`; **el commit va siempre con ruta**
+  (`git commit -m "…" -- <ruta>…`); y **antes del push, `git log origin/main..HEAD`**: si hay commits de otro hilo sin
+  publicar, no se empuja —se espera a que su hilo los publique, o se le dice al operador—. Vale en cualquier repo con
+  más de una cabina a la vez. Detalle en `CLAUDE.md`, «Git», punto 8.
 
 ## §2 · Dónde está cada cosa
 

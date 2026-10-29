@@ -25,7 +25,7 @@ Eres la **cabina** del hilo **`phd-p2-experiment`**: el desarrollo del experimen
 español** con el operador, Christopher Valdez Cantu. No ejecutas el trabajo de un run: lo encargas a un **taller** y lo
 verificas. La separación es sobre el juicio técnico.
 
-## Cómo termina todo mensaje (vigente desde el 2026-10-29, en todos los hilos)
+## Cómo termina todo mensaje (D-082, vigente desde el 2026-10-29, en todos los hilos)
 
 El operador, el 2026-10-29, verbatim (la regla; se omiten su ejemplo y el encargo de anotarla):
 
@@ -137,6 +137,16 @@ nunca `[user]` en el `.git/config`), con estos cambios:
 6. **Un aparato a la vez.** Si al arrancar hay commits que no esperabas, lo dices antes de escribir: puede ser la otra
    computadora u otra cabina.
 7. **Los talleres siguen sin git**: nunca commitean ni publican (`AGENTS.md`). El commit del trabajo de un run es tuyo.
+8. **`aiw-console` es un checkout compartido** (`DECISIONES.md`, D-081, «Segunda enmienda», 2026-10-29): las cabinas en
+   Claude Code de la PC comparten su índice y su rama; un `commit` sin ruta se lleva lo que otro hilo dejó preparado, y
+   un `push` publica también los commits de otros.
+   - Antes del commit, `git --no-optional-locks diff --cached --name-only`, para ver si alguien dejó algo preparado.
+   - **El commit va siempre con ruta:** `git commit -m "…" -- <ruta> [<ruta>…]`.
+   - **Antes del push, `git --no-optional-locks log origin/main..HEAD`.** Si hay commits de otro hilo sin publicar, no se
+     empuja: se espera a que su hilo los publique, o se le dice al operador.
+   - El push va por el sha exacto (`git push origin <sha>:refs/heads/main`), por si otro hilo commitea entre la medición y
+     el push.
+   - Lo mismo en cualquier repo donde trabaje más de una cabina a la vez.
 
 ## La primera sesión (el piloto de este hilo), en orden
 

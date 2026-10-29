@@ -82,6 +82,11 @@ lock comprobado después, identidad explícita `-c user.name=ChrissValdez -c use
 4. **La línea del cierre cambia:** «publicado: `<repo>` hasta `<sha>`» o, si algo quedó sin publicar, «toca push — N commits
    sin publicar» con el motivo.
 5. **Un aparato a la vez.** Si al arrancar ves commits de otro aparato que no esperabas, lo dices antes de escribir.
+6. **Dos permisos distintos, y hacen falta los dos.** Las **credenciales de git** de la máquina (que GitHub acepte el push):
+   las pone el operador. Y el **permiso de Claude Code** para correr `git push`: la app lo pregunta, y el operador puede
+   dejarlo permitido. Lo que el operador permita queda en la configuración de esa máquina, así que en la laptop puede
+   volver a preguntar; al cerrar el piloto se decide si esos permisos se versionan en `.claude/settings.json` de esta
+   carpeta, con las formas exactas de comando que se usaron.
 
 ## Revisar a distancia: `cantu-revisiones` (decisión del operador, 2026-10-28, opción A)
 
@@ -103,6 +108,13 @@ Razón del operador: si se va la luz y la PC se apaga, la laptop sigue al día.
 1. **Arranque de las reglas**, con los repos que hay hoy en disco: `aiw`, `Acervo`, `PHD`, y en `projects/`:
    `aiw-console`, `cantu-lessons`, `cantu-quizzes-latex`, `cantu-studio`, `phd-p2-experiment` y `cantu-revisiones`.
    Locks primero.
+1b. **La prueba del push, antes de escribir nada** (el operador, 2026-10-28: «importante verificar que claude code tenga
+   permisos para hacer push, sino los tiene será complicada sincronizar aparatos de forma remota»). En `aiw-console` y
+   en `cantu-lessons`: `git --no-optional-locks pull --ff-only`, que los dos queden en el HEAD que da el relevo o más
+   adelante; `git config --get-all credential.helper`; `git ls-remote origin main`, que debe dar el mismo sha que
+   `origin/main`; y `git push --dry-run origin main`. **Si algo pide usuario o contraseña, o falla, para y lo dice con
+   el error literal**: las credenciales las arregla el operador, no la cabina. La prueba de verdad es el primer push real
+   (paso 3); hasta que no pase, la cabina no se da por mudada.
 2. **Leer el relevo** (`context/handoffs/cantu-lessons.md`, el tercero, del 2026-10-28) y el final del veredicto de
    `cantu-lessons`. Esta carpeta, el relevo y los mensajes del operador de la mudanza los escribió y commiteó la cabina
    de Cowork **en la laptop**; llegaron a la PC por `pull`.

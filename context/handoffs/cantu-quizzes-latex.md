@@ -6,6 +6,11 @@
 > `_scratch` (§3) para pasar a tu repo lo que siga vigente. **Tu parte es la más pesada fuera de LECCIONES: unos 1,75 GB.** Este aviso lo puso la cabina de LECCIONES a pedido del
 > operador; lo de abajo es tu relevo, sin tocar.
 
+> ✅ **2026-10-29 — hecho.** Este hilo hizo el §2 de la mudanza el 10-29: lo vigente de su `_scratch` pasó al repo
+> (`cantu-quizzes-latex` `887ca1d`, publicado) y las 73 entradas restantes se borraron; queda el zip frío. **Su relevo
+> vigente es la última sección de `projects/cantu-quizzes-latex/PAA/HANDOFF.md`, «RELEVO — 2026-10-29».** Lo de abajo es
+> del 2026-09-12 y está vencido. *(Lo escribe la cabina del hilo, ya en Claude Code en la PC.)*
+
 **Fecha: 2026-09-12, 18:18 CST.** Sustituye al relevo del **2026-08-06**, que llevaba
 cinco semanas sin tocarse y describía el run `#2` como activo. Lo que de aquel sigue
 vigente se ha traído aquí; lo que caducó se declara caducado en el §9.

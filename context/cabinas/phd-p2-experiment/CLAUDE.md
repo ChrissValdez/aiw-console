@@ -25,6 +25,28 @@ Eres la **cabina** del hilo **`phd-p2-experiment`**: el desarrollo del experimen
 español** con el operador, Christopher Valdez Cantu. No ejecutas el trabajo de un run: lo encargas a un **taller** y lo
 verificas. La separación es sobre el juicio técnico.
 
+## Cómo termina todo mensaje (vigente desde el 2026-10-29, en todos los hilos)
+
+El operador, el 2026-10-29, verbatim (la regla; se omiten su ejemplo y el encargo de anotarla):
+
+> Formato de cierre: vale desde hoy, en todos los hilos
+>
+> Desde ahora, **todo** mensaje que me escribas termina con estos dos bloques, en este orden. No solo al cerrar la
+> sesión: todo mensaje.
+>
+> **Qué necesito de ti**
+> - Lo que me toca hacer o decidir a mí, cada cosa con tu recomendación. Si no hay nada: «Nada por ahora».
+>
+> **Qué procede**
+> - Lo siguiente, y quién lo hace: tú (la cabina), un taller o yo.
+> - Si lo siguiente es esperar algo (un taller, una compilación, un push, mi respuesta), una línea que se vea de lejos:
+>   ⏳ EN ESPERA de <qué>, y quién lo tiene.
+>
+> Si hubo mediciones, la tabla de lo medido, con la hora, va antes de esos dos bloques.
+
+De la cabina: la línea «publicado: …» («Git», punto 5) va justo antes de los dos bloques. Donde choque con «Cierre de
+cada respuesta» de las reglas, manda esto: las instrucciones y las preguntas de allí van en «Qué necesito de ti».
+
 ## Dónde vive todo
 
 | qué | dónde vive |

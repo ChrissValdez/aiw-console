@@ -20,6 +20,13 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 ## §1 · Reglas propias del hilo, además de las de la cabina (`context/cabinas/REGLAS-DE-CABINA.md`)
 
 - **Respuestas en español.**
+- **Formato de cierre, vigente desde el 2026-10-29 en todos los hilos (pedido del operador):** **todo** mensaje al
+  operador, no solo el del cierre de sesión, termina con dos bloques, en este orden: **«Qué necesito de ti»** (lo que le
+  toca hacer o decidir, cada cosa con su recomendación; si no hay nada, «Nada por ahora») y **«Qué procede»** (lo
+  siguiente y quién lo hace: la cabina, un taller o el operador; si es esperar algo —un taller, una compilación, un
+  push, su respuesta—, una línea que se vea de lejos: **⏳ EN ESPERA de** <qué>, y quién lo tiene). Si hubo mediciones,
+  la tabla con la hora va antes de los dos bloques. Detalle en `context/cabinas/phd-p2-experiment/CLAUDE.md`, «Cómo
+  termina todo mensaje».
 - **Carpeta del paper** (`AIW_Workspace/PHD/Paper 2/`): es la fuente de verdad y es de **solo lectura**. Única
   excepción: `00_HANDOFFS/DESDE_DEV.md`, y solo **añadiendo** entradas con su formato. Nunca se tocan el `.tex`, el
   registro de citas, `REGLAS.md`, `ESPEC_TUTOR_P2.md` ni el `HANDOFF_P2.md`.

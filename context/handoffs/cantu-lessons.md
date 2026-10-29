@@ -78,9 +78,12 @@
 - **Nada.** RW-54 cerró el 2026-10-29: el servidor está en `cantu-revisiones/servidor/`, y su cierre en el veredicto
   («RW-54 terminado»). La vía provisional ya salió del README y del molde v3. Lo que falta es estrenarlo con una galería
   real en `cantu-revisiones/galerias/`.
-- **Pendiente de la palabra del operador:** el falso ROJO de la escala de letra en la PC. Toda web compilada aquí sale
-  en ROJO porque `docs/referencias/escala-de-letra.css` se saca en CRLF (md5 `829e22d1`) y el bloque es LF (`f6c1a477`,
-  el del blob). La cabina recomienda `docs/referencias/escala-de-letra.css text eol=lf` en el `.gitattributes`.
+- **El falso ROJO de la escala de letra en la PC está arreglado** (`cantu-lessons` `9d67825`, «Sí, aplícala»): el
+  `.gitattributes` saca `docs/referencias/escala-de-letra.css` en LF. Siguen en CRLF en la PC los moldes CSS que se
+  copian «byte a byte» (`docs/moldes/RW-06/*.css`): va al ticket de herramientas.
+- **Compiladas en la PC** (2026-10-29): la web de L16 (AMARILLO, solo por palabras de prosa), la web de L03 (VERDE) y
+  las slides de L02 y L03 (VERDE). Las demás lecciones no se han compilado en la PC: sus páginas no están en git y no
+  llegaron con la copia.
 
 ## Pendientes
 

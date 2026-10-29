@@ -84,9 +84,23 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     `67a2a6bc5d2bd96cf384f46ad8dc6c80` (860 líneas) antes de añadir nada. El operador ya aprobó que, tras cada entrada,
     la cabina commitee y publique en `PHD` solo ese fichero (2026-10-29, «Sí, solo ese fichero»; `CLAUDE.md`, «El canal
     con el paper»).
-  - Rehacer la `.venv` en la PC (sale de `requirements.lock`): la suite debe dar 3371 passed. **En la PC no hay
-    Python** (medido el 2026-10-29: ni `py` ni intérprete; `python` es el alias de la Microsoft Store): primero lo
-    instala el operador (el lock está resuelto para 3.10 y 3.12).
+  - **La `.venv` está rehecha** (2026-10-29, 19:37–19:38 UTC). El operador instaló Python 3.12.10 con
+    `winget install --id Python.Python.3.12 -e --source winget`, para su usuario
+    (`C:\Users\chris\AppData\Local\Programs\Python\Python312\`; el lanzador `py.exe` está en `…\Python\Launcher\`).
+    Una consola abierta antes de instalar no ve el `PATH` nuevo, y la app tampoco: la cabina llama a `py` por su ruta
+    completa. La suite da **3370 passed, 1 skipped, 25 deselected** (19:55 UTC). La omitida es
+    `tests/test_manual_server.py:508`, que necesita crear un enlace simbólico (`WinError 1314`; hace falta el Modo de
+    programador o ser administrador). La cabina recomendó dejarla así; el operador no se ha pronunciado.
+  - **El checkout de la PC escribía CRLF** (medido el 2026-10-29). El Git de la PC trae `core.autocrlf=true` en
+    `C:/Program Files/Git/etc/gitconfig`. En la laptop este repo tenía `core.autocrlf=false` en su `.git/config`
+    (`docs/runs/RUN-P2-TUTOR-LAUNCHER-001.md`, D7), y eso no viajó. Con `* text=auto`, 307 de los 381 ficheros quedaron
+    en CRLF y 4 tests fallaban: los ejemplos `.jsonl` del contrato traían CR. A la pregunta «¿Pongo `core.autocrlf
+    input` en phd-p2-experiment y paso los 307 ficheros a LF?», el operador contestó «Sí, adelante» (2026-10-29). La
+    cabina puso `core.autocrlf input` en el `.git/config` de `phd-p2-experiment` (solo ahí) y pasó los 307 a LF. Cada
+    uno se escribió solo si quedaba idéntico a su blob del índice: cuadraron 307 de 307. Un `git add` de esas rutas
+    puso el índice al día sin cambiar contenido (`diff --cached` vacío; `status` limpio). Para un clon nuevo en Windows,
+    lo duradero es del repo: un `.gitattributes` que fije LF (por ejemplo `*.jsonl text eol=lf`). Va en el próximo
+    ticket de DEVELOPMENT.
   - **El adaptador de Claude acepta solo `2.1.226 (Claude Code)`** (`src/p2exp/llm/claude.py`, `MEASURED_VERSIONS`) y en
     la PC hay `2.1.284` (medido el 2026-10-29): el evaluador de PAF se niega aquí hasta que un taller corra las pruebas
     gratis de `tests/integration/test_claude_live.py` y añada la versión si pasan (`AGENTS.md`). Va en el próximo ticket

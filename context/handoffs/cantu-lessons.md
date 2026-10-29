@@ -75,13 +75,12 @@
 
 ## En vuelo
 
-- **RW-54**: el operador lo lanzó el 2026-10-28 como sesión de la app («RW-54 · El servidor de las galerías»). Cuando
-  termine, la cabina:
-  1. lee `docs/informes/RW-54.md`, mide el servidor contra el ticket y commitea `servidor/servidor-galeria.mjs` en
-     `cantu-revisiones` y el informe en `cantu-lessons`;
-  2. pone el comando que entregue en el README de `cantu-revisiones`;
-  3. si el servidor nuevo funciona, quita del README y del molde v3 la vía provisional (copiar el servidor de RW-53 a
-     `galerias/<ticket>/trabajo/`).
+- **Nada.** RW-54 cerró el 2026-10-29: el servidor está en `cantu-revisiones/servidor/`, y su cierre en el veredicto
+  («RW-54 terminado»). La vía provisional ya salió del README y del molde v3. Lo que falta es estrenarlo con una galería
+  real en `cantu-revisiones/galerias/`.
+- **Pendiente de la palabra del operador:** el falso ROJO de la escala de letra en la PC. Toda web compilada aquí sale
+  en ROJO porque `docs/referencias/escala-de-letra.css` se saca en CRLF (md5 `829e22d1`) y el bloque es LF (`f6c1a477`,
+  el del blob). La cabina recomienda `docs/referencias/escala-de-letra.css text eol=lf` en el `.gitattributes`.
 
 ## Pendientes
 

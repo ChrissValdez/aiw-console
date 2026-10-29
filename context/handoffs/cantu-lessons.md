@@ -73,11 +73,18 @@
 - **La enmienda a D-081:** lo que por regla no entra a git se copia a mano y se verifica con el manifiesto.
 - **Borrado** `AIW_Workspace\_cabina-lecciones\`, que estaba vacía. **`npm ci`** en `cantu-lessons/tools/render`.
 
-## En vuelo (puesto al día el 2026-10-29 a las 10:57)
+## En vuelo (puesto al día el 2026-10-29 a las 15:51)
 
-- **RW-58**, L02·D5, el ± y el aire del recuadro de «La fórmula general»: corre en su sesión, lanzado por el operador.
-- **RW-59**, la tanda 2 de slides (L03 a L08), con galería en `cantu-revisiones/galerias/RW-59/`: escrito
-  (`cantu-lessons` `e125ac5`). **Se lanza cuando cierre RW-58**, porque copia de L02.
+- **RW-59**, la tanda 2 de slides (L03 a L08), con galería en `cantu-revisiones/galerias/RW-59/`: corre en su sesión
+  (Opus 5.5 max). La aprobación va **por escena** (el operador: «palomeando y filtrando slides»):
+  - la ronda 2 la votó entera (verbatim en el veredicto, `7205b6c`);
+  - las escenas aprobadas ya están escritas en los borradores, con 6 etiquetas nuevas en el registro, y L01 a L08
+    compilan en 🟢 VERDE (`cantu-lessons` `526f863`);
+  - **la galería de la ronda 3** lleva solo las 11 slides pendientes (`cantu-revisiones` `7075e14`): falta su voto.
+  - Sus votos de la ronda 2 están en `respuestas.json` (md5 `e85888e5`), **sin publicar**: los publica el Enter en la
+    ventana del botón.
+  - Al cerrar: lo aprendido a la regla 41 (S1, S2, S3 y los dos patrones candidatos, frío y cálido en pareja y la
+    tarjeta del problema con imagen), la revisión final de cada lección y su estado.
 - **RW-57**, que el índice tenga siempre las 29 lecciones, con el código de cada una versionado: escrito. Va cuando
   ningún taller compile, porque cambia `tools/revision/`; con RW-59 en marcha, entre dos de sus rondas.
 - **El método de tandas lo aprobó el operador** («Sí, escríbela»):
@@ -94,6 +101,7 @@
 
 - **RW-54** (el servidor de las galerías), **RW-55** (el riel de L02·D9), **RW-56** (el botón
   `cantu-revisiones/abrir-galeria.cmd`, `a0c716a`) y la **regla 41 v63**.
+- **RW-58** (L02·D5, el ± y el aire del recuadro), en dos rondas: «D5 aprobada»; **regla 41 v64** (el ± de slide).
 - **Las slides de L01 y L02, «Aprobadas»** (`cantu-lessons` `3cba4fe`).
 - **El falso ROJO de la escala de letra**, arreglado en el `.gitattributes` (`9d67825`).
 - **D-082:** el cierre de todo mensaje con «Qué necesito de ti» y «Qué procede».

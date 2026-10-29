@@ -18,6 +18,13 @@
 > tabla de lo medido, con la hora, va antes de los dos bloques. En este hilo está también en
 > `projects/cantu-quizzes-latex/CABINA.md` §6.4.
 
+> 📌 **Git en `aiw-console`: el checkout es compartido (D-081, «Segunda enmienda», 2026-10-29).** Las cabinas en Claude
+> Code comparten aquí el índice y la rama. **El commit va siempre con ruta**: `git commit -F <msg> -- <ruta>`, después de
+> mirar `git diff --cached --name-only`. **Antes del push, `git log origin/main..HEAD`** (después de un `fetch`): si hay
+> commits de otro hilo, no se empuja, y se espera a su hilo o se le dice al operador. Si solo está lo propio, se publica
+> por sha exacto (`git push origin <sha>:refs/heads/main`). En este hilo está también en
+> `projects/cantu-quizzes-latex/CABINA.md` §5.11.
+
 **Fecha: 2026-09-12, 18:18 CST.** Sustituye al relevo del **2026-08-06**, que llevaba
 cinco semanas sin tocarse y describía el run `#2` como activo. Lo que de aquel sigue
 vigente se ha traído aquí; lo que caducó se declara caducado en el §9.

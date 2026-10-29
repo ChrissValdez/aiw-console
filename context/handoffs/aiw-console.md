@@ -6,6 +6,9 @@
 > `_scratch` (§3) para pasar a tu repo lo que siga vigente. Este aviso lo puso la cabina de LECCIONES a pedido del
 > operador; lo de abajo es tu relevo, sin tocar.
 
+> ✅ **Hecho por este hilo el 2026-10-29, en la PC.** Arranque de §2 de la mudanza, y revisión de su parte de `_scratch`:
+> lo vigente (las herramientas de captura del `#78`) se copió a `tools/capturas/`. Detalle en el §8 de este relevo.
+
 **Fecha:** 2026-10-21 · **Sustituye** al relevo del 2026-09-25 (mudanza de computadora, `#64` activo).
 Esta sesión corrió en la **máquina nueva**, del 2026-10-04 al 2026-10-21.
 
@@ -188,3 +191,49 @@ Todos en `context/aiw-console/records/`:
 
 Las capturas y comparaciones del `#78` están fuera del repo, en
 `C:\Users\chris\Documents\AIW_Workspace\_scratch\pulido-ui-78\`, y son desechables.
+
+---
+
+## 8. LA MUDANZA A LA PC (D-081), hecha el 2026-10-29
+
+**Dónde se trabaja ahora.** La PC (`desktop-525k0is`). Git es la fuente de verdad entre la PC y la laptop: **pull antes de
+escribir, un aparato a la vez.** El push sigue siendo del operador (este hilo sigue en Cowork). **La cabina de LECCIONES,
+ya en Claude Code, también escribe y publica en este repo** (`context/cabinas/`, su relevo, `DECISIONES.md`): el 2026-10-29
+el HEAD se movió mientras esta cabina medía. Por eso, `fetch` justo antes de cada escritura y `add` por nombre.
+
+**Lo que cambia en la máquina, medido el 2026-10-29:**
+
+- **En la PC git deja los ficheros con CRLF** (`git ls-files --eol` da `i/lf w/crlf`); en la laptop los dejaba con LF. El md5
+  del canónico en disco es el de CRLF y no coincide con el de los relevos escritos en la laptop: quitando los CR sale el
+  mismo. **Todo md5 que se publique dice si es de CRLF o de LF.** El motor respeta el final de línea del fichero, y el
+  test del `#76` no depende de él.
+- **Sin permiso de borrado, git no funciona**: el primer `fetch` dejó `.git/objects/maintenance.lock`. Se pide el permiso
+  al abrir la sesión, sobre `C:\Users\chris\Documents\AIW_Workspace`.
+- **GitHub responde desde la VM de la cabina** (`ls-remote` y `fetch` funcionan). El push sigue siendo del operador.
+
+**`_scratch`: lo que se revisó.** La lista de §3 de `context/cabinas/MUDANZA-2026-10-28.md` daba 32 entradas a este hilo.
+
+- **Copiadas a `tools/capturas/`, sin cambiar un byte** (comprobado con `cmp`): el programa de capturas, el que monta la
+  comparación y los planes del `#78`, de `_scratch/pulido-ui-78/herramientas/` y `…/ampliacion/herramientas/`. Su README
+  dice de dónde viene cada fichero y qué hay que ajustar antes de reusarlo. Se reusan al reanudar la auditoría.
+- **Ya estaban en el repo:** los dos reportes del `#78` (`REPORTE-TALLER-78-…` y `REPORTE-AMPLIACION-78-…`). Mismo texto,
+  sólo cambian los finales de línea.
+- **No vigentes, se quedan en `_scratch`** (desechables):
+  - las capturas y las páginas de comparación del `#78` (unos 33 MB): los veredictos ya están escritos;
+  - 22 programas de los runs `#47` a `#56` (`abrir-*`, `cerrar-*`, `insertar-*`, `enmendar-51`), de agosto, de cuando el
+    canónico se escribía de otra forma. `cerrar-48.mjs` y `prueba-canonico-lf.json` sólo los cita un record fechado
+    (`CIERRE-48`), como procedencia;
+  - `dsr-head.txt`, `cabina-arranque-20260823.mjs` y `cuenta-lineas-arboles.mjs` (estos dos, casi seguro de este hilo).
+- **No son de este hilo**, aunque la lista de §3 se los daba; nombrados, no tocados: `cabina-20260828`,
+  `msg-prompt-guarda-indice.txt`, `msg-records-2026-09-14.txt`, `msg-records-valvula-qatemp.txt`,
+  `msg-run-lista-canonico.txt` y `commitear-records-cabina.ps1`, que son de **Cantu Studio** por su contenido.
+- **Lo que «cita este repo» lo citan sobre todo documentos de otros hilos** que viven aquí (`context/` es de todos): `RW-15`,
+  `RW-53`, `cabina` y `_LEC_variantes5` son de LECCIONES; `banco-procedimiento.json` y `cabina-cs-20260930`, de Cantu
+  Studio.
+- **Para el hilo de CQL:** su relevo dice que sus herramientas viven en `_scratch/cql-lectura-simulador/`, y **esa carpeta
+  no existe en la PC**.
+
+**Nada se borró de `_scratch`.** Borrar es sólo con la palabra del operador.
+
+**Respaldos de antes de escribir el canónico:** siguen yendo a `_scratch` y se borran al terminar la misma operación.
+Con D-081 encaja: duran minutos y nada depende de ellos.

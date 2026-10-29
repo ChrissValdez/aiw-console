@@ -1,0 +1,13 @@
+{
+  "base": "http://127.0.0.1:8797/project-console/index.html",
+  "shots": [
+    { "name": "P-1440x900", "steps": ["await h.waitFor('.portfolio-project'); await h.sleep(400);"] },
+    { "name": "P-1440-completo", "full": "#view-portfolio .content", "steps": ["await h.waitFor('.portfolio-project'); await h.sleep(400);"],
+      "measure": "[...document.querySelectorAll('.portfolio-project')].map(c => ({ key: c.dataset.portfolioKey, h: Math.round(c.getBoundingClientRect().height), cols: [...c.children].map(x => Math.round(x.getBoundingClientRect().height)) }))" },
+    { "name": "P-1024x900", "width": 1024, "steps": ["await h.waitFor('.portfolio-project'); await h.sleep(400);"] },
+    { "name": "P-1024-completo", "width": 1024, "full": "#view-portfolio .content", "steps": ["await h.waitFor('.portfolio-project'); await h.sleep(400);"],
+      "measure": "[...document.querySelectorAll('.portfolio-project')].map(c => ({ key: c.dataset.portfolioKey, h: Math.round(c.getBoundingClientRect().height), cols: [...c.children].map(x => Math.round(x.getBoundingClientRect().height)) }))" },
+    { "name": "F-degradada-1440", "base": "http://127.0.0.1:8798/project-console/index.html", "full": "#view-portfolio .content", "steps": ["await h.waitFor('.portfolio-project-degraded'); await h.sleep(400);"] },
+    { "name": "F-degradada-1024", "width": 1024, "base": "http://127.0.0.1:8798/project-console/index.html", "full": "#view-portfolio .content", "steps": ["await h.waitFor('.portfolio-project-degraded'); await h.sleep(400);"] }
+  ]
+}

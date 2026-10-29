@@ -1,0 +1,73 @@
+{
+  "base": "http://127.0.0.1:8797/project-console/index.html",
+  "shots": [
+    { "name": "S02-portfolio", "steps": ["await h.waitFor('.portfolio-project');"] },
+    { "name": "S02-portfolio-1024", "width": 1024, "steps": ["await h.waitFor('.portfolio-project');"] },
+    { "name": "S01-sidebar-collapsed", "steps": ["await h.waitFor('.portfolio-project'); await h.click('#shell-collapse');"] },
+
+    { "name": "S04-run-queue-aiw", "steps": ["await h.project('aiw-console');"] },
+    { "name": "S04-run-queue-aiw-1024", "width": 1024, "steps": ["await h.project('aiw-console');"] },
+    { "name": "S04-run-queue-history-open", "steps": ["await h.project('aiw-console'); await h.click('[data-v3-group=\"history\"]'); await h.scrollToEl('#view-project .content', '[data-v3-group=\"history\"]', 16);"] },
+
+    { "name": "S05-run-detail-79", "steps": ["await h.project('aiw-console'); await h.clickRun(79);"] },
+    { "name": "S05-run-detail-79-1024", "width": 1024, "steps": ["await h.project('aiw-console'); await h.clickRun(79);"] },
+    { "name": "S05-run-detail-79-bottom", "steps": ["await h.project('aiw-console'); await h.clickRun(79); await h.scrollTo('#drawer-body', 99999);"] },
+    { "name": "S05-run-detail-78-active", "steps": ["await h.project('aiw-console'); await h.clickRun(78);"] },
+    { "name": "S05-run-detail-77-completed", "steps": ["await h.project('aiw-console'); await h.clickRun(77);"] },
+    { "name": "S05-run-detail-77-completed-bottom", "steps": ["await h.project('aiw-console'); await h.clickRun(77); await h.scrollTo('#drawer-body', 99999);"] },
+    { "name": "S05-run-detail-phd-5-unclassified", "steps": ["await h.project('phd-p2-experiment'); await h.clickRun(5); await h.scrollTo('#drawer-body', 99999);"] },
+
+    { "name": "S07-roadmap-tree", "steps": ["await h.project('aiw-console'); await h.click('.segment[data-subview=\"v3roadmap\"]');"] },
+    { "name": "S07-roadmap-tree-1024", "width": 1024, "steps": ["await h.project('aiw-console'); await h.click('.segment[data-subview=\"v3roadmap\"]');"] },
+    { "name": "S07-roadmap-tree-phases", "steps": ["await h.project('aiw-console'); await h.click('.segment[data-subview=\"v3roadmap\"]'); await h.scrollToEl('#view-project .content', '.v3-phase', 24);"] },
+    { "name": "S07-roadmap-tree-archive", "steps": ["await h.project('cantu-studio'); await h.click('.segment[data-subview=\"v3roadmap\"]'); await h.click('[data-v3-archive-toggle]'); await h.scrollToEl('#view-project .content', '.v3-archive-section', 24);"] },
+
+    { "name": "S08-project-config-aiw", "steps": ["await h.project('aiw-console'); await h.click('#project-config-open'); await h.waitFor('#project-config.open');"] },
+    { "name": "S08-project-config-phd", "steps": ["await h.project('phd-p2-experiment'); await h.click('#project-config-open'); await h.waitFor('#project-config.open');"] },
+    { "name": "S08-project-config-aiw-editing", "steps": ["await h.project('aiw-console'); await h.editOn(); await h.click('#project-config-open'); await h.waitFor('#project-config.open .care-budget-input');"] },
+
+    { "name": "S09-edit-mode-tree", "steps": ["await h.project('aiw-console'); await h.editOn(); await h.click('.segment[data-subview=\"v3roadmap\"]'); await h.waitFor('[data-v3edit-tree-phase]'); await h.scrollToEl('#view-project .content', '.v3-phase', 24);"] },
+    { "name": "S09-edit-mode-queue", "steps": ["await h.project('aiw-console'); await h.editOn();"] },
+
+    { "name": "S10-editor-run-79", "steps": ["await h.project('aiw-console'); await h.editOn(); await h.clickRun(79); await h.click('.v3-edit-drawer-btn'); await h.waitFor('#edit-modal.open .v3-modal-edit');"] },
+    { "name": "S10-editor-run-79-1024", "width": 1024, "steps": ["await h.project('aiw-console'); await h.editOn(); await h.clickRun(79); await h.click('.v3-edit-drawer-btn'); await h.waitFor('#edit-modal.open .v3-modal-edit');"] },
+    { "name": "S10-editor-run-79-mid", "steps": ["await h.project('aiw-console'); await h.editOn(); await h.clickRun(79); await h.click('.v3-edit-drawer-btn'); await h.waitFor('#edit-modal.open .v3-modal-edit'); await h.scrollToEl('#edit-modal-body', '[data-v3edit-op=\"set-deps\"]', 16);"] },
+    { "name": "S10-editor-run-79-classification", "steps": ["await h.project('aiw-console'); await h.editOn(); await h.clickRun(79); await h.click('.v3-edit-drawer-btn'); await h.waitFor('#edit-modal.open .v3-modal-edit'); await h.scrollToEl('#edit-modal-body', '[data-v3edit-op=\"set-classification\"]', 16);"] },
+    { "name": "S10-editor-run-79-bottom", "steps": ["await h.project('aiw-console'); await h.editOn(); await h.clickRun(79); await h.click('.v3-edit-drawer-btn'); await h.waitFor('#edit-modal.open .v3-modal-edit'); await h.scrollTo('#edit-modal-body', 99999);"] },
+    { "name": "S10-editor-phase", "steps": ["await h.project('aiw-console'); await h.editOn(); await h.click('.segment[data-subview=\"v3roadmap\"]'); await h.click('[data-v3edit-tree-phase]'); await h.waitFor('#edit-modal.open .v3-modal-edit');"] },
+    { "name": "S10-editor-objective", "steps": ["await h.project('aiw-console'); await h.editOn(); await h.click('.segment[data-subview=\"v3roadmap\"]'); await h.click('[data-v3edit-tree-objective]'); await h.waitFor('#edit-modal.open .v3-modal-edit');"] },
+    { "name": "S10-editor-insert", "steps": ["await h.project('aiw-console'); await h.editOn(); await h.click('.segment[data-subview=\"v3roadmap\"]'); await h.click('[data-v3edit-tree-add]'); await h.waitFor('#edit-modal.open .v3-modal-edit');"] },
+
+    { "name": "S12-overview", "steps": ["await h.project('aiw-console'); await h.tab('overview');"] },
+    { "name": "S12-overview-1024", "width": 1024, "steps": ["await h.project('aiw-console'); await h.tab('overview');"] },
+    { "name": "S12-overview-cantu-studio", "steps": ["await h.project('cantu-studio'); await h.tab('overview');"] },
+    { "name": "S13-history", "steps": ["await h.project('aiw-console'); await h.tab('history'); await h.waitFor('.v3-hist-row');"] },
+    { "name": "S14-docs-aiw", "steps": ["await h.project('aiw-console'); await h.tab('docs'); await h.waitFor('.docs-nav-item'); await h.waitFor('.docs-body .docs-body-h, .docs-body p');"] },
+    { "name": "S14-docs-aiw-1024", "width": 1024, "steps": ["await h.project('aiw-console'); await h.tab('docs'); await h.waitFor('.docs-nav-item'); await h.waitFor('.docs-body .docs-body-h, .docs-body p');"] },
+    { "name": "S14-docs-cantu-studio-scrolled", "steps": ["await h.project('cantu-studio'); await h.tab('docs'); await h.waitFor('.docs-nav-item'); await h.scrollTo('.docs-nav', 800);"] },
+    { "name": "S15-status-governance", "steps": ["await h.project('aiw-console'); await h.tab('status');"] },
+    { "name": "S15-status-diagnostics", "steps": ["await h.project('aiw-console'); await h.tab('status'); await h.click('a[href=\"#status-diagnostics\"]');"] },
+    { "name": "S16-lane-picker-phd", "steps": ["await h.project('phd-p2-experiment'); await h.waitFor('#v3-lane-select');"] },
+
+    { "name": "S17-run-report-section", "steps": ["await h.project('cantu-quizzes-latex'); await h.clickRun(2); await h.scrollToEl('#drawer-body', '.rrs-present', 90);"] },
+    { "name": "S18-run-report", "settle": 1500, "steps": ["await h.project('cantu-quizzes-latex'); await h.clickRun(2); await h.click('[data-run-report-open]'); await h.waitFor('#run-report-view.open .rr-root');"] },
+
+    { "name": "S06-doc-reader-list", "steps": ["await h.project('cantu-quizzes-latex'); await h.clickRun(2); await h.click('.v3-docs-door'); await h.waitFor('#doc-side-reader.open .docs-nav-item');"] },
+    { "name": "S06-doc-reader-list-scrolled", "steps": ["await h.project('cantu-quizzes-latex'); await h.clickRun(2); await h.click('.v3-docs-door'); await h.waitFor('#doc-side-reader.open .docs-nav-item'); await h.scrollTo('#doc-side-reader-index', 1000);"] },
+    { "name": "S06-doc-reader-doc-tables", "settle": 1200, "steps": ["await h.project('cantu-quizzes-latex'); await h.clickRun(2); await h.click('.v3-docs-door'); await h.waitFor('#doc-side-reader.open .docs-nav-item'); await h.type('#doc-side-reader-filter [data-doc-title-filter]', 'Estado del proyecto'); await h.click('#doc-side-reader-docs [data-dsr-doc]'); await h.waitFor('.dsr-measure .docs-body'); await h.sleep(600); await h.scrollToEl('#doc-side-reader-scroll', '.dsr-measure .docs-table-wrap', 120);"] },
+    { "name": "S06-doc-reader-doc-1024", "width": 1024, "settle": 1200, "steps": ["await h.project('cantu-quizzes-latex'); await h.clickRun(2); await h.click('.v3-docs-door'); await h.waitFor('#doc-side-reader.open .docs-nav-item'); await h.type('#doc-side-reader-filter [data-doc-title-filter]', 'Estado del proyecto'); await h.click('#doc-side-reader-docs [data-dsr-doc]'); await h.waitFor('.dsr-measure .docs-body'); await h.sleep(600);"] },
+
+    { "name": "F-portfolio-degraded", "base": "http://127.0.0.1:8798/project-console/index.html", "steps": ["await h.waitFor('.portfolio-project-degraded');"] },
+    { "name": "F-html-report-section", "base": "http://127.0.0.1:8799/project-console/index.html", "steps": ["await h.project('html-reports-qa'); await h.clickRun(1); await h.sleep(600); await h.scrollToEl('#drawer-body', '.rhr-section', 60);"] },
+    { "name": "F-batch-picker", "base": "http://127.0.0.1:8800/project-console/index.html", "steps": ["await h.project('batches'); await h.waitFor('#v3-batch-select');"] },
+    { "name": "F-lanes-run-queue", "base": "http://127.0.0.1:8801/project-console/index.html", "steps": ["await h.project('lanes');"] },
+    { "name": "F-lanes-roadmap-tree", "base": "http://127.0.0.1:8801/project-console/index.html", "steps": ["await h.project('lanes'); await h.click('.segment[data-subview=\"v3roadmap\"]');"] },
+    { "name": "F-lanes-detail-held-by-barrier", "base": "http://127.0.0.1:8801/project-console/index.html", "steps": ["await h.project('lanes'); await h.clickRun(6);"] },
+    { "name": "F-lanes-detail-barrier-run", "base": "http://127.0.0.1:8801/project-console/index.html", "steps": ["await h.project('lanes'); await h.clickRun(5);"] },
+    { "name": "F-lanes-detail-deps-by-lane", "base": "http://127.0.0.1:8801/project-console/index.html", "steps": ["await h.project('lanes'); await h.clickRun(12);"] },
+    { "name": "F-lanes-editor-lane-barrier", "base": "http://127.0.0.1:8801/project-console/index.html", "steps": ["await h.project('lanes'); await h.editOn(); await h.clickRun(6); await h.click('.v3-edit-drawer-btn'); await h.waitFor('#edit-modal.open .v3-modal-edit'); await h.scrollToEl('#edit-modal-body', '[data-v3edit-op=\"set-lane\"]', 16);"] },
+    { "name": "F-lanes-remove-refusal", "base": "http://127.0.0.1:8801/project-console/index.html", "settle": 1200, "steps": ["await h.project('lanes'); await h.editOn(); await h.clickRun(4); await h.click('.v3-edit-drawer-btn'); await h.waitFor('#edit-modal.open .v3-modal-edit'); await h.click('button[data-v3edit-op=\"remove\"]'); await h.waitText('#v3-edit-preview', 'dependents'); await h.sleep(300); await h.scrollTo('#edit-modal-body', 99999);"] },
+    { "name": "F-lanes-preview-diff", "base": "http://127.0.0.1:8801/project-console/index.html", "settle": 1200, "steps": ["await h.project('lanes'); await h.editOn(); await h.clickRun(6); await h.click('.v3-edit-drawer-btn'); await h.waitFor('#edit-modal.open .v3-modal-edit'); const t = await h.waitFor('[data-v3edit-title]'); await h.type('[data-v3edit-title]', t.value + ' (QA)'); await h.click('[data-v3edit-batch]'); await h.waitText('#v3-edit-preview', 'Confirm'); await h.sleep(300); await h.scrollTo('#edit-modal-body', 99999);"] },
+    { "name": "F-lanes-project-config-unconfigured", "base": "http://127.0.0.1:8801/project-console/index.html", "steps": ["await h.project('lanes'); const c = document.querySelector('#project-config-open'); if (c && !c.hidden) { await h.click('#project-config-open'); await h.waitFor('#project-config.open'); }"] }
+  ]
+}

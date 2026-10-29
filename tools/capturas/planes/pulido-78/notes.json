@@ -1,0 +1,94 @@
+{
+  "title": "Pulido visual de la consola — antes / después (run #78)",
+  "intro": "RUN-CONSOLE-UI-POLISH-001 · aiw-console en c2be3dd, sin commitear. Capturas a 1440×900 (y a 1024 de ancho donde el amontonamiento cambia), tomadas con Chrome sin cabeza por el protocolo DevTools, mismo guion antes y después. Las superficies S1–S18 son las de la guía de recorrido del #77; las F- se sirven desde los registros de tests/fixtures con PC_REGISTRY. Ninguna etiqueta en pantalla cambió de texto; ningún botón que escribe fue pulsado.",
+  "groups": [
+    {
+      "title": "Los ejemplos del operador",
+      "items": [
+        { "shot": "S10-editor-run-79", "surface": "Edit run #79 (editor, arriba)", "note": "Los títulos de bloque suben medio punto y pasan a blanco para separarse de las etiquetas de campo; las notas ganan interlineado y se cortan a 78 caracteres por línea; el campo «Move to position» deja el cuadro claro del navegador y toma el estilo de los demás campos, acotado a 180 px." },
+        { "shot": "S10-editor-run-79-mid", "surface": "Edit run #79 (Dependencies · Waits on a person · Barrier)", "note": "Misma jerarquía de bloques; las notas largas ya no corren a 150 caracteres por línea." },
+        { "shot": "S10-editor-run-79-classification", "surface": "Edit run #79 (Classification · Status)", "note": "Selects con cursor de mano y anillo de foco en acento en vez del blanco del navegador." },
+        { "shot": "S10-editor-run-79-bottom", "surface": "Edit run #79 (acciones · Swap · Remove)", "note": "«Preview all changes» deja de estirarse a todo el ancho y pasa a ser el botón de acento del editor, con su nota al lado; los «Preview swap» / «Preview removal» siguen secundarios." },
+        { "shot": "S10-editor-run-79-1024", "surface": "Edit run #79 a 1024 px", "note": "Mismos cambios en la ventana estrecha." },
+        { "shot": "S10-editor-phase", "surface": "Edit phase", "note": "Cabecera del modal un punto más compacta; botón de acción con peso propio." },
+        { "shot": "S10-editor-objective", "surface": "Edit objective", "note": "La casilla «Archived» y su rótulo quedan en una sola línea (antes la casilla iba encima del texto en mayúsculas)." },
+        { "shot": "S10-editor-insert", "surface": "Insert run", "note": "El campo numérico «Position» toma el estilo de la consola y se acota; el resto igual." },
+        { "shot": "S05-run-detail-79", "surface": "Detalle del run #79 (arriba)", "note": "El run_id sube un paso de contraste; los contadores de sección pasan a píldora; las etiquetas de clasificación caben en una línea (columna de 72 → 128 px)." },
+        { "shot": "S05-run-detail-79-bottom", "surface": "Detalle del run #79 (Classification · Progress)", "note": "El texto amontonado: las etiquetas «Correctness model», «Failure surfaces», «Classified at» ya no se parten; la marca «derived» va bajo su etiqueta en las dos filas; el texto del cierre deja el mono verde de 12,5 px y se lee como frase." },
+        { "shot": "S05-run-detail-79-1024", "surface": "Detalle del run #79 a 1024 px", "note": "El cajón conserva sus 560 px; mismos cambios." },
+        { "shot": "S05-run-detail-78-active", "surface": "Detalle del run #78 (activo)", "note": "La nota «No risk classification yet…» pasa de mono 12,5 px a frase de 13 px; contador en píldora." },
+        { "shot": "S05-run-detail-77-completed-bottom", "surface": "Detalle del run #77 (cerrado, Progress)", "note": "El cierre largo (quince líneas) se lee en sans 13,5 px; «run closed» conserva su mono verde." },
+        { "shot": "S05-run-detail-phd-5-unclassified", "surface": "Detalle del #5 de Phd P2 Experiment (H1)", "note": "H1: el «Classification 0» ya no es un cero suelto junto al título sino una píldora contadora, la misma que usan los grupos de la cola. La palabra de unidad va como propuesta en el reporte." },
+        { "shot": "S02-portfolio", "surface": "Project Portfolio", "note": "Las tres columnas de cada tarjeta arrancan arriba (antes se centraban y el nombre flotaba a media altura); «Open Project» se ancla al pie de la tarjeta; en «Awaiting a verdict» la cifra se pega al nombre del proyecto en vez de flotar a media anchura; las etiquetas de los contadores van en versalitas." },
+        { "shot": "S02-portfolio-1024", "surface": "Project Portfolio a 1024 px", "note": "La fila de estado que baja a lo ancho pone el estado y el botón en una sola línea." },
+        { "shot": "S04-run-queue-aiw", "surface": "Roadmap › Run Queue (etiquetas)", "note": "Las etiquetas de clase, gravedad y cierre dejan de ir en línea con el texto del título: el título es ahora una línea que envuelve y las etiquetas caen como grupo, centradas en su línea; los contadores de sub-pestaña suben un paso de contraste." },
+        { "shot": "S04-run-queue-aiw-1024", "surface": "Roadmap › Run Queue a 1024 px", "note": "La barra de herramientas ya no se corta (antes «Edit roadmap» quedaba fuera): bajo 1180 px los controles pasan a una segunda línea; las etiquetas de un título partido en dos líneas ya no quedan repartidas." }
+      ]
+    },
+    {
+      "title": "El armazón y la portada",
+      "items": [
+        { "shot": "S01-sidebar-collapsed", "surface": "Barra lateral plegada", "note": "Sin cambio visible; el foco con teclado de los ítems lleva ahora anillo de acento." },
+        { "shot": "F-portfolio-degraded", "surface": "Project Portfolio con un proyecto degradado (fixture multi)", "note": "Mismo alineado arriba; la tarjeta degradada conserva su chip ámbar; el título largo de la marca termina en elipsis." }
+      ]
+    },
+    {
+      "title": "Roadmap: cola, árbol, modo edición",
+      "items": [
+        { "shot": "S04-run-queue-history-open", "surface": "Run Queue › History desplegado", "note": "Filas cerradas: el «#N» y el título como línea envolvente; nada más cambia." },
+        { "shot": "S07-roadmap-tree", "surface": "Roadmap › Roadmap (objetivos)", "note": "Sin cambio de diseño; las etiquetas de las filas siguen la nueva regla." },
+        { "shot": "S07-roadmap-tree-phases", "surface": "Roadmap › Roadmap (fases)", "note": "Filas de fase: igual; el foco con teclado gana anillo." },
+        { "shot": "S07-roadmap-tree-1024", "surface": "Roadmap › Roadmap a 1024 px", "note": "La barra de herramientas pasa a dos líneas bajo 1180 px." },
+        { "shot": "S07-roadmap-tree-archive", "surface": "Roadmap › Archive (Cantu Studio)", "note": "Sin cambio." },
+        { "shot": "S09-edit-mode-tree", "surface": "Editing on › árbol con Edit / Add run", "note": "El «N of M done» deja de irse al centro de la banda: queda a la derecha y los botones le siguen." },
+        { "shot": "S09-edit-mode-queue", "surface": "Editing on › Run Queue", "note": "El botón «Editing on» marca su estado pulsado con fondo y borde de acento." },
+        { "shot": "S16-lane-picker-phd", "surface": "Selector LANE (Phd P2 Experiment)", "note": "Etiquetas de carril en la fuente mono de la consola (antes caían en la mono del sistema porque el token `--mono` no existía)." },
+        { "shot": "F-batch-picker", "surface": "Selector Batch (fixture batches)", "note": "El aviso ámbar de fuentes opcionales se lee como un párrafo (antes tres columnas, la última aplastada)." },
+        { "shot": "F-lanes-run-queue", "surface": "Run Queue con carriles y barreras (fixture lanes)", "note": "Etiquetas de carril y barrera en la mono de la consola y como grupo junto al título." },
+        { "shot": "F-lanes-roadmap-tree", "surface": "Roadmap con carriles (fixture lanes)", "note": "Misma regla de etiquetas en las filas del árbol." }
+      ]
+    },
+    {
+      "title": "Detalle del run: celdas, barreras, reportes",
+      "items": [
+        { "shot": "S05-run-detail-77-completed", "surface": "Detalle del run #77 (arriba)", "note": "Contadores en píldora; nota de clasificación como frase." },
+        { "shot": "F-lanes-detail-held-by-barrier", "surface": "Detalle con «Held by barrier» (fixture lanes)", "note": "La celda ya no corta el enlace a media palabra: los valores de las celdas envuelven a una segunda línea." },
+        { "shot": "F-lanes-detail-barrier-run", "surface": "Detalle de un run barrera (fixture lanes)", "note": "Celda «Barrier» envolvente; lo demás igual." },
+        { "shot": "F-lanes-detail-deps-by-lane", "surface": "Dependencias agrupadas por carril (fixture lanes)", "note": "Sin cambio de estructura; contadores en píldora." },
+        { "shot": "S17-run-report-section", "surface": "Sección «Run report» del detalle (Cantu Quizzes Latex #2)", "note": "Sin cambio en la sección; las etiquetas de clasificación debajo caben en una línea." },
+        { "shot": "F-html-report-section", "surface": "Sección «HTML report» (fixture html-reports)", "note": "Sin cambio en la sección; contadores en píldora." },
+        { "shot": "S18-run-report", "surface": "Reporte del run (renderizador)", "note": "Intacto a propósito: el renderizador del reporte es el prototipo congelado del #52, con sus propios tokens y tests de dominio." }
+      ]
+    },
+    {
+      "title": "Configuración del proyecto y editor en los fixtures",
+      "items": [
+        { "shot": "S08-project-config-aiw", "surface": "Project configuration (AIW Console)", "note": "Un paso de tamaño en todo el diálogo (11 → 12, 11,5 → 12,5 px) y filas de tabla con más aire." },
+        { "shot": "S08-project-config-phd", "surface": "Project configuration (Phd P2 Experiment)", "note": "Lista de runs sin clasificar más legible; mismos textos." },
+        { "shot": "S08-project-config-aiw-editing", "surface": "Project configuration con Editing on (formulario)", "note": "Los campos del care budget tienen fondo (antes el token `--bg-default` no existía y quedaban transparentes) y anillo de foco." },
+        { "shot": "F-lanes-project-config-unconfigured", "surface": "Project configuration no configurado (fixture lanes)", "note": "Mismo paso de tamaño; «Published defaults» igual." },
+        { "shot": "F-lanes-editor-lane-barrier", "surface": "Editor: bloques Lane y Barrier (fixture lanes)", "note": "Títulos de bloque y notas con la nueva jerarquía." },
+        { "shot": "F-lanes-remove-refusal", "surface": "Editor: «Handle the dependents before removing» (fixture lanes, dry-run)", "note": "El panel de rechazo no cambia; los botones conservan su jerarquía." },
+        { "shot": "F-lanes-preview-diff", "surface": "Editor: Preview batch con diff (fixture lanes, dry-run)", "note": "«Confirm and write» en 600; el resto igual. Nada se confirmó." }
+      ]
+    },
+    {
+      "title": "Overview, History, Docs, Status, lector",
+      "items": [
+        { "shot": "S12-overview", "surface": "Overview", "note": "El rótulo «Current work item / Next up» sube un paso de contraste; lo demás intacto." },
+        { "shot": "S12-overview-1024", "surface": "Overview a 1024 px", "note": "Sin cambio de disposición." },
+        { "shot": "S12-overview-cantu-studio", "surface": "Overview sin run activo (Cantu Studio)", "note": "Sin cambio." },
+        { "shot": "S13-history", "surface": "History", "note": "SHA y hora de cada commit suben a terciario (antes 2,6:1 de contraste); etiqueta «TODAY» un paso más clara." },
+        { "shot": "S14-docs-aiw", "surface": "Docs", "note": "Sin cambio al llegar; el bloque de controles (título, Collapse all, filtro) ahora queda fijo al desplazar." },
+        { "shot": "S14-docs-aiw-1024", "surface": "Docs a 1024 px", "note": "Sin cambio al llegar." },
+        { "shot": "S14-docs-cantu-studio-scrolled", "surface": "Docs tras bajar 800 px (H8)", "note": "H8: el filtro «Filter by title» sigue a la vista con el árbol desplazado debajo (antes quedaba 691 px por encima del borde)." },
+        { "shot": "S15-status-governance", "surface": "Status › Governance State", "note": "Sin cambio." },
+        { "shot": "S15-status-diagnostics", "surface": "Status › Console Diagnostics", "note": "«NOT EMITTED» cabe en una línea (columna de 92 → 112 px)." },
+        { "shot": "S06-doc-reader-list", "surface": "Lector de documentos (índice)", "note": "El filtro lleva una línea fina debajo que lo separa de la lista; sin otro cambio." },
+        { "shot": "S06-doc-reader-list-scrolled", "surface": "Lector tras bajar 1000 px el índice (H8)", "note": "H8: el filtro queda fijo arriba del índice (antes quedaba 884 px por encima del borde)." },
+        { "shot": "S06-doc-reader-doc-tables", "surface": "Lector: «Estado del proyecto» con tablas (H7)", "note": "H7 NO se aplicó: dos tests fijan que sólo p, li y blockquote llevan medida («prose only — no table, no pre, no figure»). Sin cambio en el documento." },
+        { "shot": "S06-doc-reader-doc-1024", "surface": "Lector a 1024 px", "note": "Sin cambio en el documento; filtro fijo." }
+      ]
+    }
+  ]
+}

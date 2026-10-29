@@ -1,0 +1,46 @@
+{
+  "title": "Project Portfolio — antes / después (ampliación del #78 bajo D-061)",
+  "intro": "RUN-CONSOLE-UI-POLISH-001, ampliación pedida por el operador el 2026-10-21 (VEREDICTO-78-QA-2026-10-21.md). Antes = d7c18ab (el pulido de 8992b6d ya dentro). Después = el árbol de trabajo sin commitear. Capturas con Chrome sin cabeza por DevTools, mismo guion antes y después; consola real en el 8797 y fixture tests/fixtures/multi en el 8798.\n\nQué cambia: se quitan del render la lista «Objectives» de cada tarjeta y el panel «Awaiting a verdict»; nada más cambia de lo que muestran las tarjetas.\n\nAltura de las seis tarjetas (px, medida con getBoundingClientRect):\n· 1440 antes: 289 / 508 / 399 / 252 / 435 / 557 — después: 214 en las seis.\n· 1024 antes: 403 / 623 / 513 / 388 / 571 / 672 — después: 315 en las seis.\n\nDónde sigue lo que mostraban: los objetivos, en Roadmap → segmento «Roadmap» del proyecto (tarjeta por objetivo, con su título); el veredicto pendiente, en el detalle del run → sección «Run report» → «no verdict yet».",
+  "groups": [
+    {
+      "title": "Consola real (6 proyectos)",
+      "items": [
+        {
+          "shot": "P-1440x900",
+          "surface": "Portfolio a 1440×900 (lo que se ve al abrir)",
+          "note": "Antes, el panel «Awaiting a verdict» ocupaba la primera franja y en la primera pantalla cabía una tarjeta completa y parte de la segunda. Después caben tres tarjetas completas y el principio de la cuarta."
+        },
+        {
+          "shot": "P-1440-completo",
+          "surface": "Portfolio a 1440, todo el tablero",
+          "note": "Sin la lista de objetivos, lo que decidía la altura era la frase de «Current status» en la columna más estrecha. La anchura pasa de la columna central a la del estado, el tablero iguala la altura de todas las filas y la franja «Roadmap» baja al pie de su columna, en la misma línea que «Open Project»."
+        },
+        {
+          "shot": "P-1024x900",
+          "surface": "Portfolio a 1024×900",
+          "note": "A 1024 el estado va en una fila propia bajo las otras dos columnas. Antes cabía una tarjeta completa y parte de la segunda; después, dos completas y el principio de la tercera."
+        },
+        {
+          "shot": "P-1024-completo",
+          "surface": "Portfolio a 1024, todo el tablero",
+          "note": "Todas las tarjetas miden 315 px. El sobrante va a la fila del estado, así la línea entre filas cae a la misma altura (178 px) en todas."
+        }
+      ]
+    },
+    {
+      "title": "Fixture con tarjetas degradadas (tests/fixtures/multi)",
+      "items": [
+        {
+          "shot": "F-degradada-1440",
+          "surface": "Tarjetas sin snapshot o con snapshot ilegible, 1440",
+          "note": "Las tarjetas degradadas toman la misma altura que las sanas; su «Open Project» queda al pie, como en las otras. Su texto no cambia."
+        },
+        {
+          "shot": "F-degradada-1024",
+          "surface": "Tarjetas degradadas, 1024",
+          "note": "Igual a 1024."
+        }
+      ]
+    }
+  ]
+}

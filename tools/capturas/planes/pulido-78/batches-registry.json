@@ -1,0 +1,7 @@
+{
+  "registry_model": "project_registry_v1",
+  "title": "Batches fixture (QA)",
+  "projects": [
+    { "key": "batches", "root": "C:/Users/chris/Documents/AIW_Workspace/projects/aiw-console/tests/fixtures/batches/project" }
+  ]
+}

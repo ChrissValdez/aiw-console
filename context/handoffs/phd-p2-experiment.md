@@ -90,7 +90,8 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     Una consola abierta antes de instalar no ve el `PATH` nuevo, y la app tampoco: la cabina llama a `py` por su ruta
     completa. La suite da **3370 passed, 1 skipped, 25 deselected** (19:55 UTC). La omitida es
     `tests/test_manual_server.py:508`, que necesita crear un enlace simbólico (`WinError 1314`; hace falta el Modo de
-    programador o ser administrador). La cabina recomendó dejarla así; el operador no se ha pronunciado.
+    programador o ser administrador). A la pregunta «¿Dejo la prueba del enlace simbólico omitida en esta PC?», el
+    operador contestó «Sí, déjala» (2026-10-29). En esta PC esa es la cuenta esperada.
   - **El checkout de la PC escribía CRLF** (medido el 2026-10-29). El Git de la PC trae `core.autocrlf=true` en
     `C:/Program Files/Git/etc/gitconfig`. En la laptop este repo tenía `core.autocrlf=false` en su `.git/config`
     (`docs/runs/RUN-P2-TUTOR-LAUNCHER-001.md`, D7), y eso no viajó. Con `* text=auto`, 307 de los 381 ficheros quedaron

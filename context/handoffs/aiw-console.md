@@ -9,6 +9,9 @@
 > ✅ **Hecho por este hilo el 2026-10-29, en la PC.** Arranque de §2 de la mudanza, y revisión de su parte de `_scratch`:
 > lo vigente (las herramientas de captura del `#78`) se copió a `tools/capturas/`. Detalle en el §8 de este relevo.
 
+> ➡ **La próxima sesión de este hilo es en Claude Code** (el operador, 2026-10-29). Su contrato es
+> `context/cabinas/aiw-console/CLAUDE.md`: léelo primero, con `context/cabinas/REGLAS-DE-CABINA.md`.
+
 **Fecha:** 2026-10-21 · **Sustituye** al relevo del 2026-09-25 (mudanza de computadora, `#64` activo).
 Esta sesión corrió en la **máquina nueva**, del 2026-10-04 al 2026-10-21.
 

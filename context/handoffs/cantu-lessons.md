@@ -73,23 +73,38 @@
 - **La enmienda a D-081:** lo que por regla no entra a git se copia a mano y se verifica con el manifiesto.
 - **Borrado** `AIW_Workspace\_cabina-lecciones\`, que estaba vacía. **`npm ci`** en `cantu-lessons/tools/render`.
 
-## En vuelo
+## En vuelo (puesto al día el 2026-10-29 a las 10:57)
 
-- **Nada.** RW-54 cerró el 2026-10-29: el servidor está en `cantu-revisiones/servidor/`, y su cierre en el veredicto
-  («RW-54 terminado»). La vía provisional ya salió del README y del molde v3. Lo que falta es estrenarlo con una galería
-  real en `cantu-revisiones/galerias/`.
-- **El falso ROJO de la escala de letra en la PC está arreglado** (`cantu-lessons` `9d67825`, «Sí, aplícala»): el
-  `.gitattributes` saca `docs/referencias/escala-de-letra.css` en LF. Siguen en CRLF en la PC los moldes CSS que se
-  copian «byte a byte» (`docs/moldes/RW-06/*.css`): va al ticket de herramientas.
-- **Compiladas en la PC** (2026-10-29): la web de L16 (AMARILLO, solo por palabras de prosa), la web de L03 (VERDE) y
-  las slides de L02 y L03 (VERDE). Las demás lecciones no se han compilado en la PC: sus páginas no están en git y no
-  llegaron con la copia.
+- **RW-56**, el botón de la galería (`cantu-revisiones/abrir-galeria.cmd`): corre en su sesión, lanzado por el operador.
+  Su informe ya está en `docs/informes/RW-56.md`, sin medir ni commitear.
+- **RW-58**, L02·D5, el ± y el aire del recuadro de «La fórmula general»: escrito y por lanzar. Va antes de la tanda,
+  porque la tanda copia de L02.
+- **RW-57**, que el índice tenga siempre las 29 lecciones y el código de cada una quede versionado: escrito. Va
+  **después** de RW-58 y cuando ningún taller compile, porque cambia `tools/revision/`.
+- **Pendiente de la palabra del operador: el método de las slides.** La cabina recomienda la tanda 2 (RW-59: las slides
+  de L03 a L08, 59 escenas) con una sola galería en `cantu-revisiones`:
+  - el molde aplicado sin variantes, y variantes solo donde el molde no decide;
+  - el subtítulo como primera decisión de sistema. Hoy va a 35,2 px, peso 500 y `#3B4252`, contra el cuerpo a 31,2 px,
+    peso 400 y `#475569`, y el operador dice que «grita»;
+  - una bandeja de comentarios sueltos en vez de tickets sueltos.
+
+  La recomendación y las palabras del operador están en el veredicto.
+
+## Cerrado hoy (2026-10-29)
+
+- **RW-54** (el servidor de las galerías), **RW-55** (el riel de L02·D9) y la **regla 41 v63**.
+- **Las slides de L01 y L02, «Aprobadas»** (`cantu-lessons` `3cba4fe`).
+- **El falso ROJO de la escala de letra**, arreglado en el `.gitattributes` (`9d67825`).
+- **D-082:** el cierre de todo mensaje con «Qué necesito de ti» y «Qué procede».
+- **La segunda enmienda a D-081:** en `aiw-console`, el commit va siempre con ruta.
+- **Las 29 lecciones, compiladas en la PC** (10:11–10:55): 52 compilaciones, sin rojos. El índice vuelve a listarlas
+  todas.
 
 ## Pendientes
 
 Del relevo del 2026-10-28; esta sesión no los volvió a medir:
 
-- L11 slide desde su web; L11B sin slide; L02·D9 (opciones); L20·D3 a las variantes de L20.
+- L11 slide desde su web; L11B sin slide; L20·D3 a las variantes de L20. (L02·D9 ya se resolvió: RW-55.)
 - **El ticket de herramientas:** las guardas de la regla 41 v62, las piezas del lote, las guardas de RW-45, las mutaciones
   débiles, nombres de consola, historial, y los `_generado` viejos de `lecciones/L02-…/` (no los creó la cabina: necesitan
   la palabra del operador).
@@ -118,7 +133,7 @@ Del relevo de septiembre, comprobado contra el disco el 2026-10-29:
 
 - **Veredicto del hilo:** `projects/cantu-lessons/docs/veredictos/2026-10-16-lectura-de-las-seis-lecciones-web.md`. Al
   final, la mudanza, la prueba del push y «Sí, las cinco».
-- **Tickets:** `projects/cantu-lessons/docs/encargos/REVISION-WEB-TICKETS.md`, hasta RW-54.
+- **Tickets:** `projects/cantu-lessons/docs/encargos/REVISION-WEB-TICKETS.md`, hasta RW-58.
 - **Informes:** `projects/cantu-lessons/docs/informes/`. El de RW-53 es `RW-53.md`; ya no está en `_scratch`.
 - **Moldes y sondas:** `docs/moldes/` y `tools/sondas/`, con su procedencia en `docs/moldes/DE-DONDE-VIENE.md`.
 - **El molde de galería** es `docs/referencias/MOLDE-DE-GALERIA.md` v3, y **el común de los talleres**,

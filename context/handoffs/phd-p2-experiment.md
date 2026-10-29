@@ -43,6 +43,9 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   (`git commit -m "…" -- <ruta>…`); y **antes del push, `git log origin/main..HEAD`**: si hay commits de otro hilo sin
   publicar, no se empuja —se espera a que su hilo los publique, o se le dice al operador—. Vale en cualquier repo con
   más de una cabina a la vez. Detalle en `CLAUDE.md`, «Git», punto 8.
+- **El pull que falla por dos `fetch` a la vez** (`fatal: Cannot fast-forward to multiple branches.`) se repite **una
+  vez** si se mide que no hay divergencia; si vuelve a fallar, se para y se dice. Palabra del operador del 2026-10-29,
+  verbatim en `CLAUDE.md`, «Git», punto 2.
 
 ## §2 · Dónde está cada cosa
 
@@ -79,7 +82,13 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   - **`DESDE_DEV.md` no viajó** (§6): copiarlo desde la laptop (el operador) y comprobar su md5 LF
     `67a2a6bc5d2bd96cf384f46ad8dc6c80` (860 líneas) antes de añadir nada. Y la palabra del operador sobre si la cabina
     commitea y publica ese fichero en `PHD` tras cada entrada (propuesto en `CLAUDE.md`).
-  - Rehacer la `.venv` en la PC (sale de `requirements.lock`): la suite debe dar 3371 passed.
+  - Rehacer la `.venv` en la PC (sale de `requirements.lock`): la suite debe dar 3371 passed. **En la PC no hay
+    Python** (medido el 2026-10-29: ni `py` ni intérprete; `python` es el alias de la Microsoft Store): primero lo
+    instala el operador (el lock está resuelto para 3.10 y 3.12).
+  - **El adaptador de Claude acepta solo `2.1.226 (Claude Code)`** (`src/p2exp/llm/claude.py`, `MEASURED_VERSIONS`) y en
+    la PC hay `2.1.284` (medido el 2026-10-29): el evaluador de PAF se niega aquí hasta que un taller corra las pruebas
+    gratis de `tests/integration/test_claude_live.py` y añada la versión si pasan (`AGENTS.md`). Va en el próximo ticket
+    de DEVELOPMENT que necesite PAF. Codex (`0.142.0`) no tiene esa lista.
   - Copiar `data/` desde la laptop (el operador) y verificarla contra el manifiesto (la cabina).
   - Versionar `data/manual/` en el próximo ticket de DEVELOPMENT (una excepción en `.gitignore` y una nota en el
     contrato de datos §11).

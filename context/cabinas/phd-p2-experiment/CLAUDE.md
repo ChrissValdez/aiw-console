@@ -129,6 +129,12 @@ nunca `[user]` en el `.git/config`), con estos cambios:
 1. **Todo git que salga a la red lleva `GIT_TERMINAL_PROMPT=0` y `GCM_INTERACTIVE=never`**, para que una credencial que
    falte falle con su error y no abra una ventana que se quede esperando.
 2. **Antes de escribir en un repo, `git pull --ff-only`**, solo en su llamada. Si no avanza limpio, para y lo dice.
+   - **Una excepción, con la palabra del operador (2026-10-29).** Si falla con `fatal: Cannot fast-forward to multiple
+     branches.` porque otro proceso hizo `fetch` a la vez (la misma línea dos veces en `.git/FETCH_HEAD`; pasó el
+     2026-10-29 a las 16:40:28 UTC en `aiw-console`), y midiendo solo con lecturas no hay divergencia
+     (`git --no-optional-locks rev-list --left-right --count HEAD...origin/main` sin números en los dos lados), se repite
+     **una vez** el mismo pull y se declara. Si vuelve a fallar, para y lo dice. El operador, verbatim: a la pregunta
+     *«¿Te vale que repita una vez el pull cuando falle por dos fetch a la vez?»*, *«Vamos con tu recomendacion»*.
 3. **La cabina publica.** Después de cada commit que fija algo, `git push`, solo en su llamada, y verifica
    `git --no-optional-locks rev-list --count origin/main..HEAD` → `0`.
 4. **Si el push falla, para y lo dice** con el error literal. No reintenta de otra forma ni toca credenciales. Mientras

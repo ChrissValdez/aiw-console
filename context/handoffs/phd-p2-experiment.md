@@ -72,9 +72,19 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     `dynamics_version`). **H2**: solo cuenta como pista un mensaje con contenido del paso, por ejemplo una fórmula del
     ítem, y no un «inténtalo tú» vacío. Ajusta Q2 (§3.5, nueva `perception_version`). **H3**: sin cambio, se mide en el
     piloto.
-  - **Falta la QA1–QA4** (informe §8.3: dos conversaciones del alumno con el tutor real), en sí/no. Con ella, la
-    cabina emite **una sola segunda ronda del `#20`** (D-061) con H1, H2 y lo que la QA pida, y con el texto del run
-    enmendado en el mismo encargo.
+  - **La QA1–QA4, toda sí** (2026-10-29). A «¿Me pasas la QA1–QA4 del §8.3?», Chris contestó «Todo sí». Está en el
+    mismo veredicto (commit `cf442c8`). La segunda ronda lleva solo H1 y H2.
+  - **El texto del `#20` se enmendó con la «RONDA 2»** (D-061), por la consola: `set-text`, con prueba en seco
+    (`remap: []`) y aplicación con su base. Solo cambió el `full_description` del `#20`. El canónico pasó de md5
+    `2e1384c2…` a `4e53de05…` (árbol = LF); `.project/` lo re-emitió `serve.mjs`. Commit `31e0567`, publicado. El
+    respaldo está en `_backups\phd-p2-experiment\RUN-P2-LEARNER-001-ronda2\roadmap.json` y se borra cuando cierre el
+    `#20`.
+  - **El ticket de la segunda ronda se le dio a Chris el 2026-10-29.** Pide una sesión real del adverso, de pago: como
+    mucho 2 sesiones de `--call-budget 96` cada una. Para la regla de H2, la cabina avisó de algo: en la sesión real
+    (b), el primer «inténtalo» del tutor en `s1` traía \(6\) y \(-5\), así que con esa regla sigue contando como pista
+    (sí trae contenido del paso). El taller debe clasificar los 12 mensajes reales con la regla vieja y con la nueva.
+    Al terminar el taller toca el turno 2: leer su informe, cerrar el `#20` si la QA de la ronda pasa, y borrar el
+    respaldo.
 - Hecho, de ESPEC §11: los pasos 1 a 3 (formatos, PAF sobre trazas a mano, el tutor completo) y el alumno simulado
   (contrato aprobado y construido). Más: la superficie visible, PAF sobre sesiones manuales y el lanzador. Sin
   empezar: el arnés de escenarios y la cobertura (O4.P2, O4.P3), los interruptores (O5), los brazos de RQ3 y la

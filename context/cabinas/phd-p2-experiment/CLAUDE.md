@@ -116,9 +116,13 @@ versión commiteada en `PHD` `e9d38b6` (sesión 15 del paper). Nunca se commitea
 del paper, y git no las llevó. **Hasta que el operador copie el fichero de la laptop y la cabina compruebe ese md5, no
 se añade nada a `DESDE_DEV.md`**: se haría una bifurcación.
 
-**Propuesto, pendiente de la palabra del operador:** que, después de añadir una entrada, la cabina commitee y publique
-en `PHD` **solo** `Paper 2/00_HANDOFFS/DESDE_DEV.md`, con `add` dirigido, para que viaje entre las dos computadoras.
-Pregúntaselo antes de la primera escritura. Si dice que no, la entrada queda sin commitear y se le recuerda.
+**Aprobado por el operador el 2026-10-29.** A la pregunta *«¿Commiteo y publico en PHD solo DESDE_DEV.md tras cada
+entrada?»* respondió, verbatim: *«Sí, solo ese fichero»*. Así que, después de añadir una entrada, la cabina commitea y
+publica en `PHD` **solo** `Paper 2/00_HANDOFFS/DESDE_DEV.md`, para que viaje entre las dos computadoras. Nunca otro
+fichero de `PHD`. `PHD` lo commitea también el hilo del paper, así que rige lo de «Git», punto 8: `pull --ff-only` antes
+de escribir; `diff --cached --name-only` y el commit con ruta (`git commit -m "…" -- "Paper 2/00_HANDOFFS/DESDE_DEV.md"`);
+y antes del push, `git log origin/main..HEAD`: si hay commits del hilo del paper sin publicar, no se empuja. La primera
+entrada que se publique así le dice al hilo del paper que ese fichero lo commitea ahora la cabina de desarrollo.
 
 ## Git
 
@@ -165,7 +169,8 @@ nunca `[user]` en el `.git/config`), con estos cambios:
 3. **Leer el relevo entero** (`context/handoffs/phd-p2-experiment.md`) y contrastar sus cifras con el disco: el estado
    del roadmap (20 runs; `#1` a `#19` completed; `#20` active) y el md5 del canónico de arriba.
 4. **Lo que no viajó**, medido y no supuesto:
-   - `DESDE_DEV.md`: ¿ya está la copia de la laptop (md5 LF `67a2a6bc5d2bd96cf384f46ad8dc6c80`)? Y la pregunta de arriba.
+   - `DESDE_DEV.md`: ¿ya está la copia de la laptop (md5 LF `67a2a6bc5d2bd96cf384f46ad8dc6c80`)? Y la pregunta de arriba
+     (contestada el 2026-10-29: sí).
    - `.venv`: ¿existe y la suite da **3371 passed, 25 deselected** (`.venv\Scripts\python -m pytest -q`, desde la raíz
      del repo)? Si no existe, se propone rehacerla con `py -3.12 -m venv .venv` y
      `.venv\Scripts\python -m pip install -r requirements.lock`, y se hace con la palabra del operador.

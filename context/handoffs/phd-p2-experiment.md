@@ -28,7 +28,8 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   la tabla con la hora va antes de los dos bloques. Detalle en `context/cabinas/phd-p2-experiment/CLAUDE.md`, «Cómo
   termina todo mensaje».
 - **Carpeta del paper** (`AIW_Workspace/PHD/Paper 2/`): es la fuente de verdad y es de **solo lectura**. Única
-  excepción: `00_HANDOFFS/DESDE_DEV.md`, y solo **añadiendo** entradas con su formato. Nunca se tocan el `.tex`, el
+  excepción: `00_HANDOFFS/DESDE_DEV.md`, y solo **añadiendo** entradas con su formato; tras cada entrada, la cabina
+  commitea y publica en `PHD` ese fichero y ningún otro (palabra del operador, 2026-10-29). Nunca se tocan el `.tex`, el
   registro de citas, `REGLAS.md`, `ESPEC_TUTOR_P2.md` ni el `HANDOFF_P2.md`.
 - **Desarrollo decide cómo se construye.** No decide las reglas de la política, qué es una violación, los pasos de
   PAF, la muestra de validación ni los límites de ESPEC §9: eso va a `DESDE_DEV.md`.
@@ -80,8 +81,9 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 - **De la mudanza (§6):**
   - **`DESDE_DEV.md` no viajó** (§6): copiarlo desde la laptop (el operador) y comprobar su md5 LF
-    `67a2a6bc5d2bd96cf384f46ad8dc6c80` (860 líneas) antes de añadir nada. Y la palabra del operador sobre si la cabina
-    commitea y publica ese fichero en `PHD` tras cada entrada (propuesto en `CLAUDE.md`).
+    `67a2a6bc5d2bd96cf384f46ad8dc6c80` (860 líneas) antes de añadir nada. El operador ya aprobó que, tras cada entrada,
+    la cabina commitee y publique en `PHD` solo ese fichero (2026-10-29, «Sí, solo ese fichero»; `CLAUDE.md`, «El canal
+    con el paper»).
   - Rehacer la `.venv` en la PC (sale de `requirements.lock`): la suite debe dar 3371 passed. **En la PC no hay
     Python** (medido el 2026-10-29: ni `py` ni intérprete; `python` es el alias de la Microsoft Store): primero lo
     instala el operador (el lock está resuelto para 3.10 y 3.12).

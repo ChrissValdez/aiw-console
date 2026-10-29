@@ -144,8 +144,38 @@ Verbatim en `context/aiw-console/records/REGLAS-DE-OPERACION-DEL-OPERADOR.md`. E
   verifica en disco y cierra declarando que no hubo QA. La QA humana es para lo que se ve en pantalla o para un punto
   crítico, y acotada. **Ésta es la que más cambia el ritmo.**
 
-Y una que el operador pidió en la cabina de LECCIONES y que esta cabina también aplica (memoria de Claude Code, no record):
-**todo mensaje cierra con «Qué necesito de ti» y «Qué procede»**, y si se espera algo, con **«⏳ EN ESPERA de …»**.
+### Regla de formato vigente: el cierre de TODO mensaje (el operador, 2026-10-29, para todos los hilos)
+
+**Todo mensaje al operador, no solo el de cierre de sesión, termina con dos bloques, en este orden:**
+
+1. **«Qué necesito de ti»**: lo que le toca hacer o decidir al operador, cada cosa con la recomendación de la cabina. Si
+   no hay nada, «Nada por ahora».
+2. **«Qué procede»**: lo siguiente, y quién lo hace (la cabina, un taller o el operador). Si lo siguiente es esperar algo
+   (un taller, una compilación, un push, la respuesta del operador), una línea que se vea de lejos:
+   **⏳ EN ESPERA de** <qué>, y quién lo tiene.
+
+Si hubo mediciones, la tabla de lo medido, con la hora, va **antes** de los dos bloques. En Claude Code, la línea
+«publicado: …» va justo antes de ellos.
+
+El texto del operador, verbatim:
+
+> Formato de cierre: vale desde hoy, en todos los hilos
+>
+> Desde ahora, **todo** mensaje que me escribas termina con estos dos bloques, en este orden. No solo al cerrar la
+> sesión: todo mensaje.
+>
+> **Qué necesito de ti**
+> - Lo que me toca hacer o decidir a mí, cada cosa con tu recomendación. Si no hay nada: «Nada por ahora».
+>
+> **Qué procede**
+> - Lo siguiente, y quién lo hace: tú (la cabina), un taller o yo.
+> - Si lo siguiente es esperar algo (un taller, una compilación, un push, mi respuesta), una línea que se vea de lejos:
+>   ⏳ EN ESPERA de <qué>, y quién lo tiene.
+>
+> Si hubo mediciones, la tabla de lo medido, con la hora, va antes de esos dos bloques.
+
+Lo pidió primero en la cabina de LECCIONES; desde el 2026-10-29 vale para todos los hilos. También está en el
+`CLAUDE.md` de esta cabina («Formato de cierre de cada mensaje») y en la memoria de Claude Code de la PC.
 
 ---
 

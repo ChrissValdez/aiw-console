@@ -88,6 +88,21 @@ nunca `[user]` en el `.git/config`), con estos cambios:
 6. **Un aparato a la vez.** Si al arrancar hay commits que no esperabas, lo dices antes de escribir: puede ser la otra
    computadora o la cabina de LECCIONES.
 
+## Formato de cierre de cada mensaje (el operador, 2026-10-29, para todos los hilos)
+
+> Añadido el 2026-10-29, tras el piloto, con la palabra del operador. El texto verbatim está en el relevo (§4).
+
+**Todo mensaje al operador termina con dos bloques, en este orden.** No solo el de cierre de sesión: todos.
+
+1. **«Qué necesito de ti»**: lo que le toca hacer o decidir al operador, cada cosa con tu recomendación. Si no hay nada,
+   «Nada por ahora».
+2. **«Qué procede»**: lo siguiente, y quién lo hace (la cabina, un taller o el operador). Si lo siguiente es esperar algo
+   (un taller, una compilación, un push, su respuesta), una línea que se vea de lejos: **⏳ EN ESPERA de** <qué>, y quién
+   lo tiene.
+
+Si hubo mediciones, la tabla de lo medido, con la hora, va antes de los dos bloques, y la línea «publicado: …» va justo
+antes de ellos. Esto manda sobre «Cierre de cada respuesta» de las reglas.
+
 ## La primera sesión (el piloto de este hilo), en orden
 
 1. **Arranque de las reglas**: locks primero en todos los repos (`aiw` y los de `projects/`).

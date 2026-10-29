@@ -13,7 +13,9 @@ Las cifras son mediciones fechadas: se vuelven a medir al abrir.
 Desarrollo del experimento del Paper 2 del doctorado de Chris (PAF: medir si un tutor con LLM cumple una política
 explícita). Repo `projects/phd-p2-experiment`. El canónico es `roadmap/roadmap.json` y el motor que lo conduce es el
 de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no se dice otro) e `INTERFACE` (`ui/`).
-La cabina sigue en **Cowork**.
+**La cabina se muda a Claude Code** (pedido del operador, 2026-10-29): su configuración es
+`context/cabinas/phd-p2-experiment/CLAUDE.md` v0, y la sesión se abre en esa carpeta, nunca en el repo del proyecto
+(allí el `CLAUDE.md` carga las reglas de los talleres).
 
 ## §1 · Reglas propias del hilo, además de las de la cabina (`context/cabinas/REGLAS-DE-CABINA.md`)
 
@@ -27,8 +29,8 @@ La cabina sigue en **Cowork**.
   bajo qué condición cambiaría la recomendación. Se dice siempre qué se probó y qué no.
 - **Modelos:** por CLI de suscripción, sin API. Codex para el tutor y el alumno; Claude Code para el evaluador.
 - **Los talleres no guardan memoria de Claude Code**: lo que deba durar va al informe del run.
-- **Git (D-081):** el operador hace pull antes de que la cabina escriba y hace el push. Desde el entorno de la
-  cabina no hay fetch ni pull: GitHub pide usuario (medido el 2026-10-29).
+- **Git (D-081):** en Cowork, el operador hacía pull y push; desde la VM no había ruta con credenciales a GitHub
+  (medido el 2026-10-29). En Claude Code, la cabina hace pull, commit y push (`CLAUDE.md`, «Git»).
 
 ## §2 · Dónde está cada cosa
 
@@ -48,8 +50,12 @@ La cabina sigue en **Cowork**.
 
 - Runs `#1` a `#19` cerrados; `#20` «Build the simulated learner by its contract and play it against the full tutor»
   está **active**. Su trabajo está commiteado (`91d1043`); faltan la QA de Chris (dos conversaciones del alumno con el
-  tutor real) y sus decisiones H1–H3 del informe (§7): rotar las tácticas del adverso por sesión, que solo cuente como
-  señal un mensaje con contenido del paso, y la paciencia del adverso.
+  tutor real) y sus decisiones H1–H3 del informe (§7). Lo que la cabina de Cowork le recomendó: **H1**, que las
+  tácticas del adverso roten por sesión y no empiecen de cero en cada paso (así aparece el contexto falso y se mantiene
+  «hasta dos veces por paso»); **H2**, que solo cuente como señal un mensaje que trae contenido del paso (una fórmula
+  del ítem), no un «inténtalo tú» vacío; esto ajusta Q2 y necesita su sí; **H3**, dejar que presionar gaste paciencia
+  y medirlo en el piloto. Si aprueba H1 y H2: segunda ronda de `#20` (D-061), con el texto del run enmendado en el
+  mismo encargo. Formato de respuesta pedido: QA1–QA4 (sí/no) y H1–H3.
 - Hecho, de ESPEC §11: los pasos 1 a 3 (formatos, PAF sobre trazas a mano, el tutor completo) y el alumno simulado
   (contrato aprobado y construido). Más: la superficie visible, PAF sobre sesiones manuales y el lanzador. Sin
   empezar: el arnés de escenarios y la cobertura (O4.P2, O4.P3), los interruptores (O5), los brazos de RQ3 y la
@@ -57,9 +63,14 @@ La cabina sigue en **Cowork**.
 
 ## §4 · Pendientes que no tienen run
 
-- **De la mudanza (§6):** rehacer la `.venv` en la PC (el operador; sale de `requirements.lock`); copiar `data/` desde
-  la laptop (el operador) y verificarla contra el manifiesto (la cabina); versionar `data/manual/` en el próximo
-  ticket de DEVELOPMENT (una excepción en `.gitignore` y una nota en el contrato de datos §11).
+- **De la mudanza (§6):**
+  - **`DESDE_DEV.md` no viajó** (§6): copiarlo desde la laptop (el operador) y comprobar su md5 LF
+    `67a2a6bc5d2bd96cf384f46ad8dc6c80` (860 líneas) antes de añadir nada. Y la palabra del operador sobre si la cabina
+    commitea y publica ese fichero en `PHD` tras cada entrada (propuesto en `CLAUDE.md`).
+  - Rehacer la `.venv` en la PC (sale de `requirements.lock`): la suite debe dar 3371 passed.
+  - Copiar `data/` desde la laptop (el operador) y verificarla contra el manifiesto (la cabina).
+  - Versionar `data/manual/` en el próximo ticket de DEVELOPMENT (una excepción en `.gitignore` y una nota en el
+    contrato de datos §11).
 - La revisión a fondo de Chris del informe de PAF (`data/manual/se_x9629szb4q/paf/002/report.md`), con la legibilidad
   que pidió para el run del visor (O9.P4).
 - Las cuatro carencias no bloqueantes del contrato del servidor (`docs/runs/RUN-P2-LIVE-VIEWER-001.md` §7).
@@ -90,5 +101,7 @@ La cabina sigue en **Cowork**.
 | 15:49 | `.venv` | no existe en la PC |
 | 15:49 | `_demos/phd-p2-hito-1` (343 ficheros, 8,6 MB en la laptop) | no existe en la PC; retirada por Chris el 2026-10-29 |
 | 15:49 | `_backups/phd-p2-experiment_roadmap.json_pre-20_2026-10-22` | no llegó; no hace falta: el roadmap de ese momento está en git (`0492e25`) |
+| 16:19–16:22 | `PHD/Paper 2/00_HANDOFFS/DESDE_DEV.md` | **no viajó lo que la cabina escribió después de la sesión 15 del paper**: en la PC, 181 líneas (la versión de `PHD` `e9d38b6`, árbol limpio); en la laptop, 69 036 bytes y 860 líneas, sin commitear. El manifiesto lo marca en `difieren-en-contenido.txt` |
+| 16:22:35 | HEAD frente a `origin/main`, tras el push del operador | `phd-p2-experiment` `deb51ee` = `deb51ee`; `aiw-console` `0b4235a` = `0b4235a` |
 
 Lo que falta de la mudanza está en el §4.

@@ -16,6 +16,34 @@
 > recomendación, o «Nada por ahora») y «Qué procede» (qué sigue y quién lo hace; si es esperar, **⏳ EN ESPERA de** <qué>).
 > La tabla de lo medido, con la hora, va antes.
 
+> **PRIMERA SESIÓN EN CLAUDE CODE — 2026-10-29, de 10:45 a 10:55 (hora de la PC, UTC−6), por la cabina de
+> `cantu-studio`.** Studio sigue en pausa (D-079): no se emitió ningún ticket ni se tocó la cola. Arranque medido:
+> - **Locks:** ninguno, en los diez directorios con `.git` (`aiw`, `aiw/sandbox`, `Acervo`, `PHD` y los seis de
+>   `projects/`).
+> - **La prueba del push:** `cantu-studio` en `a3d0bbcf` = `origin/main` = `ls-remote`. `aiw-console` en `1971b64`, un
+>   commit por delante de `origin/main` (`25b7c72`). En los dos, `pull --ff-only`, `ls-remote` y `push --dry-run`
+>   respondieron sin pedir credenciales. **El primer push real es el del commit que trae este relevo**, y con él sale
+>   `1971b64`.
+> - **El canónico, igual que el 2026-10-19:** 277 runs · completed 267 · planned 10 (#268–#277, en O8) · active 0 ·
+>   `history=267` · 0 errores con el motor de `aiw-console` (278 `externalRunIds`: crecen con los otros proyectos, no
+>   con este). md5 **normalizado** `b8b75d54…`. El que «Dónde quedamos» llama «del árbol» lo era en la VM, en LF; **el
+>   del árbol en la PC es `de3a10ab…`**.
+> - **Lecciones anotó las peticiones 32 a 36** en `cantu-lessons/docs/PARA-CANTU-STUDIO-2026-10-21.md` (último cambio
+>   el 2026-10-23, `0ea7445`). Se listaron, no se reconciliaron: 32, «Para saber más» y la nota «Ver cálculo» a
+>   16/24 px (*sigue haciendo falta*); 33, un componente «Ley» (al archivo); 34, la escala de letra en Studio, para
+>   quitar el puente de las 29 lecciones (*al frente de la cola al reanudar*); 35, el fondo de la «Nota destacada» sutil
+>   de la slide, desde la paleta; 36, confirmar que «Generar Slides» declara siempre las variables de la paleta. Según
+>   Lecciones, ninguna rompe una lección publicada. **La fecha de esos ficheros en la PC (2026-10-28 17:17) es la del
+>   checkout: las peticiones nuevas se buscan con `git log`.**
+> - **Sin commitear en `cantu-studio`, y no es de la cabina:** `tools/studio/editor-ui/package-lock.json`
+>   (`@emnapi/wasi-threads` 1.2.2 → 1.2.3, dependencia opcional; el fichero es del 2026-09-26, anterior a la mudanza).
+>   No se tocó; se decide al reanudar.
+> - **El validador en la PC**, mientras las herramientas no se adapten: una sonda de solo lectura fuera del workspace,
+>   con `checkInvariants` del motor de `aiw-console` y `externalRunIdsFor` de `serve.mjs`. Importar `serve.mjs` no
+>   levanta servidor.
+> - **El veredicto sobre el `CLAUDE.md` v0** está en `context/cabinas/cantu-studio/VEREDICTO-PILOTO-2026-10-29.md`. Sus
+>   cambios para una v1 esperan la palabra del operador.
+
 > **MUDANZA HECHA — 2026-10-29, en la PC (`desktop-525k0is`), por la cabina de `cantu-studio`.** Arranque medido:
 > `cantu-studio` en `9e8a02c4` = `origin/main` (copia local; la VM no tiene credenciales para consultar GitHub),
 > `aiw-console` por delante de `a0c3d9c`, sin `index.lock`. De las 112 entradas de `_scratch` que §3 asigna a este hilo,
@@ -56,8 +84,10 @@ y en `DECISIONES.md` como D-079): Studio se pausa mientras Lecciones termina el 
 
 **Para reanudar:** en Claude Code, con `context/cabinas/cantu-studio/ARRANQUE.md` y el `CLAUDE.md` de esa carpeta. El prompt de Cowork (`cantu-studio/PROMPT-PARA-REANUDAR-TRAS-LA-PAUSA.md`) queda sustituido.
 
-**Si abres este hilo durante la pausa:** mide el arranque, lee PETICIONES por si Lecciones anotó algo, y no
-emitas tickets salvo un fallo de una lección publicada.
+**Si abres este hilo durante la pausa:** mide el arranque, mira si Lecciones anotó algo en sus
+`cantu-lessons/docs/PARA-CANTU-STUDIO-*.md` (por `git log`; `PETICIONES-DE-LECCIONES.md` solo se pone al día al
+reanudar), y no emitas tickets salvo un fallo de una lección publicada. *(Corregido el 2026-10-29: decía «lee
+PETICIONES».)*
 
 ---
 
@@ -130,7 +160,10 @@ md5 del canónico (árbol) `b8b75d541bac7349ca361d9488b70263`.**
 - **En paralelo solo con superficies disjuntas**, y nada estructural en la cola con un taller en vuelo.
 - **`add` dirigido, identidad explícita, `--no-optional-locks`, lock y `tmp_obj_*` comprobados tras cada escritura.**
 
-## LAS HERRAMIENTAS DE LA CABINA — se quedan en `_scratch/cabina-cs-20260930/`
+## LAS HERRAMIENTAS DE LA CABINA — desde la mudanza, en `context/cantu-studio/herramientas-cabina/`
+
+*(Corregido el 2026-10-29: decía «se quedan en `_scratch/cabina-cs-20260930/`». Se copian a `_scratch` y se adaptan a
+Windows en el primer uso real; ver su `LEEME.md`.)*
 
 - `abre.sh <qo> <run_id>` y `cierra.sh <qo> <run_id> <closeoutFile>`: planned→active y active→completed por la
   consola, con dry-run, baseline, md5 y campos cambiados.

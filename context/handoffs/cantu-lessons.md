@@ -75,24 +75,25 @@
 
 ## En vuelo (puesto al día el 2026-10-29 a las 10:57)
 
-- **RW-56**, el botón de la galería (`cantu-revisiones/abrir-galeria.cmd`): corre en su sesión, lanzado por el operador.
-  Su informe ya está en `docs/informes/RW-56.md`, sin medir ni commitear.
-- **RW-58**, L02·D5, el ± y el aire del recuadro de «La fórmula general»: escrito y por lanzar. Va antes de la tanda,
-  porque la tanda copia de L02.
-- **RW-57**, que el índice tenga siempre las 29 lecciones y el código de cada una quede versionado: escrito. Va
-  **después** de RW-58 y cuando ningún taller compile, porque cambia `tools/revision/`.
-- **Pendiente de la palabra del operador: el método de las slides.** La cabina recomienda la tanda 2 (RW-59: las slides
-  de L03 a L08, 59 escenas) con una sola galería en `cantu-revisiones`:
-  - el molde aplicado sin variantes, y variantes solo donde el molde no decide;
-  - el subtítulo como primera decisión de sistema. Hoy va a 35,2 px, peso 500 y `#3B4252`, contra el cuerpo a 31,2 px,
-    peso 400 y `#475569`, y el operador dice que «grita»;
-  - una bandeja de comentarios sueltos en vez de tickets sueltos.
-
-  La recomendación y las palabras del operador están en el veredicto.
+- **RW-58**, L02·D5, el ± y el aire del recuadro de «La fórmula general»: corre en su sesión, lanzado por el operador.
+- **RW-59**, la tanda 2 de slides (L03 a L08), con galería en `cantu-revisiones/galerias/RW-59/`: escrito
+  (`cantu-lessons` `e125ac5`). **Se lanza cuando cierre RW-58**, porque copia de L02.
+- **RW-57**, que el índice tenga siempre las 29 lecciones, con el código de cada una versionado: escrito. Va cuando
+  ningún taller compile, porque cambia `tools/revision/`; con RW-59 en marcha, entre dos de sus rondas.
+- **El método de tandas lo aprobó el operador** («Sí, escríbela»):
+  - una tanda es un ticket y una galería;
+  - el molde se aplica sin variantes, y hay variantes solo donde el molde no decide;
+  - las decisiones de sistema van primero (la primera, el subtítulo que «grita»);
+  - después, la revisión final de cada lección;
+  - lo aprendido pasa a regla y a molde.
+- **La bandeja:** los comentarios sueltos del operador no abren ticket; van a `cantu-lessons/docs/encargos/BANDEJA.md`.
+- **Para la web**, el operador quiere el mismo método en las lecciones nuevas, cuando haya una galería pensada para la
+  web. Está en la bandeja.
 
 ## Cerrado hoy (2026-10-29)
 
-- **RW-54** (el servidor de las galerías), **RW-55** (el riel de L02·D9) y la **regla 41 v63**.
+- **RW-54** (el servidor de las galerías), **RW-55** (el riel de L02·D9), **RW-56** (el botón
+  `cantu-revisiones/abrir-galeria.cmd`, `a0c716a`) y la **regla 41 v63**.
 - **Las slides de L01 y L02, «Aprobadas»** (`cantu-lessons` `3cba4fe`).
 - **El falso ROJO de la escala de letra**, arreglado en el `.gitattributes` (`9d67825`).
 - **D-082:** el cierre de todo mensaje con «Qué necesito de ti» y «Qué procede».
@@ -133,7 +134,8 @@ Del relevo de septiembre, comprobado contra el disco el 2026-10-29:
 
 - **Veredicto del hilo:** `projects/cantu-lessons/docs/veredictos/2026-10-16-lectura-de-las-seis-lecciones-web.md`. Al
   final, la mudanza, la prueba del push y «Sí, las cinco».
-- **Tickets:** `projects/cantu-lessons/docs/encargos/REVISION-WEB-TICKETS.md`, hasta RW-58.
+- **Tickets:** `projects/cantu-lessons/docs/encargos/REVISION-WEB-TICKETS.md`, hasta RW-59. **La bandeja**, en
+  `docs/encargos/BANDEJA.md`.
 - **Informes:** `projects/cantu-lessons/docs/informes/`. El de RW-53 es `RW-53.md`; ya no está en `_scratch`.
 - **Moldes y sondas:** `docs/moldes/` y `tools/sondas/`, con su procedencia en `docs/moldes/DE-DONDE-VIENE.md`.
 - **El molde de galería** es `docs/referencias/MOLDE-DE-GALERIA.md` v3, y **el común de los talleres**,

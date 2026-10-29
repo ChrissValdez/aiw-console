@@ -40,8 +40,10 @@ esa cadena, la cabina lo dice.**
 | las decisiones que afectan a varios proyectos | `aiw-console/context/DECISIONES.md` |
 | veredictos, reglas de diseño, tickets, registro | `cantu-lessons/docs/` (como hasta hoy) |
 | lo que el operador revisa: galerías, páginas, `respuestas.json` | `cantu-revisiones` |
-| **el informe de cada taller** | **en git, no en `_scratch`.** Hoy `TALLER-COMUN` lo manda a `_scratch/RW-xx/INFORME.md`: la cabina propone el cambio (¿`cantu-lessons/docs/informes/`?) y lo escribe con el OK del operador |
-| `_scratch` y `_backups` | **desechables.** Nada de lo que hace falta para seguir puede vivir solo ahí; si la cabina encuentra algo así, lo dice y propone a qué repo va. Las herramientas suyas de `_scratch/cabina/` que se usan de verdad (p. ej. `secciones/pintar.mjs`) se proponen para `cantu-lessons/tools/` o para esta carpeta |
+| el informe de cada taller | `cantu-lessons/docs/informes/<ticket>.md` (`TALLER-COMUN` v7). Los anteriores (51 informes y 4 inventarios) se copiaron ahí el 2026-10-28 |
+| moldes y sondas de talleres anteriores | `cantu-lessons/docs/moldes/` y `cantu-lessons/tools/sondas/`; procedencia en `docs/moldes/DE-DONDE-VIENE.md` |
+| las herramientas de esta cabina | `herramientas/`, en esta carpeta (hoy, `pintar.mjs`; no corre tal cual en Windows, ver su README) |
+| `_scratch` y `_backups` | **desechables.** Nada de lo que hace falta para seguir puede vivir solo ahí; si la cabina encuentra algo así, lo dice y propone a qué repo va |
 
 **`aiw-console` lo escriben varios hilos:** `add` siempre por nombre, y cada fichero que la cabina escriba ahí se declara
 por su ruta completa en el mismo turno. Lo de esta carpeta y el relevo de `cantu-lessons` son de este hilo;
@@ -112,8 +114,8 @@ Razón del operador: si se va la luz y la PC se apaga, la laptop sigue al día.
    que difiera fuera de esa lista sí es un fallo**. El resultado va al veredicto, con commit y push: **es la prueba del
    push.** Si falla, eso es lo primero que se le dice al operador. Después, `_scratch/cabina/mudanza/` es desechable.
 4. **Medir `cantu-revisiones`:** remoto, rama, el README, que el push funcione.
-5. **Proponer al operador**, de una vez: la estructura de `cantu-revisiones`, los cambios al molde de galería, dónde va el
-   informe de cada taller, y qué herramientas de `_scratch/cabina/` se versionan. Escribir lo aprobado, commit y push.
+5. **Proponer al operador**, de una vez: la estructura de `cantu-revisiones` y los cambios al molde de galería (hoy la
+   galería todavía va en `_scratch/RW-xx/`). Escribir lo aprobado, commit y push.
 6. **Proponer al operador la entrada D-081 en `DECISIONES.md`** (la última medida, el 2026-10-28, es D-080; verifícalo): la
    cabina de LECCIONES pasa a Claude Code en la PC; su configuración vive en `context/cabinas/`; las reglas de cabina,
    una sola copia en `context/cabinas/REGLAS-DE-CABINA.md`; la cabina publica; `_scratch` es desechable; lo que se revisa

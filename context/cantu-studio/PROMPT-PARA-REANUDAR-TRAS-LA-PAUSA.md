@@ -1,5 +1,7 @@
 # Prompt para abrir el hilo `cantu-studio` al terminar la pausa (D-079)
 
+> **SUSTITUIDO el 2026-10-29:** el hilo se mudó a Claude Code. Se abre con `context/cabinas/cantu-studio/ARRANQUE.md` y su `CLAUDE.md`. Esto queda como registro.
+
 > Escrito por la cabina el 2026-10-20, al pausar Studio. Se pega tal cual en un hilo nuevo. Es el mismo que se dio
 > al operador en el chat.
 

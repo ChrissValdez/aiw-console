@@ -6,6 +6,16 @@
 > `_scratch` (§3) para pasar a tu repo lo que siga vigente. Este aviso lo puso la cabina de LECCIONES a pedido del
 > operador; lo de abajo es tu relevo, sin tocar.
 
+> ⚠ **DESDE EL 2026-10-29, ESTE HILO VIVE EN CLAUDE CODE, EN PAUSA.** Decisión del operador (literal en
+> `cantu-studio/records/DECISION-2026-10-29-STUDIO-SE-MUDA-A-CLAUDE-CODE-EN-PAUSA.md`). La cabina abre allá con
+> `context/cabinas/cantu-studio/ARRANQUE.md`, y su configuración es `context/cabinas/cantu-studio/CLAUDE.md` v0. Studio
+> sigue en pausa por D-079; el operador decide allá cuándo se reanuda. **Último publicado por la cabina de Cowork:**
+> `cantu-studio` `a3d0bbcf`; `aiw-console`, el commit que trajo `context/cabinas/cantu-studio/`.
+>
+> **Formato de cierre de todo mensaje (D-082, 2026-10-29):** termina con «Qué necesito de ti» (cada cosa con su
+> recomendación, o «Nada por ahora») y «Qué procede» (qué sigue y quién lo hace; si es esperar, **⏳ EN ESPERA de** <qué>).
+> La tabla de lo medido, con la hora, va antes.
+
 > **MUDANZA HECHA — 2026-10-29, en la PC (`desktop-525k0is`), por la cabina de `cantu-studio`.** Arranque medido:
 > `cantu-studio` en `9e8a02c4` = `origin/main` (copia local; la VM no tiene credenciales para consultar GitHub),
 > `aiw-console` por delante de `a0c3d9c`, sin `index.lock`. De las 112 entradas de `_scratch` que §3 asigna a este hilo,
@@ -44,7 +54,7 @@ y en `DECISIONES.md` como D-079): Studio se pausa mientras Lecciones termina el 
 - **Se retoma** cuando Lecciones termine el PAA y el operador reabra Studio. Lo que toca entonces lo dice D-078:
   el pulido grande del editor, entre la PAA y el EXANI II, para que lo usen maestros.
 
-**Para reanudar:** el prompt está en `cantu-studio/PROMPT-PARA-REANUDAR-TRAS-LA-PAUSA.md`.
+**Para reanudar:** en Claude Code, con `context/cabinas/cantu-studio/ARRANQUE.md` y el `CLAUDE.md` de esa carpeta. El prompt de Cowork (`cantu-studio/PROMPT-PARA-REANUDAR-TRAS-LA-PAUSA.md`) queda sustituido.
 
 **Si abres este hilo durante la pausa:** mide el arranque, lee PETICIONES por si Lecciones anotó algo, y no
 emitas tickets salvo un fallo de una lección publicada.

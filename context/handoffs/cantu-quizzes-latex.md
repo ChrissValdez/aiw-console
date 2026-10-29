@@ -11,6 +11,13 @@
 > vigente es la última sección de `projects/cantu-quizzes-latex/PAA/HANDOFF.md`, «RELEVO — 2026-10-29».** Lo de abajo es
 > del 2026-09-12 y está vencido. *(Lo escribe la cabina del hilo, ya en Claude Code en la PC.)*
 
+> 📌 **Formato de cierre, vigente desde el 2026-10-29 (decisión del operador, para todos los hilos).** Todo mensaje al
+> operador termina con dos bloques, en este orden: **Qué necesito de ti** (lo que le toca hacer o decidir, cada cosa con
+> recomendación; si no hay nada, «Nada por ahora») y **Qué procede** (lo siguiente y quién lo hace: la cabina, un taller
+> o él; si lo siguiente es esperar algo, una línea `⏳ EN ESPERA de <qué>, y quién lo tiene`). Si hubo mediciones, la
+> tabla de lo medido, con la hora, va antes de los dos bloques. En este hilo está también en
+> `projects/cantu-quizzes-latex/CABINA.md` §6.4.
+
 **Fecha: 2026-09-12, 18:18 CST.** Sustituye al relevo del **2026-08-06**, que llevaba
 cinco semanas sin tocarse y describía el run `#2` como activo. Lo que de aquel sigue
 vigente se ha traído aquí; lo que caducó se declara caducado en el §9.

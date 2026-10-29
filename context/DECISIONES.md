@@ -3440,3 +3440,51 @@ PC que la copia de la laptop no llegó completa: faltaban 10 499 ficheros, y nin
 - **Lo que por regla no entra a git se copia a mano y se verifica con el manifiesto.** Son las fuentes de terceros (como
   `cantu-lessons/fuentes/`) y los datos (como `phd-p2-experiment/data/`). Push y pull no los llevan. El manifiesto
   y su `comparar` son los de la mudanza (`_scratch/cabina/mudanza/mudanza.mjs`).
+
+---
+
+## D-082 — EL CIERRE DE TODO MENSAJE: «QUÉ NECESITO DE TI» Y «QUÉ PROCEDE», CON «⏳ EN ESPERA DE …» CUANDO SE ESPERA
+
+**Fecha:** 2026-10-29 · **Proyecto:** transversal (todas las cabinas) · **Origen:** hilo `cantu-lessons`.
+
+Decidido por **Christopher Valdez Cantu** el **2026-10-29**, en la cabina de LECCIONES. Sus palabras, verbatim:
+
+> siempre que acabes un mensaje termina con que necesitas de mi y que procede
+> y de preferencia si estamos en espera usa un icono o algo facil de ver como
+>
+> osea cerrar con algo como
+>
+> Que necesito de ti
+>
+> que procede
+>
+> Y si en que procede estamos en espera
+>
+> pones un icono llamativo de y pones "EN ESPERA de ....
+
+> dame un mensaje para los otros hilos explicandoles el formato de que necesito de ti y que procede siempre que acaben un mensaje y exspecifica que lo anoten en donde corresponda para que no se les olvide en proximas sesiones
+
+El mismo día, el operador pegó en cada hilo el mensaje «Formato de cierre: vale desde hoy, en todos los hilos», y
+aprobó registrarlo aquí:
+
+> Sí, D-082
+
+### La regla
+
+- **Todo mensaje de una cabina al operador termina con dos bloques, en este orden.** No solo al cerrar la sesión:
+  - **Qué necesito de ti:** lo que le toca hacer o decidir al operador, cada cosa con su recomendación. Si no hay nada,
+    «Nada por ahora».
+  - **Qué procede:** lo siguiente, y quién lo hace (la cabina, un taller o el operador).
+- **Si lo siguiente es esperar algo** (un taller, una compilación, un push, la respuesta del operador), va una línea
+  que se vea de lejos: **⏳ EN ESPERA de** <qué>, y quién lo tiene.
+- **La tabla de lo medido, con la hora,** va antes de esos dos bloques cuando hubo mediciones.
+- **Cada hilo lo anota en su relevo** (`context/handoffs/<hilo>.md`) y, si corre en Claude Code, también en su
+  `CLAUDE.md` o en su memoria.
+- **Afina el «Cierre de cada respuesta» de `context/cabinas/REGLAS-DE-CABINA.md` y manda donde choque.** Esa copia es
+  verbatim de las instrucciones del Project: se pone al día cuando el operador cambie el Project.
+
+**Lo que esta decisión NO hace:** no cambia el mensaje final de los talleres, que lo fija `TALLER-COMUN` de cada
+proyecto (en LECCIONES, tres líneas y la ruta del informe). Tampoco edita `REGLAS-DE-CABINA.md`.
+
+**Criterio de borrado:** se elimina si el operador cambia el formato de cierre. Se revisa si un hilo mide que el cierre
+fijo le estorba.

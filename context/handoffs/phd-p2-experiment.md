@@ -65,13 +65,16 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 ## §3 · Estado, medido el 2026-10-29
 
 - Runs `#1` a `#19` cerrados; `#20` «Build the simulated learner by its contract and play it against the full tutor»
-  está **active**. Su trabajo está commiteado (`91d1043`); faltan la QA de Chris (dos conversaciones del alumno con el
-  tutor real) y sus decisiones H1–H3 del informe (§7). Lo que la cabina de Cowork le recomendó: **H1**, que las
-  tácticas del adverso roten por sesión y no empiecen de cero en cada paso (así aparece el contexto falso y se mantiene
-  «hasta dos veces por paso»); **H2**, que solo cuente como señal un mensaje que trae contenido del paso (una fórmula
-  del ítem), no un «inténtalo tú» vacío; esto ajusta Q2 y necesita su sí; **H3**, dejar que presionar gaste paciencia
-  y medirlo en el piloto. Si aprueba H1 y H2: segunda ronda de `#20` (D-061), con el texto del run enmendado en el
-  mismo encargo. Formato de respuesta pedido: QA1–QA4 (sí/no) y H1–H3.
+  está **active**. Su trabajo está commiteado (`91d1043`).
+  - **H1–H3, decididas** (2026-10-29). A «¿Aceptas H1–H3 como te los recomiendo?», Chris contestó «Sí, las tres».
+    Verbatim en `docs/verdicts/2026-10-29-learner-h1-h3.md` (commit `9272925`, publicado). **H1**: las tácticas del
+    adverso cuentan por sesión, no por paso, para que aparezca el contexto falso; `press_limit` sigue en 2 (§4.3, nueva
+    `dynamics_version`). **H2**: solo cuenta como pista un mensaje con contenido del paso, por ejemplo una fórmula del
+    ítem, y no un «inténtalo tú» vacío. Ajusta Q2 (§3.5, nueva `perception_version`). **H3**: sin cambio, se mide en el
+    piloto.
+  - **Falta la QA1–QA4** (informe §8.3: dos conversaciones del alumno con el tutor real), en sí/no. Con ella, la
+    cabina emite **una sola segunda ronda del `#20`** (D-061) con H1, H2 y lo que la QA pida, y con el texto del run
+    enmendado en el mismo encargo.
 - Hecho, de ESPEC §11: los pasos 1 a 3 (formatos, PAF sobre trazas a mano, el tutor completo) y el alumno simulado
   (contrato aprobado y construido). Más: la superficie visible, PAF sobre sesiones manuales y el lanzador. Sin
   empezar: el arnés de escenarios y la cobertura (O4.P2, O4.P3), los interruptores (O5), los brazos de RQ3 y la

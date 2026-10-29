@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Decisión — versales en el badge de Portada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Roboto+Slab:wght@300;700;800;900&display=swap">
+<style>
+  body { margin:0; background:#ECEFF4; font-family:'Inter',sans-serif; color:#2E3440; padding:26px 34px 60px; }
+  h1 { font-size:22px; margin:0 0 6px; }
+  .sub { color:#4C566A; font-size:14px; margin:0 0 22px; max-width:900px; line-height:1.6; }
+  .cols { display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:980px; }
+  .col { background:#fff; border:1px solid #D8DEE9; border-radius:12px; padding:18px 22px 24px; }
+  .col h2 { font-size:14px; margin:0 0 4px; letter-spacing:.04em; }
+  .col p.k { font-size:12px; color:#4C566A; margin:0 0 18px; }
+  .col.now { border-color:#A3BE8C; }
+  .col.next { border-color:#5E81AC; }
+  .row { margin-bottom:14px; }
+  /* El badge tal cual lo declara renderTitleSlide.js, a tamano real: 0.9rem = 14.4px */
+  .badge { display:inline-block; font-family:'Inter',sans-serif; font-weight:800; font-size:0.9rem;
+           color:#5E81AC; letter-spacing:0.2em; background:rgba(94,129,172,0.1);
+           padding:0.6rem 1.5rem; border-radius:50px; }
+  .up { text-transform:uppercase; }
+  .none { text-transform:none; }
+  .tag { font-size:11px; color:#8A94A6; margin-top:5px; }
+  .note { font-size:13px; color:#4C566A; margin-top:26px; line-height:1.7; max-width:980px; }
+  .note b { color:#2E3440; }
+  code { background:#F0F2F6; padding:1px 5px; border-radius:4px; font-family:'Roboto Slab',serif; font-size:12px; }
+</style>
+</head>
+<body>
+
+<h1>¿El badge de la Portada va en versales?</h1>
+<p class="sub">
+  A la izquierda, como se envía hoy. A la derecha, con <code>text-transform: uppercase</code> —
+  lo que llevan sus 17 rótulos hermanos del motor. Los valores son <b>los reales de tu corpus</b>.
+  Tamaño real: 14,4 px, Inter 800, interletrado 0.2em, que es tipografía de versales.
+  <b>Afecta a 27 portadas ya construidas</b>, no a las tres que yo creía.
+</p>
+
+<div class="cols">
+  <div class="col now">
+    <h2>HOY — <span style="color:#A3BE8C">caja mixta</span></h2>
+    <p class="k">Los dos primeros son el defecto: <i>slug</i> de carpeta. Los demás los escribiste tú.</p>
+    <div class="row"><span class="badge none">algebra</span><div class="tag">← defecto: slug del compilador</div></div>
+    <div class="row"><span class="badge none">test</span><div class="tag">← defecto: slug del compilador</div></div>
+    <div class="row"><span class="badge none">Álgebra</span><div class="tag">6 portadas</div></div>
+    <div class="row"><span class="badge none">System Showcase</span><div class="tag">4 portadas</div></div>
+    <div class="row"><span class="badge none">Módulo 1</span><div class="tag">3 portadas</div></div>
+    <div class="row"><span class="badge none">Diseño Avanzado</span><div class="tag">2 portadas</div></div>
+    <div class="row"><span class="badge none">System Library v3.2</span><div class="tag">1 portada</div></div>
+  </div>
+
+  <div class="col next">
+    <h2>PROPUESTO — <span style="color:#5E81AC">versales</span></h2>
+    <p class="k">Lo mismo con <code>uppercase</code>. El interletrado ya está calibrado para esto.</p>
+    <div class="row"><span class="badge up">algebra</span><div class="tag">← se repara aparte, exponiéndote el campo</div></div>
+    <div class="row"><span class="badge up">test</span><div class="tag">← se repara aparte</div></div>
+    <div class="row"><span class="badge up">Álgebra</span><div class="tag">6 portadas</div></div>
+    <div class="row"><span class="badge up">System Showcase</span><div class="tag">4 portadas</div></div>
+    <div class="row"><span class="badge up">Módulo 1</span><div class="tag">3 portadas</div></div>
+    <div class="row"><span class="badge up">Diseño Avanzado</span><div class="tag">2 portadas</div></div>
+    <div class="row"><span class="badge up">System Library v3.2</span><div class="tag">1 portada</div></div>
+  </div>
+</div>
+
+<p class="note">
+  <b>Lo que hay que mirar:</b> el interletrado de 0.2em está calibrado para versales — en caja mixta
+  separa demasiado las minúsculas. Pero las versales aplanan la diferencia entre <i>«Álgebra»</i> y
+  <i>«ÁLGEBRA»</i>, y en cadenas largas como <i>«System Library v3.2»</i> pesan más.
+  <br><br>
+  <b>Y hay una tercera opción</b> que no dibujo porque nadie la ha pedido: dejar el <code>uppercase</code>
+  fuera y <b>estrechar el interletrado</b> a algo de caja mixta — que es lo que hace la narrativa del
+  motor, el único otro rótulo sin versales, con <code>-0.03em</code>.
+  <br><br>
+  Dime <b>izquierda</b>, <b>derecha</b>, o <b>la tercera</b>.
+</p>
+
+</body>
+</html>

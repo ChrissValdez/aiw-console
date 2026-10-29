@@ -6,6 +6,23 @@
 > `_scratch` (§3) para pasar a tu repo lo que siga vigente. Este aviso lo puso la cabina de LECCIONES a pedido del
 > operador; lo de abajo es tu relevo, sin tocar.
 
+> **MUDANZA HECHA — 2026-10-29, en la PC (`desktop-525k0is`), por la cabina de `cantu-studio`.** Arranque medido:
+> `cantu-studio` en `9e8a02c4` = `origin/main` (copia local; la VM no tiene credenciales para consultar GitHub),
+> `aiw-console` por delante de `a0c3d9c`, sin `index.lock`. De las 112 entradas de `_scratch` que §3 asigna a este hilo,
+> se copió lo vigente (copia, no movimiento; byte a byte, comparado con `cmp`):
+> - los 4 bancos de QA → `cantu-studio/QA/bancos/` (con `DE-DONDE-VIENE.md`);
+> - `medicion/` y `guiones/` de `RUN-CANTU-COMPILE-NEVER-OVERWRITES-ANOTHER-LESSON-001`, que su `LEEME.md` promete y no
+>   estaban en git → su carpeta de `QA/temp/`;
+> - las herramientas de la cabina → `aiw-console/context/cantu-studio/herramientas-cabina/` (se copian a `_scratch` para
+>   usarlas; ver su `LEEME.md`);
+> - 5 páginas de decisión → `aiw-console/context/cantu-studio/records/anexos/`.
+>
+> **Lo demás (~100 entradas) es trabajo intermedio de runs cerrados y se queda en `_scratch`.** No son de este hilo:
+> `_LEC_variantes4` y `L06-v2-capturas` (de LECCIONES). `QA/temp/` en la PC: 3 484 ficheros versionados y 23 ignorados
+> (salidas regenerables de los #216–#218). `node_modules`: completo según `npm ls`, binarios de Windows x64; falta que el
+> operador abra el editor una vez en la PC. **Corrección:** la limpieza del 2026-10-19 borró capturas `.png` que algunos
+> informes citan; el texto de las mediciones sí está en git.
+
 > Escrito por la cabina al cerrar la sesión del **2026-09-30 al 2026-10-19**. **Sustituye al relevo del
 > 2026-09-25/30.**
 >

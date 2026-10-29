@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Esquema — dónde va el control de tamaño (#120 y #121)</title>
+<style>
+  :root{
+    --tinta:#1a1a1a; --suave:#6b6b6b; --linea:#d9d5cc; --papel:#faf8f4;
+    --campo:#e8eef6; --campo-b:#9db8d6;
+    --ctrl:#fdf0dc; --ctrl-b:#e0a94a;
+    --mal:#fbe6e4; --mal-b:#d98b83;
+    --bien:#e6f2e8; --bien-b:#7fae8b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 28px 80px;background:var(--papel);color:var(--tinta);
+       font:16px/1.55 -apple-system,'Segoe UI',system-ui,sans-serif}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:27px;margin:0 0 6px;letter-spacing:-.4px}
+  .sub{color:var(--suave);font-size:15px;margin:0 0 8px}
+  .aviso{background:#fff;border:1px solid var(--linea);border-left:4px solid #c9a227;
+         padding:13px 16px;border-radius:5px;margin:20px 0 34px;font-size:14.5px}
+  h2{font-size:20px;margin:44px 0 4px;padding-top:20px;border-top:1px solid var(--linea)}
+  h2:first-of-type{border-top:none;padding-top:0}
+  .lead{color:var(--suave);font-size:14.5px;margin:0 0 20px;max-width:74ch}
+  .par{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+  @media(max-width:900px){.par{grid-template-columns:1fr}}
+  .col{background:#fff;border:1px solid var(--linea);border-radius:9px;padding:0;overflow:hidden}
+  .col > header{padding:11px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+  .hoy header{background:var(--mal);border-bottom:1px solid var(--mal-b);color:#8a3a30}
+  .nuevo header{background:var(--bien);border-bottom:1px solid var(--bien-b);color:#2f6b45}
+  .form{padding:18px 16px}
+  .fila{border-radius:6px;padding:9px 12px;margin:0 0 8px;font-size:14px}
+  .f-campo{background:var(--campo);border:1px solid var(--campo-b)}
+  .f-ctrl{background:var(--ctrl);border:1px solid var(--ctrl-b)}
+  .f-campo b,.f-ctrl b{font-weight:600}
+  .et{display:block;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--suave);margin-bottom:2px}
+  .cola{margin-top:16px;padding-top:14px;border-top:2px dashed var(--mal-b)}
+  .cola-t{font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:#8a3a30;margin-bottom:8px;font-weight:700}
+  .nota{font-size:13px;color:var(--suave);padding:0 16px 16px;margin:0}
+  .coleccion{border:2px dashed var(--campo-b);border-radius:7px;padding:12px;margin-top:4px;background:#f7fafd}
+  .coleccion-t{font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:#4a6c92;margin-bottom:9px;font-weight:700}
+  .item{background:#fff;border:1px solid var(--campo-b);border-radius:5px;padding:8px 11px;margin-bottom:7px;font-size:13.5px}
+  table{border-collapse:collapse;width:100%;margin-top:14px;font-size:14.5px;background:#fff}
+  th,td{border:1px solid var(--linea);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:#f1eee7;font-size:13px;text-transform:uppercase;letter-spacing:.4px}
+  .tag{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;font-weight:700;letter-spacing:.3px}
+  .t-120{background:#e5edf7;color:#2d5486}
+  .t-121{background:#f3e9f7;color:#6a3d80}
+  .t-no{background:#eee;color:#666}
+  .pie{margin-top:52px;padding-top:18px;border-top:1px solid var(--linea);font-size:13.5px;color:var(--suave)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Dónde va el control de tamaño</h1>
+  <p class="sub">Lo que van a hacer <b>#120</b> (Tarjeta) y <b>#121</b> (Lista con etiquetas).</p>
+
+  <div class="aviso">
+    <b>Esto es un ESQUEMA dibujado por la cabina, NO una captura del editor.</b>
+    La cabina no ve interfaces. Sirve para que entiendas la <i>colocación</i>, no para juzgar
+    colores, tipografía ni tamaños reales. El render de verdad lo produce el taller dentro de
+    cada run, y eso sí lo revisarás en pantalla.
+  </div>
+
+  <h2>El problema, que es lo que tú describiste</h2>
+  <p class="lead">
+    Tus palabras: <i>«no campo, campo, campo / tamaño, tamaño, tamaño»</i>.
+    Hoy los controles de tamaño no están junto a su campo: están todos amontonados al final del
+    formulario, después de que el bloque del componente se cierre.
+  </p>
+
+  <div class="par">
+    <div class="col hoy">
+      <header>Hoy — la Tarjeta</header>
+      <div class="form">
+        <div class="fila f-campo"><span class="et">campo</span><b>Título</b></div>
+        <div class="fila f-campo"><span class="et">campo</span><b>Texto</b></div>
+        <div class="fila f-campo"><span class="et">campo</span><b>Autor</b></div>
+        <div class="cola">
+          <div class="cola-t">↓ la cola compartida, al final ↓</div>
+          <div class="fila f-ctrl"><span class="et">control</span><b>Tamaño del título</b></div>
+          <div class="fila f-ctrl"><span class="et">control</span><b>Tamaño del texto</b></div>
+          <div class="fila f-ctrl"><span class="et">control</span><b>Tamaño del autor</b></div>
+        </div>
+      </div>
+      <p class="nota">Para cambiar el tamaño del título tienes que bajar al final y acordarte de
+        cuál de los tres controles era.</p>
+    </div>
+
+    <div class="col nuevo">
+      <header>Después de #120 — la Tarjeta</header>
+      <div class="form">
+        <div class="fila f-campo"><span class="et">campo</span><b>Título</b></div>
+        <div class="fila f-ctrl"><span class="et">su control</span><b>Tamaño</b></div>
+        <div class="fila f-campo"><span class="et">campo</span><b>Texto</b></div>
+        <div class="fila f-ctrl"><span class="et">su control</span><b>Tamaño</b></div>
+        <div class="fila f-campo"><span class="et">campo</span><b>Autor</b></div>
+        <div class="fila f-ctrl"><span class="et">su control</span><b>Tamaño</b></div>
+      </div>
+      <p class="nota">Cada control pegado a su campo. Nada cambia de conducta: los mismos cuatro
+        peldaños, los mismos valores, el mismo resultado en la diapositiva.</p>
+    </div>
+  </div>
+
+  <h2>El caso raro: la Lista con etiquetas</h2>
+  <p class="lead">
+    Aquí no se puede hacer lo de arriba, y por eso te pregunté. La Lista no tiene «un campo» al
+    que pegar el control: <b>un solo control dimensiona el texto de todos los ítems a la vez</b>,
+    y los ítems los vas añadiendo tú, pueden ser tres o quince.
+  </p>
+
+  <div class="par">
+    <div class="col hoy">
+      <header>Hoy — la Lista</header>
+      <div class="form">
+        <div class="fila f-campo"><span class="et">campo</span><b>Título de la lista</b></div>
+        <div class="coleccion">
+          <div class="coleccion-t">los ítems, tantos como añadas</div>
+          <div class="item">Ítem 1 — icono + etiqueta + texto</div>
+          <div class="item">Ítem 2 — icono + etiqueta + texto</div>
+          <div class="item">Ítem 3 — icono + etiqueta + texto</div>
+        </div>
+        <div class="cola">
+          <div class="cola-t">↓ la cola compartida, al final ↓</div>
+          <div class="fila f-ctrl"><span class="et">control</span><b>Tamaño del texto</b></div>
+        </div>
+      </div>
+      <p class="nota">El control está al final y nada dice que gobierna los tres ítems a la vez.</p>
+    </div>
+
+    <div class="col nuevo">
+      <header>Después de #121 — lo que elegiste</header>
+      <div class="form">
+        <div class="fila f-campo"><span class="et">campo</span><b>Título de la lista</b></div>
+        <div class="coleccion">
+          <div class="coleccion-t">los ítems, tantos como añadas</div>
+          <div class="fila f-ctrl" style="margin-bottom:11px"><span class="et">control de toda la lista</span><b>Tamaño del texto de los ítems</b></div>
+          <div class="item">Ítem 1 — icono + etiqueta + texto</div>
+          <div class="item">Ítem 2 — icono + etiqueta + texto</div>
+          <div class="item">Ítem 3 — icono + etiqueta + texto</div>
+        </div>
+      </div>
+      <p class="nota">Encabezando la colección: lo ves antes de empezar a escribir ítems, y el
+        rótulo dice que los afecta a todos. <b>Esto es lo que decidiste hoy.</b></p>
+    </div>
+  </div>
+
+  <h2>Qué hace cada run que viene</h2>
+
+  <table>
+    <tr>
+      <th style="width:90px">Run</th>
+      <th style="width:230px">Qué toca</th>
+      <th>Qué vas a ver, y qué tendrás que juzgar</th>
+    </tr>
+    <tr>
+      <td><span class="tag t-120">#120</span></td>
+      <td><b>Tarjeta</b><br><span style="font-size:13px;color:#6b6b6b">sus cuatro familias</span></td>
+      <td>El dibujo de arriba, pero con el editor de verdad. Tendrás que decirme si cada control
+        quedó donde esperabas en las <b>cuatro</b> familias, y si el formulario se lee mejor o peor
+        que antes.</td>
+    </tr>
+    <tr>
+      <td><span class="tag t-121">#121</span></td>
+      <td><b>Lista con etiquetas</b><br><span style="font-size:13px;color:#6b6b6b">y se levanta su bloqueo</span></td>
+      <td>Dos cosas a la vez. Primero <b>podrás insertarla por fin</b> — hoy no puedes. Y entonces
+        verás el control encabezando la colección, y además el tamaño de texto que
+        <b>#116</b> le dio y que nunca has podido mirar.</td>
+    </tr>
+    <tr>
+      <td><span class="tag t-no">—</span></td>
+      <td>Métrica y Cita</td>
+      <td>Tienen varios campos y <b>un</b> control. La regla ya dice cómo se colocan, pero
+        <b>ningún run los tiene asignados todavía</b>. Está nombrado, no programado.</td>
+    </tr>
+  </table>
+
+  <h2>Lo que NO cambia, y conviene que lo sepas</h2>
+  <p class="lead">
+    Ninguno de estos dos runs cambia <b>cómo se ve la diapositiva</b>. Solo cambian dónde están
+    los mandos en el formulario mientras la editas. Los tamaños, los cuatro peldaños y el
+    resultado compilado se quedan exactamente como están — y hay una comprobación automática que
+    lo vigila: si el HTML de una sola diapositiva se moviera un byte, el run se pone rojo.
+  </p>
+
+  <p class="pie">
+    Esquema de la cabina · 2026-08-18 · no es una captura · el render real lo produce cada run
+  </p>
+
+</div>
+</body>
+</html>

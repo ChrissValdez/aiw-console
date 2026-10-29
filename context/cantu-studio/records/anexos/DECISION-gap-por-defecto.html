@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Decisión — el gap por defecto de la rejilla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Roboto+Slab:wght@300;700;800;900&display=swap">
+<style>
+  body { margin:0; background:#ECEFF4; font-family:'Inter',sans-serif; color:#2E3440; padding:24px 32px 60px; }
+  h1 { font-size:22px; margin:0 0 4px; }
+  .sub { color:#4C566A; font-size:14px; margin:0 0 20px; }
+  .panel { background:#fff; border:1px solid #D8DEE9; border-radius:10px; padding:16px 20px; margin-bottom:22px; }
+  .ctl { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  input[type=range] { width:460px; }
+  .read { font-family:'Roboto Slab',serif; font-size:26px; font-weight:700; min-width:210px; }
+  .read small { font-family:'Inter',sans-serif; font-weight:500; font-size:14px; color:#4C566A; }
+  .marks { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  button { font-family:'Inter',sans-serif; font-size:13px; font-weight:600; padding:7px 14px; border-radius:999px;
+           border:1px solid #D8DEE9; background:#F7F9FC; color:#2E3440; cursor:pointer; }
+  button.on { background:#2E3440; color:#fff; border-color:#2E3440; }
+
+  /* El lienzo real: 1920x1080 con raiz de 24px, escalado para caber */
+  .stagewrap { width:100%; overflow:hidden; border-radius:10px; border:1px solid #D8DEE9; background:#fff; }
+  .stage { width:1920px; height:1080px; font-size:24px; background:#FFFFFF;
+           transform-origin: top left; position:relative; }
+  .slide { position:absolute; inset:0; padding:80px 96px; box-sizing:border-box; display:flex; flex-direction:column; }
+  .slide h2 { font-family:'Roboto Slab',serif; font-size:4.5rem; font-weight:900; color:#2E3440; margin:0; line-height:1.05; }
+  .slide p.st { font-size:2.2rem; font-weight:500; color:#3B4252; margin:1rem 0 0 0; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; margin-top:3rem; flex:1; }
+  .cell { background:#F4F6FA; border:2px solid #D8DEE9; border-radius:14px; padding:2rem; }
+  .cell h3 { font-family:'Roboto Slab',serif; font-size:2.2rem; font-weight:800; margin:0 0 1rem; color:#2E3440; }
+  .cell li, .cell p { font-size:1.5rem; line-height:1.5; color:#3B4252; margin:0 0 .8rem; }
+  .cell ul { margin:0; padding-left:1.4rem; }
+  .note { font-size:13px; color:#4C566A; margin-top:14px; line-height:1.6; }
+  b.k { font-family:'Roboto Slab',serif; }
+</style>
+</head>
+<body>
+
+<h1>El gap por defecto de la rejilla de diapositiva</h1>
+<p class="sub">Arrastra hasta que se vea bien. Lo de abajo es el lienzo real, 1920&times;1080.
+<b>Corregido el 2026-08-13:</b> la raíz de <code>rem</code> es <b>16px</b>, no 24 — el <code>font-size:24px</code> de
+<code>#j-infinity-root</code> es de un <code>div</code> y sólo fija el <code>em</code>. La versión anterior de esta página
+etiquetaba mal las equivalencias; el dibujo era correcto porque el control trabaja en píxeles.</p>
+
+<div class="panel">
+  <div class="ctl">
+    <input type="range" id="r" min="16" max="144" step="4" value="64">
+    <div class="read"><span id="px">64px</span> <small>= <span id="rem">4rem</span></small></div>
+  </div>
+  <div class="marks">
+    <button data-v="40">40px = 2,5rem — usado en 6 composiciones</button>
+    <button data-v="64" class="on">64px = 4rem — el default de hoy, usado en 4</button>
+    <button data-v="48">48px = 3rem</button>
+    <button data-v="60">60px — usado en 2</button>
+    <button data-v="32">32px = 2rem</button>
+  </div>
+  <p class="note">
+    <b class="k">Los dos candidatos están más cerca de lo que yo decía:</b> 64px y 40px, no 96 y 40.
+    Y los dos son peldaños limpios sobre la raíz real de 16px — 2,5rem y 4rem.
+    El corpus usa los dos: 40px en seis composiciones (cinco son la misma repetida) y 64px en cuatro.
+  </p>
+</div>
+
+<div class="stagewrap" id="wrap">
+  <div class="stage" id="stage">
+    <div class="slide">
+      <h2>Propiedades de los números</h2>
+      <p class="st">Cómo se comportan al sumar y al multiplicar</p>
+      <div class="grid" id="g">
+        <div class="cell">
+          <h3>Conmutativa</h3>
+          <ul>
+            <li>El orden de los sumandos no altera la suma.</li>
+            <li>El orden de los factores no altera el producto.</li>
+            <li>No vale para la resta ni la división.</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <h3>Asociativa</h3>
+          <ul>
+            <li>Se pueden agrupar los términos como convenga.</li>
+            <li>El resultado no cambia con el agrupamiento.</li>
+            <li>Tampoco vale para resta ni división.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="note">
+  Fíjate en <b>cuánto respira</b> entre las dos columnas frente a cuánto sitio le quita al contenido.
+  Entre 40px y 64px cada columna gana o pierde 12px de ancho útil: es una diferencia de canal, no de contenido.
+</p>
+
+<script>
+  var r=document.getElementById('r'), px=document.getElementById('px'), rem=document.getElementById('rem'),
+      g=document.getElementById('g'), stage=document.getElementById('stage'), wrap=document.getElementById('wrap'),
+      btns=document.querySelectorAll('button[data-v]');
+  function apply(v){
+    g.style.gap = v+'px';
+    px.textContent = v+'px';
+    var rv = v/16; rem.textContent = (Math.round(rv*1000)/1000)+'rem';
+    btns.forEach(function(b){ b.classList.toggle('on', Number(b.dataset.v)===Number(v)); });
+  }
+  r.addEventListener('input', function(){ apply(r.value); });
+  btns.forEach(function(b){ b.addEventListener('click', function(){ r.value=b.dataset.v; apply(b.dataset.v); }); });
+  function fit(){ var s = wrap.clientWidth/1920; stage.style.transform='scale('+s+')'; wrap.style.height=(1080*s)+'px'; }
+  window.addEventListener('resize', fit); fit(); apply(64);
+</script>
+</body>
+</html>

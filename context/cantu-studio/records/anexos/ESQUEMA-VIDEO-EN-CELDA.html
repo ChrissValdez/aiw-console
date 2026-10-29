@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Esquema — qué hace un vídeo cuando la celda no es 16:9</title>
+<style>
+  :root{
+    --tinta:#1a1a1a; --suave:#6b6b6b; --linea:#d9d5cc; --papel:#faf8f4;
+    --celda:#eef1f6; --celda-b:#a9b8cc;
+    --video:#2f3a4a; --video-b:#1d2531;
+    --hueco:#f6d9d5; --hueco-b:#d98b83;
+    --ok:#e6f2e8; --ok-b:#7fae8b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:34px 26px 80px;background:var(--papel);color:var(--tinta);
+       font:16px/1.5 -apple-system,'Segoe UI',system-ui,sans-serif}
+  .wrap{max-width:1200px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:-.4px}
+  .sub{color:var(--suave);font-size:15px;margin:0 0 18px;max-width:76ch}
+  .aviso{background:#fff;border:1px solid var(--linea);border-left:4px solid #c9a227;
+         padding:12px 15px;border-radius:5px;margin:0 0 30px;font-size:14.5px}
+  h2{font-size:19px;margin:38px 0 6px;padding-top:18px;border-top:1px solid var(--linea)}
+  .lead{color:var(--suave);font-size:14.5px;margin:0 0 18px;max-width:76ch}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:start}
+  @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+  .op{background:#fff;border:1px solid var(--linea);border-radius:9px;overflow:hidden;display:flex;flex-direction:column}
+  .op > header{padding:10px 13px;font-size:12.5px;font-weight:700;letter-spacing:.3px;
+               background:#f1eee7;border-bottom:1px solid var(--linea)}
+  .op.hoy > header{background:var(--hueco);border-bottom-color:var(--hueco-b);color:#8a3a30}
+  .stage{padding:16px 13px;display:flex;justify-content:center}
+  /* la celda: proporciones tomadas de la captura del operador -- alta y estrecha */
+  .celda{width:190px;height:230px;border:2px dashed var(--celda-b);background:var(--celda);
+         border-radius:6px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .celda::after{content:'la celda';position:absolute;top:3px;left:6px;font-size:9.5px;
+                letter-spacing:.4px;text-transform:uppercase;color:#6a7c94}
+  .vid{background:var(--video);border:1px solid var(--video-b);border-radius:3px;
+       display:flex;align-items:center;justify-content:center;color:#cfd8e3;font-size:10.5px;
+       letter-spacing:.3px;text-align:center;line-height:1.25}
+  /* A: mantener proporcion, centrar -- 16:9 dentro de 190 de ancho */
+  .a .vid{width:174px;height:98px}
+  /* B: estirar -- llena la celda deformando */
+  .b .vid{width:174px;height:214px}
+  /* C: llenar y recortar -- el video sobresale y se corta */
+  .c .vid{width:380px;height:214px}
+  /* D: la celda se ajusta */
+  .d .celda{height:114px}
+  .d .vid{width:174px;height:98px}
+  .nota{padding:0 13px 14px;margin:0;font-size:13px;color:var(--suave);flex:1}
+  .verd{padding:9px 13px;font-size:12.5px;border-top:1px solid var(--linea);background:#fcfbf9}
+  .si{color:#2f6b45;font-weight:700}
+  .no{color:#8a3a30;font-weight:700}
+  table{border-collapse:collapse;width:100%;margin-top:16px;font-size:14.5px;background:#fff}
+  th,td{border:1px solid var(--linea);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:#f1eee7;font-size:12.5px;text-transform:uppercase;letter-spacing:.4px}
+  .pie{margin-top:44px;padding-top:16px;border-top:1px solid var(--linea);font-size:13px;color:var(--suave)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Qué hace un vídeo cuando la celda no tiene su forma</h1>
+  <p class="sub">
+    Un vídeo de YouTube es <b>16:9</b> — ancho. Una celda de la rejilla casi nunca lo es.
+    Alguien tiene que decidir qué gana, y hoy <b>nadie lo ha decidido</b>: lo que ves es el
+    resultado por omisión.
+  </p>
+
+  <div class="aviso">
+    <b>Esto es un ESQUEMA dibujado por la cabina, NO una captura del editor.</b>
+    La celda está dibujada con las proporciones de tu captura: alta y estrecha. Sirve para
+    elegir el comportamiento, no para juzgar colores ni acabado.
+  </div>
+
+  <h2>Las cuatro salidas posibles</h2>
+  <p class="lead">
+    La franja punteada es la celda. El rectángulo oscuro es el vídeo.
+  </p>
+
+  <div class="grid">
+
+    <div class="op hoy a">
+      <header>A · Lo de HOY — mantener proporción</header>
+      <div class="stage"><div class="celda"><div class="vid">vídeo 16:9</div></div></div>
+      <p class="nota">El vídeo conserva su forma y se centra. <b>Sobra hueco arriba y abajo</b>, y
+        al lado una tarjeta que sí llena su celda hace que se vea descolgado. Es lo que estás
+        viendo.</p>
+      <div class="verd">deforma <span class="no">no</span> · corta <span class="no">no</span> ·
+        deja hueco <span class="si">sí</span></div>
+    </div>
+
+    <div class="op b">
+      <header>B · Estirar hasta llenar</header>
+      <div class="stage"><div class="celda"><div class="vid">vídeo estirado</div></div></div>
+      <p class="nota">Llena la celda entera, pero <b>deforma la imagen</b>. Es lo que ya pasa en
+        rejilla de cuatro filas, donde sale 10:1 en vez de 16:9. Las caras y el texto del vídeo
+        salen aplastados.</p>
+      <div class="verd">deforma <span class="si">SÍ</span> · corta <span class="no">no</span> ·
+        deja hueco <span class="no">no</span></div>
+    </div>
+
+    <div class="op c">
+      <header>C · Llenar y recortar</header>
+      <div class="stage"><div class="celda"><div class="vid">vídeo recortado</div></div></div>
+      <p class="nota">Llena la celda sin deformar, pero <b>corta los lados</b>. En un vídeo
+        educativo eso puede comerse texto o parte de la pizarra, y además tapa los controles del
+        reproductor.</p>
+      <div class="verd">deforma <span class="no">no</span> · corta <span class="si">SÍ</span> ·
+        deja hueco <span class="no">no</span></div>
+    </div>
+
+    <div class="op d">
+      <header>D · La celda se ajusta al vídeo</header>
+      <div class="stage" style="align-items:center"><div class="celda"><div class="vid">vídeo 16:9</div></div></div>
+      <p class="nota">El vídeo manda y <b>la celda encoge</b> hasta su altura. No hay hueco ni
+        deformación, pero <b>la fila entera cambia de alto</b> y eso mueve a los componentes que
+        la comparten.</p>
+      <div class="verd">deforma <span class="no">no</span> · corta <span class="no">no</span> ·
+        mueve la fila <span class="si">SÍ</span></div>
+    </div>
+
+  </div>
+
+  <h2>Lo que hay que saber para elegir</h2>
+
+  <table>
+    <tr><th style="width:150px">Opción</th><th>Lo que ganas</th><th>Lo que pagas</th></tr>
+    <tr>
+      <td><b>A</b> — mantener<br><span style="font-size:12.5px;color:#6b6b6b">lo de hoy</span></td>
+      <td>El vídeo siempre se ve bien.</td>
+      <td>Huecos, y desalineado respecto a lo que tenga al lado. Es lo que no te gustó.</td>
+    </tr>
+    <tr>
+      <td><b>B</b> — estirar</td>
+      <td>La diapositiva queda cuadrada, sin huecos.</td>
+      <td>La imagen se deforma. En cuatro filas es <b>10:1</b>, medido.</td>
+    </tr>
+    <tr>
+      <td><b>C</b> — recortar</td>
+      <td>Sin huecos y sin deformar.</td>
+      <td>Se pierde lo que quede fuera, y tapa los controles del reproductor.</td>
+    </tr>
+    <tr>
+      <td><b>D</b> — la celda cede</td>
+      <td>El vídeo intacto y sin huecos.</td>
+      <td>La fila cambia de alto: mueve a sus vecinos. Es un cambio de la rejilla, no del vídeo.</td>
+    </tr>
+  </table>
+
+  <p class="lead" style="margin-top:22px">
+    <b>Y hay una quinta salida que no es excluyente:</b> que lo elijas tú por diapositiva, con un
+    control, igual que eliges el tamaño del texto. Cuesta más que fijar un comportamiento, pero
+    no te obliga a que todos los vídeos del curso se comporten igual.
+  </p>
+
+  <p class="pie">
+    Esquema de la cabina · 2026-08-18 · no es una captura · el comportamiento real lo implementa
+    su run
+  </p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Esquema — qué significa «tamaño» cuando la celda manda</title>
+<style>
+  :root{
+    --tinta:#1a1a1a; --suave:#6b6b6b; --linea:#d9d5cc; --papel:#faf8f4;
+    --celda:#eef1f6; --celda-b:#a9b8cc;
+    --caja:#fff; --caja-b:#c3ccd8;
+    --mal:#fbe6e4; --mal-b:#d98b83;
+    --ok:#e6f2e8; --ok-b:#7fae8b;
+    --amb:#fdf3e0; --amb-b:#e0a94a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:34px 26px 80px;background:var(--papel);color:var(--tinta);
+       font:16px/1.5 -apple-system,'Segoe UI',system-ui,sans-serif}
+  .wrap{max-width:1240px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:-.4px}
+  .sub{color:var(--suave);font-size:15px;margin:0 0 8px;max-width:80ch}
+  .aviso{background:#fff;border:1px solid var(--linea);border-left:4px solid #c9a227;
+         padding:12px 15px;border-radius:5px;margin:18px 0 32px;font-size:14.5px}
+  h2{font-size:19px;margin:40px 0 6px;padding-top:18px;border-top:1px solid var(--linea)}
+  .lead{color:var(--suave);font-size:14.5px;margin:0 0 18px;max-width:80ch}
+  .fila{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start}
+  @media(max-width:1000px){.fila{grid-template-columns:1fr}}
+  .op{background:#fff;border:1px solid var(--linea);border-radius:9px;overflow:hidden;display:flex;flex-direction:column}
+  .op > header{padding:11px 14px;font-size:13px;font-weight:700;letter-spacing:.3px}
+  .a header{background:var(--mal);border-bottom:1px solid var(--mal-b);color:#8a3a30}
+  .b header{background:var(--ok);border-bottom:1px solid var(--ok-b);color:#2f6b45}
+  .c header{background:var(--amb);border-bottom:1px solid var(--amb-b);color:#8a6420}
+  .stage{padding:16px 14px;display:flex;gap:14px;justify-content:center;align-items:flex-start}
+  .celda{width:150px;border:2px dashed var(--celda-b);background:var(--celda);border-radius:6px;
+         position:relative;padding:8px;overflow:hidden}
+  .celda.alta{height:200px}
+  .celda.baja{height:96px}
+  .cap{position:absolute;bottom:-19px;left:0;width:100%;text-align:center;font-size:10.5px;
+       letter-spacing:.4px;text-transform:uppercase;color:#6a7c94}
+  .celdawrap{position:relative;margin-bottom:22px}
+  .caja{background:var(--caja);border:1px solid var(--caja-b);border-radius:4px;padding:6px 7px}
+  .rot{font-size:7px;letter-spacing:.6px;text-transform:uppercase;color:#8a6420;font-weight:700;margin-bottom:3px}
+  .frm{font-family:'Times New Roman',serif;font-style:italic;text-align:center;margin:5px 0}
+  .txt{color:#5b6572;line-height:1.35}
+  /* A: fijo -- se corta */
+  .a .frm{font-size:26px} .a .txt{font-size:11px}
+  /* B: encoge para caber, tope el peldano */
+  .b .celda.alta .frm{font-size:26px} .b .celda.alta .txt{font-size:11px}
+  .b .celda.baja .frm{font-size:15px} .b .celda.baja .txt{font-size:7.5px}
+  /* C: llena siempre */
+  .c .celda.alta .frm{font-size:34px} .c .celda.alta .txt{font-size:14px}
+  .c .celda.baja .frm{font-size:15px} .c .celda.baja .txt{font-size:7.5px}
+  .nota{padding:0 14px 14px;margin:0;font-size:13px;color:var(--suave);flex:1}
+  .verd{padding:9px 14px;font-size:12.5px;border-top:1px solid var(--linea);background:#fcfbf9}
+  .si{color:#2f6b45;font-weight:700} .no{color:#8a3a30;font-weight:700}
+  table{border-collapse:collapse;width:100%;margin-top:16px;font-size:14.5px;background:#fff}
+  th,td{border:1px solid var(--linea);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:#f1eee7;font-size:12.5px;text-transform:uppercase;letter-spacing:.4px}
+  .pie{margin-top:44px;padding-top:16px;border-top:1px solid var(--linea);font-size:13px;color:var(--suave)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Qué significa «tamaño» cuando la celda manda</h1>
+  <p class="sub">
+    Propusiste que el tamaño se escale solo según el hueco: <b>si no cabe, encoge; si cabe, que
+    use el máximo disponible</b>. Son <b>dos ideas separables</b>, y la segunda cambia lo que
+    significan los cuatro peldaños que llevamos cinco runs construyendo. Esto las dibuja.
+  </p>
+
+  <div class="aviso">
+    <b>Esquema de la cabina, NO una captura.</b> Las proporciones son ilustrativas: sirve para
+    elegir el modelo, no para juzgar la calibración.
+  </div>
+
+  <h2>Las tres salidas</h2>
+  <p class="lead">La franja punteada es la celda. Arriba una celda alta, abajo una baja.</p>
+
+  <div class="fila">
+
+    <div class="op a">
+      <header>A · Lo de HOY — el peldaño manda siempre</header>
+      <div class="stage">
+        <div class="celdawrap"><div class="celda alta"><div class="caja">
+          <div class="rot">Regla</div><div class="frm">a² + b² = c²</div>
+          <div class="txt">Explica en una frase cuándo se usa.</div></div></div>
+          <span class="cap">celda alta</span></div>
+        <div class="celdawrap"><div class="celda baja"><div class="caja">
+          <div class="rot">Regla</div><div class="frm">a² + b² = c²</div>
+          <div class="txt">Explica en una frase cuándo se usa.</div></div></div>
+          <span class="cap">celda baja</span></div>
+      </div>
+      <p class="nota">El texto mide lo mismo en las dos. En la baja <b>se corta</b> — es
+        exactamente lo de tu captura. Y en la alta sobra hueco.</p>
+      <div class="verd">se corta <span class="no">SÍ</span> · el peldaño significa algo
+        <span class="si">sí</span> · igual en toda la diapositiva <span class="si">sí</span></div>
+    </div>
+
+    <div class="op b">
+      <header>B · Encoge para caber — el peldaño es el TECHO</header>
+      <div class="stage">
+        <div class="celdawrap"><div class="celda alta"><div class="caja">
+          <div class="rot">Regla</div><div class="frm">a² + b² = c²</div>
+          <div class="txt">Explica en una frase cuándo se usa.</div></div></div>
+          <span class="cap">celda alta</span></div>
+        <div class="celdawrap"><div class="celda baja"><div class="caja">
+          <div class="rot">Regla</div><div class="frm">a² + b² = c²</div>
+          <div class="txt">Explica en una frase cuándo se usa.</div></div></div>
+          <span class="cap">celda baja</span></div>
+      </div>
+      <p class="nota">El peldaño que eliges es <b>el tamaño máximo</b>. Si cabe, lo usa; si no,
+        baja hasta caber. <b>Nunca se corta</b> y el peldaño sigue significando algo.</p>
+      <div class="verd">se corta <span class="si">no</span> · el peldaño significa algo
+        <span class="si">sí</span> · igual en toda la diapositiva <span class="no">no siempre</span></div>
+    </div>
+
+    <div class="op c">
+      <header>C · Llenar siempre el hueco</header>
+      <div class="stage">
+        <div class="celdawrap"><div class="celda alta"><div class="caja">
+          <div class="rot">Regla</div><div class="frm">a² + b² = c²</div>
+          <div class="txt">Explica en una frase cuándo se usa.</div></div></div>
+          <span class="cap">celda alta</span></div>
+        <div class="celdawrap"><div class="celda baja"><div class="caja">
+          <div class="rot">Regla</div><div class="frm">a² + b² = c²</div>
+          <div class="txt">Explica en una frase cuándo se usa.</div></div></div>
+          <span class="cap">celda baja</span></div>
+      </div>
+      <p class="nota">El texto crece hasta llenar. Nunca sobra hueco… pero <b>el peldaño deja de
+        decidir el tamaño</b>: lo decide la celda. Dos reglas iguales en celdas distintas se ven
+        distintas.</p>
+      <div class="verd">se corta <span class="si">no</span> · el peldaño significa algo
+        <span class="no">NO</span> · igual en toda la diapositiva <span class="no">no</span></div>
+    </div>
+
+  </div>
+
+  <h2>Lo que hay que saber para elegir</h2>
+
+  <table>
+    <tr><th style="width:130px">Opción</th><th>Lo que ganas</th><th>Lo que pagas</th></tr>
+    <tr>
+      <td><b>A</b> — hoy</td>
+      <td>El peldaño manda y todo se ve consistente.</td>
+      <td><b>Se corta.</b> Es el defecto que acabas de ver.</td>
+    </tr>
+    <tr>
+      <td><b>B</b> — techo<br><span style="font-size:12.5px;color:#6b6b6b">recomendada</span></td>
+      <td>Nunca se corta, y <b>los cuatro peldaños siguen significando algo</b>: son el máximo
+        que quieres. Lo que hemos construido en cinco runs se conserva entero.</td>
+      <td>En celdas apretadas el texto baja del peldaño que pediste. Hay que decidir si eso se
+        te avisa en el editor o pasa callado.</td>
+    </tr>
+    <tr>
+      <td><b>C</b> — llenar</td>
+      <td>Nunca sobra hueco; la diapositiva siempre se ve «completa».</td>
+      <td><b>El peldaño deja de decidir.</b> Las cuatro tablas ancladas —y la regla de que
+        «Mediano es lo que ya ves»— dejarían de tener sentido. Y es lo más parecido al
+        «Automático» que pediste quitar dos veces.</td>
+    </tr>
+  </table>
+
+  <h2>Y una cosa que no se ve en el dibujo</h2>
+  <p class="lead">
+    Sea cual sea la que elijas, <b>hay que decidir también quién cede primero</b> cuando una fila
+    lleva dos componentes: el escenario tiene alto fijo, así que lo que una fila necesita se lo
+    quita a las demás. Esa pregunta ya está escrita en el run de la geometría de celda.
+  </p>
+
+  <p class="pie">
+    Esquema de la cabina · 2026-08-20 · no es una captura · el comportamiento real lo implementa
+    su run
+  </p>
+
+</div>
+</body>
+</html>

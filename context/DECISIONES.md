@@ -3431,3 +3431,12 @@ hilos».
 
 **Criterio de borrado:** se revisa con el veredicto del piloto de LECCIONES (si Claude Code no sirve como cabina, el punto
 de la cabina se deshace; lo de git y `_scratch` se queda).
+
+### Enmienda (2026-10-28, la misma noche, en la PC)
+
+Con la palabra del operador («Sí, las cinco», guardada en el mismo veredicto de `cantu-lessons`), después de medir en la
+PC que la copia de la laptop no llegó completa: faltaban 10 499 ficheros, y ninguno estaba en git.
+
+- **Lo que por regla no entra a git se copia a mano y se verifica con el manifiesto.** Son las fuentes de terceros (como
+  `cantu-lessons/fuentes/`) y los datos (como `phd-p2-experiment/data/`). Push y pull no los llevan. El manifiesto
+  y su `comparar` son los de la mudanza (`_scratch/cabina/mudanza/mudanza.mjs`).

@@ -3441,6 +3441,25 @@ PC que la copia de la laptop no llegó completa: faltaban 10 499 ficheros, y nin
   `cantu-lessons/fuentes/`) y los datos (como `phd-p2-experiment/data/`). Push y pull no los llevan. El manifiesto
   y su `comparar` son los de la mudanza (`_scratch/cabina/mudanza/mudanza.mjs`).
 
+### Segunda enmienda (2026-10-29: varias cabinas en Claude Code a la vez)
+
+Con la palabra del operador, en la cabina de LECCIONES:
+
+> Sí, enmienda
+
+La cabina de LECCIONES lo midió antes de commitear, el 2026-10-29 entre las 10:33 y las 10:34. En `aiw-console` había
+ficheros preparados por otra cabina y dos commits de otros hilos sin publicar.
+
+- **Las cabinas que corren en Claude Code en la PC comparten el checkout de `aiw-console`**, y con él el índice y la
+  rama:
+  - un `git commit` sin ruta se lleva todo lo preparado, aunque lo haya preparado otro hilo;
+  - un `git push` publica todos los commits locales, también los de otros.
+- **En `aiw-console`, el commit va siempre con ruta:** `git commit -m "…" -- <ruta> [<ruta>…]`. Así entran solo esas
+  rutas, aunque haya otras preparadas. Antes, `git diff --cached --name-only`, para ver si alguien dejó algo preparado.
+- **Antes del push, `git log origin/main..HEAD`.** Si hay commits de otro hilo sin publicar, no se empuja: se espera a
+  que su hilo los publique, o se le dice al operador.
+- **Lo mismo vale en cualquier repo** donde trabaje más de una cabina a la vez.
+
 ---
 
 ## D-082 — EL CIERRE DE TODO MENSAJE: «QUÉ NECESITO DE TI» Y «QUÉ PROCEDE», CON «⏳ EN ESPERA DE …» CUANDO SE ESPERA

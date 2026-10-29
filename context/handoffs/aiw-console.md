@@ -122,8 +122,9 @@ Escritas por este hilo en `context/DECISIONES.md`:
 - **D-080** — `work_class` entra a la clasificación; la relación entre runs se deriva.
 
 D-077 a D-079 las escribió el hilo `cantu-studio`. **D-079 pausa Cantu Studio**, y por eso esperan el `#81` y el `#82`.
-D-081 (la mudanza a la PC) la escribió el hilo `cantu-lessons`. **La última era D-081 el 2026-10-29 a las 10:19.
-Mide el siguiente número antes de escribir una D**: escriben varios hilos.
+D-081 (la mudanza a la PC, con dos enmiendas) y D-082 (el formato de cierre de todo mensaje) las escribió el hilo
+`cantu-lessons`. **La última era D-082 el 2026-10-29 a las 10:39. Mide el siguiente número antes de escribir una D**:
+escriben varios hilos.
 
 **Hueco propio, declarado en el cierre del `#75`:** `CONTRATO.md:55` pide que la decisión que hace caducar un texto del
 contrato anote esa corrección. D-076 y D-080 no lo hicieron; `DECISIONES.md` es append-only y no se reescriben. La
@@ -174,7 +175,8 @@ El texto del operador, verbatim:
 >
 > Si hubo mediciones, la tabla de lo medido, con la hora, va antes de esos dos bloques.
 
-Lo pidió primero en la cabina de LECCIONES; desde el 2026-10-29 vale para todos los hilos. También está en el
+Lo pidió primero en la cabina de LECCIONES; desde el 2026-10-29 vale para todos los hilos, y quedó registrado como
+**D-082** en `DECISIONES.md`. También está en el
 `CLAUDE.md` de esta cabina («Formato de cierre de cada mensaje») y en la memoria de Claude Code de la PC.
 
 ---
@@ -225,6 +227,30 @@ falsos demostraron que cada una encuentra otra capa.
 - **Cuidado al leer fuera de esta carpeta:** al leer un fichero de `context/cabinas/lecciones/`, Claude Code cargó el
   `CLAUDE.md` de LECCIONES en esta sesión, porque carga el `CLAUDE.md` de la carpeta de cada fichero leído. No mandó
   nada aquí, pero es el contrato de otra cabina.
+
+### Git en un checkout compartido: la segunda enmienda de D-081 (2026-10-29)
+
+**Las cabinas que corren en Claude Code en la PC comparten el checkout de `aiw-console`**, y con él el índice y la rama.
+Un `git commit` sin ruta se lleva todo lo que haya preparado, aunque lo preparara otro hilo. Un `git push` publica todos
+los commits locales, también los de otros. Lo midió LECCIONES el 10-29, y esta cabina vio lo mismo esa mañana: ficheros
+de `phd-p2-experiment` sin commitear al lado de los suyos, y commits de CQL y de `phd-p2-experiment` debajo y encima de
+los suyos, con segundos de diferencia. Por eso, en `aiw-console`:
+
+1. **`git pull --ff-only`** justo antes de escribir, solo en su llamada.
+2. **`git diff --cached --name-only`** antes de commitear, para ver si otro hilo dejó algo preparado.
+3. **El commit va siempre con ruta:** `git commit -m "…" -- <ruta> [<ruta>…]`, con la identidad explícita
+   (`-c user.name=ChrissValdez -c user.email=christopherkntu@gmail.com`). Así entran solo esas rutas, aunque haya otras
+   preparadas.
+4. **Antes del push, `git fetch` y `git log origin/main..HEAD`.** Si debajo de tu commit hay commits de otro hilo sin
+   publicar, **no se empuja**: o se espera a que su hilo los publique (el 10-29, CQL publicó el suyo en menos de 30 s),
+   o se le dice al operador.
+5. **El push va por sha exacto:** `git push origin <sha>:main`. Así no se lleva lo que otro hilo commitee encima entre
+   la medición y el push. Esto no lo dice la enmienda: lo usa la cabina de `phd-p2-experiment`, y a esta le hizo falta
+   el 10-29, cuando `a89b577` entró 30 s después de `be1521c`.
+6. **Después, `git ls-remote origin main`** tiene que dar tu sha, o uno que lo contenga.
+
+La enmienda dice que **lo mismo vale en cualquier repo** donde trabaje más de una cabina a la vez. El texto completo está
+en `context/DECISIONES.md`, D-081, «Segunda enmienda».
 
 ### Escribir el canónico, medido en Cowork y SIN PROBAR en Claude Code
 
@@ -294,8 +320,8 @@ Las capturas y comparaciones del `#78` están fuera del repo, en
 
 Git es la fuente de verdad entre la PC y la laptop: **`pull --ff-only` antes de escribir, y un aparato a la vez.** En
 este repo escriben varios hilos, también en vivo: el 10-29, de 10:15 a 10:24, entraron cuatro commits de otros hilos o de Cowork, y alguien publicó desde esta PC a
-las 10:20 y a las 10:26. Por eso,
-`add` por nombre y pull justo antes de cada escritura.
+las 10:20 y a las 10:26. Por eso se sigue la segunda enmienda de D-081 (§6): pull justo antes de cada escritura,
+commit con ruta, `log origin/main..HEAD` antes del push, y push por sha exacto.
 
 **`_scratch`: lo que se revisó** (de las 32 entradas que la lista de §3 de la mudanza daba a este hilo):
 

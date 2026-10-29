@@ -35,8 +35,9 @@ verificas. La separación es sobre el juicio técnico.
 | `_scratch` y `_backups` | **desechables.** Solo para lo que dura una operación (la copia del canónico antes de escribirlo, borrada al terminar) |
 
 **`aiw-console` lo escriben varios hilos** (la cabina de LECCIONES, en Claude Code, escribe `context/cabinas/lecciones/`,
-su relevo y `DECISIONES.md`): `pull --ff-only` justo antes de cada escritura, `add` siempre por nombre, y cada fichero
-que la cabina escriba se declara por su ruta completa en el mismo turno.
+su relevo y `DECISIONES.md`): `pull --ff-only` justo antes de cada escritura, `add` siempre por nombre, **el commit
+siempre con ruta y el push por sha** («Git», 7: segunda enmienda de D-081), y cada fichero que la cabina escriba se
+declara por su ruta completa en el mismo turno.
 
 ## Qué cambia respecto a Cowork
 
@@ -80,17 +81,30 @@ nunca `[user]` en el `.git/config`), con estos cambios:
 1. **Todo git que salga a la red lleva `GIT_TERMINAL_PROMPT=0` y `GCM_INTERACTIVE=never`**, para que una credencial que
    falte falle con su error y no abra una ventana que se quede esperando (lección del piloto de LECCIONES).
 2. **Antes de escribir en un repo, `git pull --ff-only`**, solo en su llamada. Si no avanza limpio, para y lo dice.
-3. **La cabina publica.** Después de cada commit que fija algo, `git push`, solo en su llamada, y verifica
-   `git --no-optional-locks rev-list --count origin/main..HEAD` → `0`.
+3. **La cabina publica.** Después de cada commit que fija algo, `git push`, solo en su llamada, en la forma del punto 7.
+   Verifica que `git ls-remote origin main` da su sha (o uno que lo contenga). `rev-list --count origin/main..HEAD` → `0`
+   solo vale si nadie commiteó encima.
 4. **Si el push falla, para y lo dice** con el error literal. No reintenta de otra forma ni toca credenciales. Mientras
    no se arregle, vuelve la línea «toca push — N commits sin publicar».
 5. **La línea del cierre y del parte:** «publicado: `aiw-console` hasta `<sha>`», o el «toca push» con el motivo.
 6. **Un aparato a la vez.** Si al arrancar hay commits que no esperabas, lo dices antes de escribir: puede ser la otra
    computadora o la cabina de LECCIONES.
+7. **El checkout de `aiw-console` es compartido** (D-081, «Segunda enmienda», 2026-10-29). Las cabinas en Claude Code
+   comparten índice y rama: un commit sin ruta se lleva lo que otro hilo dejó preparado, y un push publica también los
+   commits de otros. Por eso:
+   - antes de commitear, `git diff --cached --name-only`, por si alguien dejó algo preparado;
+   - **el commit va siempre con ruta:** `git -c user.name=… -c user.email=… commit -m "…" -- <ruta> [<ruta>…]`;
+   - **antes del push, `git fetch` y `git log origin/main..HEAD`.** Si debajo del tuyo hay commits de otro hilo sin
+     publicar, **no se empuja**: se espera a que su hilo los publique, o se le dice al operador;
+   - **el push, por sha exacto:** `git push origin <sha>:main`, para no llevarse lo que otro hilo commitee encima entre
+     la medición y el push. Esto lo añade esta cabina: lo usa la de `phd-p2-experiment`, y aquí hizo falta el 10-29.
+
+   Según la enmienda, lo mismo vale en cualquier repo donde trabaje más de una cabina a la vez.
 
 ## Formato de cierre de cada mensaje (el operador, 2026-10-29, para todos los hilos)
 
-> Añadido el 2026-10-29, tras el piloto, con la palabra del operador. El texto verbatim está en el relevo (§4).
+> Añadido el 2026-10-29, tras el piloto, con la palabra del operador. Es **D-082**. El texto verbatim está en el relevo
+> (§4) y en `DECISIONES.md`.
 
 **Todo mensaje al operador termina con dos bloques, en este orden.** No solo el de cierre de sesión: todos.
 

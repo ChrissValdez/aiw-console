@@ -116,10 +116,9 @@ Razón del operador: si se va la luz y la PC se apaga, la laptop sigue al día.
 4. **Medir `cantu-revisiones`:** remoto, rama, el README, que el push funcione.
 5. **Proponer al operador**, de una vez: la estructura de `cantu-revisiones` y los cambios al molde de galería (hoy la
    galería todavía va en `_scratch/RW-xx/`). Escribir lo aprobado, commit y push.
-6. **Proponer al operador la entrada D-081 en `DECISIONES.md`** (la última medida, el 2026-10-28, es D-080; verifícalo): la
-   cabina de LECCIONES pasa a Claude Code en la PC; su configuración vive en `context/cabinas/`; las reglas de cabina,
-   una sola copia en `context/cabinas/REGLAS-DE-CABINA.md`; la cabina publica; `_scratch` es desechable; lo que se revisa
-   va en `cantu-revisiones`. Con su palabra, se escribe y se publica.
+6. **D-081 ya está escrita** en `DECISIONES.md` (la cabina de Cowork, 2026-10-28, a pedido del operador), con el aviso a
+   los demás hilos: `context/cabinas/MUDANZA-2026-10-28.md` y una nota al principio de cada relevo. Léela y di si algo de
+   lo que encuentres la contradice.
 7. **Cerrar:** el relevo del hilo se reescribe con lo de esta sesión (el bloque del relevo de septiembre que lleva dentro
    se revisa contra el disco: lo vigente se queda, lo vencido sale). Al lado, en esta carpeta, **el veredicto sobre este
    `CLAUDE.md`**. Commit y push.

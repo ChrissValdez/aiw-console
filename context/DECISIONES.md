@@ -3397,3 +3397,37 @@ local de `cantu-studio` rechaza la clave** mientras su hilo no la tolere (CLASIF
 
 **Criterio de borrado:** se elimina si el piloto en otros proyectos demuestra que cinco clases no
 alcanzan, o si la relación necesita guardarse como dato porque derivarla no basta.
+
+---
+
+## D-081 — LA MUDANZA A LA PC: GIT ES LA FUENTE DE VERDAD, `_SCRATCH` ES DESECHABLE, Y LA CABINA DE LECCIONES PASA A CLAUDE CODE
+
+**Fecha:** 2026-10-28 · **Proyecto:** transversal (todos los hilos y las dos computadoras) · **Origen:** hilo
+`cantu-lessons`, durante la mudanza de la laptop a la PC.
+
+Decidido por **Christopher Valdez Cantu** el **2026-10-28**, en mensajes guardados verbatim en
+`projects/cantu-lessons/docs/veredictos/2026-10-16-lectura-de-las-seis-lecciones-web.md` (secciones del 2026-10-28):
+«porque no A? (…) mantiene sincronizadas ambas computadoras»; «si se ira dieta chris»; «necesito pasar todas estas
+instrucciones y registros a algun repo para que siempre esten sincronziadas ambas computadoras»; «estoy deacuerdo que sea
+aiw console»; «tenemos que mudar todo lo que siga vigente de sractch»; «necesito tambien avisarle de esto a los otros
+hilos».
+
+### La regla
+
+- **Git es la fuente de verdad entre las dos computadoras.** Se cambia de computadora con push en una y pull en la otra;
+  se trabaja en una a la vez.
+- **`_scratch` y `_backups` son desechables.** Lo que hace falta para seguir —informes, moldes, sondas, herramientas de la
+  cabina— vive en un repo. Se copia, no se mueve; borrar de `_scratch` es solo con la palabra del operador.
+- **La configuración de las cabinas vive en `context/cabinas/`:** `REGLAS-DE-CABINA.md`, copia verbatim de las
+  instrucciones del Project, una para todas; y una carpeta por hilo que se mude a Claude Code.
+- **La cabina de LECCIONES pasa a Claude Code** en la PC, como piloto (`context/cabinas/lecciones/CLAUDE.md`). En Claude
+  Code la cabina hace commit **y push**. Los demás hilos siguen en Cowork hasta el veredicto del piloto.
+- **Lo que el operador revisa a distancia** va en un repo propio del hilo (LECCIONES: `projects/cantu-revisiones`).
+- **Cada hilo, al reabrirse, revisa su parte de `_scratch`** y pasa a su repo lo vigente:
+  `context/cabinas/MUDANZA-2026-10-28.md`.
+
+**Lo que esta decisión NO hace:** no muda a Claude Code a ningún otro hilo; no mueve nada del `_scratch` de otros hilos
+(cada uno lo hace en su repo); no toca `Acervo` ni `PHD`, que no tienen relevo aquí.
+
+**Criterio de borrado:** se revisa con el veredicto del piloto de LECCIONES (si Claude Code no sirve como cabina, el punto
+de la cabina se deshace; lo de git y `_scratch` se queda).

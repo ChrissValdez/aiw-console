@@ -1,5 +1,11 @@
 # HANDOFF — hilo `cantu-studio` (el proyecto)
 
+> ⚠ **ANTES DE NADA — la mudanza del 2026-10-28 (D-081).** El trabajo pasó de la laptop a la PC y git es la fuente de
+> verdad entre las dos computadoras; `_scratch` es desechable. Al reabrir este hilo, lee
+> `context/cabinas/MUDANZA-2026-10-28.md` y haz su §2 antes que nada: el arranque en la PC, y revisar tu parte de
+> `_scratch` (§3) para pasar a tu repo lo que siga vigente. Este aviso lo puso la cabina de LECCIONES a pedido del
+> operador; lo de abajo es tu relevo, sin tocar.
+
 > Escrito por la cabina al cerrar la sesión del **2026-09-30 al 2026-10-19**. **Sustituye al relevo del
 > 2026-09-25/30.**
 >

@@ -55,7 +55,8 @@
 3. **La cabina hace commit y push.** En Cowork no podía: corría en la nube sin ruta a GitHub; no era un tema de permisos.
 4. **La configuración de las cabinas, en un solo repo sincronizado: `aiw-console/context/cabinas/`.** El operador propuso un
    repo nuevo; la cabina recomendó este porque `context/` ya es el canal de contexto de la cabina (D-037) y un repo nuevo lo
-   partiría en dos. Pendiente: proponer la entrada D-081 en `DECISIONES.md`.
+   partiría en dos. Registrado como **D-081** en `DECISIONES.md`; el aviso a los demás hilos, en
+   `context/cabinas/MUDANZA-2026-10-28.md` y al principio de cada relevo.
 5. **Lo que hace falta para seguir vive en git; `_scratch` es desechable.** El informe de cada taller pasa a git (dónde,
    por proponer).
 

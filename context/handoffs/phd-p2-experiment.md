@@ -1,5 +1,11 @@
 # Relevo — hilo `phd-p2-experiment`
 
+> ⚠ **ANTES DE NADA — la mudanza del 2026-10-28 (D-081).** El trabajo pasó de la laptop a la PC y git es la fuente de
+> verdad entre las dos computadoras; `_scratch` es desechable. Al reabrir este hilo, lee
+> `context/cabinas/MUDANZA-2026-10-28.md` y haz su §2 antes que nada: el arranque en la PC, y revisar tu parte de
+> `_scratch` (§3) para pasar a tu repo lo que siga vigente. Este aviso lo puso la cabina de LECCIONES a pedido del
+> operador; lo de abajo es tu relevo, sin tocar.
+
 **Fecha: 2026-10-22 (UTC).** Es el primer relevo de este hilo; antes no tenía ninguno en
 `handoffs/`. Lo escribe la cabina a mitad de sesión para que la próxima sepa, como mínimo, dónde
 está cada cosa. Las cifras son mediciones fechadas: se vuelven a medir al abrir.

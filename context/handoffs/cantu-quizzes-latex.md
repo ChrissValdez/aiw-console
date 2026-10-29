@@ -1,5 +1,11 @@
 # Relevo — hilo `cantu-quizzes-latex`
 
+> ⚠ **ANTES DE NADA — la mudanza del 2026-10-28 (D-081).** El trabajo pasó de la laptop a la PC y git es la fuente de
+> verdad entre las dos computadoras; `_scratch` es desechable. Al reabrir este hilo, lee
+> `context/cabinas/MUDANZA-2026-10-28.md` y haz su §2 antes que nada: el arranque en la PC, y revisar tu parte de
+> `_scratch` (§3) para pasar a tu repo lo que siga vigente. **Tu parte es la más pesada fuera de LECCIONES: unos 1,75 GB.** Este aviso lo puso la cabina de LECCIONES a pedido del
+> operador; lo de abajo es tu relevo, sin tocar.
+
 **Fecha: 2026-09-12, 18:18 CST.** Sustituye al relevo del **2026-08-06**, que llevaba
 cinco semanas sin tocarse y describía el run `#2` como activo. Lo que de aquel sigue
 vigente se ha traído aquí; lo que caducó se declara caducado en el §9.

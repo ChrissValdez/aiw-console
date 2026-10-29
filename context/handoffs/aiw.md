@@ -1,5 +1,11 @@
 # Handoff — hilo `aiw`
 
+> ⚠ **ANTES DE NADA — la mudanza del 2026-10-28 (D-081).** El trabajo pasó de la laptop a la PC y git es la fuente de
+> verdad entre las dos computadoras; `_scratch` es desechable. Al reabrir este hilo, lee
+> `context/cabinas/MUDANZA-2026-10-28.md` y haz su §2 antes que nada: el arranque en la PC, y revisar tu parte de
+> `_scratch` (§3) para pasar a tu repo lo que siga vigente. Este aviso lo puso la cabina de LECCIONES a pedido del
+> operador; lo de abajo es tu relevo, sin tocar.
+
 > **Reescrito el 2026-08-06 (sesión de Cowork, modo CONECTADO).** Sustituye al del mismo
 > día escrito en modo ESPEJO. **La sesión siguiente abre en una LAPTOP NUEVA**, así que
 > §1 es una sección de mudanza y es lo primero que hay que leer después de §0.

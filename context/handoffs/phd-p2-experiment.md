@@ -68,6 +68,26 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   La cola está vacía; el siguiente run hay que crearlo. El último, `#22` «Turn off the Claude Code CLI's built-in
   agents-md plugin in its adapter, plant an AGENTS.md in its canary, and measure 2.1.284», cerró el 2026-10-30, sin QA
   humana, como dice su texto (commit `952cb7d`, publicado). Su historia y la del `#21` van abajo.
+- **Los runs `#1` a `#23` están cerrados** (2026-10-30): 23 de 23 `completed`, `history=23`, `ready_next=0`. La cola
+  está vacía.
+- **`#23` «Build the scenario harness…» se cerró** sin QA humana, como dice su texto.
+  - **Entrega:**
+    - `src/p2exp/play/harness/` y su contrato `docs/contracts/scenario-harness.md`;
+    - el esquema `scenario-plan.schema.json`;
+    - el guard (j);
+    - 36 pruebas, vistas en rojo;
+    - una corrida real: `FAC-001`, cooperativo, `item_closed` en 6 turnos, 18 llamadas de Codex.
+  - La cabina verificó la suite (3422/1/26) y las pruebas del arnés y de los guards (97 passed). Lo publicó en el
+    commit `04ce5d6`.
+  - Cierre por la consola: campo a campo, solo `status` y `closeout_result`; md5 `b9956c56…` → `9115431f…`. Commit
+    `b01cd6e`. Respaldos borrados.
+  - **Decisiones abiertas, para el run del piloto** (informe §9). Recomendación de la cabina, sin preguntar todavía:
+    - **9.1:** ¿se archivan las sesiones que acaban en `error`? Recomienda (a): no archivarlas, y reintentarlas con
+      `--retry-failed`. Que lo confirme el piloto.
+    - **9.2:** el conductor nombra `native.test-only.jsonl` a toda traza, así que el modo del estudio fallaría. Es un
+      cambio de una línea en el run que fije N: que lo nombre por `settings.N_source`.
+    - **9.3:** el estudio rechaza ids de ítem que `debug/items/` ya tiene. Recomienda dar ids nuevos a los ítems del
+      estudio y dejar la regla estricta.
 - **`#23` creado y `active`** (2026-10-30), con el encuadre y los campos aprobados («Sí, créalo»). Chris había dicho
   «Sí, prepáralo» al arnés de escenarios (O4.P2).
   - Por la consola: `insert` al final de la fase O4.P2, que estaba vacía (remap: solo el nuevo, en el 23), y luego

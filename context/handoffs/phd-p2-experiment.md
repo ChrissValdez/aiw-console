@@ -93,7 +93,21 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
       la versión; B, dejar el CLI en 2.1.226, que se actualiza solo; C, aceptarlo como residuo.
     - **Desviación declarada:** el taller usó `git checkout-index` en su copia del scratchpad, nunca en el repositorio.
       El ticket decía «git que escriba en cualquier forma» fuera de alcance.
-    - **Pendiente:** que Chris decida cerrar el `#21` y abrir la opción A como `#22`.
+    - **Chris decidió** («Sí, las dos», 2026-10-30) cerrar el `#21` y abrir la opción A como `#22`.
+  - **El `#21` se cerró por la consola** sin QA humana, como dice su texto: `active` → `completed`, con
+    `closeout_result`.
+    - Prueba en seco con `remap: []`; campo a campo, solo cambiaron `status` y `closeout_result`.
+    - md5 `7fd2fd68…` → `45011515…`. Commit `6ff821d`, publicado.
+    - Respaldos borrados: los dos del `#21` y el temporal de la consola.
+    - 21 de 21 runs `completed`.
+  - **`#22` redactado, a la espera de que Chris apruebe sus campos.**
+    - `RUN-P2-CLAUDE-AGENTS-MD-001`, «Turn off the Claude Code CLI's built-in agents-md plugin in its adapter, plant an
+      AGENTS.md in its canary, and measure 2.1.284».
+    - En O1.P2 y en el orden 22, depende de `RUN-P2-PC-UPKEEP-001`.
+    - Prueba en seco de la inserción: remap con solo el nuevo, en el 22; el canónico sin tocar.
+    - Script: `insertar-22.mjs` del scratchpad de la cabina.
+    - Medido para planificar: el CLI tiene `--bare` (que podría apagar el OAuth) y `--plugin-dir`, y el adaptador ya
+      usa `--setting-sources ""`, `--strict-mcp-config` y `--disable-slash-commands`.
 - Los runs `#1` a `#20` están cerrados. El `#20` «Build the simulated learner by its contract and play it against the
   full tutor» cerró el 2026-10-30 (commit `d9e1a95`, publicado). Su historia, abajo.
   - **H1–H3, decididas** (2026-10-29). A «¿Aceptas H1–H3 como te los recomiendo?», Chris contestó «Sí, las tres».

@@ -64,9 +64,24 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 ## §3 · Estado, medido el 2026-10-30
 
-- **Los runs `#1` a `#20` están cerrados**: 20 de 20 `completed`, `history=20`, `ready_next=0`, sin runs `planned`.
-  La cola está vacía; el próximo run hay que crearlo (§4). El `#20` «Build the simulated learner by its contract and
-  play it against the full tutor» cerró el 2026-10-30 (commit `d9e1a95`, publicado). Su historia, abajo.
+- **`#21` «Pin LF line endings in the repository and measure the PC's Claude Code version for its adapter»
+  (`RUN-P2-PC-UPKEEP-001`) está `active`.** Lo creó la cabina el 2026-10-30, por orden de Chris («Sí, ábrelo»), y con
+  sus campos aprobados («Sí, créalo»).
+  - Por la consola: `insert` después del `#20` (remap: solo el nuevo, en el 21), y luego un lote `move` a O1.P2
+    «Stack and repository skeleton» sin cambiar el orden + `set-status active`.
+  - Campo a campo: un solo cambio, el run nuevo, igual a lo pedido. md5 `75ca7398…` → `7fd2fd68…`; `.project/`
+    re-emitido.
+  - Commit `c3020de`, publicado. Respaldo: `_backups\phd-p2-experiment\RUN-P2-PC-UPKEEP-001\roadmap.json`; se borra al
+    cerrar.
+  - **Taller lanzado** como sesión enlazada: «Taller #21: LF en el repo y Claude 2.1.284»,
+    `local_0e0f1b7b-7c1f-45ce-844f-393ddf3d6d98`, `p2-pc-upkeep`; Opus, esfuerzo medio, sin worktree. No lleva QA
+    humana y gasta como mucho 2 llamadas de Claude.
+  - Al cerrarlo, la cabina hace un clon nuevo con el gitconfig de la PC y comprueba que sale en LF.
+  - **La sesión del CLI de Claude está caducada**: «Login: Expired — log in again» a las 17:04 UTC. Iniciar sesión es
+    de Chris (`claude auth login`). El taller hace primero lo de LF y, si la sesión sigue caducada, para sin la parte
+    de pago.
+- Los runs `#1` a `#20` están cerrados. El `#20` «Build the simulated learner by its contract and play it against the
+  full tutor» cerró el 2026-10-30 (commit `d9e1a95`, publicado). Su historia, abajo.
   - **H1–H3, decididas** (2026-10-29). A «¿Aceptas H1–H3 como te los recomiendo?», Chris contestó «Sí, las tres».
     Verbatim en `docs/verdicts/2026-10-29-learner-h1-h3.md` (commit `9272925`, publicado). **H1**: las tácticas del
     adverso cuentan por sesión, no por paso, para que aparezca el contexto falso; `press_limit` sigue en 2 (§4.3, nueva

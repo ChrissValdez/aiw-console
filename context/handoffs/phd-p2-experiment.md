@@ -62,10 +62,11 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 | Lo que oye el hilo del paper | `PHD/Paper 2/00_HANDOFFS/DESDE_DEV.md` |
 | La nota del hito 1 | `docs/hitos/2026-10-22-hito-1.md`, **histórica**: la junta pasó y la copia para la demo se retiró (2026-10-29) |
 
-## §3 · Estado, medido el 2026-10-29
+## §3 · Estado, medido el 2026-10-30
 
-- Runs `#1` a `#19` cerrados; `#20` «Build the simulated learner by its contract and play it against the full tutor»
-  está **active**. Su trabajo está commiteado (`91d1043`).
+- **Los runs `#1` a `#20` están cerrados**: 20 de 20 `completed`, `history=20`, `ready_next=0`, sin runs `planned`.
+  La cola está vacía; el próximo run hay que crearlo (§4). El `#20` «Build the simulated learner by its contract and
+  play it against the full tutor» cerró el 2026-10-30 (commit `d9e1a95`, publicado). Su historia, abajo.
   - **H1–H3, decididas** (2026-10-29). A «¿Aceptas H1–H3 como te los recomiendo?», Chris contestó «Sí, las tres».
     Verbatim en `docs/verdicts/2026-10-29-learner-h1-h3.md` (commit `9272925`, publicado). **H1**: las tácticas del
     adverso cuentan por sesión, no por paso, para que aparezca el contexto falso; `press_limit` sigue en 2 (§4.3, nueva
@@ -143,9 +144,17 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     - La cabina verificó en disco: suite 3383/1/25, 0 `w/crlf`, solo el informe con §12.16 al final.
     - Comparó los 12 mensajes del §12.16.8 con la traza nativa del scratchpad del taller: coinciden literal.
     - Publicado en el commit `7483881`.
-    - **Pendiente: la QA de la ronda.** Chris lee la conversación y contesta «¿El contexto falso se lee como un
-      alumno?». Lo que hay que mirar: tras alegar «Mi profesor me dijo…», el alumno (5) dice «No sé cómo hacer esta
-      parte». Si pasa, se cierra el `#20`; si no, la palanca es §4.3, con una dinámica v3.
+    - **La QA de la ronda pasó** (2026-10-30). A «¿El contexto falso se lee como un alumno?», con lo que había que
+      mirar (el (4), y el salto al (5) «No sé cómo hacer esta parte»), Chris contestó «Sí, se lee así». Está en el
+      veredicto, sección «The QA of the second round».
+  - **El `#20` se cerró por la consola**, `active` → `completed`, con `closeout_result` (1640 caracteres).
+    - Prueba en seco con `remap: []` y aplicación con su base.
+    - Campo a campo contra el respaldo: solo cambiaron `status` y `closeout_result`.
+    - md5 `4e53de05…` → `75ca7398…` (árbol = LF = HEAD); `.project/` re-emitido.
+    - Commit `d9e1a95`, publicado.
+    - Respaldos borrados: `RUN-P2-LEARNER-001-ronda2` y `RUN-P2-LEARNER-001-cierre`, y el temporal de la consola.
+  - **Sigue abierto del `#20`:** las entradas de H1–H7 y de las versiones nuevas en `DESDE_DEV.md`, cuando llegue la
+    copia de la laptop (informe §12.11 y §12.16.9).
 - Hecho, de ESPEC §11: los pasos 1 a 3 (formatos, PAF sobre trazas a mano, el tutor completo) y el alumno simulado
   (contrato aprobado y construido). Más: la superficie visible, PAF sobre sesiones manuales y el lanzador. Sin
   empezar: el arnés de escenarios y la cobertura (O4.P2, O4.P3), los interruptores (O5), los brazos de RQ3 y la

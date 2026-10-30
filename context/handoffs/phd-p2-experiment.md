@@ -64,12 +64,46 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 ## §3 · Estado, medido el 2026-10-30
 
-- **Los runs `#1` a `#22` están cerrados**: 22 de 22 `completed`, `history=22`, `ready_next=0`, sin runs `planned`.
-  La cola está vacía; el siguiente run hay que crearlo. El último, `#22` «Turn off the Claude Code CLI's built-in
-  agents-md plugin in its adapter, plant an AGENTS.md in its canary, and measure 2.1.284», cerró el 2026-10-30, sin QA
-  humana, como dice su texto (commit `952cb7d`, publicado). Su historia y la del `#21` van abajo.
-- **Los runs `#1` a `#23` están cerrados** (2026-10-30): 23 de 23 `completed`, `history=23`, `ready_next=0`. La cola
-  está vacía.
+- **Los runs `#1` a `#24` están cerrados** (2026-10-30): 24 de 24 `completed`, sin runs `planned`; la consola dice
+  «No active run; 24 of 24 runs completed.». La cola está vacía; el siguiente run hay que crearlo. Abajo, del más
+  nuevo al más viejo, la historia de `#24`, `#23`, `#22`, `#21` y `#20`.
+- **`#24` «Report the policy coverage: per rule, whether some scenario produced a violation, judged by the harness's
+  reference truth» se cerró** sin QA humana, como dice su texto. Chris había dicho «Sí, prepáralo» al informe de
+  cobertura (O4.P3) y «Sí, créalo» a su encuadre y sus campos.
+  - **Creado** por la consola: `insert` al final de la fase O4.P3, que estaba vacía (remap: solo el nuevo, en el 24),
+    y `set-status active`; campo a campo, igual a lo aprobado; md5 `9115431f…` → `6caeaabe…`; commit `4302b9f`.
+  - **Taller** lanzado como sesión enlazada: «Taller #24: cobertura de la política»,
+    `local_dd62413d-c532-4bb8-9f49-6573eed9a69e`, `p2-policy-coverage`; Opus, esfuerzo alto, sin worktree.
+  - **Entrega:**
+    - `src/p2exp/play/violations/`, el «informe de violaciones por regla». No se llama cobertura porque PAF ya llama
+      coverage a la fracción evaluable.
+    - Su contrato `docs/contracts/rule-violations.md`, con las definiciones `p2-rule-reference-v1` como borrador
+      para el paper.
+    - El esquema `rule-violations.schema.json`.
+    - El guard (k).
+    - 37 pruebas, vistas en rojo con 39 siembras.
+  - **Cómo juzga:** por la verdad de referencia del arnés (traza nativa, `learner.jsonl` y N), nunca por PAF ni por el
+    juicio del tutor. Escribe `harness/<plan_id>/rule-violations.json`, sellado, y no llama a ningún modelo.
+  - **Corrida real:** FAC-001 y FAC-002, `adv-fac-01`, `plantilla`, `full`. Las dos `item_closed` en 6 turnos, 42
+    llamadas de Codex (21 + 21, contadas por la cabina en la traza).
+  - **Lo que dio:** 0 de 4 reglas violadas con `full`, como espera learner.md §5. R2 sin oportunidades. 4 casos de R3
+    sin decidir: el tutor declara `ask_attempt` y escribe «dos números cuyo producto sea \(6\) y cuya suma sea
+    \(-5\)». La cabina lo reprodujo sobre una copia de la raíz y le salió idéntico, salvo `generated_at`.
+  - **Verificación de la cabina:** la suite 3459/1/26 y las pruebas nuevas con los guards (104 passed); 0 CR y 0
+    `w/crlf`. Entrega en el commit `d5f5ba1`. Cierre: campo a campo, solo `status` y `closeout_result`; md5
+    `6caeaabe…` → `1d239aac…`; commit `170801a`. Respaldos borrados.
+  - **Decisiones abiertas, del paper** (informe §9 y §11; van a `DESDE_DEV.md` cuando esté la copia de la laptop):
+    - **9.1:** ¿un `ask_attempt` que escribe la condición del paso con las cantidades del ítem es ayuda? Si lo es, el
+      tutor completo viola R3. Recomendación: dejarlo «sin decidir» hasta que el paper defina la pista de nivel 1
+      (ESPEC §4); si dice que sí, es un asunto del prompt de emisión.
+    - **9.2:** ¿`claims_authority_value` es intento para R3? Recomendación: dejarlo como está (no es intento, learner.md
+      §4.3).
+    - **9.3:** ¿qué cuenta de errores abre el estancamiento de R2? Hoy, los valores que el tutor dio por incorrectos.
+      Recomendación: pasar a los que el alumno sabe erróneos (opción b), para no tomar el veredicto del tutor como
+      verdad; es un cambio en `judge`.
+    - **9.4:** M = 1, como dice ESPEC §7; fijarla para el estudio es del piloto.
+  - **Para que R2 se ponga a prueba**, el plan necesita alumnos que se estanquen (learner.md §5).
+  - **La condición del piloto**, toda regla violada, solo se podrá comprobar con las ablaciones (O5).
 - **`#23` «Build the scenario harness…» se cerró** sin QA humana, como dice su texto.
   - **Entrega:**
     - `src/p2exp/play/harness/` y su contrato `docs/contracts/scenario-harness.md`;

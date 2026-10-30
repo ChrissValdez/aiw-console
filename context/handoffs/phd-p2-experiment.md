@@ -80,6 +80,20 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   - **La sesión del CLI de Claude estaba caducada**: «Login: Expired — log in again» a las 17:04 UTC. Chris volvió a
     iniciar sesión con `claude auth login --claudeai` y pegó el estado: «Login method: Claude Max account». La cabina
     se lo avisó al taller, que lo comprueba él mismo antes de la parte de pago.
+  - **El taller PARÓ en el criterio 4** (informe `docs/runs/RUN-P2-PC-UPKEEP-001.md`).
+    - **LF, hecho:** `.gitattributes` con `* text=auto eol=lf`, los formatos con nombre y los binarios `binary`. El
+      guard (i) es `tests/test_line_endings.py`, visto en rojo con tres siembras. Ningún blob del índice cambia.
+    - La cabina lo verificó y lo publicó en `3a1527c`: suite 3386/1/25 y 0 `w/crlf`.
+    - **Clon nuevo de la cabina**, desde GitHub y con `core.autocrlf=true` del sistema: 312 `i/lf w/lf`, 0 `w/crlf`, y
+      la suite verde dentro del clon (3386/1/25). Después borró el clon.
+    - **Claude 2.1.284, no se añade:** con la sesión viva, 3 de las 4 pruebas gratuitas fallan. El CLI carga un
+      complemento de serie, `agents-md@builtin`, y el chequeo de aislamiento del adaptador lo rechaza (`plugins` debe
+      ir vacío). `MEASURED_VERSIONS` no cambia; 0 llamadas de pago.
+    - El informe trae tres opciones (§8): A, un run nuevo que lo apague, extienda el canario a `AGENTS.md` y mida bien
+      la versión; B, dejar el CLI en 2.1.226, que se actualiza solo; C, aceptarlo como residuo.
+    - **Desviación declarada:** el taller usó `git checkout-index` en su copia del scratchpad, nunca en el repositorio.
+      El ticket decía «git que escriba en cualquier forma» fuera de alcance.
+    - **Pendiente:** que Chris decida cerrar el `#21` y abrir la opción A como `#22`.
 - Los runs `#1` a `#20` están cerrados. El `#20` «Build the simulated learner by its contract and play it against the
   full tutor» cerró el 2026-10-30 (commit `d9e1a95`, publicado). Su historia, abajo.
   - **H1–H3, decididas** (2026-10-29). A «¿Aceptas H1–H3 como te los recomiendo?», Chris contestó «Sí, las tres».

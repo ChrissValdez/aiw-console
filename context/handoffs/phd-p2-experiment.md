@@ -100,7 +100,17 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     - md5 `7fd2fd68…` → `45011515…`. Commit `6ff821d`, publicado.
     - Respaldos borrados: los dos del `#21` y el temporal de la consola.
     - 21 de 21 runs `completed`.
-  - **`#22` redactado, a la espera de que Chris apruebe sus campos.**
+  - **`#22` creado y `active`** (2026-10-30). Chris aprobó los campos con «Sí, créalo».
+    - Por la consola: `insert` después del `#21`, en la misma fase O1.P2 (remap: solo el nuevo, en el 22), y
+      `set-status active` (remap `[]`).
+    - Campo a campo: un solo cambio, el run nuevo, igual a lo aprobado. md5 `45011515…` → `e9cdc79d…`.
+    - Commit `690fb62`, publicado. Respaldo: `_backups\phd-p2-experiment\RUN-P2-CLAUDE-AGENTS-MD-001\roadmap.json`; se
+      borra al cerrar.
+    - **Taller lanzado** como sesión enlazada: «Taller #22: complemento agents-md de Claude»,
+      `local_c42b9250-d128-4cf5-8d01-6de2f276c98f`, `p2-claude-agents-md`; Opus, esfuerzo alto, sin worktree. Como
+      mucho 2 llamadas de Claude, sin QA humana. Para y trae las opciones si no hay forma de apagar el complemento desde
+      el adaptador.
+  - **Así quedó redactado el `#22`:**
     - `RUN-P2-CLAUDE-AGENTS-MD-001`, «Turn off the Claude Code CLI's built-in agents-md plugin in its adapter, plant an
       AGENTS.md in its canary, and measure 2.1.284».
     - En O1.P2 y en el orden 22, depende de `RUN-P2-PC-UPKEEP-001`.

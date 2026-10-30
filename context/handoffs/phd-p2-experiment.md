@@ -134,6 +134,9 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
       `login status` no prueba que el token se renueve; solo una llamada real lo prueba.
     - **Lo que sigue:** Chris hace `codex logout` y `codex login`. Luego, una llamada mínima de pago
       (`test_minimal_call`) antes de la sesión, y otra vez la semilla 18 (§12.15.4).
+  - **Chris volvió a iniciar sesión en Codex** («Ya inicié sesión», 2026-10-29). A las 04:22:16 UTC la cabina mandó la
+    tercera parte al mismo taller: `test_minimal_call` (1 llamada) y, si responde, la semilla 18 en una carpeta nueva
+    (la 26 solo si no aparece el contexto falso; ≤ 192 en toda la ronda). El informe va en un §12.16 nuevo.
 - Hecho, de ESPEC §11: los pasos 1 a 3 (formatos, PAF sobre trazas a mano, el tutor completo) y el alumno simulado
   (contrato aprobado y construido). Más: la superficie visible, PAF sobre sesiones manuales y el lanzador. Sin
   empezar: el arnés de escenarios y la cobertura (O4.P2, O4.P3), los interruptores (O5), los brazos de RQ3 y la

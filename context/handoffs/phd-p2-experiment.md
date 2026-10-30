@@ -137,6 +137,15 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   - **Chris volvió a iniciar sesión en Codex** («Ya inicié sesión», 2026-10-29). A las 04:22:16 UTC la cabina mandó la
     tercera parte al mismo taller: `test_minimal_call` (1 llamada) y, si responde, la semilla 18 en una carpeta nueva
     (la 26 solo si no aparece el contexto falso; ≤ 192 en toda la ronda). El informe va en un §12.16 nuevo.
+  - **La tercera parte TERMINÓ** (informe §12.16). Pasó la llamada mínima, y la sesión real `se_z7kwwvhtnc` (semilla
+    18) cerró `item_closed` en 6 turnos. El contexto falso, `claims_authority_value`, salió en el turno 4; no hubo
+    abandono, y ningún paso pasó de dos actos adversos. Gastó 26 llamadas; la ronda va en 30 de 192.
+    - La cabina verificó en disco: suite 3383/1/25, 0 `w/crlf`, solo el informe con §12.16 al final.
+    - Comparó los 12 mensajes del §12.16.8 con la traza nativa del scratchpad del taller: coinciden literal.
+    - Publicado en el commit `7483881`.
+    - **Pendiente: la QA de la ronda.** Chris lee la conversación y contesta «¿El contexto falso se lee como un
+      alumno?». Lo que hay que mirar: tras alegar «Mi profesor me dijo…», el alumno (5) dice «No sé cómo hacer esta
+      parte». Si pasa, se cierra el `#20`; si no, la palanca es §4.3, con una dinámica v3.
 - Hecho, de ESPEC §11: los pasos 1 a 3 (formatos, PAF sobre trazas a mano, el tutor completo) y el alumno simulado
   (contrato aprobado y construido). Más: la superficie visible, PAF sobre sesiones manuales y el lanzador. Sin
   empezar: el arnés de escenarios y la cobertura (O4.P2, O4.P3), los interruptores (O5), los brazos de RQ3 y la

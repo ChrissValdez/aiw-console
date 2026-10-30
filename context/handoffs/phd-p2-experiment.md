@@ -64,8 +64,12 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 ## §3 · Estado, medido el 2026-10-30
 
+- **Los runs `#1` a `#22` están cerrados**: 22 de 22 `completed`, `history=22`, `ready_next=0`, sin runs `planned`.
+  La cola está vacía; el siguiente run hay que crearlo. El último, `#22` «Turn off the Claude Code CLI's built-in
+  agents-md plugin in its adapter, plant an AGENTS.md in its canary, and measure 2.1.284», cerró el 2026-10-30, sin QA
+  humana, como dice su texto (commit `952cb7d`, publicado). Su historia y la del `#21` van abajo.
 - **`#21` «Pin LF line endings in the repository and measure the PC's Claude Code version for its adapter»
-  (`RUN-P2-PC-UPKEEP-001`) está `active`.** Lo creó la cabina el 2026-10-30, por orden de Chris («Sí, ábrelo»), y con
+  (`RUN-P2-PC-UPKEEP-001`), cerrado.** Lo creó la cabina el 2026-10-30, por orden de Chris («Sí, ábrelo»), y con
   sus campos aprobados («Sí, créalo»).
   - Por la consola: `insert` después del `#20` (remap: solo el nuevo, en el 21), y luego un lote `move` a O1.P2
     «Stack and repository skeleton» sin cambiar el orden + `set-status active`.
@@ -144,6 +148,18 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     - **La ronda 3 se mandó al mismo taller** (19:09 UTC): solo esa lectura, que tiene que seguir estricta y verse en
       rojo, y la sección «## 11. Ronda 3». Con 0 llamadas. No amplía el run: su texto ya pide las gratuitas del
       evaluador.
+    - **La ronda 3 TERMINÓ** (informe §11). La lectura del prompt pasa a `[-1]`, estricta en las dos formas, y se vio en
+      rojo con siembras.
+      - La cabina verificó la suite (3386/1/26) y corrió ella las 7 gratuitas de Claude y del evaluador (7 passed).
+      - Publicado en el commit `86797c2`.
+  - **El `#22` se cerró por la consola** sin QA humana, como dice su texto: `active` → `completed`, con
+    `closeout_result` (1558 caracteres).
+    - Prueba en seco con `remap: []`; campo a campo, solo cambiaron `status` y `closeout_result`.
+    - md5 `7473400b…` → `e8320fdf…`. Commit `952cb7d`, publicado.
+    - Borrados sus tres respaldos y el temporal de la consola.
+  - **Sigue abierto, del `#22`:**
+    - las entradas para el paper en `DESDE_DEV.md` (informe §10.11 y §11.9), cuando llegue la copia de la laptop;
+    - medir 2.1.226 en la laptop, si se vuelve a usar.
   - **Así quedó redactado el `#22`:**
     - `RUN-P2-CLAUDE-AGENTS-MD-001`, «Turn off the Claude Code CLI's built-in agents-md plugin in its adapter, plant an
       AGENTS.md in its canary, and measure 2.1.284».
@@ -272,10 +288,9 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     puso el índice al día sin cambiar contenido (`diff --cached` vacío; `status` limpio). Para un clon nuevo en Windows,
     lo duradero es del repo: un `.gitattributes` que fije LF (por ejemplo `*.jsonl text eol=lf`). Va en el próximo
     ticket de DEVELOPMENT.
-  - **El adaptador de Claude acepta solo `2.1.226 (Claude Code)`** (`src/p2exp/llm/claude.py`, `MEASURED_VERSIONS`) y en
-    la PC hay `2.1.284` (medido el 2026-10-29): el evaluador de PAF se niega aquí hasta que un taller corra las pruebas
-    gratis de `tests/integration/test_claude_live.py` y añada la versión si pasan (`AGENTS.md`). Va en el próximo ticket
-    de DEVELOPMENT que necesite PAF. El adaptador de Codex no tiene esa lista, pero sus opciones se midieron en
+  - **Resuelto en `#21` y `#22`:** el adaptador de Claude acepta `2.1.226` y `2.1.284` (`MEASURED_VERSIONS`), cada una
+    con su forma de petición aceptada. Con la próxima actualización del CLI se vuelve a parar hasta medirla. El
+    adaptador de Codex no tiene esa lista, pero sus opciones se midieron en
     `0.163.0-alpha.10.2`, la que Chris instaló en la PC el 2026-10-29 (antes había `0.142.0`, sin `gpt-6-astra`). Su
     `login status` no prueba que el token se renueve: la prueba es `test_minimal_call` (1 llamada).
   - Copiar `data/` desde la laptop (el operador) y verificarla contra el manifiesto (la cabina).

@@ -118,6 +118,12 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
       guard (d) con esa versión; solo si pasan, la sesión con la semilla 18 (≤ 96 llamadas, más una segunda solo si no
       aparece el contexto falso). Va también el campo en los dos ejemplos inválidos. Después vienen la QA de la ronda y
       el cierre del `#20`.
+  - **Chris instaló Codex 0.163** (2026-10-29). Lo pegó del PowerShell: `npm.cmd install -g
+    @openai/codex@0.163.0-alpha.10.2` → «changed 2 packages in 10s»; `codex --version` → `codex-cli
+    0.163.0-alpha.10.2`. La cabina lo midió a las 04:07:44 UTC: misma versión, «Logged in using ChatGPT», árbol limpio
+    en `c2f7175`. Le mandó el encargo de la segunda parte al **mismo** taller (`p2-learner-ronda2`), que tiene el
+    contexto: la semilla 18, sus scripts y el §12. Pide la capa gratuita del guard (d) antes de gastar, los dos ejemplos
+    inválidos, la sesión real (≤ 2 sesiones / 192 llamadas) y un §12.15 nuevo, sin tocar §12.1–§12.14.
 - Hecho, de ESPEC §11: los pasos 1 a 3 (formatos, PAF sobre trazas a mano, el tutor completo) y el alumno simulado
   (contrato aprobado y construido). Más: la superficie visible, PAF sobre sesiones manuales y el lanzador. Sin
   empezar: el arnés de escenarios y la cobertura (O4.P2, O4.P3), los interruptores (O5), los brazos de RQ3 y la

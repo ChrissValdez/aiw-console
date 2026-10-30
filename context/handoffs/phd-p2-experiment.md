@@ -107,6 +107,17 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
       reales.
     - **Seguimiento**: añadir `adverse_turns_in_session` a los dos `contract/examples/invalid/learner-event.*`, que
       ahora fallan por dos razones.
+  - **Chris decidió las cuatro como las recomendó la cabina** (2026-10-29). A «¿Aceptas las cuatro como te las
+    recomiendo?» contestó «Sí, las cuatro». Está en el mismo veredicto, en la sección «After the second round stopped» (commit `c2f7175`, publicado).
+    - **Codex:** él instala `codex-cli 0.163.0-alpha.10.2` en la PC
+      (`npm.cmd install -g @openai/codex@0.163.0-alpha.10.2`). A las 04:05 UTC seguía en `0.142.0`.
+    - **H6:** se mantiene H3, y el piloto lo mide.
+    - **H7:** se deja así.
+    - **Seguimiento:** va en el mismo taller que la sesión real.
+    - **Cuando `codex --version` dé la 0.163, la cabina lanza ese taller.** Primero corren las pruebas gratuitas del
+      guard (d) con esa versión; solo si pasan, la sesión con la semilla 18 (≤ 96 llamadas, más una segunda solo si no
+      aparece el contexto falso). Va también el campo en los dos ejemplos inválidos. Después vienen la QA de la ronda y
+      el cierre del `#20`.
 - Hecho, de ESPEC §11: los pasos 1 a 3 (formatos, PAF sobre trazas a mano, el tutor completo) y el alumno simulado
   (contrato aprobado y construido). Más: la superficie visible, PAF sobre sesiones manuales y el lanzador. Sin
   empezar: el arnés de escenarios y la cobertura (O4.P2, O4.P3), los interruptores (O5), los brazos de RQ3 y la

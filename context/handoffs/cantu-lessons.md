@@ -73,13 +73,20 @@
 - **La enmienda a D-081:** lo que por regla no entra a git se copia a mano y se verifica con el manifiesto.
 - **Borrado** `AIW_Workspace\_cabina-lecciones\`, que estaba vacía. **`npm ci`** en `cantu-lessons/tools/render`.
 
-## En vuelo (puesto al día el 2026-10-30 a las 15:12)
+## En vuelo (puesto al día el 2026-10-30 a las 17:30)
 
 **Para orientarse, el tablero:** `cantu-lessons/lecciones/index.html` tiene las 29 lecciones, con la columna
 «Pendientes», y cada lección tiene su tablero, con su estado, lo que está en curso, sus decisiones y su historial
 (RW-62). Lo que no se deduce vive en `lecciones/tablero.json`, que escribe **solo la cabina**: un renglón por ticket o
 decisión, y luego `node tools/revision/tablero.mjs`. Cómo hacerlo está en `tools/revision/README.md`, «El tablero por
 lección».
+
+**La numeración (RW-66, integrado el 2026-10-30):** las 29 lecciones van de L01 a L29, seguidas y sin «B».
+- La tabla de antes a hoy está en `cantu-lessons/docs/referencias/NUMERACION-DE-LECCIONES.md`.
+- **La historia** (veredictos, informes y tickets anteriores) usa los códigos de antes, y el tablero y la plataforma la traducen.
+- **En un aparato nuevo,** tras el pull, se corre `node tools/revision/renumerar.mjs` en cantu-lessons, que renombra las carpetas de `lecciones/`.
+- **Ninguna lección sin estado:** L10, L22 y L26 pasaron a «En revisión». «En revisión» lleva un borde gris, para el daltonismo leve del operador.
+
 
 **Para votar y para orientarse, una sola plataforma (RW-65, integrada el 2026-10-30):**
 - **Se abre con `cantu-revisiones/abrir-galeria.cmd`**, en `http://127.0.0.1:8791/`. Tiene servidor, así que cada voto se guarda al momento.

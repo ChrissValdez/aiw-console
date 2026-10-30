@@ -77,9 +77,9 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     `local_0e0f1b7b-7c1f-45ce-844f-393ddf3d6d98`, `p2-pc-upkeep`; Opus, esfuerzo medio, sin worktree. No lleva QA
     humana y gasta como mucho 2 llamadas de Claude.
   - Al cerrarlo, la cabina hace un clon nuevo con el gitconfig de la PC y comprueba que sale en LF.
-  - **La sesión del CLI de Claude está caducada**: «Login: Expired — log in again» a las 17:04 UTC. Iniciar sesión es
-    de Chris (`claude auth login`). El taller hace primero lo de LF y, si la sesión sigue caducada, para sin la parte
-    de pago.
+  - **La sesión del CLI de Claude estaba caducada**: «Login: Expired — log in again» a las 17:04 UTC. Chris volvió a
+    iniciar sesión con `claude auth login --claudeai` y pegó el estado: «Login method: Claude Max account». La cabina
+    se lo avisó al taller, que lo comprueba él mismo antes de la parte de pago.
 - Los runs `#1` a `#20` están cerrados. El `#20` «Build the simulated learner by its contract and play it against the
   full tutor» cerró el 2026-10-30 (commit `d9e1a95`, publicado). Su historia, abajo.
   - **H1–H3, decididas** (2026-10-29). A «¿Aceptas H1–H3 como te los recomiendo?», Chris contestó «Sí, las tres».

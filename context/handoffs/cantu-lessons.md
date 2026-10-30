@@ -73,7 +73,7 @@
 - **La enmienda a D-081:** lo que por regla no entra a git se copia a mano y se verifica con el manifiesto.
 - **Borrado** `AIW_Workspace\_cabina-lecciones\`, que estaba vacía. **`npm ci`** en `cantu-lessons/tools/render`.
 
-## En vuelo (puesto al día el 2026-10-30 a las 10:07)
+## En vuelo (puesto al día el 2026-10-30 a las 11:52)
 
 **Para orientarse, el tablero:** `cantu-lessons/lecciones/index.html` tiene las 29 lecciones, con la columna
 «Pendientes», y cada lección tiene su tablero, con su estado, lo que está en curso, sus decisiones y su historial
@@ -81,10 +81,12 @@
 decisión, y luego `node tools/revision/tablero.mjs`. Cómo hacerlo está en `tools/revision/README.md`, «El tablero por
 lección».
 
-**Para votar, una sola galería:** `cantu-revisiones/abrir-galeria.cmd` abre la portada por lección
-(`http://127.0.0.1:8791/`), con todas las galerías juntas y lo de slide aparte de lo de web (RW-63). Al cerrar un
-ticket, su galería **ya no se quita**: se marca con `galerias/<ticket>/estado.json` (`MOLDE-DE-GALERIA`, puesta al día
-del 2026-10-30).
+**Para votar y para orientarse, una sola plataforma (RW-65, integrada el 2026-10-30):**
+- **Se abre con `cantu-revisiones/abrir-galeria.cmd`**, en `http://127.0.0.1:8791/`. Tiene servidor, así que cada voto se guarda al momento.
+- **El inicio** muestra las 29 lecciones con lo que le espera al operador.
+- **Cada lección tiene sus pestañas:** Resumen, Guion web (con ✓ ~ ✗ por variante, en `guiones-web/respuestas.json`), Guion slide (su galería), Lección web, Lección slide e Historial.
+- **Los tickets no se ven.** Los talleres siguen armando sus galerías por ticket.
+- **Al cerrar un ticket**, su galería se marca con `galerias/<ticket>/estado.json` y no se quita.
 
 | ticket | qué | dónde va | qué espera |
 |---|---|---|---|
@@ -96,17 +98,15 @@ del 2026-10-30).
 
 - **El orden de voto que recomendó la cabina:** primero RW-60, porque su color cambia los cálidos de RW-61 y de RW-59.
   Después, los mazos de L03 a L08, RW-61 y RW-64.
-- **Falta un commit en `cantu-revisiones`:** el comentario nuevo de `abrir-galeria.cmd` (rama de RW-63, `47ecba4`). Se
-  dejó fuera del merge porque la ventana del botón de RW-59 seguía abierta: cmd vuelve a leer un `.cmd` en marcha por
-  su posición en el fichero. Se aplica cuando esa ventana se cierre.
-- **Las copias de trabajo de RW-62 y RW-63** siguen en `_scratch\RW-62\cantu-lessons` y `_scratch\RW-63\cantu-revisiones`,
-  con sus ramas ya integradas. Se quitan con `git worktree remove`.
+- **Los votos de RW-59** (rondas 1 a 5) están publicados: la cabina hizo el commit (`26100f1`), porque la ventana del botón
+  se cerró sin Enter.
 - **La bandeja:** los comentarios sueltos del operador no abren ticket; van a `cantu-lessons/docs/encargos/BANDEJA.md`.
 
 ## Cerrado (2026-10-29 y 30)
 
 - **RW-62** (el tablero por lección, con RW-57; `cantu-lessons` `bb7cc21`) y **RW-63** (una sola galería, por lección;
   `cantu-revisiones` `b4db0bf`), integrados el 2026-10-30.
+- **RW-65** (la plataforma única de revisión; `cantu-revisiones` `6522562`, `cantu-lessons` `70fff6f`), integrada el 2026-10-30. Las copias de trabajo de RW-62, RW-63 y RW-65 ya se quitaron.
 
 - **RW-54** (el servidor de las galerías), **RW-55** (el riel de L02·D9), **RW-56** (el botón
   `cantu-revisiones/abrir-galeria.cmd`, `a0c716a`) y la **regla 41 v63**.

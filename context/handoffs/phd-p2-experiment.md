@@ -133,6 +133,17 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
       - la línea de git en una llamada real;
       - las gratuitas y, si pasan, la versión y las 2 de pago;
       - una sección «## 10. Ronda 2» del informe, con «Para el hilo del paper», que va a `DESDE_DEV.md`.
+    - **La ronda 2 PARÓ en el último paso** (informe §10).
+      - **Hecho:** el bloque comprobado por su forma, solo en 2.1.284 (`ENVIRONMENT_PATTERN`; visto en rojo);
+        `CLAUDE_CODE_DISABLE_ATTACHMENTS=1`, que solo quita la línea de tokens (`LATER_ENV`, no en 2.1.226); y en una
+        llamada real, «Is a git repository: false».
+      - `MEASURED_VERSIONS = {2.1.226, 2.1.284}`: las 5 gratuitas y las 2 de pago pasan (2 llamadas).
+      - La cabina lo verificó (3386/1/26, 0 `w/crlf`) y lo publicó en el commit `4001fa1`.
+      - **Falta:** `test_the_evaluator_call_reaches_the_cli_as_built` lee el prompt en el índice 1, que es la forma de
+        2.1.226. Ese fichero estaba fuera del Scope del ticket.
+    - **La ronda 3 se mandó al mismo taller** (19:09 UTC): solo esa lectura, que tiene que seguir estricta y verse en
+      rojo, y la sección «## 11. Ronda 3». Con 0 llamadas. No amplía el run: su texto ya pide las gratuitas del
+      evaluador.
   - **Así quedó redactado el `#22`:**
     - `RUN-P2-CLAUDE-AGENTS-MD-001`, «Turn off the Claude Code CLI's built-in agents-md plugin in its adapter, plant an
       AGENTS.md in its canary, and measure 2.1.284».

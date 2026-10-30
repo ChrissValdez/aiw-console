@@ -68,6 +68,18 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   La cola está vacía; el siguiente run hay que crearlo. El último, `#22` «Turn off the Claude Code CLI's built-in
   agents-md plugin in its adapter, plant an AGENTS.md in its canary, and measure 2.1.284», cerró el 2026-10-30, sin QA
   humana, como dice su texto (commit `952cb7d`, publicado). Su historia y la del `#21` van abajo.
+- **`#23` redactado, a la espera de que Chris apruebe el encuadre y los campos** (2026-10-30). Chris dijo «Sí,
+  prepáralo» al arnés de escenarios (O4.P2).
+  - `RUN-P2-SCENARIO-HARNESS-001`, «Build the scenario harness: a plan of scenarios played one by one, each session
+    written with its traces, records and sealed-map entry»; en la fase O4.P2 (vacía), en el orden 23.
+  - Prueba en seco: remap con solo el nuevo, en el 23, y el aviso esperado de fase vacía; el canónico sin tocar.
+    Script: `insertar-23.mjs` del scratchpad de la cabina.
+  - **Hallazgo que fija el encuadre:** en `policy/p2-policy-v1.json`, `parameters.N.value` es `null` (lo fija el
+    piloto, ESPEC 10). Sin N, ninguna sesión arranca salvo con un N de prueba, y su traza es test-only
+    (`p2exp.tutor.settings`). El arnés de este run solo puede producir sesiones de prueba.
+  - Fuentes medidas: ESPEC §7 y §10–§11; `COMO_CONSTRUIR_LA_MEDICION.md`, Pieza 5; contrato de datos §4, §10 y §11;
+    `p2exp.play.driver` (`TEST_N = 2`); `p2exp.contract.sealed_map`; las dos fichas de `debug/items`; los
+    interruptores ya presentes en el código de las etapas del tutor.
 - **`#21` «Pin LF line endings in the repository and measure the PC's Claude Code version for its adapter»
   (`RUN-P2-PC-UPKEEP-001`), cerrado.** Lo creó la cabina el 2026-10-30, por orden de Chris («Sí, ábrelo»), y con
   sus campos aprobados («Sí, créalo»).

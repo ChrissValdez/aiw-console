@@ -68,8 +68,18 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   La cola está vacía; el siguiente run hay que crearlo. El último, `#22` «Turn off the Claude Code CLI's built-in
   agents-md plugin in its adapter, plant an AGENTS.md in its canary, and measure 2.1.284», cerró el 2026-10-30, sin QA
   humana, como dice su texto (commit `952cb7d`, publicado). Su historia y la del `#21` van abajo.
-- **`#23` redactado, a la espera de que Chris apruebe el encuadre y los campos** (2026-10-30). Chris dijo «Sí,
-  prepáralo» al arnés de escenarios (O4.P2).
+- **`#23` creado y `active`** (2026-10-30), con el encuadre y los campos aprobados («Sí, créalo»). Chris había dicho
+  «Sí, prepáralo» al arnés de escenarios (O4.P2).
+  - Por la consola: `insert` al final de la fase O4.P2, que estaba vacía (remap: solo el nuevo, en el 23), y luego
+    `set-status active`.
+  - Campo a campo: un solo cambio, el run nuevo, igual a lo aprobado. md5 `e8320fdf…` → `b9956c56…`.
+  - Commit `2798607`, publicado. Respaldo: `_backups\phd-p2-experiment\RUN-P2-SCENARIO-HARNESS-001\roadmap.json`; se
+    borra al cerrar.
+  - **Taller lanzado** como sesión enlazada: «Taller #23: arnés de escenarios»,
+    `local_9022dc31-b118-4c38-bcd9-291fe3121d2e`, `p2-scenario-harness`; Opus, esfuerzo alto, sin worktree.
+  - El encargo: un plan de escenarios con su contrato y su esquema; jugarlo uno por uno con el conductor; presupuesto,
+    retomar y fallos; modo de prueba solo, y el del estudio bloqueado mientras N sea `null`; solo `full`. Hace una
+    corrida real (≤ 60 llamadas de Codex) y no lleva QA humana.
   - `RUN-P2-SCENARIO-HARNESS-001`, «Build the scenario harness: a plan of scenarios played one by one, each session
     written with its traces, records and sealed-map entry»; en la fase O4.P2 (vacía), en el orden 23.
   - Prueba en seco: remap con solo el nuevo, en el 23, y el aviso esperado de fase vacía; el canónico sin tocar.

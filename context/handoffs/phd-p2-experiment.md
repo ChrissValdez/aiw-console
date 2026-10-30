@@ -124,6 +124,16 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     en `c2f7175`. Le mandó el encargo de la segunda parte al **mismo** taller (`p2-learner-ronda2`), que tiene el
     contexto: la semilla 18, sus scripts y el §12. Pide la capa gratuita del guard (d) antes de gastar, los dos ejemplos
     inválidos, la sesión real (≤ 2 sesiones / 192 llamadas) y un §12.15 nuevo, sin tocar §12.1–§12.14.
+  - **La segunda parte PARÓ en la sesión real** (informe §12.15).
+    - Hecho y verificado por la cabina: el guard (d) gratuito pasa con la 0.163 (2 de 2); los dos ejemplos inválidos
+      llevan el campo y fallan solo por su siembra; suite 3383/1/25; 0 `w/crlf`.
+    - Publicado en el commit `d075882`.
+    - La semilla 18 terminó en `error` en el turno 1: Codex no pudo renovar el token de ChatGPT («Please log out and
+      sign in again», 04:12:23 UTC). Hubo 3 `codex exec` sin respuesta (3 de 192 como cota) y no se corrió la 26.
+    - **Corrección de la cabina:** a las 04:07:44 leyó «Logged in using ChatGPT» y dijo que había sesión. Ese
+      `login status` no prueba que el token se renueve; solo una llamada real lo prueba.
+    - **Lo que sigue:** Chris hace `codex logout` y `codex login`. Luego, una llamada mínima de pago
+      (`test_minimal_call`) antes de la sesión, y otra vez la semilla 18 (§12.15.4).
 - Hecho, de ESPEC §11: los pasos 1 a 3 (formatos, PAF sobre trazas a mano, el tutor completo) y el alumno simulado
   (contrato aprobado y construido). Más: la superficie visible, PAF sobre sesiones manuales y el lanzador. Sin
   empezar: el arnés de escenarios y la cobertura (O4.P2, O4.P3), los interruptores (O5), los brazos de RQ3 y la

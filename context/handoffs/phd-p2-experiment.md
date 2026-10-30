@@ -121,8 +121,18 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
       trabajo, si es repo git, plataforma, shell, versión del SO, nombre e ID del modelo, fecha de corte,
       `<total_tokens>` y fecha), y desaparece el recordatorio aceptado con el correo y la fecha.
       `CLAUDE_CODE_DISABLE_ATTACHMENTS=1` solo quita la línea de tokens. 0 llamadas de pago.
-    - **Pendiente, de Chris:** si acepta ese bloque como residuo (opción A del §8). La cabina recomienda aceptarlo y
-      hacerlo como segunda ronda del `#22` (D-061).
+    - **Chris lo aceptó** (2026-10-30). A «¿Aceptas el bloque «# Environment» como residuo, en una segunda ronda del
+      #22?», contestó «Sí, acéptalo».
+      - El veredicto verbatim está en `docs/verdicts/2026-10-30-claude-2-1-284-environment-residual-accepted.md`.
+      - El texto del `#22` se enmendó con la «RONDA 2 (2026-10-30)» por la consola (`set-text`, `remap: []`); solo
+        cambió el `full_description`. md5 `e9cdc79d…` → `7473400b…`. Commit `b0aab23`, publicado.
+      - Respaldo de la ronda: `_backups\phd-p2-experiment\RUN-P2-CLAUDE-AGENTS-MD-001-ronda2\roadmap.json`.
+    - **La ronda 2 se mandó al mismo taller** (`p2-claude-agents-md`) a las 18:59 UTC. Pide:
+      - la forma exacta del bloque, solo en 2.1.284;
+      - `CLAUDE_CODE_DISABLE_ATTACHMENTS=1`;
+      - la línea de git en una llamada real;
+      - las gratuitas y, si pasan, la versión y las 2 de pago;
+      - una sección «## 10. Ronda 2» del informe, con «Para el hilo del paper», que va a `DESDE_DEV.md`.
   - **Así quedó redactado el `#22`:**
     - `RUN-P2-CLAUDE-AGENTS-MD-001`, «Turn off the Claude Code CLI's built-in agents-md plugin in its adapter, plant an
       AGENTS.md in its canary, and measure 2.1.284».

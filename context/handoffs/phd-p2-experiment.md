@@ -110,6 +110,19 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
       `local_c42b9250-d128-4cf5-8d01-6de2f276c98f`, `p2-claude-agents-md`; Opus, esfuerzo alto, sin worktree. Como
       mucho 2 llamadas de Claude, sin QA humana. Para y trae las opciones si no hay forma de apagar el complemento desde
       el adaptador.
+  - **El taller del `#22` PARÓ en el criterio 6** (informe `docs/runs/RUN-P2-CLAUDE-AGENTS-MD-001.md`).
+    - **Qué hace `agents-md`:** lee los `AGENTS.md` (y `.claude/AGENTS.md`) de las carpetas de arriba como
+      instrucciones de proyecto, donde no hay `CLAUDE.md`. Con las opciones de antes no llegaba nada.
+    - **Lo apaga** `--settings '{"enabledPlugins":{"agents-md@builtin":false}}'` (`PLUGIN_ARGS`): `init` queda con
+      `plugins: []`. Va para toda versión salvo 2.1.226 (`WITHOUT_PLUGIN_ARGS`). `--bare` no lo apaga.
+    - **El canario** planta `AGENTS.md`, y tiene una segunda plantación sin `CLAUDE.md`; visto en rojo sin la opción.
+    - La cabina lo verificó (suite 3386/1/26, 0 `w/crlf`) y lo publicó en el commit `c36cc76`.
+    - **2.1.284 sigue fuera:** su petición trae un mensaje nuevo con rol `system`, «# Environment» (carpeta de
+      trabajo, si es repo git, plataforma, shell, versión del SO, nombre e ID del modelo, fecha de corte,
+      `<total_tokens>` y fecha), y desaparece el recordatorio aceptado con el correo y la fecha.
+      `CLAUDE_CODE_DISABLE_ATTACHMENTS=1` solo quita la línea de tokens. 0 llamadas de pago.
+    - **Pendiente, de Chris:** si acepta ese bloque como residuo (opción A del §8). La cabina recomienda aceptarlo y
+      hacerlo como segunda ronda del `#22` (D-061).
   - **Así quedó redactado el `#22`:**
     - `RUN-P2-CLAUDE-AGENTS-MD-001`, «Turn off the Claude Code CLI's built-in agents-md plugin in its adapter, plant an
       AGENTS.md in its canary, and measure 2.1.284».

@@ -79,7 +79,14 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     `2e1384c2…` a `4e53de05…` (árbol = LF); `.project/` lo re-emitió `serve.mjs`. Commit `31e0567`, publicado. El
     respaldo está en `_backups\phd-p2-experiment\RUN-P2-LEARNER-001-ronda2\roadmap.json` y se borra cuando cierre el
     `#20`.
-  - **El ticket de la segunda ronda se le dio a Chris el 2026-10-29.** Pide una sesión real del adverso, de pago: como
+  - **El taller de la segunda ronda lo lanzó la cabina el 2026-10-29**, como sesión enlazada a la suya
+    («Taller #20 ronda 2: alumno simulado H1–H2», `local_340af2bb-37c8-40e2-8bce-546952159f00`, nombre
+    `p2-learner-ronda2`; Opus, esfuerzo alto, en la carpeta del repo y sin worktree). Fue por orden de Chris, a quien
+    la cabina le había dado el ticket para pegarlo: *«no me de slos tickets para lanzarlos, tu lanzalos en un ticket
+    anidado a esta conversacion por eso nos cambiamos cabina a claude code entonces tu lanzalo directamente»*. Desde
+    entonces la cabina lanza ella los talleres (`../cabinas/phd-p2-experiment/CLAUDE.md`, «Qué cambia respecto a
+    Cowork»). El brief es el ticket entero, más un preámbulo: no escribir git, tocar solo «Scope», y abrir el último
+    mensaje con `TERMINADO` o `PARADO: …`. Pide una sesión real del adverso, de pago: como
     mucho 2 sesiones de `--call-budget 96` cada una. Para la regla de H2, la cabina avisó de algo: en la sesión real
     (b), el primer «inténtalo» del tutor en `s1` traía \(6\) y \(-5\), así que con esa regla sigue contando como pista
     (sí trae contenido del paso). El taller debe clasificar los 12 mensajes reales con la regla vieja y con la nueva.

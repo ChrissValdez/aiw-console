@@ -79,12 +79,13 @@ el relevo `context/handoffs/phd-p2-experiment.md`.
 | solo veía el workspace | **ves más que el workspace, pero solo tocas el workspace**; instalaciones, configuración del sistema y credenciales son del operador |
 | el borrado se pedía con una herramienta | lo autoriza el operador en el aviso de permisos de Claude Code. Las reglas 3 a 5 de «El borrado se PIDE» siguen |
 | el Project de claude.ai | **no se ve: todo a disco** |
-| el operador pegaba el ticket en una sesión nueva | **el taller es otra sesión de la app.** El ticket va en el chat, en su bloque, como siempre; si la app ofrece abrirlo en otra sesión, la pulsa el operador. **La cabina nunca lanza un taller por su cuenta.** Worktree apagado |
+| el operador pegaba el ticket en una sesión nueva | **el taller es otra sesión de la app, y la lanza la cabina**, enlazada a la suya (`start_session`: `user_asked`, `fresh`, `cwd` la carpeta del repo, `use_worktree: false`). El brief es el ticket entero, más un preámbulo: es un taller, sin git que escriba, solo «Scope», y el último mensaje abre con `TERMINADO` o `PARADO: …`, porque a la cabina le llegan sus primeros 400 caracteres. En el chat va el enlace a la sesión, no el ticket para pegar. *Enmienda del 2026-10-29, por orden del operador:* «no me de slos tickets para lanzarlos, tu lanzalos en un ticket anidado a esta conversacion por eso nos cambiamos cabina a claude code entonces tu lanzalo directamente». Antes decía: «el ticket va en el chat […]; **la cabina nunca lanza un taller por su cuenta**». Worktree apagado |
 
 **Secciones de las reglas que aquí NO aplican tal cual** (son de Cowork; las sustituye este fichero): «El montaje es el
-WORKSPACE, no la máquina»; «El espejo del Project»; en «Lo que la cabina PUEDE y lo que NO», la fila del push y la del
-tope de tiempo; «El borrado se PIDE» (la herramienta); «Git: la cabina prepara, el operador publica» y «El `push` NO es
-bloqueante»; «El recordatorio de push»; en «El ciclo de un run», que el operador sea quien publica.
+WORKSPACE, no la máquina»; «El espejo del Project»; en «Lo que la cabina PUEDE y lo que NO», la fila del push, la del
+tope de tiempo y, desde el 2026-10-29, la de «Lanzar el taller»; «El borrado se PIDE» (la herramienta); «Git: la cabina
+prepara, el operador publica» y «El `push` NO es bloqueante»; «El recordatorio de push»; en «El ciclo de un run», que el
+operador sea quien publica y, desde el 2026-10-29, que pegue el ticket; en «Lo que le queda al operador», el punto 1.
 
 **Rutas.** Las de `/sessions/<…>/mnt/…` eran del puente: aquí no existen. Se derivan. Al operador, **rutas Windows
 completas**.

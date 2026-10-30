@@ -92,6 +92,21 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     (sí trae contenido del paso). El taller debe clasificar los 12 mensajes reales con la regla vieja y con la nueva.
     Al terminar el taller toca el turno 2: leer su informe, cerrar el `#20` si la QA de la ronda pasa, y borrar el
     respaldo.
+  - **El taller PARÓ en el criterio 6** (2026-10-29, informe §12). Construyó todo lo gratuito: H1
+    (`p2-learner-dynamics-v2`, campo nuevo `adverse_turns_in_session`), H2 (`p2-learner-perception-v2`: es señal la
+    matemática que no repite el enunciado), el contrato §13/§14, y el ejemplo pasa a la semilla 363. La suite queda en
+    3383 passed, 1 skipped; 9 ficheros, todos en «Scope». La sesión real no corrió: el único Codex de la PC es
+    `codex-cli 0.142.0`, que no trae `gpt-6-astra` en su catálogo. El adaptador se midió en `0.163.0-alpha.10.2`,
+    que está en npm (la «latest» es 0.166.0); la app de Codex de la ronda 1 no está en esta PC. Gastó 0 llamadas.
+    La cabina lo verificó en disco: suite 3383/1/25, 0 `w/crlf`, la omitida es la del enlace simbólico. Lo publicó
+    en el commit `383567d`. El `#20` sigue `active`.
+    Para la sesión, el taller eligió la semilla 18 (§12.7).
+  - **Hallazgos nuevos, para Chris:**
+    - **H6**: con H2, el adverso abandona 17 de 39 sesiones con el tutor simulado; H3 se decidió con 3 de 39.
+    - **H7**: una pista sin fórmula ya no es señal (la de respaldo de nivel 1 de `s2`); no sale en los 12 mensajes
+      reales.
+    - **Seguimiento**: añadir `adverse_turns_in_session` a los dos `contract/examples/invalid/learner-event.*`, que
+      ahora fallan por dos razones.
 - Hecho, de ESPEC §11: los pasos 1 a 3 (formatos, PAF sobre trazas a mano, el tutor completo) y el alumno simulado
   (contrato aprobado y construido). Más: la superficie visible, PAF sobre sesiones manuales y el lanzador. Sin
   empezar: el arnés de escenarios y la cobertura (O4.P2, O4.P3), los interruptores (O5), los brazos de RQ3 y la

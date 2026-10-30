@@ -73,7 +73,7 @@
 - **La enmienda a D-081:** lo que por regla no entra a git se copia a mano y se verifica con el manifiesto.
 - **Borrado** `AIW_Workspace\_cabina-lecciones\`, que estaba vacía. **`npm ci`** en `cantu-lessons/tools/render`.
 
-## En vuelo (puesto al día el 2026-10-30 a las 11:52)
+## En vuelo (puesto al día el 2026-10-30 a las 15:12)
 
 **Para orientarse, el tablero:** `cantu-lessons/lecciones/index.html` tiene las 29 lecciones, con la columna
 «Pendientes», y cada lección tiene su tablero, con su estado, lo que está en curso, sus decisiones y su historial
@@ -86,6 +86,15 @@ lección».
 - **El inicio** muestra las 29 lecciones con lo que le espera al operador.
 - **Cada lección tiene sus pestañas:** Resumen, Guion web (con ✓ ~ ✗ por variante, en `guiones-web/respuestas.json`), Guion slide (su galería), Lección web, Lección slide e Historial.
 - **Los tickets no se ven.** Los talleres siguen armando sus galerías por ticket.
+- **Pulida con el operador en dos rondas más** (`cantu-revisiones` `0cd35c2`, `cantu-lessons` `3fe5d21`):
+  - el inicio es la tabla por área, con el diseño de dentro;
+  - ya no hay pestaña Resumen, y Lección web y Lección slide abren aparte;
+  - el guion web tiene un solo formato, el de galería;
+  - los guiones enseñan la lección entera en miniatura, con la marca de cada slide o sección.
+- **Las miniaturas se pintan después de compilar:** `node tools/revision/miniaturas.mjs` en cantu-lessons. Solo repinta
+  lo que cambió; las 29 lecciones tardan 4 min. Hasta que `build.mjs` la llame, la corre la cabina.
+- **Los votos** se llaman «✓ Se queda · ~ Referencia · ✗ Fuera», con una sola ✓ por slide o sección. Una con una sola
+  ✓ y sin opciones nuevas se escribe en la lección (`MOLDE-DE-GALERIA`, «Los votos, y cuándo se escribe en la lección»).
 - **Al cerrar un ticket**, su galería se marca con `galerias/<ticket>/estado.json` y no se quita.
 
 | ticket | qué | dónde va | qué espera |

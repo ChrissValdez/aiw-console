@@ -73,31 +73,40 @@
 - **La enmienda a D-081:** lo que por regla no entra a git se copia a mano y se verifica con el manifiesto.
 - **Borrado** `AIW_Workspace\_cabina-lecciones\`, que estaba vacía. **`npm ci`** en `cantu-lessons/tools/render`.
 
-## En vuelo (puesto al día el 2026-10-29 a las 15:51)
+## En vuelo (puesto al día el 2026-10-30 a las 10:07)
 
-- **RW-59**, la tanda 2 de slides (L03 a L08), con galería en `cantu-revisiones/galerias/RW-59/`: corre en su sesión
-  (Opus 5.5 max). La aprobación va **por escena** (el operador: «palomeando y filtrando slides»):
-  - la ronda 2 la votó entera (verbatim en el veredicto, `7205b6c`);
-  - las escenas aprobadas ya están escritas en los borradores, con 6 etiquetas nuevas en el registro, y L01 a L08
-    compilan en 🟢 VERDE (`cantu-lessons` `526f863`);
-  - **la galería de la ronda 3** lleva solo las 11 slides pendientes (`cantu-revisiones` `7075e14`): falta su voto.
-  - Sus votos de la ronda 2 están en `respuestas.json` (md5 `e85888e5`), **sin publicar**: los publica el Enter en la
-    ventana del botón.
-  - Al cerrar: lo aprendido a la regla 41 (S1, S2, S3 y los dos patrones candidatos, frío y cálido en pareja y la
-    tarjeta del problema con imagen), la revisión final de cada lección y su estado.
-- **RW-57**, que el índice tenga siempre las 29 lecciones, con el código de cada una versionado: escrito. Va cuando
-  ningún taller compile, porque cambia `tools/revision/`; con RW-59 en marcha, entre dos de sus rondas.
-- **El método de tandas lo aprobó el operador** («Sí, escríbela»):
-  - una tanda es un ticket y una galería;
-  - el molde se aplica sin variantes, y hay variantes solo donde el molde no decide;
-  - las decisiones de sistema van primero (la primera, el subtítulo que «grita»);
-  - después, la revisión final de cada lección;
-  - lo aprendido pasa a regla y a molde.
+**Para orientarse, el tablero:** `cantu-lessons/lecciones/index.html` tiene las 29 lecciones, con la columna
+«Pendientes», y cada lección tiene su tablero, con su estado, lo que está en curso, sus decisiones y su historial
+(RW-62). Lo que no se deduce vive en `lecciones/tablero.json`, que escribe **solo la cabina**: un renglón por ticket o
+decisión, y luego `node tools/revision/tablero.mjs`. Cómo hacerlo está en `tools/revision/README.md`, «El tablero por
+lección».
+
+**Para votar, una sola galería:** `cantu-revisiones/abrir-galeria.cmd` abre la portada por lección
+(`http://127.0.0.1:8791/`), con todas las galerías juntas y lo de slide aparte de lo de web (RW-63). Al cerrar un
+ticket, su galería **ya no se quita**: se marca con `galerias/<ticket>/estado.json` (`MOLDE-DE-GALERIA`, puesta al día
+del 2026-10-30).
+
+| ticket | qué | dónde va | qué espera |
+|---|---|---|---|
+| RW-59 | slides de L03 a L08 | todas las escenas aprobadas, escritas y en VERDE (`6a902a7`) | que el operador revise los 6 mazos enteros («Primero las reviso»); luego, cerrar: lo aprendido a la regla 41, el generador de su galería a `docs/moldes/RW-59/`, sus respuestas a `docs/informes/`, su galería marcada cerrada y los estados |
+| RW-60 | la paleta de los bordes de tarjeta | galería publicada: 7 slides, «Hoy» y 3 paletas al peso del Azul acero | el voto; el taller recomienda la 1, Ocre, y la cabina también |
+| RW-61 | slides de L09 a L26 (tanda 3) | galería publicada: 125 vistas, con la decisión S4 y los tres patrones en «Con el molde» | el voto; también su duda 1, las escenas de L11B que hay dentro de L11 |
+| RW-64 | la web de las 29 lecciones | galería publicada: 39 secciones por decidir (`966b658`) | el voto; no escribe borradores sin turno de la cabina, porque RW-61 escribe en los mismos |
+| RW-31 a RW-33 | el plan de fracciones de L17 | en espera | la aprobación de la web de L16, que está en la galería de RW-64 |
+
+- **El orden de voto que recomendó la cabina:** primero RW-60, porque su color cambia los cálidos de RW-61 y de RW-59.
+  Después, los mazos de L03 a L08, RW-61 y RW-64.
+- **Falta un commit en `cantu-revisiones`:** el comentario nuevo de `abrir-galeria.cmd` (rama de RW-63, `47ecba4`). Se
+  dejó fuera del merge porque la ventana del botón de RW-59 seguía abierta: cmd vuelve a leer un `.cmd` en marcha por
+  su posición en el fichero. Se aplica cuando esa ventana se cierre.
+- **Las copias de trabajo de RW-62 y RW-63** siguen en `_scratch\RW-62\cantu-lessons` y `_scratch\RW-63\cantu-revisiones`,
+  con sus ramas ya integradas. Se quitan con `git worktree remove`.
 - **La bandeja:** los comentarios sueltos del operador no abren ticket; van a `cantu-lessons/docs/encargos/BANDEJA.md`.
-- **Para la web**, el operador quiere el mismo método en las lecciones nuevas, cuando haya una galería pensada para la
-  web. Está en la bandeja.
 
-## Cerrado hoy (2026-10-29)
+## Cerrado (2026-10-29 y 30)
+
+- **RW-62** (el tablero por lección, con RW-57; `cantu-lessons` `bb7cc21`) y **RW-63** (una sola galería, por lección;
+  `cantu-revisiones` `b4db0bf`), integrados el 2026-10-30.
 
 - **RW-54** (el servidor de las galerías), **RW-55** (el riel de L02·D9), **RW-56** (el botón
   `cantu-revisiones/abrir-galeria.cmd`, `a0c716a`) y la **regla 41 v63**.

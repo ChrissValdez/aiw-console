@@ -188,7 +188,9 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   - **El adaptador de Claude acepta solo `2.1.226 (Claude Code)`** (`src/p2exp/llm/claude.py`, `MEASURED_VERSIONS`) y en
     la PC hay `2.1.284` (medido el 2026-10-29): el evaluador de PAF se niega aquí hasta que un taller corra las pruebas
     gratis de `tests/integration/test_claude_live.py` y añada la versión si pasan (`AGENTS.md`). Va en el próximo ticket
-    de DEVELOPMENT que necesite PAF. Codex (`0.142.0`) no tiene esa lista.
+    de DEVELOPMENT que necesite PAF. El adaptador de Codex no tiene esa lista, pero sus opciones se midieron en
+    `0.163.0-alpha.10.2`, la que Chris instaló en la PC el 2026-10-29 (antes había `0.142.0`, sin `gpt-6-astra`). Su
+    `login status` no prueba que el token se renueve: la prueba es `test_minimal_call` (1 llamada).
   - Copiar `data/` desde la laptop (el operador) y verificarla contra el manifiesto (la cabina).
   - Versionar `data/manual/` en el próximo ticket de DEVELOPMENT (una excepción en `.gitignore` y una nota en el
     contrato de datos §11).

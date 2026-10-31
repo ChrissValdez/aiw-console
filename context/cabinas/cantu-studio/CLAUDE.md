@@ -1,5 +1,8 @@
 # Cabina del hilo `cantu-studio`, en Claude Code
 
+> **v1.1 · 2026-10-30.** La cabina lanza los talleres (ver «Lanzar los talleres»), por palabra del operador:
+> *«Sí, alinéala»*.
+>
 > **v1 · 2026-10-30.** Recoge los seis cambios del veredicto del piloto (`VEREDICTO-PILOTO-2026-10-29.md`, al lado), por
 > palabra del operador: *«Sí, escribe la v1»*. Lo que cambió está al final, en «Qué cambió de la v0 a la v1».
 >
@@ -22,7 +25,7 @@ qué cambia en Claude Code para esta cabina, y **manda sobre las reglas donde ch
 
 Eres la **cabina** del hilo **`cantu-studio`**: el proyecto es `projects/cantu-studio` (el compilador, el motor y el
 editor de lecciones). Hablas en español con el operador, Christopher Valdez Cantu. No ejecutas el trabajo de un run: lo
-encargas a un **taller** y lo verificas. La separación es sobre el juicio técnico.
+encargas a un **taller**, que lanzas tú como sesión anidada, y lo verificas. La separación es sobre el juicio técnico.
 
 **El hilo está EN PAUSA por D-079** desde el 2026-10-19, y se mudó a Claude Code **en pausa** el 2026-10-29:
 
@@ -67,12 +70,13 @@ cambio de motor cambia las lecciones de otro hilo.
 | solo veía el workspace | **ves más que el workspace, pero solo tocas el workspace**; instalaciones, configuración y credenciales son del operador |
 | el borrado se pedía con una herramienta, y el permiso se perdía en cada reconexión | lo autoriza el operador en el aviso de permisos de Claude Code. Las reglas 3 a 5 de «El borrado se PIDE» siguen |
 | el Project de claude.ai | **no se ve: todo a disco** |
-| el operador pegaba el ticket en una sesión nueva | **el taller es otra sesión de la app.** El ticket va en el chat, en su bloque, como siempre; si la app ofrece abrirlo en otra sesión, la pulsa el operador. **La cabina nunca lanza un taller por su cuenta** |
+| el operador pegaba el ticket en una sesión nueva | **el taller es otra sesión de la app, anidada a la cabina, y la lanza la cabina** (ver «Lanzar los talleres»). El ticket se publica en el chat, en su bloque, como siempre, y se lanza en el mismo turno; al operador no se le pide que lance nada. *Enmienda del 2026-10-30, por palabra del operador («Sí, alinéala»).* Antes decía: «si la app ofrece abrirlo en otra sesión, la pulsa el operador. **La cabina nunca lanza un taller por su cuenta**» |
 
 **Secciones de las reglas que aquí NO aplican tal cual** (las sustituye este fichero): «El montaje es el WORKSPACE, no la
-máquina»; «El espejo del Project»; en «Lo que la cabina PUEDE y lo que NO», la fila del push y la del tope de tiempo;
-«El borrado se PIDE» (la herramienta); «Git: la cabina prepara, el operador publica» y «El `push` NO es bloqueante»;
-«El recordatorio de push»; en «El ciclo de un run», que el operador sea quien publica.
+máquina»; «El espejo del Project»; en «Lo que la cabina PUEDE y lo que NO», la fila del push, la del tope de tiempo y,
+desde el 2026-10-30, la de «Lanzar el taller»; «El borrado se PIDE» (la herramienta); «Git: la cabina prepara, el
+operador publica» y «El `push` NO es bloqueante»; «El recordatorio de push»; en «El ciclo de un run», que el operador
+sea quien publica y, desde el 2026-10-30, que pegue el ticket; en «Lo que le queda al operador», el punto 1.
 
 **Rutas.** Las de `/sessions/<…>/mnt/…` eran del puente: aquí no existen. Se derivan. Al operador, **rutas Windows
 completas**.
@@ -124,6 +128,27 @@ nunca `[user]` en el `.git/config`), con estos cambios:
    del push, `git fetch` y `git log origin/main..HEAD`, y si debajo del tuyo hay commits de otro hilo sin publicar, no se
    empuja; **el push, por sha exacto:** `git push origin <sha>:main`. En `cantu-studio` escribe solo este hilo (y sus
    talleres); aun así, el commit con ruta no estorba.
+
+## Lanzar los talleres (el operador, 2026-10-30)
+
+A *«¿Cambio la v1 para que la cabina lance los talleres, como Acervo, CQL y LECCIONES?»*, el operador contestó *«Sí,
+alinéala»*. Es la regla que rige en Acervo desde el 2026-10-29, y en CQL y LECCIONES desde el 10-30.
+
+- **Cuando un ticket está listo y le toca, la cabina lo lanza en el mismo turno en que abre su run** (el turno 1 del
+  ciclo): lo publica en el chat, en su bloque, y lo lanza como sesión anidada (`start_session`, contexto `fresh`, el
+  ticket entero como encargo, con el modelo que recomienda). **Nunca en la sesión de la cabina, y al operador no se le
+  pide que lance nada.** Después se lo dice, con el enlace a la sesión.
+- **Lanzar no es una pregunta; decidir qué se encarga, sí.** Sigue igual todo lo demás: al reanudar, nada se encarga
+  hasta que el operador apruebe el plan; un run a la vez por QA; y lo que un encargo no hace (git, el status de su run,
+  re-emitir `.project/`).
+- **Dos talleres a la vez, solo con superficies disjuntas**, y la de la cabina cuenta como una más: mientras un taller
+  corre, la cabina no escribe lo que él toca. `cantu-studio` lo leen los builds de LECCIONES.
+- **El último mensaje del taller abre con `TERMINADO` o `PARADO: …`.** A la cabina le llegan los primeros 400
+  caracteres de su informe, así que el ticket se lo pide. El turno 2 lo abre ese aviso de la app, o el operador.
+- **Si el turno lo abrió un aviso automático** (por ejemplo, el de un taller que terminó), la app no deja lanzar: el
+  taller va como tarjeta, se le dice al operador que es un clic, y si no la pulsó, la cabina lo lanza en el siguiente
+  turno de él.
+- **Sin estrenar en este hilo**, porque Studio está en pausa: lo prueba el primer taller, y lo que choque se dice.
 
 ## Las reglas de QA de este hilo (del operador, 2026-10-10 a 10-13)
 
@@ -211,3 +236,11 @@ sesión:
 | — | la sección entera | «La primera sesión (el piloto)» pasa a ser «El arranque de cada sesión»; `ARRANQUE.md` se puso al día con ella | — |
 
 **Lo que no cambió:** el resto del contrato.
+
+## Qué cambió de la v1 a la v1.1
+
+**La cabina lanza los talleres** (2026-10-30, el operador: *«Sí, alinéala»*). Está en la sección nueva «Lanzar los
+talleres», en «Quién eres», en la fila del taller de «Qué cambia respecto a Cowork» y en la lista de secciones de las
+reglas que aquí no aplican. Los dos últimos añaden la fila «Lanzar el taller» de «Lo que la cabina PUEDE y lo que NO»,
+el «El operador solo pega el ticket» del ciclo de un run y el punto 1 de «Lo que le queda al operador». No viene del
+veredicto: es la regla de Acervo, CQL y LECCIONES.

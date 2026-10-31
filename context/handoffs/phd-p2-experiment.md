@@ -583,8 +583,11 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 ## §4 · Pendientes que no tienen run
 
-- **El paquete de la revisión humana, al cerrar O6 (decisión del operador, 2026-10-31; §1).** La cabina lo arma sin
-  preguntar en cuanto cierre la exportación ciega:
+- **El paquete de la revisión humana, al cerrar O6 (decisión del operador, 2026-10-31; §1).** **Armado el
+  2026-10-31 a las 21:55 UTC** en `C:\Users\chris\Documents\AIW_Workspace\_revision\phd-p2-o6\` (fuera de git, 1.7
+  MB; empieza por `LEEME.md`). El par del visor es la misma sesión adversa de FAC-001 (semilla 20261030, alumno de
+  plantilla) con el tutor completo (`tr_07uys2o0b0`, del `#24`) y sin control (`tr_odejv7b444`, del `#25`, las 3
+  violaciones de R3); el paquete del codificador es `cod-a` de la muestra regenerada por la cabina. Lo que lleva:
   1. el estado en una página: qué está construido, paso por paso de ESPEC §11, con los números medidos y lo no
      verificado;
   2. el prototipo en vivo: Chris de alumno contra el tutor completo, con el lanzador, y después el informe de PAF de su

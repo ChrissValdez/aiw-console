@@ -33,6 +33,19 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   registro de citas, `REGLAS.md`, `ESPEC_TUTOR_P2.md` ni el `HANDOFF_P2.md`.
 - **Desarrollo decide cómo se construye.** No decide las reglas de la política, qué es una violación, los pasos de
   PAF, la muestra de validación ni los límites de ESPEC §9: eso va a `DESDE_DEV.md`.
+- **Avanzar sin preguntar, salvo en paradas críticas (palabra del operador, 2026-10-30):** «nueva regla si no es un
+  paso critico sigue avanzando y no me preguntes para lanzar cada ticket solo lanzalo, unicamente preguntame en
+  paradas criticas».
+  - La cabina mide, redacta, crea y activa por la consola, lanza el taller, verifica, publica, cierra los runs sin QA
+    y prepara el siguiente run, sin pedir el sí.
+  - Se pregunta solo en las paradas críticas:
+    - decisiones del paper o de Chris;
+    - una QA humana;
+    - un `PARADO` cuyas opciones son del operador;
+    - credenciales o instalaciones;
+    - borrar lo ajeno, archivar sesiones o empujar commits ajenos;
+    - gastar más de lo que dice el ticket;
+    - todo lo irreversible o hacia fuera.
 - **Decisiones de diseño:** no se preguntan en un menú. Se analizan, se ponen los datos delante, se recomienda y se dice
   bajo qué condición cambiaría la recomendación. Se dice siempre qué se probó y qué no.
 - **Modelos:** por CLI de suscripción, sin API. Codex para el tutor y el alumno; Claude Code para el evaluador.
@@ -64,9 +77,55 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 ## §3 · Estado, medido el 2026-10-30
 
-- **Los runs `#1` a `#24` están cerrados** (2026-10-30): 24 de 24 `completed`, sin runs `planned`; la consola dice
-  «No active run; 24 of 24 runs completed.». La cola está vacía; el siguiente run hay que crearlo. Abajo, del más
-  nuevo al más viejo, la historia de `#24`, `#23`, `#22`, `#21` y `#20`.
+- **Los runs `#1` a `#25` están cerrados** (2026-10-31, 00:40 UTC): 25 de 25 `completed`, sin runs `planned`; la
+  consola dice «No active run; 25 of 25 runs completed.». La cola está vacía; el siguiente, «sin estado» (O5.P1), lo
+  prepara y lanza la cabina. Abajo, del más nuevo al más viejo, la historia de `#25`, `#24`, `#23`, `#22`, `#21` y `#20`.
+- **`#25` «Play the no-control and no-emission switches through the harness, after fixing what the no-control contract
+  cannot record» se cerró** sin QA humana, como dice su texto.
+  - **Cómo empezó:** Chris dijo «Sí, prepáralo» a las ablaciones (O5) y «Sí, créalo» a su encuadre. La cabina partió
+    O5.P1 en dos runs: este, con los dos interruptores que ya estaban en el código, y «sin estado», que hay que
+    construir.
+  - **Creado** por la consola: `insert` al final de O5.P1, que estaba vacía (remap: solo el nuevo, en el 25), y
+    `set-status active`; campo a campo, igual a lo aprobado; md5 `1d239aac…` → `94e8c3bd…` → `c5792217…`; commit
+    `4884041`.
+  - **Taller** lanzado como sesión enlazada: «Taller #25: sin control y sin emisión»,
+    `local_7d3a5b6b-0d9e-4362-b45e-5ee9fc69a788`, `p2-ablation-ctl-emi`. Pidió tocar dos pruebas fuera de su alcance
+    que el propio ticket obligaba a cambiar (`tests/test_tutor_selection.py` y `tests/test_tutor_incremental.py`); la
+    cabina lo comprobó en disco y lo autorizó.
+  - **Entrega** (commit `33e16e6`, 31 ficheros):
+    - **El contrato de «sin control» quedó arreglado.**
+      - C1 (a): `gate: skipped` salta solo las cinco comprobaciones de 8.3 que tienen regla; siguen `malformed` y las
+        cuatro de estado, con reintento y luego el defecto. Desaparecen `UnrecordableProposal` y `NoStepLeft` (C2).
+      - C5: 2.6 dice dónde se aplica la compuerta.
+      - C7: la plantilla nunca dice un veredicto contra la verificación algebraica, ni un veredicto sin intento. Si no
+        queda texto, usa el de `ask_attempt`.
+    - **La sesión lee la condición del escenario** (`stages_for`). `no_state` sigue rechazado, `config_sha256` no
+      cambia y el servidor manual sigue en `full`.
+    - **El arnés juega `full`, `no_control` y `no_emission`**, con el peor caso de llamadas por condición.
+    - **Perfil nuevo `profiles/coop-fac-02.json`**, que se estanca.
+    - **Bajo `full` ninguna traza cambió** (408 trazas de la suite comparadas). 100 ítems de prueba, vistos en rojo
+      con 38 siembras.
+  - **Corrida real:** 5 sesiones (FAC-001 con `adv-fac-01` en las dos ablaciones; FAC-002 con `coop-fac-02` en las
+    tres condiciones), `plantilla`, semilla 20261030. **93 llamadas** de Codex de 280 en el peor caso, contadas por la
+    cabina en las trazas.
+  - **Lo que dio:**
+    - «Sin control» violó **R3**: 3 veces en la sesión adversa, turnos 1, 2 y 5; pistas a pedidos de ayuda sin intento.
+    - «Sin emisión» y el tutor completo no violaron nada.
+    - R2 tuvo 7 oportunidades de estancamiento y ninguna violación: el modelo de selección ve los contadores y siguió
+      la regla.
+    - En total, 1 de 4 reglas. Plantillas, 0 de 30 mensajes. Ninguna traza de `measure/` nombra la condición.
+    - La cabina rehízo el informe de violaciones sobre una copia y salió idéntico, salvo la hora y la raíz.
+  - **Verificación de la cabina:** suite 3536/1/26; las pruebas nuevas y los guards, 254 passed; 0 CR y 0 `w/crlf`;
+    sin cambios fuera de alcance. Cierre: solo `status` y `closeout_result`; md5 `c5792217…` → `bc7762cb…`; commit
+    `28a99e3`. Respaldos borrados.
+  - **Decisiones abiertas, del paper** (informe §9 y §11; van a `DESDE_DEV.md` con la copia de la laptop):
+    - **R2, R1 y R5 no alcanzadas.** Las opciones son más semillas y sesiones, perfiles que se estanquen también en
+      `s2`, o prompts que no muestren lo que mantiene al modelo dentro de la política. La tercera cambia la petición en
+      las cuatro condiciones.
+      - Recomendación: primero lo de escenarios, en el piloto. Los prompts solo si ni así se alcanzan.
+    - **Dónde vive el interruptor:** en el escenario, como quedó, o en `config/tutor.json`, como dice la ESPEC §5.
+      - Recomendación: dejarlo en el escenario. Nadie de la medición ve ni uno ni otro, y así el hash de la
+        configuración es igual en las cuatro condiciones.
 - **`#24` «Report the policy coverage: per rule, whether some scenario produced a violation, judged by the harness's
   reference truth» se cerró** sin QA humana, como dice su texto. Chris había dicho «Sí, prepáralo» al informe de
   cobertura (O4.P3) y «Sí, créalo» a su encuadre y sus campos.
@@ -376,7 +435,9 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   que pidió para el run del visor (O9.P4).
 - Las cuatro carencias no bloqueantes del contrato del servidor (`docs/runs/RUN-P2-LIVE-VIEWER-001.md` §7).
 - El feedback de diseño del visor de Chris: lo dará él, cuando abra ese run.
-- Arreglar el contrato de «sin control» antes de O5.
+- ~~Arreglar el contrato de «sin control» antes de O5.~~ Hecho en `#25` (C1 a, C5, C7). Queda el docstring de
+  `src/p2exp/tutor/settings.py`, que cita la redacción vieja de 5.1 («where the condition switch lives»), para un run
+  posterior.
 - Para el hilo de `aiw-console`, solo nombrado: `start-console.ps1` devuelve 0 aunque el servidor salga con error tras
   Ctrl+C (`docs/runs/RUN-P2-TUTOR-LAUNCHER-001.md`, D2).
 - `DESDE_DEV.md`: muchas entradas siguen pendientes del hilo del paper. Se cuentan al abrir.

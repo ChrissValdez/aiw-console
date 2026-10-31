@@ -57,7 +57,7 @@
      finales de línea, salidas que el build regenera, o cosas de otros hilos.
 - **La laptop sigue congelada** hasta que la copia esté verificada.
 - **Sin runs (D-083, 2026-10-30):** este hilo ya no trabaja con runs ni con la consola de *features*. Su tablero es la
-  plataforma de revisión, y el trabajo va por tickets RW. `cantu-lessons/roadmap/roadmap.json` queda congelado como
+  «Galería de lecciones» (la plataforma de revisión), y el trabajo va por tickets RW. `cantu-lessons/roadmap/roadmap.json` queda congelado como
   historia, y ninguna respuesta abre con la línea del run.
 
 ## Lo que se hizo en esta sesión

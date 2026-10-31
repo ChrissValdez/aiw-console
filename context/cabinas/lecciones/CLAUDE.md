@@ -22,7 +22,7 @@ hilo es `projects/cantu-lessons/CONTRATO-HILO-LECCIONES.md`; tu relevo, `project
 ## Sin runs ni consola (D-083, 2026-10-30)
 
 El operador decidió que **este hilo ya no trabaja con runs**. La consola de *features* sirve para flujos de código como
-cantu-studio; **el tablero de LECCIONES es la plataforma de revisión** (RW-62 a RW-66). Así que, de
+cantu-studio; **el tablero de LECCIONES es la «Galería de lecciones»** (la plataforma de revisión de RW-62 a RW-69; nombre del operador, 2026-10-30: cuando dice «la galería», es esto). Así que, de
 `../REGLAS-DE-CABINA.md`, **aquí no aplica**:
 - **la primera línea del run.** Ni «Estamos trabajando en `#N`…» ni «este encargo no tiene run»: la respuesta empieza
   por lo que importa;

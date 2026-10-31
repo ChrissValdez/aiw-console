@@ -84,10 +84,40 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 ## §3 · Estado, medido el 2026-10-30
 
-- **Los runs `#1` a `#26` están cerrados** (2026-10-31, 02:13 UTC): 26 de 26 `completed`, sin runs `planned`; la
-  consola dice «No active run; 26 of 26 runs completed.». O5 terminó: el arnés juega las cuatro condiciones de la ESPEC
-  §3.3. El siguiente es O6 (los brazos de RQ3 y la exportación ciega), y lo prepara y lanza la cabina. Abajo, del más
-  nuevo al más viejo, la historia de `#26`, `#25`, `#24`, `#23`, `#22`, `#21` y `#20`.
+- **Los runs `#1` a `#27` están cerrados** (2026-10-31, 03:24 UTC). El **`#28` «Build the RQ3 direct judge: one
+  strong model with the same rubric and trace that decides every opportunity at once, without PAF's steps or
+  validations» está `active`** (commit `fe6c9d8`), con su ticket escrito; su taller espera la palabra de Chris. O5
+  terminó: el arnés juega las cuatro condiciones de la ESPEC §3.3. Abajo, del más nuevo al más viejo, la historia de
+  `#27`, `#26`, `#25`, `#24`, `#23`, `#22`, `#21` y `#20`.
+- **`#27` «Build the RQ3 arm where PAF gives everything to the evaluator: the same five steps and rubric, with every
+  computed condition decided by the evaluator from the text» se cerró** sin QA humana, como dice su texto.
+  - **Creado** al final de O6.P1, que estaba vacía (commit `86a4d0d`). Taller «Taller #27: brazo con todo al
+    evaluador», `local_85035026-8e2b-41e7-ad6b-34302c42fe51`, lanzado con el «Lánzalo» de Chris y archivado al cerrar
+    (antes hubo que apagarle el Remote Control).
+  - **Entrega** (commit `51928ed`, 17 ficheros):
+    - `evaluate_trace(..., arm="all_evaluator")` en el controlador. Cada condición `computed` se le pide al evaluador
+      por su id y su enunciado, con los registros y parámetros (N, K) que usa; no se extraen campos.
+    - El paso 1 y las validaciones de forma no cambian.
+    - Prompt propio `prompts/p2-evaluator-all-v1/`, por la clave `all_evaluator_prompt_id` de `config/evaluator.json`.
+    - Registro propio `p2-paf-record-all-evaluator-v1`, con `arm`; la agregación no mezcla brazos.
+    - PAF completo, igual byte a byte: 19 registros y 183 prompts fijados por hash.
+    - 410 ítems de prueba, vistos en rojo con 33 siembras.
+  - **Pasada real** sobre las siete trazas de depuración: 188 llamadas de Claude Code (183 contadas antes; tope de
+    250).
+  - **Acuerdo con las llaves:** 140/144 oportunidades y 92/96 resultados por regla, los mismos totales que PAF
+    completo. La cabina lo rehízo gratis y le salió igual.
+    - Las 105 condiciones computadas que tienen valor en la llave, acertadas.
+    - Los 4 desacuerdos son de condiciones que el evaluador decide en los dos brazos: ambigüedad de la rúbrica.
+    - Estas trazas no ponen a prueba el álgebra que el brazo aísla, así que todavía no distinguen los brazos.
+  - **Verificación de la cabina:** suite 4008/1/26; las pruebas del brazo y los guards, 1902 passed; 0 CR; sin cambios
+    fuera de alcance. Cierre: commit `df4719d`, solo `status` y `closeout_result`.
+  - **Abiertas, del paper** (informe):
+    - Con N `null`, el brazo se niega. Las alternativas son Not Evaluable sin preguntar al evaluador, o preguntarle
+      con «N: sin valor». Recomendación: dejarlo así hasta que el piloto fije N.
+    - Las lecturas R2-C2 L2 y L6 dicen que el controlador computa la condición. Para este brazo y para los
+      codificadores, eso describe el procedimiento equivocado. Recomendación: que las lecturas de la rúbrica del
+      estudio no nombren quién decide.
+    - RQ3 necesita también que el paper declare el resultado esperado del juez (V-juez).
 - **`#26` «Build the no-state switch: the model keeps the attempts, errors and hints in its own context, and the gate
   checks the selection against what it says» se cerró** sin QA humana, como dice su texto.
   - **Creado** por la consola, sin preguntar, por la regla del 2026-10-30 (§1): `insert` al final de O5.P1 (remap:

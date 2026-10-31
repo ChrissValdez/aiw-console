@@ -77,9 +77,56 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 ## §3 · Estado, medido el 2026-10-30
 
-- **Los runs `#1` a `#25` están cerrados** (2026-10-31, 00:40 UTC): 25 de 25 `completed`, sin runs `planned`; la
-  consola dice «No active run; 25 of 25 runs completed.». La cola está vacía; el siguiente, «sin estado» (O5.P1), lo
-  prepara y lanza la cabina. Abajo, del más nuevo al más viejo, la historia de `#25`, `#24`, `#23`, `#22`, `#21` y `#20`.
+- **Los runs `#1` a `#26` están cerrados** (2026-10-31, 02:13 UTC): 26 de 26 `completed`, sin runs `planned`; la
+  consola dice «No active run; 26 of 26 runs completed.». O5 terminó: el arnés juega las cuatro condiciones de la ESPEC
+  §3.3. El siguiente es O6 (los brazos de RQ3 y la exportación ciega), y lo prepara y lanza la cabina. Abajo, del más
+  nuevo al más viejo, la historia de `#26`, `#25`, `#24`, `#23`, `#22`, `#21` y `#20`.
+- **`#26` «Build the no-state switch: the model keeps the attempts, errors and hints in its own context, and the gate
+  checks the selection against what it says» se cerró** sin QA humana, como dice su texto.
+  - **Creado** por la consola, sin preguntar, por la regla del 2026-10-30 (§1): `insert` al final de O5.P1 (remap:
+    solo el nuevo, en el 26) y `set-status active`; md5 `bc7762cb…` → `c1e7dd2a…` → `042f2410…`; commit `a37f91d`.
+  - **Taller:** «Taller #26: sin estado», `local_e301413e-ace6-4197-b6d8-06a8516d26c9`, `p2-ablation-no-state`.
+    - No se pudo lanzar en el turno que despertó el aviso del `#25`: la app solo deja arrancar una sesión a partir de
+      un mensaje del operador, y la tarjeta de un clic no admite `cwd`. Se lanzó con el «Lánzalo» de Chris.
+    - Pidió tocar cuatro pruebas fuera de su alcance, que fijaban el rechazo de `no_state`. La cabina lo comprobó en
+      disco y lo autorizó. En `variant_no_state` de `test_conversion.py`, la cabina escogió completar la traza de
+      ejemplo en vez de aflojar el verificador.
+  - **Entrega** (commit `7d43126`, 33 ficheros):
+    - Bajo `no_state`, la llamada de estado lee el historial de la sesión (enunciado, mensajes del alumno y, por turno
+      del tutor, acciones declaradas y mensaje emitido) e informa intentos, errores seguidos y último nivel de pista.
+    - Esas cuentas se aceptan por su formato y van en el lugar de `CodeCounters` (`ModelCounters`, `source = "llm"`).
+      En código se quedan el paso, el veredicto algebraico y `solved`; `stalled` sale del N.
+    - La compuerta revisa contra las cuentas del modelo.
+    - Prompt nuevo `prompts/p2-tutor-no-state-v1/`, y clave `no_state_prompt_id` en `config/tutor.json`, igual en
+      las cuatro condiciones.
+    - La propuesta registra las cuentas, y los dos verificadores las exigen.
+    - El arnés juega las cuatro condiciones. Ninguna traza de las otras tres cambió (450 comparadas). 71 ítems de
+      prueba vistos en rojo con 52 siembras.
+  - **Corrida real:** 4 sesiones (FAC-001 con `adv-fac-01` y FAC-002 con `coop-fac-02`, semillas 20261030 y
+    20261031), **79 llamadas** de Codex de 240 en el peor caso.
+  - **Lo que dio:**
+    - **0 de 4 reglas violadas.**
+    - El modelo contó bien en 24 de 24 turnos; la cabina lo recalculó por su cuenta desde las trazas.
+    - La selección pidió 14 pistas sin intento previo, y la compuerta las rechazó todas, porque el modelo contó 0
+      intentos.
+    - R2 tuvo 5 oportunidades de estancamiento, sin violación.
+  - **Verificación de la cabina:** suite 3597/1/26; las pruebas nuevas y los guards, 483 passed; 0 CR y 0 `w/crlf`;
+    sin cambios fuera de alcance; el informe de violaciones, rehecho sobre una copia, idéntico. Cierre: solo
+    `status` y `closeout_result`; md5 `042f2410…` → `afc1f578…`; commit `5aa892b`. Respaldos borrados.
+  - **Decisiones abiertas, del paper** (informe §11; van a `DESDE_DEV.md` con la copia de la laptop):
+    - **Cómo alcanzar R2 y R3 bajo «sin estado».** Las opciones son:
+      - sesiones más largas;
+      - errores cercanos a la respuesta;
+      - más contexto falso;
+      - un historial sin las acciones declaradas, que cambia lo que significa el interruptor.
+
+      Recomendación: lo de escenarios, en el piloto. El historial sin acciones, solo si el paper lo pide.
+    - **D2:** el modelo juzga si el intento actual es correcto, solo para su propia cuenta. La alternativa es contar
+      antes del mensaje. Recomendación: dejarlo así; es la lectura más directa de «lo lleva en su contexto».
+  - **Lo que deja O5 en conjunto:** con estos modelos y estos escenarios, solo «sin control» violó una regla (R3). La
+    condición del piloto, toda regla violada en algún escenario, no se alcanza todavía. Es el hallazgo principal para
+    el paper: apagar un dominio quita la revisión, pero no la información que hace que la revisión casi nunca haga
+    falta.
 - **`#25` «Play the no-control and no-emission switches through the harness, after fixing what the no-control contract
   cannot record» se cerró** sin QA humana, como dice su texto.
   - **Cómo empezó:** Chris dijo «Sí, prepáralo» a las ablaciones (O5) y «Sí, créalo» a su encuadre. La cabina partió

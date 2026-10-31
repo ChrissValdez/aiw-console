@@ -53,7 +53,11 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   - **El límite de la app:** en un turno que despertó el aviso de un taller, la app no deja lanzar el siguiente, y la
     tarjeta de un clic no admite la carpeta del repo. El run se deja creado y activo, y se le pide a Chris una
     palabra («lánzalo»).
-- **Decisiones de diseño:** no se preguntan en un menú. Se analizan, se ponen los datos delante, se recomienda y se dice
+- **Pausa de revisión humana al cerrar O6 (palabra del operador, 2026-10-31):** Chris pidió un hito para parar y
+  revisar el estado del proyecto («delegué demasiado y estoy perdiendo idea de en qué estado está»), después de un buen
+  milestone. La cabina propuso al cerrar O6 (tras la exportación ciega O6.P2, antes del piloto) o justo tras el `#28`;
+  contestó «Al cerrar O6». Es una **parada**: cuando cierre el `#28`, la cabina abre y cierra la exportación sin
+  preguntar, y al cerrarla para: **ningún run de O7 se abre sin la revisión de Chris**. Lo que se le prepara, en §4. no se preguntan en un menú. Se analizan, se ponen los datos delante, se recomienda y se dice
   bajo qué condición cambiaría la recomendación. Se dice siempre qué se probó y qué no.
 - **Modelos:** por CLI de suscripción, sin API. Codex para el tutor y el alumno; Claude Code para el evaluador.
 - **Los talleres no guardan memoria de Claude Code**: lo que deba durar va al informe del run.
@@ -86,7 +90,14 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 - **Los runs `#1` a `#27` están cerrados** (2026-10-31, 03:24 UTC). El **`#28` «Build the RQ3 direct judge: one
   strong model with the same rubric and trace that decides every opportunity at once, without PAF's steps or
-  validations» está `active`** (commit `fe6c9d8`), con su ticket escrito; su taller espera la palabra de Chris. O5
+  validations» está `active`** (commit `fe6c9d8`). Su taller «Taller #28: juez directo»
+  (`local_9086f0a8-7352-4981-aa16-d07ef30213af`) corre desde las 06:17 UTC del 2026-10-31, con el «Lánzalo» de Chris.
+  A las 06:34 UTC paró su pasada real tras 7 de las 24 llamadas previstas: 5 contestaron y 2 volvieron sin salida
+  legible (el CLI las dio por rechazadas); lo gratuito (contrato, juez, pruebas, informe) siguió. El taller trajo tres
+  opciones; la cabina eligió la (A), sin preguntar, por no cambiar lo que el brazo mide ni gastar más que el ticket:
+  un prompt `p2-judge-v2` sin la clave de salida `reasoning` (el razonamiento queda en el propio modelo, al esfuerzo
+  del rol, sin cambio), y repetir la pasada completa: 7 + 24 = 31 llamadas, dentro del tope de 60. El prompt es
+  palanca del piloto (ESPEC §10); el informe del run lo dice. O5
   terminó: el arnés juega las cuatro condiciones de la ESPEC §3.3. Abajo, del más nuevo al más viejo, la historia de
   `#27`, `#26`, `#25`, `#24`, `#23`, `#22`, `#21` y `#20`.
 - **`#27` «Build the RQ3 arm where PAF gives everything to the evaluator: the same five steps and rubric, with every
@@ -484,6 +495,17 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 ## §4 · Pendientes que no tienen run
 
+- **El paquete de la revisión humana, al cerrar O6 (decisión del operador, 2026-10-31; §1).** La cabina lo arma sin
+  preguntar en cuanto cierre la exportación ciega:
+  1. el estado en una página: qué está construido, paso por paso de ESPEC §11, con los números medidos y lo no
+     verificado;
+  2. el prototipo en vivo: Chris de alumno contra el tutor completo, con el lanzador, y después el informe de PAF de su
+     sesión;
+  3. una sesión del alumno simulado en el visor, una con el tutor completo y otra con un interruptor apagado;
+  4. la exportación ciega, vista como la verá un codificador;
+  5. las decisiones abiertas, cada una con su recomendación: las del paper acumuladas en §3 (`#20` a `#28`) y las de
+     Chris antes del piloto (D-familias, D-Ncand, D-rechazo, D-termino; ESPEC §10).
+  Antes de la revisión hacen falta las copias de la laptop (`data\` y `DESDE_DEV.md`, abajo).
 - **De la mudanza (§6):**
   - **`DESDE_DEV.md` no viajó** (§6): copiarlo desde la laptop (el operador) y comprobar su md5 LF
     `67a2a6bc5d2bd96cf384f46ad8dc6c80` (860 líneas) antes de añadir nada. El operador ya aprobó que, tras cada entrada,

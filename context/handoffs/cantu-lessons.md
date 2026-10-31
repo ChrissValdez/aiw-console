@@ -13,12 +13,15 @@
 ## Dónde estamos (2026-10-31, 00:05)
 
 - **Sin runs (D-083).** El tablero es la **«Galería de lecciones»**: la plataforma de revisión, y cuando el operador dice
-  «la galería» es ella entera. El trabajo va por tickets RW, y el siguiente libre es **RW-72**.
+  «la galería» es ella entera. El trabajo va por tickets RW, y el siguiente libre es **RW-73**.
   `cantu-lessons/roadmap/roadmap.json` está congelado como historia, y ninguna respuesta abre con la línea del run.
 - **Desde el 31-oct (00:32) se revisa por lección,** en orden y por tandas, con L01 de piloto. Es un ticket corrector de
   web y uno de slide por tanda. Está en el contrato de la cabina, «Revisar por lección», y el mensaje del operador en el
-  veredicto. **El próximo ticket es el corrector de la web de L01,** y se escribe y se lanza cuando el operador diga
-  «L01 revisada».
+  veredicto. **El próximo ticket es el corrector de la web de L01 (RW-73),** y se escribe y se lanza cuando el operador
+  diga «L01 revisada».
+- **RW-72 corre desde el 31-oct, 15:10:** una investigación de un servidor 24/7 (el operador: «Es una duda abre un
+  ticket aparte»). No instala ni compra nada, y su informe irá en `docs/informes/RW-72.md`. La decisión toca a todas
+  las cabinas, así que irá a `DECISIONES.md` con la palabra del operador.
 - **Las 29 lecciones, de L01 a L29** (RW-66), con **29 webs y 29 slides** compiladas. La última que faltaba era la slide
   de L12 (antes L11B), escrita el 30-oct en la ronda 2 de RW-68.
 - **La normalización que pidió el operador está hecha:** la numeración, los estados, la slide de L12 y las galerías
@@ -31,7 +34,8 @@
   | `projects/cantu-revisiones` | `3e5415a` |
   | `projects/aiw-console` | el commit de este relevo |
 
-- **Ningún taller trabaja.** Siguen activas, esperando al operador, las sesiones de RW-59, RW-60, RW-61, RW-64 y RW-68.
+- **Trabaja RW-72** (desde el 31-oct). Siguen activas, esperando al operador, las sesiones de RW-59, RW-60, RW-61,
+  RW-64 y RW-68.
   Las de los tickets cerrados están archivadas.
 
 ## Cómo se trabaja ahora

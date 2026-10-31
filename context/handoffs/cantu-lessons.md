@@ -121,6 +121,7 @@ lección».
 | RW-31 a RW-33 | el plan de fracciones de L17 | en espera | la aprobación de la web de L16, que está en la galería de RW-64 |
 | RW-67 | compilar solo lo que cambió, en paralelo y con sus miniaturas | el taller trabaja en `_scratch/RW-67/cantu-lessons`, rama `rw-67-compilar` | su entrega; al integrarla, que la compilación llame a `publicar-paginas.mjs` |
 | RW-68 | la slide de L12 (antes L11B) | galería publicada: 8 vistas (`bd06fee`) | el voto |
+| RW-70 | un botón en la galería para traer lo nuevo y recargar, y `renumerar.mjs` sin opciones | el taller trabaja en `_scratch/RW-70/{cantu-lessons,cantu-revisiones}`, rama `rw-70-traer` | su entrega; la cabina integra y pasa a `tools/revision/README.md` el texto de su informe |
 
 - **El orden de voto que recomendó la cabina:** primero RW-60, porque su color cambia los cálidos de RW-61 y de RW-59.
   Después, los mazos de L03 a L08, RW-61 y RW-64.
@@ -133,7 +134,10 @@ lección».
 - **RW-62** (el tablero por lección, con RW-57; `cantu-lessons` `bb7cc21`) y **RW-63** (una sola galería, por lección;
   `cantu-revisiones` `b4db0bf`), integrados el 2026-10-30.
 - **RW-69** (la galería igual en la laptop; `cantu-lessons` `935a659`, `cantu-revisiones` `e591e92`; páginas publicadas
-  `dffdac0`), integrado el 2026-10-30. Su copia de trabajo ya se quitó.
+  `dffdac0`), integrado el 2026-10-30. Su copia de trabajo ya se quitó y su sesión está archivada. El operador lo probó
+  en la laptop (`LAPTOP-PF6SOUAS`): dos dobles clics, 57 páginas publicadas, 19 carpetas renombradas.
+- **Archivar los tickets que terminan** (el operador, 2026-10-30): es regla del contrato. La sesión «Lecciones cabina
+  setup» (el arranque a medias del 29-oct) también está archivada.
 - **RW-65** (la plataforma única de revisión; `cantu-revisiones` `6522562`, `cantu-lessons` `70fff6f`), integrada el 2026-10-30. Las copias de trabajo de RW-62, RW-63 y RW-65 ya se quitaron.
 
 - **RW-54** (el servidor de las galerías), **RW-55** (el riel de L02·D9), **RW-56** (el botón

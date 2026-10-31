@@ -49,6 +49,20 @@ los tickets no los lances en cabina lanzalos en su propia conversacion anidada c
 - **Si el turno lo abrió un aviso automático**, como el de un taller que terminó, la app no deja lanzar: el ticket va como
   tarjeta, y la cabina lo lanza en el siguiente turno del operador si él no la pulsó.
 
+## Archivar los tickets que terminan (el operador, 2026-10-30)
+
+*«ademas de esto cuando puedas archiva los ticekts que ya no son necesario mantener activos / siempre que acabe de
+ejecutarse un ticket revisa y archiva en la lista de tickets cuales ya se pueden archivar para no acumular tickets»*.
+
+- **Cada vez que un taller termina,** la cabina revisa la lista de sesiones de los tickets
+  (`list_sessions` con `linked: true`) y archiva las que ya no hacen falta. Eso incluye las integradas y cerradas, y
+  las que quedaron a medias y ya no sirven. Después se lo dice al operador, en una línea.
+- **Siguen activas** la que trabaja y las que esperan un voto o una revisión del operador, porque el taller procesa ese
+  voto.
+- **Antes de archivar,** la cabina mira lo último de esa sesión (`list_events`): que no espere nada del operador. Si
+  tiene Remote Control encendido, lo apaga primero (`set_remote_control`), porque si no la app no la archiva.
+  Archivar se puede deshacer.
+
 ## Dónde vive todo, y por qué
 
 **Esta carpeta es `projects/aiw-console/context/cabinas/lecciones/`.** Decisión del operador, 2026-10-28: la

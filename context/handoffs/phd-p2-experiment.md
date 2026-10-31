@@ -90,9 +90,14 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 - **Los runs `#1` a `#28` están cerrados** (2026-10-31, 06:57 UTC): 28 de 28 `completed`, ninguno activo. Con el
   `#28` queda completa **O6.P1**: los tres brazos de RQ3 existen y se comparan sobre las mismas oportunidades. O5
-  terminó: el arnés juega las cuatro condiciones de la ESPEC §3.3. Lo siguiente es **O6.P2**, la exportación ciega
-  para los codificadores (sin run todavía), y al cerrarla, la **parada de revisión** de §1. Abajo, del más nuevo al
-  más viejo, la historia de `#28`, `#27`, `#26`, `#25`, `#24`, `#23`, `#22`, `#21` y `#20`.
+  terminó: el arnés juega las cuatro condiciones de la ESPEC §3.3. El **`#29` «Build the blind export for human
+  coders: the same rubric and opportunities as PAF in a per-coder packet, shuffled and free of the condition, the
+  verdicts and the other coder, with the filled sheets read back as a record of their own arm» está `active`** en
+  **O6.P2** (`RUN-P2-CODER-EXPORT-001`; creado y activado por la consola sin preguntar, 07:01–07:02 UTC; md5
+  `c30aaf6e…` → `2ae6516c…` → `45169ad6…`; commit `db16292`), con su ticket escrito; su taller espera la palabra de
+  Chris (el límite de la app de §1). Sin modelo: 0 llamadas. Es el último run antes de la **parada de revisión** de
+  §1. Abajo, del más nuevo al más viejo, la historia de `#28`, `#27`, `#26`, `#25`, `#24`, `#23`, `#22`, `#21` y
+  `#20`.
 - **`#28` «Build the RQ3 direct judge: one strong model with the same rubric and trace that decides every opportunity
   at once, without PAF's steps or validations» se cerró** sin QA humana, como dice su texto.
   - **Creado** al final de O6.P1, tras el `#27` (commit `fe6c9d8`). Taller «Taller #28: juez directo»,

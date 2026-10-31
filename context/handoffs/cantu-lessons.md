@@ -19,9 +19,10 @@
   web y uno de slide por tanda. Está en el contrato de la cabina, «Revisar por lección», y el mensaje del operador en el
   veredicto. **El próximo ticket es el corrector de la web de L01 (RW-73),** y se escribe y se lanza cuando el operador
   diga «L01 revisada».
-- **RW-72 corre desde el 31-oct, 15:10:** una investigación de un servidor 24/7 (el operador: «Es una duda abre un
-  ticket aparte»). No instala ni compra nada, y su informe irá en `docs/informes/RW-72.md`. La decisión toca a todas
-  las cabinas, así que irá a `DECISIONES.md` con la palabra del operador.
+- **RW-72 corre desde el 31-oct, 16:20, como agente de fondo de la cabina:** una investigación de un servidor 24/7 (el
+  operador: «Es una duda abre un ticket aparte»). Por Remote Control la app no dejó abrir su sesión, y el operador
+  dijo «Hazlo aquí mejor ese ticket». No instala ni compra nada, y su informe irá en `docs/informes/RW-72.md`. La
+  decisión toca a todas las cabinas, así que irá a `DECISIONES.md` con la palabra del operador.
 - **Las 29 lecciones, de L01 a L29** (RW-66), con **29 webs y 29 slides** compiladas. La última que faltaba era la slide
   de L12 (antes L11B), escrita el 30-oct en la ronda 2 de RW-68.
 - **La normalización que pidió el operador está hecha:** la numeración, los estados, la slide de L12 y las galerías
@@ -30,11 +31,11 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `8b7a07b` |
+  | `projects/cantu-lessons` | `93b24dc` |
   | `projects/cantu-revisiones` | `3e5415a` |
   | `projects/aiw-console` | el commit de este relevo |
 
-- **Trabaja RW-72** (desde el 31-oct). Siguen activas, esperando al operador, las sesiones de RW-59, RW-60, RW-61,
+- **Trabaja RW-72** (desde el 31-oct, 16:20, como agente de fondo: no deja sesión que archivar). Siguen activas, esperando al operador, las sesiones de RW-59, RW-60, RW-61,
   RW-64 y RW-68.
   Las de los tickets cerrados están archivadas.
 

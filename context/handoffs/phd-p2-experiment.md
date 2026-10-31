@@ -88,16 +88,54 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 ## §3 · Estado, medido el 2026-10-30
 
-- **Los runs `#1` a `#28` están cerrados** (2026-10-31, 06:57 UTC): 28 de 28 `completed`, ninguno activo. Con el
-  `#28` queda completa **O6.P1**: los tres brazos de RQ3 existen y se comparan sobre las mismas oportunidades. O5
-  terminó: el arnés juega las cuatro condiciones de la ESPEC §3.3. El **`#29` «Build the blind export for human
-  coders: the same rubric and opportunities as PAF in a per-coder packet, shuffled and free of the condition, the
-  verdicts and the other coder, with the filled sheets read back as a record of their own arm» está `active`** en
-  **O6.P2** (`RUN-P2-CODER-EXPORT-001`; creado y activado por la consola sin preguntar, 07:01–07:02 UTC; md5
-  `c30aaf6e…` → `2ae6516c…` → `45169ad6…`; commit `db16292`), con su ticket escrito; su taller espera la palabra de
-  Chris (el límite de la app de §1). Sin modelo: 0 llamadas. Es el último run antes de la **parada de revisión** de
-  §1. Abajo, del más nuevo al más viejo, la historia de `#28`, `#27`, `#26`, `#25`, `#24`, `#23`, `#22`, `#21` y
-  `#20`.
+- **Los runs `#1` a `#29` están cerrados** (2026-10-31, 21:44 UTC): 29 de 29 `completed`, ninguno activo. **O6
+  terminó**, y con él todo lo que la ESPEC pide construir antes del piloto (§11, pasos 1 a 6). **Estamos en la parada
+  de revisión de §1:** ningún run de O7 se abre sin la revisión de Chris; la cabina arma el paquete de §4. Abajo, del
+  más nuevo al más viejo, la historia de `#29`, `#28`, `#27`, `#26`, `#25`, `#24`, `#23`, `#22`, `#21` y `#20`.
+- **`#29` «Build the blind export for human coders: the same rubric and opportunities as PAF in a per-coder packet,
+  shuffled and free of the condition, the verdicts and the other coder, with the filled sheets read back as a record
+  of their own arm» se cerró** sin QA humana, como dice su texto.
+  - **Creado** en O6.P2, que estaba vacía (07:01–07:02 UTC; md5 `c30aaf6e…` → `2ae6516c…` → `45169ad6…`; commit
+    `db16292`). Taller «Taller #29: exportación ciega para codificadores»,
+    `local_3e872f20-530d-4389-91da-baea938d72f3`, lanzado a las 20:45 UTC con el «Lánzalo» de Chris y archivado al
+    cerrar (Remote Control apagado antes).
+  - **Entrega** (commit `2778b17`, 20 ficheros): el paquete `p2exp.export` (`make` y `read`, modos prueba y estudio),
+    fuera del tutor; el guard (l) fija sus fronteras.
+    - Cada codificador recibe solo su paquete, en español: `LEEME.md` (instrucciones), `rubrica.md` (texto de cada
+      criterio con sus lecturas, reglas de la política, composición en palabras, N y K con su valor; sin la parte
+      estructurada) y por traza un documento Markdown con registros y eventos, y tras cada mensaje del tutor el
+      bloque de sus oportunidades, más una hoja CSV de diez columnas (cinco por llenar: `aplica`, `violacion`,
+      `nivel`, `eventos_de_apoyo`, `nota`).
+    - Las oportunidades son las de PAF. Trazas barajadas por codificador desde una semilla, etiquetas `T01…Tn`; la
+      correspondencia va en un manifiesto fuera del paquete (`sealed/coders/<export_id>/manifest.json`).
+    - Un barrido de cada byte antes de escribir garantiza que el paquete no lleva condición, envoltura, vocabulario
+      de registros, manifiesto ni nada del otro codificador.
+    - La lectura de vuelta da `p2-coder-record-v1` con `arm: human_coder` y `coder_id`; una celda ilegible queda Not
+      Evaluable sin adivinar; la agregación y la comparación van por brazo.
+    - Modo estudio negado con N `null`. Los tres brazos, iguales por hash. 92 ítems nuevos, vistos en rojo con 66
+      siembras. Contrato: `docs/contracts/coder-export.md`.
+  - **Muestra** sobre las siete trazas de depuración, dos codificadores, N = 2: 16 ficheros y 52.464 bytes por
+    codificador, 144 oportunidades; el codificador simulado (las llaves) lee de vuelta 144/144 y 96/96. 0 llamadas
+    de modelo.
+  - **Verificación de la cabina:** 20 ficheros, todos dentro del alcance, 0 CR. Regeneró la muestra en su carpeta y
+    la leyó de vuelta con el **otro** codificador (`cod-b`; el taller usó `cod-a`): 144/144 y 96/96. Barrido propio
+    de fugas en los dos paquetes: 0 trace_id, 0 nombres de condición o ablación, 0 vocabulario de registros, 0 del
+    otro codificador, 0 celdas llenas en las hojas en blanco; los dos «veredicto/verdict» que aparecen son texto de
+    la rúbrica (el nombre de R5-C1 y una ruta citada en una lectura). Mismo contenido en los dos paquetes, en distinto
+    orden. Sembró una celda ilegible (Not Evaluable, `unreadable_cell`, con su motivo) y una referencia posterior
+    (guardada aparte, no decide). Modo estudio y raíz dentro del repo, negados sin escribir nada. Suite **4423
+    passed**, 1 skipped, 26 deselected; pruebas nuevas y guards 909 passed; `paf_agreement.py` 144/144 en los cinco
+    brazos simulados; 0 `w/crlf`. Cierre: commit `eaeb9d4`, solo `status` y `closeout_result`; md5 `45169ad6…` →
+    `4b5b54d7…`.
+  - **Abiertas, del paper y de Chris** (informe §8):
+    - **«Solo lo anterior»** se dispone en el documento y se instruye, no se garantiza por construcción. La
+      alternativa (un documento por evento del tutor, como el juez) repite cada prefijo. Recomendación: dejarlo así
+      para el piloto y medir allí si los codificadores lo respetan.
+    - **Las lecturas de la rúbrica de depuración** llegan a los codificadores como están: nombran al evaluador o al
+      controlador y citan rutas del repositorio y runs. Recomendación (la misma del `#27`): que las lecturas de la
+      rúbrica del estudio estén escritas para quien codifica, sin nombrar el procedimiento ni citar el repositorio.
+    - **Cuántos codificadores, qué muestra y qué índice de acuerdo** son de Chris (D-turnos, D-4.21, D-evaluadores),
+      antes de la corrida de validación.
 - **`#28` «Build the RQ3 direct judge: one strong model with the same rubric and trace that decides every opportunity
   at once, without PAF's steps or validations» se cerró** sin QA humana, como dice su texto.
   - **Creado** al final de O6.P1, tras el `#27` (commit `fe6c9d8`). Taller «Taller #28: juez directo»,

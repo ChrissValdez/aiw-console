@@ -1,246 +1,208 @@
 # HANDOFF — hilo `cantu-lessons` (LECCIONES)
 
-> **Cuarto relevo de este hilo.** Lo escribió la cabina el **2026-10-29** en la PC (`DESKTOP-525K0IS`), al cerrar la
-> primera sesión en Claude Code (el piloto, del 2026-10-28 a las 23:19 al 2026-10-29 a las 08:55, hora de CDMX).
-> Sustituye al relevo del 2026-10-28 (escrito en la laptop). El bloque de septiembre que ese relevo llevaba dentro se
-> revisó contra el disco: lo vigente está aquí, y lo que salió va al final con el porqué.
+> **Quinto relevo de este hilo.** Lo escribió la cabina el **2026-10-31 a las 00:05** en la PC (`DESKTOP-525K0IS`), antes
+> de que el operador compactara la conversación de la cabina (la que abrió el 2026-10-29). Sustituye al cuarto relevo
+> (2026-10-29, con añadidos del 30; está en git, `aiw-console` `f118fed`, con la tabla de lo que salió del relevo de
+> septiembre).
 >
 > **Todo lo de aquí está medido y lleva fecha. Contrástalo contra el disco al abrir. Gana el disco.**
 >
-> **La cabina abre leyendo enteros** `context/cabinas/lecciones/CLAUDE.md` y `context/cabinas/REGLAS-DE-CABINA.md`.
-> Medido el 2026-10-28: la app abrió la sesión en `AIW_Workspace` y no en `context/cabinas/lecciones/`, así que el
-> `CLAUDE.md` **no se cargó solo**; los leyó porque lo pedía el mensaje de arranque del operador. El veredicto del piloto
-> sobre ese `CLAUDE.md` está al lado: `context/cabinas/lecciones/VEREDICTO-PILOTO-2026-10-28.md`.
+> **La cabina abre leyendo enteros** `context/cabinas/lecciones/CLAUDE.md` y `context/cabinas/REGLAS-DE-CABINA.md`. La
+> app abre la sesión en `AIW_Workspace`, así que ese `CLAUDE.md` **no se carga solo**.
 
-## Dónde estamos
+## Dónde estamos (2026-10-31, 00:05)
 
-- **La cabina corre en Claude Code, en la PC, y publica ella misma.** La prueba del push pasó el 2026-10-28 a las 23:20:
-  Git Credential Manager pone la credencial sin preguntar (`401` y luego `200 OK` en `git-receive-pack`). Pushes reales
-  de esta sesión: `cantu-lessons` `5b15678` y `8004ff4`, `cantu-revisiones` `956bccb`, `aiw-console` `b9e75d9` y el
-  commit de este relevo.
-- **HEAD al cerrar** (2026-10-29 08:54; en todos, HEAD = `origin/main` y el árbol limpio):
+- **Sin runs (D-083).** El tablero es la **«Galería de lecciones»**: la plataforma de revisión, y cuando el operador dice
+  «la galería» es ella entera. El trabajo va por tickets RW, y el siguiente libre es **RW-72**.
+  `cantu-lessons/roadmap/roadmap.json` está congelado como historia, y ninguna respuesta abre con la línea del run.
+- **Las 29 lecciones, de L01 a L29** (RW-66), con **29 webs y 29 slides** compiladas. La última que faltaba era la slide
+  de L12 (antes L11B), escrita el 30-oct en la ronda 2 de RW-68.
+- **La normalización que pidió el operador está hecha:** la numeración, los estados, la slide de L12 y las galerías
+  completas con «Hoy» (RW-71).
+- **HEAD** (en los tres, HEAD = `origin/main` y el árbol limpio):
 
-  | repo | sha | nota |
-  |---|---|---|
-  | `projects/cantu-lessons` | `8004ff4` | |
-  | `projects/cantu-revisiones` | `956bccb` | estrenado en esta sesión |
-  | `projects/aiw-console` | el commit de este relevo | después de `b9e75d9` |
-  | `aiw`, `Acervo`, `PHD`, `cantu-quizzes-latex`, `cantu-studio`, `phd-p2-experiment` | el de la laptop (`repos-laptop.tsv`) | `cantu-studio` con `M tools/studio/editor-ui/package-lock.json`, de su hilo |
+  | repo | sha |
+  |---|---|
+  | `projects/cantu-lessons` | `8b7a07b` |
+  | `projects/cantu-revisiones` | `3e5415a` |
+  | `projects/aiw-console` | el commit de este relevo |
 
-- **La mudanza NO está verificada.** Medido el 2026-10-28 entre las 23:22 y las 23:45:
-  - el `comparar` de ficheros da **NO**: faltan 10 499, **ninguno versionado**. Lo que difiere es casi todo CRLF contra
-    LF; solo 94 ficheros difieren de verdad, y son de otros hilos;
-  - el de repos da NO solo por las dos diferencias esperadas;
-  - el build de L02 `--slide` sale **VERDE**, después del `npm ci` de `tools/render`.
+- **Ningún taller trabaja.** Siguen activas, esperando al operador, las sesiones de RW-59, RW-60, RW-61, RW-64 y RW-68.
+  Las de los tickets cerrados están archivadas.
 
-  Leyendo las cifras, la PC no se rehízo con la copia entera de la laptop: es su workspace de antes, con los repos al día
-  por git y `_scratch`, `Dieta_Chris` y `Acervo` copiados encima. El detalle está en el veredicto de `cantu-lessons`
-  («La cabina, ya en la PC y en Claude Code…»).
-- **Falta que el operador copie de la laptop** lo de `_scratch/cabina/mudanza/faltan-en-la-pc.txt`:
-  - `cantu-lessons/fuentes/`: 13 ficheros, 18,4 MB. Son evidencia y nunca entran a git, así que **solo existen allí**;
-  - `PHD/Paper 2/`: `00_HANDOFFS/DESDE_DEV.md` y `HANDOFF_P2.md`, con cambios sin commitear en la laptop, y 35 ficheros
-    sin seguimiento;
-  - `phd-p2-experiment/data/manual/`, `Claude outputs/`, `_demos/`, `.claude/launch.json` y
-    `PARADA-MONTAJE-MAQUINA-NUEVA.md`.
+## Cómo se trabaja ahora
 
-  `_backups` no se copia (D-081). Lo de `cantu-quizzes-latex` (1 617) lo decide su hilo. Decisión del operador al
-  cerrar: «Cierra ya»; **cuando copie, la cabina vuelve a correr el `comparar` y añade el resultado al veredicto.**
-- **Cómo se vuelve a verificar:**
-  1. Los pasos 6 y 7 de `_scratch/cabina/mudanza/README.md`.
-  2. Las tres sondas de esta sesión, en `_scratch/cabina/mudanza/sondas/`:
-     - `analizar-mudanza.mjs`: por carpeta, y si lo que difiere es solo CRLF/LF;
-     - `clasificar-git.mjs`: si lo que falta está en HEAD, ignorado o suelto;
-     - `eol-contra-head.mjs`: si el tamaño de la laptop sale del blob de HEAD.
+**La Galería de lecciones** (`cantu-revisiones`):
+- **Se abre con `cantu-revisiones/abrir-galeria.cmd`** en `http://127.0.0.1:8791/`. **El 8791 es del operador:** la
+  cabina no lo toca ni lo para; sus pruebas van en otro puerto (8799 suele estar libre), paradas por PID.
+- **El botón trae los dos repos** (`cantu-lessons`, solo si está limpio y en `main`). Corre `renumerar.mjs` primero en
+  simulación y arranca el servidor en un hilo (`servidor/arranque.mjs`). Con Enter, publica los votos.
+- **«Traer lo nuevo»** (RW-70) es un botón de la barra. Trae lo nuevo sin cerrar la ventana, publica los votos y recarga
+  la misma vista.
+- **Cada lección tiene sus pestañas:** Guion web y Guion slide, que son sus galerías; Lección web y Lección slide, que
+  abren aparte; e Historial.
+  - Donde una galería de ticket trae opciones, sale su vista.
+  - Donde no, la vista **«Hoy»** (RW-71), con sus votos en `galerias/HOY/respuestas.json`.
+  - **Tras cada pull, la cabina lee los ~ y ✗ de «Hoy»:** le tocan a ella, y van a la bandeja o a un ticket.
+- **Los votos:** «✓ Se queda · ~ Referencia · ✗ Fuera», con una sola ✓ por slide o sección. Una con una sola ✓ y sin
+  opciones nuevas se escribe en la lección. Está en `MOLDE-DE-GALERIA`: «Los votos…» y «La vista «Hoy»».
+- **En la laptop** (`LAPTOP-PF6SOUAS`) se ven las páginas que la cabina publica en `cantu-revisiones/lecciones/`, sin
+  compilar. El operador lo probó el 30-oct.
+  - El Historial dice «historial sin leer».
+  - **Su ventana abierta es de antes de RW-70:** con Enter y otro doble clic le llegan «Traer lo nuevo» y «Hoy».
 
-     Cada una lleva su uso en la cabecera.
-  3. **El criterio:** todo lo de la lista está en la PC con su tamaño. El resto del NO tiene que tener explicación:
-     finales de línea, salidas que el build regenera, o cosas de otros hilos.
-- **La laptop sigue congelada** hasta que la copia esté verificada.
-- **Sin runs (D-083, 2026-10-30):** este hilo ya no trabaja con runs ni con la consola de *features*. Su tablero es la
-  «Galería de lecciones» (la plataforma de revisión), y el trabajo va por tickets RW. `cantu-lessons/roadmap/roadmap.json` queda congelado como
-  historia, y ninguna respuesta abre con la línea del run.
+**Compilar y publicar** (`cantu-lessons`):
+- **`node tools/revision/build.mjs --todas --sin-git`** (RW-67) compila solo lo que no está al día, 3 a la vez, y pinta
+  las miniaturas. Sin cambios tarda 0,8 s; todo, unos 15 min. `--simular` dice antes qué compilaría. Una corrida a la
+  vez por checkout.
+- **Tras compilar, la cabina publica para la laptop:**
+  1. `node tools/revision/publicar-paginas.mjs [Lnn…]`;
+  2. en `cantu-revisiones`, `git add -- lecciones`, commit por ruta y push.
 
-## Lo que se hizo en esta sesión
+  Que lo haga solo el build está en la bandeja, con la duda 7 de RW-67.
+- **Los estados**, con `node tools/revision/estado.mjs <Lnn> <guion|leccion|slide> <estado>`. Lo que no se deduce va en
+  `lecciones/tablero.json`, que escribe **solo la cabina**. Después, `node tools/revision/tablero.mjs`.
+- **La numeración:** la tabla de antes a hoy está en `docs/referencias/NUMERACION-DE-LECCIONES.md`. La historia
+  (veredicto, informes, tickets de antes) usa los códigos viejos.
 
-- **Las decisiones del operador**, verbatim en el veredicto de `cantu-lessons`: «Sí, las cinco» y «Cierra ya».
-- **`cantu-revisiones`, estrenado:** el README con la estructura (`galerias/<ticket>/`, `lecciones/<Lnn-slug>/`,
-  `servidor/`) y el ciclo (el taller escribe, la cabina publica, el operador hace pull, vota y push), más un `.gitignore`.
-  Es privado.
-- **`MOLDE-DE-GALERIA` v3 y `TALLER-COMUN` v8:** la galería va en `cantu-revisiones/galerias/<ticket>/`, y al cerrar
-  cada ticket `respuestas.json` se copia a `cantu-lessons/docs/informes/<ticket>.respuestas.json`.
-- **Ticket RW-54**, el servidor de las galerías, en `docs/encargos/REVISION-WEB-TICKETS.md`. Va con Opus 5.5 extra: la
-  cabina dijo «alto» en el chat y se corrigió por la tabla de `TALLER-COMUN` §8.
-- **La enmienda a D-081:** lo que por regla no entra a git se copia a mano y se verifica con el manifiesto.
-- **Borrado** `AIW_Workspace\_cabina-lecciones\`, que estaba vacía. **`npm ci`** en `cantu-lessons/tools/render`.
+**Los tickets:**
+- **La cabina escribe el ticket** en `docs/encargos/REVISION-WEB-TICKETS.md`, lo publica y **lo lanza sin preguntar**
+  como sesión anidada (`start_session`). Solo pregunta antes de una decisión altamente crítica. Contrato, «Lanzar
+  tickets».
+- **Si la herramienta toca `tools/` o la galería,** el taller trabaja en worktrees que le prepara la cabina
+  (`_scratch/RW-xx/<repo>`, rama `rw-xx-…`). Hace commit en su rama con identidad explícita, sin push ni merge.
+- **La cabina integra:** revisa, `merge --no-ff -F <fichero>`, push, quita el worktree y borra la rama.
+- **En un turno abierto por un aviso automático, o con el operador en Remote Control,** la app no deja abrir sesiones.
+  - Si el turno lo abrió un aviso: tarjeta (`own_initiative`).
+  - Si el operador escribe por Remote Control: que pulse la tarjeta desde la PC. Si pide «hazlo aquí», va como agente de
+    fondo de la cabina. Así corrió RW-71.
+- **Al terminar cada taller, la cabina archiva las sesiones que ya no hacen falta** (el operador, 30-oct). Antes mira
+  `list_events` y apaga el Remote Control. Las que esperan un voto siguen activas.
 
-## En vuelo (puesto al día el 2026-10-30 a las 17:30)
+**Git:**
+- **Credenciales:** `GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never` en lo que va a la red. Si algo pide credenciales, se
+  para y se da el error literal.
+- **El índice:** `--no-optional-locks` para leer; `add` por nombre; identidad con `-c`, nunca escrita en
+  `.git/config`.
+- **`aiw-console` es de todas las cabinas:**
+  - commit siempre con `-- <ruta>`;
+  - después, `git log origin/main..HEAD` en una llamada aparte: si hay commits ajenos, no se empuja;
+  - push por sha: `git push origin <sha>:refs/heads/main`.
+- **Los finales de línea:** en `cantu-lessons`, el veredicto, los tickets, `tablero.json`, los README, el molde y
+  TALLER-COMUN están en CRLF; la bandeja y este relevo, en LF. Se miden con node, porque grep y sed de Git Bash no ven el
+  `\r`. Se escriben con scripts de node que conservan el final de línea, no con heredocs.
 
-**Para orientarse, el tablero:** `cantu-lessons/lecciones/index.html` tiene las 29 lecciones, con la columna
-«Pendientes», y cada lección tiene su tablero, con su estado, lo que está en curso, sus decisiones y su historial
-(RW-62). Lo que no se deduce vive en `lecciones/tablero.json`, que escribe **solo la cabina**: un renglón por ticket o
-decisión, y luego `node tools/revision/tablero.mjs`. Cómo hacerlo está en `tools/revision/README.md`, «El tablero por
-lección».
-
-**La numeración (RW-66, integrado el 2026-10-30):** las 29 lecciones van de L01 a L29, seguidas y sin «B».
-- La tabla de antes a hoy está en `cantu-lessons/docs/referencias/NUMERACION-DE-LECCIONES.md`.
-- **La historia** (veredictos, informes y tickets anteriores) usa los códigos de antes, y el tablero y la plataforma la traducen.
-- **En un aparato nuevo,** el botón de la galería trae `cantu-lessons` y corre `renumerar.mjs`, primero en simulación,
-  para renombrar las carpetas de `lecciones/` (RW-69). Ojo: a mano y sin opciones, `renumerar.mjs` puede tocar variantes
-  que ya citan códigos de hoy (informe RW-69, §3; en la bandeja).
-- **Ninguna lección sin estado:** L10, L22 y L26 pasaron a «En revisión». «En revisión» lleva un borde gris, para el daltonismo leve del operador.
-
-
-**Para votar y para orientarse, una sola plataforma (RW-65, integrada el 2026-10-30):**
-- **Se abre con `cantu-revisiones/abrir-galeria.cmd`**, en `http://127.0.0.1:8791/`. Tiene servidor, así que cada voto se guarda al momento.
-- **El inicio** muestra las 29 lecciones con lo que le espera al operador.
-- **Cada lección tiene sus pestañas:** Resumen, Guion web (con ✓ ~ ✗ por variante, en `guiones-web/respuestas.json`), Guion slide (su galería), Lección web, Lección slide e Historial.
-- **Los tickets no se ven.** Los talleres siguen armando sus galerías por ticket.
-- **Pulida con el operador en dos rondas más** (`cantu-revisiones` `0cd35c2`, `cantu-lessons` `3fe5d21`):
-  - el inicio es la tabla por área, con el diseño de dentro;
-  - ya no hay pestaña Resumen, y Lección web y Lección slide abren aparte;
-  - el guion web tiene un solo formato, el de galería;
-  - los guiones enseñan la lección entera en miniatura, con la marca de cada slide o sección.
-- **Compilar (RW-67, integrado el 2026-10-30):** `node tools/revision/build.mjs --todas --sin-git` compila solo las piezas
-  que no están al día, 3 a la vez, y al terminar pinta sus miniaturas. Sin cambios tarda 0,7 s, y todas, unos 15 min.
-  `--simular` dice antes qué compilaría. Una corrida de `build.mjs` a la vez por checkout (TALLER-COMUN §5).
-- **La galería, igual en la laptop (RW-69, integrado el 2026-10-30):** el botón trae los dos repos, y la galería enseña de
-  cada pieza la más nueva: la compilada en ese aparato o la publicada en `cantu-revisiones/lecciones/`. **Tras compilar y
-  pintar las miniaturas, la cabina publica:** `node tools/revision/publicar-paginas.mjs` en cantu-lessons (solo copia lo
-  que cambió), y en cantu-revisiones `git add -- lecciones`, commit por ruta y push. La primera publicación, de las 29
-  lecciones, es `dffdac0` (600 ficheros, unos 6 MB en git). La primera vez en la laptop van dos dobles clics. Allí no
-  salen el historial de versiones ni la revisión de la slide de antes de las galerías. Que la compilación publique sola
-  está en la bandeja, con la duda 7 de RW-67: el sitio está marcado en `build.mjs`.
-- **«Traer lo nuevo» (RW-70, integrado el 2026-10-30):** es un botón en la barra de la galería. Trae los dos repos con
-  `abrir-galeria.ps1 -SoloTraer`, publica los votos pendientes y recarga la misma vista. Si llega código nuevo de la
-  galería, vuelve a arrancar sola en un hilo del mismo proceso. Sale desde el siguiente doble clic del botón.
-- **Los votos** se llaman «✓ Se queda · ~ Referencia · ✗ Fuera», con una sola ✓ por slide o sección. Una con una sola
-  ✓ y sin opciones nuevas se escribe en la lección (`MOLDE-DE-GALERIA`, «Los votos, y cuándo se escribe en la lección»).
-- **Al cerrar un ticket**, su galería se marca con `galerias/<ticket>/estado.json` y no se quita.
-- **La vista «Hoy» (RW-71, integrado el 2026-10-30):** cada sección o slide sin opciones en ninguna galería se abre con
-  «Hoy» (276 vistas). Sus votos van a `cantu-revisiones/galerias/HOY/respuestas.json`. **Tras cada pull, la cabina lee
-  ahí los ~ y ✗**, que le tocan a ella (bandeja o ticket); al pie del inicio, «Para los talleres» los liga. Una ✓ deja la
-  sección decidida. Está en `MOLDE-DE-GALERIA`, «La vista «Hoy»». Con esto queda hecha la normalización que pidió el
-  operador: la numeración, los estados, la slide de L12 (por votar) y las galerías.
+## En vuelo: lo que espera al operador
 
 | ticket | qué | dónde va | qué espera |
 |---|---|---|---|
-| RW-59 | slides de L03 a L08 | todas las escenas aprobadas, escritas y en VERDE (`6a902a7`) | que el operador revise los 6 mazos enteros («Primero las reviso»); luego, cerrar: lo aprendido a la regla 41, el generador de su galería a `docs/moldes/RW-59/`, sus respuestas a `docs/informes/`, su galería marcada cerrada y los estados |
-| RW-60 | la paleta de los bordes de tarjeta | galería publicada: 7 slides, «Hoy» y 3 paletas al peso del Azul acero | el voto; el taller recomienda la 1, Ocre, y la cabina también |
-| RW-61 | slides de L09 a L26 (tanda 3) | galería publicada: 125 vistas, con la decisión S4 y los tres patrones en «Con el molde» | el voto; también su duda 1, las escenas de L11B que hay dentro de L11 |
-| RW-64 | la web de las 29 lecciones | galería publicada: 39 secciones por decidir (`966b658`) | el voto; no escribe borradores sin turno de la cabina, porque RW-61 escribe en los mismos |
+| RW-59 | slides de L03 a L08 | escenas aprobadas, escritas y en verde (`6a902a7`) | que el operador revise los 6 mazos («Primero las reviso»). Luego, cerrar: lo aprendido a la regla 41, el generador a `docs/moldes/RW-59/`, sus respuestas a `docs/informes/`, `estado.json` de su galería y los estados |
+| RW-60 | la paleta de los bordes de tarjeta | galería: 7 slides, «Hoy» y 3 paletas | el voto; el taller y la cabina recomiendan la 1, Ocre. Después, el barrido de bordes (su duda 7) |
+| RW-61 | slides de L09 a L29 (tanda 3) | galería: 125 vistas, con S4 y los patrones en «Con el molde» | el voto. Su duda 1: las escenas de L12 siguen dentro de la slide de L11, y hay que quitarlas (y la palabra «operar» de la portada de L11, duda 4 de RW-68). Antes de su próxima ronda, migra sus datos con `renumerar.mjs --traducir` |
+| RW-64 | la web de las 29 lecciones | galería: 39 secciones por decidir | el voto. No escribe borradores sin turno de la cabina (RW-61 escribe en los mismos). Su galería tiene unas 60 fotos con insignias de antes de RW-66: se arreglan en su próxima ronda |
+| RW-68 | la slide de L12 | **escrita** con lo que recomendó el taller (ronda 2, `c9410d6`), en verde, «En revisión», publicada (`3e5415a`) | el voto en su galería. Otra opción votada la reescribe desde `operar_en_notacion_cientifica.slide.variantes.json` |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
-| RW-68 | la slide de L12 (antes L11B) | galería publicada: 8 vistas (`bd06fee`) | el voto |
 
 - **El orden de voto que recomendó la cabina:** primero RW-60, porque su color cambia los cálidos de RW-61 y de RW-59.
-  Después, los mazos de L03 a L08, RW-61 y RW-64.
-- **Los votos de RW-59** (rondas 1 a 5) están publicados: la cabina hizo el commit (`26100f1`), porque la ventana del botón
-  se cerró sin Enter.
-- **La bandeja:** los comentarios sueltos del operador no abren ticket; van a `cantu-lessons/docs/encargos/BANDEJA.md`.
+  Después, los mazos de L03 a L08, RW-61, RW-64 y RW-68.
+- **Las dudas que quedaron con la recomendación del taller,** mientras el operador no diga otra cosa:
+  - **RW-70:** la barra crece una fila a 380 px; en la PC, «Traer lo nuevo» sale en ámbar.
+  - **RW-71:** una ✓ con comentario cuenta como decidida; un ~ o una ✗ sin comentario, como votada; L18 y L19 se
+    pueden votar; la carpeta se llama `HOY`.
 
-## Cerrado (2026-10-29 y 30)
+## Pendientes de la cabina
 
-- **RW-62** (el tablero por lección, con RW-57; `cantu-lessons` `bb7cc21`) y **RW-63** (una sola galería, por lección;
-  `cantu-revisiones` `b4db0bf`), integrados el 2026-10-30.
-- **RW-69** (la galería igual en la laptop; `cantu-lessons` `935a659`, `cantu-revisiones` `e591e92`; páginas publicadas
-  `dffdac0`), integrado el 2026-10-30. Su copia de trabajo ya se quitó y su sesión está archivada. El operador lo probó
-  en la laptop (`LAPTOP-PF6SOUAS`): dos dobles clics, 57 páginas publicadas, 19 carpetas renombradas.
-- **RW-67** (compilar sin frenar; `cantu-lessons` `ba52f04`) y **RW-70** («Traer lo nuevo»; `cantu-revisiones`
-  `430989f`, `cantu-lessons` `8fd045c`), integrados el 2026-10-30. Sus copias de trabajo ya se quitaron y sus sesiones
-  están archivadas. TALLER-COMUN §5 y el README de `tools/revision` quedaron al día (`dfe5abb`). La primera
-  compilación completa con RW-67: 57 piezas en 15 min 27 s; la siguiente, 0,8 s.
-- **RW-71** (las galerías completas, con «Hoy»; `cantu-revisiones` `ba0580e`, `cantu-lessons` `6064fcc`), integrado el
-  2026-10-30. Corrió como agente de fondo de la cabina, porque desde Remote Control la app no deja abrir sesiones (lo
-  pidió el operador: «Y podrías hacerlo aquí?»). Sus copias de trabajo ya se quitaron.
-- **Archivar los tickets que terminan** (el operador, 2026-10-30): es regla del contrato. La sesión «Lecciones cabina
-  setup» (el arranque a medias del 29-oct) también está archivada.
-- **RW-65** (la plataforma única de revisión; `cantu-revisiones` `6522562`, `cantu-lessons` `70fff6f`), integrada el 2026-10-30. Las copias de trabajo de RW-62, RW-63 y RW-65 ya se quitaron.
+- **La bandeja** (`cantu-lessons/docs/encargos/BANDEJA.md`), con lo abierto:
+  - que la compilación publique sola (duda 7 de RW-67);
+  - la regla de 3 en la web de L08 (necesita la palabra del operador);
+  - la guarda del ± de slide;
+  - `build.mjs --slide` a 1366 × 768;
+  - `studio.mjs` sin `--no-optional-locks`;
+  - los subtítulos de las slides;
+  - el ± en MathJax;
+  - las filas de slide de L03, L04, L06 y L07 en el registro;
+  - y las demás que tiene ahí.
+- **Las copias de los talleres en `lecciones/`:** son 60 carpetas fuera de `codigos.json` (L01W, L02P…), y `tablero.mjs`
+  las avisa. Quitarlas es limpieza que espera la palabra del operador.
+- **`renumerar.mjs --comprobar`** marca `galerias/RW-68` por 7 «B» en su texto («antes L11B»). Está así a propósito,
+  pero hay que decidir si la guarda lo admite o si se cambia el texto.
+- **El temario** (`temario/01-aritmetica.md`) tiene su propia numeración, que no coincide con los códigos.
+- **De relevos anteriores, sin volver a medir:**
+  - L20·D3 a las variantes de L20;
+  - el ticket de herramientas: las guardas de la regla 41 v62, las piezas del lote, las guardas de RW-45, las mutaciones
+    débiles, los nombres de consola y los `_generado` viejos de `lecciones/L02-…/`, que necesitan la palabra del
+    operador;
+  - probar `problema-slide` con más problemas;
+  - la pregunta de Moodle.
+- **La regla de archivar, pasada a otras cabinas** (el operador: «Sí, pásasela»): P2 contestó que ya la aplicaba;
+  Acervo no había contestado al cerrar.
+- `drafts/web/_pendiente-qa/casilla-2-operar-con-signos/` **no se borra**: es la etapa 2 de la regla 17. Sus scripts
+  están en `_scratch/_LEC_variantes5/`.
 
-- **RW-54** (el servidor de las galerías), **RW-55** (el riel de L02·D9), **RW-56** (el botón
-  `cantu-revisiones/abrir-galeria.cmd`, `a0c716a`) y la **regla 41 v63**.
-- **RW-58** (L02·D5, el ± y el aire del recuadro), en dos rondas: «D5 aprobada»; **regla 41 v64** (el ± de slide).
-- **Las slides de L01 y L02, «Aprobadas»** (`cantu-lessons` `3cba4fe`).
-- **El falso ROJO de la escala de letra**, arreglado en el `.gitattributes` (`9d67825`).
-- **D-082:** el cierre de todo mensaje con «Qué necesito de ti» y «Qué procede».
-- **La segunda enmienda a D-081:** en `aiw-console`, el commit va siempre con ruta.
-- **Las 29 lecciones, compiladas en la PC** (10:11–10:55): 52 compilaciones, sin rojos. El índice vuelve a listarlas
-  todas.
+## Cerrado (29 y 30 de octubre)
 
-## Pendientes
+| qué | dónde |
+|---|---|
+| RW-54 (el servidor), RW-55 (el riel de L02·D9), RW-56 (el botón), RW-58 (L02·D5, el ±) y la regla 41 v63–v64 | ver el veredicto |
+| las slides de L01 y L02, «Aprobadas» | `cantu-lessons` `3cba4fe` |
+| RW-62 (el tablero por lección) y RW-63 (una sola galería, por lección) | `bb7cc21`, `b4db0bf` |
+| RW-65 (la plataforma única, pulida en tres rondas) | `cantu-revisiones` `6522562`, `cantu-lessons` `70fff6f` |
+| RW-66 (L01 a L29 y los estados) | `cantu-lessons` `3195e1f`, `cantu-revisiones` `ce11878` |
+| RW-67 (compilar solo lo que cambió) | `cantu-lessons` `ba52f04`; la primera completa, 57 piezas en 15 min 27 s |
+| RW-69 (la galería en la laptop) | `935a659`, `e591e92`; páginas publicadas `dffdac0` |
+| RW-70 («Traer lo nuevo»; `renumerar.mjs` sin opciones) | `cantu-revisiones` `430989f`, `cantu-lessons` `8fd045c` |
+| RW-71 (las galerías completas, con «Hoy»; corrió como agente de la cabina) | `cantu-revisiones` `ba0580e`, `cantu-lessons` `6064fcc` |
+| el nombre «Galería de lecciones» | veredicto `02a3fdf`; contrato `f51bc43` |
+| D-082 (el cierre de cada mensaje) y D-083 (sin runs) | `aiw-console` `context/DECISIONES.md` |
 
-Del relevo del 2026-10-28; esta sesión no los volvió a medir:
+## Lo que el operador tiene que decidir (con la recomendación de la cabina)
 
-- L11 slide desde su web; L11B sin slide; L20·D3 a las variantes de L20. (L02·D9 ya se resolvió: RW-55.)
-- **El ticket de herramientas:** las guardas de la regla 41 v62, las piezas del lote, las guardas de RW-45, las mutaciones
-  débiles, nombres de consola, historial, y los `_generado` viejos de `lecciones/L02-…/` (no los creó la cabina: necesitan
-  la palabra del operador).
-- Probar la tarjeta del problema (`problema-slide`) con más problemas: lo pidió el operador.
-- L16 por aprobar (desbloquea RW-31, RW-32 y RW-33); la revisión de L11 y L11B; la pregunta de Moodle.
-- La siguiente tanda de slides: L03 en adelante, en orden, con el comentario del operador por escena.
+1. **Pasar el `CLAUDE.md` de la cabina a v1:** sigue marcado «v0 · PILOTO», aunque ya lleva muchas enmiendas.
+   *Recomendación: sí, en una sesión tranquila, con el veredicto del piloto al lado.*
+2. **Versionar `mudanza.mjs` y las tres sondas** en `context/cabinas/lecciones/herramientas/`. *Recomendación: sí.*
+3. **Los permisos de Claude Code en `.claude/settings.json`.** *Recomendación: todavía no.* La cabina corre en modo
+   *bypass*.
 
-Del relevo de septiembre, comprobado contra el disco el 2026-10-29:
+## La mudanza de la laptop a la PC (abierta desde el 28-oct)
 
-- `drafts/web/_pendiente-qa/casilla-2-operar-con-signos/` existe (último commit, 2026-09-25). Es el material de la ronda
-  5 para la etapa 2 de la regla 17 (forma visual por sección) y **no se borra**.
-- Los scripts de esa ronda 5 (`construir.mjs`, `medir.mjs`, `validar.mjs`, `anchos.json` y otros) ya están en la PC, en
-  `_scratch/_LEC_variantes5/`. `docs/moldes/DE-DONDE-VIENE.md` no los recoge. Si la etapa 2 sigue viva, pasan a
-  `docs/moldes/`.
+- **No está verificada.** El `comparar` dio NO el 28-oct: faltan 10 499 ficheros, ninguno versionado, y casi todo lo que
+  difiere es CRLF contra LF.
+- **Falta que el operador copie de la laptop** lo de `_scratch/cabina/mudanza/faltan-en-la-pc.txt`:
+  - `cantu-lessons/fuentes/`: 13 ficheros, 18,4 MB. Son evidencia y no van a git, así que **solo están en la laptop**;
+  - `PHD/Paper 2/` y `phd-p2-experiment/` (lo de su hilo).
 
-## Lo que el operador tiene que decidir (cada una con la recomendación de la cabina)
-
-1. **Versionar `mudanza.mjs` y las tres sondas** en `context/cabinas/lecciones/herramientas/`. *Recomendación: sí.* La
-   enmienda a D-081 apunta a `_scratch/cabina/mudanza/mudanza.mjs`, que es desechable.
-2. **Pasar el `CLAUDE.md` a v1** con los cambios del veredicto del piloto. *Recomendación: sí, al abrir la sesión
-   siguiente.*
-3. **Los permisos de Claude Code en `.claude/settings.json`.** *Recomendación: todavía no.* La sesión corrió en modo
-   *bypass* y la app no preguntó nada; primero se mide en la laptop qué pregunta.
+  Cuando copie, la cabina vuelve a correr el `comparar` (pasos 6 y 7 de `_scratch/cabina/mudanza/README.md` y las
+  sondas de `sondas/`) y añade el resultado al veredicto. `_scratch/cabina/mudanza/` **no se borra hasta verificar**.
+- **La laptop ya se usa para revisar** con la galería (RW-69), pero no para escribir en los repos.
 
 ## Dónde está todo
 
-- **Veredicto del hilo:** `projects/cantu-lessons/docs/veredictos/2026-10-16-lectura-de-las-seis-lecciones-web.md`. Al
-  final, la mudanza, la prueba del push y «Sí, las cinco».
-- **Tickets:** `projects/cantu-lessons/docs/encargos/REVISION-WEB-TICKETS.md`, hasta RW-59. **La bandeja**, en
-  `docs/encargos/BANDEJA.md`.
-- **Informes:** `projects/cantu-lessons/docs/informes/`. El de RW-53 es `RW-53.md`; ya no está en `_scratch`.
-- **Moldes y sondas:** `docs/moldes/` y `tools/sondas/`, con su procedencia en `docs/moldes/DE-DONDE-VIENE.md`.
-- **El molde de galería** es `docs/referencias/MOLDE-DE-GALERIA.md` v3, y **el común de los talleres**,
-  `docs/encargos/TALLER-COMUN.md` v8.
-- **Lo que se revisa a distancia:** `projects/cantu-revisiones` (su README).
-- **La mudanza:** `_scratch/cabina/mudanza/`, con el README, el script, los manifiestos de la laptop y de la PC,
-  `faltan-en-la-pc.txt`, `difieren-en-contenido.txt` y `sondas/`. **No se borra hasta verificar.**
+- **El veredicto del hilo**, con todas las palabras del operador:
+  `projects/cantu-lessons/docs/veredictos/2026-10-16-lectura-de-las-seis-lecciones-web.md`.
+- **Los tickets:** `docs/encargos/REVISION-WEB-TICKETS.md`, hasta RW-71. **La bandeja**: `docs/encargos/BANDEJA.md`.
+- **Los informes:** `docs/informes/RW-xx.md`.
+- **El molde de galería:** `docs/referencias/MOLDE-DE-GALERIA.md` v3, con «Los votos…» y «La vista «Hoy»».
+- **El común de los talleres:** `docs/encargos/TALLER-COMUN.md` v8, con §5 al día con RW-67.
+- **Las herramientas:** `tools/revision/README.md` (compilar, publicar, renumerar, el tablero, la plataforma).
+- **La galería:** `projects/cantu-revisiones`: su README; `galerias/<ticket>/`, `galerias/HOY/` y `lecciones/`, que es lo
+  publicado.
+- **Los bancos de prueba de los talleres** (desechables): `_scratch/RW-69/`, `_scratch/RW-70/` y `_scratch/RW-71/`, en
+  `trabajo/` y `capturas/`.
 
 ## La capacidad de la cabina, medida en la PC
 
-Mediciones del 2026-10-28 y del 2026-10-29:
-
-- **Claude Code, con el disco directo.** Lee y escribe el workspace, corre git con `add`, `commit` y `push`, borra, y
-  corre `npm` y `node` v24.12.0. **No hay Python**: solo el alias de la Microsoft Store.
-- **Las llamadas de git a la red** van con `GIT_TERMINAL_PROMPT=0` y `GCM_INTERACTIVE=never`: si algo pidiera
-  credenciales, falla con el error literal en vez de quedarse esperando una ventana.
-- **Los finales de línea:** `cantu-lessons`, `aiw-console` y `cantu-revisiones` se sacan en CRLF (`core.autocrlf=true`,
-  del gitconfig de sistema); `cantu-quizzes-latex`, en LF (su config: `autocrlf=false`, `eol=lf`). En la laptop los
-  árboles eran LF, y por eso un manifiesto por tamaño los da como diferentes.
-- **GitHub Desktop** está abierto en la PC y hace fetch solo. No estorbó.
-- **La app de Claude** es el `.msix` 4.29.0.0, en `C:\Program Files\WindowsApps\`. **`AllowAllTrustedApps` volvió a 0**
-  (medido el 2026-10-29 a las 08:53), como avisaba el relevo de septiembre: la app funciona, pero sus actualizaciones
-  pueden fallar. Es del operador.
+- **Claude Code con el disco directo:** git (`add`, `commit` y `push`), `npm` y `node` v24.12.0. Y **Python 3.12.10** desde
+  el 29-oct, por usuario: se llama por ruta completa (memoria de la cabina).
+- **GitHub Desktop** está abierto y hace fetch solo. No estorba.
+- **La app de Claude** es el `.msix`, y `AllowAllTrustedApps` está en 0: sus actualizaciones pueden fallar. Es cosa del
+  operador.
 
 ## Lecciones que siguen valiendo
 
-1. **Un `comparar` en NO no es un diagnóstico.** Se desglosa antes de decir qué falló: fuera de git, ignorado, finales
-   de línea, commits de hoy. Aquí el NO sumaba 17 439 ficheros entre los que faltan y los que difieren, y lo que importaba
-   eran unas pocas carpetas.
-2. **Antes de afirmar que algo no existe, se mira también GitHub** (septiembre: `bc2455d` estaba en GitHub sin bajar).
-3. **Una regla escrita no protege si el encargo no la cita** (septiembre: cinco rondas contra la regla 18).
+1. **Un `comparar` en NO no es un diagnóstico.** Se desglosa antes de decir qué falló.
+2. **Antes de afirmar que algo no existe, se mira también GitHub.**
+3. **Una regla escrita no protege si el encargo no la cita.**
 4. **Donde el `CLAUDE.md` dice que se abre la sesión no es donde la abre la app.** El mensaje de arranque es la red.
-
-## Lo que salió del relevo de septiembre, y por qué
-
-| sección de septiembre | por qué salió (medido el 2026-10-29) |
-|---|---|
-| «Lo primero: el índice y dos ficheros» | el guion piloto `docs/guiones/L06-operar-con-signos.html` ya no existe. Los guiones viven en `lecciones/<Lnn-slug>/guion-web.html` (7 versionados). El catálogo sigue (último commit, 2026-10-07) |
-| «El método» y «Lo que espera al operador», puntos 1 y 4 | se escribieron en `DISENO-DE-LECCIONES` v17 (2026-09-30): la regla 17 «El GUION» y la justificación del orden 4 → 5 en la regla 24. La cabecera ya está corregida; hoy va en v62. Los puntos 2 y 3 (variantes y notas del guion de L06, hoy L03) no se volvieron a medir: si siguen abiertos, los lleva el catálogo |
-| «Estado, medido el 2026-09-30» | sha vencidos |
-| «El cruce con `cantu-studio`» | `RUN-CANTU-COMPONENT-PETITIONS-ANALYSIS-STOP-001` está `completed` (`#221`), y Studio está en pausa (D-079) |
-| «La capacidad de la cabina» (la terminal de Cowork) | la cabina ya no corre en Cowork. Queda la directiva de Appx, arriba |
-| «Arranque en la laptop» | lo sustituye el `CLAUDE.md` |
-| «Lo que no viajó» | ya viajó: `_scratch/_LEC_variantes5/` está en la PC. `_scratch/wireframes` no existe |
+5. **El final de línea se mide con node, no con grep.** Un script que falla «sin ancla» casi siempre es por un CRLF.
+6. **El operador no ve la caja de la pregunta cuando escribe por Remote Control.** Cada mensaje se cierra con lo que
+   necesita la cabina, dicho en el texto.

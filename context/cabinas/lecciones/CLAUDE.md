@@ -48,6 +48,11 @@ los tickets no los lances en cabina lanzalos en su propia conversacion anidada c
   decisión de método o de contenido que nadie ha tomado.
 - **Si el turno lo abrió un aviso automático**, como el de un taller que terminó, la app no deja lanzar: el ticket va como
   tarjeta, y la cabina lo lanza en el siguiente turno del operador si él no la pulsó.
+- **Si el operador escribe por Remote Control** (medido el 2026-10-30), la app tampoco deja abrir la sesión ni arrancar
+  la tarjeta: «you can start a session only on a message typed in the desktop app». No ve la caja de la pregunta, así
+  que se le dice en el texto: que pulse la tarjeta, nombrándola, desde la PC. Si pide «hazlo aquí», el ticket corre como
+  **agente de fondo de la cabina** (`Agent`, con el ticket como brief y en sus worktrees). Se le avisa de que no podrá
+  hablarle directamente, y se retira la tarjeta. Así corrió RW-71.
 
 ## Archivar los tickets que terminan (el operador, 2026-10-30)
 

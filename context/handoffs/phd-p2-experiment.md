@@ -43,9 +43,16 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
     - una QA humana;
     - un `PARADO` cuyas opciones son del operador;
     - credenciales o instalaciones;
-    - borrar lo ajeno, archivar sesiones o empujar commits ajenos;
+    - borrar lo ajeno o empujar commits ajenos;
     - gastar más de lo que dice el ticket;
     - todo lo irreversible o hacia fuera.
+  - **Archivar talleres (palabra del operador, 2026-10-31):** «ademas cuando ya no sea necesario un ticket archivalo
+    para no tenr una lista enorme de ticketrs se vuelve dificil mantener el hilo». La cabina archiva cada taller
+    (`archive_session`) en cuanto su run queda verificado, publicado y cerrado. Los de `#20` a `#26` se archivaron el
+    2026-10-31.
+  - **El límite de la app:** en un turno que despertó el aviso de un taller, la app no deja lanzar el siguiente, y la
+    tarjeta de un clic no admite la carpeta del repo. El run se deja creado y activo, y se le pide a Chris una
+    palabra («lánzalo»).
 - **Decisiones de diseño:** no se preguntan en un menú. Se analizan, se ponen los datos delante, se recomienda y se dice
   bajo qué condición cambiaría la recomendación. Se dice siempre qué se probó y qué no.
 - **Modelos:** por CLI de suscripción, sin API. Codex para el tutor y el alumno; Claude Code para el evaluador.

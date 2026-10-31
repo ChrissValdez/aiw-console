@@ -84,7 +84,9 @@ lección».
 **La numeración (RW-66, integrado el 2026-10-30):** las 29 lecciones van de L01 a L29, seguidas y sin «B».
 - La tabla de antes a hoy está en `cantu-lessons/docs/referencias/NUMERACION-DE-LECCIONES.md`.
 - **La historia** (veredictos, informes y tickets anteriores) usa los códigos de antes, y el tablero y la plataforma la traducen.
-- **En un aparato nuevo,** tras el pull, se corre `node tools/revision/renumerar.mjs` en cantu-lessons, que renombra las carpetas de `lecciones/`.
+- **En un aparato nuevo,** el botón de la galería trae `cantu-lessons` y corre `renumerar.mjs`, primero en simulación,
+  para renombrar las carpetas de `lecciones/` (RW-69). Ojo: a mano y sin opciones, `renumerar.mjs` puede tocar variantes
+  que ya citan códigos de hoy (informe RW-69, §3; en la bandeja).
 - **Ninguna lección sin estado:** L10, L22 y L26 pasaron a «En revisión». «En revisión» lleva un borde gris, para el daltonismo leve del operador.
 
 
@@ -100,6 +102,12 @@ lección».
   - los guiones enseñan la lección entera en miniatura, con la marca de cada slide o sección.
 - **Las miniaturas se pintan después de compilar:** `node tools/revision/miniaturas.mjs` en cantu-lessons. Solo repinta
   lo que cambió; las 29 lecciones tardan 4 min. Hasta que `build.mjs` la llame, la corre la cabina.
+- **La galería, igual en la laptop (RW-69, integrado el 2026-10-30):** el botón trae los dos repos, y la galería enseña de
+  cada pieza la más nueva: la compilada en ese aparato o la publicada en `cantu-revisiones/lecciones/`. **Tras compilar y
+  pintar las miniaturas, la cabina publica:** `node tools/revision/publicar-paginas.mjs` en cantu-lessons (solo copia lo
+  que cambió), y en cantu-revisiones `git add -- lecciones`, commit por ruta y push. La primera publicación, de las 29
+  lecciones, es `dffdac0` (600 ficheros, unos 6 MB en git). La primera vez en la laptop van dos dobles clics. Allí no
+  salen el historial de versiones ni la revisión de la slide de antes de las galerías.
 - **Los votos** se llaman «✓ Se queda · ~ Referencia · ✗ Fuera», con una sola ✓ por slide o sección. Una con una sola
   ✓ y sin opciones nuevas se escribe en la lección (`MOLDE-DE-GALERIA`, «Los votos, y cuándo se escribe en la lección»).
 - **Al cerrar un ticket**, su galería se marca con `galerias/<ticket>/estado.json` y no se quita.
@@ -111,6 +119,8 @@ lección».
 | RW-61 | slides de L09 a L26 (tanda 3) | galería publicada: 125 vistas, con la decisión S4 y los tres patrones en «Con el molde» | el voto; también su duda 1, las escenas de L11B que hay dentro de L11 |
 | RW-64 | la web de las 29 lecciones | galería publicada: 39 secciones por decidir (`966b658`) | el voto; no escribe borradores sin turno de la cabina, porque RW-61 escribe en los mismos |
 | RW-31 a RW-33 | el plan de fracciones de L17 | en espera | la aprobación de la web de L16, que está en la galería de RW-64 |
+| RW-67 | compilar solo lo que cambió, en paralelo y con sus miniaturas | el taller trabaja en `_scratch/RW-67/cantu-lessons`, rama `rw-67-compilar` | su entrega; al integrarla, que la compilación llame a `publicar-paginas.mjs` |
+| RW-68 | la slide de L12 (antes L11B) | galería publicada: 8 vistas (`bd06fee`) | el voto |
 
 - **El orden de voto que recomendó la cabina:** primero RW-60, porque su color cambia los cálidos de RW-61 y de RW-59.
   Después, los mazos de L03 a L08, RW-61 y RW-64.
@@ -122,6 +132,8 @@ lección».
 
 - **RW-62** (el tablero por lección, con RW-57; `cantu-lessons` `bb7cc21`) y **RW-63** (una sola galería, por lección;
   `cantu-revisiones` `b4db0bf`), integrados el 2026-10-30.
+- **RW-69** (la galería igual en la laptop; `cantu-lessons` `935a659`, `cantu-revisiones` `e591e92`; páginas publicadas
+  `dffdac0`), integrado el 2026-10-30. Su copia de trabajo ya se quitó.
 - **RW-65** (la plataforma única de revisión; `cantu-revisiones` `6522562`, `cantu-lessons` `70fff6f`), integrada el 2026-10-30. Las copias de trabajo de RW-62, RW-63 y RW-65 ya se quitaron.
 
 - **RW-54** (el servidor de las galerías), **RW-55** (el riel de L02·D9), **RW-56** (el botón

@@ -68,6 +68,37 @@ ejecutarse un ticket revisa y archiva en la lista de tickets cuales ya se pueden
   tiene Remote Control encendido, lo apaga primero (`set_remote_control`), porque si no la app no la archiva.
   Archivar se puede deshacer.
 
+## Revisar por lección (el operador, 2026-10-31)
+
+*«a mi me gustaria organizar las revisiones por lecciones no por tickets / quizas tener un ticket para correcciones web
+y otro para correcciones slide / pero aqui en cabina organizamos el trabajo de leccion a leccion»*. Y después: *«si
+acepto ese metodo con L01 como piloto, cabe aclarar que puedo dar feedback de varias lecciones pero la idea es irme en
+orden»*.
+
+- **El operador revisa en la galería, en orden y por tandas.** Por ejemplo, L02 a L04, luego L05, luego L06 a L08. En
+  cada lección mira el Guion web y el Guion slide, y vota ✓, ~ o ✗ con comentario. Al terminar una tanda, la publica y
+  lo dice: «L02 a L04 revisadas».
+- **La cabina lee los votos de la tanda,** en «Hoy» y en las galerías de los tickets. Los pasa al veredicto y los
+  reparte:
+  - lo de cada lección, a los correctores;
+  - lo que vale para todas las lecciones (una paleta, un componente, una regla), a su propio ticket o a la bandeja.
+    Eso no se decide lección por lección.
+- **Un ticket por tanda y por pieza, no por lección.** Es un corrector de web y uno de slide, cada uno con todas las
+  lecciones de la tanda, y solo se abre el que tenga correcciones.
+  - Cada ticket es una sesión nueva, y se archiva cuando se integra.
+  - Dentro, el taller trabaja y reporta lección por lección. Si una se atasca, para esa y entrega las demás.
+  - Una tanda de más de cuatro lecciones, o con decenas de correcciones, se parte en dos.
+  - El juicio del operador no se agrupa: sigue votando sección por sección.
+- **En una misma lección, primero la web y después la slide.** Las dos viven en el mismo borrador (`webBlocks` y
+  `slideBlocks`), y la slide repite lo que dice la web. Dos tandas distintas pueden ir a la vez (la web de una mientras
+  la slide de la anterior), siempre que no compilen a la vez en el mismo checkout (TALLER-COMUN §5).
+- **Al integrar, la cabina compila, publica y le dice al operador qué secciones cambiaron.** Lo que tenía ✓ queda
+  decidido, y una lección con todo en ✓ pasa a «Aprobada». El operador no espera a la cabina: mientras corren los
+  tickets de una tanda, revisa la siguiente.
+- **Piloto: L01.** Un método nuevo no se estrena en lote: después de L01 se ajusta esta sección.
+- **Medido el 31-oct:** un ~ o una ✗ de «Hoy» se queda «Votada» aunque la sección ya se haya corregido. En el piloto,
+  la cabina le da al operador la lista de lo que cambió; después se decide si va a un ticket de herramientas.
+
 ## Dónde vive todo, y por qué
 
 **Esta carpeta es `projects/aiw-console/context/cabinas/lecciones/`.** Decisión del operador, 2026-10-28: la

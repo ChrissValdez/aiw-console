@@ -15,6 +15,10 @@
 - **Sin runs (D-083).** El tablero es la **«Galería de lecciones»**: la plataforma de revisión, y cuando el operador dice
   «la galería» es ella entera. El trabajo va por tickets RW, y el siguiente libre es **RW-72**.
   `cantu-lessons/roadmap/roadmap.json` está congelado como historia, y ninguna respuesta abre con la línea del run.
+- **Desde el 31-oct (00:32) se revisa por lección,** en orden y por tandas, con L01 de piloto. Es un ticket corrector de
+  web y uno de slide por tanda. Está en el contrato de la cabina, «Revisar por lección», y el mensaje del operador en el
+  veredicto. **El próximo ticket es el corrector de la web de L01,** y se escribe y se lanza cuando el operador diga
+  «L01 revisada».
 - **Las 29 lecciones, de L01 a L29** (RW-66), con **29 webs y 29 slides** compiladas. La última que faltaba era la slide
   de L12 (antes L11B), escrita el 30-oct en la ronda 2 de RW-68.
 - **La normalización que pidió el operador está hecha:** la numeración, los estados, la slide de L12 y las galerías
@@ -103,8 +107,11 @@
 | RW-68 | la slide de L12 | **escrita** con lo que recomendó el taller (ronda 2, `c9410d6`), en verde, «En revisión», publicada (`3e5415a`) | el voto en su galería. Otra opción votada la reescribe desde `operar_en_notacion_cientifica.slide.variantes.json` |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 
-- **El orden de voto que recomendó la cabina:** primero RW-60, porque su color cambia los cálidos de RW-61 y de RW-59.
-  Después, los mazos de L03 a L08, RW-61, RW-64 y RW-68.
+- **Desde el 31-oct, el voto va por lección y en orden** (contrato, «Revisar por lección»). Las galerías de estos
+  tickets ya salen dentro de cada lección, y lo que el operador elija ahí lo aplica el corrector de su tanda. Antes del
+  primer corrector, la cabina mide si las opciones están en disco; si alguna no está, ese voto vuelve a su ticket.
+  **La excepción es la paleta de RW-60:** toca todas las slides, así que conviene votarla antes del primer corrector de
+  slide.
 - **Las dudas que quedaron con la recomendación del taller,** mientras el operador no diga otra cosa:
   - **RW-70:** la barra crece una fila a 380 px; en la PC, «Traer lo nuevo» sale en ámbar.
   - **RW-71:** una ✓ con comentario cuenta como decidida; un ~ o una ✗ sin comentario, como votada; L18 y L19 se

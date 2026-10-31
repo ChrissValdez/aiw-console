@@ -88,18 +88,63 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 
 ## §3 · Estado, medido el 2026-10-30
 
-- **Los runs `#1` a `#27` están cerrados** (2026-10-31, 03:24 UTC). El **`#28` «Build the RQ3 direct judge: one
-  strong model with the same rubric and trace that decides every opportunity at once, without PAF's steps or
-  validations» está `active`** (commit `fe6c9d8`). Su taller «Taller #28: juez directo»
-  (`local_9086f0a8-7352-4981-aa16-d07ef30213af`) corre desde las 06:17 UTC del 2026-10-31, con el «Lánzalo» de Chris.
-  A las 06:34 UTC paró su pasada real tras 7 de las 24 llamadas previstas: 5 contestaron y 2 volvieron sin salida
-  legible (el CLI las dio por rechazadas); lo gratuito (contrato, juez, pruebas, informe) siguió. El taller trajo tres
-  opciones; la cabina eligió la (A), sin preguntar, por no cambiar lo que el brazo mide ni gastar más que el ticket:
-  un prompt `p2-judge-v2` sin la clave de salida `reasoning` (el razonamiento queda en el propio modelo, al esfuerzo
-  del rol, sin cambio), y repetir la pasada completa: 7 + 24 = 31 llamadas, dentro del tope de 60. El prompt es
-  palanca del piloto (ESPEC §10); el informe del run lo dice. O5
-  terminó: el arnés juega las cuatro condiciones de la ESPEC §3.3. Abajo, del más nuevo al más viejo, la historia de
-  `#27`, `#26`, `#25`, `#24`, `#23`, `#22`, `#21` y `#20`.
+- **Los runs `#1` a `#28` están cerrados** (2026-10-31, 06:57 UTC): 28 de 28 `completed`, ninguno activo. Con el
+  `#28` queda completa **O6.P1**: los tres brazos de RQ3 existen y se comparan sobre las mismas oportunidades. O5
+  terminó: el arnés juega las cuatro condiciones de la ESPEC §3.3. Lo siguiente es **O6.P2**, la exportación ciega
+  para los codificadores (sin run todavía), y al cerrarla, la **parada de revisión** de §1. Abajo, del más nuevo al
+  más viejo, la historia de `#28`, `#27`, `#26`, `#25`, `#24`, `#23`, `#22`, `#21` y `#20`.
+- **`#28` «Build the RQ3 direct judge: one strong model with the same rubric and trace that decides every opportunity
+  at once, without PAF's steps or validations» se cerró** sin QA humana, como dice su texto.
+  - **Creado** al final de O6.P1, tras el `#27` (commit `fe6c9d8`). Taller «Taller #28: juez directo»,
+    `local_9086f0a8-7352-4981-aa16-d07ef30213af`, lanzado a las 06:17 UTC con el «Lánzalo» de Chris y archivado al
+    cerrar (Remote Control apagado antes).
+  - **La parada de su pasada real** (06:34 UTC): con el prompt `p2-judge-v1`, que pedía el razonamiento libre como
+    campo de salida, el API rechazó 2 de las primeras 7 llamadas sin salida legible y el taller paró, como manda el
+    ticket, y pidió una decisión con tres opciones. La cabina eligió la (A) sin preguntar (no cambia lo que el brazo
+    mide ni gasta más que el ticket): `p2-judge-v2`, igual que v1 sin ese campo (el razonamiento queda en el propio
+    modelo, al esfuerzo del rol, `low`, sin cambio), y repetir la pasada entera. v1 queda en disco como evidencia de
+    la parada; `config/judge.json` apunta a v2. Las dos respuestas de la cabina a ese mensaje se cortaron por el
+    filtro de seguridad del modelo de la cabina; la tercera, ya con otro modelo, llegó.
+  - **Entrega** (commit `9a9de01`, 24 ficheros):
+    - `p2exp.measure.judge` (`judge_trace`), del lado del modelo del guard (b), junto al evaluador; ningún módulo de
+      `p2exp` lo importa. El rol `judge` recibe la política, la rúbrica entera (texto, lecturas, parte estructurada,
+      composiciones), todos los registros externos y los eventos hasta el juzgado, y decide en **una llamada por
+      evento** todas las oportunidades que PAF reconoce en él (`call_unit: event` de `config/judge.json`): si aplica (o
+      falta información), si hay violación, el nivel y las referencias. Sin pasos, condiciones computadas,
+      validaciones ni reintentos; lo que no se lee de su primera respuesta queda Not Evaluable, `procedure_failure`.
+      Que no ve lo posterior se garantiza por construcción (una llamada por evento, con los eventos hasta ese).
+    - Las oportunidades son las de PAF: `controller.opportunities`, ahora función que el juez también llama.
+    - Registro propio `p2-judge-record-v1` con `arm: direct_judge` (esquema y cinco ejemplos bajo el guard (a)); la
+      agregación y la comparación con las llaves van por brazo; las negativas de `for_result` valen igual.
+    - Guards (b) y (c) extendidos al juez. PAF completo y el brazo `all_evaluator`, byte a byte iguales (registros y
+      prompts fijados por hash antes de tocar el código).
+    - 315 ítems en `tests/test_arm_direct_judge.py` más 8 de guards, vistos en rojo con 66 siembras. Contrato:
+      `rubric-format.md` §5.5.
+  - **Pasada real** sobre las siete trazas de depuración: **31 llamadas** de Claude Code (7 de v1, parada; 24 de v2,
+    completa, 56.6 s, ninguna ilegible); tope de 60; 0 de Codex.
+  - **Acuerdo con las llaves:** **140/144 oportunidades y 93/96 resultados por regla** (R1 23/24, R2 22/24, R3
+    24/24, R5 24/24), frente a 140/144 y 92/96 del brazo `all_evaluator` y de PAF completo. La cabina lo rehízo gratis
+    sobre una copia y le salió idéntico.
+    - Dos desacuerdos de clase nueva, **J1**: faltaba `item.final_answer` y el juez juzgó R1-C1 en vez de declarar
+      que faltaba información (lo que PAF resuelve en el paso 1).
+    - Un error del modelo: contó mal el estancamiento de R2-C2, condición que PAF computa.
+    - Una ambigüedad de la rúbrica (familia A1): el nivel de una pista sobre el mismo mensaje de siempre.
+    - En R3 el juez acierta las tres oportunidades que los otros dos brazos pierden; con una sola pasada no se
+      distingue de la variación entre corridas. Es un primer número sobre trazas de depuración, no un resultado.
+  - **Verificación de la cabina:** 24 ficheros, todos dentro del alcance, 0 CR; cuenta de llamadas rehecha sobre la
+    copia (7 + 24, todas `claude-opus-5`); suite **4331 passed**, 1 skipped (enlace simbólico), 26 deselected; las
+    pruebas del brazo y los guards, 828 passed; `paf_agreement.py` 144/144 en los cuatro brazos simulados; 0 `w/crlf`.
+    Cierre: commit `d086ed1`, solo `status` y `closeout_result`; md5 `ce6510ef…` → `c30aaf6e…`.
+  - **Abiertas, del paper** (informe §9):
+    - **J1:** si un juez que deriva el valor que falta del enunciado se equivoca o acierta (la evidencia de la rúbrica
+      nombra el registro). Recomendación: que la rúbrica del estudio diga qué hacer cuando falta un registro que el
+      criterio nombra; vale también para los codificadores.
+    - **V-juez** sigue pendiente: el resultado esperado del juez lo declara el paper antes de ver datos.
+    - **A1** ya alcanza tres condiciones (ayuda, pista, nivel) sobre el mismo mensaje: el texto de la rúbrica del
+      estudio lo zanjaría.
+    - **Palancas del piloto** (ESPEC §10), sin tocar en el run: esfuerzo del juez (`low`; el CLI trae `high` por
+      defecto), modelo, unidad de llamada (por evento hoy; por regla o por oportunidad) y prompt (razonamiento como
+      texto antes de la salida, ejemplos resueltos, qué hacer ante un registro ausente).
 - **`#27` «Build the RQ3 arm where PAF gives everything to the evaluator: the same five steps and rubric, with every
   computed condition decided by the evaluator from the text» se cerró** sin QA humana, como dice su texto.
   - **Creado** al final de O6.P1, que estaba vacía (commit `86a4d0d`). Taller «Taller #27: brazo con todo al

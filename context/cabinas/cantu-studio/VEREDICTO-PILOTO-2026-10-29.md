@@ -5,6 +5,9 @@
 > la sesión solo midió el arranque, sin tickets ni cola. Responde a lo que pide la v0: «qué sirvió, qué faltó, qué
 > estorbó». **Es un veredicto de la cabina, no del operador.** Los cambios de abajo se proponen para una v1, y se
 > escriben cuando el operador lo diga.
+>
+> **Escritos el 2026-10-30 en la v1 del `CLAUDE.md`**, por palabra del operador: *«Sí, escribe la v1»*. La tabla del
+> final de la v1 dice dónde quedó cada uno.
 
 ## En una línea
 

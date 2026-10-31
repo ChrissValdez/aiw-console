@@ -1,12 +1,15 @@
 # Cabina del hilo `cantu-studio`, en Claude Code
 
-> **v0 · 2026-10-29 · PILOTO de este hilo.** Escrito por la cabina de Cowork a pedido del operador: *«quisiera mudarlo y
+> **v1 · 2026-10-30.** Recoge los seis cambios del veredicto del piloto (`VEREDICTO-PILOTO-2026-10-29.md`, al lado), por
+> palabra del operador: *«Sí, escribe la v1»*. Lo que cambió está al final, en «Qué cambió de la v0 a la v1».
+>
+> **v0 · 2026-10-29.** Escrito por la cabina de Cowork a pedido del operador: *«quisiera mudarlo y
 > dejarlo en pausa alla / porque asi ya cambiamos a la metodologia de alla y que alal en claude decida cuando continuar
 > trabajando con cantu studio»* (literal en `context/cantu-studio/records/DECISION-2026-10-29-STUDIO-SE-MUDA-A-CLAUDE-CODE-EN-PAUSA.md`).
 > Hecho sobre `../aiw-console/CLAUDE.md` v0, que a su vez recoge el veredicto del piloto de LECCIONES
-> (`../lecciones/VEREDICTO-PILOTO-2026-10-28.md`). Es un contrato **sin estrenar**: la primera sesión lo prueba y, al
-> cerrar, entrega un veredicto sobre este fichero (qué sirvió, qué faltó, qué estorbó). Cualquier choque con la realidad
-> se dice, no se calla.
+> (`../lecciones/VEREDICTO-PILOTO-2026-10-28.md`). La primera sesión lo probó el 2026-10-29 con Studio en pausa: **el
+> arranque y el push quedaron estrenados; la consola, los tickets, la QA y las herramientas en Windows, no.** Lo que
+> choque con la realidad al estrenarlos se dice, no se calla.
 
 @../REGLAS-DE-CABINA.md
 
@@ -38,7 +41,7 @@ encargas a un **taller** y lo verificas. La separación es sobre el juicio técn
 | qué | dónde vive |
 |---|---|
 | las reglas de todas las cabinas | `projects/aiw-console/context/cabinas/REGLAS-DE-CABINA.md` |
-| lo propio de esta cabina en Claude Code | `projects/aiw-console/context/cabinas/cantu-studio/` (este fichero y `ARRANQUE.md`) |
+| lo propio de esta cabina en Claude Code | `projects/aiw-console/context/cabinas/cantu-studio/` (este fichero, `ARRANQUE.md` y el veredicto del piloto) |
 | el relevo del hilo | `projects/aiw-console/context/handoffs/cantu-studio.md` — **léelo entero al abrir** |
 | las trampas medidas del hilo | `projects/aiw-console/context/cantu-studio/PROMPT-DE-REINICIO.md` (el estado que describe es viejo; las trampas valen) |
 | records, veredictos y decisiones del hilo | `projects/aiw-console/context/cantu-studio/records/` (anexos en `records/anexos/`) |
@@ -97,7 +100,8 @@ En `projects/aiw-console/context/cantu-studio/herramientas-cabina/`, con su `LEE
 `cadena.mjs`, `settext.mjs`, `status.mjs`, `valida.mjs` y `qa/arma.mjs`. **Se hicieron para la VM de Cowork y no se han
 probado en Windows:** los `.sh` hacen `cd` a una ruta de `_scratch` y usan `W=$HOME/mnt/AIW_Workspace`, y los `.mjs`
 levantan su propia instancia de `serve.mjs`. **Se copian a `_scratch` y se adaptan en el primer uso real**, no durante la
-pausa; la primera escritura del canónico se verifica con md5 antes y después, como siempre.
+pausa; la primera escritura del canónico se verifica con md5 antes y después, como siempre. **Mientras tanto, el
+validador de arranque se corre como dice «El arranque de cada sesión», punto 4.**
 
 ## Git
 
@@ -113,7 +117,8 @@ nunca `[user]` en el `.git/config`), con estos cambios:
 4. **Si el push falla, para y lo dice** con el error literal. No reintenta de otra forma ni toca credenciales. Mientras
    no se arregle, vuelve la línea «toca push — N commits sin publicar».
 5. **La línea del cierre y del parte:** «publicado: `<repo>` hasta `<sha>`», o el «toca push» con el motivo.
-6. **Un aparato a la vez.** Si al arrancar hay commits que no esperabas, lo dices antes de escribir.
+6. **Un aparato a la vez.** Si al arrancar hay commits que no esperabas, o cambios sin commitear que no son tuyos, lo
+   dices antes de escribir. Los cambios ajenos no se tocan.
 7. **El checkout de `aiw-console` es compartido** (D-081, «Segunda enmienda»): antes de commitear,
    `git diff --cached --name-only`; **el commit va siempre con ruta** (`git … commit -m "…" -- <ruta> [<ruta>…]`); antes
    del push, `git fetch` y `git log origin/main..HEAD`, y si debajo del tuyo hay commits de otro hilo sin publicar, no se
@@ -144,18 +149,65 @@ Si hubo mediciones, la tabla de lo medido, con la hora, va antes de los dos bloq
 de ellos. Esto manda sobre «Cierre de cada respuesta» de las reglas. Y toda respuesta sigue abriendo con el run en que
 estamos (en pausa: «sin run; Studio en pausa, D-079»).
 
-## La primera sesión (el piloto de este hilo), en orden
+## El arranque de cada sesión, en orden
 
-1. **Arranque de las reglas:** locks primero en todos los repos (`aiw` y los de `projects/`).
-2. **La prueba del push, antes de escribir nada**, en `cantu-studio` y en `aiw-console`: `git pull --ff-only`; que el
-   HEAD quede en **`a3d0bbcf`** o más adelante en `cantu-studio`, y en el commit que trajo este fichero o más adelante en
-   `aiw-console` (la cabina de Cowork, 2026-10-29); `git ls-remote origin main` igual a `origin/main`; y
-   `git push --dry-run origin main`. Si algo pide usuario o contraseña, o falla, **para y lo dice con el error
-   literal.** La prueba de verdad es el primer push real; hasta entonces la cabina no se da por mudada.
-3. **Leer el relevo entero** y contrastar sus cifras con el canónico: 277 runs, completed 267 / planned 10 (archivo O8)
-   / active 0, validador 0 errores, md5 normalizado `b8b75d54…`.
-4. **Mirar si Lecciones anotó peticiones** después del 2026-10-17 en sus `docs/PARA-CANTU-STUDIO-*.md`: solo listarlas,
-   no reconciliarlas (eso es al reanudar).
-5. **Reportar el estado en una tabla con la hora.** El hilo sigue en pausa salvo que el operador diga otra cosa.
-6. **Cerrar:** el relevo se pone al día con lo de la sesión y, al lado de este fichero, **el veredicto sobre este
-   `CLAUDE.md`**. Commit (con ruta) y push.
+La primera sesión, el piloto, se hizo el 2026-10-29; su veredicto está al lado. Desde la v1, esto se hace al abrir cada
+sesión:
+
+1. **Locks primero, en todo directorio del workspace con `.git`**: la raíz, `projects/` y debajo de `aiw/` (`aiw/sandbox`
+   es un repo propio, que el `.gitignore` de `aiw` ignora). Se derivan con un bucle, no se listan: el 2026-10-29 eran
+   diez.
+2. **Git, antes de escribir nada**, en `cantu-studio` y en `aiw-console`: `git pull --ff-only`; que el HEAD quede en el
+   último publicado que da el relevo, o más adelante; y `git ls-remote origin main` igual a `origin/main`. Si el HEAD va
+   por delante de `origin/main`, mira de quién es cada commit (`git log origin/main..HEAD`). **Los de este hilo** (por
+   ejemplo, el último de la cabina de Cowork, que commiteaba y no publicaba) **salen con tu siguiente push**; los de otro
+   hilo, no (Git, 7). Si algo pide usuario o contraseña, o falla, **para y lo dice con el error literal.**
+3. **Los cambios sin commitear en `cantu-studio` se nombran y no se tocan** (`status --porcelain`, dirigido a carpetas).
+   Desde antes de la mudanza hay uno que no es de la cabina: `tools/studio/editor-ui/package-lock.json`
+   (`@emnapi/wasi-threads` 1.2.2 → 1.2.3, dependencia opcional; medido el 2026-10-29). Se decide al reanudar.
+4. **Leer el relevo entero** y contrastar sus cifras con el canónico: los runs y su reparto por status, `history`, los
+   errores del validador y el md5 **normalizado**. **Los `externalRunIds` no se contrastan:** crecen con los canónicos
+   de los otros proyectos, no con este (254 el 2026-10-19, 278 el 2026-10-29).
+
+   **El validador, mientras las herramientas no estén adaptadas a Windows**, es este `.mjs` de solo lectura, en el
+   scratchpad de la sesión y nunca en el workspace. Importar `serve.mjs` no levanta servidor (solo escucha si se corre
+   directo), así que no choca con la consola del operador en el 8788. Probado el 2026-10-30:
+
+   ```js
+   // valida-arranque.mjs — en el scratchpad de la sesión, nunca en el workspace. Solo lee.
+   import fs from 'fs';
+   import crypto from 'crypto';
+   import { pathToFileURL } from 'url';
+   const W = 'C:/Users/chris/Documents/AIW_Workspace';
+   const imp = (p) => import(pathToFileURL(`${W}/projects/aiw-console/${p}`).href);
+   const { checkInvariants } = await imp('tools/roadmap/roadmap-core.mjs');
+   const { externalRunIdsFor } = await imp('project-console/serve.mjs');
+   const buf = fs.readFileSync(`${W}/projects/cantu-studio/.aiw/roadmap/roadmap.json`);
+   const md5 = (b) => crypto.createHash('md5').update(b).digest('hex');
+   const r = JSON.parse(buf.toString('utf8'));
+   const runs = r.objectives.flatMap((o) => o.phases.flatMap((p) => p.runs));
+   const by = {}; for (const x of runs) by[x.status] = (by[x.status] || 0) + 1;
+   const errs = checkInvariants(r, { externalRunIds: await externalRunIdsFor('cantu-studio') });
+   console.log({ runs: runs.length, ...by, errores: errs.length, md5_arbol: md5(buf), md5_normalizado: md5(buf.toString('utf8').replace(/\r/g, '')) });
+   process.exit(0);
+   ```
+5. **Mirar si Lecciones anotó peticiones** en sus `docs/PARA-CANTU-STUDIO-*.md`, **por fecha de commit y no por la del
+   fichero**: en la PC todos tienen la del checkout (2026-10-28 17:17). Con
+   `git -C projects/cantu-lessons --no-optional-locks log --format='%h %ci %s' -- 'docs/PARA-CANTU-STUDIO-*'`. En pausa
+   solo se listan; se reconcilian al reanudar.
+6. **Reportar el estado en una tabla con la hora.** El hilo sigue en pausa salvo que el operador diga otra cosa.
+7. **Cerrar:** el relevo se pone al día con lo de la sesión. Commit (con ruta) y push.
+
+## Qué cambió de la v0 a la v1
+
+| # | dónde | cambio | del veredicto, «Lo que faltó» |
+|---|---|---|---|
+| 1 | «El arranque», 1 | los locks, en todo directorio con `.git`, derivado: la raíz, `projects/` y debajo de `aiw/` | 1 |
+| 2 | «El arranque», 2 | el HEAD de referencia es el último publicado que da el relevo; los commits de este hilo sin publicar salen con el siguiente push, y los de otro hilo no | 2 |
+| 3 | «El arranque», 4, y «Las herramientas» | cómo se corre el validador en Windows mientras las herramientas no se adaptan, con la receta probada | 3 |
+| 4 | «El arranque», 4 | los `externalRunIds` no se contrastan con el relevo | 4 |
+| 5 | «El arranque», 5 | las peticiones de Lecciones se buscan por fecha de commit, no por la del fichero | 5 |
+| 6 | «El arranque», 3, y «Git», 6 | los cambios sin commitear en `cantu-studio` se nombran y no se tocan | 6 |
+| — | la sección entera | «La primera sesión (el piloto)» pasa a ser «El arranque de cada sesión»; `ARRANQUE.md` se puso al día con ella | — |
+
+**Lo que no cambió:** el resto del contrato.

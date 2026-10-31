@@ -41,8 +41,14 @@
 > - **El validador en la PC**, mientras las herramientas no se adapten: una sonda de solo lectura fuera del workspace,
 >   con `checkInvariants` del motor de `aiw-console` y `externalRunIdsFor` de `serve.mjs`. Importar `serve.mjs` no
 >   levanta servidor.
-> - **El veredicto sobre el `CLAUDE.md` v0** está en `context/cabinas/cantu-studio/VEREDICTO-PILOTO-2026-10-29.md`. Sus
->   cambios para una v1 esperan la palabra del operador.
+> - **El veredicto sobre el `CLAUDE.md` v0** está en `context/cabinas/cantu-studio/VEREDICTO-PILOTO-2026-10-29.md`.
+>
+> **2026-10-30, 20:57–21:05 (hora de la PC): la v1 del `CLAUDE.md`**, por palabra del operador («Sí, escribe la v1»).
+> Lleva los seis cambios del veredicto, y «La primera sesión» pasa a ser «El arranque de cada sesión», con la receta del
+> validador probada. `ARRANQUE.md` se puso al día con ella. **El arranque de ese día dio lo mismo que el 10-29:** sin
+> locks en los diez repos; `cantu-studio` en `a3d0bbcf` = `ls-remote`, con el mismo `package-lock.json` sin commitear;
+> el canónico, 277 · 267 / 10 / 0 · 0 errores · normalizado `b8b75d54…`. Lecciones no anotó nada después del 10-23
+> (la última es la 36). D-083 (LECCIONES deja los runs) no cambia este hilo: lo dice ella misma.
 
 > **MUDANZA HECHA — 2026-10-29, en la PC (`desktop-525k0is`), por la cabina de `cantu-studio`.** Arranque medido:
 > `cantu-studio` en `9e8a02c4` = `origin/main` (copia local; la VM no tiene credenciales para consultar GitHub),

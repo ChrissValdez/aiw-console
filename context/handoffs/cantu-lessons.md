@@ -116,6 +116,11 @@ lección».
 - **Los votos** se llaman «✓ Se queda · ~ Referencia · ✗ Fuera», con una sola ✓ por slide o sección. Una con una sola
   ✓ y sin opciones nuevas se escribe en la lección (`MOLDE-DE-GALERIA`, «Los votos, y cuándo se escribe en la lección»).
 - **Al cerrar un ticket**, su galería se marca con `galerias/<ticket>/estado.json` y no se quita.
+- **La vista «Hoy» (RW-71, integrado el 2026-10-30):** cada sección o slide sin opciones en ninguna galería se abre con
+  «Hoy» (276 vistas). Sus votos van a `cantu-revisiones/galerias/HOY/respuestas.json`. **Tras cada pull, la cabina lee
+  ahí los ~ y ✗**, que le tocan a ella (bandeja o ticket); al pie del inicio, «Para los talleres» los liga. Una ✓ deja la
+  sección decidida. Está en `MOLDE-DE-GALERIA`, «La vista «Hoy»». Con esto queda hecha la normalización que pidió el
+  operador: la numeración, los estados, la slide de L12 (por votar) y las galerías.
 
 | ticket | qué | dónde va | qué espera |
 |---|---|---|---|
@@ -123,7 +128,7 @@ lección».
 | RW-60 | la paleta de los bordes de tarjeta | galería publicada: 7 slides, «Hoy» y 3 paletas al peso del Azul acero | el voto; el taller recomienda la 1, Ocre, y la cabina también |
 | RW-61 | slides de L09 a L26 (tanda 3) | galería publicada: 125 vistas, con la decisión S4 y los tres patrones en «Con el molde» | el voto; también su duda 1, las escenas de L11B que hay dentro de L11 |
 | RW-64 | la web de las 29 lecciones | galería publicada: 39 secciones por decidir (`966b658`) | el voto; no escribe borradores sin turno de la cabina, porque RW-61 escribe en los mismos |
-| RW-31 a RW-33 | el plan de fracciones de L17 | en espera | la aprobación de la web de L16, que está en la galería de RW-64 |
+| RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 | RW-68 | la slide de L12 (antes L11B) | galería publicada: 8 vistas (`bd06fee`) | el voto |
 
 - **El orden de voto que recomendó la cabina:** primero RW-60, porque su color cambia los cálidos de RW-61 y de RW-59.
@@ -141,7 +146,11 @@ lección».
   en la laptop (`LAPTOP-PF6SOUAS`): dos dobles clics, 57 páginas publicadas, 19 carpetas renombradas.
 - **RW-67** (compilar sin frenar; `cantu-lessons` `ba52f04`) y **RW-70** («Traer lo nuevo»; `cantu-revisiones`
   `430989f`, `cantu-lessons` `8fd045c`), integrados el 2026-10-30. Sus copias de trabajo ya se quitaron y sus sesiones
-  están archivadas. TALLER-COMUN §5 y el README de `tools/revision` quedaron al día (`dfe5abb`).
+  están archivadas. TALLER-COMUN §5 y el README de `tools/revision` quedaron al día (`dfe5abb`). La primera
+  compilación completa con RW-67: 57 piezas en 15 min 27 s; la siguiente, 0,8 s.
+- **RW-71** (las galerías completas, con «Hoy»; `cantu-revisiones` `ba0580e`, `cantu-lessons` `6064fcc`), integrado el
+  2026-10-30. Corrió como agente de fondo de la cabina, porque desde Remote Control la app no deja abrir sesiones (lo
+  pidió el operador: «Y podrías hacerlo aquí?»). Sus copias de trabajo ya se quitaron.
 - **Archivar los tickets que terminan** (el operador, 2026-10-30): es regla del contrato. La sesión «Lecciones cabina
   setup» (el arranque a medias del 29-oct) también está archivada.
 - **RW-65** (la plataforma única de revisión; `cantu-revisiones` `6522562`, `cantu-lessons` `70fff6f`), integrada el 2026-10-30. Las copias de trabajo de RW-62, RW-63 y RW-65 ya se quitaron.

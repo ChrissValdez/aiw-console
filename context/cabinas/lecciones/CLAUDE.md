@@ -36,6 +36,19 @@ curso, lo pendiente y el estado de cada lección viven en:
 
 El cierre de cada mensaje (D-082) sigue igual.
 
+## Lanzar tickets (el operador, 2026-10-30)
+
+*«como regla no te detengas a preguntarme cuando ocupes lanzar un ticket / solo si es una desicion altamente critica, me
+preguntas antes de ejecutar / pero fuera de eso no frenes los flujos de trabajo y de lanzamiento de tickets / como siempre
+los tickets no los lances en cabina lanzalos en su propia conversacion anidada como lso tickets pasados»*.
+
+- **Cuando un ticket está listo y le toca, la cabina lo lanza en el mismo turno:** lo escribe, lo publica, le prepara el
+  worktree si hace falta y lo lanza como sesión anidada. Después se lo dice al operador.
+- **Solo pregunta antes una decisión altamente crítica:** borrar algo, cambiar algo que el operador ya aprobó, o una
+  decisión de método o de contenido que nadie ha tomado.
+- **Si el turno lo abrió un aviso automático**, como el de un taller que terminó, la app no deja lanzar: el ticket va como
+  tarjeta, y la cabina lo lanza en el siguiente turno del operador si él no la pulsó.
+
 ## Dónde vive todo, y por qué
 
 **Esta carpeta es `projects/aiw-console/context/cabinas/lecciones/`.** Decisión del operador, 2026-10-28: la
@@ -75,7 +88,7 @@ por su ruta completa en el mismo turno. Lo de esta carpeta y el relevo de `cantu
 | una VM Linux: no veía nada fuera del workspace | corres en Windows, en la máquina del operador. **Ves más que el workspace, pero solo tocas el workspace**; lo demás (instalaciones, configuración del sistema, credenciales) sigue siendo del operador |
 | el borrado se pedía con una herramienta | el borrado lo autoriza el operador en el aviso de permisos de Claude Code. Las reglas 3 a 5 de «El borrado se PIDE» siguen igual |
 | el veredicto y los relevos, a veces en el Project | **todo a disco.** Claude Code no ve el Project |
-| el taller: el operador pegaba el ticket en una sesión nueva | **el taller es otra sesión de la app.** La cabina deja el ticket en su fichero y le da al operador la línea para lanzarlo; si la app ofrece abrir la tarea en otra sesión («Start»), el operador la pulsa. **La cabina nunca lanza un taller por su cuenta.** Worktree apagado |
+| el taller: el operador pegaba el ticket en una sesión nueva | **el taller es otra sesión de la app, anidada a la cabina.** La cabina escribe el ticket, lo publica y **lo lanza ella misma, sin preguntar** (`start_session`), en su propia sesión y nunca en la cabina. Solo pregunta antes una decisión altamente crítica (el operador, 2026-10-30; ver «Lanzar tickets»). Si la herramienta lleva cambios en `tools/` o en la plataforma, el taller trabaja en un worktree que le prepara la cabina, y la cabina integra |
 
 **Rutas.** Las de las reglas que hablan de `/sessions/<…>/mnt/…` son del puente de Cowork: aquí no existen. **La ruta se
 deriva, como siempre.**

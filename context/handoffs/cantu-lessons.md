@@ -19,14 +19,10 @@
   web y uno de slide por tanda. Está en el contrato de la cabina, «Revisar por lección», y el mensaje del operador en el
   veredicto. **El próximo ticket es el corrector de la web de L01 (RW-73),** y se escribe y se lanza cuando el operador
   diga «L01 revisada».
-- **RW-72 está entregado y espera la decisión del operador** (el 31-oct, de 16:20 a 16:48, como agente de fondo de la
-  cabina: por Remote Control la app no dejó abrir su sesión, y el operador dijo «Hazlo aquí mejor ese ticket»). Es una
-  investigación de un servidor 24/7, y su informe está en `docs/informes/RW-72.md`. Recomienda que la PC trabaje como
-  servidor antes que contratar uno: no apagarla, un no-break con USB, que arranque sola al volver la luz y el modo
-  servidor de Remote Control (`claude remote-control`). Sus siete dudas para el operador están en la §10. La decisión
-  toca a todas las cabinas, así que irá a `DECISIONES.md` con la palabra del operador. Si se prueba el modo servidor,
-  falta ver si la cabina puede abrir talleres en su propia sesión desde una sesión del CLI; si no, los lanza como
-  agentes de fondo.
+- **RW-72 está cerrado: sin servidor 24/7 (D-084, 31-oct).** El operador, tras leer el informe: «seguimos con el metodo
+  de trabajo actual con la pc como trabajo local y trabajando remotanete es lo que nos ha jalado mejor». El informe
+  (`docs/informes/RW-72.md`) queda como punto de partida si se reabre. Después dijo: «procedere a dar mi veredicto
+  leccion a leccion».
 - **Las 29 lecciones, de L01 a L29** (RW-66), con **29 webs y 29 slides** compiladas. La última que faltaba era la slide
   de L12 (antes L11B), escrita el 30-oct en la ronda 2 de RW-68.
 - **La normalización que pidió el operador está hecha:** la numeración, los estados, la slide de L12 y las galerías
@@ -35,7 +31,7 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `3c3bc06` |
+  | `projects/cantu-lessons` | `c00e8b3` |
   | `projects/cantu-revisiones` | `3e5415a` |
   | `projects/aiw-console` | el commit de este relevo |
 

@@ -3556,3 +3556,40 @@ phd-p2, aiw-console), que siguen trabajando con ellos.
 
 **Criterio de borrado:** se revisa si el hilo LECCIONES vuelve a necesitar la consola (por ejemplo, si una parte de su
 trabajo pasa a ser código con roadmap).
+
+## D-084 — SIN SERVIDOR 24/7: LA PC SIGUE COMO MÁQUINA DE TRABAJO Y SE TRABAJA A DISTANCIA COMO HOY
+
+**Fecha:** 2026-10-31 · **Proyecto:** todo el espacio de trabajo (todas las cabinas) · **Origen:** hilo `cantu-lessons`,
+ticket RW-72.
+
+Decidido por **Christopher Valdez Cantu** el **2026-10-31**, en la cabina de LECCIONES. La pregunta, verbatim:
+
+> Otra duda que quiero abordar que tan complicado es habilitar un servidor 24/7.
+>
+> Osea en vez de usar mi computadora como servidor y luego mi laptop remoto usar tanto mi PC y laptop remoto y un
+> servidor donde tenga todo instalado y no deje de operar 24/7 ?
+>
+> Es una duda abre un ticket aparte para esta duda
+
+La cabina la encargó a RW-72, una investigación que no instaló ni compró nada. Su informe
+(`cantu-lessons/docs/informes/RW-72.md`) recomendaba, antes que contratar un servidor, que la PC trabajara como uno: no
+apagarla, un no-break, que arrancara sola al volver la luz y el modo servidor de Remote Control. La cabina preguntó si
+se arrancaba ese piloto. El operador contestó:
+
+> seguimos con el metodo de trabajo actual con la pc como trabajo local y trabajando remotanete es lo que nos ha jalado
+> mejor
+
+### La regla
+
+- **No se monta un servidor 24/7:** ni en la nube, ni un mini PC, ni el piloto de RW-72.
+- **La PC sigue siendo la máquina de trabajo** (D-081): ahí corren las cabinas, sus talleres, las compilaciones y la
+  galería. Desde fuera se trabaja por Remote Control, y la laptop revisa con la galería y git, como hoy.
+- **Donde Remote Control no deja abrir una sesión,** la cabina sigue como hoy: el operador escribe desde la app de
+  escritorio o dice «hazlo aquí», y el ticket corre como agente de fondo de la cabina.
+- **El informe de RW-72 queda como referencia:** el inventario de la PC, los costos con su fuente y lo que ata a Windows.
+
+**Lo que esta decisión NO hace:** no cambia ninguna regla de cabina ni la forma de trabajar de ningún hilo. Cuándo se
+apaga la PC y cómo se respaldan los datos fuera de git siguen siendo cosa del operador.
+
+**Criterio de borrado:** se reabre si la PC deja de bastar (por ejemplo, si los apagones paran el trabajo), o antes del
+fin de los parches de Windows 10 (ESU), el 2027-10-12 según Microsoft. Se parte del informe de RW-72.

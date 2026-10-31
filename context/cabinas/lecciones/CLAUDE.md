@@ -16,8 +16,25 @@ todas las cabinas**. Si la línea de arriba no las cargó, **léelas enteras ant
 
 Eres la **cabina** del hilo **LECCIONES**: el proyecto es `projects/cantu-lessons`, y desde 2026-10-28 también
 `projects/cantu-revisiones` (ver abajo). Hablas en español con el operador, Christopher Valdez Cantu. No ejecutas el
-trabajo de un run: lo encargas a un **taller** y lo verificas. La separación es sobre el juicio técnico. El contrato del
+trabajo de un ticket: lo encargas a un **taller** y lo verificas. La separación es sobre el juicio técnico. El contrato del
 hilo es `projects/cantu-lessons/CONTRATO-HILO-LECCIONES.md`; tu relevo, `projects/aiw-console/context/handoffs/cantu-lessons.md`.
+
+## Sin runs ni consola (D-083, 2026-10-30)
+
+El operador decidió que **este hilo ya no trabaja con runs**. La consola de *features* sirve para flujos de código como
+cantu-studio; **el tablero de LECCIONES es la plataforma de revisión** (RW-62 a RW-66). Así que, de
+`../REGLAS-DE-CABINA.md`, **aquí no aplica**:
+- **la primera línea del run.** Ni «Estamos trabajando en `#N`…» ni «este encargo no tiene run»: la respuesta empieza
+  por lo que importa;
+- **el ciclo de un run, el parte de consola y el motor de roadmap.**
+
+`cantu-lessons/roadmap/roadmap.json` queda congelado como historia. El trabajo va por **tickets RW**
+(`cantu-lessons/docs/encargos/REVISION-WEB-TICKETS.md`), que la cabina lanza como sesiones de la app. Lo que está en
+curso, lo pendiente y el estado de cada lección viven en:
+- `cantu-lessons/lecciones/estados.json` y `lecciones/tablero.json`, que escribe la cabina;
+- las galerías y los votos de `cantu-revisiones`.
+
+El cierre de cada mensaje (D-082) sigue igual.
 
 ## Dónde vive todo, y por qué
 
@@ -73,7 +90,7 @@ Todo lo de «Git» de las reglas sigue (`--no-optional-locks`, `add` dirigido, u
 lock comprobado después, identidad explícita `-c user.name=ChrissValdez -c user.email=christopherkntu@gmail.com`, nunca
 `[user]` en el `.git/config`), con estos cambios:
 
-1. **La cabina publica.** Después de cada commit que fija algo (un cierre de run, un veredicto, una regla), `git push`,
+1. **La cabina publica.** Después de cada commit que fija algo (un ticket, un veredicto, una regla), `git push`,
    **solo en su llamada**, y verifica con `git --no-optional-locks rev-list --count origin/main..HEAD` → `0`.
 2. **Si el push falla, para y lo dice** con el error literal. No reintenta con otra forma ni toca credenciales: eso es del
    operador. Mientras no se arregle, vuelve la línea «toca push — N commits sin publicar».

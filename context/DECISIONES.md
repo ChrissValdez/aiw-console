@@ -3507,3 +3507,52 @@ proyecto (en LECCIONES, tres líneas y la ruta del informe). Tampoco edita `REGL
 
 **Criterio de borrado:** se elimina si el operador cambia el formato de cierre. Se revisa si un hilo mide que el cierre
 fijo le estorba.
+
+## D-083 — EL HILO LECCIONES YA NO TRABAJA CON RUNS: SU TABLERO ES LA PLATAFORMA DE REVISIÓN
+
+**Fecha:** 2026-10-30 · **Proyecto:** `cantu-lessons` (solo el hilo LECCIONES) · **Origen:** hilo `cantu-lessons`.
+
+Decidido por **Christopher Valdez Cantu** el **2026-10-30**, en la cabina de LECCIONES. Sus palabras, verbatim:
+
+> Este mensaje:
+>
+> Este encargo no tiene run
+>
+> eso pasa porque la consola manejamos run por leccion, pero claramente  no esta funcionnado en nuestro nuevo flujo de trabajo
+> Que recomiendaS?
+>
+> yo diria que con la interfaz que estamos diseñando para revisar lecciones no tiene caso, tener la consola de features eso funciona mas para flujos de trabajo de codigo mas tradicionales como cantu studio
+> Aqui sirve mas la nueva consola que hicimos para el indice de lecciones con sus estados, etc
+>
+> entonces... como actualizamos el contexto para que no tengas que analizar y poner No hay run
+> no solo una nueva regla sino actualizar el contexto para no tener ruido de ese tema que opinas ?
+
+La cabina propuso esta decisión, solo para LECCIONES, y que se pusiera al día el contexto. El operador contestó:
+
+> Sí, así
+
+### La regla
+
+- **El hilo LECCIONES no abre, no cierra ni sigue runs**, y no usa la consola de *features* de `aiw-console`. Las reglas
+  de runs de `context/cabinas/REGLAS-DE-CABINA.md` no le aplican:
+  - la primera línea con el run («Estamos trabajando en `#N`…» o «este encargo no tiene run»);
+  - el ciclo de un run, el parte de consola y el motor de roadmap.
+- **Su tablero es la plataforma de revisión** (RW-62 a RW-66), que muestra por lección:
+  - el estado (`cantu-lessons/lecciones/estados.json`);
+  - lo que está en curso y las decisiones pendientes (`lecciones/tablero.json`);
+  - los votos y las galerías (`cantu-revisiones`).
+
+  El trabajo se encarga por **tickets RW** (`docs/encargos/REVISION-WEB-TICKETS.md`), que lanza la cabina como sesiones
+  de la app.
+- **`cantu-lessons/roadmap/roadmap.json` queda congelado como historia:** ni se borra ni se vuelve a tocar.
+- **Sigue igual:** el cierre de cada mensaje (D-082) y todo lo demás de las reglas comunes.
+- **Se aplica en:**
+  - el contrato de la cabina, `context/cabinas/lecciones/CLAUDE.md`, que manda sobre las reglas donde chocan;
+  - el relevo `context/handoffs/cantu-lessons.md`;
+  - la memoria de Claude Code de la cabina.
+
+**Lo que esta decisión NO hace:** no cambia `REGLAS-DE-CABINA.md` ni los runs de los demás hilos (cantu-studio, CQL,
+phd-p2, aiw-console), que siguen trabajando con ellos.
+
+**Criterio de borrado:** se revisa si el hilo LECCIONES vuelve a necesitar la consola (por ejemplo, si una parte de su
+trabajo pasa a ser código con roadmap).

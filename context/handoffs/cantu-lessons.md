@@ -56,9 +56,9 @@
   3. **El criterio:** todo lo de la lista está en la PC con su tamaño. El resto del NO tiene que tener explicación:
      finales de línea, salidas que el build regenera, o cosas de otros hilos.
 - **La laptop sigue congelada** hasta que la copia esté verificada.
-- **El canónico** es `cantu-lessons/roadmap/roadmap.json` (md5 de disco `22f67745`, medido el 2026-10-28 a las 23:21):
-  1 objetivo y 30 runs, 25 `active` y 5 `completed`; sin las claves `barrier`, `lane` ni `batch`. `active` no significa
-  que un taller esté corriendo. Los tickets RW no tienen run.
+- **Sin runs (D-083, 2026-10-30):** este hilo ya no trabaja con runs ni con la consola de *features*. Su tablero es la
+  plataforma de revisión, y el trabajo va por tickets RW. `cantu-lessons/roadmap/roadmap.json` queda congelado como
+  historia, y ninguna respuesta abre con la línea del run.
 
 ## Lo que se hizo en esta sesión
 

@@ -36,9 +36,8 @@
   | `projects/aiw-console` | el commit de este relevo |
 
 - **Trabajan RW-59, RW-60 y RW-64** con los votos que el operador pegó en el chat el 31-oct (19:23; veredicto, «El
-  operador vota RW-59, RW-60 y RW-64…»). Esperan al operador RW-61 y RW-68. **RW-73 está escrito y publicado, pero no
-  arrancó:** por Remote Control la app no deja abrir sesiones. Corre con «lánzalo» desde la app de escritorio o con
-  «hazlo aquí».
+  operador vota RW-59, RW-60 y RW-64…»). Esperan al operador RW-61 y RW-68. **RW-73 corre en su propia sesión desde el 31-oct,
+  19:27** (el operador escribió desde la PC: «Lo lanzo desde la PC»).
   Las de los tickets cerrados están archivadas.
 
 ## Cómo se trabaja ahora
@@ -112,7 +111,7 @@
 | RW-61 | slides de L09 a L29 (tanda 3) | galería: 125 vistas, con S4 y los patrones en «Con el molde» | el voto. Su duda 1: las escenas de L12 siguen dentro de la slide de L11, y hay que quitarlas (y la palabra «operar» de la portada de L11, duda 4 de RW-68). Antes de su próxima ronda, migra sus datos con `renumerar.mjs --traducir` |
 | RW-64 | la web de las 29 lecciones | galería: 39 secciones por decidir. El 31-oct el operador dejó L03·S2, L04·S2 y L04·S3, y dejó de referencia, con comentario, L02·S1, L02·S2 y L04·S1. Tiene turno para escribir los borradores de L02 a L04 | que el taller escriba las tres que se quedan y traiga la ronda 2 de las otras tres. No escribe borradores sin turno de la cabina (RW-61 escribe en los mismos). Su galería tiene unas 60 fotos con insignias de antes de RW-66: se arreglan en su próxima ronda |
 | RW-68 | la slide de L12 | **escrita** con lo que recomendó el taller (ronda 2, `c9410d6`), en verde, «En revisión», publicada (`3e5415a`) | el voto en su galería. Otra opción votada la reescribe desde `operar_en_notacion_cientifica.slide.variantes.json` |
-| RW-73 | el recuadro de paneles de la web (`fa-panel`, el de L05·S3) y los que se le parecen | **escrito y publicado (`962fc93`), sin arrancar:** por Remote Control la app no deja abrir sesiones | «lánzalo» desde la app de escritorio, o «hazlo aquí». Luego, el censo y de 8 a 10 alternativas en su galería |
+| RW-73 | el recuadro de paneles de la web (`fa-panel`, el de L05·S3) y los que se le parecen | **corre en su sesión desde el 31-oct, 19:27** | el censo y de 8 a 10 alternativas en su galería; después, el voto |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 
 - **Desde el 31-oct, el voto va por lección y en orden** (contrato, «Revisar por lección»). Las galerías de estos

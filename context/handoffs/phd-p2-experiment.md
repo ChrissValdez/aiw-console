@@ -597,6 +597,14 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   5. las decisiones abiertas, cada una con su recomendación: las del paper acumuladas en §3 (`#20` a `#28`) y las de
      Chris antes del piloto (D-familias, D-Ncand, D-rechazo, D-termino; ESPEC §10).
   Antes de la revisión hacen falta las copias de la laptop (`data\` y `DESDE_DEV.md`, abajo).
+  **Ampliado el 2026-11-01**, a pedido de Chris («dame un estatus de que cambios has hecho … y como hacer un QA en
+  el prototipo»): `0-que-cambio.md` (los runs `#18` a `#29`, con su intervención en cada uno) y `2-prototipo-en-vivo.md`
+  reescrito como guía de QA (cómo funciona un turno, las reglas, un guion de 9 mensajes sobre FAC-001 con lo que debe
+  pasar y dónde verlo en «Depuración», y cómo parar). La versión anterior decía, mal, que el servidor se para cerrando
+  la ventana: se cierra la sesión en la página y luego Ctrl+C. **El lanzador se probó en la PC** el 2026-11-01 a las
+  05:54 UTC, por el camino del doble clic (`Start-Process` del `.cmd`, puerto 8798, sin abrir sesión): respondió en 3 s,
+  con Codex con sesión, `code_commit` `eaeb9d4` sin cambios y los dos ítems; 0 llamadas; la ventana se cerró sin dejar
+  servidor ni crear `data\`. Ctrl+C no se volvió a medir en la PC: se midió en la laptop en el `#17`.
 - **De la mudanza (§6):**
   - **`DESDE_DEV.md` no viajó** (§6): copiarlo desde la laptop (el operador) y comprobar su md5 LF
     `67a2a6bc5d2bd96cf384f46ad8dc6c80` (860 líneas) antes de añadir nada. El operador ya aprobó que, tras cada entrada,

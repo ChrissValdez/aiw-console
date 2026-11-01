@@ -31,8 +31,8 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `df980a4` |
-  | `projects/cantu-revisiones` | `9241dcc` |
+  | `projects/cantu-lessons` | `b2d745b` |
+  | `projects/cantu-revisiones` | `3f4b937` |
   | `projects/aiw-console` | el commit de este relevo |
 
 - **Trabajan RW-59, RW-60 y RW-64** con los votos que el operador pegó en el chat el 31-oct (19:23; veredicto, «El
@@ -111,7 +111,7 @@
 | RW-61 | slides de L09 a L29 (tanda 3) | galería: 125 vistas, con S4 y los patrones en «Con el molde» | el voto. Su duda 1: las escenas de L12 siguen dentro de la slide de L11, y hay que quitarlas (y la palabra «operar» de la portada de L11, duda 4 de RW-68). Antes de su próxima ronda, migra sus datos con `renumerar.mjs --traducir` |
 | RW-64 | la web de las 29 lecciones | ronda 2 (31-oct): escribió L03·S2, L04·S2 y L04·S3 (`cantu-lessons` `7cd1d91`, páginas en `cantu-revisiones` `aaae18a`). Su galería trae L02·S1 (la 3), L02·S2 (la 4) y L04·S1 (la 3, recomendada, y la 4) | el voto de esas tres; con turno de la cabina, escribe las que queden con una sola ✓ |
 | RW-68 | la slide de L12 | **escrita** con lo que recomendó el taller (ronda 2, `c9410d6`), en verde, «En revisión», publicada (`3e5415a`) | el voto en su galería. Otra opción votada la reescribe desde `operar_en_notacion_cientifica.slide.variantes.json` |
-| RW-73 | el recuadro de paneles de la web (`fa-panel`, el de L05·S3) y los que se le parecen | **corre en su sesión desde el 31-oct, 19:27** | el censo y de 8 a 10 alternativas en su galería; después, el voto |
+| RW-73 | el recuadro de paneles de la web (`fa-panel`, el de L05·S3) y los que se le parecen | censo: 54 recuadros con ese aspecto en 17 lecciones, de 24 hojas; galería publicada (`cantu-revisiones` `3f4b937`): seis secciones con «Hoy» y diez alternativas; recomienda la 9 (como la slide L05·D4) | el voto. Al cerrar, borrar sus copias L05R, L09R, L18R, L19R, L25R y L28R de `lecciones/` |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 
 - **Desde el 31-oct, el voto va por lección y en orden** (contrato, «Revisar por lección»). Las galerías de estos

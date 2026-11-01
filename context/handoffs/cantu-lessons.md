@@ -31,8 +31,8 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `11bb336` |
-  | `projects/cantu-revisiones` | `3f4b937` |
+  | `projects/cantu-lessons` | `9366b3d` |
+  | `projects/cantu-revisiones` | `6507a85` en `origin/main`. El checkout de la PC sigue en `45fe87c` hasta que el operador pulse «Traer lo nuevo» (la integración de RW-75 se hizo en una copia aparte, para no cambiar el código bajo su 8791) |
   | `projects/aiw-console` | el commit de este relevo |
 
 - **Trabajan RW-59, RW-60 y RW-64** con los votos que el operador pegó en el chat el 31-oct (19:23; veredicto, «El
@@ -40,9 +40,9 @@
   19:27** (el operador escribió desde la PC: «Lo lanzo desde la PC»).
   Las de los tickets cerrados están archivadas.
 - **31-oct, 23:57: el operador votó L02 a L04** (veredicto, «El operador vota L02 a L04 y pide carriles…»). RW-64
-  escribe sus tres nuevas, y **RW-75** (la galería: carriles web/slide, «Copiar» por lección y los estados después del
-  voto, con un icono de «por revisar») corre en su sesión desde las 23:59, en `_scratch/RW-75/<repo>`, rama
-  `rw-75-carriles-y-estados`. La cabina la integra cuando avise.
+  escribió sus tres nuevas (`4e31d8d`, páginas en `45fe87c`). **RW-75 está integrado (1-nov)**: carriles «Web · Slide»,
+  «Copiar» por lección (por omisión, solo lo nuevo) y los estados después del voto, con un ojo por lección (veredicto,
+  «RW-64 escribe L02·S1, L02·S2 y L04·S1, y se integra RW-75»).
 - **Las sesiones de corrección son dos por tanda, web y slide, no cuatro** (recomendación de la cabina, 31-oct).
   Guion y lección de una pieza salen del mismo borrador.
 
@@ -60,6 +60,19 @@
   - Donde una galería de ticket trae opciones, sale su vista.
   - Donde no, la vista **«Hoy»** (RW-71), con sus votos en `galerias/HOY/respuestas.json`.
   - **Tras cada pull, la cabina lee los ~ y ✗ de «Hoy»:** le tocan a ella, y van a la bandeja o a un ticket.
+- **Desde RW-75 (1-nov):**
+  - **Votar por carril:** el control «Web · Slide» deja las flechas y «lo siguiente por votar» en una pieza.
+  - **«Copiar»:** por lección, primero la web y después la slide, con la galería de cada sección. Por omisión copia
+    solo lo nuevo, y «Copiar todo» está al lado.
+  - **Los estados por sección y por slide:** votada sin decisión, por escribir, escrita y por revisar, revisada.
+  - **El ojo de cada lección** vuelve solo cuando su página cambia. «✓ La revisé» se marca en la propia lección, y se
+    guarda en `galerias/REVISADAS/`.
+  - **«Escrita» la apunta el taller** con `node tools/revision/escrita.mjs` en el commit en que escribe la opción
+    (MOLDE-DE-GALERIA, punto 6). Si un taller no lo hizo, la cabina lo apunta al integrar. Una decisión de sistema se
+    apunta con las lecciones y la pieza.
+  - **Si el 8791 está corriendo,** la cabina integra el código de `cantu-revisiones` en una copia aparte (worktree
+    `--detach` en `origin/main`) y empuja desde ahí. Al operador le llega con «Traer lo nuevo», que vuelve a arrancar
+    la galería.
 - **Los votos:** «✓ Se queda · ~ Referencia · ✗ Fuera», con una sola ✓ por slide o sección. Una con una sola ✓ y sin
   opciones nuevas se escribe en la lección. Está en `MOLDE-DE-GALERIA`: «Los votos…» y «La vista «Hoy»».
 - **En la laptop** (`LAPTOP-PF6SOUAS`) se ven las páginas que la cabina publica en `cantu-revisiones/lecciones/`, sin
@@ -115,10 +128,9 @@
 | RW-59 | slides de L03 a L08 | escenas aprobadas, escritas y en verde (`6a902a7`). Ronda 6 (31-oct), publicada en `cantu-revisiones` `aaae18a`: solo L08·D4, con la 7 (en la lección), la 8, la 9 (recomendada: dos tablas, Azul acero y Ocre) y la 10 | el voto de L08·D4; después, que el operador revise los 6 mazos («Primero las reviso») y cerrar: lo aprendido a la regla 41, el generador a `docs/moldes/RW-59/`, `estado.json` de su galería y los estados |
 | RW-60 | la paleta de los bordes de tarjeta | **decidida el 31-oct: la 1, «Ocre»**. La cabina escribió la regla 41 v65 y el token `ocre` en la paleta de slide (`cantu-lessons` `b9a4db7`). Parte 2 hecha: los 13 bordes de L01 a L08 y L12, en Ocre (`cantu-lessons` `6eda324`, páginas en `cantu-revisiones` `9241dcc`) | las dudas 3 (rellenos), 4 (raya de la portada), 5 (etiquetas de L04) y 9 (fichas de las slides viejas), del operador. Los 8 bordes de L09 a L29 los barre RW-61 cuando escriba |
 | RW-61 | slides de L09 a L29 (tanda 3) | galería: 125 vistas, con S4 y los patrones en «Con el molde» | el voto. Su duda 1: las escenas de L12 siguen dentro de la slide de L11, y hay que quitarlas (y la palabra «operar» de la portada de L11, duda 4 de RW-68). Antes de su próxima ronda, migra sus datos con `renumerar.mjs --traducir` |
-| RW-64 | la web de las 29 lecciones | ronda 2 (31-oct): escribió L03·S2, L04·S2 y L04·S3 (`cantu-lessons` `7cd1d91`, páginas en `cantu-revisiones` `aaae18a`). Su galería trae L02·S1 (la 3), L02·S2 (la 4) y L04·S1 (la 3, recomendada, y la 4) | **votadas el 31-oct (23:40): la 3, la 4 y la 3.** Las escribe desde las 23:59; después, la cabina publica L02 y L04 |
+| RW-64 | la web de las 29 lecciones | escritas las seis votadas de L02 a L04 (L02·S1, L02·S2, L03·S2, L04·S1 a S3; `7cd1d91` y `4e31d8d`), publicadas y apuntadas con `escrita.mjs` | el voto de las secciones de su galería en las demás lecciones; con turno de la cabina, escribe las que queden con una sola ✓ y las apunta con `escrita.mjs` |
 | RW-68 | la slide de L12 | **escrita** con lo que recomendó el taller (ronda 2, `c9410d6`), en verde, «En revisión», publicada (`3e5415a`) | el voto en su galería. Otra opción votada la reescribe desde `operar_en_notacion_cientifica.slide.variantes.json` |
 | RW-73 | el recuadro de paneles de la web (`fa-panel`, el de L05·S3) y los que se le parecen | censo: 54 recuadros con ese aspecto en 17 lecciones, de 24 hojas; galería publicada (`cantu-revisiones` `3f4b937`): seis secciones con «Hoy» y diez alternativas; recomienda la 9 (como la slide L05·D4) | el voto. Al cerrar, borrar sus copias L05R, L09R, L18R, L19R, L25R y L28R de `lecciones/` |
-| RW-75 | la galería: votar por carriles (web o slide), «Copiar» por lección y los estados después del voto | corre desde el 31-oct, 23:59, en sus worktrees (`_scratch/RW-75/cantu-revisiones` y `cantu-lessons`, rama `rw-75-carriles-y-estados`) | nada: la cabina integra (merge --no-ff), publica y quita los worktrees |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 
 - **Desde el 31-oct, el voto va por lección y en orden** (contrato, «Revisar por lección»). Las galerías de estos
@@ -173,6 +185,7 @@
 | RW-69 (la galería en la laptop) | `935a659`, `e591e92`; páginas publicadas `dffdac0` |
 | RW-70 («Traer lo nuevo»; `renumerar.mjs` sin opciones) | `cantu-revisiones` `430989f`, `cantu-lessons` `8fd045c` |
 | RW-71 (las galerías completas, con «Hoy»; corrió como agente de la cabina) | `cantu-revisiones` `ba0580e`, `cantu-lessons` `6064fcc` |
+| RW-75 (carriles, «Copiar» por lección, los estados y el ojo; `escrita.mjs`) | `cantu-lessons` `c673503`, `66c9006` y `9366b3d`; `cantu-revisiones` `6507a85` |
 | el nombre «Galería de lecciones» | veredicto `02a3fdf`; contrato `f51bc43` |
 | D-082 (el cierre de cada mensaje) y D-083 (sin runs) | `aiw-console` `context/DECISIONES.md` |
 

@@ -13,11 +13,11 @@
 ## Dónde estamos (2026-10-31, 00:05)
 
 - **Sin runs (D-083).** El tablero es la **«Galería de lecciones»**: la plataforma de revisión, y cuando el operador dice
-  «la galería» es ella entera. El trabajo va por tickets RW, y el siguiente libre es **RW-73**.
+  «la galería» es ella entera. El trabajo va por tickets RW, y el siguiente libre es **RW-75**.
   `cantu-lessons/roadmap/roadmap.json` está congelado como historia, y ninguna respuesta abre con la línea del run.
 - **Desde el 31-oct (00:32) se revisa por lección,** en orden y por tandas, con L01 de piloto. Es un ticket corrector de
   web y uno de slide por tanda. Está en el contrato de la cabina, «Revisar por lección», y el mensaje del operador en el
-  veredicto. **El próximo ticket es el corrector de la web de L01 (RW-73),** y se escribe y se lanza cuando el operador
+  veredicto. **El próximo ticket es el corrector de la web de L01 (RW-74),** y se escribe y se lanza cuando el operador
   diga «L01 revisada».
 - **RW-72 está cerrado: sin servidor 24/7 (D-084, 31-oct).** El operador, tras leer el informe: «seguimos con el metodo
   de trabajo actual con la pc como trabajo local y trabajando remotanete es lo que nos ha jalado mejor». El informe
@@ -31,12 +31,14 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `c00e8b3` |
+  | `projects/cantu-lessons` | `962fc93` |
   | `projects/cantu-revisiones` | `3e5415a` |
   | `projects/aiw-console` | el commit de este relevo |
 
-- **No trabaja ningún ticket.** RW-72 corrió como agente de fondo y no dejó sesión que archivar. Siguen activas, esperando al operador, las sesiones de RW-59, RW-60, RW-61,
-  RW-64 y RW-68.
+- **Trabajan RW-59, RW-60 y RW-64** con los votos que el operador pegó en el chat el 31-oct (19:23; veredicto, «El
+  operador vota RW-59, RW-60 y RW-64…»). Esperan al operador RW-61 y RW-68. **RW-73 está escrito y publicado, pero no
+  arrancó:** por Remote Control la app no deja abrir sesiones. Corre con «lánzalo» desde la app de escritorio o con
+  «hazlo aquí».
   Las de los tickets cerrados están archivadas.
 
 ## Cómo se trabaja ahora
@@ -105,18 +107,19 @@
 
 | ticket | qué | dónde va | qué espera |
 |---|---|---|---|
-| RW-59 | slides de L03 a L08 | escenas aprobadas, escritas y en verde (`6a902a7`) | que el operador revise los 6 mazos («Primero las reviso»). Luego, cerrar: lo aprendido a la regla 41, el generador a `docs/moldes/RW-59/`, sus respuestas a `docs/informes/`, `estado.json` de su galería y los estados |
-| RW-60 | la paleta de los bordes de tarjeta | galería: 7 slides, «Hoy» y 3 paletas | el voto; el taller y la cabina recomiendan la 1, Ocre. Después, el barrido de bordes (su duda 7) |
+| RW-59 | slides de L03 a L08 | escenas aprobadas, escritas y en verde (`6a902a7`). El 31-oct el operador dejó la 7 en L08·D4 y D5, y preguntó cómo aprovechar el espacio de D4 como la 2: el taller trae opciones solo de D4 | la galería de D4 para publicar; después, que el operador revise los 6 mazos («Primero las reviso»). Luego, cerrar: lo aprendido a la regla 41, el generador a `docs/moldes/RW-59/`, sus respuestas a `docs/informes/`, `estado.json` de su galería y los estados |
+| RW-60 | la paleta de los bordes de tarjeta | **decidida el 31-oct: la 1, «Ocre: Azul acero y Ocre»** | que el taller entregue su punto 4 (la tabla para la regla 41 y el inventario de cada borde). Después, la cabina escribe la regla 41 y decide quién lo aplica a los borradores |
 | RW-61 | slides de L09 a L29 (tanda 3) | galería: 125 vistas, con S4 y los patrones en «Con el molde» | el voto. Su duda 1: las escenas de L12 siguen dentro de la slide de L11, y hay que quitarlas (y la palabra «operar» de la portada de L11, duda 4 de RW-68). Antes de su próxima ronda, migra sus datos con `renumerar.mjs --traducir` |
-| RW-64 | la web de las 29 lecciones | galería: 39 secciones por decidir | el voto. No escribe borradores sin turno de la cabina (RW-61 escribe en los mismos). Su galería tiene unas 60 fotos con insignias de antes de RW-66: se arreglan en su próxima ronda |
+| RW-64 | la web de las 29 lecciones | galería: 39 secciones por decidir. El 31-oct el operador dejó L03·S2, L04·S2 y L04·S3, y dejó de referencia, con comentario, L02·S1, L02·S2 y L04·S1. Tiene turno para escribir los borradores de L02 a L04 | que el taller escriba las tres que se quedan y traiga la ronda 2 de las otras tres. No escribe borradores sin turno de la cabina (RW-61 escribe en los mismos). Su galería tiene unas 60 fotos con insignias de antes de RW-66: se arreglan en su próxima ronda |
 | RW-68 | la slide de L12 | **escrita** con lo que recomendó el taller (ronda 2, `c9410d6`), en verde, «En revisión», publicada (`3e5415a`) | el voto en su galería. Otra opción votada la reescribe desde `operar_en_notacion_cientifica.slide.variantes.json` |
+| RW-73 | el recuadro de paneles de la web (`fa-panel`, el de L05·S3) y los que se le parecen | **escrito y publicado (`962fc93`), sin arrancar:** por Remote Control la app no deja abrir sesiones | «lánzalo» desde la app de escritorio, o «hazlo aquí». Luego, el censo y de 8 a 10 alternativas en su galería |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 
 - **Desde el 31-oct, el voto va por lección y en orden** (contrato, «Revisar por lección»). Las galerías de estos
   tickets ya salen dentro de cada lección, y lo que el operador elija ahí lo aplica el corrector de su tanda. Antes del
   primer corrector, la cabina mide si las opciones están en disco; si alguna no está, ese voto vuelve a su ticket.
-  **La excepción es la paleta de RW-60:** toca todas las slides, así que conviene votarla antes del primer corrector de
-  slide.
+  Así pasó el 31-oct con RW-59 y RW-64: sus opciones solo estaban en las copias de los talleres, y los votos volvieron a
+  sus tickets. **La paleta de RW-60 ya está votada** (la 1, Ocre).
 - **Las dudas que quedaron con la recomendación del taller,** mientras el operador no diga otra cosa:
   - **RW-70:** la barra crece una fila a 380 px; en la PC, «Traer lo nuevo» sale en ámbar.
   - **RW-71:** una ✓ con comentario cuenta como decidida; un ~ o una ✗ sin comentario, como votada; L18 y L19 se

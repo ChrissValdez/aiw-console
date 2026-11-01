@@ -31,8 +31,8 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `b9a4db7` |
-  | `projects/cantu-revisiones` | `aaae18a` |
+  | `projects/cantu-lessons` | `df980a4` |
+  | `projects/cantu-revisiones` | `9241dcc` |
   | `projects/aiw-console` | el commit de este relevo |
 
 - **Trabajan RW-59, RW-60 y RW-64** con los votos que el operador pegó en el chat el 31-oct (19:23; veredicto, «El
@@ -107,7 +107,7 @@
 | ticket | qué | dónde va | qué espera |
 |---|---|---|---|
 | RW-59 | slides de L03 a L08 | escenas aprobadas, escritas y en verde (`6a902a7`). Ronda 6 (31-oct), publicada en `cantu-revisiones` `aaae18a`: solo L08·D4, con la 7 (en la lección), la 8, la 9 (recomendada: dos tablas, Azul acero y Ocre) y la 10 | el voto de L08·D4; después, que el operador revise los 6 mazos («Primero las reviso») y cerrar: lo aprendido a la regla 41, el generador a `docs/moldes/RW-59/`, `estado.json` de su galería y los estados |
-| RW-60 | la paleta de los bordes de tarjeta | **decidida el 31-oct: la 1, «Ocre»**. La cabina escribió la regla 41 v65 y el token `ocre` en la paleta de slide (`cantu-lessons` `b9a4db7`). Parte 2, en curso: el taller barre los 13 bordes de L01 a L08 y L12 | que el taller entregue la parte 2 para publicarla; las dudas 3 (rellenos), 4 (raya de la portada), 5 (etiquetas de L04) y 9 (fichas de las slides viejas), del operador. Los 8 bordes de L09 a L29 los barre RW-61 cuando escriba |
+| RW-60 | la paleta de los bordes de tarjeta | **decidida el 31-oct: la 1, «Ocre»**. La cabina escribió la regla 41 v65 y el token `ocre` en la paleta de slide (`cantu-lessons` `b9a4db7`). Parte 2 hecha: los 13 bordes de L01 a L08 y L12, en Ocre (`cantu-lessons` `6eda324`, páginas en `cantu-revisiones` `9241dcc`) | las dudas 3 (rellenos), 4 (raya de la portada), 5 (etiquetas de L04) y 9 (fichas de las slides viejas), del operador. Los 8 bordes de L09 a L29 los barre RW-61 cuando escriba |
 | RW-61 | slides de L09 a L29 (tanda 3) | galería: 125 vistas, con S4 y los patrones en «Con el molde» | el voto. Su duda 1: las escenas de L12 siguen dentro de la slide de L11, y hay que quitarlas (y la palabra «operar» de la portada de L11, duda 4 de RW-68). Antes de su próxima ronda, migra sus datos con `renumerar.mjs --traducir` |
 | RW-64 | la web de las 29 lecciones | ronda 2 (31-oct): escribió L03·S2, L04·S2 y L04·S3 (`cantu-lessons` `7cd1d91`, páginas en `cantu-revisiones` `aaae18a`). Su galería trae L02·S1 (la 3), L02·S2 (la 4) y L04·S1 (la 3, recomendada, y la 4) | el voto de esas tres; con turno de la cabina, escribe las que queden con una sola ✓ |
 | RW-68 | la slide de L12 | **escrita** con lo que recomendó el taller (ronda 2, `c9410d6`), en verde, «En revisión», publicada (`3e5415a`) | el voto en su galería. Otra opción votada la reescribe desde `operar_en_notacion_cientifica.slide.variantes.json` |

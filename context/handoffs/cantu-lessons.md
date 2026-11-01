@@ -31,8 +31,8 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `962fc93` |
-  | `projects/cantu-revisiones` | `3e5415a` |
+  | `projects/cantu-lessons` | `b9a4db7` |
+  | `projects/cantu-revisiones` | `aaae18a` |
   | `projects/aiw-console` | el commit de este relevo |
 
 - **Trabajan RW-59, RW-60 y RW-64** con los votos que el operador pegó en el chat el 31-oct (19:23; veredicto, «El
@@ -106,10 +106,10 @@
 
 | ticket | qué | dónde va | qué espera |
 |---|---|---|---|
-| RW-59 | slides de L03 a L08 | escenas aprobadas, escritas y en verde (`6a902a7`). El 31-oct el operador dejó la 7 en L08·D4 y D5, y preguntó cómo aprovechar el espacio de D4 como la 2: el taller trae opciones solo de D4 | la galería de D4 para publicar; después, que el operador revise los 6 mazos («Primero las reviso»). Luego, cerrar: lo aprendido a la regla 41, el generador a `docs/moldes/RW-59/`, sus respuestas a `docs/informes/`, `estado.json` de su galería y los estados |
-| RW-60 | la paleta de los bordes de tarjeta | **decidida el 31-oct: la 1, «Ocre: Azul acero y Ocre»** | que el taller entregue su punto 4 (la tabla para la regla 41 y el inventario de cada borde). Después, la cabina escribe la regla 41 y decide quién lo aplica a los borradores |
+| RW-59 | slides de L03 a L08 | escenas aprobadas, escritas y en verde (`6a902a7`). Ronda 6 (31-oct), publicada en `cantu-revisiones` `aaae18a`: solo L08·D4, con la 7 (en la lección), la 8, la 9 (recomendada: dos tablas, Azul acero y Ocre) y la 10 | el voto de L08·D4; después, que el operador revise los 6 mazos («Primero las reviso») y cerrar: lo aprendido a la regla 41, el generador a `docs/moldes/RW-59/`, `estado.json` de su galería y los estados |
+| RW-60 | la paleta de los bordes de tarjeta | **decidida el 31-oct: la 1, «Ocre»**. La cabina escribió la regla 41 v65 y el token `ocre` en la paleta de slide (`cantu-lessons` `b9a4db7`). Parte 2, en curso: el taller barre los 13 bordes de L01 a L08 y L12 | que el taller entregue la parte 2 para publicarla; las dudas 3 (rellenos), 4 (raya de la portada), 5 (etiquetas de L04) y 9 (fichas de las slides viejas), del operador. Los 8 bordes de L09 a L29 los barre RW-61 cuando escriba |
 | RW-61 | slides de L09 a L29 (tanda 3) | galería: 125 vistas, con S4 y los patrones en «Con el molde» | el voto. Su duda 1: las escenas de L12 siguen dentro de la slide de L11, y hay que quitarlas (y la palabra «operar» de la portada de L11, duda 4 de RW-68). Antes de su próxima ronda, migra sus datos con `renumerar.mjs --traducir` |
-| RW-64 | la web de las 29 lecciones | galería: 39 secciones por decidir. El 31-oct el operador dejó L03·S2, L04·S2 y L04·S3, y dejó de referencia, con comentario, L02·S1, L02·S2 y L04·S1. Tiene turno para escribir los borradores de L02 a L04 | que el taller escriba las tres que se quedan y traiga la ronda 2 de las otras tres. No escribe borradores sin turno de la cabina (RW-61 escribe en los mismos). Su galería tiene unas 60 fotos con insignias de antes de RW-66: se arreglan en su próxima ronda |
+| RW-64 | la web de las 29 lecciones | ronda 2 (31-oct): escribió L03·S2, L04·S2 y L04·S3 (`cantu-lessons` `7cd1d91`, páginas en `cantu-revisiones` `aaae18a`). Su galería trae L02·S1 (la 3), L02·S2 (la 4) y L04·S1 (la 3, recomendada, y la 4) | el voto de esas tres; con turno de la cabina, escribe las que queden con una sola ✓ |
 | RW-68 | la slide de L12 | **escrita** con lo que recomendó el taller (ronda 2, `c9410d6`), en verde, «En revisión», publicada (`3e5415a`) | el voto en su galería. Otra opción votada la reescribe desde `operar_en_notacion_cientifica.slide.variantes.json` |
 | RW-73 | el recuadro de paneles de la web (`fa-panel`, el de L05·S3) y los que se le parecen | **corre en su sesión desde el 31-oct, 19:27** | el censo y de 8 a 10 alternativas en su galería; después, el voto |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |

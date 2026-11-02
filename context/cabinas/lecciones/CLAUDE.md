@@ -68,6 +68,23 @@ ejecutarse un ticket revisa y archiva en la lista de tickets cuales ya se pueden
   tiene Remote Control encendido, lo apaga primero (`set_remote_control`), porque si no la app no la archiva.
   Archivar se puede deshacer.
 
+## Los carriles de corrección (el operador, 2026-11-01)
+
+*«es buen momento apra probar lo de tener sesiones para correrjir feedback de guion web, otro para guion slide, otro
+para leccion web y otro para leccion slide … no las nobmres algo general como RW XX»*, y *«una 5 seion para correcciones
+de la plataforma»*.
+
+- **Desde el 2026-11-01 se corrige por carriles, no por tickets.** Son cinco sesiones de larga vida: CR-GW (guion
+  web), CR-GS (guion slide), CR-LW (lección web), CR-LS (lección slide) y CR-PL (plataforma). El contrato es
+  `projects/cantu-lessons/docs/carriles/CARRILES.md`, y **manda sobre «Revisar por lección»** donde chocan: los
+  tickets correctores por tanda ya no se abren.
+- **La cabina reparte.** Pasa lo del operador al veredicto, verbatim, y manda a cada carril su encargo numerado
+  (`docs/carriles/CR-xx/<nn>-encargo.md`), con un mensaje a su sesión. Publica lo de los Guiones, publica las páginas
+  que compilan las Lecciones e integra las ramas de CR-PL.
+- **Los tickets RW siguen** para lo que no es corregir: una herramienta nueva grande, una investigación o un plan.
+- **Una sesión de carril con la conversación muy larga** deja su relevo en su bitácora, y la cabina abre otra con el
+  mismo código.
+
 ## Revisar por lección (el operador, 2026-10-31)
 
 *«a mi me gustaria organizar las revisiones por lecciones no por tickets / quizas tener un ticket para correcciones web

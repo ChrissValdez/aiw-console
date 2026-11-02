@@ -17,7 +17,7 @@
   `cantu-lessons/roadmap/roadmap.json` está congelado como historia, y ninguna respuesta abre con la línea del run.
 - **Desde el 31-oct (00:32) se revisa por lección,** en orden y por tandas, con L01 de piloto. Es un ticket corrector de
   web y uno de slide por tanda. Está en el contrato de la cabina, «Revisar por lección», y el mensaje del operador en el
-  veredicto. **El próximo ticket es el corrector de la web de L01 (RW-74),** y se escribe y se lanza cuando el operador
+  veredicto. **Desde el 1-nov los correctores por tanda los sustituyen los carriles (abajo); L01 quedó aprobada sin correcciones y RW-74 no se usó.** Antes: el corrector de la web de L01 se lanzaba cuando el operador
   diga «L01 revisada».
 - **RW-72 está cerrado: sin servidor 24/7 (D-084, 31-oct).** El operador, tras leer el informe: «seguimos con el metodo
   de trabajo actual con la pc como trabajo local y trabajando remotanete es lo que nos ha jalado mejor». El informe
@@ -31,7 +31,7 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `e2b3ea5` |
+  | `projects/cantu-lessons` | `ce58b46` |
   | `projects/cantu-revisiones` | `6507a85` en `origin/main`. El checkout de la PC sigue en `45fe87c` hasta que el operador pulse «Traer lo nuevo» (la integración de RW-75 se hizo en una copia aparte, para no cambiar el código bajo su 8791) |
   | `projects/aiw-console` | el commit de este relevo |
 
@@ -48,9 +48,9 @@
   - **Son cinco sesiones de larga vida:** CR-GW (guion web), CR-GS (guion slide), CR-LW (lección web), CR-LS
     (lección slide) y CR-PL (plataforma).
   - **Guion decide y Lección escribe.** El contrato es `cantu-lessons/docs/carriles/CARRILES.md` (v1).
-  - **Estado a las 20:56:** los seis tickets abiertos (RW-59, RW-60, RW-61, RW-64, RW-68 y RW-73) escriben su
-    «Traspaso al carril» al final de su informe. Después, la cabina lo publica, lanza los cinco carriles y archiva
-    los tickets.
+  - **Lanzados a las 21:06**, cada uno con su primer encargo en `docs/carriles/CR-xx/01-encargo.md` (`ab663f1`). Los
+    seis tickets dejaron su traspaso en su informe (`c100f2b`) y están archivados. El contrato de la cabina tiene
+    ahora «Los carriles de corrección».
   - **La web de L01 está aprobada:** «Hoy» ✓ en sus cinco secciones, sin correcciones.
 
 ## Cómo se trabaja ahora
@@ -132,12 +132,11 @@
 
 | ticket | qué | dónde va | qué espera |
 |---|---|---|---|
-| RW-59 | slides de L03 a L08 | escenas aprobadas, escritas y en verde (`6a902a7`). Ronda 6 (31-oct), publicada en `cantu-revisiones` `aaae18a`: solo L08·D4, con la 7 (en la lección), la 8, la 9 (recomendada: dos tablas, Azul acero y Ocre) y la 10 | el voto de L08·D4; después, que el operador revise los 6 mazos («Primero las reviso») y cerrar: lo aprendido a la regla 41, el generador a `docs/moldes/RW-59/`, `estado.json` de su galería y los estados |
-| RW-60 | la paleta de los bordes de tarjeta | **decidida el 31-oct: la 1, «Ocre»**. La cabina escribió la regla 41 v65 y el token `ocre` en la paleta de slide (`cantu-lessons` `b9a4db7`). Parte 2 hecha: los 13 bordes de L01 a L08 y L12, en Ocre (`cantu-lessons` `6eda324`, páginas en `cantu-revisiones` `9241dcc`) | las dudas 3 (rellenos), 4 (raya de la portada), 5 (etiquetas de L04) y 9 (fichas de las slides viejas), del operador. Los 8 bordes de L09 a L29 los barre RW-61 cuando escriba |
-| RW-61 | slides de L09 a L29 (tanda 3) | galería: 125 vistas, con S4 y los patrones en «Con el molde» | el voto. Su duda 1: las escenas de L12 siguen dentro de la slide de L11, y hay que quitarlas (y la palabra «operar» de la portada de L11, duda 4 de RW-68). Antes de su próxima ronda, migra sus datos con `renumerar.mjs --traducir` |
-| RW-64 | la web de las 29 lecciones | escritas las seis votadas de L02 a L04 (L02·S1, L02·S2, L03·S2, L04·S1 a S3; `7cd1d91` y `4e31d8d`), publicadas y apuntadas con `escrita.mjs` | el voto de las secciones de su galería en las demás lecciones; con turno de la cabina, escribe las que queden con una sola ✓ y las apunta con `escrita.mjs` |
-| RW-68 | la slide de L12 | **escrita** con lo que recomendó el taller (ronda 2, `c9410d6`), en verde, «En revisión», publicada (`3e5415a`) | el voto en su galería. Otra opción votada la reescribe desde `operar_en_notacion_cientifica.slide.variantes.json` |
-| RW-73 | el recuadro de paneles de la web (`fa-panel`, el de L05·S3) y los que se le parecen | censo: 54 recuadros con ese aspecto en 17 lecciones, de 24 hojas; galería publicada (`cantu-revisiones` `3f4b937`): seis secciones con «Hoy» y diez alternativas; recomienda la 9 (como la slide L05·D4) | el voto. Al cerrar, borrar sus copias L05R, L09R, L18R, L19R, L25R y L28R de `lecciones/` |
+| CR-GW (guion web; `local_ec02efe0-9621-4021-bb4a-7d666e418d3f`) | las galerías de la web (hereda RW-64 y RW-73) | CR-GW·01: la ronda 2 del recuadro; quitar L05·S3 y L05·S4 de la de RW-64 y marcar las seis escritas | que avise; la cabina publica la galería |
+| CR-GS (guion slide; `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`) | las galerías de la slide (hereda RW-59, RW-60, RW-61 y RW-68) | CR-GS·01: cerrar la de RW-60; las dudas 3, 4, 5 y 9 votables; RW-59, RW-61 y RW-68 al día | que avise; la cabina publica |
+| CR-LW (lección web; `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`) | escribe la web decidida | CR-LW·01: ponerse en marcha (no hay nada por escribir) | que avise |
+| CR-LS (lección slide; `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`) | escribe la slide decidida | CR-LS·01: los 6 bordes cálidos de L13 a L25 en Ocre | sus commits; la cabina publica las páginas |
+| CR-PL (plataforma; `local_947c3c68-6237-48d1-b3f0-62e616d967ef`) | la Galería de lecciones y sus herramientas | CR-PL·01: una sola galería por sección y por slide, en `_scratch/CR-PL/<repo>`, rama `cr-pl-01-una-galeria` | que avise; la cabina integra desde una copia aparte si el 8791 corre |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 
 - **Desde el 31-oct, el voto va por lección y en orden** (contrato, «Revisar por lección»). Las galerías de estos

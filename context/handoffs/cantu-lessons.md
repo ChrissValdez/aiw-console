@@ -31,8 +31,8 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `1b403eb` |
-  | `projects/cantu-revisiones` | `b9973e6` en `origin/main`. El checkout de la PC sigue en `11a35b2` hasta que el operador pulse «Traer lo nuevo» (CR-PL·01 se integró desde una copia aparte) |
+  | `projects/cantu-lessons` | `87c7d73` |
+  | `projects/cantu-revisiones` | `83a04d6` en `origin/main` (los votos de la laptop, las galerías de CR-GW·02 y CR-GS·02, y CR-PL·02). El checkout de la PC sigue en `11a35b2`, limpio, hasta que el operador pulse «Traer lo nuevo»: el 8791 corre y se integró desde una copia aparte |
   | `projects/aiw-console` | el commit de este relevo |
 
 - **Trabajan RW-59, RW-60 y RW-64** con los votos que el operador pegó en el chat el 31-oct (19:23; veredicto, «El
@@ -132,11 +132,11 @@
 
 | ticket | qué | dónde va | qué espera |
 |---|---|---|---|
-| CR-GW (guion web; `local_ec02efe0-9621-4021-bb4a-7d666e418d3f`) | las galerías de la web (hereda RW-64 y RW-73) | CR-GW·01 hecho y publicado (`11a35b2`). **CR-GW·02 en marcha** (encargo `ed454a4`): el operador votó el 2-nov la 13 del recuadro en L05·S3, L05·S4 y L09·S2, con los títulos centrados (decisión de sistema para los 54); entregas para CR-LW (primero L05 y L09) y las de L08·S1, L08·S3, L11·S1 y L11·S3; ronda nueva de L11·S2 | que avise; la cabina publica las galerías y le encarga la escritura a CR-LW. Los votos del 2-nov siguen en la laptop sin publicar |
-| CR-GS (guion slide; `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`) | las galerías de la slide (hereda RW-59, RW-60, RW-61 y RW-68) | CR-GS·01 hecho y publicado (`72795bc`). **CR-GS·02 en marcha** (encargo `1b403eb`): el operador votó el 2-nov la 6 en L04·D2 y D3 (duda 5 resuelta), la 9 en L08·D4 y la 1 de RW-61 en L09·D2–D5, L10·D2–D5 y L11·D2–D7 (entregas para CR-LS); ronda nueva de L11·D8–D11 (no se entiende la tarea: es comparar) | que avise; la cabina publica y le encarga la escritura a CR-LS. Sin voto: L02·D1 y D2, L13·D4, RW-61 desde L12 |
-| CR-LW (lección web; `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`) | escribe la web decidida | CR-LW·01 hecho: en marcha, bitácora abierta | el siguiente encargo (lo próximo que el operador decida en la web) |
-| CR-LS (lección slide; `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`) | escribe la slide decidida | CR-LS·01 hecho (`34c2f78`, páginas `d6e8658`): 6 bordes de L13 a L25 en Ocre; en L13·D4 y L14·D4 solo el borde (regla 41 v65.6) | L26·D3 y D5, y las fichas de la duda 9, tras su voto |
-| CR-PL (plataforma; `local_947c3c68-6237-48d1-b3f0-62e616d967ef`) | la Galería de lecciones y sus herramientas | CR-PL·01 integrado (`21591e9`, `b9973e6`). **CR-PL·02 en marcha** (encargo `ff4d57c`, rama `cr-pl-02-juntar-votos` en `_scratchCR-PL<repo>`): que el botón junte los votos de dos aparatos con los dos `respuestas.log` en orden de hora (la laptop se paró el 2-nov: votos de RW-60 y RW-64 sin publicar, y la PC ya había publicado los suyos); con tiempo, L08·D2 «sin foto» y la ✓ única y «Descartadas» en la plataforma | que avise; la cabina integra desde una copia aparte si el 8791 corre. La laptop: el operador aparta sus cuatro ficheros en `AIW_Workspaceotos-laptop-2026-11-02` con el bloque de la cabina; si salen claves distintas, se deciden en el veredicto |
+| CR-GW (guion web; `local_ec02efe0-9621-4021-bb4a-7d666e418d3f`) | las galerías de la web (hereda RW-64 y RW-73) | CR-GW·02 hecho y publicado (`8794b47`): la 13 con los títulos centrados; 49 entregas para CR-LW; L11·S2 con ronda nueva (recomienda la 3) | el voto de L11·S2 |
+| CR-GS (guion slide; `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`) | las galerías de la slide (hereda RW-59, RW-60, RW-61 y RW-68) | CR-GS·02 hecho y publicado (`c6d8b15`): 17 entregas para CR-LS; RW-59 sin nada por votar; L11·D8–D11 con ronda 2 (recomienda la 2) | los votos: L11·D8–D11, L02·D1 y D2, L13·D4 y RW-61 desde L12 |
+| CR-LW (lección web; `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`) | escribe la web decidida | **CR-LW·02 en marcha** (encargo `87c7d73`): las 49 entregas de CR-GW·02 (la 13 en 45 secciones de 16 lecciones, primero L05 y L09; L08·S1, L08·S3, L11·S1 y L11·S3) | que avise a la mitad y al final; la cabina publica las páginas |
+| CR-LS (lección slide; `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`) | escribe la slide decidida | **CR-LS·02 en marcha** (encargo `87c7d73`): 16 de las 17 entregas de CR-GS·02 (L04·D2 y D3, L08·D4, L09·D2 a L11·D6; L11·D7 espera a D8–D11) | que avise; la cabina publica las páginas. Una compilación a la vez con CR-LW |
+| CR-PL (plataforma; `local_947c3c68-6237-48d1-b3f0-62e616d967ef`) | la Galería de lecciones y sus herramientas | CR-PL·02 integrado (`83a04d6`, `249d7c0`): el botón junta los votos de dos aparatos (banco 40 de 40, repetido por la cabina); la ✓ única y «Descartadas» ya corrían | candidato a CR-PL·03: L08·D2 «sin foto» (enseñar la slide de la lección cuando la decidida no tiene foto) y «Falta decidir» en escenas sin galería de L09 y L10 |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 
 - **Desde el 31-oct, el voto va por lección y en orden** (contrato, «Revisar por lección»). Las galerías de estos

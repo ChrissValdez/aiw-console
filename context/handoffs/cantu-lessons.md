@@ -31,8 +31,8 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `ce58b46` |
-  | `projects/cantu-revisiones` | `6507a85` en `origin/main`. El checkout de la PC sigue en `45fe87c` hasta que el operador pulse «Traer lo nuevo» (la integración de RW-75 se hizo en una copia aparte, para no cambiar el código bajo su 8791) |
+  | `projects/cantu-lessons` | `43129b3` |
+  | `projects/cantu-revisiones` | `b9973e6` en `origin/main`. El checkout de la PC sigue en `11a35b2` hasta que el operador pulse «Traer lo nuevo» (CR-PL·01 se integró desde una copia aparte) |
   | `projects/aiw-console` | el commit de este relevo |
 
 - **Trabajan RW-59, RW-60 y RW-64** con los votos que el operador pegó en el chat el 31-oct (19:23; veredicto, «El
@@ -132,11 +132,11 @@
 
 | ticket | qué | dónde va | qué espera |
 |---|---|---|---|
-| CR-GW (guion web; `local_ec02efe0-9621-4021-bb4a-7d666e418d3f`) | las galerías de la web (hereda RW-64 y RW-73) | CR-GW·01: la ronda 2 del recuadro; quitar L05·S3 y L05·S4 de la de RW-64 y marcar las seis escritas | que avise; la cabina publica la galería |
-| CR-GS (guion slide; `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`) | las galerías de la slide (hereda RW-59, RW-60, RW-61 y RW-68) | CR-GS·01: cerrar la de RW-60; las dudas 3, 4, 5 y 9 votables; RW-59, RW-61 y RW-68 al día | que avise; la cabina publica |
-| CR-LW (lección web; `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`) | escribe la web decidida | CR-LW·01: ponerse en marcha (no hay nada por escribir) | que avise |
-| CR-LS (lección slide; `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`) | escribe la slide decidida | CR-LS·01: los 6 bordes cálidos de L13 a L25 en Ocre | sus commits; la cabina publica las páginas |
-| CR-PL (plataforma; `local_947c3c68-6237-48d1-b3f0-62e616d967ef`) | la Galería de lecciones y sus herramientas | CR-PL·01: una sola galería por sección y por slide, en `_scratch/CR-PL/<repo>`, rama `cr-pl-01-una-galeria` | que avise; la cabina integra desde una copia aparte si el 8791 corre |
+| CR-GW (guion web; `local_ec02efe0-9621-4021-bb4a-7d666e418d3f`) | las galerías de la web (hereda RW-64 y RW-73) | CR-GW·01 hecho y publicado (`11a35b2`): la ronda 2 del recuadro (las 11 a la 16, con L05·S4; recomienda la 13, «según el papel»); RW-64 sin L05·S3 ni S4 | el voto del recuadro; el resto del comentario a medias del operador en L05·S3 |
+| CR-GS (guion slide; `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`) | las galerías de la slide (hereda RW-59, RW-60, RW-61 y RW-68) | CR-GS·01 hecho y publicado (`72795bc`): RW-60 cerrada; la duda 5 en RW-59 (ronda 7), las dudas 3 y 4 en `galerias/CR-GS/`, la duda 9 en RW-61 (L13·D4) | los votos: L04·D2 y D3, L02·D1 y D2 (CR-GS), L13·D4, L08·D4 (8 a 10), las 125 de RW-61 y las de RW-68 |
+| CR-LW (lección web; `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`) | escribe la web decidida | CR-LW·01 hecho: en marcha, bitácora abierta | el siguiente encargo (lo próximo que el operador decida en la web) |
+| CR-LS (lección slide; `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`) | escribe la slide decidida | CR-LS·01 hecho (`34c2f78`, páginas `d6e8658`): 6 bordes de L13 a L25 en Ocre; en L13·D4 y L14·D4 solo el borde (regla 41 v65.6) | L26·D3 y D5, y las fichas de la duda 9, tras su voto |
+| CR-PL (plataforma; `local_947c3c68-6237-48d1-b3f0-62e616d967ef`) | la Galería de lecciones y sus herramientas | CR-PL·01 integrado (`21591e9`, `b9973e6`): una sola galería por sección y por slide (la otra con su letra, «R5»); MOLDE punto 7 | el siguiente encargo; pendiente para él: L08·D2 sale «sin foto», y la plataforma vota con su propio guion y no con el de cada galería (lo vio CR-GS) |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 
 - **Desde el 31-oct, el voto va por lección y en orden** (contrato, «Revisar por lección»). Las galerías de estos

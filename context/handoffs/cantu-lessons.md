@@ -31,8 +31,8 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `244992e` |
-  | `projects/cantu-revisiones` | `eed4a61` en `origin/main` (las páginas de las 29 y la foto de L14·D4). El checkout de la PC sigue en `11a35b2`, limpio y 16 detrás, hasta que el operador pulse «Traer lo nuevo»: el 8791 corre, y la cabina publica desde una copia aparte (`git worktree add --detach`, `CANTU_REVISIONES_DIR=<copia> node tools/revision/publicar-paginas.mjs`). Las galerías que los carriles escriben en la PC se pasan a la copia con un índice temporal y `git diff --binary origin/main <árbol> -- <galería> ":!galerias/*/respuestas.*" | git apply --index`; después, en la PC, `git checkout -- galerias` y `git clean -f -- galerias`. Los votos de L12 a L29 aún no están publicados |
+  | `projects/cantu-lessons` | `76c67fd` |
+  | `projects/cantu-revisiones` | `85c30fc` en `origin/main` (CR-PL·03 integrado). El checkout de la PC sigue en `11a35b2`, limpio y 18 detrás, hasta que el operador pulse «Traer lo nuevo»: el 8791 corre, y la cabina publica desde una copia aparte (`git worktree add --detach`, `CANTU_REVISIONES_DIR=<copia> node tools/revision/publicar-paginas.mjs`). Las galerías que los carriles escriben en la PC se pasan a la copia con un índice temporal y `git diff --binary origin/main <árbol> -- <galería> ":!galerias/*/respuestas.*" | git apply --index`; después, en la PC, `git checkout -- galerias` y `git clean -f -- galerias`. Los votos de L12 a L29 aún no están publicados |
   | `projects/aiw-console` | el commit de este relevo |
 
 - **Trabajan RW-59, RW-60 y RW-64** con los votos que el operador pegó en el chat el 31-oct (19:23; veredicto, «El
@@ -136,7 +136,7 @@
 | CR-GS (guion slide; `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`) | las galerías de la slide (hereda RW-59, RW-60, RW-61 y RW-68) | CR-GS·03 hecho y publicado (`71221b5`, la foto de L14·D4 en `40fa18c`) | los votos de L11·D8–D11, L13·D12, L14·D2 y RW-61 desde L14·D3 |
 | CR-LW (lección web; `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`) | escribe la web decidida | CR-LW·03 hecho y publicado (informe `9a8363b`, páginas `eed4a61`): 18 en 11 lecciones. En espera: L18·S5–S7, L23·S4, L25·S2, y el arreglo de L04·S3 y L12·S4–S5, hasta el voto de la ronda 4 | el voto de la ronda 4 (la 20 o la 21) y los de las rondas 3 de RW-73 y RW-64 |
 | CR-LS (lección slide; `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`) | escribe la slide decidida | CR-LS·03 hecho y publicado (informe `721ead5`, páginas `eed4a61`): las 29 portadas en Ocre, L13, L14·D4 y L12 apuntada | los votos de L11·D8–D11 (con D7), L13·D12, L14·D2 |
-| CR-PL (plataforma; `local_947c3c68-6237-48d1-b3f0-62e616d967ef`) | la Galería de lecciones y sus herramientas | CR-PL·02 integrado. **CR-PL·03 en marcha** (encargo `244992e`, rama `cr-pl-03-estados` en `_scratchCR-PL<repo>`): `escrita.mjs` por sección y con CR-GS/CR-GW; lo decidido por sistema sin vista; estado neutro para lo que no se vota; L08·D2 «sin foto» | que avise; la cabina integra desde una copia aparte |
+| CR-PL (plataforma; `local_947c3c68-6237-48d1-b3f0-62e616d967ef`) | la Galería de lecciones y sus herramientas | CR-PL·03 integrado (`98b0512`, `85c30fc`): `escrita.mjs --en` y con CR-GS/CR-GW; lo decidido por sistema sin vista sale decidido; «– Sin cambio» (`lecciones/sin-cambio.json`, lo lleva la cabina); L08·D2 con la miniatura de la lección. «Falta decidir» de 243 a 5 (L11·D12–D16 esperan la ronda 2 de L11·D8–D11) | el siguiente encargo |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 
 - **Desde el 31-oct, el voto va por lección y en orden** (contrato, «Revisar por lección»). Las galerías de estos

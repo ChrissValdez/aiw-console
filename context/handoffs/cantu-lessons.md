@@ -31,7 +31,7 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `43129b3` |
+  | `projects/cantu-lessons` | `ff4d57c` |
   | `projects/cantu-revisiones` | `b9973e6` en `origin/main`. El checkout de la PC sigue en `11a35b2` hasta que el operador pulse «Traer lo nuevo» (CR-PL·01 se integró desde una copia aparte) |
   | `projects/aiw-console` | el commit de este relevo |
 
@@ -136,7 +136,7 @@
 | CR-GS (guion slide; `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`) | las galerías de la slide (hereda RW-59, RW-60, RW-61 y RW-68) | CR-GS·01 hecho y publicado (`72795bc`): RW-60 cerrada; la duda 5 en RW-59 (ronda 7), las dudas 3 y 4 en `galerias/CR-GS/`, la duda 9 en RW-61 (L13·D4) | los votos: L04·D2 y D3, L02·D1 y D2 (CR-GS), L13·D4, L08·D4 (8 a 10), las 125 de RW-61 y las de RW-68 |
 | CR-LW (lección web; `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`) | escribe la web decidida | CR-LW·01 hecho: en marcha, bitácora abierta | el siguiente encargo (lo próximo que el operador decida en la web) |
 | CR-LS (lección slide; `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`) | escribe la slide decidida | CR-LS·01 hecho (`34c2f78`, páginas `d6e8658`): 6 bordes de L13 a L25 en Ocre; en L13·D4 y L14·D4 solo el borde (regla 41 v65.6) | L26·D3 y D5, y las fichas de la duda 9, tras su voto |
-| CR-PL (plataforma; `local_947c3c68-6237-48d1-b3f0-62e616d967ef`) | la Galería de lecciones y sus herramientas | CR-PL·01 integrado (`21591e9`, `b9973e6`): una sola galería por sección y por slide (la otra con su letra, «R5»); MOLDE punto 7 | el siguiente encargo; pendiente para él: L08·D2 sale «sin foto», y la plataforma vota con su propio guion y no con el de cada galería (lo vio CR-GS) |
+| CR-PL (plataforma; `local_947c3c68-6237-48d1-b3f0-62e616d967ef`) | la Galería de lecciones y sus herramientas | CR-PL·01 integrado (`21591e9`, `b9973e6`). **CR-PL·02 en marcha** (encargo `ff4d57c`, rama `cr-pl-02-juntar-votos` en `_scratchCR-PL<repo>`): que el botón junte los votos de dos aparatos con los dos `respuestas.log` en orden de hora (la laptop se paró el 2-nov: votos de RW-60 y RW-64 sin publicar, y la PC ya había publicado los suyos); con tiempo, L08·D2 «sin foto» y la ✓ única y «Descartadas» en la plataforma | que avise; la cabina integra desde una copia aparte si el 8791 corre. La laptop: el operador aparta sus cuatro ficheros en `AIW_Workspaceotos-laptop-2026-11-02` con el bloque de la cabina; si salen claves distintas, se deciden en el veredicto |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 
 - **Desde el 31-oct, el voto va por lección y en orden** (contrato, «Revisar por lección»). Las galerías de estos

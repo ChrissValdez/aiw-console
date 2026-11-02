@@ -31,7 +31,7 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `ff4d57c` |
+  | `projects/cantu-lessons` | `ed454a4` |
   | `projects/cantu-revisiones` | `b9973e6` en `origin/main`. El checkout de la PC sigue en `11a35b2` hasta que el operador pulse «Traer lo nuevo» (CR-PL·01 se integró desde una copia aparte) |
   | `projects/aiw-console` | el commit de este relevo |
 
@@ -132,7 +132,7 @@
 
 | ticket | qué | dónde va | qué espera |
 |---|---|---|---|
-| CR-GW (guion web; `local_ec02efe0-9621-4021-bb4a-7d666e418d3f`) | las galerías de la web (hereda RW-64 y RW-73) | CR-GW·01 hecho y publicado (`11a35b2`): la ronda 2 del recuadro (las 11 a la 16, con L05·S4; recomienda la 13, «según el papel»); RW-64 sin L05·S3 ni S4 | el voto del recuadro; el resto del comentario a medias del operador en L05·S3 |
+| CR-GW (guion web; `local_ec02efe0-9621-4021-bb4a-7d666e418d3f`) | las galerías de la web (hereda RW-64 y RW-73) | CR-GW·01 hecho y publicado (`11a35b2`). **CR-GW·02 en marcha** (encargo `ed454a4`): el operador votó el 2-nov la 13 del recuadro en L05·S3, L05·S4 y L09·S2, con los títulos centrados (decisión de sistema para los 54); entregas para CR-LW (primero L05 y L09) y las de L08·S1, L08·S3, L11·S1 y L11·S3; ronda nueva de L11·S2 | que avise; la cabina publica las galerías y le encarga la escritura a CR-LW. Los votos del 2-nov siguen en la laptop sin publicar |
 | CR-GS (guion slide; `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`) | las galerías de la slide (hereda RW-59, RW-60, RW-61 y RW-68) | CR-GS·01 hecho y publicado (`72795bc`): RW-60 cerrada; la duda 5 en RW-59 (ronda 7), las dudas 3 y 4 en `galerias/CR-GS/`, la duda 9 en RW-61 (L13·D4) | los votos: L04·D2 y D3, L02·D1 y D2 (CR-GS), L13·D4, L08·D4 (8 a 10), las 125 de RW-61 y las de RW-68 |
 | CR-LW (lección web; `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`) | escribe la web decidida | CR-LW·01 hecho: en marcha, bitácora abierta | el siguiente encargo (lo próximo que el operador decida en la web) |
 | CR-LS (lección slide; `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`) | escribe la slide decidida | CR-LS·01 hecho (`34c2f78`, páginas `d6e8658`): 6 bordes de L13 a L25 en Ocre; en L13·D4 y L14·D4 solo el borde (regla 41 v65.6) | L26·D3 y D5, y las fichas de la duda 9, tras su voto |

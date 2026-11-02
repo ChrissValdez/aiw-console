@@ -31,7 +31,7 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `9366b3d` |
+  | `projects/cantu-lessons` | `e2b3ea5` |
   | `projects/cantu-revisiones` | `6507a85` en `origin/main`. El checkout de la PC sigue en `45fe87c` hasta que el operador pulse «Traer lo nuevo» (la integración de RW-75 se hizo en una copia aparte, para no cambiar el código bajo su 8791) |
   | `projects/aiw-console` | el commit de este relevo |
 
@@ -43,8 +43,15 @@
   escribió sus tres nuevas (`4e31d8d`, páginas en `45fe87c`). **RW-75 está integrado (1-nov)**: carriles «Web · Slide»,
   «Copiar» por lección (por omisión, solo lo nuevo) y los estados después del voto, con un ojo por lección (veredicto,
   «RW-64 escribe L02·S1, L02·S2 y L04·S1, y se integra RW-75»).
-- **Las sesiones de corrección son dos por tanda, web y slide, no cuatro** (recomendación de la cabina, 31-oct).
-  Guion y lección de una pieza salen del mismo borrador.
+- **1-nov, 20:53: los carriles de corrección** (el operador; veredicto, «El operador pide los carriles de corrección»).
+  Sustituyen a los tickets correctores por tanda y a la recomendación de la cabina del 31-oct (dos sesiones).
+  - **Son cinco sesiones de larga vida:** CR-GW (guion web), CR-GS (guion slide), CR-LW (lección web), CR-LS
+    (lección slide) y CR-PL (plataforma).
+  - **Guion decide y Lección escribe.** El contrato es `cantu-lessons/docs/carriles/CARRILES.md` (v1).
+  - **Estado a las 20:56:** los seis tickets abiertos (RW-59, RW-60, RW-61, RW-64, RW-68 y RW-73) escriben su
+    «Traspaso al carril» al final de su informe. Después, la cabina lo publica, lanza los cinco carriles y archiva
+    los tickets.
+  - **La web de L01 está aprobada:** «Hoy» ✓ en sus cinco secciones, sin correcciones.
 
 ## Cómo se trabaja ahora
 

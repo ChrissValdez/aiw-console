@@ -31,8 +31,8 @@
 
   | repo | sha |
   |---|---|
-  | `projects/cantu-lessons` | `5d462ad` |
-  | `projects/cantu-revisiones` | `0772a9f` en `origin/main` (páginas de 14 lecciones). El checkout de la PC sigue en `11a35b2`, limpio, hasta que el operador pulse «Traer lo nuevo»: el 8791 corre, y la cabina publica desde una copia aparte (`git worktree add --detach`, `CANTU_REVISIONES_DIR=<copia> node tools/revision/publicar-paginas.mjs Lnn…`). Los votos de L12 a L29 (tercer pegado del 2-nov) aún no están publicados |
+  | `projects/cantu-lessons` | `f497671` (la regla 41 en la v66) |
+  | `projects/cantu-revisiones` | `71221b5` en `origin/main` (las galerías de CR-GW·03 y CR-GS·03). El checkout de la PC sigue en `11a35b2`, limpio y 14 detrás, hasta que el operador pulse «Traer lo nuevo»: el 8791 corre, y la cabina publica desde una copia aparte. Las galerías que escriben los carriles en el checkout de la PC se publican con un índice temporal (`GIT_INDEX_FILE`) y `git diff --binary origin/main <árbol> -- <galerías> ":!galerias/*/respuestas.*" | git apply --index` en la copia; después, `git checkout -- galerias` y `git clean -f -- galerias` en la PC. Los votos de L12 a L29 aún no están publicados |
   | `projects/aiw-console` | el commit de este relevo |
 
 - **Trabajan RW-59, RW-60 y RW-64** con los votos que el operador pegó en el chat el 31-oct (19:23; veredicto, «El
@@ -132,10 +132,10 @@
 
 | ticket | qué | dónde va | qué espera |
 |---|---|---|---|
-| CR-GW (guion web; `local_ec02efe0-9621-4021-bb4a-7d666e418d3f`) | las galerías de la web (hereda RW-64 y RW-73) | CR-GW·02 publicado (`8794b47`). **CR-GW·03 en marcha** (encargo `c06cdf6`): el operador votó de L12 a L29 el 2-nov y el recuadro se decide por sección (la 11 en L18·S5, L19·S2 y L25·S2; la R15 ~ en L28·S5); entregas de RW-64 (16) y del recuadro; vista banda/11 para L19·S5, L23·S2 y L25·S1; rondas: L22·S3, L23·S1, L25·S3, L28 y L29·S4 | que avise; la cabina publica y encarga a CR-LW |
-| CR-GS (guion slide; `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`) | las galerías de la slide (hereda RW-59, RW-60, RW-61 y RW-68) | CR-GS·02 publicado (`c6d8b15`). **CR-GS·03 en marcha** (encargo `c06cdf6`): dudas 3 (Dorado Arena), 4 (la raya en Ocre, 29 portadas) y 9 (fichas en Ocre, también L14·D4) resueltas; L12 (RW-68) y L13 votadas; rondas de L13·D12 y L14·D2; el texto de la regla 41 | que avise; la cabina publica y encarga a CR-LS |
-| CR-LW (lección web; `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`) | escribe la web decidida | CR-LW·02 hecho (informe `81dd617`, páginas publicadas): 25 de 49 entregas en 13 lecciones; 24 en espera (19 frenadas por los votos de L12 a L29; L18·S5–S7 y L23·S4 por un aviso de la regla 38 en la 11; L11·S1 por un desborde de su prototipo) | el siguiente encargo, tras CR-GW·03 |
-| CR-LS (lección slide; `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`) | escribe la slide decidida | CR-LS·02 hecho (informe `8d186ff`, páginas publicadas): L04·D2–D3, L08·D4, L09·D2–D5, L10·D2–D5 y L11·D2–D6; L11·D7 espera a D8–D11 | el siguiente encargo, tras CR-GS·03 |
+| CR-GW (guion web; `local_ec02efe0-9621-4021-bb4a-7d666e418d3f`) | las galerías de la web (hereda RW-64 y RW-73) | CR-GW·03 hecho y publicado (`e52bb80`): RW-73 con la 11 donde la votó, ronda 3 (banda/11; la 15 centrada en L28 y L29) y ronda 4 (el nombre de la 11: la 20 o la 21, recomendada); RW-64 con 16 aprobadas y siete rondas; 17 entregas nuevas | los votos de las rondas 3 y 4 de RW-73 y las de RW-64 |
+| CR-GS (guion slide; `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`) | las galerías de la slide (hereda RW-59, RW-60, RW-61 y RW-68) | CR-GS·03 hecho y publicado (`71221b5`): 43 entregas (29 portadas en Ocre, L13, L14·D4); CR-GS y RW-68 cerradas; rondas 2 de L13·D12 y L14·D2 | rehacer la foto «Hoy» de L14·D4 cuando CR-LS la escriba; los votos de L11·D8–D11, L13·D12, L14·D2 y RW-61 desde L14·D3 |
+| CR-LW (lección web; `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`) | escribe la web decidida | CR-LW·02 hecho y publicado. **CR-LW·03 en marcha** (encargo `f497671`): las 18 por escribir de CR-GW·03 (16 de RW-64, L19·S2 con la 11, L11·S1 con su arreglo) | que avise; la cabina publica |
+| CR-LS (lección slide; `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`) | escribe la slide decidida | CR-LS·02 hecho y publicado. **CR-LS·03 en marcha** (encargo `f497671`): las 43 de CR-GS·03 (29 portadas, L13, L14·D4) y apuntar L12 | que avise a la mitad y al final; la cabina publica |
 | CR-PL (plataforma; `local_947c3c68-6237-48d1-b3f0-62e616d967ef`) | la Galería de lecciones y sus herramientas | CR-PL·02 integrado (`83a04d6`, `249d7c0`) | candidato a CR-PL·03: `escrita.mjs` con decisión de sistema apunta la pieza entera (L19·S2 sale «Por revisar» sin estar escrita); L08·D2 «sin foto»; «Falta decidir» en escenas sin galería de L09 y L10 |
 | RW-31 a RW-33 | el plan de fracciones de L18 (antes L17) | en espera | la aprobación de la web de L17 (antes L16), que está en la galería de RW-64 |
 

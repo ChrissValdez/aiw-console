@@ -8,9 +8,24 @@
 >
 > **La cabina abre leyendo enteros** `context/cabinas/landing/CLAUDE.md` y `context/cabinas/REGLAS-DE-CABINA.md`.
 
+## Al día, 2026-11-05 cerca de las 00:15 (la primera sesión de la cabina LANDING)
+
+- **Las referencias están entregadas:** `referencias/index.html` en `metodo-cantu-landing` `334e4ad`, ya en `origin/main`.
+  Se revisaron 38 sitios y las plantillas de educación de Framer y Webflow; quedan seis, cada una para una parte de la
+  página: Brilliant y Fiveable (la portada), Shape Up (la ruta en cuatro pasos), Tally (el tono y las notas a mano),
+  El Moro (la identidad) y la plantilla «Profe» de Framer (USD 39, para los paquetes; no se compra).
+- **Se le pidieron** (`CLAUDE.md`, «La primera sesión», puntos 3 y 4): qué le gusta y qué no de cada referencia, y sus
+  paquetes (nombre y qué incluye cada uno). **En espera de su respuesta.** Lo que diga va a `veredictos/` tal cual, antes de
+  construir la versión única (punto 5).
+- La copia con las capturas dentro, para verla en otro aparato, está en
+  `_scratch/landing/referencias/entrega/referencias-landing.html` (fuera del repo; se rehace desde `referencias/`).
+- Las capturas se tomaron con el Chrome de la PC y el `puppeteer-core` del banco de `cantu-lessons` (solo se lee de ahí).
+
+El resto de este relevo es el que escribió la cabina de LECCIONES: sigue vigente.
+
 ## Dónde estamos
 
-- **El repo:** `metodo-cantu-landing`, `main` en `032791f` (23:44), igual a `origin/main`.
+- **El repo:** `metodo-cantu-landing`, `main` en `032791f` (23:44), igual a `origin/main`. *(Al 5-nov 00:15: `334e4ad`.)*
 - **Lo que hay:**
   - el código de hoy (`secciones/`), el marco (`marco/`) y la vista (`vista.html`);
   - las cuatro variantes A a D (`variantes/`);

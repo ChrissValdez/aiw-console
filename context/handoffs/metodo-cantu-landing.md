@@ -22,8 +22,11 @@
   de apps y software (USD 120 al año; gratis, ~3 %), no de academias; no lo recomendó. Le propuso dejar de buscar
   referencias del nicho y armar ya la versión única con su identidad de hoy y el concepto de la D. **En espera de su
   decisión y de sus paquetes.**
-- La copia con las capturas dentro, para verla en otro aparato, está en
-  `_scratch/landing/referencias/entrega/referencias-landing.html` (fuera del repo; se rehace desde `referencias/`).
+- **Después (5-nov, ~00:25) dijo que está atorado** y pidió una recomendación antes de armar nada
+  (`veredictos/2026-11-05-atorado.md`). Además, una **regla nueva**: todo lo que él revisa se genera en el repo, nunca en
+  `_scratch`, porque se desincroniza entre computadoras. Ya está en el `CLAUDE.md`, punto 8. La cabina borró su copia de
+  `_scratch/landing/referencias/`. Lo demás de `_scratch/landing/` (`comparar/`, `ramas/` y `A-pulida-*`, 21 MB) lo dejó
+  la cabina de LECCIONES y no se borró sin su palabra.
 - Las capturas se tomaron con el Chrome de la PC y el `puppeteer-core` del banco de `cantu-lessons` (solo se lee de ahí).
 
 El resto de este relevo es el que escribió la cabina de LECCIONES: sigue vigente.

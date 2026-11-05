@@ -46,6 +46,9 @@ necesito de ti**, **Qué procede** y, si se espera algo, **⏳ EN ESPERA de …*
    footer se reproducen a mano (`marco/`).
 7. **Los talleres (sesiones de la app) los lanza la cabina,** como en los otros hilos. Las sesiones en la nube las lanza
    él: la app no deja abrirlas si su ventana no está a la vista.
+8. **Todo lo que él va a revisar se genera en el repo, nunca en `_scratch`** (2026-11-05): *«generalo en el repo todo el
+   contenido a revisar sino se puede desincronizar el contenido entre computadoras»*. Se commitea y se publica antes de
+   avisarle. Las sondas y pruebas desechables van al directorio temporal de la sesión, no a `_scratch`.
 
 ## Lo que impone Moodle
 

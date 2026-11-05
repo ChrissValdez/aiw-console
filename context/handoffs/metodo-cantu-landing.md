@@ -27,6 +27,12 @@
   `_scratch`, porque se desincroniza entre computadoras. Ya está en el `CLAUDE.md`, punto 8. La cabina borró su copia de
   `_scratch/landing/referencias/`. Lo demás de `_scratch/landing/` (`comparar/`, `ramas/` y `A-pulida-*`, 21 MB) lo dejó
   la cabina de LECCIONES y no se borró sin su palabra.
+- **La primera referencia que le encanta (5-nov, ~00:32): oryzo.ai**, un demo de Lusion con calidad de página de Apple: *«la
+  animacion, la paleta de colores, todo»*. Su reparo: vende un producto, no un servicio. Sus palabras están en
+  `veredictos/2026-11-05-oryzo.md`; lo medido y qué se lleva, en `referencias/oryzo.md` (`75d4050`). La cabina le propuso
+  una sola versión «a la Oryzo» con su identidad: la hoja de respuestas como objeto protagonista que se llena en los
+  cuatro pasos, una idea por pantalla, su marino y su dorado con crema, movimiento ligero solo como mejora y sin 3D.
+  **En espera de su sí.**
 - Las capturas se tomaron con el Chrome de la PC y el `puppeteer-core` del banco de `cantu-lessons` (solo se lee de ahí).
 
 El resto de este relevo es el que escribió la cabina de LECCIONES: sigue vigente.

@@ -33,6 +33,12 @@
   una sola versión «a la Oryzo» con su identidad: la hoja de respuestas como objeto protagonista que se llena en los
   cuatro pasos, una idea por pantalla, su marino y su dorado con crema, movimiento ligero solo como mejora y sin 3D.
   **En espera de su sí.**
+- **Después (~00:45) contestó «Primero lo platicamos»** y mandó una segunda referencia que le gusta: dala.craftedbygc.com.
+  Duda porque ninguna de las dos tiene que ver con el concepto de Método Cantú, y pidió opinión sin construir nada. Sus
+  palabras están en `veredictos/2026-11-05-dala-y-oryzo.md`; lo medido, en `referencias/dala.md` (`5940964`). La cabina
+  opinó: el tema no tiene que ver, el lenguaje sí, y la metáfora de Dala (fragmentos sueltos que se ordenan) es la del
+  método. Recomendó el camino A: ese lenguaje dentro de Moodle, sin 3D y gratis. El camino B, fuera de Moodle y con 3D de
+  verdad, implica dinero y un estudio. **En espera de lo que diga.**
 - Las capturas se tomaron con el Chrome de la PC y el `puppeteer-core` del banco de `cantu-lessons` (solo se lee de ahí).
 
 El resto de este relevo es el que escribió la cabina de LECCIONES: sigue vigente.

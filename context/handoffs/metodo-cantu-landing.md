@@ -17,6 +17,11 @@
 - **Se le pidieron** (`CLAUDE.md`, «La primera sesión», puntos 3 y 4): qué le gusta y qué no de cada referencia, y sus
   paquetes (nombre y qué incluye cada uno). **En espera de su respuesta.** Lo que diga va a `veredictos/` tal cual, antes de
   construir la versión única (punto 5).
+- **Su respuesta (5-nov, ~00:20): «ninguna reeferencia me gusto».** Preguntó si refero.design sirve o si hay algo mejor.
+  Está tal cual en `veredictos/2026-11-05-referencias.md` (`16bb357`). La cabina lo revisó: es una biblioteca de pantallas
+  de apps y software (USD 120 al año; gratis, ~3 %), no de academias; no lo recomendó. Le propuso dejar de buscar
+  referencias del nicho y armar ya la versión única con su identidad de hoy y el concepto de la D. **En espera de su
+  decisión y de sus paquetes.**
 - La copia con las capturas dentro, para verla en otro aparato, está en
   `_scratch/landing/referencias/entrega/referencias-landing.html` (fuera del repo; se rehace desde `referencias/`).
 - Las capturas se tomaron con el Chrome de la PC y el `puppeteer-core` del banco de `cantu-lessons` (solo se lee de ahí).

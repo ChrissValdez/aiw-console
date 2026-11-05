@@ -103,6 +103,21 @@
   1. su visto bueno a la propuesta del express;
   2. los datos que faltan;
   3. el prototipo con el que se sigue.
+- **El express, aprobado como idea (~08:12):** sus detalles quedan por definir; por ahora, solo el botón, pendiente de
+  enlazar al examen.
+  - En `CONTENIDO.md` (`217b0fc`): «Haz tu diagnóstico express gratis», en la portada y al final de la ruta.
+  - **DIAG** lleva a WhatsApp con M6 mientras no exista el examen, y está definido una sola vez en cada prototipo.
+  - Se encargó a las tres sesiones por `SendMessage`. **A (`2aea745`) y D (`6698b61`) están publicados** y medidos por la
+    cabina. **B estaba trabajando a las 08:23;** se commitea al terminar.
+- **Pidió comparar las cuatro (la original, A, B y D) antes de decidir (~08:15).** La comparación está en
+  `prototipos/comparacion-cuatro.md` (`05d50bb`).
+  - **La cabina recomienda la D como base,** con lo rescatado de cada una en el lenguaje de la D:
+    - de la original, la promesa «Tu pase al Tec y UDEM» y los dos servicios claros;
+    - de A, la hoja que avanza en los cuatro pasos y lo ligero;
+    - de B, el header con anclas y el objeto sobre el escritorio, con una foto real.
+  - **La B, como segunda etapa:** una página de campaña.
+  - Defecto medido de la D: en el celular, el flotante tapa los botones del texto.
+  - **En espera de su decisión.**
 - Las capturas se tomaron con el Chrome de la PC y el `puppeteer-core` del banco de `cantu-lessons` (solo se lee de ahí).
 
 El resto de este relevo es el que escribió la cabina de LECCIONES: sigue vigente.

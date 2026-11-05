@@ -83,6 +83,26 @@
 
   Para vender empatan: B tiene mejor primer impacto, pero su parte media es más débil en el celular. Se le pidieron los
   datos que faltan (quién y dónde, testimonios, paquetes, una fecha y si el diagnóstico es gratis). **En espera.**
+- **La D, aprobada (5-nov, en la madrugada):** a su tercera ronda, académica como libro de texto, le dijo a `proto-d` «Sí,
+  así». Commit `8cfea7d`; la entrada a los prototipos está al día (`f6e1ecb`). Lo de «videojuego contra académico» está en
+  la memoria `landing-academico-no-retro`.
+- **El diagnóstico (5-nov, ~08:00):** hoy se pide al inscribirse y dura unas 2 horas. Él propone **un diagnóstico express
+  gratis** para motivar la compra (`veredictos/2026-11-05-diagnostico-express.md`). La cabina escribió la propuesta en
+  `prototipos/diagnostico-express.md`:
+  - 20 a 25 minutos en su Moodle;
+  - se pide por WhatsApp;
+  - el resultado va por área, con un mensaje del profe en menos de 24 horas;
+  - el botón principal de la landing pasaría a «Haz tu diagnóstico express gratis».
+
+  **No se anuncia antes de que el examen exista.** Armar el examen con el banco de `cantu-quizzes-latex` es trabajo de ese
+  hilo: se nombra, no se hace aquí.
+- **Corrección:** el commit `8cfea7d` dice «medido por la cabina hacia las 02:15». Fue hacia las 08:05; la cabina supuso
+  la hora sin mirarla.
+- Las tres sesiones (`proto-a`, `proto-b` y `proto-d`) siguen sin archivar: falta que él elija con cuál se sigue.
+  **En espera:**
+  1. su visto bueno a la propuesta del express;
+  2. los datos que faltan;
+  3. el prototipo con el que se sigue.
 - Las capturas se tomaron con el Chrome de la PC y el `puppeteer-core` del banco de `cantu-lessons` (solo se lee de ahí).
 
 El resto de este relevo es el que escribió la cabina de LECCIONES: sigue vigente.

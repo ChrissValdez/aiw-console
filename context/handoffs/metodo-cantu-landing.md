@@ -70,6 +70,19 @@
   páginas se ven quietas. Se le dijo cómo encenderlo.
 
   Las tres sesiones quedan sin archivar hasta su veredicto, por si toca otra ronda. **En espera de su opinión de los tres.**
+- **Su primera mirada (~01:45):** D mejoró, pero A y B se ven muy bien, sobre todo B. Pidió analizar A y B como landing,
+  no como diseño. A `proto-d` le dijo que se siente «retro videojuego» y no «retro académico»; esa sesión hace una tercera
+  ronda (en curso a las 02:09; sus cambios en `prototipos/D-pulida/` siguen **sin commitear** hasta que termine). Sus
+  palabras están en `veredictos/2026-11-05-tres-prototipos-ronda-1.md`.
+- **El análisis de A y B como landing** está en `prototipos/analisis-A-B.md` (`6ce0c07`). Las dos dicen bien qué son en la
+  primera pantalla. Lo que frena la venta:
+  - no hay razones para confiar (quién, dónde, testimonios);
+  - la oferta está vacía;
+  - hay 6 a 7 pantallas sin botón en el texto;
+  - la pregunta de la portada no se puede contestar.
+
+  Para vender empatan: B tiene mejor primer impacto, pero su parte media es más débil en el celular. Se le pidieron los
+  datos que faltan (quién y dónde, testimonios, paquetes, una fecha y si el diagnóstico es gratis). **En espera.**
 - Las capturas se tomaron con el Chrome de la PC y el `puppeteer-core` del banco de `cantu-lessons` (solo se lee de ahí).
 
 El resto de este relevo es el que escribió la cabina de LECCIONES: sigue vigente.

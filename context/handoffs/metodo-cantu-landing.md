@@ -118,6 +118,15 @@
   - **La B, como segunda etapa:** una página de campaña.
   - Defecto medido de la D: en el celular, el flotante tapa los botones del texto.
   - **En espera de su decisión.**
+- **Su decisión (~08:25): un prototipo nuevo con las recomendaciones, armado con Fable 5.1**
+  (`veredictos/2026-11-05-prototipo-e.md`).
+  - El encargo es `encargos/PROTO-E.md` (`585e441`): la D aprobada + los 7 puntos rescatados + 2 correcciones, en
+    `prototipos/E-recomendada/`; la D no se toca.
+  - Se lanzó la sesión `proto-e` (`local_7df9685a-…`) con un primer turno de espera. Se le cambió el modelo a
+    `claude-fable-5-1` (esfuerzo xhigh) y se le mandó el encargo por `SendMessage` a las 08:28. Así todo su trabajo
+    corre con Fable.
+  - **B seguía agregando el botón del express;** se commitea al terminar.
+  - `proto-a` y `proto-d` siguen sin archivar hasta que él vea la E.
 - Las capturas se tomaron con el Chrome de la PC y el `puppeteer-core` del banco de `cantu-lessons` (solo se lee de ahí).
 
 El resto de este relevo es el que escribió la cabina de LECCIONES: sigue vigente.

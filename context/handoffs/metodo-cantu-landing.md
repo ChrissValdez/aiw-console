@@ -49,6 +49,27 @@
   2. commitea cada carpeta y publica;
   3. arma una entrada para verlas a pantalla completa, sin encoger nada;
   4. le pasa a él las ligas y las rutas completas.
+- **Los tres terminaron y están publicados (5-nov, ~01:35):**
+  - `10d422c`: PROTO-A, la hoja de respuestas sobre marino casi negro, en Moodle; 61,5 KB.
+  - `6937e07`: PROTO-B, la hoja en 3D con Three.js, página aparte; 0,28 MB y versión quieta.
+  - `7e2dd1b`: PROTO-D, segunda ronda, «examen impreso de antes».
+  - `562ff02`: la entrada `prototipos/index.html` y `veredictos/2026-11-05-proto-d-ronda-1.md`.
+
+  **El dueño le escribió directo a `proto-d`:** dijo que su primera ronda «perdió el estilo retro», y por eso esa sesión
+  la rehízo. La cabina copió esas palabras de la transcripción.
+
+  **Lo que midió la cabina en Chrome:**
+  - sin scroll de lado a 1440 ni a 390 px y un solo `h1`;
+  - todos los enlaces de WhatsApp van al número correcto y no hay errores en la consola;
+  - cero corchetes y cero `<svg>` en los bloques para Moodle de A y D.
+
+  **Corrección:** los mensajes de commit de A, B y D dicen «medido por la cabina (01:52)». La hora real fue hacia las
+  01:30; la cabina la escribió mal.
+
+  **PC-Chris tiene apagado «Mostrar animaciones en Windows»:** Chrome lo trata como `prefers-reduced-motion` y las tres
+  páginas se ven quietas. Se le dijo cómo encenderlo.
+
+  Las tres sesiones quedan sin archivar hasta su veredicto, por si toca otra ronda. **En espera de su opinión de los tres.**
 - Las capturas se tomaron con el Chrome de la PC y el `puppeteer-core` del banco de `cantu-lessons` (solo se lee de ahí).
 
 El resto de este relevo es el que escribió la cabina de LECCIONES: sigue vigente.

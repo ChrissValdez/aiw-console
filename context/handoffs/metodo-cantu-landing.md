@@ -39,6 +39,16 @@
   opinó: el tema no tiene que ver, el lenguaje sí, y la metáfora de Dala (fragmentos sueltos que se ordenan) es la del
   método. Recomendó el camino A: ese lenguaje dentro de Moodle, sin 3D y gratis. El camino B, fuera de Moodle y con 3D de
   verdad, implica dinero y un estudio. **En espera de lo que diga.**
+- **Pidió tres prototipos antes de decidir (~00:55),** cada uno en una sesión anidada: A (el lenguaje de Oryzo y Dala en
+  Moodle, sin 3D), B (3D fuera de Moodle) y D (la variante D pulida). Sus palabras están en
+  `veredictos/2026-11-05-tres-prototipos.md`. La cabina escribió el contenido común (`prototipos/CONTENIDO.md`) y los
+  encargos (`encargos/PROTO-COMUN.md`, `PROTO-A.md`, `PROTO-B.md` y `PROTO-D.md`, en `e693aec`), y lanzó a las 01:00
+  las sesiones `proto-a`, `proto-b` y `proto-d`. Escriben en `prototipos/A-lenguaje/`, `B-3d/` y `D-pulida/` y no tocan
+  git. **Al terminar las tres, la cabina:**
+  1. revisa lo que entregaron;
+  2. commitea cada carpeta y publica;
+  3. arma una entrada para verlas a pantalla completa, sin encoger nada;
+  4. le pasa a él las ligas y las rutas completas.
 - Las capturas se tomaron con el Chrome de la PC y el `puppeteer-core` del banco de `cantu-lessons` (solo se lee de ahí).
 
 El resto de este relevo es el que escribió la cabina de LECCIONES: sigue vigente.

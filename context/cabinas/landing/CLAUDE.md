@@ -49,6 +49,9 @@ necesito de ti**, **Qué procede** y, si se espera algo, **⏳ EN ESPERA de …*
 8. **Todo lo que él va a revisar se genera en el repo, nunca en `_scratch`** (2026-11-05): *«generalo en el repo todo el
    contenido a revisar sino se puede desincronizar el contenido entre computadoras»*. Se commitea y se publica antes de
    avisarle. Las sondas y pruebas desechables van al directorio temporal de la sesión, no a `_scratch`.
+9. **Nunca Fable** (2026-11-06): *«no lo quiero hacer con fable, consumio muchos tokens inecesariamente, no lo volvamos
+   a hacer»*. Los talleres van con Opus y esfuerzo alto; ni se lanzan con Fable ni se les cambia el modelo a Fable.
+10. **No se generan prototipos nuevos sin su nuevo feedback** (2026-11-06). La cabina espera.
 
 ## Lo que impone Moodle
 

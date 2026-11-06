@@ -38,6 +38,8 @@
   por `estados.json`. CR-PL·27 y ·28 (las dos revisiones: Chris, Meche y Final) ya están integradas.
 - **CR-GW y CR-LW, sin trabajo** desde las 13:00. Lo siguiente: la norma de letra y aire de la web, cuando cierre la tanda C.
 
+**Lo que la cabina le debe al operador (17:41):** cuando se integre CR-PL·31 (la lentitud de la plataforma), un **aviso grande y notorio** en el chat, y «⏳ EN ESPERA de que confirmes que ya no notas la lentitud».
+
 **Lo que espera al operador:**
 - en la galería CR-GS (`19304b5`, prueba-14d):
   - la «?» en el color de su bloque (vista de sistema en L21·D10: L08·D8, L21·D10 y L22·D8; las piezas `L08-b6-A3` y `L22-b5-A3`

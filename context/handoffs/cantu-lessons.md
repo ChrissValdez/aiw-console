@@ -10,6 +10,71 @@
 > **La cabina abre leyendo enteros** `context/cabinas/lecciones/CLAUDE.md` y `context/cabinas/REGLAS-DE-CABINA.md`. La
 > app abre la sesión en `AIW_Workspace`, así que ese `CLAUDE.md` **no se carga solo**.
 
+## Dónde estamos (2026-11-06, 15:55) — antes de compactar la conversación de la cabina
+
+> Lo escribió la cabina antes de que el operador compactara su conversación (CARRILES v2, «Ahorro y velocidad»). Lo de abajo, desde
+> «Dónde estamos (2026-10-31, 00:05)», es historia. **Gana el disco:** el veredicto, los encargos de `docs/carriles/` y `tablero.json`.
+
+**Los carriles (sesiones enlazadas a la cabina):**
+- CR-GW `local_ec02efe0-9621-4021-bb4a-7d666e418d3f`;
+- CR-GS `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`;
+- CR-LW `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`;
+- CR-LS `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`;
+- CR-PL `local_947c3c68-6237-48d1-b3f0-62e616d967ef`.
+
+**Lo que está en curso:**
+- **CR-GS·14** (las tandas del color y la norma; `docs/carriles/CR-GS/14-encargo.md` y sus adendas):
+  - falta L12·D5: una opción nueva sobre la 5, más su pieza `L12-b4-A2c` (adendas de las 15:44 y las 15:46);
+  - después deja su relevo, y **la cabina abre otra sesión de CR-GS** (contexto al 77 %), archiva la vieja y le apaga antes el Remote
+    Control.
+- **CR-LS·13** (escribe las tandas; adendas en `docs/carriles/CR-LS/13-encargo.md`):
+  - escritas y publicadas: A, B, A2 (L07), A3 (L21) y la C1 de L02 a L12;
+  - L13 ya está escrita (`6001620`) y falta publicarla; sigue el resto de la C1, y luego la C2;
+  - `L12-b4` espera la A2c. `L18-b4-C` y `L24-b5-C` van como estaban (solo la norma);
+  - al cerrar la C, la cabina la pasa a Sonnet (`set_session_model`).
+- **CR-PL·29:** plegar cada área del inicio, la vista «Hoy» del tamaño de las demás, y quitar la regla que dejaba aprobada L01·web
+  por `estados.json`. CR-PL·27 y ·28 (las dos revisiones: Chris, Meche y Final) ya están integradas.
+- **CR-GW y CR-LW, sin trabajo** desde las 13:00. Lo siguiente: la norma de letra y aire de la web, cuando cierre la tanda C.
+
+**Lo que espera al operador:**
+- en la galería CR-GS (`19304b5`, prueba-14d):
+  - la «?» en el color de su bloque (vista de sistema en L21·D10: L08·D8, L21·D10 y L22·D8; las piezas `L08-b6-A3` y `L22-b5-A3`
+    esperan su voto);
+  - L18·D5 y L24·D6 en una columna (piezas `-A4`);
+  - L12·D5, la ronda nueva, cuando CR-GS la entregue;
+- **L05·D5, la 10:** ¿rompe su regla de columnas (DISENO v82)? Pregunta abierta;
+- **álgebra, en pausa:** él pidió el plan («Sí, prepáralo») y luego lo pausó para hablar de carriles y tokens. No hay ninguna lección
+  de álgebra en el repo. El temario está en `temario/02-algebra.md`, `algebra.json` y `presupuesto-algebra.md`. La recomendación de
+  la cabina: sin carriles nuevos; la web, con CR-GW y CR-LW; una sola sesión de producción para el piloto;
+- **Meche:** las pestañas ya están; empieza a revisar cuando él diga.
+
+**Lo nuevo de hoy, en las reglas:**
+- **DISENO v76 a v82:**
+  - cuatro colores (sin la Lavanda), con el Azul acero de letra `#4E719B` (token `azul_letra`), y el plan de rotación cerrado
+    (L08–L10 en Azul acero de letra);
+  - la cuenta del paso a paso web al nivel 2 (en L07, el 3);
+  - la norma de la slide aplicada, con dos excepciones;
+  - un procedimiento no salta de columna.
+- **CARRILES v2:** un aviso por tanda; releer el voto antes de entregar; un dueño por galería; renovar al pasar del 60 %.
+- **`lecciones/tablero.json` → `teselas` (CR-PL·26 y ·27):** cada tesela por escribir se declara «en el taller» o «espera». También
+  se puede declarar una pieza entera (`"L11·slide"`). Lo escrito y no publicado sale «por publicar», en gris.
+- **Los apuntes:**
+  - una decisión de sistema va con su propio código y `--en` (`CR-GS12`, `CR-GS12R`, `CR-GS14P` el color del plan, `CR-GS14N` la
+    norma);
+  - `escrita.mjs` se niega a pisar otro apunte (CR-PL·25);
+  - **misma vista** (la clave heredada de RW-59, RW-61 o RW-64) con una decisión más nueva: `--reemplazar`, sin preguntar;
+  - **dos vistas distintas en una slide** (el paso a paso y el color de la tanda 2): el paso a paso se queda con el apunte, y el
+    color va como `CR-GS14P`.
+
+**Las herramientas de la cabina** (en `_scratch/cabina-lecciones/`):
+- `pendientes.mjs` mide el 🚧 en su propio servidor (8797) y escribe `pendientes.json`. Se corre en cada cierre;
+- `vigilar-votos.mjs 120`, siempre con `run_in_background` (no con `&`). Se rearma cada vez que despierta.
+- **Al publicar:** un worktree temporal, con `git -C` y sin hacer `cd` dentro. Si la shell queda dentro, Windows no deja borrarlo:
+  quedaron `pubgw15`, `pubgw15b`, `int26-cantu-revisiones` y `pubL06`, que el operador borra cuando quiera.
+
+**Los tokens:** a las 15:49 iba el 15 % de la semana (se reinicia el 13-nov a las 04:59). La cabina tenía el 70 % de su contexto, CR-GS el
+77 % y CR-LS el 32 %.
+
 ## Dónde estamos (2026-10-31, 00:05)
 
 - **2026-11-04, 19:20: la revisión general de las slides** (el operador, comentario general `GEN-20261104-173148`, y otro

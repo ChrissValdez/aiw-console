@@ -29,7 +29,7 @@
     Control.
   - **15:59: L12·D5 entregada (la 6, en la galería 8e421a1) y relevo escrito** (`docs/carriles/CR-GS.md`, `1857f00`). **Falta abrir
     la sesión nueva:** por Remote Control la app no deja abrir sesiones ni proponer tarjetas. Se abre con un mensaje del operador
-    escrito en la app de escritorio. El brief está en el veredicto. Mientras tanto, la sesión vieja sigue disponible.
+    escrito en la app de escritorio. El brief está en `_scratch/cabina-lecciones/brief-cr-gs-2.md`. Mientras tanto, la sesión vieja sigue disponible.
 - **CR-LS·13** (escribe las tandas; adendas en `docs/carriles/CR-LS/13-encargo.md`):
   - escritas y publicadas: A, B, A2 (L07), A3 (L21) y la C1 de L02 a L12;
   - L13 ya está escrita (`6001620`) y falta publicarla; sigue el resto de la C1, y luego la C2;

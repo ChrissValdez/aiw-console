@@ -17,7 +17,7 @@
 
 **Los carriles (sesiones enlazadas a la cabina):**
 - CR-GW `local_ec02efe0-9621-4021-bb4a-7d666e418d3f`;
-- CR-GS `local_49a75736-5723-47eb-8d03-a0d0bd4bdb55`;
+- CR-GS `local_1a18fc95-7a2d-4918-b1fa-dd2b714f3416` (renovada a las 17:34; la vieja, `local_49a75736…`, archivada);
 - CR-LW `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`;
 - CR-LS `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`;
 - CR-PL `local_947c3c68-6237-48d1-b3f0-62e616d967ef`.
@@ -27,8 +27,7 @@
   - falta L12·D5: una opción nueva sobre la 5, más su pieza `L12-b4-A2c` (adendas de las 15:44 y las 15:46);
   - después deja su relevo, y **la cabina abre otra sesión de CR-GS** (contexto al 77 %), archiva la vieja y le apaga antes el Remote
     Control.
-  - **15:59: L12·D5 entregada (la 6, en la galería 8e421a1) y relevo escrito** (`docs/carriles/CR-GS.md`, `1857f00`). **Falta abrir
-    la sesión nueva:** por Remote Control la app no deja abrir sesiones ni proponer tarjetas. Se abre con un mensaje del operador
+  - **15:59: L12·D5 entregada (la 6, en la galería 8e421a1) y relevo escrito** (`docs/carriles/CR-GS.md`, `1857f00`). **Ya abierta (17:34):** por Remote Control la app no deja abrir sesiones ni proponer tarjetas. Se abre con un mensaje del operador
     escrito en la app de escritorio. El brief está en `_scratch/cabina-lecciones/brief-cr-gs-2.md`. Mientras tanto, la sesión vieja sigue disponible.
 - **CR-LS·13** (escribe las tandas; adendas en `docs/carriles/CR-LS/13-encargo.md`):
   - escritas y publicadas: A, B, A2 (L07), A3 (L21) y la C1 de L02 a L12;

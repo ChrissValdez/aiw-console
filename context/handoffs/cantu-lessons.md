@@ -64,6 +64,17 @@
     2. ARI-23 es complementaria, pero prepara el quiz de Porcentajes. La cabina recomienda que el quiz cierre tras ARI-20 y que
        ARI-23 quede en la complementaria como refuerzo de ese quiz. Pasarla a esencial obligaría a renumerar.
   - **Con su sí:** el campo `quiz` en `codigos.json` y el encargo del modo a CR-PL.
+  - **01:01, de acuerdo con los bloques** (el caso 1 queda decidido: Propiedades cierra en ARI-02). Pregunta además por el orden de la
+    complementaria y por pasar ARI-23 a la esencial (veredicto, cantu-lessons `f8f0b36`).
+    - Notación científica no está en medio por ningún motivo: RW-79 dejó las complementarias en el orden que tenían.
+    - ARI-23 prepara 19 de las 95 preguntas de Porcentajes. Es complementaria por RW-77, porque el PAA nunca la pregunta.
+    - **La cabina recomienda una tercera renumeración, de 6 códigos (RW-82, con el molde de RW-79):**
+      - ARI-23 → ARI-21, esencial, al final del grupo 5;
+      - ARI-24–26 → ARI-22–24, Intereses;
+      - ARI-21–22 → ARI-25–26, Notación científica;
+      - ARI-01–20 y ARI-27–29 no cambian.
+    - Quedan 21 esenciales y 8 complementarias, sin ninguna lección suelta. Primero RW-82 y después el campo `quiz` y CR-PL, porque
+      los dos tocan `codigos.json`. Espera su sí.
 - **El temario de álgebra no está aprobado:**
   - en la página hay 0 marcas (`evaluacion` vacía, medido a las 00:40);
   - siguen abiertas las 4 dudosas, la geometría que usa álgebra y el plan.

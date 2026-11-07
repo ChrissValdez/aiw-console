@@ -264,6 +264,25 @@
     - el aviso a Chris y a Meche: «ya se vota, recarguen»;
     - si alguna laptop publica votos de antes, correr en la PC `renumerar.mjs --revisiones` y `--comprobar` (§10, paso 11).
   - **El vigilante de votos,** rearmado como `bqz6fkdul` (14:55).
+- **La tarde del 7-nov, álgebra primero (de 15:51 a 17:49; veredictos en cantu-lessons, de `d3a3b78` a `dbc9173`):**
+  - 15:51, «dime en qué estamos»; 15:55, «Sí, álgebra primero»; 16:06, los bloques de los dos temarios; 16:12, la duda de
+    ALG-31 y de los «regresos».
+  - **16:16, «revisa todo el contenido de álgebra»** (`504bff3`): 0 lecciones antes de lo que necesitan; 4 bloques partidos (2,
+    3, 7 y 11). Preguntas que se enseñan después de su quiz: Desigualdades 20 de 86, Fundamentos 16 de 106, Ecuaciones
+    lineales 15 de 98, Polinomios 12 de 82 y Sistemas 9 de 99. Casi todas por lo que la lección necesita. Scripts y salida
+    en `_scratch/RW-86/` (`auditar-algebra-2.mjs`, `auditoria-algebra-2.txt`).
+  - **17:43, «Estoy de acuerdo con las re etiquetas» y «listo» a la página de álgebra** (`dbc9173`):
+    - re-etiquetas, sin cambiar ningún código: ALG-31 → «5 · Sistemas»; ALG-68 → «11 · Cuadráticas»; ALG-70 a 72 → «7b ·
+      Radicales: ecuaciones y racionalizar». Ningún bloque queda partido;
+    - la página, versión 8 (`1794095255-d059`; copia `_scratch/RW-86/pagina-b.html`, md5 `cfd0b7db…`), con «Por qué va
+      aquí» en 20 lecciones;
+    - `evaluacion`, 0 documentos (17:46): **el temario de álgebra queda aprobado tal cual**;
+    - `NUMERACION-DE-LECCIONES.md`, «Congelado»: los «4 regresos» pasan a «Ningún bloque queda partido».
+  - **RW-88 encargado (17:51, `7ca7b89`):** el plan de álgebra en `.docx` (`temario/Algebra-temario.docx`, molde de
+    aritmética), su extractor en Node (`temario/extraer_docx_algebra.mjs` → `temario/algebra-plan.json`) y ALG-01 y ALG-02
+    listos para el piloto. **Sin lanzar:** el operador trabaja por Remote Control y la app no deja abrir sesiones ni
+    proponer tarjetas. Se lanza con un mensaje suyo escrito en la app de escritorio, o como agente de fondo si dice «hazlo
+    aquí».
 - **RW-82 entregado (lo revisé a las 02:25)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`),
   sin choques con main. «Para integrar» está en `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
   - **B quedó aprobado (12:13) y deja aritmética en la v3, así que se integra tal cual.** Solo falta su «listo», con los tres

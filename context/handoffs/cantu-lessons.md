@@ -245,7 +245,7 @@
       - **14:32, «Ya la cerré»** (veredicto `a215a82`): a las 14:33 el 8791 seguía escuchando (PID 19172, hijo del PowerShell
         de `abrir-galeria.ps1`, PID 1788). Cerró el navegador, no la ventana del servidor. `cantu-revisiones` está limpio y al día
         (`8c86c01`), sin votos pendientes. Se le pidió Enter en esa ventana o su permiso para que la cabina lo pare.
-      - **14:35, «Páralo tú»** (veredicto `54f44ab`): la cabina paró el 8791 y escribió `desde` a las 14:36:12 (medido con `date`).
+      - **14:34, «Páralo tú»** (veredicto `54f44ab`): la cabina paró el 8791 y escribió `desde` a las 14:36:12 (medido con `date`).
 - **RW-82 integrado en la PC (de 14:36 a 14:55):** en `codigos.json`, `"desde": "2026-11-07T14:36:12-06:00"`.
   - `renumerar.mjs`: dos pasadas, y la tercera, sin cambios. `--comprobar`: ningún código de antes en lo vivo.
   - **Votos:** ninguno perdido ni cambiado en las 10 galerías. `contar-votos.mjs comparar` da un «MAL» falso en seis: lee

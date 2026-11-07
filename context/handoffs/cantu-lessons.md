@@ -164,7 +164,14 @@
             Exponentes (de 24,5 a 25,3 preg./forma).
           - Para el que no sabe nada, Geometría entra desde 65 h y Funciones desde 87 h [ESTIMADO].
         - **12:48:** la cabina le pidió comprobar si Geometría queda fuera con 50 h por el examen o por elegir de uno en uno
-          (la cadena de figuras como paquete). Falta esa respuesta para archivar la sesión.
+          (la cadena de figuras como paquete).
+        - **Respuesta a las 12:54 (`690f507`, subido a las 12:55; sesión archivada): era el coach, no el examen.**
+          - Ahora el coach compara planes enteros, y un candidato puede ser un tramo de la cadena de un área.
+          - El que no sabe nada, con 50 h, pasa de 25,3 a 29,0 preg./forma: entra la cadena de figuras de Geometría y sale
+            Datos entero.
+          - Geometría entra desde 44 h (antes 65) y Funciones desde 85 h.
+          - Con 20 h no cambia nada (11,8), porque el paquete cuesta ≈ 37,4 h.
+          - El JSON trae los planes de este coach.
       - **12:45, «Sí, apérgalo»** (veredicto `dce1699`): aprobó Desigualdades detrás de Sistemas (RW-85, duda 1). Siguen abiertas
         las dudas 2 a 8.
       - **RW-86 lanzado** (encargo en cantu-lessons `8c38d7f`; sesión `local_66b72197-053f-4a2e-8d1e-f07544d9a0dc`).

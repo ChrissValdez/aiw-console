@@ -111,6 +111,20 @@
       - Probada en el 8986: 30 tramos y 14 quizzes, igual que RW-83 §5.
       - La copia de antes está en `_scratch\RW-83\pagina-agrupada.antes-cambios.html`.
       - **Siguen abiertas la duda 3 (con CQL) y la 4,** y su revisión del temario.
+    - **02:29:** le llevé al chat la lista agrupada de las 72, con títulos.
+    - **10:56, «Me causa ruido eso de refuerzos»** (veredicto, cantu-lessons `df896ca`). Le molesta que el mismo tema vuelva 13 a 46
+      lecciones después, como pasó con Porcentajes en aritmética.
+      - Medido: son 14 refuerzos, con 205 preguntas del banco y 0 del PAA. 10 podrían ir justo después de su tema; 53, 54, 71 y
+        72 necesitan un tema posterior.
+      - Tres caminos:
+        - A, pasarlos a la esencial, como ARI-23;
+        - **B (la recomendación de la cabina), pegados a su tema y opcionales;**
+        - C, dejarlos como están.
+      - B y A cambian la regla de numerar de álgebra, pero aritmética no se mueve. Espera su decisión.
+- **RW-82 entregado (02:2x)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`), sin choques con
+  main. **Espera su «listo»:** los tres aparatos sincronizados y la galería del 8791 cerrada. «Para integrar» está en
+  `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
+- **Vigilante de votos:** el `bnj2w4wng` se paró al reiniciarse la sesión. Se rearmó a las 10:57 como `b2e2rei5e`.
 - **El temario de álgebra no está aprobado:**
   - en la página hay 0 marcas (`evaluacion` vacía, medido a las 00:40);
   - siguen abiertas las 4 dudosas, la geometría que usa álgebra y el plan.

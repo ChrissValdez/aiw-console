@@ -38,6 +38,17 @@
   por `estados.json`. CR-PL·27 y ·28 (las dos revisiones: Chris, Meche y Final) ya están integradas.
 - **CR-GW y CR-LW, sin trabajo** desde las 13:00. Lo siguiente: la norma de letra y aire de la web, cuando cierre la tanda C.
 
+**2026-11-07, 00:40 · El subtítulo de las rutas y el piloto de álgebra** (veredicto y encargo en cantu-lessons `0911d44`).
+- **CR-PL·34 encargado (00:41):** el subtítulo de CR-PL·33 hace bien su trabajo, pero «no se ve tan bonito». La primera fase son tres
+  versiones con fotos en `_scratch\CR-PL\34\fotos\`, sin integrar. Cuando CR-PL avise: enseñárselas (SendUserFile) y pasarle a CR-PL
+  la elección tal cual.
+- **El temario de álgebra no está aprobado:**
+  - en la página hay 0 marcas (`evaluacion` vacía, medido a las 00:40);
+  - siguen abiertas las 4 dudosas, la geometría que usa álgebra y el plan.
+- **El piloto ALG-01 y ALG-02:** lo frenan su sí al temario, el plan de esas dos lecciones y el área ALG en la plataforma
+  (`codigos.json` solo tiene ARI). No lo frenan las 4 dudosas, la geometría ni NUEVAS-FG.
+- **Recomendación de la cabina:** aprobar el temario como está y preparar el plan de las dos lecciones del piloto. Se espera su sí.
+
 **RW-81 aceptado (2026-11-06, 23:25, «Sí, las 7»):** sin glosario (veredicto y reglas en cantu-lessons `e1a0c13`). **CR-LW·17** encargado (23:27): las frases «divisor común mayor» (ARI-12 · S1) y «¿qué por ciento…?» (ARI-18 · S1), y «cifra» → «dígito» en toda la web de ARI-14. **CR-LW·17 integrado y publicado (23:40):** cantu-lessons hasta `0b2d0d0` y las páginas en cantu-revisiones `c0e1eb9`. ARI-12 · S1 lleva la frase debajo de las dos tarjetas, porque dentro de la del MCD daba rojo por las gemelas. ARI-18 · S1 queda en amarillo por el aviso de palabras (56 + 11 = 67); lo admitió la cabina (precedente CR-LW·03, L11·S1) y el operador puede pedir el verde. **CR-LS·14 encargado (23:41, `2534f3c`):** las mismas frases en ARI-12 · D2 (pie debajo de las tarjetas), ARI-18 · D2 (al final del subtítulo) y «dígito» en D6, D10 y D11 de ARI-14. **CR-LS·14 integrado y publicado (23:54):** cantu-lessons hasta `0e27d92` y las slides en cantu-revisiones `8c86c01`; las tres en verde, ninguna vuelve a 👁 (no estaban aprobadas). RW-81 queda cerrado en web y slide. TALLER-COMUN v9: puntos 14 («dígito» al volver a tocar ARI-06/07/11/15/21), 15 (las 8 palabras de álgebra de RW-81 §5) y 16 («carril» = sesión CR-*; en la galería, «modo web/slide»). CARRILES v2 punto 4: se compacta, no se renueva. Lo del banco, a CQL como nota (sin respuesta). MCM/mcm sigue con las convenciones pendientes.
 
 **RW-80 aceptado (2026-11-06, 23:12, «Sí, acéptalas»):** las 5 dudas de su §6, como recomienda el informe (veredicto, cantu-lessons `974784e`). El hueco de la fórmula general (4 a 6 Fácil y Medio, por `AZUL-026`) CQL lo programó como **NUEVAS-FG** (`ac5935a`, fila 454): de 4 a 6 nuevas al final de `ALG-EQD-EcuacionesCuadraticas-01_Facil` y `-02_Medio` (desde `-Facil-027` y `-Medio-058`); «ninguna solución real» irá como Fácil, y la raíz doble puede quedar fuera por gemela. Taller, verificación ciega, integración y compilación tras la QA de Chris; CQL avisa al integrar. La página del temario, versión 3 (las 5 en «Ya decidido»). Lo siguiente: las 7 dudas de RW-81, presentadas al operador con los códigos de hoy (L14 → ARI-12, L20 → ARI-18, L16 → ARI-14…).

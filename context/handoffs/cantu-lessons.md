@@ -211,6 +211,11 @@
           opcionales o al simulador.
         - **A estrategia-moodle se le pasa con RW-85:** nada reparte horas entre Español y Matemáticas.
         - Pregunta si encarga el diseño del diagnóstico por área.
+      - **13:56, «si encargalo»:** RW-87 encargado (cantu-lessons `f0ce943`, encargo en la línea 4700 de
+        `REVISION-WEB-TICKETS.md`). Es el diseño de solo lectura del diagnóstico de Matemáticas por área. Entrega `RW-87.md` y
+        `DIAGNOSTICO-POR-AREA.json`.
+        - **Sin lanzar:** el operador escribe por Remote Control, y la app no deja abrir la sesión (ni con `user_asked` ni con
+          tarjeta). Se le preguntó si lo corre la cabina como agente de fondo o si lo lanza él escribiendo desde la PC.
 - **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,
   `servidor/arranque.mjs 8791`, abierto a las 09:57). La cabina no lo toca y le pidió que lo cierre. Los dos repos están al
   día. El vigilante de votos se rearmó como `bo3309pwf`.

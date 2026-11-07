@@ -195,6 +195,13 @@
         - La cabina recomienda el diagnóstico por área, con tres cuidados: se abre al empezar el área y se puede adelantar; cada
           pregunta va a un tramo de la ruta; el plan del primer día es provisional.
         - Propone encargar su diseño. Espera su sí.
+      - **13:48, «¿por área tal cual, o también un inicial general?»** (veredicto `76b35d5`). La cabina recomienda dos piezas,
+        cada una con un solo trabajo:
+        - un inicial corto el primer día: reparte las horas entre Español y Matemáticas, da el primer plan y queda como punto de
+          partida; no mapea temas;
+        - el diagnóstico por área: decide qué tramos saltar.
+        - El inicial aporta porque Español es 70 de las 125 preguntas y los de área no lo miden. Pregunta si encarga el diseño
+          con las dos piezas.
 - **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,
   `servidor/arranque.mjs 8791`, abierto a las 09:57). La cabina no lo toca y le pidió que lo cierre. Los dos repos están al
   día. El vigilante de votos se rearmó como `bo3309pwf`.

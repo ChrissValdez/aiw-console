@@ -38,7 +38,7 @@
   por `estados.json`. CR-PL·27 y ·28 (las dos revisiones: Chris, Meche y Final) ya están integradas.
 - **CR-GW y CR-LW, sin trabajo** desde las 13:00. Lo siguiente: la norma de letra y aire de la web, cuando cierre la tanda C.
 
-**Lo que la cabina le debía al operador, cerrado (2026-11-06, 19:53):** el aviso grande de la lentitud se dio a las 18:40, y él contestó desde la PC que «ya no esta lento», con la duda de que fuera por la poca carga. Si vuelve con los carriles trabajando, va a CR-PL. En Chrome seguía la línea de QuotaExceededError: el almacén ya estaba lleno, y se quita borrando los datos de 127.0.0.1 una vez.
+**Lo que la cabina le debía al operador, cerrado (2026-11-06, 19:51):** el aviso grande de la lentitud se dio a las 18:40, y él contestó desde la PC que «ya no esta lento», con la duda de que fuera por la poca carga. Si vuelve con los carriles trabajando, va a CR-PL. En Chrome seguía la línea de QuotaExceededError: el almacén ya estaba lleno, y se quita borrando los datos de 127.0.0.1 una vez.
 
 **Lo que espera al operador:**
 - en la galería CR-GS (`19304b5`, prueba-14d):

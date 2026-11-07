@@ -202,6 +202,15 @@
         - el diagnóstico por área: decide qué tramos saltar.
         - El inicial aporta porque Español es 70 de las 125 preguntas y los de área no lo miden. Pregunta si encarga el diseño
           con las dos piezas.
+      - **13:53, «español y matematicas estan separados»** (veredicto `72bb2f6`): se estudian por separado, cada uno con su
+        diagnóstico, y solo se juntan en el simulador. **La cabina retira el inicial corto:** su razón era ese reparto.
+        - Recomienda solo el diagnóstico de Matemáticas por área, encadenado: el de aritmética se presenta el primer día; si sale
+          bien, se ofrece el siguiente enseguida, y si sale flojo, el siguiente se abre al llegar a su área. Cada pregunta apunta
+          a un tramo, y el plan del primer día es provisional.
+        - Responde en parte la duda 8 de RW-85: lo que sobra en Matemáticas no pasa a Español. Falta decidir si va a las
+          opcionales o al simulador.
+        - **A estrategia-moodle se le pasa con RW-85:** nada reparte horas entre Español y Matemáticas.
+        - Pregunta si encarga el diseño del diagnóstico por área.
 - **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,
   `servidor/arranque.mjs 8791`, abierto a las 09:57). La cabina no lo toca y le pidió que lo cierre. Los dos repos están al
   día. El vigilante de votos se rearmó como `bo3309pwf`.

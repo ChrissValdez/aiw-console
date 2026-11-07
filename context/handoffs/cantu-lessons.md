@@ -280,9 +280,8 @@
     - `NUMERACION-DE-LECCIONES.md`, «Congelado»: los «4 regresos» pasan a «Ningún bloque queda partido».
   - **RW-88 encargado (17:51, `7ca7b89`):** el plan de álgebra en `.docx` (`temario/Algebra-temario.docx`, molde de
     aritmética), su extractor en Node (`temario/extraer_docx_algebra.mjs` → `temario/algebra-plan.json`) y ALG-01 y ALG-02
-    listos para el piloto. **Sin lanzar:** el operador trabaja por Remote Control y la app no deja abrir sesiones ni
-    proponer tarjetas. Se lanza con un mensaje suyo escrito en la app de escritorio, o como agente de fondo si dice «hazlo
-    aquí».
+    listos para el piloto. A las 17:49 no se pudo lanzar (Remote Control). **17:53, «lánzalo como su propio taller»:**
+    lanzado como `local_96e58dcc-04f6-44a1-970b-e9b6d49e79e3` («rw-88-plan-algebra»). Espera su mensaje.
 - **RW-82 entregado (lo revisé a las 02:25)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`),
   sin choques con main. «Para integrar» está en `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
   - **B quedó aprobado (12:13) y deja aritmética en la v3, así que se integra tal cual.** Solo falta su «listo», con los tres

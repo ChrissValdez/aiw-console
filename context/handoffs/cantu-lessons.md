@@ -121,9 +121,14 @@
         - **B (la recomendación de la cabina), pegados a su tema y opcionales;**
         - C, dejarlos como están.
       - B y A cambian la regla de numerar de álgebra, pero aritmética no se mueve. Espera su decisión.
-- **RW-82 entregado (02:2x)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`), sin choques con
-  main. **Espera su «listo»:** los tres aparatos sincronizados y la galería del 8791 cerrada. «Para integrar» está en
-  `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
+    - **11:01, «C descartado… estoy entre A o B».** Pregunta si el concepto es «esencial y opcional» en vez de «esencial y
+      complementaria», y pide analizar los dos temarios.
+      - **RW-84 lanzado** (encargo en cantu-lessons `396aa7a`; sesión `local_f364861e-c7ce-44eb-89ec-9de4eeca0b99`). Es de solo
+        lectura y compara hoy, A y B en aritmética y álgebra. Entrega `RW-84.md` y `ORDEN-ESENCIAL-OPCIONAL.json`.
+- **RW-82 entregado (lo revisé a las 02:25)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`),
+  sin choques con main. «Para integrar» está en `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
+  - **En pausa hasta que decida el modelo (RW-84):** con B, Notación científica podría volver junto a Operaciones y la numeración
+    de aritmética cambiaría otra vez. Después necesita su «listo», con los tres aparatos sincronizados y el 8791 cerrado.
 - **Vigilante de votos:** el `bnj2w4wng` se paró al reiniciarse la sesión. Se rearmó a las 10:57 como `b2e2rei5e`.
 - **El temario de álgebra no está aprobado:**
   - en la página hay 0 marcas (`evaluacion` vacía, medido a las 00:40);

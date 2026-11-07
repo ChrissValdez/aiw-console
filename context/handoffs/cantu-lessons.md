@@ -158,6 +158,13 @@
         - **La cabina le devolvió los planes de §7** (12:43): el coach arrastraba solo los usos del examen, y los planes mandaban
           a Datos sin fracciones y a Funciones sin álgebra. El arrastre tiene que contar los fundamentos del temario. La tabla de
           álgebra no cambia. La sesión sigue abierta hasta esa corrección.
+      - **12:45, «Sí, apérgalo»** (veredicto `dce1699`): aprobó Desigualdades detrás de Sistemas (RW-85, duda 1). Siguen abiertas
+        las dudas 2 a 8.
+      - **RW-86 lanzado** (encargo en cantu-lessons `8c38d7f`; sesión `local_66b72197-053f-4a2e-8d1e-f07544d9a0dc`).
+        - Prepara la página de álgebra con el orden final, `_scratchRW-86pagina-b.html`: marca por fila e interruptor
+          «Esconder las opcionales».
+        - Lee la tabla del commit `b972661`. `evaluacion` tiene 0 documentos (12:47).
+        - La cabina la publica en `KVVPFq3NkR7Ac3hxhQsLee`.
 - **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,
   `servidor/arranque.mjs 8791`, abierto a las 09:57). La cabina no lo toca y le pidió que lo cierre. Los dos repos están al
   día. El vigilante de votos se rearmó como `bo3309pwf`.

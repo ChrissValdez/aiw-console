@@ -38,6 +38,8 @@
   por `estados.json`. CR-PL·27 y ·28 (las dos revisiones: Chris, Meche y Final) ya están integradas.
 - **CR-GW y CR-LW, sin trabajo** desde las 13:00. Lo siguiente: la norma de letra y aire de la web, cuando cierre la tanda C.
 
+**CR-PL·32 integrado (2026-11-06, 21:21):** el botón «Reiniciar» junto a «Sincronizar» (cantu-revisiones `32fb1b7`, cantu-lessons `69faca5`; informe `docs/carriles/CR-PL/32.md`). Llega a cada aparato con su primer «Sincronizar», que reinicia solo porque cambia `servidor/`. Sin conflictos con `rw-79-ruta-esencial` (merge-tree del carril).
+
 **El temario de álgebra, versión 2 (2026-11-06, 21:19):** la misma página, ahora con el orden de RW-80 (`cantu-lessons 21b770c`, integrado; taller archivado). Los datos salen de `RW-80.md` §4 y §5 con `scratchpad/alg/extraer80.mjs`: las piezas suman lo de cada lección en las 72. Esperan al operador las 5 dudas de RW-80 (§6), su evaluación en la página y las 4 dudosas (ALG-52, 64, 56 y 36). **RW-81** (¿cada concepto con un solo nombre?, el glosario) está en curso, `local_65d1d8bb…`: es solo medición, el operador lo revisa antes de aplicar nada.
 
 **El temario de álgebra, para evaluar (2026-11-06, 20:37):** página privada https://claude.ai/artifact/KVVPFq3NkR7Ac3hxhQsLee, hecha con los datos de RW-78. Tiene las 72 lecciones (ALG-01…ALG-72) en dos rutas. El operador marca cada una «bien», «cambiar» o «duda», con una nota. Sus marcas se leen con `ArtifactData` `list` de la colección `evaluacion`, un documento por código, con los campos `veredicto`, `nota`, `el` y `por`.

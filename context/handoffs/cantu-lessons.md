@@ -81,6 +81,12 @@
     - **RW-82 lanzado**, en la sesión `local_1f88e612-d66c-4f93-8436-b7a0b644c061`, con ramas `rw-82-renumerar` y sin push.
     - La migración la corre la cabina al integrar, con su §«Para integrar»: los tres aparatos sincronizados y sin votar.
     - Después de RW-82 vienen el campo `quiz` y CR-PL.
+    - **01:09, RW-82 pidió tocar la plataforma** porque `ARI-21` es válido en las dos generaciones. La cabina contestó:
+      - `numeracion` en cada POST, con 409 solo sobre ARI-21–26 y `VERSION_DE_DATOS` 6; la página dice «recárgala» sin perder lo
+        escrito;
+      - `"n":"RW-82"` en los renglones de `respuestas.log`;
+      - **`desde` (la hora ISO del corte) la escribe la cabina a mano en `codigos.json`** al integrar. La herramienta se niega a
+        correr sin ella.
 - **Álgebra agrupada por quiz (01:04):** *«y agrupa igual los temas de algebra, para poder analizarlo de la misma manera antes de
   aprobarlo»*.
   - En álgebra no hay «Practica en»: hay que medirlo por el fichero de cada pregunta, con 14 quizzes del banco.

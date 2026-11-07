@@ -163,7 +163,7 @@
           - Solo cambian los dos planes del que no sabe nada: con 50 h sale Funciones y entran Sistemas, Desigualdades y
             Exponentes (de 24,5 a 25,3 preg./forma).
           - Para el que no sabe nada, Geometría entra desde 65 h y Funciones desde 87 h [ESTIMADO].
-        - **12:49:** la cabina le pidió comprobar si Geometría queda fuera con 50 h por el examen o por elegir de uno en uno
+        - **12:48:** la cabina le pidió comprobar si Geometría queda fuera con 50 h por el examen o por elegir de uno en uno
           (la cadena de figuras como paquete). Falta esa respuesta para archivar la sesión.
       - **12:45, «Sí, apérgalo»** (veredicto `dce1699`): aprobó Desigualdades detrás de Sistemas (RW-85, duda 1). Siguen abiertas
         las dudas 2 a 8.

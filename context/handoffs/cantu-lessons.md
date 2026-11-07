@@ -20,7 +20,8 @@
 - CR-GS `local_1a18fc95-7a2d-4918-b1fa-dd2b714f3416` (renovada a las 17:34; la vieja, `local_49a75736…`, archivada);
 - CR-LW `local_4a414da2-60b9-4ccf-b42b-ddecaee83b21`;
 - CR-LS `local_7c6e3e45-a14b-4444-bb79-721be4b4083a`;
-- CR-PL `local_4c741188-e71b-48a9-a760-74382af20e8c`.
+- CR-PL `local_4c741188-e71b-48a9-a760-74382af20e8c`;
+- CR-PE `local_af06ccde-1ef8-480f-96a3-895491e78db5` (Peticiones, abierto el 7-nov a las 17:56; CARRILES v3).
 
 **Lo que está en curso:**
 - **CR-GS·14** (las tandas del color y la norma; `docs/carriles/CR-GS/14-encargo.md` y sus adendas):
@@ -282,6 +283,10 @@
     aritmética), su extractor en Node (`temario/extraer_docx_algebra.mjs` → `temario/algebra-plan.json`) y ALG-01 y ALG-02
     listos para el piloto. A las 17:49 no se pudo lanzar (Remote Control). **17:53, «lánzalo como su propio taller»:**
     lanzado como `local_96e58dcc-04f6-44a1-970b-e9b6d49e79e3` («rw-88-plan-algebra»). Espera su mensaje.
+  - **17:54 y 17:56, el carril CR-PE · Peticiones** (cantu-lessons `ee1915d` y `f66d600`): un carril de larga vida para lo
+    que no es de otro carril (los RW y lo que el operador pida directo, también desde la laptop por Remote Control). Sus reglas,
+    en `CARRILES.md` «v3»; su bitácora, `docs/carriles/CR-PE.md`; el brief, `_scratch/cabina-lecciones/brief-cr-pe.md`. Copia
+    las palabras del operador en su informe y avisa a la cabina una vez por petición; el veredicto lo sigue escribiendo la cabina.
 - **RW-82 entregado (lo revisé a las 02:25)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`),
   sin choques con main. «Para integrar» está en `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
   - **B quedó aprobado (12:13) y deja aritmética en la v3, así que se integra tal cual.** Solo falta su «listo», con los tres

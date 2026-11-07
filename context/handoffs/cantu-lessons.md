@@ -245,9 +245,25 @@
       - **14:32, «Ya la cerré»** (veredicto `a215a82`): a las 14:33 el 8791 seguía escuchando (PID 19172, hijo del PowerShell
         de `abrir-galeria.ps1`, PID 1788). Cerró el navegador, no la ventana del servidor. `cantu-revisiones` está limpio y al día
         (`8c86c01`), sin votos pendientes. Se le pidió Enter en esa ventana o su permiso para que la cabina lo pare.
-- **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,
-  `servidor/arranque.mjs 8791`, abierto a las 09:57). La cabina no lo toca y le pidió que lo cierre. Los dos repos están al
-  día. El vigilante de votos se rearmó como `bo3309pwf`.
+      - **14:35, «Páralo tú»** (veredicto `54f44ab`): la cabina paró el 8791 y escribió `desde` a las 14:36:12 (medido con `date`).
+- **RW-82 integrado en la PC (de 14:36 a 14:55):** en `codigos.json`, `"desde": "2026-11-07T14:36:12-06:00"`.
+  - `renumerar.mjs`: dos pasadas, y la tercera, sin cambios. `--comprobar`: ningún código de antes en lo vivo.
+  - **Votos:** ninguno perdido ni cambiado en las 10 galerías. `contar-votos.mjs comparar` da un «MAL» falso en seis: lee
+    las claves sin fecha y las toma por de hoy. La comparación que sirve usa la generación del informe de la migración
+    (RW-79): `_scratch/RW-82/trabajo/comparar-con-informe.mjs`.
+  - **Prueba en el 8795** (proceso hijo, parado por su handle):
+    - el inicio dice «Ruta esencial · ARI-01 a ARI-21 · 21 lecciones»;
+    - ARI-21 es «Porcentaje ¿de qué?» y ARI-25, «Notación científica»;
+    - un «Aprobar» de prueba en ARI-21 se guardó sin 409 y se deshizo; los `respuestas.*` de REVISADAS se restauraron
+      con `git checkout --`.
+  - `build.mjs --todas`, con 0 ✘, y `publicar-paginas.mjs`, con 38 ficheros cambiados y ninguno borrado.
+  - **Commits, todos subidos:** en cantu-lessons, `e5b916a` (encima del merge `9c925c4`); en cantu-revisiones, `ff73677`
+    (galerías y lecciones) y `9894496` (las páginas publicadas).
+  - **Falta:**
+    - el doble clic en el botón de Laptop-Chris y de Laptop-MC;
+    - el aviso a Chris y a Meche: «ya se vota, recarguen»;
+    - si alguna laptop publica votos de antes, correr en la PC `renumerar.mjs --revisiones` y `--comprobar` (§10, paso 11).
+  - **El vigilante de votos,** rearmado como `bqz6fkdul` (14:55).
 - **RW-82 entregado (lo revisé a las 02:25)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`),
   sin choques con main. «Para integrar» está en `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
   - **B quedó aprobado (12:13) y deja aritmética en la v3, así que se integra tal cual.** Solo falta su «listo», con los tres

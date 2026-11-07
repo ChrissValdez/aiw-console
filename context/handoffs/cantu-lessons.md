@@ -216,6 +216,17 @@
         `DIAGNOSTICO-POR-AREA.json`.
         - **Sin lanzar:** el operador escribe por Remote Control, y la app no deja abrir la sesión (ni con `user_asked` ni con
           tarjeta). Se le preguntó si lo corre la cabina como agente de fondo o si lo lanza él escribiendo desde la PC.
+      - **14:19, «volvamos a lo simple»** (veredicto `f04a922`): se queda el diagnóstico de hoy, y los de sección van más
+        adelante. **RW-87 queda en pausa sin lanzarse.** Sigue la ruta esencial con opcionales. Pide la recomendación para los
+        temarios de aritmética y álgebra, antes que nada.
+        - **La cabina recomienda congelarlos como están:**
+          - aritmética, la v3 (29 lecciones: 21 esenciales y 8 opcionales); solo falta RW-82;
+          - álgebra, la página publicada (72 lecciones: 50 esenciales y 22 opcionales), con las 4 dudosas como están, la
+            geometría en una línea y el operador marcando solo lo que cambiaría;
+          - códigos fijos: si algo cambia, cambia la marca;
+          - para CQL, la versión de cada quiz de álgebra solo con lo que el alumno de la esencial ya estudió (Racionales: 53 de
+            81), y las ≈ 7 preguntas de Propiedades (duda 6 de RW-85).
+        - Se aparcan las dudas 2, 3, 7 y 8 de RW-85. Espera su sí.
 - **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,
   `servidor/arranque.mjs 8791`, abierto a las 09:57). La cabina no lo toca y le pidió que lo cierre. Los dos repos están al
   día. El vigilante de votos se rearmó como `bo3309pwf`.

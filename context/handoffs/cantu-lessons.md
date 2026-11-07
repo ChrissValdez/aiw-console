@@ -103,7 +103,14 @@
       2. Trabajo y rendimiento y Productos notables, a quizzes de la complementaria, y ALG-20 con Razones;
       3. que el quiz de la ruta esencial pregunte solo lo de sus esenciales; eso toca a CQL;
       4. aceptar Exponentes y Radicales partidos (la 30 y la 50).
-    - La página enseña la regla, no las recomendaciones. Con su sí, se cambian los `QUIZZES[*].fila` y se vuelve a publicar.
+    - **02:13, «Sí, las dos»** (dudas 1 y 2; veredicto, cantu-lessons `dbbccd8`).
+      - Republicada la versión `1794039294-1330` con el guion `scratchpad/mover-quizzes.mjs`: Fundamentos va después de 13,
+        Polinomios después de 05, Trabajo después de 58 y Productos notables después de 68; ALG-20 con Razones.
+      - Los grupos están numerados por su primera lección. Una lección de un quiz que ya pasó es refuerzo, también en la esencial
+        (ALG-36).
+      - Probada en el 8986: 30 tramos y 14 quizzes, igual que RW-83 §5.
+      - La copia de antes está en `_scratch\RW-83\pagina-agrupada.antes-cambios.html`.
+      - **Siguen abiertas la duda 3 (con CQL) y la 4,** y su revisión del temario.
 - **El temario de álgebra no está aprobado:**
   - en la página hay 0 marcas (`evaluacion` vacía, medido a las 00:40);
   - siguen abiertas las 4 dudosas, la geometría que usa álgebra y el plan.

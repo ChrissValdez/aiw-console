@@ -38,7 +38,7 @@
   por `estados.json`. CR-PL·27 y ·28 (las dos revisiones: Chris, Meche y Final) ya están integradas.
 - **CR-GW y CR-LW, sin trabajo** desde las 13:00. Lo siguiente: la norma de letra y aire de la web, cuando cierre la tanda C.
 
-**Lo que la cabina le debe al operador (17:41):** cuando se integre la lentitud de la plataforma (CR-PL·31 parte 3; las partes 1 y 2, plegar y la revisión, se integraron a las 18:09 sin ella: cantu-revisiones 61701d7), un **aviso grande y notorio** en el chat, y «⏳ EN ESPERA de que confirmes que ya no notas la lentitud».
+**Lo que la cabina le debe al operador:** el aviso grande de la lentitud **ya se dio** (2026-11-06, 18:40), cuando se integró la parte 3 de CR-PL·31 (cantu-revisiones 0db476d). Queda «⏳ EN ESPERA de que confirme que ya no nota la lentitud»: si la sigue notando, va a CR-PL, que tiene el contexto, y no a una sesión nueva.
 
 **Lo que espera al operador:**
 - en la galería CR-GS (`19304b5`, prueba-14d):

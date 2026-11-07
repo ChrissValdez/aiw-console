@@ -231,6 +231,17 @@
         opcionales al final; 20 de 22 opcionales junto a su tema; 8 de 12 bloques seguidos. Hay 4 regresos, cada uno por lo que la
         lección necesita: ALG-31, ALG-47 (el único esencial lejano, 41 lecciones después de ALG-06), ALG-68, y ALG-70 a 72.
         Aritmética no tiene ninguno. La cabina recomienda dejarlo así y congelar. Espera su sí.
+      - **14:28, «Sí, congélalos»: LOS DOS TEMARIOS QUEDAN FIJOS** (veredicto y `NUMERACION-DE-LECCIONES.md`, sección
+        «Congelado», en cantu-lessons `39d20f9`):
+        - aritmética, la v3 (ARI-01 a 21 esenciales, de 22 a 29 opcionales), que aplica RW-82;
+        - álgebra, el orden de RW-85 §2.2: desde hoy sus códigos son estos;
+        - las 4 dudosas como están, la geometría en una línea, y los códigos fijos (si algo cambia, cambia la marca).
+        - Aprobadas las dudas 4 y 5 de RW-85. Aparcadas la 2, la 3, la 7, la 8 y RW-87.
+        - **La página de álgebra, en la versión 7** (`1794083454-ea06`): «Ya decidido» dice que está congelada, y «Lo que decides
+          tú» queda en marcar solo lo que cambiaría, más el plan `.docx`.
+        - **Dos pedidos a CQL_Cabina a las 14:33**, en cola porque estaba fuera de línea (sin confirmar que lo leyó): el quiz de
+          Propiedades (≈ 7 preguntas que usan ARI-03, ARI-04 y ARI-16; duda 6 de RW-85), y una versión de cada uno de los 11 quizzes
+          esenciales de álgebra solo con lo que ya estudió el alumno de la esencial (no urge). Espera su aviso.
 - **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,
   `servidor/arranque.mjs 8791`, abierto a las 09:57). La cabina no lo toca y le pidió que lo cierre. Los dos repos están al
   día. El vigilante de votos se rearmó como `bo3309pwf`.

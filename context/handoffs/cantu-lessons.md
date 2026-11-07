@@ -148,6 +148,19 @@
         - escribe las reglas del coach y tres planes de 20, 50 y 100 horas, y mide el peso de Español;
         - entrega `RW-85.md` y `RUTA-DE-ESTUDIO.json`, que la sesión estrategia-moodle va a leer.
       - Siguen abiertas las dudas 4 a 6 de RW-84: los dos quizzes (va a CQL), la marca «Opcional» y ALG-36.
+      - **RW-85 entregó a las 12:41 (cantu-lessons `b972661`, subido).**
+        - Aritmética: la v3 pasa la regla.
+        - Álgebra: el orden B con Desigualdades detrás de Sistemas; cambian 22 códigos frente a B y 67 frente a RW-80. La tabla
+          está en §2.2.
+        - El orden de las áreas se confirma: ARI → ALG → GEO → DATOS → FUN.
+        - Horas [ESTIMADO]: ≈ 99 h la esencial sin Reto.
+        - 8 dudas.
+        - **La cabina le devolvió los planes de §7** (12:52): el coach arrastraba solo los usos del examen, y los planes mandaban
+          a Datos sin fracciones y a Funciones sin álgebra. El arrastre tiene que contar los fundamentos del temario. La tabla de
+          álgebra no cambia. La sesión sigue abierta hasta esa corrección.
+- **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,
+  `servidor/arranque.mjs 8791`, abierto a las 09:57). La cabina no lo toca y le pidió que lo cierre. Los dos repos están al
+  día. El vigilante de votos se rearmó como `bo3309pwf`.
 - **RW-82 entregado (lo revisé a las 02:25)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`),
   sin choques con main. «Para integrar» está en `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
   - **B quedó aprobado (12:13) y deja aritmética en la v3, así que se integra tal cual.** Solo falta su «listo», con los tres

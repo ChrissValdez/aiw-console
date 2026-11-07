@@ -43,8 +43,27 @@
   versiones con fotos en `_scratch\CR-PL\34\fotos\`, sin integrar. **00:50, el operador se queda con la de hoy:** «no, la version
   actual sigue siendo la mejor, asi dejemosla de momento» (veredicto, cantu-lessons `90f08c4`). CR-PL·34 se cierra sin código: CR-PL
   escribe el informe corto (`34.md`), la bitácora y el relevo, y avisa con el commit para publicarlo.
-- **Pendiente con el operador:** «agrupar por tema». La cabina recomendó un solo interruptor, con examen y base solo dentro de cada
-  grupo (00:47, `d9377cb`). Espera su sí, o «solo agrupar».
+- **«Agrupar por tema» (00:54):** el operador lo quiere **sin la etiqueta examen/base**. El grupo es el quiz. Lo que manda es el
+  orden: las lecciones del grupo, y debajo el renglón del quiz. La cabina midió `temario/aritmetica.json`:
+  - El `orden` ya intercala cada quiz después de las lecciones que lo preparan.
+  - **Ninguna lección se queda sin quiz.** ARI-10, 20, 22 y 26 son mitades de lecciones partidas después del temario. ARI-26 lo
+    dice su borrador (`ARI-PI-Intereses`); ARI-22 lo dice el veredicto (RW-21 partió L11); ARI-10 y ARI-20 se deducen de su
+    lección madre.
+  - **Los 8 grupos:**
+    - Propiedades: ARI-01–02
+    - Operaciones: ARI-03–10
+    - Teoría de números: ARI-11–14
+    - Fracciones: ARI-15–17
+    - Porcentajes: ARI-18–20 y ARI-23
+    - Notación científica: ARI-21–22
+    - Intereses: ARI-24–26
+    - Conjuntos: ARI-27–29
+  - **Dos casos para él:**
+    1. El `orden` cierra Propiedades después de L04. En cambio, «Practica en» de L03 y L04 y el «Lo prepara» del quiz dicen
+       Operaciones. La cabina recomienda que Propiedades cierre en ARI-02.
+    2. ARI-23 es complementaria, pero prepara el quiz de Porcentajes. La cabina recomienda que el quiz cierre tras ARI-20 y que
+       ARI-23 quede en la complementaria como refuerzo de ese quiz. Pasarla a esencial obligaría a renumerar.
+  - **Con su sí:** el campo `quiz` en `codigos.json` y el encargo del modo a CR-PL.
 - **El temario de álgebra no está aprobado:**
   - en la página hay 0 marcas (`evaluacion` vacía, medido a las 00:40);
   - siguen abiertas las 4 dudosas, la geometría que usa álgebra y el plan.

@@ -125,10 +125,18 @@
       complementaria», y pide analizar los dos temarios.
       - **RW-84 lanzado** (encargo en cantu-lessons `396aa7a`; sesión `local_f364861e-c7ce-44eb-89ec-9de4eeca0b99`). Es de solo
         lectura y compara hoy, A y B en aritmética y álgebra. Entrega `RW-84.md` y `ORDEN-ESENCIAL-OPCIONAL.json`.
+      - **RW-84 entregado (11:14; subido a main como cantu-lessons `2bc2bd3` a las 11:19; sesión archivada).** Recomienda B,
+        «esencial y opcional», en las dos áreas.
+        - Aritmética: B = v3, 0 códigos cambian, así que RW-82 se integra tal cual. «B estricto» (Notación científica junto a
+          Operaciones) cambia 16 códigos; no lo recomienda.
+        - Álgebra: la esencial sigue en 50; los regresos bajan de 14 a 4; el de la esencial se salta opcionales en 9 sitios;
+          cambian 67 de 72 números (solo la página: no hay lecciones escritas).
+        - El quiz: «Quiz X» esencial, recortado a sus esenciales, más «Quiz X completo» opcional. Va a CQL.
+        - La marca es «Opcional», con «para ir más lejos» debajo. Siete dudas en el informe; se las llevé al chat.
 - **RW-82 entregado (lo revisé a las 02:25)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`),
   sin choques con main. «Para integrar» está en `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
-  - **En pausa hasta que decida el modelo (RW-84):** con B, Notación científica podría volver junto a Operaciones y la numeración
-    de aritmética cambiaría otra vez. Después necesita su «listo», con los tres aparatos sincronizados y el 8791 cerrado.
+  - **Ya no lo frena el modelo:** RW-84 midió que B deja aritmética en la v3. Falta su elección de modelo y su «listo», con
+    los tres aparatos sincronizados y el 8791 cerrado.
 - **Vigilante de votos:** el `bnj2w4wng` se paró al reiniciarse la sesión. Se rearmó a las 10:57 como `b2e2rei5e`.
 - **El temario de álgebra no está aprobado:**
   - en la página hay 0 marcas (`evaluacion` vacía, medido a las 00:40);

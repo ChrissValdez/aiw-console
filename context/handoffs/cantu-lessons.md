@@ -242,6 +242,9 @@
         - **Dos pedidos a CQL_Cabina entre las 14:30 y las 14:31**, en cola porque estaba fuera de línea (sin confirmar que lo leyó): el quiz de
           Propiedades (≈ 7 preguntas que usan ARI-03, ARI-04 y ARI-16; duda 6 de RW-85), y una versión de cada uno de los 11 quizzes
           esenciales de álgebra solo con lo que ya estudió el alumno de la esencial (no urge). Espera su aviso.
+      - **14:32, «Ya la cerré»** (veredicto `a215a82`): a las 14:33 el 8791 seguía escuchando (PID 19172, hijo del PowerShell
+        de `abrir-galeria.ps1`, PID 1788). Cerró el navegador, no la ventana del servidor. `cantu-revisiones` está limpio y al día
+        (`8c86c01`), sin votos pendientes. Se le pidió Enter en esa ventana o su permiso para que la cabina lo pare.
 - **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,
   `servidor/arranque.mjs 8791`, abierto a las 09:57). La cabina no lo toca y le pidió que lo cierre. Los dos repos están al
   día. El vigilante de votos se rearmó como `bo3309pwf`.

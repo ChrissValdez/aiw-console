@@ -94,6 +94,16 @@
     entrega `RW-83.md`, `ALGEBRA-QUIZ-POR-LECCION.json` y `_scratch\RW-83\pagina-agrupada.html`.
   - La cabina publica esa página en el mismo artifact (KVVPFq3NkR7Ac3hxhQsLee, versión de hoy `1794028414-f051`), sin tocar las
     capacidades (`db`, `user`) ni la colección `evaluacion`.
+  - **RW-83 cerrado.** El commit `c8a6452` está en main. La página quedó publicada en la versión `1794036154-9d32`: se revisó el diff
+    contra la de hoy y `LECCIONES` es idéntico. La colección `evaluacion` sigue en 0 documentos. La sesión se archiva.
+    - Lo medido: 1 201 preguntas, ninguna lección sin quiz y ningún quiz sin lección. 5 quizzes no salen seguidos, y 10 de 14
+      quedan partidos entre las dos rutas: 20 de las 22 complementarias son refuerzo de un quiz de la esencial.
+    - **Las 4 dudas del operador** (RW-83, «Dudas»):
+      1. el quiz de Fundamentos, después de ALG-13, y el de Polinomios, después de ALG-05;
+      2. Trabajo y rendimiento y Productos notables, a quizzes de la complementaria, y ALG-20 con Razones;
+      3. que el quiz de la ruta esencial pregunte solo lo de sus esenciales; eso toca a CQL;
+      4. aceptar Exponentes y Radicales partidos (la 30 y la 50).
+    - La página enseña la regla, no las recomendaciones. Con su sí, se cambian los `QUIZZES[*].fila` y se vuelve a publicar.
 - **El temario de álgebra no está aprobado:**
   - en la página hay 0 marcas (`evaluacion` vacía, medido a las 00:40);
   - siguen abiertas las 4 dudosas, la geometría que usa álgebra y el plan.

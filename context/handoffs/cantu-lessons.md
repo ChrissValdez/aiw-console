@@ -155,7 +155,7 @@
         - El orden de las áreas se confirma: ARI → ALG → GEO → DATOS → FUN.
         - Horas [ESTIMADO]: ≈ 99 h la esencial sin Reto.
         - 8 dudas.
-        - **La cabina le devolvió los planes de §7** (12:52): el coach arrastraba solo los usos del examen, y los planes mandaban
+        - **La cabina le devolvió los planes de §7** (12:43): el coach arrastraba solo los usos del examen, y los planes mandaban
           a Datos sin fracciones y a Funciones sin álgebra. El arrastre tiene que contar los fundamentos del temario. La tabla de
           álgebra no cambia. La sesión sigue abierta hasta esa corrección.
 - **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,

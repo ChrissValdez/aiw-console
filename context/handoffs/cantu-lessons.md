@@ -227,6 +227,10 @@
           - para CQL, la versión de cada quiz de álgebra solo con lo que el alumno de la esencial ya estudió (Racionales: 53 de
             81), y las ≈ 7 preguntas de Propiedades (duda 6 de RW-85).
         - Se aparcan las dudas 2, 3, 7 y 8 de RW-85. Espera su sí.
+      - **14:24, «¿cómo quedó el orden de álgebra?»** (veredicto `f978513`). Medido en la página publicada: sin bloque de
+        opcionales al final; 20 de 22 opcionales junto a su tema; 8 de 12 bloques seguidos. Hay 4 regresos, cada uno por lo que la
+        lección necesita: ALG-31, ALG-47 (el único esencial lejano, 41 lecciones después de ALG-06), ALG-68, y ALG-70 a 72.
+        Aritmética no tiene ninguno. La cabina recomienda dejarlo así y congelar. Espera su sí.
 - **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,
   `servidor/arranque.mjs 8791`, abierto a las 09:57). La cabina no lo toca y le pidió que lo cierre. Los dos repos están al
   día. El vigilante de votos se rearmó como `bo3309pwf`.

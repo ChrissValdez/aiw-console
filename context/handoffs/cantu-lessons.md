@@ -133,10 +133,25 @@
           cambian 67 de 72 números (solo la página: no hay lecciones escritas).
         - El quiz: «Quiz X» esencial, recortado a sus esenciales, más «Quiz X completo» opcional. Va a CQL.
         - La marca es «Opcional», con «para ir más lejos» debajo. Siete dudas en el informe; se las llevé al chat.
+    - **11:35–12:13, el operador decide el modelo** (veredicto, cantu-lessons `4d98ff2`, `655bd4f`, `06eda42`, `f232b4f` y `7c743b3`):
+      - preguntó qué hace esencial u opcional a una lección: la vara de RW-77 y RW-78, que se fija en el PAA real;
+      - pidió el peso de cada tema para saber en qué enfocarse con pocas horas;
+      - **su regla (12:07):** se estudia por áreas, una tras otra; dentro de cada área manda el orden pedagógico, y el peso solo
+        desempata dos temas independientes. La cabina retiró su idea de bloques de varias áreas;
+      - **12:13: B, «esencial y opcional».** No a la C ni a una «segunda vuelta», y el alumno necesita un coach.
+      - Escrito en `NUMERACION-DE-LECCIONES.md` v4. En aritmética B da la v3 (0 cambios). Álgebra se renumera una sola vez, con
+        la tabla de RW-85.
+      - **RW-85 lanzado** (encargo en cantu-lessons `7c743b3`; sesión `local_f87be911-1a3c-49f4-b31a-e1bfb4070e92`). Es de solo
+        lectura y trabaja así:
+        - ordena cada área con su regla y comprueba el orden de las áreas;
+        - mide el peso, las horas y los prerrequisitos de cada uno de los 43 temas;
+        - escribe las reglas del coach y tres planes de 20, 50 y 100 horas, y mide el peso de Español;
+        - entrega `RW-85.md` y `RUTA-DE-ESTUDIO.json`, que la sesión estrategia-moodle va a leer.
+      - Siguen abiertas las dudas 4 a 6 de RW-84: los dos quizzes (va a CQL), la marca «Opcional» y ALG-36.
 - **RW-82 entregado (lo revisé a las 02:25)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`),
   sin choques con main. «Para integrar» está en `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
-  - **Ya no lo frena el modelo:** RW-84 midió que B deja aritmética en la v3. Falta su elección de modelo y su «listo», con
-    los tres aparatos sincronizados y el 8791 cerrado.
+  - **B quedó aprobado (12:13) y deja aritmética en la v3, así que se integra tal cual.** Solo falta su «listo», con los tres
+    aparatos sincronizados y el 8791 cerrado.
 - **Vigilante de votos:** el `bnj2w4wng` se paró al reiniciarse la sesión. Se rearmó a las 10:57 como `b2e2rei5e`.
 - **El temario de álgebra no está aprobado:**
   - en la página hay 0 marcas (`evaluacion` vacía, medido a las 00:40);

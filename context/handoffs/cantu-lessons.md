@@ -74,7 +74,20 @@
       - ARI-21–22 → ARI-25–26, Notación científica;
       - ARI-01–20 y ARI-27–29 no cambian.
     - Quedan 21 esenciales y 8 complementarias, sin ninguna lección suelta. Primero RW-82 y después el campo `quiz` y CR-PL, porque
-      los dos tocan `codigos.json`. Espera su sí.
+      los dos tocan `codigos.json`.
+  - **01:03, «Sí, renumera».** La tabla v3 está en `NUMERACION-DE-LECCIONES.md`, con «Los grupos por quiz» de v3, y el encargo
+    RW-82 en `REVISION-WEB-TICKETS.md` (cantu-lessons `fb3a9f5`).
+    - «Porcentaje ¿de qué?» queda como esencial · examen; esa clase la decidió la cabina.
+    - **RW-82 lanzado**, en la sesión `local_1f88e612-d66c-4f93-8436-b7a0b644c061`, con ramas `rw-82-renumerar` y sin push.
+    - La migración la corre la cabina al integrar, con su §«Para integrar»: los tres aparatos sincronizados y sin votar.
+    - Después de RW-82 vienen el campo `quiz` y CR-PL.
+- **Álgebra agrupada por quiz (01:04):** *«y agrupa igual los temas de algebra, para poder analizarlo de la misma manera antes de
+  aprobarlo»*.
+  - En álgebra no hay «Practica en»: hay que medirlo por el fichero de cada pregunta, con 14 quizzes del banco.
+  - **RW-83 lanzado** (cantu-lessons `d1cea42`), en la sesión `local_a5c015d6-c9ac-4147-895f-748c3c651115`. Es de solo lectura y
+    entrega `RW-83.md`, `ALGEBRA-QUIZ-POR-LECCION.json` y `_scratch\RW-83\pagina-agrupada.html`.
+  - La cabina publica esa página en el mismo artifact (KVVPFq3NkR7Ac3hxhQsLee, versión de hoy `1794028414-f051`), sin tocar las
+    capacidades (`db`, `user`) ni la colección `evaluacion`.
 - **El temario de álgebra no está aprobado:**
   - en la página hay 0 marcas (`evaluacion` vacía, medido a las 00:40);
   - siguen abiertas las 4 dudosas, la geometría que usa álgebra y el plan.

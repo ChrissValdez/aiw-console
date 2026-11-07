@@ -40,8 +40,11 @@
 
 **2026-11-07, 00:40 · El subtítulo de las rutas y el piloto de álgebra** (veredicto y encargo en cantu-lessons `0911d44`).
 - **CR-PL·34 encargado (00:41):** el subtítulo de CR-PL·33 hace bien su trabajo, pero «no se ve tan bonito». La primera fase son tres
-  versiones con fotos en `_scratch\CR-PL\34\fotos\`, sin integrar. Cuando CR-PL avise: enseñárselas (SendUserFile) y pasarle a CR-PL
-  la elección tal cual.
+  versiones con fotos en `_scratch\CR-PL\34\fotos\`, sin integrar. **00:50, el operador se queda con la de hoy:** «no, la version
+  actual sigue siendo la mejor, asi dejemosla de momento» (veredicto, cantu-lessons `90f08c4`). CR-PL·34 se cierra sin código: CR-PL
+  escribe el informe corto (`34.md`), la bitácora y el relevo, y avisa con el commit para publicarlo.
+- **Pendiente con el operador:** «agrupar por tema». La cabina recomendó un solo interruptor, con examen y base solo dentro de cada
+  grupo (00:47, `d9377cb`). Espera su sí, o «solo agrupar».
 - **El temario de álgebra no está aprobado:**
   - en la página hay 0 marcas (`evaluacion` vacía, medido a las 00:40);
   - siguen abiertas las 4 dudosas, la geometría que usa álgebra y el plan.

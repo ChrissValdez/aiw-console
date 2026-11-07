@@ -158,6 +158,13 @@
         - **La cabina le devolvió los planes de §7** (12:43): el coach arrastraba solo los usos del examen, y los planes mandaban
           a Datos sin fracciones y a Funciones sin álgebra. El arrastre tiene que contar los fundamentos del temario. La tabla de
           álgebra no cambia. La sesión sigue abierta hasta esa corrección.
+        - **Corrección entregada a las 12:47 (`9b90e85`, subido a las 12:48).** El arrastre cuenta los fundamentos del temario, y
+          los 9 planes dan «ok» en la comprobación de prerrequisitos.
+          - Solo cambian los dos planes del que no sabe nada: con 50 h sale Funciones y entran Sistemas, Desigualdades y
+            Exponentes (de 24,5 a 25,3 preg./forma).
+          - Para el que no sabe nada, Geometría entra desde 65 h y Funciones desde 87 h [ESTIMADO].
+        - **12:49:** la cabina le pidió comprobar si Geometría queda fuera con 50 h por el examen o por elegir de uno en uno
+          (la cadena de figuras como paquete). Falta esa respuesta para archivar la sesión.
       - **12:45, «Sí, apérgalo»** (veredicto `dce1699`): aprobó Desigualdades detrás de Sistemas (RW-85, duda 1). Siguen abiertas
         las dudas 2 a 8.
       - **RW-86 lanzado** (encargo en cantu-lessons `8c38d7f`; sesión `local_66b72197-053f-4a2e-8d1e-f07544d9a0dc`).

@@ -179,6 +179,22 @@
           «Esconder las opcionales».
         - Lee la tabla del commit `b972661`. `evaluacion` tiene 0 documentos (12:47).
         - La cabina la publica en `KVVPFq3NkR7Ac3hxhQsLee`.
+      - **RW-86 entregó a las 12:59** (informe en cantu-lessons `44ad45b`, subido; sesión archivada a las 13:04, con Remote
+        Control apagado antes).
+        - La sonda: 72 filas (50 ● y 22 ○), 14 renglones de quiz y 0 lecciones antes de lo que necesitan; con las opcionales
+          escondidas, 50 filas.
+        - La cabina decidió sus 9 dudas como recomendaba (todo se queda) y cambió dos frases: la aritmética, con ≈86 min de la
+          esencial, y la cita de RW-83, con dónde va hoy el quiz de Polinomios (detrás de ALG-06).
+        - **Publicada entre las 13:03 y las 13:04** en `KVVPFq3NkR7Ac3hxhQsLee`, versión 6 (`1794078207-7c78`), sin tocar las
+          capacidades; `evaluacion` tenía 0 documentos justo antes. Copia: `_scratch\RW-86\pagina-b.html`, md5
+          `ffd52315b0533393090b55fb262ca776`, 94 538 bytes.
+      - **13:00, el diagnóstico** (veredicto `5a74f2a`): pregunta si un diagnóstico por área es mejor que el largo, en el que su
+        sobrino sacó 28 de 100.
+        - Medido en `PAA/Examen Diagnostico/plantilla-matematicas.csv`: Matemáticas trae 60 preguntas (Aritmética 8, Álgebra 20,
+          Funciones 7, Estadística 10, Geometría 15). Va detrás de Lectura y Redacción, y Geometría es lo último (46 a 60).
+        - La cabina recomienda el diagnóstico por área, con tres cuidados: se abre al empezar el área y se puede adelantar; cada
+          pregunta va a un tramo de la ruta; el plan del primer día es provisional.
+        - Propone encargar su diseño. Espera su sí.
 - **RW-82, en marcha desde su «Listo» de las 12:36** (veredicto `f25dfe8`): parado porque el 8791 sigue abierto (PID 19172,
   `servidor/arranque.mjs 8791`, abierto a las 09:57). La cabina no lo toca y le pidió que lo cierre. Los dos repos están al
   día. El vigilante de votos se rearmó como `bo3309pwf`.

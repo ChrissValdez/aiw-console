@@ -306,6 +306,12 @@
       Taller archivado (Remote Control apagado antes). Alto: ALG-01, 3 844 px y 608 palabras; ALG-02, 4 437 px y 695 (341 de fórmula).
       En la Galería de prueba (8795) sale el área «Álgebra» con las dos. **Espera:** su lectura de las dos webs y las dudas 1 a 6
       del informe. Después, la slide de las dos (antes, `tools/sondas/comun.mjs` debe aceptar el área).
+    - **20:21–20:27, su lectura** (votos en cantu-revisiones `f18b832`, comentarios en `b3f43ea`; veredicto y tablero en
+      cantu-lessons `4882f53`): «sí» en ALG-01 AP, S1, S2 y EG, y en ALG-02 AP; «meh» en ALG-01·S3 y ALG-02·S1, S2, S3 y EG, con un
+      comentario en cada una (los 5, «en el taller» CR-GW·16 en `tablero.json`). Pidió **tres variantes por sección** en vez de
+      una: va como **CR-GW·16** (`docs/carriles/CR-GW/16-encargo.md`), enviado a las 20:37 a CR-GW. **Desde ALG-03, la primera
+      ronda de cada lección web nueva trae tres variantes por sección** (cambia «una sola versión» de LOTE-2). Las dudas 1 a 6
+      de RW-89 siguen sin su respuesta. La PC se reinició hacia las 20:35; vigilante rearmado (`batmw8mss`).
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

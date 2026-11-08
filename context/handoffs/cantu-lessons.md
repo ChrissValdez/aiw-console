@@ -287,6 +287,16 @@
     que no es de otro carril (los RW y lo que el operador pida directo, también desde la laptop por Remote Control). Sus reglas,
     en `CARRILES.md` «v3»; su bitácora, `docs/carriles/CR-PE.md`; el brief, `_scratch/cabina-lecciones/brief-cr-pe.md`. Copia
     las palabras del operador en su informe y avisa a la cabina una vez por petición; el veredicto lo sigue escribiendo la cabina.
+  - **RW-88 entregado (18:13, cantu-lessons `f152adb`, publicado por la cabina):** `temario/Algebra-temario.docx` (md5
+    `e013454a…`), `temario/extraer_docx_algebra.mjs`, `temario/algebra-plan.json` y `docs/informes/RW-88.md`. La cabina regeneró el
+    JSON del `.docx` (igual al del repo, salvo la fecha) y corrió la sonda: 16 de 16. Fotos en `_scratch/RW-88/fotos/` (HTML sacado del
+    `.docx`; **en Word no se ha abierto**). Taller archivado (Remote Control apagado antes).
+    - **Las dudas de §6:** 1, 2, 5, 6, 7 y 8, como recomienda el taller. La 9 va a CR-PE·01 (`e285fb8`: `docs/referencias/ALGEBRA-PIEZAS.json`).
+      La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
+      no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
+      de álgebra, para usar el formato que apruebe.
+    - **Lo que sigue:** el operador revisa el `.docx` de álgebra. Después, el alta de ALG-01 y ALG-02 en `codigos.json` con sus
+      borradores en `drafts/web/matematicas_paa/algebra/` (RW-88 §4) y `tools/sondas/comun.mjs` que acepte el área.
 - **RW-82 entregado (lo revisé a las 02:25)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`),
   sin choques con main. «Para integrar» está en `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
   - **B quedó aprobado (12:13) y deja aritmética en la v3, así que se integra tal cual.** Solo falta su «listo», con los tres

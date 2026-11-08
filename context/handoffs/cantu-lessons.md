@@ -328,6 +328,11 @@
       de ALG-02 y mirar que el 🚧 quede en 0. CR-GW sigue con la ronda 2.
     - **11:41, CR-LW·18 hecho y publicado:** `bbfdaeb` y `461179e` (borrador md5 `f894420b…`, verde, apuntado `ALG-02 EG CR-GW V61`),
       subidos; página en cantu-revisiones `88c359d`. 🚧 en 0. Los borradores de álgebra van con LF en disco (los de aritmética, CRLF).
+    - **11:51, el nombre de la ruta:** «Ampliación» no le gusta; le gusta «Refuerzo» pero pidió más. La cabina le dio 8 con tabla y
+      recomienda «Ventaja» (veredicto `10f2201`). Espera su elección.
+    - **11:52, las guías de la UDEM** (veredicto `5593eb4`): las quiere como referencia de álgebra. Están en su OneDrive
+      (`EducaTalento/Asesorias Chris/Matemáticas/`, zips de Álgebra I y II); la copia `projects/cantu-lessons/fuentes/udem/` (gitignored)
+      ya no estaba y se rehízo (50 ficheros). CR-GW lo sabe para la ronda 2. **Desde ALG-03, cada encargo cita la guía de su tema.**
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

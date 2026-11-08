@@ -333,6 +333,16 @@
     - **11:52, las guías de la UDEM** (veredicto `5593eb4`): las quiere como referencia de álgebra. Están en su OneDrive
       (`EducaTalento/Asesorias Chris/Matemáticas/`, zips de Álgebra I y II); la copia `projects/cantu-lessons/fuentes/udem/` (gitignored)
       ya no estaba y se rehízo (50 ficheros). CR-GW lo sabe para la ronda 2. **Desde ALG-03, cada encargo cita la guía de su tema.**
+    - **12:08, la ronda 2 de CR-GW·16, publicada** (cantu-revisiones `3a068e6`; CR-GW `1c53660` y `93df2d0`, informe
+      `docs/carriles/CR-GW/16.md` §6; galería md5 `c39d995b…`, 30 fotos nuevas): la 64, la 65 y la 66 en ALG-01·S3 y ALG-02·S1, S2
+      y S3. CR-GW recomienda la 64 en ALG-01·S3, y la 65, la 66 y la 64 en ALG-02·S1, S2 y S3. ALG-01·S3 pasa de 60 palabras (77 a 80).
+      **Espera su voto.** Con él: CR-GW entrega a `_scratch/CR-GW/entregas/16/`, un encargo nuevo de CR-LW, y la cabina registra en
+      `docs/BLOQUES-PROVISIONALES.md` las etiquetas de las que ganen (y quita `anatomia-de-una-expresion` de ALG-02 si no gana).
+    - **12:09, «Ventaja», por ahora** (veredicto y encargo en cantu-lessons `103eac8`): es el nombre provisional de la ruta
+      complementaria; lo sigue analizando. **CR-PL·35** (`docs/carriles/CR-PL/35-encargo.md`, enviado a las 12:14): el nombre que se ve
+      en `servidor/portada.js` (el valor interno `complementaria` no cambia) y los tres avisos falsos de álgebra (`conceptGrid` a
+      29,2 px, `papeles.mjs:147`, números blancos sobre círculos). Al volver: integrar y publicar; cambia `servidor/`, así que en
+      cada aparato «Sincronizar» y, si no se ve, «Reiniciar».
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

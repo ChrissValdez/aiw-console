@@ -461,6 +461,11 @@
     - **14:10, la tanda 1, publicada** (aviso de RW-91 a las 14:07). ALG-03 y ALG-05 en 🟢 (cantu-revisiones `10b7afd`).
       - ALG-04 sale con la tanda 2, porque RW-91 lo tiene abierto.
       - El «hoy» no se vota todavía: se vota cuando cada lección tenga sus tandas.
+    - **14:12, la tanda 2 (`0ca5640`), revisada y empujada.**
+      - Las tablas de ALG-04·S1 y S4 y de ALG-06·S1 pasan a fichas en la losa gris. Las cuentas están bien.
+      - Sus tres etiquetas `fichas-*` ya tienen fila en BLOQUES (`e990a6d`).
+      - ALG-06 da 🟢. ALG-04 da 🟡 (S1, 102 palabras de prosa, por encima de 60): se le pidió a RW-91 que lo recorte. **Sin
+        publicar** hasta su aviso con fotos.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

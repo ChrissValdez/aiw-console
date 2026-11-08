@@ -372,6 +372,13 @@
       **Espera su voto.** Con él: CR-GW entrega, un encargo nuevo de CR-LW, y la cabina registra en `docs/BLOQUES-PROVISIONALES.md`
       las etiquetas de las que ganen (termino-desglosado, tabla-por-numero-de-terminos, semejantes-en-recuadro,
       paso-a-paso-suma-de-polinomios).
+    - **13:02–13:05, su voto de la ronda 3 (en Laptop-Chris, cantu-revisiones `c24375c`) y el siguiente batch** (veredicto y adenda 3
+      en cantu-lessons `a503d2a`). ALG-02·S1 **la 68** y S3 **la 67**: CR-GW las entrega y después las escribe CR-LW·20. S2, a
+      una **cuarta ronda** desde la 70 sobre la 67: el «2 + 2» y la x se tachan con dos líneas separadas, «más orgánicas». Enviada
+      a CR-GW a las 13:07. **Pidió el siguiente batch de álgebra, por bloque (4 a 6 lecciones).** La cabina le llevó el temario
+      (`temario/algebra-plan.json`: 72 lecciones en 13 bloques) y recomienda **ALG-03 a ALG-06**, que cierran el bloque 1
+      «Expresiones», con la guía 02 de la UDEM. Después, el bloque 2 (ALG-07 a ALG-14, 8 esenciales) en dos batches de 4.
+      **Espera su elección.** ALG-06 es la primera de ventaja de álgebra: con ella, a CR-PL la duda 3 de RW-88.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

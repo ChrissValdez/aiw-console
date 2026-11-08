@@ -497,6 +497,16 @@
       - la 87: una ficha con rótulo.
 
       Cada una va en ALG-03·S1 y ALG-02·S2. **Esperan su voto.** Con la elegida, RW-91 escribe las dos secciones y hace la tanda 4.
+    - **15:03–15:12, la 86 en las dos secciones** (veredicto y adenda 7 en cantu-lessons `cdad5ca` y `ccb7f1d`).
+      - El operador pidió leer también lo que dijo de las rechazadas. La regla queda así:
+        - la 86, cuando la sección explica una sola cosa;
+        - la 87 (ficha con rótulo), cuando tiene varios casos;
+        - la 85, para un procedimiento largo.
+        Va a TALLER-COMUN v11.
+      - **CR-GW** hace tres entregas: la 86 de ALG-02·S2, la de ALG-03·S1 y la pieza de la 87.
+      - **RW-91** escribe la 86 en las dos secciones y después la tanda 4 con la 87: ALG-05·S1 y S3 y ALG-06·S2 tienen dos casos cada
+        una.
+      - **Sigue pendiente qué adopta el operador del flujo** (la pregunta de las 14:38).
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

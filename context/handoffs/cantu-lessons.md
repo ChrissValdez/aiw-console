@@ -352,6 +352,10 @@
 
       La galería que CR-GW rehízo a las 12:13 (`e7609971…`, la 65 de S2 con la guía UDEM) **no se publica**: él votó la de las
       12:07, y la 65 no se cambia donde está. Vigilante rearmado (`b78nc9sas`).
+    - **12:22, ALG-01·S3 entregada por CR-GW** (`_scratch/CR-GW/entregas/16/ALG-01-S3-error-comun-con-dos-pasos.json`, md5
+      `d89af052…`; base comprobada con el sha256 del borrador vivo) y **encargada a CR-LW como CR-LW·19** (cantu-lessons `e36b95e`,
+      enviada). Al volver: revisar, publicar la página de ALG-01, poner la tesela «ALG-01·S3» en «atendido» y comprobar que el 🚧
+      quede en 0. El aviso de palabras (80 contra 60) es esperado.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

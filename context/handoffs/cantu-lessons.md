@@ -323,6 +323,9 @@
       (TALLER-COMUN v10, punto 17). Vigilante rearmado (`bw4a6ts86`). **Preguntó el nombre de la «ruta complementaria»:** la cabina
       recomienda «Ampliación» (no «Refuerzo»: RW-84 §7); espera su elección. Con ella: CR-PL cambia el nombre visible y la cabina
       los documentos; el valor interno de `codigos.json` (`complementaria`) no cambia.
+    - **11:37, ALG-02·EG entregada por CR-GW** (`_scratch/CR-GW/entregas/16/ALG-02-EG-signo-a-la-izquierda.json`, md5 `3a64b022…`,
+      comprobado) y **encargada a CR-LW como CR-LW·18** (cantu-lessons `9ffa14f`, enviada). Al volver: revisar, publicar la página
+      de ALG-02 y mirar que el 🚧 quede en 0. CR-GW sigue con la ronda 2.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

@@ -401,6 +401,9 @@
       `INTERCALADAS = {ALG}` en el catálogo; en la Galería, álgebra va en una sola tabla con la pastilla «de ventaja». Aritmética
       sigue igual (probado en el 8795). No hay que recompilar. **Pendiente, sin encargo:** que algo compruebe que el orden de
       álgebra en `codigos.json` es el `orden` del temario (CR-PL·36, §6).
+    - **13:26, la ronda 4 de ALG-02·S2, publicada** (CR-GW·16 §8, cantu-lessons `81215dc`; galería en cantu-revisiones `4e4b284`):
+      la 70, la 71 y la 72, la 67 con la x y el 2+2 tachados aparte, a mano. CR-GW recomienda la 70. **Espera el voto.** Con él:
+      la elegida a CR-LW·21, y `semejantes-en-recuadro` a `docs/BLOQUES-PROVISIONALES.md`.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

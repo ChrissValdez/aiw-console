@@ -483,6 +483,14 @@
     - **14:34, la tanda 5** (`db3f579`): la nota «Error común», con su contexto y la cuenta buena en grande, en ALG-04·S2, ALG-05·S2 y
       ALG-06·S3. Publicadas ALG-05 y ALG-06 en 🟢 (cantu-revisiones `bc9fb41`). ALG-04 sigue esperando el recorte de S1. RW-91 escribe el
       informe, con tres preguntas: × o ·, «costo variable» y el tachado diagonal de ARI-16.
+    - **14:35–14:43, la jerarquía visual y la pregunta del flujo** (veredicto en cantu-lessons `329d094` y `806705f`).
+      - El operador votó «meh» la 73, pasó la 71 de «sí» a «meh» y votó «no» la 74 y la 75. Pide jerarquía visual: el área gris
+        de aritmética para la explicación y el procedimiento, «en general».
+      - **CR-GW·17, adenda 6:** la 85 a la 87 sobre la 73 y la 71, en ALG-03·S1 y ALG-02·S2 a la vez. La elegida la escribe RW-91,
+        y después hace la tanda 4.
+      - ALG-04 se publicó en 🟡 con las tres frases de S1 (cantu-revisiones `ae51e77`; cantu-lessons `dcd8dbb`). El recorte
+        `a1037d8` se deshizo porque los mensajes de la cabina se cruzaron. El informe de RW-91 está empujado.
+      - **El operador preguntó cómo acelerar el flujo** (14:38). El diagnóstico va en el chat. **Pendiente: qué adopta.**
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

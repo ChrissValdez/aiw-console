@@ -367,6 +367,11 @@
       (`1808448`). Llega a cada aparato con «Sincronizar», y si no se ve, «Reiniciar». **Dudas de CR-PL, para el nombre
       definitivo:** el botón dice «Plegar la ventaja», y la otra sigue llamándose «Ruta esencial». La rama `cr-pl-35-ventaja`
       queda en los dos repos, ya integrada.
+    - **12:51, la ronda 3 de CR-GW·16, publicada** (cantu-revisiones `60828c1`; CR-GW `0f76cd7`, informe §7; galería md5
+      `d7cdccdf…`, 24 fotos nuevas): la 67, la 68 y la 69 en ALG-02·S1, S2 y S3. CR-GW recomienda la 68 en S1, y la 67 en S2 y en S3.
+      **Espera su voto.** Con él: CR-GW entrega, un encargo nuevo de CR-LW, y la cabina registra en `docs/BLOQUES-PROVISIONALES.md`
+      las etiquetas de las que ganen (termino-desglosado, tabla-por-numero-de-terminos, semejantes-en-recuadro,
+      paso-a-paso-suma-de-polinomios).
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

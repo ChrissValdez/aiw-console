@@ -99,8 +99,13 @@ todo el flujo … implementa los 4 cambios mencionadso y probemos que tal jalan�
 - **Dos velocidades:** la ronda de dirección va ligera (fotos y tres líneas por opción); la revisión completa, solo al escribir.
 - **Los carriles de lecciones nuevos, en su worktree** (`_scratch\<ticket>\wt\cantu-lessons`, con su rama). La cabina junta
   su rama como junta las de CR-PL, compila desde su carpeta y publica. Una compilación a la vez en la máquina (CARRILES).
-- **Tras cada voto, la declaración del tablero va primero y se empuja sola,** antes que el veredicto y el encargo. Hasta que llega,
-  la plataforma del operador dice «sin encargo» (lo preguntó el 2026-11-08, 15:11).
+- **Tras cada voto, la declaración del tablero va primero y se empuja sola,** antes que el veredicto y el encargo.
+  - Lo preguntó el operador el 2026-11-08 a las 15:11. A las 15:32 pidió que fuera regla y no arreglo a mano: *«actualiza el flujo de
+    trabajo para que asi aparezca cuando pasa, no sea solo un arreglo manual de este caso»*.
+  - **Con CR-PL·37 integrado,** mientras su aparato no tenga noticias de la cabina de después del voto, la plataforma dice sola
+    **«recién votada»** (en gris). «Sin encargo» en rojo queda para cuando ya las tiene, pasado el margen, y la tesela sigue sin
+    declarar.
+  - **Ese margen es el plazo de la cabina para declarar.** Si se pasa, la alarma es de verdad.
 - **Publicar primero; el papeleo, por tandas.** A los talleres, instrucciones solo por fichero, con un mensaje de una línea que
   apunta al fichero. Nunca una corrección a mitad de una tanda.
 

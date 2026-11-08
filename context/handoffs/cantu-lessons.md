@@ -389,6 +389,11 @@
       - **CR-PL·36** (`docs/carriles/CR-PL/36-encargo.md`, enviado a las 13:12): el catálogo y la Galería, con las de ventaja de
         álgebra intercaladas (RW-88, duda 3).
       - **Cuando el batch 1 quede:** el bloque 2 entero (ALG-07 a ALG-14, 8 lecciones) en un solo batch, como pidió.
+    - **13:13, ALG-02·S1 (la 68) y S3 (la 67) entregadas por CR-GW** (`_scratch/CR-GW/entregas/16/`, md5 `cb5a419b…` y `94a41bdd…`)
+      y **encargadas a CR-LW·20** (cantu-lessons `31a3554`, enviado). En el mismo commit, la cabina registró en
+      `docs/BLOQUES-PROVISIONALES.md` `termino-desglosado`, `tabla-por-numero-de-terminos` y `paso-a-paso-suma-de-polinomios`, y dejó
+      `anatomia-de-una-expresion` como «sustituido». `semejantes-en-recuadro` (S2) espera la ronda 4. Al volver CR-LW: publicar
+      ALG-02 y comprobar que el 🚧 quede en 0.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

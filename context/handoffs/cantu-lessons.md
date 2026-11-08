@@ -424,6 +424,18 @@
       - 13:47: RW-90 pasó el dinero de ALG-06 a «$» (`d3c682e`, regla 36.1); republicada (cantu-revisiones `18bd063`) y nota al pie
         de la adenda 3 (`7876350`). El mensaje a CR-GW no salió: la app pausa los mensajes entre sesiones tras 10 sin que el
         operador escriba aquí. CR-GW lo ve en el encargo; repetírselo cuando el operador escriba.
+    - **13:40–13:47, votos en Laptop-Chris** (cantu-revisiones `d97000e` y `1c9acb4`; veredicto y adendas en cantu-lessons `a189363` y
+      `03bd6aa`):
+      - **ALG-02·S2, la 71** («sí»). CR-GW·16, adenda 4: la entrega. Después, CR-LW·21 y el registro de `semejantes-en-recuadro`.
+        Tesela «CR-GW·16 y CR-LW·21». **CR-LW·21 todavía no está escrito.**
+      - **Votó el «hoy» de ALG-03 y ALG-04.** «sí»: ALG-03 AP, S2 y EG, y ALG-04 AP y EG. «meh»: ALG-03 S1 y S3, y ALG-04 S1 a S4.
+        CR-GW·17, adenda 4: solo las «meh» van a tres variantes. ALG-05 y ALG-06 esperan su voto del «hoy». Teselas al día.
+      - **Dos reglas nuevas, para TALLER-COMUN v11 antes del bloque 2:** la «Tabla» solo para listas de reglas, y un procedimiento
+        por partes en la lámina gris, con recuadros por paso. Además, «antes del paréntesis» y no «delante»; y ½x, no x/2.
+      - **Pregunta abierta:** ¿se cambia el título de ALG-03 (temario) a «antes del paréntesis»?
+      - **RW-90 terminó:** informe en `1297396`, revisado y empujado. Falta archivar su sesión.
+      - **Los mensajes a CR-GW (adendas 3·nota y 4, y CR-GW·16 adenda 4) no salieron**, por la pausa de la app. Mandarlos en
+        cuanto el operador escriba.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

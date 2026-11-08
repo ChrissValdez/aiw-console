@@ -292,6 +292,9 @@
     JSON del `.docx` (igual al del repo, salvo la fecha) y corrió la sonda: 16 de 16. Fotos en `_scratch/RW-88/fotos/` (HTML sacado del
     `.docx`; **en Word no se ha abierto**). Taller archivado (Remote Control apagado antes).
     - **Las dudas de §6:** 1, 2, 5, 6, 7 y 8, como recomienda el taller. La 9 va a CR-PE·01 (`e285fb8`: `docs/referencias/ALGEBRA-PIEZAS.json`).
+      **CR-PE·01 cerrado y publicado (18:17, `9b84e7a` y `18cebd5`):** 265 piezas (no 275: `piezas.json` ya traía N01–N10),
+      1 201 preguntas, con el ajuste de RW-80; sonda `tools/sondas/algebra-piezas.mjs`, 11 de 11 (la cabina la corrió). **CR-PE·02**
+      (encargado): la página aprobada en `docs/referencias/ALGEBRA-PAGINA-APROBADA.html`, y la sonda que lea esa copia.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

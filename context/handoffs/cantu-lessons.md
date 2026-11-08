@@ -300,11 +300,16 @@
     («rw-89-piloto-algebra»). Hace el alta en `codigos.json` y la web de ALG-01 y de ALG-02 directo al borrador (método de
     `LOTE-2-LECCIONES-WEB.md`, DISEÑO v83). La slide va después de que el operador lea la web. Al entregar: revisar, publicar las
     páginas en cantu-revisiones, poner las dos en «En revisión» en `estados.json` y archivar el taller.
+    - **RW-89 entregado e integrado (18:56):** el taller dejó `0cdb754` (alta en `codigos.json`, los seis ficheros del borrador y
+      `docs/informes/RW-89.md`). La cabina registró sus 5 etiquetas en `BLOQUES-PROVISIONALES.md` (`4aa07d2`), compiló (las dos en
+      verde), publicó las páginas (cantu-revisiones `eaf0566`) y puso la lección «En revisión» (`bbc20f4`). Nota en el veredicto (18:57).
+      Taller archivado (Remote Control apagado antes). Alto: ALG-01, 3 844 px y 608 palabras; ALG-02, 4 437 px y 695 (341 de fórmula).
+      En la Galería de prueba (8795) sale el área «Álgebra» con las dos. **Espera:** su lectura de las dos webs y las dudas 1 a 6
+      del informe. Después, la slide de las dos (antes, `tools/sondas/comun.mjs` debe aceptar el área).
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.
-    - **Lo que sigue:** el operador revisa el `.docx` de álgebra. Después, el alta de ALG-01 y ALG-02 en `codigos.json` con sus
-      borradores en `drafts/web/matematicas_paa/algebra/` (RW-88 §4) y `tools/sondas/comun.mjs` que acepte el área.
+    - **Lo que sigue:** el alta y la web ya están (RW-89, arriba). Queda `tools/sondas/comun.mjs`, que acepte el área antes de la slide.
 - **RW-82 entregado (lo revisé a las 02:25)** en las ramas `rw-82-renumerar` (cantu-lessons `819716f`, cantu-revisiones `5f85951`),
   sin choques con main. «Para integrar» está en `docs/informes/RW-82.md` §10, en la rama. `desde` va a mano.
   - **B quedó aprobado (12:13) y deja aritmética en la v3, así que se integra tal cual.** Solo falta su «listo», con los tres

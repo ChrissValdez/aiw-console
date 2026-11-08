@@ -343,6 +343,15 @@
       en `servidor/portada.js` (el valor interno `complementaria` no cambia) y los tres avisos falsos de álgebra (`conceptGrid` a
       29,2 px, `papeles.mjs:147`, números blancos sobre círculos). Al volver: integrar y publicar; cambia `servidor/`, así que en
       cada aparato «Sincronizar» y, si no se ve, «Reiniciar».
+    - **12:09–12:16, su voto de la ronda 2** (cantu-revisiones `f4414da`; veredicto, adenda 2 a CR-GW·16 y tablero en cantu-lessons
+      `2da95a2`). **ALG-01·S3, la 64:** CR-GW la entrega y luego CR-LW·19 la escribe (tesela «en el taller»). **ALG-02·S1, S2 y S3,
+      tercera ronda** desde la 67, enviada a CR-GW a las 12:19:
+      - S1, sobre la 65: las flechas, cada una a su parte y con su explicación;
+      - S2, sobre la 64, en renglón: el «NO» en negritas, 9x^(2+2) tachado y tres formas de marcar el 3, el 6 y el 9;
+      - S3, sobre la 64: una línea suave entre la ecuación y el procedimiento.
+
+      La galería que CR-GW rehízo a las 12:13 (`e7609971…`, la 65 de S2 con la guía UDEM) **no se publica**: él votó la de las
+      12:07, y la 65 no se cambia donde está. Vigilante rearmado (`b78nc9sas`).
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

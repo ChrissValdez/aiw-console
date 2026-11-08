@@ -326,6 +326,8 @@
     - **11:37, ALG-02·EG entregada por CR-GW** (`_scratch/CR-GW/entregas/16/ALG-02-EG-signo-a-la-izquierda.json`, md5 `3a64b022…`,
       comprobado) y **encargada a CR-LW como CR-LW·18** (cantu-lessons `9ffa14f`, enviada). Al volver: revisar, publicar la página
       de ALG-02 y mirar que el 🚧 quede en 0. CR-GW sigue con la ronda 2.
+    - **11:41, CR-LW·18 hecho y publicado:** `bbfdaeb` y `461179e` (borrador md5 `f894420b…`, verde, apuntado `ALG-02 EG CR-GW V61`),
+      subidos; página en cantu-revisiones `88c359d`. 🚧 en 0. Los borradores de álgebra van con LF en disco (los de aritmética, CRLF).
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

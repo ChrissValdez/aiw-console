@@ -397,6 +397,10 @@
     - **13:16, CR-LW·20 hecho y publicado:** `e93249a` y `3a81142` (borrador md5 `86745d86…`, 19 bloques, amarillo solo por los
       avisos a propósito de `termino-desglosado`), subidos; página en cantu-revisiones `60169a1`. 🚧 en 0. «Literal» sigue en S2
       (bloques 10 a 12) hasta que se escriba la ronda 4.
+    - **13:25, CR-PL·36 integrado** (cantu-lessons `bbd6685`, cantu-revisiones `ea21706`, en avance rápido; informe `CR-PL/36.md`):
+      `INTERCALADAS = {ALG}` en el catálogo; en la Galería, álgebra va en una sola tabla con la pastilla «de ventaja». Aritmética
+      sigue igual (probado en el 8795). No hay que recompilar. **Pendiente, sin encargo:** que algo compruebe que el orden de
+      álgebra en `codigos.json` es el `orden` del temario (CR-PL·36, §6).
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

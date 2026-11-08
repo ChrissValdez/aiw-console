@@ -317,6 +317,12 @@
       «atendido». **Espera su voto.** Con él: CR-GW entrega a `_scratch/CR-GW/entregas/16/`, CR-LW escribe, y la cabina registra
       la etiqueta que salga (`anatomia-juntar-semejantes` o `paso-a-paso-suma-de-polinomios`). A CR-PL, cuando toque: los dos avisos
       falsos de nivel (`conceptGrid` a 29,2 px; `papeles.mjs:147` solo mira `c0`), propuesta en `CR-GW/16.md` §3.
+    - **2026-11-08, 11:20–11:31, su voto de la ronda** (cantu-revisiones `c08c0df`; veredicto, adenda, TALLER-COMUN v10 y tablero en
+      cantu-lessons `27f161e`): ALG-02·EG **la 61** (CR-GW la entrega, CR-LW·18 la escribe; tesela «en el taller»). ALG-01·S3 y
+      ALG-02·S1, S2 y S3, **segunda ronda** desde la 64 (adenda de las 11:35, enviada a CR-GW). **«Variable», no «literal»**
+      (TALLER-COMUN v10, punto 17). Vigilante rearmado (`bw4a6ts86`). **Preguntó el nombre de la «ruta complementaria»:** la cabina
+      recomienda «Ampliación» (no «Refuerzo»: RW-84 §7); espera su elección. Con ella: CR-PL cambia el nombre visible y la cabina
+      los documentos; el valor interno de `codigos.json` (`complementaria`) no cambia.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

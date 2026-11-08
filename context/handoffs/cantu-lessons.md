@@ -264,7 +264,7 @@
     - el doble clic en el botón de Laptop-Chris y de Laptop-MC;
     - el aviso a Chris y a Meche: «ya se vota, recarguen»;
     - si alguna laptop publica votos de antes, correr en la PC `renumerar.mjs --revisiones` y `--comprobar` (§10, paso 11).
-  - **El vigilante de votos,** rearmado como `bzdgf914a` (15:26).
+  - **El vigilante de votos,** rearmado como `bzdgf914a` (15:24).
 - **La tarde del 7-nov, álgebra primero (de 15:51 a 17:49; veredictos en cantu-lessons, de `d3a3b78` a `dbc9173`):**
   - 15:51, «dime en qué estamos»; 15:55, «Sí, álgebra primero»; 16:06, los bloques de los dos temarios; 16:12, la duda de
     ALG-31 y de los «regresos».

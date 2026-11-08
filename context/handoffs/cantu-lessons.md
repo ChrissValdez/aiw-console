@@ -409,6 +409,9 @@
       - **CR-GW·17** (`docs/carriles/CR-GW/17-encargo.md`, `eb06d6a`, enviado a las 13:29): la primera ronda del batch, lección por
         lección, con tres variantes por sección (ALG-03: la 73 a la 75) y «hoy» plegado. **ALG-04, ALG-05 y ALG-06 le van en adendas**
         cuando RW-90 avise de cada una: revisar, registrar sus etiquetas, recompilar, publicar, teselas y adenda.
+    - **13:34–13:37, ALG-04 de RW-90** (`906058c`, md5 `d0e492c5…`, 721 palabras): revisada, `escala-de-letra` registrada (`1b0c3ea`),
+      verde y publicada (cantu-revisiones `9744822`); CR-GW·17 adenda 1 (`139e2e8`, la 76 a la 78) y teselas (`b0cbfe4`). Su texto
+      nombraba «ARI-04» y «ARI-16»: dicho a CR-GW·17 y a RW-90.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

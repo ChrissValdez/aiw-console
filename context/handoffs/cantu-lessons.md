@@ -470,6 +470,16 @@
         - La x recta en «2x + 14» es de la foto, que se tomó antes de que cargara KaTeX_Math-BoldItalic; en la página sale en cursiva.
         - RW-91 ya está en la tanda 3, con ALG-03 a ALG-06 abiertas y recompiladas a las 14:13. **ALG-04 y ALG-06 se publican con la
           tanda 3**, las cuatro juntas.
+    - **14:17–14:28, la tanda 3, la 71 y CR-GW·17** (veredicto en cantu-lessons `b7908a2`).
+      - La tanda 3 de RW-91 (`098403f`) pasa siete cadenas al paso a paso de la lámina gris. Las 10 etiquetas de las tandas 2 y 3 ya
+        tienen fila en BLOQUES (`e990a6d`, `04181b0`).
+      - Publicadas: ALG-03, ALG-05 y ALG-06 en 🟢 (cantu-revisiones `f611b28`), y ALG-02 con la 71 (`3b0b634`; RW-91 la escribió en
+        `ae62117`, igual que la entrega). El 🟡 de ALG-02 es el de siempre, la escala de S1.
+      - **ALG-04, sin publicar:** S1 da 102 palabras de prosa (tope 60). Se le pidió a RW-91 que lo recorte; está en su cola.
+      - **CR-GW·17** (`d4a33c3`): la 73, la 74 y la 75 de ALG-03·S1, en la galería CR-GW (cantu-revisiones `a57faa0`), probadas en el
+        8795. **Le toca votar al operador.** Con la elegida: registrar `signo-antes-del-parentesis` y pasársela a RW-91 para la tanda 4
+        (ALG-03·S1, ALG-05·S1 y S3, ALG-06·S2).
+      - RW-91 sigue con la tanda 5 (lo de aritmética).
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

@@ -356,6 +356,9 @@
       `d89af052…`; base comprobada con el sha256 del borrador vivo) y **encargada a CR-LW como CR-LW·19** (cantu-lessons `e36b95e`,
       enviada). Al volver: revisar, publicar la página de ALG-01, poner la tesela «ALG-01·S3» en «atendido» y comprobar que el 🚧
       quede en 0. El aviso de palabras (80 contra 60) es esperado.
+    - **12:25, CR-LW·19 hecho y publicado:** `0d5d17b` y `6a3dff6` (borrador md5 `9b04391f…`, amarillo solo por el aviso de
+      palabras; apuntado `ALG-01 S3 CR-GW V64`), subidos; página en cantu-revisiones `64bfc5a`. 🚧 en 0. Siguen CR-GW (la tercera
+      ronda de ALG-02·S1–S3) y CR-PL·35.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

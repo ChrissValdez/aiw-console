@@ -417,6 +417,10 @@
       Guarda nueva para ALG-06: ~450 palabras de prosa sin fórmulas u ~8 000 px.
     - **13:41–13:43, ALG-05** (`7f5b039`, md5 `f05586af…`): revisada, `escala-de-letra` registrada (`5cc57c6`), verde y publicada
       (cantu-revisiones `4d6a231`); CR-GW·17 adenda 2 (`5391d32`, la 79 a la 81) y teselas. Falta ALG-06 de RW-90.
+    - **13:44–13:47, ALG-06, la primera de ventaja** (`c894da5`, md5 `7f8f6f95…`): revisada, `escala-de-letra` registrada (`c45c51f`),
+      verde y publicada (cantu-revisiones `e101ed9`); en el 8795, en su sitio con «de ventaja». CR-GW·17 adenda 3 (`6bb6acc`, la 82 a
+      la 84) y teselas. **RW-90 terminó las cuatro; falta su informe** (`docs/informes/RW-90.md`): revisarlo, empujarlo y archivar el
+      taller. **El batch «queda» cuando el operador vote las rondas de CR-GW·17**; entonces, el bloque 2 entero (ALG-07 a ALG-14).
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

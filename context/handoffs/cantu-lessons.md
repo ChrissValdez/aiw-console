@@ -421,6 +421,9 @@
       verde y publicada (cantu-revisiones `e101ed9`); en el 8795, en su sitio con «de ventaja». CR-GW·17 adenda 3 (`6bb6acc`, la 82 a
       la 84) y teselas. **RW-90 terminó las cuatro; falta su informe** (`docs/informes/RW-90.md`): revisarlo, empujarlo y archivar el
       taller. **El batch «queda» cuando el operador vote las rondas de CR-GW·17**; entonces, el bloque 2 entero (ALG-07 a ALG-14).
+      - 13:47: RW-90 pasó el dinero de ALG-06 a «$» (`d3c682e`, regla 36.1); republicada (cantu-revisiones `18bd063`) y nota al pie
+        de la adenda 3 (`7876350`). El mensaje a CR-GW no salió: la app pausa los mensajes entre sesiones tras 10 sin que el
+        operador escriba aquí. CR-GW lo ve en el encargo; repetírselo cuando el operador escriba.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

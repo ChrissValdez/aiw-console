@@ -449,6 +449,15 @@
       - **CR-GW** (mensaje enviado a las 13:57): primero la entrega de la 71 (adenda 4 de CR-GW·16). Después, CR-GW·17 adenda 5:
         solo tres variantes de ALG-03·S1 (la 73 a la 75). Lo demás de CR-GW·17, cancelado.
       - **Teselas:** las quince «meh» de ALG-02 a ALG-06 dicen «en el taller · RW-91».
+    - **14:01–14:07, la entrega de la 71 y la tanda 1 de RW-91.**
+      - CR-GW entregó la 71 de ALG-02·S2 (`_scratch/CR-GW/entregas/16/ALG-02-S2-tachado-con-ola.json`, md5 `2d9f39d6…`; bloques
+        9–12 → 3). Cuadra con el vivo. La cabina registró `semejantes-en-recuadro` (cantu-lessons `46012ef`) y se la pasó a RW-91.
+      - La tanda 1 de RW-91 (`83bdbab`: «antes», el título de ALG-03 en el borrador, la identidad, el `.docx` y el plan, y ALG-04 sin
+        códigos de lección) está revisada y empujada. Nota del veredicto y tesela de ALG-02·S2 en `f0969c5`.
+      - **Falta publicar la tanda 1** (ALG-03, ALG-04 y ALG-05). Se espera el aviso de RW-91: está en la tanda 2 y tiene ALG-04 y
+        ALG-06 abiertos en el checkout, así que compilar ahora mezclaría su trabajo a medias. Ya se le pidió que diga en cada aviso si
+        terminó de compilar.
+      - CR-GW sigue con la 73 a la 75 de ALG-03·S1.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

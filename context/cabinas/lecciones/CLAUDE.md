@@ -85,6 +85,25 @@ de la plataforma»*.
 - **Una sesión de carril con la conversación muy larga** deja su relevo en su bitácora, y la cabina abre otra con el
   mismo código.
 
+## El flujo de trabajo v11 (el operador, 2026-11-08)
+
+*«me hace sentido esto: Primero las piezas, después las lecciones … a veces doy el mismo feedback en 4-5 secciones, y eso frena
+todo el flujo … implementa los 4 cambios mencionadso y probemos que tal jalan»* (15:07). Lo de los talleres está en
+`docs/encargos/TALLER-COMUN.md` v11, sección 9. Lo de la cabina:
+
+- **Un comentario de sistema abre una ronda de pieza, no una por sección.** Es de sistema si habla de cómo se ve algo «en general»
+  o si es el mismo en dos secciones. Va a CR-GW, el carril de piezas: tres variantes en dos secciones de muestra. La elegida entra
+  al catálogo (`docs/referencias/piezas/`) y se aplica de una vez en todas las secciones donde va.
+- **Cada lección es de un carril a la vez,** declarado en el tablero. Ese carril arma sus rondas y escribe él mismo la elegida: sin
+  entregas de un carril a otro.
+- **Dos velocidades:** la ronda de dirección va ligera (fotos y tres líneas por opción); la revisión completa, solo al escribir.
+- **Los carriles de lecciones nuevos, en su worktree** (`_scratch\<ticket>\wt\cantu-lessons`, con su rama). La cabina junta
+  su rama como junta las de CR-PL, compila desde su carpeta y publica. Una compilación a la vez en la máquina (CARRILES).
+- **Tras cada voto, la declaración del tablero va primero y se empuja sola,** antes que el veredicto y el encargo. Hasta que llega,
+  la plataforma del operador dice «sin encargo» (lo preguntó el 2026-11-08, 15:11).
+- **Publicar primero; el papeleo, por tandas.** A los talleres, instrucciones solo por fichero, con un mensaje de una línea que
+  apunta al fichero. Nunca una corrección a mitad de una tanda.
+
 ## Revisar por lección (el operador, 2026-10-31)
 
 *«a mi me gustaria organizar las revisiones por lecciones no por tickets / quizas tener un ticket para correcciones web

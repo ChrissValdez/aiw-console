@@ -264,7 +264,7 @@
     - el doble clic en el botón de Laptop-Chris y de Laptop-MC;
     - el aviso a Chris y a Meche: «ya se vota, recarguen»;
     - si alguna laptop publica votos de antes, correr en la PC `renumerar.mjs --revisiones` y `--comprobar` (§10, paso 11).
-  - **El vigilante de votos,** rearmado como `bqz6fkdul` (14:55).
+  - **El vigilante de votos,** rearmado como `bzdgf914a` (15:26).
 - **La tarde del 7-nov, álgebra primero (de 15:51 a 17:49; veredictos en cantu-lessons, de `d3a3b78` a `dbc9173`):**
   - 15:51, «dime en qué estamos»; 15:55, «Sí, álgebra primero»; 16:06, los bloques de los dos temarios; 16:12, la duda de
     ALG-31 y de los «regresos».
@@ -497,7 +497,7 @@
       - la 87: una ficha con rótulo.
 
       Cada una va en ALG-03·S1 y ALG-02·S2. **Esperan su voto.** Con la elegida, RW-91 escribe las dos secciones y hace la tanda 4.
-    - **15:03–15:12, la 86 en las dos secciones** (veredicto y adenda 7 en cantu-lessons `cdad5ca` y `ccb7f1d`).
+    - **15:03–15:07, la 86 en las dos secciones** (veredicto y adenda 7 en cantu-lessons `cdad5ca` y `ccb7f1d`).
       - El operador pidió leer también lo que dijo de las rechazadas. La regla queda así:
         - la 86, cuando la sección explica una sola cosa;
         - la 87 (ficha con rótulo), cuando tiene varios casos;
@@ -506,7 +506,25 @@
       - **CR-GW** hace tres entregas: la 86 de ALG-02·S2, la de ALG-03·S1 y la pieza de la 87.
       - **RW-91** escribe la 86 en las dos secciones y después la tanda 4 con la 87: ALG-05·S1 y S3 y ALG-06·S2 tienen dos casos cada
         una.
-      - **Sigue pendiente qué adopta el operador del flujo** (la pregunta de las 14:38).
+      - **Sigue pendiente qué adopta el operador del flujo** (la pregunta de las 14:38). **Resuelto a las 15:07: los cuatro.**
+    - **15:07, el flujo nuevo: el operador aprueba los cuatro cambios** («Primero las piezas, después las lecciones … probemos que
+      tal jalan»). Su matiz: las piezas salen de verlas aplicadas, así que la ronda de pieza se abre en cuanto aparece el comentario.
+      - **Escrito:** TALLER-COMUN v11, con la sección 9 y los puntos 18 a 22 (cantu-lessons `a57ba54`), y en el CLAUDE.md de la cabina
+        «El flujo de trabajo v11».
+      - **CR-GW·18 en marcha:** el catálogo de piezas en `docs/referencias/piezas/` (la 86, la 87, la 85, la 67, el tachado y `.fa-r`),
+        con su comprobación y el censo del tachado en diagonal de aritmética. CR-GW es ya el carril de piezas; su siguiente número,
+        el 91.
+      - **RW-91, adenda 1 (tanda 6) en marcha:** la 87 en ALG-04·S1 y S4 y en ALG-06·S1; después, la ronda ligera de ALG-06·EG (la 88 a
+        la 90), sobre una copia de la galería CR-GW que publica la cabina. La elegida la escribe RW-91.
+      - **El bloque 2 (ALG-07 a ALG-14), en dos carriles, cada uno en su worktree:** el encargo se escribe cuando el catálogo esté.
+      - **Publicadas:**
+        - la 86, en ALG-02·S2 (15:11, cantu-revisiones `58e4e47`) y en ALG-03·S1 (15:13, `83f6bb7`);
+        - la 87, en ALG-05·S1 y S3 y en ALG-06·S2 (15:18, `c99b234`).
+
+        Etiquetas registradas: `signo-antes-del-parentesis` y las tres `casos-…`.
+      - **15:11, el operador preguntó por el estado de ALG-02.** Su laptop tenía la copia de las 15:04: con una declaración más vieja
+        que su voto, la tesela sale «sin encargo». Desde ahora, tras cada voto la declaración va primero. Para CR-PL queda una
+        propuesta: «recién votada» en vez de «sin encargo».
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

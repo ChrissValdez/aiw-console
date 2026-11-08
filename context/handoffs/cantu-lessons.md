@@ -379,6 +379,16 @@
       (`temario/algebra-plan.json`: 72 lecciones en 13 bloques) y recomienda **ALG-03 a ALG-06**, que cierran el bloque 1
       «Expresiones», con la guía 02 de la UDEM. Después, el bloque 2 (ALG-07 a ALG-14, 8 esenciales) en dos batches de 4.
       **Espera su elección.** ALG-06 es la primera de ventaja de álgebra: con ella, a CR-PL la duda 3 de RW-88.
+    - **13:08, el batch: «Vamos con 03 a 06 y cuando ese quedé pedimos bloque 2 entero»** (veredicto y encargos en cantu-lessons
+      `d7a23bc`).
+      - **RW-90** (`docs/encargos/REVISION-WEB-TICKETS.md`, al final): un taller escribe ALG-03 a ALG-06 directo al borrador, con el
+        método de RW-89, las decisiones de ALG-01 y ALG-02 y la guía 02 de la UDEM. Va en la sesión anidada `local_fbba3ef2-0c4d-4673-b876-dfc0d2971f01`
+        (`rw-90-alg-03-06`), lanzada a las 13:12. Avisa al terminar cada lección; la cabina publica cada página y pasa la lección
+        a **CR-GW·17**, la primera ronda con tres variantes por sección y la versión del taller plegada como «hoy». Ese encargo
+        todavía no está escrito.
+      - **CR-PL·36** (`docs/carriles/CR-PL/36-encargo.md`, enviado a las 13:12): el catálogo y la Galería, con las de ventaja de
+        álgebra intercaladas (RW-88, duda 3).
+      - **Cuando el batch 1 quede:** el bloque 2 entero (ALG-07 a ALG-14, 8 lecciones) en un solo batch, como pidió.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

@@ -359,6 +359,14 @@
     - **12:25, CR-LW·19 hecho y publicado:** `0d5d17b` y `6a3dff6` (borrador md5 `9b04391f…`, amarillo solo por el aviso de
       palabras; apuntado `ALG-01 S3 CR-GW V64`), subidos; página en cantu-revisiones `64bfc5a`. 🚧 en 0. Siguen CR-GW (la tercera
       ronda de ALG-02·S1–S3) y CR-PL·35.
+    - **12:28, su «no» a la 65 de ALG-02·S2** (cantu-revisiones `b18b2a6`): la publicada, sin comentario. La ronda 3 de S2 sigue sobre
+      la 64 y CR-GW lo sabe. Vigilante rearmado (`bymwqurvt`).
+    - **12:41, CR-PL·35 integrado** (veredicto `f34e434`): «Ventaja» en la Galería (cantu-revisiones `69624bd`, probado en el 8795) y
+      los tres avisos falsos de álgebra (cantu-lessons `9cac7d6` + `51ce9ab`, informe `docs/carriles/CR-PL/35.md`).
+      `build.mjs --todas` recompiló las 60 piezas (12 min 44 s); al publicar no cambió ningún fichero, solo el manifiesto
+      (`1808448`). Llega a cada aparato con «Sincronizar», y si no se ve, «Reiniciar». **Dudas de CR-PL, para el nombre
+      definitivo:** el botón dice «Plegar la ventaja», y la otra sigue llamándose «Ruta esencial». La rama `cr-pl-35-ventaja`
+      queda en los dos repos, ya integrada.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

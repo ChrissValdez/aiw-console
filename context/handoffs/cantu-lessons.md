@@ -525,6 +525,7 @@
       - **15:11, el operador preguntó por el estado de ALG-02.** Su laptop tenía la copia de las 15:04: con una declaración más vieja
         que su voto, la tesela sale «sin encargo». Desde ahora, tras cada voto la declaración va primero. Para CR-PL queda una
         propuesta: «recién votada» en vez de «sin encargo».
+      - **15:29, RW-91 tanda 6, paso 1** (`e6afca9`): la 87 en ALG-04·S1 y S4 (tres fichas, una debajo de la otra; ALG-04 pasa de 6289 a ~7990 px a 1366) y en ALG-06·S1 (dos, en paralelo). Etiquetas `casos-sustituir-tres-valores`, `casos-partir-un-segmento` y `casos-perimetro-y-area` registradas; las `fichas-…` de la tanda 2, marcadas como sustituidas (`5f4d808`). Publicadas a las 15:31 (cantu-revisiones `c0d8fca`). Sigue la ronda ligera de ALG-06·EG (la 88 a la 90).
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

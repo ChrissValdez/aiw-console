@@ -436,6 +436,19 @@
       - **RW-90 terminó:** informe en `1297396`, revisado y empujado. Falta archivar su sesión.
       - **Los mensajes a CR-GW (adendas 3·nota y 4, y CR-GW·16 adenda 4) no salieron**, por la pausa de la app. Mandarlos en
         cuanto el operador escriba.
+    - **13:48–13:52, el operador vota ALG-05 y ALG-06 (casi todo «mismo feedback que…»), dice «si cmabialo» al título de ALG-03 y
+      pide arreglar los comentarios repetidos por tandas en las seis, con aritmética de referencia** (veredicto y encargos en
+      cantu-lessons `1a2f971`).
+      - **RW-91** (`REVISION-WEB-TICKETS.md`, al final), lanzado a las 13:58 como sesión `local_6c0ebd26-e60c-4a0b-b8c7-2e34bb874311`
+        (`rw-91-tandas-algebra`):
+        - primero, la revisión contra aritmética;
+        - después, las tandas 1 (las palabras y el título de ALG-03), 2 (la tabla), 3 (la lámina gris) y 5 (lo de aritmética);
+        - la 71 de ALG-02·S2, que ya no va a CR-LW·21 (CR-LW·21 no se escribe);
+        - y la tanda 4 con la elegida de CR-GW·17.
+        Avisa por tanda. **En cada aviso:** revisar, registrar sus etiquetas, publicar y avisar al operador para que vuelva a votar.
+      - **CR-GW** (mensaje enviado a las 13:57): primero la entrega de la 71 (adenda 4 de CR-GW·16). Después, CR-GW·17 adenda 5:
+        solo tres variantes de ALG-03·S1 (la 73 a la 75). Lo demás de CR-GW·17, cancelado.
+      - **Teselas:** las quince «meh» de ALG-02 a ALG-06 dicen «en el taller · RW-91».
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

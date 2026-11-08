@@ -394,6 +394,9 @@
       `docs/BLOQUES-PROVISIONALES.md` `termino-desglosado`, `tabla-por-numero-de-terminos` y `paso-a-paso-suma-de-polinomios`, y dejó
       `anatomia-de-una-expresion` como «sustituido». `semejantes-en-recuadro` (S2) espera la ronda 4. Al volver CR-LW: publicar
       ALG-02 y comprobar que el 🚧 quede en 0.
+    - **13:16, CR-LW·20 hecho y publicado:** `e93249a` y `3a81142` (borrador md5 `86745d86…`, 19 bloques, amarillo solo por los
+      avisos a propósito de `termino-desglosado`), subidos; página en cantu-revisiones `60169a1`. 🚧 en 0. «Literal» sigue en S2
+      (bloques 10 a 12) hasta que se escriba la ronda 4.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

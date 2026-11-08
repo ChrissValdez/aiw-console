@@ -295,6 +295,11 @@
       **CR-PE·01 cerrado y publicado (18:17, `9b84e7a` y `18cebd5`):** 265 piezas (no 275: `piezas.json` ya traía N01–N10),
       1 201 preguntas, con el ajuste de RW-80; sonda `tools/sondas/algebra-piezas.mjs`, 11 de 11 (la cabina la corrió). **CR-PE·02**
       (encargado): la página aprobada en `docs/referencias/ALGEBRA-PAGINA-APROBADA.html`, y la sonda que lea esa copia.
+      **CR-PE·02 cerrado** (`f37e35c`, 18:19; idéntica a la v8, sonda 11 de 11).
+  - **18:19, «procede con el piloto ALG 01 y 02»:** RW-89 (`e9955a4`), taller `local_3fc4fc5b-a114-4686-9605-7b45eabbbf28`
+    («rw-89-piloto-algebra»). Hace el alta en `codigos.json` y la web de ALG-01 y de ALG-02 directo al borrador (método de
+    `LOTE-2-LECCIONES-WEB.md`, DISEÑO v83). La slide va después de que el operador lea la web. Al entregar: revisar, publicar las
+    páginas en cantu-revisiones, poner las dos en «En revisión» en `estados.json` y archivar el taller.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

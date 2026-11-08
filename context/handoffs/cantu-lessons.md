@@ -491,6 +491,12 @@
       - ALG-04 se publicó en 🟡 con las tres frases de S1 (cantu-revisiones `ae51e77`; cantu-lessons `dcd8dbb`). El recorte
         `a1037d8` se deshizo porque los mensajes de la cabina se cruzaron. El informe de RW-91 está empujado.
       - **El operador preguntó cómo acelerar el flujo** (14:38). El diagnóstico va en el chat. **Pendiente: qué adopta.**
+    - **14:54, la 85 a la 87, publicadas** (cantu-revisiones `7285a36`; informe en cantu-lessons `b98f050`):
+      - la 85: la cuenta en la losa gris;
+      - la 86: la cuenta y la leyenda en la lámina gris;
+      - la 87: una ficha con rótulo.
+
+      Cada una va en ALG-03·S1 y ALG-02·S2. **Esperan su voto.** Con la elegida, RW-91 escribe las dos secciones y hace la tanda 4.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

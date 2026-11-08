@@ -480,6 +480,9 @@
         8795. **Le toca votar al operador.** Con la elegida: registrar `signo-antes-del-parentesis` y pasársela a RW-91 para la tanda 4
         (ALG-03·S1, ALG-05·S1 y S3, ALG-06·S2).
       - RW-91 sigue con la tanda 5 (lo de aritmética).
+    - **14:34, la tanda 5** (`db3f579`): la nota «Error común», con su contexto y la cuenta buena en grande, en ALG-04·S2, ALG-05·S2 y
+      ALG-06·S3. Publicadas ALG-05 y ALG-06 en 🟢 (cantu-revisiones `bc9fb41`). ALG-04 sigue esperando el recorte de S1. RW-91 escribe el
+      informe, con tres preguntas: × o ·, «costo variable» y el tachado diagonal de ARI-16.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

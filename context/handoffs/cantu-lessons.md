@@ -312,6 +312,11 @@
       una: va como **CR-GW·16** (`docs/carriles/CR-GW/16-encargo.md`), enviado a las 20:37 a CR-GW. **Desde ALG-03, la primera
       ronda de cada lección web nueva trae tres variantes por sección** (cambia «una sola versión» de LOTE-2). Las dudas 1 a 6
       de RW-89 siguen sin su respuesta. La PC se reinició hacia las 20:35; vigilante rearmado (`batmw8mss`).
+    - **21:11, la ronda de CR-GW·16, publicada** (cantu-revisiones `b816268`; informe `docs/carriles/CR-GW/16.md`, `35ed248`; nota
+      en el veredicto y tablero, `f70c8ca`): la 61, la 62 y la 63 en ALG-01·S3 y ALG-02·S1, S2, S3 y EG. Los 5 comentarios,
+      «atendido». **Espera su voto.** Con él: CR-GW entrega a `_scratch/CR-GW/entregas/16/`, CR-LW escribe, y la cabina registra
+      la etiqueta que salga (`anatomia-juntar-semejantes` o `paso-a-paso-suma-de-polinomios`). A CR-PL, cuando toque: los dos avisos
+      falsos de nivel (`conceptGrid` a 29,2 px; `papeles.mjs:147` solo mira `c0`), propuesta en `CR-GW/16.md` §3.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

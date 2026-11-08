@@ -458,6 +458,9 @@
         ALG-06 abiertos en el checkout, así que compilar ahora mezclaría su trabajo a medias. Ya se le pidió que diga en cada aviso si
         terminó de compilar.
       - CR-GW sigue con la 73 a la 75 de ALG-03·S1.
+    - **14:10, la tanda 1, publicada** (aviso de RW-91 a las 14:07). ALG-03 y ALG-05 en 🟢 (cantu-revisiones `10b7afd`).
+      - ALG-04 sale con la tanda 2, porque RW-91 lo tiene abierto.
+      - El «hoy» no se vota todavía: se vota cuando cada lección tenga sus tandas.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

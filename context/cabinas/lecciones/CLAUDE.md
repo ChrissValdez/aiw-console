@@ -106,6 +106,12 @@ todo el flujo … implementa los 4 cambios mencionadso y probemos que tal jalan�
     **«recién votada»** (en gris). «Sin encargo» en rojo queda para cuando ya las tiene, pasado el margen, y la tesela sigue sin
     declarar.
   - **Ese margen es el plazo de la cabina para declarar.** Si se pasa, la alarma es de verdad.
+- **Tras un ~ del «hoy», variantes nuevas con número nuevo** (TALLER-COMUN v12 §9.2; el operador, 2026-11-08: *«en vez de traer
+  nueva variantes, actualiza una variatne vieja»*). Nunca una sección reescrita en su sitio para que la vuelva a votar. Al declarar
+  un ~ cuyo comentario es el de la ronda anterior sin tocar, no se reencarga ese comentario: se lee como «sigue sin gustarme».
+- **La letra de los procedimientos** (TALLER-COMUN v12, punto 23): ninguno por encima de la tarjeta de pasos (29,1 px) hasta que
+  el operador vote la norma de tamaños (CR-GW·20). **Al escribir un encargo, nada de «en grande»:** el punto 22 decía «arriba la
+  cuenta, en grande» y dio cuentas de 35 px en 8 secciones de álgebra.
 - **Publicar primero; el papeleo, por tandas.** A los talleres, instrucciones solo por fichero, con un mensaje de una línea que
   apunta al fichero. Nunca una corrección a mitad de una tanda.
 

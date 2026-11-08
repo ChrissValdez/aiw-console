@@ -466,6 +466,10 @@
       - Sus tres etiquetas `fichas-*` ya tienen fila en BLOQUES (`e990a6d`).
       - ALG-06 da 🟢. ALG-04 da 🟡 (S1, 102 palabras de prosa, por encima de 60): se le pidió a RW-91 que lo recorte. **Sin
         publicar** hasta su aviso con fotos.
+      - 14:15: llegó el aviso de la tanda 2 (se cruzó con el de la cabina). Fotos vistas.
+        - La x recta en «2x + 14» es de la foto, que se tomó antes de que cargara KaTeX_Math-BoldItalic; en la página sale en cursiva.
+        - RW-91 ya está en la tanda 3, con ALG-03 a ALG-06 abiertas y recompiladas a las 14:13. **ALG-04 y ALG-06 se publican con la
+          tanda 3**, las cuatro juntas.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

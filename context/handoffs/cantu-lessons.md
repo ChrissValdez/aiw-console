@@ -412,6 +412,9 @@
     - **13:34–13:37, ALG-04 de RW-90** (`906058c`, md5 `d0e492c5…`, 721 palabras): revisada, `escala-de-letra` registrada (`1b0c3ea`),
       verde y publicada (cantu-revisiones `9744822`); CR-GW·17 adenda 1 (`139e2e8`, la 76 a la 78) y teselas (`b0cbfe4`). Su texto
       nombraba «ARI-04» y «ARI-16»: dicho a CR-GW·17 y a RW-90.
+    - **13:39, RW-90 paró en ALG-05 por el largo** (802 palabras; 378 sin fórmulas). La cabina la dejó entera (13:40): el plan
+      la trae como una lección. El corte (a) S1+S2 / (b) S3+S4+EG queda en el veredicto por si el operador la quiere en dos.
+      Guarda nueva para ALG-06: ~450 palabras de prosa sin fórmulas u ~8 000 px.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

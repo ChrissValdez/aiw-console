@@ -404,6 +404,11 @@
     - **13:26, la ronda 4 de ALG-02·S2, publicada** (CR-GW·16 §8, cantu-lessons `81215dc`; galería en cantu-revisiones `4e4b284`):
       la 70, la 71 y la 72, la 67 con la x y el 2+2 tachados aparte, a mano. CR-GW recomienda la 70. **Espera el voto.** Con él:
       la elegida a CR-LW·21, y `semejantes-en-recuadro` a `docs/BLOQUES-PROVISIONALES.md`.
+    - **13:26–13:30, ALG-03 de RW-90** (`a98fd53`, md5 `559eee90…`): revisada, con sus dos etiquetas registradas (`24b882c`), recompilada
+      en verde y publicada (cantu-revisiones `95d4182`). Las cinco teselas, «en el taller · CR-GW·17» (`ef1ab60`).
+      - **CR-GW·17** (`docs/carriles/CR-GW/17-encargo.md`, `eb06d6a`, enviado a las 13:29): la primera ronda del batch, lección por
+        lección, con tres variantes por sección (ALG-03: la 73 a la 75) y «hoy» plegado. **ALG-04, ALG-05 y ALG-06 le van en adendas**
+        cuando RW-90 avise de cada una: revisar, registrar sus etiquetas, recompilar, publicar, teselas y adenda.
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

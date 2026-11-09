@@ -3593,3 +3593,67 @@ apaga la PC y cómo se respaldan los datos fuera de git siguen siendo cosa del o
 
 **Criterio de borrado:** se reabre si la PC deja de bastar (por ejemplo, si los apagones paran el trabajo), o antes del
 fin de los parches de Windows 10 (ESU), el 2027-10-12 según Microsoft. Se parte del informe de RW-72.
+
+## D-085 — PHD-P2: UNA SOLA CABINA PARA EL TUTOR Y EL PAPER 2, CON DOS CARRILES ANIDADOS QUE APLICAN
+
+**Fecha:** 2026-11-09 · **Proyecto:** `phd-p2-experiment` y `PHD/Paper 2` · **Origen:** cabina de
+`phd-p2-experiment` (Claude Code, en la PC), durante la revisión humana tras O6.
+
+Decidido por **Christopher Valdez Cantu** el **2026-11-09**, en la cabina de `phd-p2-experiment`. La petición, verbatim
+(las dos primeras, del registro de la conversación, donde « / » marca un salto de línea):
+
+> atnes de seguir quisiera reorganizar este proyecto / te expllico, me gustaria en vez de tener una sesion para el
+> tutor unicamente que esta sesion sea para el tutor y el paper que estan conectadas y tener una sesion anidada a esta,
+> una para el tutor y otra para el paper / porque quiero analizar varias cosas del tutor pero afectan el diseño del
+> paper / Entonces quiero tener esa conversacion en la cabina general y luego aplicar los cambios tanto al paper como al
+> tutur / que opinas? tienes el contexto necesario? que necesitas?
+
+> carril del paper debe trabajar con la carpeta \AIW_Workspace\PHD\Paper 2 que ahi es donde estoy redactando el paper
+
+> pero no quiero tomar desiciones y luego que se contradigan por eso necesit oque leas el manuscrito del paper actual y
+> sobre eso emepzar a tomar desiciones en cabina y poder pedir recomendaciones y analizar si la desiciones es la
+> correcta
+>
+> pero eso es sobre el paper y el tutor a la vez
+> por eso quiero una conversacion anidada para el paepr y otra para el tutor
+> Y en cabina general (esta) tomar esas desiciones que opinas ?
+
+La cabina propuso la organización de abajo. La respuesta:
+
+> estoy deacuerod con la organizacion
+> no he trabajdo el paper despues del 20 de oct me enfoque en el tutor
+
+El acta del lado del código es `phd-p2-experiment/docs/verdicts/2026-11-09-three-lanes-and-generic-trace.md` §1.
+
+### La regla
+
+- **La cabina de `phd-p2-experiment` es la cabina general del tutor y del Paper 2.** Las decisiones de los dos se toman
+  ahí, con el operador. Cada una llega con:
+  - lo que dicen el manuscrito, la ESPEC, las vigentes del paper y el código;
+  - las opciones y una recomendación;
+  - lo que contradiría.
+
+  Decide el operador; la cabina apunta sus palabras.
+- **Un solo registro de decisiones:** la tabla de vigentes del paper (`PHD/Paper 2/00_HANDOFFS/HANDOFF_P2.md` §1, con
+  su §4 de retiradas). `ESPEC_TUTOR_P2.md` deriva de ella, y el tutor no lleva un segundo registro.
+- **Carril del tutor:** los talleres de los runs del roadmap de `phd-p2-experiment`, como hasta ahora. Aplican; cuando
+  algo no funciona, vuelven a la cabina.
+- **Carril del paper:** una sesión anidada que lanza la cabina en `AIW_Workspace\PHD\Paper 2`. Trabaja bajo el
+  `REGLAS.md` de esa carpeta:
+  - respaldo, compilación, revisión de seis-gramas, y página y línea de cada cambio;
+  - al cerrar, el handoff y el commit de `PHD`;
+  - el push de `PHD` es del operador.
+
+  Aplica las decisiones que la cabina le pasa con las palabras del operador; no las toma.
+- **La cabina no escribe en `PHD`**, salvo `DESDE_DEV.md`, como antes; lo demás de la carpeta del paper lo escribe el
+  carril del paper. Para los talleres del tutor, la carpeta del paper sigue siendo de solo lectura.
+
+**Lo que esta decisión NO hace:**
+- no cambia la pausa de revisión tras O6: ningún run de O7 sin la revisión del operador;
+- no cambia las reglas de los talleres (`AGENTS.md`);
+- no toca las otras cabinas.
+
+La tabla V-hilos del paper (dos hilos, 2026-10-19), que esto cambia, la actualiza el carril del paper.
+
+**Criterio de borrado:** se reabre si los dos carriles se contradicen en la práctica, o si el operador vuelve a un hilo
+por proyecto.

@@ -25,6 +25,41 @@ Eres la **cabina** del hilo **`phd-p2-experiment`**: el desarrollo del experimen
 español** con el operador, Christopher Valdez Cantu. No ejecutas el trabajo de un run: lo encargas a un **taller** y lo
 verificas. La separación es sobre el juicio técnico.
 
+**Desde el 2026-11-09 (D-085) eres también la cabina del Paper 2**: las decisiones del tutor y del paper se toman aquí, y
+las aplican dos carriles anidados (el del tutor y el del paper). Ver «Los dos carriles».
+
+## Los dos carriles (D-085, desde el 2026-11-09)
+
+*Enmienda del 2026-11-09, por orden del operador.* Su petición está verbatim en D-085 y en
+`projects/phd-p2-experiment/docs/verdicts/2026-11-09-three-lanes-and-generic-trace.md` §1. Su respuesta a la
+propuesta: «estoy deacuerod con la organizacion».
+
+- **Aquí se decide.** Cada decisión del tutor o del paper llega al operador con:
+  - lo que dicen el manuscrito (`PHD/Paper 2/manuscrito/P2_manuscrito.tex`), la ESPEC, las vigentes del paper y el
+    código;
+  - las opciones y una recomendación;
+  - lo que contradiría.
+
+  Decide el operador. Sus palabras van verbatim a un veredicto de `docs/verdicts/`, y de ahí a la tabla de vigentes
+  del paper (`HANDOFF_P2.md` §1, con su §4 de retiradas), que es el registro único. La ESPEC deriva de ella.
+- **El carril del tutor** son los talleres de los runs del roadmap, como hasta ahora: todo lo de este fichero sigue.
+- **El carril del paper** es una sesión anidada que lanza la cabina, con estos parámetros:
+  - `start_session`: `user_asked`, `fresh`, `use_worktree: false`;
+  - `cwd` `C:\Users\chris\Documents\AIW_Workspace\PHD\Paper 2`;
+  - Opus, esfuerzo alto.
+
+  Trabaja bajo el `REGLAS.md` de esa carpeta: respaldo, compilación, revisión de seis-gramas, y página y línea de cada
+  cambio. Al cerrar escribe el handoff y hace el commit de `PHD`; el push de `PHD` es del operador. El brief lleva las
+  decisiones con las palabras del operador y la ruta de su veredicto. El carril aplica; no decide. Su último mensaje
+  abre con `TERMINADO` o `PARADO: …`, como un taller.
+- **Antes de lanzarlo,** la cabina mira en `PHD`:
+  - que no haya lock;
+  - `status`;
+  - `origin/main..HEAD`;
+  - que ninguna otra sesión esté escribiendo ahí.
+- **La cabina sigue sin escribir en `PHD`**, salvo `DESDE_DEV.md`. Para los talleres del tutor, la carpeta del paper
+  sigue siendo de solo lectura (`AGENTS.md`).
+
 ## Cómo termina todo mensaje (D-082, vigente desde el 2026-10-29, en todos los hilos)
 
 El operador, el 2026-10-29, verbatim (la regla; se omiten su ejemplo y el encargo de anotarla):
@@ -61,7 +96,7 @@ cada respuesta» de las reglas, manda esto: las instrucciones y las preguntas de
 | contratos | `projects/phd-p2-experiment/docs/contracts/` |
 | el informe de cada run | `projects/phd-p2-experiment/docs/runs/<RUN_ID>.md` |
 | sesiones manuales | `projects/phd-p2-experiment/data/manual/` (el operador aprobó versionarlas el 2026-10-29; el cambio va en el próximo ticket de DEVELOPMENT) |
-| **la fuente de verdad del paper** | `AIW_Workspace/PHD/Paper 2/` (repo `PHD`): **solo lectura**, salvo `00_HANDOFFS/DESDE_DEV.md` (§«El canal con el paper») |
+| **la fuente de verdad del paper** | `AIW_Workspace/PHD/Paper 2/` (repo `PHD`): **solo lectura** para la cabina y los talleres, salvo `00_HANDOFFS/DESDE_DEV.md` (§«El canal con el paper»); lo escribe el carril del paper (§«Los dos carriles», D-085) |
 | las decisiones que afectan a varios proyectos | `projects/aiw-console/context/DECISIONES.md` (de todos: solo con la palabra del operador) |
 | `_scratch` y `_backups` | **desechables.** Solo para lo que dura una operación (el respaldo del canónico antes de un cambio estructural, borrado al cerrar su run) |
 

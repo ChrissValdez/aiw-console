@@ -689,6 +689,7 @@
       - **La 9 de ALG-05·D2 ✓ (21:06):** el voto va al veredicto, la tesela queda «en el taller» y CR-AS·05 la escribe en la lección, con SIS-ERROR-COMUN `--en D2`; en cantu-lessons es 700b0834 (apuntado a las 21:11)
       - **CR-AS·05 cerrada y publicada:** la 9 de ALG-05·D2 ya está en la lección (cantu-lessons b51f9a8e y 4bbfa868, páginas c7d7e32), con SIS-ERROR-COMUN escrita en las tres; la tesela, atendida (apuntado a las 21:22)
       - **El comentario de ARI-07·S1 (00:25): la flecha de la llevada se encima con el 1 de antes:** queda en el veredicto, el tablero lo marca «en el taller» y CR-RW·02 hace el censo y arma una sola opción en CR-GW; en cantu-lessons es 16964da0 (apuntado a las 00:30)
+      - **Los dos comentarios de ARI-12 (00:28): S2 «mucho texto» y S3 el color de la regla y las alturas:** van a la enmienda de CR-RW·02, en la misma primera ronda de la galería CR-RW (no CR-GW, corregido), y la flecha va vista por vista; en cantu-lessons es 45f39a8a (apuntado a las 00:34)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

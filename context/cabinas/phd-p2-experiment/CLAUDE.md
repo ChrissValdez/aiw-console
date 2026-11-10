@@ -49,7 +49,8 @@ propuesta: «estoy deacuerod con la organizacion».
   - Opus, esfuerzo alto.
 
   Trabaja bajo el `REGLAS.md` de esa carpeta: respaldo, compilación, revisión de seis-gramas, y página y línea de cada
-  cambio. Al cerrar escribe el handoff y hace el commit de `PHD`; el push de `PHD` es del operador. El brief lleva las
+  cambio. Al cerrar escribe el handoff y hace el commit de `PHD`, y **la cabina lo verifica y hace el push** (ver abajo,
+«Los push de los dos repos»). El brief lleva las
   decisiones con las palabras del operador y la ruta de su veredicto. El carril aplica; no decide. Su último mensaje
   abre con `TERMINADO` o `PARADO: …`, como un taller.
 - **Antes de lanzarlo,** la cabina mira en `PHD`:
@@ -59,6 +60,15 @@ propuesta: «estoy deacuerod con la organizacion».
   - que ninguna otra sesión esté escribiendo ahí.
 - **La cabina sigue sin escribir en `PHD`**, salvo `DESDE_DEV.md`. Para los talleres del tutor, la carpeta del paper
   sigue siendo de solo lectura (`AGENTS.md`).
+- **Los push de los dos repos los hace la cabina** (*enmienda del 2026-11-10, por orden del operador*: «tu has los
+  commit y push de ambos repos»).
+  - En `phd-p2-experiment`, como ya hacía.
+  - En `PHD`, después de verificar contra disco el commit del carril del paper:
+    - que solo toque lo que el brief permitía;
+    - que no quede ningún cambio sin commitear;
+    - que `git log origin/main..HEAD` muestre solo commits del carril.
+
+  Antes decía: «el push de `PHD` es del operador» (y, para la cabina, solo `DESDE_DEV.md`).
 
 ## Cómo termina todo mensaje (D-082, vigente desde el 2026-10-29, en todos los hilos)
 

@@ -687,6 +687,7 @@
       - **CR-AS·04 integrada (60dc7b3d); ALG-05·D2 la 9 (tacha en equis) publicada en CR-GS (1d03081, ebc22f5) para votar; worktree de CR-AS fuera; el renglón sigue en el panel de CR-SIS (dos controles); veredicto 2f07d14a** (apuntado a las 19:30)
       - **El renglón de la web, cerrado como hoy (DISEÑO v106, 0702a6c4): siete propuestas descartadas, la investigación en docs/referencias/INVESTIGACION-RENGLON-WEB.md; CR-SIS cierra su parte con una adenda; el gris con centrado sigue esperando la lectura 1/2/3; ALG-05·D2 la 9 por votar** (apuntado a las 20:52)
       - **La 9 de ALG-05·D2 ✓ (21:06):** el voto va al veredicto, la tesela queda «en el taller» y CR-AS·05 la escribe en la lección, con SIS-ERROR-COMUN `--en D2`; en cantu-lessons es 700b0834 (apuntado a las 21:11)
+      - **CR-AS·05 cerrada y publicada:** la 9 de ALG-05·D2 ya está en la lección (cantu-lessons b51f9a8e y 4bbfa868, páginas c7d7e32), con SIS-ERROR-COMUN escrita en las tres; la tesela, atendida (apuntado a las 21:22)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

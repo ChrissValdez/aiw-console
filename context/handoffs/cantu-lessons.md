@@ -694,6 +694,7 @@
       - **ARI-28·S5 (00:42): las dos cuentas de De Morgan, alineadas como un solo bloque:** segunda enmienda de CR-RW·02, en la misma ronda; de paso, se arreglaron tres fórmulas que el shell se comió en el veredicto y en el encargo (6a20c023, e7a8ff5b) (apuntado a las 00:46)
       - **ALG-01 slide, puro texto (00:50):** el operador no sabe cómo mejorarla; CR-AS·06 hace una ronda de enfoque, tres enfoques en las mismas tres slides, con investigación y piezas del catálogo; en cantu-lessons es b5b57684. Hay tres carriles trabajando (CR-RW, CR-SIS y CR-AS), el tope (apuntado a las 00:50)
       - **CR-AS·06 publicada para votar:** la ronda de enfoque de ALG-01 en CR-GS (67f0673 y 040c1ae), con A color (la 5/5/6), B barras (la 6/6/7) y C máquina (la 7/7/8, la recomendada) en D2, D3 y D6; las fotos van al operador; el carril queda cerrado (cantu-lessons b8a9b93e) (apuntado a las 01:24)
+      - **CR-RW·02 publicada para votar:** la galería CR-RW es nueva y va en su ronda 1 (cantu-revisiones 7b7d5e4 y 48a7336): ARI-07·S1 la 1, ARI-12·S2 la 2–4, ARI-12·S3 la 5–7 y ARI-28·S5 la 8; el carril queda cerrado. CR-SIS·04 fue devuelta por el scroll lateral de SIS-TABLAS-ARI24 (+621 px a 1366); cantu-lessons 03e0ffa6 (apuntado a las 01:28)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

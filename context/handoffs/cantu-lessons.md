@@ -679,6 +679,7 @@
       - **El renglón, ronda 2, publicado** dentro de REGLA-TIPOGRAFIA-RENGLON (REGLAS-WEB 0913651; 310–312, la ronda 1 plegada). Espera el voto del operador. La ronda del gris con el centrado espera su respuesta a la pregunta de CR-SIS (lecturas 1, 2 o 3; CR-SIS recomienda la 1). (apuntado a las 18:19)
       - **CR-AS·03 (1) publicada:** ALG-03·D10–D14 al Azul acero (lessons 6544a7f4, páginas 1468d5e; 🟡 con el aviso de «no todo frío», previsto). ALG-05·D2 en el taller. CR-AS sigue con el 2 (Error común de ALG-05·D2) y el 3 (filo de ALG-01·D5) en la misma rama: cherry-pick solo lo nuevo. (apuntado a las 18:21)
       - **CR-AS·03 (2 y 3):** ALG-05·D2 la 8 para votar (galería CR-GS 849ca2b + estado 1b05049; tesela atendido); la foto tiene franjas de referencia aplastadas, CR-AS la rehace con nombre nuevo. ALG-01·D5 no era error (N6 cerrada). CR-AS hizo un pull --ff-only en el checkout de cantu-revisiones (fuera de norma, sin daño). Pregunta al operador: los Procedimientos en Ocre de ALG-04/05/06. (apuntado a las 18:31)
+      - **CR-AS cerrado; la 228 a CR-RW·01 (web) y CR-RS·01 (slides), 7fc2c61c; veredicto e3be1329; trabajan CR-PL·53, CR-RW·01 y CR-RS·01; 🚧 0** (apuntado a las 18:37)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

@@ -681,6 +681,7 @@
       - **CR-AS·03 (2 y 3):** ALG-05·D2 la 8 para votar (galería CR-GS 849ca2b + estado 1b05049; tesela atendido); la foto tiene franjas de referencia aplastadas, CR-AS la rehace con nombre nuevo. ALG-01·D5 no era error (N6 cerrada). CR-AS hizo un pull --ff-only en el checkout de cantu-revisiones (fuera de norma, sin daño). Pregunta al operador: los Procedimientos en Ocre de ALG-04/05/06. (apuntado a las 18:31)
       - **CR-AS cerrado; la 228 a CR-RW·01 (web) y CR-RS·01 (slides), 7fc2c61c; veredicto e3be1329; trabajan CR-PL·53, CR-RW·01 y CR-RS·01; 🚧 0** (apuntado a las 18:37)
       - **CR-RW·01 integrada (37345cb9) y publicada (cantu-revisiones 9109609): la 228 en la web de ARI-06 y ARI-07, apunte SIS-LLEVADASW; la slide apunta SIS-LLEVADASS; CR-RW cerrado; veredicto 5903ac56; 🚧 0** (apuntado a las 18:45)
+      - **CR-PL·53 integrada y publicada (cantu-lessons e7aeaffe, cantu-revisiones 873d8ac): SIS a la mitad, tramo encendido, claves SIS- largas en escrita.mjs; SIS-ERROR-COMUN apuntada en ALG-01·D6 y ALG-04·D2 (52412401); worktrees de CR-PL fuera, sesión sin limpiar (abierta en pantalla); veredicto 9e25356e; la 310 a prueba en ARI-25S por pedido directo (d2a6c53d); trabaja CR-RS·01; 🚧 0** (apuntado a las 18:51)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

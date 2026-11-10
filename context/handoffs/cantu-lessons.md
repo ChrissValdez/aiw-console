@@ -691,6 +691,7 @@
       - **El comentario de ARI-07·S1 (00:25): la flecha de la llevada se encima con el 1 de antes:** queda en el veredicto, el tablero lo marca «en el taller» y CR-RW·02 hace el censo y arma una sola opción en CR-GW; en cantu-lessons es 16964da0 (apuntado a las 00:30)
       - **Los dos comentarios de ARI-12 (00:28): S2 «mucho texto» y S3 el color de la regla y las alturas:** van a la enmienda de CR-RW·02, en la misma primera ronda de la galería CR-RW (no CR-GW, corregido), y la flecha va vista por vista; en cantu-lessons es 45f39a8a (apuntado a las 00:34)
       - **Las tablas (00:34–00:36): abusamos de ellas; ARI-24·S1 compara procedimientos en tabla, mejor como las áreas grises de ARI-18·S3:** CR-SIS·04 hace la pieza, el censo de todas las tablas, ARI-24 en una vista SIS- y REGLA-WEB-TABLAS; en cantu-lessons es fc5dcc18 (apuntado a las 00:39)
+      - **ARI-28·S5 (00:42): las dos cuentas de De Morgan, alineadas como un solo bloque:** segunda enmienda de CR-RW·02, en la misma ronda; de paso, se arreglaron tres fórmulas que el shell se comió en el veredicto y en el encargo (6a20c023, e7a8ff5b) (apuntado a las 00:46)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

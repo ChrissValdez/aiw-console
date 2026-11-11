@@ -749,6 +749,7 @@
       - CR-AW2 en pausa (ALG-09 y ALG-10 sin commit, esperan la revisión de ALG-07); CR-SIS·09 (el H1 que desborda) trabajando con CR-AS·14 y CR-RS·08; CR-PL·64 en cola (apuntado a las 21:20)
       - la laptop sincronizó: ARI-11·S4 la 9 ✓ (CR-RW·09) y el comentario de ALG-07 (EG, la comprobación 7 = 7; CR-AW2), en cola tras CR-AS·14, CR-RS·08 y CR-SIS·09; orden CR-AW2, CR-RW, CR-PL·64 (apuntado a las 21:27)
       - CR-RS·08 a voto (ARI-19·D3 la 10, ARI-26·D4 la 11; galería 8da5b6f); CR-AW2 aplica el comentario de ALG-07; trabajando CR-AS·14, CR-SIS·09 y CR-AW2; en cola CR-RW (ARI-11·S4 la 9) y CR-PL·64 (apuntado a las 21:41)
+      - ALG-07 y ALG-08 con la comprobación (62d60d63, páginas 980fdc9; comentario atendido); CR-RW escribe ARI-11·S4 la 9; trabajando CR-AS·14, CR-SIS·09 y CR-RW; en cola CR-PL·64; CR-AW2 en pausa (apuntado a las 21:45)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

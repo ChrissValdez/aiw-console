@@ -764,6 +764,7 @@
       - Disco: borrados 101,8 GB de _scratch cerrado de LECCIONES (179 carpetas, con el sí del operador); quedan el encargo activo y, de cada carril vivo, su último encargo y sus carpetas sin número; libres 109 GB (apuntado a las 02:06)
       - ARI-27·D10 se queda (CR-SIS·12, tras el 11); ARI-19·D3 bordes frío-cálido-frío (CR-RS·11); CR-AW3 abierto: bloque 3 web ALG-15 a 21 (local_e70c53f8-9d79-4f09-84a2-168eef682e2f, puerto 8804); trabajan CR-SIS·11, CR-RS·11, CR-AW3·01 (apuntado a las 02:18)
       - «1 sin encargo» falso en ARI-11 (el 8791 con el portada.js de antes de CR-PL·65); CR-PL·66 lanzado (local_4dbd1153-c2c9-4ef2-aca7-ce1d824dd7f4): reinicio solo; hasta integrarlo, decir «Sincronizar en la PC» tras juntar código de la plataforma (apuntado a las 02:27)
+      - CR-SIS·11 y CR-RS·11 integrados (ARI-19·D3 bordes frío-cálido-frío; ALG-11/14 sin ⚠ de lista-en-igual); 🚧 0; trabajan CR-SIS·12, CR-PL·66 y CR-AW3·01 (apuntado a las 02:39)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

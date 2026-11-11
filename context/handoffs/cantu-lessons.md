@@ -774,6 +774,7 @@
       - ALG-19 web publicada (CR-AW3·01; páginas fb2fd26) (apuntado a las 03:26)
       - ALG-20 web publicada (CR-AW3·01; páginas b63375e) (apuntado a las 03:30)
       - CR-PL·66 integrado (cf97280): la plataforma se pone al día sola; falta un Sincronizar en la PC y en cada laptop; sesiones de CR-PL archivadas (apuntado a las 03:31)
+      - ALG-21 web publicada (CR-AW3·01; páginas 23d3707) (apuntado a las 03:35)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

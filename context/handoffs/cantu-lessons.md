@@ -753,6 +753,7 @@
       - bloque 2 web publicado entero (ALG-07 a 14, 🟡; ronda de ALG-14·S2 en CR-AW2); CR-SIS·09 y CR-AS·14 integrados; ARI-01 retenida (borde de acento, CR-PL·64); CR-RS·09 trabajando; disco C: al 99 % (apuntado a las 22:32)
       - CR-RS·09 integrado: ARI-26·D4 la 11 publicada; ARI-11·D11 la 12 a voto (CR-RS ronda 5) (apuntado a las 22:46)
       - CR-PL·64 integrado (excepciones con piezas; ARI-01·D4 era aviso falso): ARI-01 publicada; ningún carril trabajando; CR-AS2 espera la aprobación de las webs del bloque 2 (apuntado a las 22:49)
+      - Tablas de ALG-11·S2 y ALG-14·S1: DISEÑO v109, «una fila, un dato» (cantu-lessons 52638d4a); la 317 no entra en aritmética (el operador: «no, se queda»); trabajando CR-AW2·02 (las dos tablas a áreas grises), CR-SIS·10 (guarda tabla-una-igualdad y KaTeX a 320) y CR-AS2·01 (slides del bloque 2, sin piloto, ALG-11 y 14 al final); veredicto 12a781db (apuntado a las 23:53)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

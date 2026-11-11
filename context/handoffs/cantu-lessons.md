@@ -779,6 +779,7 @@
       - CR-AW3·01 cerrado y junto (759c6fab); espera los votos de ALG-15·S2 y ALG-18·S4 y lo «solo Reto» de ALG-17 y ALG-19 (apuntado a las 03:43)
       - ALG-15 slides publicadas (CR-AS3·01; páginas 5a90805) (apuntado a las 04:10)
       - Galería CR-AS3 nueva (7a91cc0): SIS-COLOR-BLOQUE-3, escrito el Azul acero; vigilante con 19 galerías (apuntado a las 04:13)
+      - Bloque 3 entero en slides (ALG-15 a 21, 163; páginas 80a1935); CR-AS3·01 cerrado; esperan el color del bloque 3 y los votos de ALG-15·S2 y ALG-18·S4 (apuntado a las 05:23)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

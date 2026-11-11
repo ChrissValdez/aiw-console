@@ -777,6 +777,7 @@
       - ALG-21 web publicada (CR-AW3·01; páginas 23d3707) (apuntado a las 03:35)
       - Bloque 3: las siete webs publicadas (ALG-21 23d3707); CR-AS3·01 encargado (4aad3f2a), en la sesión de CR-AS2 porque la app no dejó abrir una nueva por Remote Control (apuntado a las 03:40)
       - CR-AW3·01 cerrado y junto (759c6fab); espera los votos de ALG-15·S2 y ALG-18·S4 y lo «solo Reto» de ALG-17 y ALG-19 (apuntado a las 03:43)
+      - ALG-15 slides publicadas (CR-AS3·01; páginas 5a90805) (apuntado a las 04:10)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

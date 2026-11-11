@@ -768,6 +768,7 @@
       - ALG-15 web publicada (CR-AW3·01, la primera del bloque 3; 🟡); su ronda de S2 en camino (apuntado a las 02:41)
       - galería CR-AW3 creada, ronda 1 de ALG-15·S2 publicada (97dbf75); vigilante rearmado (b0e3exmzx); 🚧 0 (apuntado a las 02:44)
       - CR-SIS·12 integrado (ARI-27·D10 exenta, slide 🟡); trabajan CR-PL·66 y CR-AW3·01 (apuntado a las 02:53)
+      - ALG-16 web publicada (CR-AW3·01; 🟡, sin ronda) (apuntado a las 02:55)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

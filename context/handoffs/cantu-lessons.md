@@ -762,6 +762,7 @@
       - CR-RS·10 integrado (ARI-11·D11, la 12 escrita; galerías CR-RS y RW-61 plegadas); SIS-COLOR-BLOQUE-2 apuntado en ALG-07; trabajan CR-AS·15 y CR-SIS·11 (apuntado a las 01:52)
       - CR-AS·15 integrado (ALG-04·D17 la 6 y ALG-06·D2 la 5 escritas; CR-GS plegada); trabaja CR-SIS·11 (apuntado a las 01:59)
       - Disco: borrados 101,8 GB de _scratch cerrado de LECCIONES (179 carpetas, con el sí del operador); quedan el encargo activo y, de cada carril vivo, su último encargo y sus carpetas sin número; libres 109 GB (apuntado a las 02:06)
+      - ARI-27·D10 se queda (CR-SIS·12, tras el 11); ARI-19·D3 bordes frío-cálido-frío (CR-RS·11); CR-AW3 abierto: bloque 3 web ALG-15 a 21 (local_e70c53f8-9d79-4f09-84a2-168eef682e2f, puerto 8804); trabajan CR-SIS·11, CR-RS·11, CR-AW3·01 (apuntado a las 02:18)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

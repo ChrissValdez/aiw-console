@@ -745,6 +745,7 @@
       - **CR-AW·02 integrada: ALG-02·S2 sin cambios (la 86 ✓ del 8-nov ya contestó la 62; 29,1 px, nivel 2 de la 94); su falso aviso, añadido a CR-PL·63.** Trabajan CR-SIS·08 y CR-PL·63; CR-AW libre; CR-AW2 espera la respuesta del operador. Veredicto e315851a (apuntado a las 20:39)
       - **El bloque 2 de álgebra, lanzado (el operador: «Sí, lánzalo»): CR-AW2·01 (6087a4dd) escribe la web de ALG-07 a ALG-14, una a la vez, reusando lo votado del bloque 1; avisa por lección y la cabina publica cada una. CR-AS2 espera la aprobación de cada web.** Trabajan CR-SIS·08, CR-PL·63 y CR-AW2·01 (tope). Veredicto 660ee8fb (apuntado a las 20:49)
       - ALG-07 publicada para revisar (CR-AW2·01, 🟡; cantu-lessons 438381ef y 34824664); CR-AW2 termina ALG-08 y para hasta que el operador revise ALG-07 (9.8.8); laptop igualada con c7e906a, faltan juntar.mjs y Sincronizar (apuntado a las 21:06)
+      - ALG-08 publicada; CR-SIS·08 y CR-PL·63 integrados (guardas del hueco y la letra en aviso); CR-AS·14 (la 317 en 8 slides de álgebra) y CR-RS·08 (ARI-26·D4) trabajando; CR-PL·64 (excepciones) en cola hasta que pare CR-AW2; al operador: la 317 en aritmética, el relleno y A+ (apuntado a las 21:16)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

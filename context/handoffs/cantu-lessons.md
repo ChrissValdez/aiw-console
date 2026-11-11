@@ -757,6 +757,7 @@
       - CR-AW2·02 integrado: ALG-11·S2 y ALG-14·S1 en áreas grises, publicadas (páginas c547a10), comentarios atendidos; integrar.mjs ya reconoce CR-AW2; siguen CR-SIS·10 y CR-AS2·01; veredicto 8081b698 (apuntado a las 00:02)
       - ALG-07 en slides publicada (CR-AS2·01, páginas 58cdc5d); galería CR-AS2 nueva con SIS-COLOR-BLOQUE-2 (la 1 Dorado Arena, escrita); CR-PL·65 por el falso pendiente de ARI-26·D4; disco a 126 MB: 28 worktrees integrados quitados, 2,2 GB libres; veredicto 506ca150 (apuntado a las 00:30)
       - Slides de ALG-08, 09, 10 y 12 publicadas (CR-AS2·01); CR-SIS·10 integrado, guarda tabla-una-igualdad en rojo: queda ARI-27·D10 (pregunta al operador); fórmulas de 320 se quedan; 102 GB de _scratch cerrado, pregunta al operador; veredicto 1bf92b54 (apuntado a las 01:09)
+      - Bloque 2 entero en slides (176; ALG-13, 11 y 14 publicadas; CR-AS2·01 cerrado); CR-SIS·11 encargado (lista-en-igual y etiqueta larga); pendientes 🚧 1, sin encargo 0; esperan al operador: borrar 102 GB, ARI-27·D10, color del bloque 2; veredicto 901f08b4 (apuntado a las 01:29)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

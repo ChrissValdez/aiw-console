@@ -747,6 +747,7 @@
       - ALG-07 publicada para revisar (CR-AW2·01, 🟡; cantu-lessons 438381ef y 34824664); CR-AW2 termina ALG-08 y para hasta que el operador revise ALG-07 (9.8.8); laptop igualada con c7e906a, faltan juntar.mjs y Sincronizar (apuntado a las 21:06)
       - ALG-08 publicada; CR-SIS·08 y CR-PL·63 integrados (guardas del hueco y la letra en aviso); CR-AS·14 (la 317 en 8 slides de álgebra) y CR-RS·08 (ARI-26·D4) trabajando; CR-PL·64 (excepciones) en cola hasta que pare CR-AW2; al operador: la 317 en aritmética, el relleno y A+ (apuntado a las 21:16)
       - CR-AW2 en pausa (ALG-09 y ALG-10 sin commit, esperan la revisión de ALG-07); CR-SIS·09 (el H1 que desborda) trabajando con CR-AS·14 y CR-RS·08; CR-PL·64 en cola (apuntado a las 21:20)
+      - la laptop sincronizó: ARI-11·S4 la 9 ✓ (CR-RW·09) y el comentario de ALG-07 (EG, la comprobación 7 = 7; CR-AW2), en cola tras CR-AS·14, CR-RS·08 y CR-SIS·09; orden CR-AW2, CR-RW, CR-PL·64 (apuntado a las 21:27)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

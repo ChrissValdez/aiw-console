@@ -759,6 +759,7 @@
       - Slides de ALG-08, 09, 10 y 12 publicadas (CR-AS2·01); CR-SIS·10 integrado, guarda tabla-una-igualdad en rojo: queda ARI-27·D10 (pregunta al operador); fórmulas de 320 se quedan; 102 GB de _scratch cerrado, pregunta al operador; veredicto 1bf92b54 (apuntado a las 01:09)
       - Bloque 2 entero en slides (176; ALG-13, 11 y 14 publicadas; CR-AS2·01 cerrado); CR-SIS·11 encargado (lista-en-igual y etiqueta larga); pendientes 🚧 1, sin encargo 0; esperan al operador: borrar 102 GB, ARI-27·D10, color del bloque 2; veredicto 901f08b4 (apuntado a las 01:29)
       - Votos 00:29–00:30: bloque 2 en Dorado Arena (DISEÑO v110), CR-AS·15 (la 6 y la 5) y CR-RS·10 (la 12 de ARI-11·D11) encargados; CR-PL·65 integrado y ARI-12·D4 apuntada; trabajan CR-SIS·11, CR-AS·15 y CR-RS·10; esperan al operador: borrar 102 GB y ARI-27·D10; veredicto ad7942c0 (apuntado a las 01:36)
+      - CR-RS·10 integrado (ARI-11·D11, la 12 escrita; galerías CR-RS y RW-61 plegadas); SIS-COLOR-BLOQUE-2 apuntado en ALG-07; trabajan CR-AS·15 y CR-SIS·11 (apuntado a las 01:52)
       La 3 («opcional» en el catálogo y opcionales intercaladas) va a CR-PL con el alta de las primeras opcionales de álgebra;
       no frena el piloto. La 4 (rehacer `Aritmetica-temario-v2.docx`, que va con L01–L26) espera a que el operador revise el
       de álgebra, para usar el formato que apruebe.

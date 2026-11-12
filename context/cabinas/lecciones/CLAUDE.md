@@ -146,6 +146,20 @@ orden»*.
 - **Medido el 31-oct:** un ~ o una ✗ de «Hoy» se queda «Votada» aunque la sección ya se haya corregido. En el piloto,
   la cabina le da al operador la lista de lo que cambió; después se decide si va a un ticket de herramientas.
 
+## Cambio de cuenta (el operador, 2026-11-12)
+
+Hay dos cuentas de Claude, la principal y la suplementaria, y nunca trabajan a la vez: cuando los tokens de una se acaban, el
+trabajo sigue en la otra y luego vuelve. Todo está en `projects/aiw-console/context/cambio-de-cuenta/`:
+- `PROTOCOLO.md`: el cierre, el cambio, el arranque y el prompt de la primera vez;
+- `HANDOFF.md`: dónde nos quedamos;
+- `sincronia.mjs`: si todo está en GitHub.
+
+- **«protocolo para cambiar de cuenta»:** la cabina hace el cierre (§1), dice «listo, puedes cambiar» y espera, sin hacer nada más.
+- **«ya volví, revisa la carpeta del protocolo»:** hace el arranque (§3) antes de tocar nada.
+- **Al llegar al 90 % del tope semanal** (`get_usage`), la cabina se lo avisa al operador en su cierre.
+- **La PC es la máquina de trabajo; la laptop y el celular la manejan a distancia.** Razón del operador: puede salir y apagar la
+  laptop, y la PC sigue trabajando.
+
 ## Dónde vive todo, y por qué
 
 **Esta carpeta es `projects/aiw-console/context/cabinas/lecciones/`.** Decisión del operador, 2026-10-28: la

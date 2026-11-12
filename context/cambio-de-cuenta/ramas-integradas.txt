@@ -1,0 +1,12 @@
+# Ramas locales ya revisadas: su trabajo está en main, juntado por la cabina con otro commit (squash o rehecho).
+# sincronia.mjs no las cuenta mientras su punta siga en el mismo sha. Formato: <repo> <rama> <sha>. Revisadas el 2026-11-12.
+cantu-lessons cr-gs-17 b7026c57f2639ada1f75112b452ddc71d3c22f00
+cantu-lessons cr-gs-18-sobre-9a619af 5b4b212dc99ce59150db5f7f50acaa922e2fa0c1
+cantu-lessons cr-gs-19 de205dd485aef3217fa33de8c4324d809c4c34a3
+cantu-lessons cr-gw-25-aire-del-recuadro 9f6e7af26cd3d1577d7b6f6f5f32d0bd2c70d7f3
+cantu-lessons cr-gw-29-anclar 692f843bf584419ba80ce79556037e667477d03c
+cantu-lessons cr-gw-31 2404dd4afd8d6d9a3aae6a517b9cfa8cdcb93534
+cantu-lessons cr-ls-15-pasada 6234e3ce7ded2739f1720b76b6a7b85432016066
+cantu-lessons cr-ls-15-pasada-2 68e7394902c483555796c2b22ddf9608ddbc7ce0
+cantu-lessons cr-lw-21-pasada-unica 8dfa890441985abf69b0c09ba5bec59e71cea944
+cantu-lessons cr-rs-03 46ad287fc1691261aebacc017a9998f5b12ac698

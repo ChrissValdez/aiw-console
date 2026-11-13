@@ -10,3 +10,7 @@ cantu-lessons cr-ls-15-pasada 6234e3ce7ded2739f1720b76b6a7b85432016066
 cantu-lessons cr-ls-15-pasada-2 68e7394902c483555796c2b22ddf9608ddbc7ce0
 cantu-lessons cr-lw-21-pasada-unica 8dfa890441985abf69b0c09ba5bec59e71cea944
 cantu-lessons cr-rs-03 46ad287fc1691261aebacc017a9998f5b12ac698
+# Revisadas el 2026-11-13 (cierre de la suplementaria): juntadas en main por ruta, main ya trae lo suyo o algo más nuevo.
+cantu-lessons cr-a7-02 6da57589a79e82750ec7e2a7bfbc714813cbbaa1
+cantu-lessons cr-a9-01 42815da1b76593bf3aed5d80436d0d4d534d712b
+cantu-lessons cr-sis-13 7d9c6abea973c620f3ec409d8f381b96c19242b3

@@ -23,3 +23,4 @@ cantu-lessons cr-a5-05 454d65fd5f602918ed1592aaec2afcb0b81f119c
 cantu-lessons cr-a5-05b 891d2360059ea6dcc6301d99f3a96da2bb865e4b
 cantu-lessons cr-a12-01 8df2bfb7d5862ac60426923d06ef5d9a10e6199c
 cantu-lessons cr-a13-01 a65ba33be8e8a6cee9dbffaf89db75eeb3b6a03f
+cantu-lessons cr-sis-21 489fed12b96d0eae356758de74fc749b1e8bd9f3

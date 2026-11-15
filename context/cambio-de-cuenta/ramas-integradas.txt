@@ -59,3 +59,4 @@ cantu-lessons cr-pl-79 c83e989d
 cantu-lessons cr-sis-30 ff4828e4
 cantu-lessons cr-le-05 5dfefc0e
 cantu-lessons cr-sis-31 05277e22
+cantu-lessons cr-le-06 806d615c

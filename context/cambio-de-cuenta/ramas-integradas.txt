@@ -53,3 +53,4 @@ cantu-lessons cr-pl-76 fcc4c14d (adenda)
 cantu-lessons cr-le-03 ec28070d
 cantu-lessons cr-sis-29 d85f2b32
 cantu-lessons cr-le-03b 954bba1a
+cantu-lessons cr-pl-77 d9b87248

@@ -47,3 +47,4 @@ cantu-lessons cr-le-01 64020d6d8286e3afca56ea0cd705be4f99bf2132
 cantu-lessons cr-sis-28 8062579c656b7f68a440a817cf91f53d3e2b5c0d
 cantu-lessons cr-le-02 6f8ffdb33ac7c5d1bb28bdb55b93e7150c94ab0d
 cantu-lessons cr-sis-28-adenda 1196e13e5885a949e63474a85d8bbadfc9f2c688
+cantu-lessons cr-pl-76 e2e6cbc3

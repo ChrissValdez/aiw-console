@@ -57,3 +57,4 @@ cantu-lessons cr-pl-77 d9b87248
 cantu-revisiones cr-pl-79 a723a1fb
 cantu-lessons cr-pl-79 c83e989d
 cantu-lessons cr-sis-30 ff4828e4
+cantu-lessons cr-le-05 f982a1c5 (§1, los ✓)

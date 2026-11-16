@@ -74,3 +74,4 @@ cantu-lessons cr-le-13 1a1c1934
 cantu-lessons cr-le-14 c3535b1f
 cantu-lessons cr-fig-01 55bf6917
 cantu-lessons cr-fig-02 cfb83b28
+cantu-lessons cr-pl-81 3ae0815b

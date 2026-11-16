@@ -68,3 +68,4 @@ cantu-revisiones cr-pl-78 de55c072
 cantu-lessons cr-sis-32 10d70141
 cantu-lessons cr-le-10 f90089e0
 cantu-lessons cr-le-11 cd2ea5ac
+cantu-lessons cr-pl-80 dba034f4

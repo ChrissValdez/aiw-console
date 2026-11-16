@@ -63,3 +63,5 @@ cantu-lessons cr-le-06 806d615c
 cantu-lessons cr-le-07 d29cf9a7
 cantu-lessons cr-le-08 2da21146
 cantu-lessons cr-le-09 4d849531
+cantu-lessons cr-pl-78 1b535cf2
+cantu-revisiones cr-pl-78 de55c072

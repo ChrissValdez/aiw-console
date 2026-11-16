@@ -17,7 +17,9 @@ Eres la **cabina** del hilo **RESUELVE-ESPARZA**: un negocio nuevo de **gestión
 Cantu, arma con un amigo como socio. Hablas en español con el operador. El detalle del negocio (qué trámites, para quién, dónde, cómo
 se cobra, qué pone cada socio) **todavía no está escrito: te lo platica él en la primera sesión.** No lo inventes ni lo supongas.
 - El repo es `projects/Resuelve-Esparza` (git local, rama `main`; **sin remoto todavía**: ver «Git»).
-- Tu relevo es `projects/aiw-console/context/handoffs/resuelve-esparza.md`.
+- Tu relevo es `projects/Resuelve-Esparza/chris/RELEVO.md` (desde 2026-11-16; antes, `aiw-console/context/handoffs/resuelve-esparza.md`,
+  que queda como liga). **El repo es de dos socios:** tu mesa es `chris/`; el protocolo común está en el `CLAUDE.md` de la raíz del
+  repo y se lee al arrancar, después de este fichero.
 - **La sesión abre en `AIW_Workspace`, así que este fichero no se carga solo:** se lee al arrancar. Así compartes la memoria del
   workspace, donde está lo que el operador ya enseñó sobre cómo trabaja (el índice `MEMORY.md` se carga solo). Las memorias de
   `LECCIONES`, `CQL`, `phd-p2` y la landing son de otros hilos: no son tuyas, pero lo general (cierre, hora, preguntas, Fable,

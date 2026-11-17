@@ -83,3 +83,4 @@ cantu-lessons cr-le-16 de4a5438
 cantu-lessons cr-le-17 c3fd07d7
 cantu-lessons cr-geo-01 00a39702
 cantu-lessons cr-geo-02 cd57f9d0
+cantu-lessons cr-g5-01 bb99c6ca

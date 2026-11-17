@@ -89,3 +89,4 @@ cantu-lessons cr-g2-01 976d817c
 cantu-lessons cr-g3-01 357cf18a
 cantu-lessons cr-g4-01 c229a26c
 cantu-lessons cr-sis-33 84e004e7
+cantu-lessons cr-sis-34 783da1a9

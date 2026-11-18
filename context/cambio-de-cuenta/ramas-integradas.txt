@@ -106,3 +106,4 @@ cantu-lessons cr-pl-83 ab144312
 cantu-lessons cr-g5-04 2ae63c9f
 cantu-lessons cr-le-19 8be975bd
 cantu-lessons cr-le-18 54da49ac
+cantu-lessons cr-g5-05 4de67f89

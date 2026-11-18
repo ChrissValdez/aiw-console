@@ -83,3 +83,5 @@ Luego dime en una tabla dónde estamos y qué harías primero, y espera mi «ade
 La app cambia de cuenta para todas sus sesiones. Si en el momento del cambio trabaja otra cabina (phd-p2, Acervo, CQL, landing…),
 cada una deja su apartado en `HANDOFF.md` con el mismo cierre. `sincronia.mjs` lista sus repos, pero solo los de LECCIONES bloquean el
 cambio.
+
+**Una cabina a la laptop con la otra cuenta, a la vez** (proyectos y máquinas distintos): `OTRA-CABINA-EN-LAPTOP.md` (18-nov, LANDING).

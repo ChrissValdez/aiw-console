@@ -9,8 +9,19 @@
 
 ## Dónde estamos
 
-- **En espera de nuevo feedback del dueño.** Sus palabras (6-nov): *«quedas en espera de neuvo feedback para generar
-  nuevos prototipos»*. **No se genera ningún prototipo nuevo sin eso.**
+- **Adenda del 2026-11-18, 17:04: primero el storytelling.** Sus palabras (`veredictos/2026-11-18-storytelling-primero.md`):
+  *«no quiero mas prototipos todavia, primero quiero revisar y analizar el storytelling … ultimadamente necesito una
+  pagina que venda»*.
+  - **La cabina entregó `storytelling/analisis.md`** (landing `3ded20c`). Las nueve versiones contaron la misma historia
+    con otra piel. Le faltan quién está detrás, la prueba, la oferta y lo que está en juego, y no le habla al papá. Propone
+    una sola historia en ocho tiempos y le hace tres preguntas: de dónde llega la gente, si manda admisión o asesorías, y
+    qué está en juego.
+  - **El camino que se le propuso:** él corrige la historia → la cabina escribe el texto final (solo texto) y él lo
+    aprueba → un solo prototipo pulido → publicar y medir.
+  - **En espera de sus correcciones y respuestas.** Sigue sin generarse ningún prototipo.
+  - El sitio publicado sigue siendo la original (comprobado el 18-nov a las 17:02).
+- **Hasta el 18-nov, en espera de nuevo feedback del dueño.** Sus palabras (6-nov): *«quedas en espera de neuvo feedback
+  para generar nuevos prototipos»*. **No se genera ningún prototipo nuevo sin eso.**
 - **El repo `metodo-cantu-landing`:** `main` = `origin/main`. Medir al abrir. Los últimos commits son la cancelación de E
   y este cierre. **El dueño también commitea él mismo** (`c0eb048`, «prototipos draft», 5-nov 12:37): mirar el
   `git log` antes de suponer qué falta publicar.
@@ -33,6 +44,7 @@
 | `prototipos/analisis-A-B.md` | A y B como landing: claridad y conversión |
 | `prototipos/comparacion-cuatro.md` | la original, A, B y D: **la cabina recomienda la D como base** y qué rescatar de cada una |
 | `prototipos/diagnostico-express.md` | la propuesta del diagnóstico express gratis |
+| `storytelling/analisis.md` | **(18-nov) la historia que cuenta la página:** qué le falta para vender y una sola historia en ocho tiempos, por corregir |
 | `encargos/PROTO-*.md` | los encargos de los talleres (`PROTO-E`, marcado como cancelado) |
 | `veredictos/` | **sus palabras, tal cual**, una por mensaje; incluye lo que les escribió directo a las sesiones |
 | `variantes/`, `propuesta-08/` | las rondas del 4-nov (NUBE-07A–D y NUBE-08), que fallaron |

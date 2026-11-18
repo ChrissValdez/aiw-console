@@ -110,3 +110,4 @@ cantu-lessons cr-g5-05 4de67f89
 cantu-lessons cr-rs-15 0a9a51c3
 cantu-revisiones cr-pl-84 b9004851
 cantu-lessons cr-pl-84 dd142b28
+cantu-lessons cr-rs-15 1a1866ff

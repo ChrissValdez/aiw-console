@@ -18,7 +18,20 @@
     qué está en juego.
   - **El camino que se le propuso:** él corrige la historia → la cabina escribe el texto final (solo texto) y él lo
     aprueba → un solo prototipo pulido → publicar y medir.
-  - **En espera de sus correcciones y respuestas.** Sigue sin generarse ningún prototipo.
+  - **Sus respuestas, hacia las 17:30** (`veredictos/2026-11-18-respuestas-storytelling.md`):
+    - **la gente llega** por recomendación y por Instagram (lo supone, no lo sabe);
+    - **manda el examen de admisión,** y las asesorías van como secundarias;
+    - **lo que se juega el alumno depende de cada uno:** entrar o la beca, porque algunos necesitan un puntaje alto para
+      pedirla;
+    - **el diseño tampoco lo ha convencido,** pero *«todo el concepto de que la pagina tenga tematica de examen, se ve muy
+      acrode al concepto»*. **La temática de examen se queda.**
+  - **La cabina entregó `storytelling/texto-v1.md`** (landing `101e17d`): el texto de la página, solo texto y en una sola
+    versión.
+    - La página es un examen de tres preguntas: la 1, qué te quita puntos; la 2 (nueva), qué te juegas (entrar o la
+      beca); y la 3, qué necesitas.
+    - El cierre lleva cuatro respuestas, con la de la beca y su mensaje nuevo, **M7**.
+    - Los huecos van marcados como FALTA.
+  - **En espera de que corrija el texto.** Sin el texto aprobado no se genera ningún prototipo.
   - El sitio publicado sigue siendo la original (comprobado el 18-nov a las 17:02).
 - **Hasta el 18-nov, en espera de nuevo feedback del dueño.** Sus palabras (6-nov): *«quedas en espera de neuvo feedback
   para generar nuevos prototipos»*. **No se genera ningún prototipo nuevo sin eso.**
@@ -44,7 +57,8 @@
 | `prototipos/analisis-A-B.md` | A y B como landing: claridad y conversión |
 | `prototipos/comparacion-cuatro.md` | la original, A, B y D: **la cabina recomienda la D como base** y qué rescatar de cada una |
 | `prototipos/diagnostico-express.md` | la propuesta del diagnóstico express gratis |
-| `storytelling/analisis.md` | **(18-nov) la historia que cuenta la página:** qué le falta para vender y una sola historia en ocho tiempos, por corregir |
+| `storytelling/analisis.md` | **(18-nov) la historia que cuenta la página:** qué le falta para vender y una sola historia en ocho tiempos |
+| `storytelling/texto-v1.md` | **(18-nov) el texto de la página, v1:** un examen de tres preguntas, por corregir; **es el contenido que manda** para el próximo prototipo, en lugar de `prototipos/CONTENIDO.md` |
 | `encargos/PROTO-*.md` | los encargos de los talleres (`PROTO-E`, marcado como cancelado) |
 | `veredictos/` | **sus palabras, tal cual**, una por mensaje; incluye lo que les escribió directo a las sesiones |
 | `variantes/`, `propuesta-08/` | las rondas del 4-nov (NUBE-07A–D y NUBE-08), que fallaron |
@@ -63,6 +77,8 @@
 - **Le encantaron Oryzo y Dala:** *«la animacion, la paleta de colores, todo»*. A y B *«se ven muy bien especialmente
   B»*.
 - **Le cuesta escoger:** *«todas me gustaron de alguna manera»*.
+- **La temática de examen (18-nov):** le parece *«muy acrode al concepto»*. Es el concepto de diseño que se queda,
+  aunque ningún prototipo lo ha terminado de convencer.
 - **No quiere:**
   - landings genéricas de escuela ni «modernas» de plantilla;
   - opciones por sección: una sola versión completa a pantalla completa;

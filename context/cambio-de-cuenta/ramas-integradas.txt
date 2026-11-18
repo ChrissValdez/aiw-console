@@ -103,3 +103,4 @@ cantu-lessons cr-g2-03 4033aff5
 cantu-lessons cr-g3-04 947f816e
 cantu-revisiones cr-pl-83 edfb6713
 cantu-lessons cr-pl-83 ab144312
+cantu-lessons cr-g5-04 2ae63c9f

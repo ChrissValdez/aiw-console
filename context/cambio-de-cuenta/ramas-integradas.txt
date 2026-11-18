@@ -123,3 +123,4 @@ cantu-lessons cr-est-03 26ec57eb
 cantu-lessons cr-fun-02 bf72d6b8
 cantu-revisiones cr-fun-02 08b00438
 cantu-lessons cr-fun-02 056c254a
+cantu-lessons cr-fun-03 fc5c0f78

@@ -134,3 +134,4 @@ cantu-lessons cr-g2-05 c8505328
 cantu-lessons cr-est-05 557a1084
 cantu-lessons cr-f2-01b 5104df68
 cantu-lessons cr-e2-01c 52e65293
+cantu-lessons cr-fun-05c cd3a7b62

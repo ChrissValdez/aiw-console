@@ -1,188 +1,211 @@
 # HANDOFF — hilo `metodo-cantu-landing` (LANDING)
 
-> **Tercer relevo: pasa a la laptop, con la cuenta suplementaria.** Lo escribió la cabina LANDING el **2026-11-18 a las
-> 18:01** (`date`), en la PC (`DESKTOP-525K0IS`), al hacer el «1. Cierre» de
-> `context/cambio-de-cuenta/OTRA-CABINA-EN-LAPTOP.md`. Sustituye al segundo (6-nov); lo de antes está en el historial de
-> git de este fichero.
+> **Cuarto relevo: la cabina vuelve de la laptop a la PC.** Lo escribió la cabina LANDING el **2026-11-19 hacia las
+> 02:58** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). Es el «1. Cierre» de
+> `context/cambio-de-cuenta/OTRA-CABINA-EN-LAPTOP.md`, punto 4 («Volver a la PC»), a pedido del dueño
+> (`veredictos/2026-11-19-mudanza-a-la-pc.md`). Sustituye al tercero (18-nov, 18:01); lo de antes está en el historial
+> de git de este fichero.
 >
-> - **La landing vive ahora en la laptop.** La sesión LANDING de la PC quedó cerrada y no toca nada hasta que vuelva con el
->   mismo «1. Cierre».
-> - **La PC sigue con LECCIONES en la cuenta principal.** LANDING nunca toca lo de LECCIONES.
-> - **Todo lo de aquí está medido y lleva fecha. Contrástalo contra el disco al abrir. Gana el disco.** La cabina abre
->   leyendo enteros `context/cabinas/landing/CLAUDE.md` (v0, con los puntos 8 a 10) y `context/cabinas/REGLAS-DE-CABINA.md`.
+> - **La landing vuelve a la PC.** La sesión de la laptop quedó cerrada y no toca nada más.
+> - **LANDING nunca toca lo de LECCIONES.**
+> - **Todo lo de aquí está medido y lleva fecha. Contrástalo con el disco al abrir: gana el disco.**
+> - **Al abrir,** la cabina lee enteros `context/cabinas/landing/CLAUDE.md` (ya con los puntos 11 a 14) y
+>   `context/cabinas/REGLAS-DE-CABINA.md`.
 
 ## Dónde estamos
 
-- **En espera de que el dueño corrija `storytelling/texto-v1.md`.** No hay nada a medias ni sin commitear.
-- **Al cerrar** (18-nov, 18:01), los dos repos tenían `git status` limpio y `HEAD` igual a `origin/main`:
-  - `metodo-cantu-landing` en `987f9e2`;
-  - `aiw-console`, en el commit de este relevo.
-- **El sitio publicado sigue siendo su original** (`secciones/`). Se comprobó el 18-nov a las 17:02 bajando
-  metodocantu.com y buscando sus textos.
-- **No se genera ningún prototipo hasta que apruebe el texto.** Sus palabras (18-nov): *«no quiero mas prototipos
-  todavia, primero quiero revisar y analizar el storytelling … ultimadamente necesito una pagina que venda … el
-  storytelling es primero despues ocupo uqe el diseño sea bueno»*.
+- **En espera de sus comentarios de N, O y P** (la ronda 4 sobre su diseño).
+  - Los tres están en la página de entrada, `http://127.0.0.1:8792/`, como «Los tres nuevos sobre M, sin comentar».
+  - Además, **lo que más hay que preguntarle: cuál de las tres formas de recorrer la ruta prefiere** (ver «La ronda N,
+    O y P»).
+- **Pregunta abierta, sin contestar:** si la ronda que siga suma piezas del método que usó en el proyecto Resuelve
+  Esparza (ver «Pendiente de su respuesta»).
+- **Al cerrar** (19-nov, hacia las 02:58), no había nada a medias ni sin commitear:
+  - `metodo-cantu-landing` en `a38a4d4`, con `git status` limpio y `HEAD` = `origin/main`;
+  - `aiw-console` en el commit de este relevo.
+- **Las tres conversaciones de taller de la laptop** (`taller-n`, `taller-o` y `taller-p`) terminaron y están
+  commiteadas. Se quedan en la laptop; no hacen falta en la PC.
+- **El sitio publicado sigue siendo su original.** Nada se ha portado a Moodle.
 
-## Lo que se hizo el 18-nov
+## El camino desde el 18-nov, en una tabla
 
-1. **`storytelling/analisis.md`** (`3ded20c`) cuenta la historia que cuenta la página.
-   - Las nueve versiones (4 al 6 de noviembre) contaron la misma historia, con las mismas seis piezas y otra piel.
-   - **Les faltaba lo que vende:** quién está detrás, la prueba, la oferta y lo que está en juego. Además, no le hablaban
-     al papá.
-   - Se propuso una historia en ocho tiempos y se le hicieron tres preguntas.
-2. **Sus respuestas** (`veredictos/2026-11-18-respuestas-storytelling.md`):
-   - **De dónde llega la gente:** por recomendación y por Instagram; lo supone, no lo sabe.
-   - **Qué manda:** el examen de admisión. Las asesorías son secundarias.
-   - **Qué se juega el alumno:** depende de cada uno; entrar o la beca, porque algunos necesitan un puntaje alto para
-     pedirla.
-   - **El diseño:** tampoco lo ha convencido, pero *«todo el concepto de que la pagina tenga tematica de examen, se ve muy
-     acrode al concepto»*.
-3. **`storytelling/texto-v1.md`** (`101e17d`) es el texto de la página: solo texto, en una sola versión.
-   - **La página es un examen de tres preguntas:**
-     - la 1, en la portada: «¿Qué temas te están quitando puntos?»;
-     - la 2, nueva: «¿Qué te juegas con tu puntaje?» (entrar o la beca);
-     - la 3, en el cierre: «¿Qué necesitas?», con cuatro respuestas que son botones de WhatsApp. Entre ellas está la de la
-       beca, con su mensaje nuevo, **M7**.
-   - **Los cuatro pasos** dicen primero lo que gana el alumno.
-   - **La persona, la prueba y la oferta** van a media página. Lo que solo tiene él va marcado como **FALTA**.
-4. **Su duda:** *«eso de preguntas es interactivo? … me preocupa que no se lea facilmente si lo obligas a contestar?»*
-   (`veredictos/2026-11-18-preguntas-interactivas.md`). Se ajustó el texto (`987f9e2`):
-   - **las preguntas son la forma de la página, no un formulario;**
-   - **nada se tiene que contestar para seguir leyendo;**
-   - solo se tocan las respuestas de la pregunta 3, porque son los botones.
+Todo está en `veredictos/` (sus palabras, tal cual, 40 ficheros al 19-nov, 02:57) y en `encargos/`.
+
+| ronda | base | qué se hizo | su veredicto |
+|---|---|---|---|
+| texto v2 | v1 | `storytelling/texto-v2.md`: la parte 2 le habla de frente; dos preguntas (1 en la portada, 2 en el cierre); M1–M7 | **aprobado como dirección** («las frases pueden mejorar»). **Es el contenido de todos los prototipos** |
+| limpieza | — | se borraron las rondas que fallaron y las referencias (`archivo/`, NUBE-07A–C, NUBE-08, PROTO-E/F/G: se recuperan desde `e200ebe`). Quedan A, B, C (antes NUBE-07D, «la D-historia»), D y `diseño-actual` (réplica de metodocantu.com) | — |
+| 1 · E, F, G-libre | B, C y desde cero | E: la hoja a lápiz de B, ligera. F: el examen corregido de C. G-libre: su prompt «redesign it from the ground up», sin ver nada | **E gana por mucho** (`2026-11-19-e-gana-y-tres-versiones.md`) |
+| 2 · H, I, J | E | arreglos A1–A12 (`encargos/RONDA-HIJ.md`); H solo arreglos, I claridad, J la página como examen | **piezas de las tres** (`2026-11-19-h-i-j-mezcla-y-tres-versiones.md`) |
+| 3 · K, L, M | I | B1–B20 (`encargos/RONDA-KLM.md`); K solo comentarios, L lo hecho a mano, M menos bulto | **M como base, con piezas de L** (`2026-11-19-k-l-m-comentarios.md`) |
+| 4 · N, O, P | M | C1–C9 (`encargos/RONDA-NOP.md`); cada uno recorre la ruta de otra forma | **sin comentar** |
+
+## La ronda N, O y P (en espera)
+
+**Los tres hacen C1 a C9:**
+- fuera «Admisión general» y «Solicitar beca»;
+- «Para entrar o para tu beca, cuenta tu puntaje.» antes de «Y el puntaje se prepara.», con el marcatextos de L;
+- sin y con Método Cantú en su propio bloque;
+- ✗ en rojo en los pasos;
+- «Esto hay que repasar» en el paso 4;
+- sin la línea que une los pasos;
+- la portada de M.
+
+**En lo que se distinguen: cómo se recorre la ruta.** Su queja: *«si no te paras justo donde es, como que se queda a la
+mitad»* (su captura: `veredictos/2026-11-19-k-l-m-captura-ruta.png`).
+
+| | la ruta | propuestas para votar | medido por el taller |
+|---|---|---|---|
+| **N** (`N-comentarios`) | sin hoja fija: cada paso con su hoja al lado | ninguna | 15/15 posiciones a 1440 y 22/22 a 390 con texto y hoja del mismo paso |
+| **O** (`O-ruta-encaja`) | la hoja fija se queda; el scroll se acomoda en cada paso | o1 el paso de turno se enciende, o2 la hoja sube como pasar de hoja, o3 las preguntas se abren deslizándose (`&sin=oX`) | 28/28 reposos (M: 14/25); **sin probar con ratón o trackpad reales** |
+| **P** (`P-ruta-pantalla`) | los cuatro pasos en una pantalla, con pestañas y la hoja al lado | p1 Matemáticas sigue de hoja en hoja, p2 el botón del diagnóstico en la misma pantalla (`&sin=pX`) | 25/25 |
+
+**M trae siete propuestas, n1 a n7, que él no ha votado.** Siguen en N, O y P.
+
+## Lo que se sabe de su gusto (al 19-nov)
+
+**El resumen vivo es la tabla «Lo que se rescata, y lo que no» de `index.html`.** Lo principal:
+
+- **Sí:**
+  - la temática de examen: la hoja a lápiz, las marcas del profe (palomitas, ✗, círculos, flechas, nota a mano);
+  - sus colores: marino `#0f2238` y dorado `#f7c13b`;
+  - movimiento sutil, como el de A;
+  - poco texto;
+  - los 4 pasos presentados como **el Método Cantú** (*«es la metodologia (el metodo) que queremos promocionar»*);
+  - cada sección numerada como pregunta de examen;
+  - **la portada que se califica sola** (sin método contra con Método Cantú), de I, M y L. Va reñido entre las tres;
+    se inclina por M;
+  - el marcatextos de L;
+  - «Y el puntaje se prepara.»;
+  - el paso 4 de J (marca errores y avanza la calificación);
+  - «Esto hay que repasar»;
+  - el cierre «¿Qué necesitas?».
+- **No:**
+  - títulos que son preguntas y no dicen qué se ofrece;
+  - letra chica;
+  - la palabra «ejemplo» en las hojas;
+  - líneas que hacen bulto;
+  - frases que se repiten;
+  - texto tachado que no se lee;
+  - el fondo crema;
+  - todo de un solo color en las secciones largas;
+  - el círculo dorado relleno (*«no se ve como gis»*);
+  - fusionar secciones de forma rara;
+  - la ruta que se queda a la mitad;
+  - el filtro sobre fotos;
+  - el 3D pesado;
+  - el tono de libro de texto;
+  - lo retro de videojuego;
+  - una frase enorme sola sobre un fondo;
+  - lo genérico de escuela o de plantilla;
+  - las referencias externas (*«todas … estan horribles, olvidemos esa estrategia»*);
+  - las páginas por partes;
+  - Fable.
+- **Fotos:** ningún prototipo vigente usa fotos. Las del repo parecen generadas. La que vendería es la de quien da las
+  clases, y es FALTA.
+
+## Pendiente de su respuesta
+
+1. **Sus comentarios de N, O y P,** y cuál ruta prefiere.
+2. **Si suma piezas del método de Resuelve Esparza** (lo pegó el 19-nov hacia las 02:50; la respuesta de la cabina está
+   en esta conversación, no en un fichero).
+   - **La cabina recomendó traer:**
+     - **un crítico ciego:** un subagente califica las versiones barajadas antes de mostrárselas;
+     - **publicar cada prototipo como Artifact privado,** para revisarlo en el celular. Hoy `127.0.0.1` solo abre en la
+       máquina del servidor;
+     - **un tablero de votos** como Artifact con base de datos;
+     - **Impeccable y Taste Skill como pulido,** solo leídos, sin ejecutar sus lanzadores.
+   - **La cabina recomendó no traer:**
+     - los 9 prototipos (3 métodos × 3 direcciones), porque él ya está convergiendo;
+     - las fotos de banco;
+     - el «[ejemplo]».
+   - **Los skills:** su prompt dice que están en `C:\Users\patri\.claude\skills-biblioteca\`. En la laptop no existen;
+     el repo trae solo `frontend-design` y `hallmark` en `.claude/skills/`. **En la PC, comprobar si están.**
+3. **Los datos que solo él tiene** (lo que no llegue no se pone; marcados FALTA en `texto-v2.md`):
+   - quién da las clases: foto real y una línea. Es el más importante;
+   - desde qué año prepara alumnos;
+   - testimonios con permiso;
+   - el paquete (duración, horas, grupo, simuladores) y el próximo grupo;
+   - cómo se entera el papá;
+   - en cuánto tiempo contestan;
+   - el enlace del diagnóstico express. El examen lo hace el hilo de `cantu-quizzes-latex`.
 
 ## Lo que sigue, en orden
 
-1. **Él corrige el texto.** La cabina guarda sus palabras en `veredictos/`, tal cual, y aplica las correcciones. Si el
-   cambio es grande, lo hace en un `texto-v2.md`; si es chico, en el mismo fichero, avisando.
-2. **Con el texto aprobado, un solo prototipo**, hecho por un taller (sesión anidada, **Opus y esfuerzo alto, nunca
-   Fable**). El encargo lleva:
-   - **el texto aprobado como contenido**, en lugar de `prototipos/CONTENIDO.md`;
-   - **la temática de examen como concepto**, en el tono académico de la D;
-   - **«nada se tiene que contestar»;**
-   - lo que impone Moodle (del `CLAUDE.md`);
-   - las reglas de calidad de `encargos/PROTO-COMUN.md`.
-3. **Publicar en Moodle y medir** de qué botón llegan los mensajes de WhatsApp. Se le sugirió preguntar «¿Cómo nos
-   conociste?» al contestar cada WhatsApp, durante unas semanas.
+1. **Al llegar sus comentarios:** sus palabras a `veredictos/`, tal cual. Commit y push.
+2. **Si no pidió la ronda en sus palabras, proponerle el plan y esperar su sí** (punto 11 del `CLAUDE.md`).
+3. **La ronda:**
+   - encargos `RONDA-<letras>.md` y uno por taller, sobre el último elegido (se siguen las letras: Q, R, S…);
+   - **cada taller en su propia conversación** (`start_session`, «fresh», sin worktree, Opus, esfuerzo alto; punto 12);
+   - el brief de cada uno dice su temporal y su puerto propios.
+4. **Al llegar cada nota de taller:**
+   - leer su `NOTAS.md` y sus capturas;
+   - commit por ruta y push;
+   - mandarle sus capturas al chat (punto 13).
+5. **Al terminar la ronda:**
+   - poner al día `index.html`: los nuevos arriba; lo anterior, con su veredicto, en `V`; filas nuevas en lo que se
+     rescata;
+   - copiar `capturas/1440-primera-pantalla.webp` a `inventario/miniaturas/<id>.webp`;
+   - verificarlo en el navegador: enlaces, anclas, imágenes y scroll de lado.
+6. **Cuando elija el diseño:** portar a Moodle como paso aparte, con las reglas de «Lo que impone Moodle» del
+   `CLAUDE.md` (sin corchetes, `!important`, sin `<svg>` suelto, JS solo como mejora).
 
-## Lo que se espera del dueño
-
-- **Sus correcciones a `storytelling/texto-v1.md`,** sobre todo a la pregunta 2.
-- **Los datos que solo él tiene.** Se piden una sola vez y nada se detiene por ellos; lo que no llegue, no se pone:
-  1. quién da las clases: una foto real y una línea. **Es el más importante:** hoy la página no muestra a nadie;
-  2. una señal de confianza: desde qué año prepara alumnos, cuántas generaciones lleva o sus estrellas en Google;
-  3. de dos a tres testimonios, con permiso; mejor si uno entró con beca;
-  4. el paquete de admisión (duración, horas por semana, tamaño del grupo y simuladores) y la fecha del próximo grupo;
-  5. cómo se entera el papá del avance;
-  6. en cuánto tiempo contestan por WhatsApp;
-  7. definir el diagnóstico express. El examen lo hace el hilo de `cantu-quizzes-latex`, no este.
-- **Qué no le gustó del prototipo E.** Nunca lo dijo; no hay que insistir.
-
-## Lo que hay en el repo
+## Lo que hay en el repo (al 19-nov, 02:57)
 
 | ruta | qué es |
 |---|---|
-| `storytelling/texto-v1.md` | **el texto de la página, v1, por corregir. Es el contenido que manda** para el próximo prototipo |
-| `storytelling/analisis.md` | la historia que cuenta la página, qué le falta para vender y la historia en ocho tiempos |
-| `secciones/`, `marco/`, `vista.html` | **su página original,** tal cual está en Moodle |
-| `prototipos/D-pulida/` | **la D académica que aprobó** («Sí, así»), en Moodle. Tiene el botón del express |
-| `prototipos/A-lenguaje/`, `B-3d/` | el lenguaje de Oryzo y Dala en Moodle (61 KB), y el 3D con Three.js fuera de Moodle (0,28 MB) |
-| `prototipos/E-recomendada/` | **borrador cancelado** (con Fable); lo commiteó él en `c0eb048` |
-| `prototipos/index.html` | la entrada a los prototipos, a pantalla completa |
-| `prototipos/CONTENIDO.md` | el contenido común de A, B y D. **Lo sustituye el texto de `storytelling/`** |
-| `prototipos/analisis-A-B.md`, `comparacion-cuatro.md` | A y B como landing; las cuatro comparadas (la cabina recomendó la D como base) |
-| `prototipos/diagnostico-express.md` | la propuesta del diagnóstico express gratis |
-| `referencias/` | seis referencias que no le gustaron; `oryzo.md` y `dala.md`, **las dos que le encantaron** |
-| `encargos/PROTO-*.md` | los encargos de los talleres; `PROTO-COMUN.md` tiene las reglas de calidad. `PROTO-E` está cancelado |
-| `veredictos/` | **sus palabras, tal cual,** una por mensaje (16 ficheros, medido el 18-nov hacia las 18:02) |
-| `variantes/`, `propuesta-08/` | las rondas del 4-nov (NUBE-07A–D y NUBE-08), que fallaron |
+| `index.html` | **la página de entrada:** lo que sigue, los nuevos, las versiones anteriores con su veredicto, lo que se rescata y el mapa |
+| `direccion/servidor.mjs` | **el servidor local** (`node direccion/servidor.mjs`, `127.0.0.1:8792`). Sirve la raíz del repo y guarda los votos de `direccion/` |
+| `direccion/` | la lámina de detalles del 18-nov y sus votos |
+| `storytelling/texto-v2.md` | **el texto: el contenido que manda** |
+| `prototipos/diseño-actual/` | réplica de metodocantu.com (`secciones/`, `marco/`, `imgs/`, armada en `vista.html` con `herramientas/armar-vista.mjs`) |
+| `prototipos/A-lenguaje` … `P-ruta-pantalla` | A–D (referencia), E–P (las rondas). Cada uno con `landing.html`, `NOTAS.md`, `capturas/` y `herramientas/` |
+| `encargos/` | NUBE-07D, PROTO-A/B/D/COMUN, y las rondas `RONDA-EFG`, `-HIJ`, `-KLM`, `-NOP` con un encargo por taller |
+| `veredictos/` | sus palabras, tal cual |
+| `inventario/miniaturas/` | la primera pantalla de cada versión, para la página de entrada |
 
-## Lo que se sabe de su gusto
+## Técnico: lo que no viaja y lo que conviene saber
 
-- **La temática de examen** le parece *«muy acrode al concepto»* (18-nov), aunque ningún prototipo lo ha terminado de
-  convencer.
-- **Que se lea fácil:** nada que obligue a contestar o a tocar para entender.
-- **Tono académico, no «retro»:** aprobó la D (libro de texto y hoja de examen, serif de libro, cursiva al margen). Se
-  le leyeron como «videojuego» las sombras duras, la letra monoespaciada en mayúsculas, las tramas de puntos, los cantos
-  3D y los boletos troquelados.
-- **Su original le gusta,** pero *«siento que tiene mucho texto»*.
-- **De la D le gustó el concepto:**
-  - la portada como pregunta de examen;
-  - el poco texto;
-  - «Más horas de estudio no sirven si estudias a ciegas»;
-  - la ruta en cuatro pasos con apoyos visuales.
-- **Le encantaron Oryzo y Dala** (*«la animacion, la paleta de colores, todo»*); de A y B dijo que *«se ven muy bien
-  especialmente B»*.
-- **No quiere:**
-  - landings genéricas de escuela ni «modernas» de plantilla;
-  - opciones por sección: una sola versión completa, a pantalla completa;
-  - comparadores que encojan;
-  - Fable.
-- **Siente que se cicla:** cada vuelta de diseño sin la historia resuelta lo regresa al mismo punto.
-
-## Decisiones vigentes
-
-- **Manda el examen de admisión;** las asesorías son secundarias. Van en tres lugares: una entrada en la portada, una
-  ficha más chica y la respuesta C del cierre.
-- **Lo que se juega el alumno es entrar o la beca.** La página no elige por él: se lo pregunta.
-- **La temática de examen se queda,** y las preguntas son la forma, no un formulario.
-- **El diagnóstico express gratis:** aprobado como idea; sus detalles están por definir.
-  - Por ahora es solo el botón «Haz tu diagnóstico express gratis».
-  - **DIAG** se define una sola vez y lleva a WhatsApp con M6 mientras no exista el examen.
-- **El dorado** es el color de la acción principal.
-- **Los mensajes de WhatsApp** están en `storytelling/texto-v1.md`: van del M1 al M7, y el M7 (la beca) es nuevo.
-- **La recomendación de la cabina** (`comparacion-cuatro.md`), que él no ha confirmado: la D como base y la B, más
-  adelante, como página de campaña.
-
-## Reglas (en el `CLAUDE.md`, puntos 1 a 10)
-
-- **Una sola versión por ronda,** completa y a pantalla completa.
-- **Sus palabras van a `veredictos/`, tal cual, antes de actuar.** Él a veces les escribe directo a las sesiones
-  anidadas: hay que leer su transcripción.
-- **Lo que él revisa va al repo,** con commit y push antes de avisarle. Nunca en `_scratch`.
-- **Nunca Fable** (*«consumio muchos tokens inecesariamente, no lo volvamos a hacer»*).
-- **No se generan prototipos sin su feedback.**
-- **Nunca se sube código copiado con su sesión de Moodle abierta** (trae su `sesskey`).
-- **Nada que cueste extra; la nube, solo si él la pide.** Si algo pide credenciales o falla, se para y se da el error
-  literal.
-- **El cierre de cada mensaje:** la tabla de lo medido con su hora, «Publicado: …», «Qué necesito de ti», «Qué procede»
-  y, si se espera algo, «⏳ EN ESPERA de …».
-
-## En la laptop: lo que no está en los ficheros
-
-La laptop no ve la memoria de la PC. Lo que la cabina aprendió ahí y sirve aquí:
-- **Mirar la hora con `date` antes de escribirla,** en commits, relevos y mensajes. Dos commits del 5-nov llevan una hora
-  supuesta y equivocada.
-- **Los scripts de Node con rutas de Windows o con `\`** se escriben a un fichero (con la herramienta de escribir), no
-  por heredoc: el heredoc se come las barras.
-- **Para medir y capturar,** en la PC se usó Chrome (`C:/Program Files/Google/Chrome/Application/chrome.exe`) con el
-  `puppeteer-core` de `projects/cantu-lessons/tools/render/node_modules`, por `createRequire` y solo leyendo de ahí.
-  - **En la laptop puede no estar `cantu-lessons`.** Si no está, se puede instalar `puppeteer-core` en el directorio
-    temporal de la sesión, o usar el navegador de la app.
-  - Para el 3D: `--use-angle=swiftshader --enable-unsafe-swiftshader`.
-  - En la PC está apagado «Mostrar animaciones en Windows», y Chrome lo trata como `prefers-reduced-motion`: al medir,
-    emular `no-preference`. En la laptop, comprobarlo.
-- **Las rutas** son las mismas que en la PC si los repos están en `Documents\AIW_Workspace\projects\`. Si no, se derivan
-  al abrir.
+- **La memoria de la laptop no viaja.** Las reglas que vivían solo ahí ya están en el `CLAUDE.md` (puntos 11 a 14).
+- **La vista previa de la app** usa la configuración `landing-lamina` de `AIW_Workspace/.claude/launch.json`. No está en
+  ningún repo. Si en la PC no está, se agrega:
+  - `"name": "landing-lamina"`;
+  - `"runtimeExecutable": "node"`;
+  - `"runtimeArgs": ["projects/metodo-cantu-landing/direccion/servidor.mjs"]`;
+  - `"port": 8792`.
+- **Capturas:** `puppeteer-core` de `projects/cantu-lessons/tools/render/` por `createRequire`, solo leyendo de ahí.
+  - Chrome está en `C:/Program Files/Google/Chrome/Application/chrome.exe`.
+  - **Un navegador por página:** las pestañas de fondo se traban.
+  - Para cerrar procesos, solo los propios, filtrando por línea de comandos, y `taskkill /T` del árbol de su `node`.
+    Nunca un Chrome ajeno.
+- **Su Windows tiene las animaciones apagadas, y Chrome lo lee como `reduce`.** Los prototipos aceptan `?movimiento=si`.
+  Al capturar, emular `no-preference` y también `reduce`.
+- **Rutas con ñ** (`diseño-actual`): en Node, `fileURLToPath`, no `URL.pathname`. En Bash, un heredoc con acentos puede
+  fallar: el contenido se escribe con la herramienta de escribir.
+- **Mirar la hora con `date` antes de escribirla.**
+- **`direccion/servidor.mjs`** todavía tiene en su mapa de votos la ruta `/archivo/referencias-admision/votos`, de una
+  carpeta ya borrada. No estorba, pero sobra.
+- **`inventario/entrada-1440.webp`** es una captura vieja de la página de entrada.
 
 ## Git
 
-- **`metodo-cantu-landing`** es un repo propio, pero **el dueño también commitea** (`c0eb048`).
-  - Al abrir: `git pull`, o `fetch` y mirar `HEAD..origin/main`.
-  - El commit va por ruta, con la identidad explícita (`-c user.name=ChrissValdez -c user.email=christopherkntu@gmail.com`).
-  - El push va por sha exacto.
-- **`aiw-console` lo empujan las dos máquinas.**
-  - LANDING escribe solo `context/cabinas/landing/`, `context/handoffs/metodo-cantu-landing.md` y sus veredictos.
-  - El commit va por ruta, y antes de empujar se hace `git pull --rebase origin main`.
-  - Se empuja solo si `origin/main..HEAD` trae únicamente lo propio. Si el push choca, se repite el `pull --rebase` y el
-    push. **Nunca `--force`.**
-- Los comandos que van a la red llevan `GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never`, un timeout y `< /dev/null`.
+- **`metodo-cantu-landing`:**
+  - el dueño también puede commitear: al abrir, `git pull`, o `fetch` y mirar `HEAD..origin/main`;
+  - el commit va por ruta, con identidad explícita (`-c user.name=ChrissValdez -c user.email=christopherkntu@gmail.com`)
+    y `--no-optional-locks`;
+  - el push va por sha exacto (`git push origin <sha>:refs/heads/main`).
+- **`aiw-console`:**
+  - LANDING escribe solo `context/cabinas/landing/` y `context/handoffs/metodo-cantu-landing.md`;
+  - el commit va por ruta, y antes de empujar se hace `git pull --rebase origin main`;
+  - nunca `--force`.
+- **Comandos de red:** llevan `GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never`, un timeout y `< /dev/null`.
 
 ## Abierto, para después
 
-- **`_scratch/landing/`, en la PC:** quedan `comparar/`, `ramas/` y `A-pulida-*` (21 MB) de la cabina de LECCIONES.
-  Parecen copias de `variantes/`. No se borran sin su palabra.
-- **SSH a su servidor de Moodle** desde la app, para trabajar código. Él dijo *«depsues trabajo en eso»*.
-- **El `h1` oculto del tema** («Método Cantú»): quitarlo en los ajustes, no esconderlo.
-- **Las sesiones de prototipos de la PC** (`proto-a`, `proto-b`, `proto-d` y `proto-e`) están archivadas y son de la
-  cuenta principal. En la laptop, si hace falta un taller, se lanza uno nuevo con su encargo.
+- **La entrada a Asesorías en el celular:** al quitar la línea de la portada, abajo de 1024 px solo se llega bajando a
+  la oferta. M la puso en el menú, pero en celular el menú no se ve.
+- **A 320 × 568, el botón del diagnóstico** queda bajo el pliegue. El WhatsApp del header sí se ve.
+- **El contorno de los botones dorados sobre fondo claro** contrasta 1.6:1. El texto del botón sí pasa.
+- **Nada se ha probado en Safari, en Firefox ni en un celular real.**
+- **`_scratch/landing/` en la PC** (de la cabina de LECCIONES): no se borra sin su palabra.
+- **SSH a su servidor de Moodle,** para después (*«depsues trabajo en eso»*).

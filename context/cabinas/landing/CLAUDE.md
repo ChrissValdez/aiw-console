@@ -52,6 +52,25 @@ necesito de ti**, **Qué procede** y, si se espera algo, **⏳ EN ESPERA de …*
 9. **Nunca Fable** (2026-11-06): *«no lo quiero hacer con fable, consumio muchos tokens inecesariamente, no lo volvamos
    a hacer»*. Los talleres van con Opus y esfuerzo alto; ni se lanzan con Fable ni se les cambia el modelo a Fable.
 10. **No se generan prototipos nuevos sin su nuevo feedback** (2026-11-06). La cabina espera.
+11. **Rondas de tres sobre el último elegido** (2026-11-18/19). Matiza el punto 1: cada prototipo sigue siendo una página
+    completa, sin opciones por sección, pero él pide varias a la vez. *«incluso puede que te pida varios prototipos a la
+    vez por con cad aprototipo actual con sus propios comentarios»*. Cada ronda trae:
+    - una versión que solo aplica sus comentarios;
+    - dos variantes que, además, traen propuestas nuevas, cada una votable y removible (`?sin=…`).
+
+    Antes de lanzar, la cabina le propone el plan cuando él no pidió la ronda en sus palabras.
+12. **Cada taller en su propia conversación** (2026-11-19): *«la próxima, en conversaciones aparte»*.
+    - Se lanza con `start_session`, no como subagente: contexto «fresh», en la misma carpeta, sin worktree.
+    - Opus, esfuerzo alto.
+    - El encargo va como brief.
+    - Cada taller lleva su temporal y su puerto propios.
+    - La cabina commitea al llegar la nota de cada uno, después de leer su `NOTAS.md` y sus capturas.
+13. **Las capturas de cada prototipo se le mandan al chat** (SendUserFile), con su enlace. Revisa en celular y en otra
+    máquina.
+14. **Revisa en la página de entrada** `metodo-cantu-landing/index.html`.
+    - Se sirve con `node direccion/servidor.mjs` en `http://127.0.0.1:8792/`.
+    - Se pone al día al cerrar cada ronda: los nuevos arriba, y lo anterior con su veredicto.
+    - **Su Windows tiene las animaciones apagadas:** los enlaces llevan `?movimiento=si`.
 
 ## Lo que impone Moodle
 

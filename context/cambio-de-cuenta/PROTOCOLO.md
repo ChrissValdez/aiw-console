@@ -85,3 +85,5 @@ cada una deja su apartado en `HANDOFF.md` con el mismo cierre. `sincronia.mjs` l
 cambio.
 
 **Una cabina a la laptop con la otra cuenta, a la vez** (proyectos y máquinas distintos): `OTRA-CABINA-EN-LAPTOP.md` (18-nov, LANDING).
+
+**LECCIONES a la laptop con la cuenta de pato** (la PC en espera): `LECCIONES-EN-LAPTOP.md` (19-nov).

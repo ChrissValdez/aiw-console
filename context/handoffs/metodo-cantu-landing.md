@@ -94,7 +94,7 @@
 | `prototipos/diagnostico-express.md` | la propuesta del diagnóstico express gratis |
 | `referencias/` | seis referencias que no le gustaron; `oryzo.md` y `dala.md`, **las dos que le encantaron** |
 | `encargos/PROTO-*.md` | los encargos de los talleres; `PROTO-COMUN.md` tiene las reglas de calidad. `PROTO-E` está cancelado |
-| `veredictos/` | **sus palabras, tal cual,** una por mensaje (16 ficheros, medido el 18-nov a las 18:03) |
+| `veredictos/` | **sus palabras, tal cual,** una por mensaje (16 ficheros, medido el 18-nov hacia las 18:02) |
 | `variantes/`, `propuesta-08/` | las rondas del 4-nov (NUBE-07A–D y NUBE-08), que fallaron |
 
 ## Lo que se sabe de su gusto

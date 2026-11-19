@@ -10,6 +10,28 @@
 > **La cabina abre leyendo enteros** `context/cabinas/lecciones/CLAUDE.md` y `context/cabinas/REGLAS-DE-CABINA.md`. La
 > app abre la sesión en `AIW_Workspace`, así que ese `CLAUDE.md` **no se carga solo**.
 
+## Dónde estamos (2026-11-19, 00:50) — Datos y Funciones, todas escritas y publicadas
+
+> Lo escribió la cabina al cerrar el pedido del operador del 18-nov, 15:30: *«visto bueno, lanza todas las leciones de las areas de
+> Funciones y Datos y probabilidad»*. **Gana el disco.**
+
+- **Las 67 lecciones** (Datos 36, Funciones 31) están en main y publicadas. Ramas juntadas: cr-est-05, cr-f2-01b, cr-e2-01c,
+  cr-fun-05c, cr-e2-02b (la ronda 2 votada de CR-E2), cr-fun-06, cr-est-06, cr-f2-02. Main de `cantu-lessons` en `7240782f`.
+- **El cierre salió ✔ listo a las 00:49** (cabina.json `811628f5`): 0 sin encargo, 0 por publicar, 0 votos obsoletos, 434 piezas.
+- **Los colores de bloque, todos votados.** EST: 1 Arcilla, 2 Índigo, 3 Liquen `#4C5942`, 4 Azul petróleo `#075D88`, 5 Ocre quemado
+  `#4E3904`, 6 Magenta oscuro `#5A022B`. FUN: 1 Cobalto, 2 Tabaco, 3 Abeto `#0E431D`, 4 Ladrillo `#CE4F3B`, 5 Malva apagada `#66496E`,
+  6 Verde azulado `#005152`, 7 Vino añejo `#744E58`. DISEÑO hasta v147.
+- **Galerías:** CR-EST, CR-F2, CR-E2 (plegada, `c262ae2`) y CR-FUN, publicadas.
+- **CR-RO·01** (el desborde en la primera visita): rama cr-ro-01 `4d9d68bb`, sin juntar. Espera dos respuestas del operador: mandar a
+  Studio la «Petición 34» (`const refitHistorial = () => { fitFocus(); fitHistory(); };`; Studio está en pausa, D-079) y encender la
+  guarda como aviso amarillo (hoy daría 118).
+- **Dudas de sistema juntadas, para repasar con el operador:** orden de `codigos.json` y «opcional» vs «complementaria»; el tope de
+  siete números; la familia oliva/musgo casi agotada; la «y» del plano a 3,72:1 (`#5E81AC`); las cajas cálidas sin voto (FUN-07,
+  FUN-08); EST-32 sigue en la tinta (CR-E2); FUN-31 lleva el Vino añejo también en D3, D5, D9 y D10 (el «en» de la vista nombra
+  cuatro); los §Dudas de CR-FUN (22), CR-E2 (12) y CR-F2 (8).
+- **Cuenta:** la landing pasa a la laptop con la cuenta suplementaria según `context/cambio-de-cuenta/OTRA-CABINA-EN-LAPTOP.md`
+  (`a4e6c4d`); lo hace el operador.
+
 ## Dónde estamos (2026-11-06, 15:55) — antes de compactar la conversación de la cabina
 
 > Lo escribió la cabina antes de que el operador compactara su conversación (CARRILES v2, «Ahorro y velocidad»). Lo de abajo, desde

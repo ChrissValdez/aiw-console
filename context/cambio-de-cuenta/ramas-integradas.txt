@@ -139,3 +139,4 @@ cantu-lessons cr-e2-02b 108c7c2b
 cantu-lessons cr-fun-06 a1fc0e12
 cantu-lessons cr-est-06 8e6d0d59
 cantu-lessons cr-f2-02 059b4eef
+cantu-lessons cr-ro-02 cf0b0152

@@ -140,3 +140,20 @@ cantu-lessons cr-fun-06 a1fc0e12
 cantu-lessons cr-est-06 8e6d0d59
 cantu-lessons cr-f2-02 059b4eef
 cantu-lessons cr-ro-02 cf0b0152
+# Revisadas el 2026-11-19 02:15 (cierre de la cuenta principal, LECCIONES): rehechas o juntadas por otra rama (01c, 01b, 02b, 05c, cr-ro-02) o por squash; cada una con su CR en git log de main.
+cantu-lessons cr-e2-01 739950dc5e1bde722ddbf099c59b446c91dff65c
+cantu-lessons cr-e2-01b c1f5994b71947ae663665421b6a30d582963fed5
+cantu-lessons cr-e2-02 b255d4c9b1a44a881682746b449b610b90f4ba18
+cantu-lessons cr-est-02 65ec1f5021c700af9b756b1afa7a3dd88f5d9716
+cantu-lessons cr-f2-01 0697c4ea614be35423a7eb5c89761ee59b8fea16
+cantu-lessons cr-fun-01 359339c541b074c6f1ee054e0740f792fc96b5b8
+cantu-lessons cr-fun-05 7209c51e155ec914b0be202f21efb20331201b7e
+cantu-lessons cr-fun-05b 08b0d7d11cd1a6ee737d990374a24788405bb531
+cantu-lessons cr-g5-05 74fdab7103b4c7a132bf3409b23e35a2f3418c68
+cantu-lessons cr-le-18 54da49ac64f4888d600a9c1ac7ab13a91e0dfb3c
+cantu-lessons cr-pl-76-antes-del-rebase e2e6cbc36ac032e406edf8f825c65b07061aec92
+cantu-lessons cr-pl-78-antes-del-rebase af06123834a478588e7c66ce8d45ea1a1da1e7bc
+cantu-lessons cr-pl-78-antes-del-rebase-2 5b922a1097524ce203fddab41293753fdfa502f1
+cantu-lessons cr-pl-82 aa5b471f3e24230b937104b6e11c495e0d8f0c93
+cantu-lessons cr-ro-01 4d9d68bbecf08b9b26d9f85a73afe3ab11a5015b
+cantu-lessons cr-sis-29 d85f2b322346c7703f6da8d213ab05e22bf80cd6

@@ -1,98 +1,72 @@
 # HANDOFF de cambio de cuenta
 
-- **De la cuenta suplementaria a la principal.** La principal ya tiene su cabina: se abre su sesión y se escribe «ya volví, revisa la
-  carpeta del protocolo».
-- **Escrito:** 2026-11-13, 15:13 (hora de la PC). Lo escribió la cabina de LECCIONES de la suplementaria, en la sesión
-  `local_f6677f4f-97d5-4ff8-aad1-45b02f781ebb`. Esa sesión se queda esperando.
-- **Por qué ahora:** el operador lo pidió (*«enterado, entonces cortemos / y procedmaos a cambiar de cuenta»*). Tope semanal de la
-  suplementaria: 87 %, con el de 5 h al 79 %. Se reinicia el 14-nov a las 00:00, hora de la PC.
-- **`sincronia.mjs`:** sale «NO CAMBIAR», pero solo por lo que se nombra aquí abajo («Lo que la sincronía marca»). Puntas:
-  - cantu-lessons 2ec59bd0;
-  - cantu-revisiones 7670331;
-  - aiw-console, el commit de este fichero.
-- **`pendientes.mjs`** (15:13): 0 cambios, 0 sin entrada. Esperan el voto otra vez del operador: ALG-06·EG, ALG-38·S2, ALG-39·S1 y
-  ALG-47·S2/S3. Su ~ ya está escrito en la lección, y la plataforma le pide confirmarlo.
+- **De la cuenta principal a la suplementaria.** La suplementaria ya tiene su cabina de LECCIONES (la sesión del 13-nov,
+  `local_f6677f4f-97d5-4ff8-aad1-45b02f781ebb`). Se abre y se escribe «ya volví, revisa la carpeta del protocolo».
+- **Escrito:** 2026-11-19, 02:08 (hora de la PC). Lo escribió la cabina de LECCIONES de la principal, en la sesión
+  `local_3591b566-02e3-4c0e-8bca-146697b7fc03`. Esa sesión se queda esperando.
+- **Por qué ahora:** lo pidió el operador (*«creo que es un buen momento de hacer switch de la cuenta... entonces... iniciemos
+  protocolo para seguir trabajando en la otra cuenta»*). Tope semanal de la principal: **90 %**; se reinicia el 20-nov a las 05:00,
+  hora de la PC (11:00Z).
+- **`sincronia.mjs`:** sale «NO CAMBIAR», solo por lo que se nombra abajo en «Lo que la sincronía marca y no bloquea» (cr-fig-04 y los worktrees de prueba de CR-PL·72). Puntas: cantu-lessons `cf0b0152`, cantu-revisiones `25553db1`, aiw-console el commit de este fichero.
+- **El cierre de LECCIONES** (`tools/cabina/cierre.mjs`): **✔ listo** (medida de las 02:06): 0 sin encargo, 0 por publicar, 0 votos obsoletos, 0 comentarios sin atender, 434 piezas; ⚠ desborde en la primera visita, 116 escenas en 63 de 159 mazos (58 sin medir).
 
 ## LECCIONES
 
-### Hecho y en GitHub (13-nov)
+### Hecho y en GitHub (18 y 19-nov)
 
-- **Bloques 5 a 9 de álgebra, terminados y publicados:**
-  - CR-A5·02 (ALG-27 a 31): la 2 de ALG-28·S4, las reglas de ALG-38 y la Ciruela;
-  - CR-A7·02 (ALG-38 a 44): tus ~ de ALG-38·S2 y ALG-39·S1, ALG-42 y ALG-44 nuevas, y el Petróleo;
-  - CR-A9·01 (ALG-45 a 51): ALG-51 nueva, ALG-47·S2/S3 de la adenda 3, la partida de las cadenas y el Verde hoja.
+- **Las 217 lecciones del temario están escritas y publicadas** (web y slide, 434 piezas): Aritmética 29, Álgebra 73, Geometría 44,
+  Datos y probabilidad 38, Funciones 33. «Técnicas» sigue en pausa. **Ninguna está aprobada todavía:** las 434 están «En revisión 👁».
+- **Datos y Funciones** (el pedido del 18-nov, 15:30, *«visto bueno, lanza todas las leciones de las areas de Funciones y Datos y
+  probabilidad»*), terminado. Ramas juntadas: cr-est-05, cr-f2-01b, cr-e2-01c, cr-fun-05c, cr-e2-02b, y los arreglos del cierre
+  cr-fun-06, cr-est-06 y cr-f2-02. Los 13 colores de bloque, votados (DISEÑO hasta v147; la lista, en el relevo de la cabina).
+- **La guarda del desborde en la primera visita** (CR-RO·01 y ·02; el operador, 19-nov: *«Sí, las dos»*):
+  - en main `cf0b0152`: `tools/revision/mide-desborde.mjs`. `build.mjs` mide cada slide compilada (⚠, nunca ✖). El cierre suma la
+    cuenta del curso desde los registros, sin volver a medir; el ⚠ no impide el «listo». `DESBORDE_ESTRICTO=1` lo pasa a ✖.
+  - **Cifra parcial:** 116 escenas desbordan en 63 de 159 mazos medidos. **Faltan 58:** de EST-30 en adelante (25) y los 33 de FUN.
+    Para sembrarlos (~8 min), desde `cantu-lessons`:
+    `sh C:/Users/chris/Documents/AIW_Workspace/_scratch/CR-E2/01/turno.sh node tools/revision/mide-desborde.mjs --sin-medir --turno --raiz=C:/Users/chris/Documents/AIW_Workspace/projects/cantu-lessons`
+    Los registros (`lecciones/*/_generado/slide-mazo.desborde.json`) están fuera de git: viven en el disco de la PC.
+  - **Petición 37 a Studio** (`docs/PARA-CANTU-STUDIO-2026-11-19.md`, `c7691f95`): que el foco se vuelva a medir cuando llega la
+    letra. Con ella la cuenta baja a 0 y la guarda pasa a ✖. Studio sigue en pausa (D-079).
+- **El relevo de la cabina** (`context/handoffs/cantu-lessons.md`, sección «Dónde estamos (2026-11-19, 00:50)»), al día.
+- **Protocolo para otra cabina en la laptop** (`OTRA-CABINA-EN-LAPTOP.md`, 18-nov): la LANDING a la laptop. Lo hace el operador
+  cuando quiera. Con este cambio, la LANDING de la PC también pasa a la suplementaria: la app de la PC tiene una sola cuenta.
 
-  Las tres ramas están juntadas y en `ramas-integradas.txt`; sus informes y relevos, en main.
-- **Los tokens de color** (CR-SIS·19): `ciruela`, `petroleo` y `verde_hoja`, en main 738e81cd. Están en DISEÑO v118.
-- **DISEÑO v119** (01da1e20), de CR-SIS·20:
-  - la partida de una cadena va en la columna de las expresiones, ahora dicho con palabras;
-  - 21.6 y REGLA-ALINEACION-BLOQUE exceptúan la cadena;
-  - la regla nueva REGLA-COLUMNA-AL-MARGEN;
-  - la 36 nombra las guardas nuevas.
-- **CR-SIS·20, ya publicado:** B1 y B9 completos, en ALG-02, 04, 05, 06, 45, 46, 47, 48, 49 y 51 (páginas 24fc6b1 y 7670331).
-- El veredicto y el tablero están al día. Los comentarios de ALG-27, ALG-38 y ALG-47 están atendidos o «en el taller (CR-SIS·20)».
+### En curso
 
-### En curso: CR-SIS·20, «Todo álgebra contra las reglas» (cortado a media)
+- **Nada.** Ningún carril trabaja. El vigilante de votos (`_scratch/cabina-lecciones/vigilar-votos.mjs 120`) se apaga con esta
+  sesión: **la cabina que llega lo rearma lo primero**.
 
-- **Encargo:** `cantu-lessons/docs/carriles/CR-SIS/20-encargo.md`.
-- **Relevo:** «Relevo de CR-SIS·20», en `docs/carriles/CR-SIS.md`. Está en main (9032e85c); léelo entero.
-- **Rama `cr-sis-20`** (worktree `_scratch/CR-SIS/20/wt/cantu-lessons`), sin push. Su punta, 0e19e1e1, es un WIP tal cual del corte.
-- **Falta en main, de esa rama:**
-  1. **Los commits de B5 y B6** (por ruta, compilar y publicar):
-     - B5: ALG-29 `0cc2043b` y ALG-31 `41eceeee`;
-     - B6: ALG-32 `8602d403`, ALG-34 `1ff509dc`, ALG-35 `b834d73f`, ALG-36 `c690c9ad` y ALG-37 `cfa244a4`;
-     - más ALG-10, 11, 16, 26 y los demás desde 655c4076, menos 04, 47 y 48.
+### Lo que sigue
 
-     ALG-37 estrena la etiqueta `pasos-tres-puntos-se-prueban`. Su fila está en `_scratch/CR-SIS/20/fila-ALG-37.md` y entra al
-     registro antes de compilar ALG-37 en main.
-  2. **El WIP 0e19e1e1, sin compilar:**
-     - 10 lecciones: ALG-06 (slide), 13, 14, 15, 18, 19, 20, 24, 25 y 38 (slide);
-     - las NOTA de las piezas 85, 86, 87 y 106;
-     - las guardas sin terminar: `tools/revision/lib/formaCuenta.mjs` y lo demás de `tools/revision`.
+1. **La revisión del operador de las 217 lecciones.** Cada voto o comentario se encarga a su carril y se publica. Las sesiones de
+   carril son de la principal: en la suplementaria se abren nuevas desde el relevo de cada una (`cantu-lessons/docs/carriles/CR-*.md`).
+2. **Sembrar las 58 que faltan de la guarda** (el comando de arriba) y correr el cierre para que la cifra salga entera.
+3. **Las dudas de sistema, para repasar con el operador** (una por una, con su foto):
+   - el orden de `codigos.json`, y «opcional» o «complementaria»;
+   - el tope de siete números;
+   - la familia oliva/musgo casi agotada;
+   - la «y» del plano a 3,72:1 (`#5E81AC`);
+   - las cajas cálidas de FUN-07 y FUN-08, sin voto;
+   - EST-32 sigue en la tinta;
+   - FUN-31 lleva el Vino añejo también en D3, D5, D9 y D10 (la vista nombra cuatro);
+   - FUN-12·D6–D10: bajar el enunciado para que la guarda dé 0 (encargo de contenido);
+   - los §Dudas de CR-FUN (22), CR-E2 (12), CR-F2 (8) y CR-RO·02.
 
-     El relevo dice qué le falta a cada una.
-  3. **Las guardas, a 🔴,** con `--control-negativo`. Deben caer ALG-35·S3, ALG-47·S1 y S2, y ALG-21·S3 de main.
-  4. **El informe** `CR-SIS/20.md`, con las 54 dudas para el operador (`_scratch/CR-SIS/20/informe-partes.md`).
-- **La sesión de CR-SIS es de la suplementaria.** En la principal, CR-SIS·20 se abre en una sesión nueva desde su relevo. Es más
-  ligera: la de aquí pasaba de 3 200 mensajes. Censo y pases en Sonnet; compilaciones una a la vez.
-- **No tocar:**
-  - ALG-30·S1 y D3: van con las tres decisiones de ALG-30, que esperan al operador;
-  - los sistemas votados de ALG-28 a 31.
+### Lo que la sincronía marca y no bloquea
 
-### Espera del operador
-
-- **ALG-30, tres decisiones:** el resultado sin plano, de 70 a 56 escenas, y S1 en los pasos 4 a 6.
-- **El voto otra vez** de ALG-06·EG, ALG-38·S2, ALG-39·S1 y ALG-47·S2/S3.
-- **ARI-02·D9:** su encargo.
-- **Las 54 dudas de CR-SIS·20,** cuando estén en el informe.
-
-### Al relevo de los carriles (no urgente)
-
-- La ronda 2 de las galerías CR-A9 y CR-A7.
-- La vista `SIS-COLOR-BLOQUE-8` (Radicales, ALG-43 y 44).
-- El censo de ALG-32 a 37 de CR-A7 ya lo cubre CR-SIS·20.
-
-### Lo que la sincronía marca (nombrado, no bloquea)
-
-- **`cr-sis-20`:** el carril en curso, arriba.
-- **`_scratch/CR-PL/72/prueba/{les,pub-les,rev,pub-rev}`:** copias de prueba de CR-PL·72 con 3 a 5 ficheros sin commit. No son
-  trabajo: no se integran.
-
-### Ojo
-
-- **El vigilante de votos está apagado.** Se rearma con `node _scratch/cabina-lecciones/vigilar-votos.mjs 120`, en segundo plano,
-  desde `AIW_Workspace`.
-- **Herramientas nuevas de la cabina,** en `_scratch/cabina-lecciones/`:
-  - `atender-teselas.mjs` y `declarar-comentarios.mjs`: el tablero, línea por línea;
-  - `alta-leccion.mjs`: la línea de codigos.json y las filas del registro;
-  - `diseno-v119.mjs`.
-- **Las compilaciones a la vez se frenan entre sí.** Hoy una tardó más de 10 minutos. Va una a la vez, con `timeout`, y se mata solo
-  por PID.
-- **No se toca:**
-  - el 8791 del operador, su navegador ni `respuestas.*`;
-  - ninguna cabina vota.
+- **`cr-fig-04`** (`618d8716`, 2 commits, del 17-nov): «la guarda de figuras (regla 46, DISEÑO v135)» y su relevo. **No está en main**
+  (no hay `tools/revision/prueba-figuras.mjs` ni `docs/carriles/CR-FIG/04.md`). Es la rama del incidente del `sed` durante un
+  `--todas` (memoria «modo-seco-comprobar-antes»). No la junté a ciegas: hay que ver si se retoma, se rehace o se archiva.
+- **Worktrees de prueba de CR-PL·72** (`_scratch/CR-PL/72/prueba/les`, `pub-les`, `pub-rev`, `rev`), con cambios sin commitear. Son
+  copias de prueba de un carril ya juntado; no las borré (borrar lo ajeno pide el sí del operador).
+- Las otras ramas viejas que marcaba (cr-e2-01, -01b, -02, cr-f2-01, cr-fun-05, -05b, cr-ro-01, cr-est-02, cr-fun-01, cr-g5-05,
+  cr-le-18, cr-pl-76/78 «antes del rebase», cr-pl-82, cr-sis-29) ya están en main por otra rama o por squash: apuntadas en
+  `ramas-integradas.txt` el 19-nov.
 
 ## Otras cabinas (no bloquean; que las vea su cabina)
 
-- cantu-studio: `tools/studio/editor-ui/package-lock.json` modificado. La cabina está en pausa (D-079).
-- phd-p2-experiment: 8 cosas sin commit, en `data/manual/se_*` y `data/tutor-configs/`. Son de su cabina.
+- **metodo-cantu-landing:** 37 commits de GitHub sin bajar en la PC (`git pull --rebase`).
+- **Resuelve-Esparza:** 33 commits sin bajar.
+- **cantu-studio:** 1 sin commitear (`tools/studio/editor-ui/package-lock.json`).
+- **phd-p2-experiment:** 8 sin commitear (`data/manual/se_*`).

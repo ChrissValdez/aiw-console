@@ -35,6 +35,9 @@ necesito de ti**, **Qué procede** y, si se espera algo, **⏳ EN ESPERA de …*
 
 1. **Una sola versión nueva, completa y a pantalla completa, por ronda.** *«no me gusta que me des multiples opciones por
    seccion, solo quiero ver la version nueva y punto»*. Nunca un comparador que encoja la página.
+   **Enmienda del 20-nov-2026 (tras AM):** el dueño lo cambió. Para pulir se usa un solo prototipo con hasta tres
+   variantes por sección, y él descarta (`veredictos/2026-11-20-am-comentarios.md` del repo). Si todo está decidido, es
+   una sola versión. Lo vigente está en el relevo y en el `README.md` del repo.
 2. **Referencias antes de construir.** Las cuatro variantes de la nube (NUBE-07A a D) y NUBE-08 fallaron por adivinar su
    gusto. Primero, qué le gusta: sus referencias, una lámina de estilo o lo que diga de lo que ya vio.
 3. **Sus palabras van al disco, tal cual,** en `metodo-cantu-landing/veredictos/` (una sección por mensaje), antes de

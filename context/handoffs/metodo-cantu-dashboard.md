@@ -369,3 +369,14 @@ Aceptó la ronda de librerías: «Sí, lánzala».
 - la escala real del examen;
 - los votos de las galerías;
 - la incoherencia de C (+35 contra +95 en Matemáticas).
+
+**LIBRERIAS-1 terminó y está en GitHub** (39ac3ce, bea2907, 016027b; entrada 9a56bad). Las tres pasaron las guardas, con
+0 corchetes y 0 svg en su código. Crítico ciego, en dos vueltas:
+
+| Carril | Crítico | Palabras | CSS propio | Nota |
+|---|---|---|---|---|
+| Tabler 1.7.5 | 7,5 y 8, primero en las dos | 97 | 49 líneas | — |
+| Basecoat 1.1.0 | 8 y 8 | 110 | 161 líneas | quitó el morado del coach |
+| Web Awesome 3.15.0 | 8 y luego 7 | 106 | — | sin JS se lee; 95 archivos de JS |
+
+Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.

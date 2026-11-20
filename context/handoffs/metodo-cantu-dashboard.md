@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
 > **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día el
-> **2026-11-20 a las 01:34** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **2026-11-20 a las 02:12** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -183,8 +183,31 @@
     3. Figtree o Roboto;
     4. volver a poner «puntos» bajo la cifra;
     5. reanudar la ronda 3.
-- **Después:** con la piel que elija, **reanudar la ronda 3**: vestir las siete pantallas de `prototipo/v3/` con esa
-  capa y hacer lo que le faltó (`NOTAS.md`, guardas y crítico).
+- **Su respuesta a LOOK-1** (`veredictos/2026-11-20-look-1.md`, tres mensajes verbatim):
+  - *«mejoro mucho, pero ninguna me convence»*: ninguna piel queda fija;
+  - en la landing le funcionó buscar referencias de **excelente calidad fuera de su industria** (con las de su industria
+    «se ciclaba»). Allá, 14 referencias no le encantaron, y sí «la correcta», Apple;
+  - aquí, **Apple no**: *«ocupamos las mejores referenicas de dashboard, de preferencia con un chatbot incluido (e
+    coach) de forma integral y con bunea UX»*;
+  - elige él, por «espina», viendo link y captura. *«solo pueden entrar los de mejor calidad»*.
+- **Galería de referencias en curso:**
+  - encargo `encargos/REF-1.md` (`75a20a8`);
+  - de 6 a 10 de los mejores dashboards con IA integrada, fuera de educación;
+  - cada una con evidencia de calidad (premio o reseña), filtro de tres preguntas (diseño, UX de tablero, IA integrada)
+    y crítico ciego: menos de 8, fuera;
+  - votos ✓/~/✗ con comentario, que se guardan en `referencias/dashboards/votos.json` (el `servidor.mjs`, ampliado) y
+    con «Copiar mis respuestas», porque él vota en la PC.
+  - **Taller:** `taller-ref-1` (`local_7af61ef4-f242-413d-9ac0-e292f2a85213`), «fresh», sin worktree, Opus, esfuerzo
+    alto, puerto 8808.
+- **Al llegar su nota:**
+  - leer `NOTAS.md`, las capturas y el crítico;
+  - probar el servidor ampliado;
+  - commit y push;
+  - avisarle que abra `abrir-tablero.cmd` y vote.
+
+  **Sus votos llegan por chat** («Copiar mis respuestas») o, si él hace commit y push desde la PC, en `votos.json`.
+- **Después:** con su referencia elegida, extraer sus reglas, como el AB de la landing con Apple, y rehacer el Inicio A
+  con ellas. Luego, reanudar la ronda 3 en las siete pantallas.
 
 ## Lo que ya existe en disco y sirve de dato de ejemplo (medido 22:05, solo lectura)
 

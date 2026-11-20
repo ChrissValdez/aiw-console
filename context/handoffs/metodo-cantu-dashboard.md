@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
 > **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día a las
-> **22:33** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **22:43** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -54,8 +54,17 @@
 - **Sus dos preguntas al operador:**
   - partir Álgebra y Lectura del diagnóstico (las de ~40–45 min); recomienda sí;
   - meta solo por materia y el total solo en Simuladores; recomienda sí.
-- **En espera:** los comentarios del operador sobre v1 (19-nov, desde las 22:33). Van tal cual a `veredictos/`, y de ahí
-  sale la ronda 2.
+- **Su veredicto sobre v1 (guardado a las 22:40, `ebfc014`):** *«el diseño del dashboard esta muy feo»*. Trajo de
+  LANDING un método de siete puntos y pidió aplicarlo «tal cual»; **desde ahí es el método del hilo** (verbatim en
+  `veredictos/2026-11-19-v1-comentarios.md`; resumido en el contrato, «El método de rondas», commit `7652e4c` en
+  `aiw-console`). Lo que cambia: 3 direcciones por ronda en el mismo archivo por `?v=`, análisis escrito antes de
+  diseñar, skills `frontend-design`/`hallmark`/`dataviz`, capturas a 3 anchos con guardas por script y un crítico ciego.
+- **Punto 1 en curso:** encargo `encargos/ANALISIS-V1.md` (`2880fc8`). **Taller lanzado:** `taller-analisis-v1`
+  (`local_d26e28e1-6e27-4a2c-94da-0ba77d55f452`), una conversación nueva (no la que hizo v1), «fresh», sin worktree,
+  Opus, esfuerzo alto, puerto 8804. Escribe en `prototipo/v2/` (`NOTAS.md`, `analisis/`, `referencias/`, `tokens.css`)
+  y el `index.html` de la raíz. **No diseña.**
+- **Al llegar su nota:** leer `NOTAS.md`, los recortes y las referencias; commitear; enseñárselo al operador **antes de
+  diseñar** (lo pidió así). Siguen sin contestar: las dos preguntas del taller de v1 y la escala real.
 
 ## Lo que ya existe en disco y sirve de dato de ejemplo (medido 22:05, solo lectura)
 

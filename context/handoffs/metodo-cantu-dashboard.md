@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
 > **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día a las
-> **22:19** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **22:33** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -33,8 +33,29 @@
 - **Encargo `encargos/PROTO-V1.md`** (commit `c7b0842`). **Taller lanzado** en su propia conversación,
   `taller-proto-v1` (`local_7856604c-348d-413d-a083-efbaccf92efb`), «fresh», sin worktree, Opus, esfuerzo alto,
   puerto 8803. Escribe en `prototipo/v1/` y el `index.html` de la raíz; no toca git.
-- **Al llegar su nota:** leer su `NOTAS.md` y sus capturas; commit por ruta en `metodo-cantu-dashboard`; mandarle las
-  capturas al chat; poner al día este relevo.
+- **PROTO-V1 ENTREGADO (22:33, `65f034c`, empujado; `HEAD` = `origin/main`).** El taller terminó a las 22:31:
+  - siete pantallas en `prototipo/v1/`: `index.html` (Inicio), `diagnostico`, `plan-matematicas`, `plan-espanol`,
+    `bloque`, `simuladores` y `meta`;
+  - la página de entrada `index.html` en la raíz;
+  - 31 capturas;
+  - `NOTAS.md`;
+  - sus herramientas, copiadas por la cabina a `prototipo/v1/herramientas/`: `gen.mjs` genera las siete páginas desde
+    los datos de la alumna; sus rutas `SCR` apuntan al temporal de esa sesión.
+
+  La cabina volvió a medir: cero corchetes y cero `<svg>` en HTML/CSS. Le mandó 8 capturas (las siete a 1440 y el
+  Inicio a 390).
+- **Lo que el taller decidió o inventó** (detalle en `NOTAS.md`):
+  - la alumna ficticia es «Mariana Robles»;
+  - la escala es de 200–800 por materia y 400–1600 en el simulador. **NO VERIFICADA**;
+  - la meta es 1300 = 640 + 660;
+  - «cuánto sube» se calcula con preguntas por examen del tema (las reales de la ruta) × 11 puntos;
+  - para llegar a 217 inventó los conteos de lecciones de Geometría, Datos y Funciones;
+  - los bloques de Español los agrupó a partir de los nombres del diagnóstico.
+- **Sus dos preguntas al operador:**
+  - partir Álgebra y Lectura del diagnóstico (las de ~40–45 min); recomienda sí;
+  - meta solo por materia y el total solo en Simuladores; recomienda sí.
+- **En espera:** los comentarios del operador sobre v1 (19-nov, desde las 22:33). Van tal cual a `veredictos/`, y de ahí
+  sale la ronda 2.
 
 ## Lo que ya existe en disco y sirve de dato de ejemplo (medido 22:05, solo lectura)
 

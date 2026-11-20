@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
-> **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día a las
-> **23:38** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día el
+> **2026-11-20 a las 00:40** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -126,10 +126,24 @@
   3. cuántas palabras (quitar «puntos estimados» y los ejes repetidos);
   4. «¿Voy a tiempo?» en horas totales;
   5. lo abierto de v1: escala, 6 + 3 partes, meta por materia y meta desde el primer día.
-- **EN ESPERA de sus comentarios sobre A, B y C.** Con ellos:
-  - sus palabras a `veredictos/`;
-  - el encargo `RONDA-3`, con la dirección elegida aplicada a las demás pantallas, o una nueva ronda de Inicio;
-  - un taller nuevo.
+- **Su elección (guardada el 20-nov a las 00:38):** *«A, con lo de B y C»*
+  (`veredictos/2026-11-20-ronda-2.md`).
+  - Las direcciones B y C salen; se recuperan desde `31f12fc`.
+  - Los detalles 2 a 4 van por la recomendación de la cabina, porque él no opinó: el menú como tira, menos palabras y
+    las horas totales.
+  - Lo abierto de v1 sigue por omisión.
+- **Ronda 3 en curso:**
+  - encargo `encargos/RONDA-3.md` (`db891f9`, empujado);
+  - el tablero completo en A, en `prototipo/v3/`: Inicio, Diagnóstico, los dos planes, Bloque, Simuladores y Mi meta;
+  - una versión por pantalla, con variantes por parámetro solo si hay una pregunta abierta;
+  - capturas a 3 anchos, guardas por script y crítico ciego por pantalla y del conjunto.
+- **Taller:** `taller-ronda-3` (`local_f2981d51-e183-4c38-a1b8-a75b63c4abea`), «fresh», sin worktree, Opus, esfuerzo
+  alto, puerto 8806.
+- **Al llegar su nota:**
+  - leer `prototipo/v3/NOTAS.md`, las capturas y el crítico;
+  - volver a medir: corchetes, `<svg>`, v1 y v2 intactos, ligas;
+  - commit y push;
+  - mandarle capturas.
 
 ## Lo que ya existe en disco y sirve de dato de ejemplo (medido 22:05, solo lectura)
 

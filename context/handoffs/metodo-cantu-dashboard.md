@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
 > **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día a las
-> **23:05** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **23:38** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -106,11 +106,30 @@
   - capturas a 1440×900, 1366×768 y 390×844, guardas por script y crítico ciego.
   - **Taller:** `taller-ronda-2` (`local_1e4e2acc-0af2-4b2d-9562-e4e205529dbb`), «fresh», sin worktree, Opus,
     esfuerzo alto.
-- **Al llegar su nota:**
-  - leer la sección «Ronda 2» de `NOTAS.md`, las capturas y el informe del crítico;
-  - volver a medir corchetes, `<svg>` y que `prototipo/v1` siga intacto;
-  - commit y push;
-  - mandarle las capturas al chat.
+- **RONDA 2 ENTREGADA (`31f12fc`, empujado a las 23:38).** El taller terminó a las 23:36. Entregó:
+  - `prototipo/v2/dashboard.html` (+ `dashboard.css`), con seis vistas: `?v=a|b|c` y `&estado=nuevo`;
+  - `herramientas/servidor.mjs`: `node herramientas/servidor.mjs` y abrir `http://127.0.0.1:8805/`;
+  - las capturas a 3 anchos;
+  - las guardas: todo pasa, salvo las palabras en el primer pantallazo (A 115 en el contenido contra la vara de ~80) y
+    Español bajo el pliegue en C a 1366;
+  - `sloplint`: 0 FAIL;
+  - el crítico ciego (`prototipo/v2/critico-ronda-2.md`): A 7,5, B 6 y C 5.
+
+  La cabina volvió a medir: cero corchetes y cero `<svg>`, `prototipo/v1` intacto y `NOTAS.md` solo añade. Le mandó 6
+  capturas: A, B y C a 1440; A completa a 1440 y a 390; A en el primer día.
+- **Recomendación del taller: A «Hoy primero»,** con dos piezas de las otras:
+  - el «Después» por materia de B, en el primer día;
+  - la voz de C, en el aviso del coach.
+- **Lo que debe decidir** (sección «Lo que necesito que decidas» de `NOTAS.md`):
+  1. la dirección;
+  2. el menú en celular: tira deslizable o dos renglones;
+  3. cuántas palabras (quitar «puntos estimados» y los ejes repetidos);
+  4. «¿Voy a tiempo?» en horas totales;
+  5. lo abierto de v1: escala, 6 + 3 partes, meta por materia y meta desde el primer día.
+- **EN ESPERA de sus comentarios sobre A, B y C.** Con ellos:
+  - sus palabras a `veredictos/`;
+  - el encargo `RONDA-3`, con la dirección elegida aplicada a las demás pantallas, o una nueva ronda de Inicio;
+  - un taller nuevo.
 
 ## Lo que ya existe en disco y sirve de dato de ejemplo (medido 22:05, solo lectura)
 

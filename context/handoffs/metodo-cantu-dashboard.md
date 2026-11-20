@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
 > **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día a las
-> **22:42** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **23:01** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -63,8 +63,41 @@
   (`local_d26e28e1-6e27-4a2c-94da-0ba77d55f452`), una conversación nueva (no la que hizo v1), «fresh», sin worktree,
   Opus, esfuerzo alto, puerto 8804. Escribe en `prototipo/v2/` (`NOTAS.md`, `analisis/`, `referencias/`, `tokens.css`)
   y el `index.html` de la raíz. **No diseña.**
-- **Al llegar su nota:** leer `NOTAS.md`, los recortes y las referencias; commitear; enseñárselo al operador **antes de
-  diseñar** (lo pidió así). Siguen sin contestar: las dos preguntas del taller de v1 y la escala real.
+- **PUNTO 1 ENTREGADO (`a2559de`, empujado a las 23:01).** El taller terminó a las 23:00. En `prototipo/v2/`:
+  - `NOTAS.md`;
+  - `tokens.css`;
+  - `analisis/`: 20 recortes de v1 con medidas;
+  - `referencias/`: Linear Insights, Apple HIG Charts, Stripe Billing y Khan Academy (niveles de dominio), todas
+    públicas;
+  - y el `index.html` de la raíz, puesto al día.
+
+  La cabina volvió a medir:
+  - cero corchetes;
+  - `prototipo/v1` intacto;
+  - ligas sin rotas.
+
+  Le mandó `NOTAS.md`, el recorte del primer pantallazo y las 4 referencias.
+  - **Los 5 defectos que más pesan (del taller):**
+    1. el primer pantallazo no dice cómo va (coach de 572 px; materias bajo el pliegue);
+    2. todo pesa igual y hay demasiadas palabras (244 arriba, 22 tamaños de letra);
+    3. no hay rejilla;
+    4. el color no tiene sistema (materias grises para `dataviz`, dorado en 10 papeles);
+    5. piezas de plantilla (la caja «TU COACH» con franja, las mayúsculas, el punto medio).
+  - **Direcciones propuestas:**
+    - A «Hoy primero» (la recomendada);
+    - B «Dos columnas, dos materias»;
+    - C «El cuaderno».
+  - **Siete decisiones abiertas** (sección 6 de `NOTAS.md`), con su recomendación:
+    1. los colores de las materias (turquesa `#099393` y ocre `#a86b16`, con tinta apagada para los nombres);
+    2. «lo que sube» en un paso claro de la materia, no en dorado;
+    3. las zonas que salen;
+    4. las cuatro zonas nuevas;
+    5. el banner;
+    6. construir A, B y C;
+    7. lo abierto de v1, sobre todo la escala.
+- **EN ESPERA:** sus decisiones sobre el análisis, antes de diseñar la ronda 2. Con ellas: sus palabras a `veredictos/`,
+  encargo `RONDA-2` (A, B y C por `?v=`, servidor Node en `127.0.0.1`, capturas a 3 anchos, guardas, crítico ciego) y
+  un taller nuevo.
 
 ## Lo que ya existe en disco y sirve de dato de ejemplo (medido 22:05, solo lectura)
 

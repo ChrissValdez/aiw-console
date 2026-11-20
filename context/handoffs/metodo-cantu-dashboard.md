@@ -25,7 +25,15 @@
     preguntar). Motivación: «estudié 5 temas y mi puntaje subió aprox 30 puntos»; **puntaje meta** según su objetivo;
   - identidad visual: los dos headers de su Moodle (marino, y el banner verde azulado → ocre) y su logo; el footer es
     neutro. No hay que calcarlos, pero no desentonar.
-- **En espera:** su «adelante» al concepto y a la tabla (chat del 19-nov, mensaje de las 22:08), y tres decisiones con recomendación.
+- **Su «adelante» llegó (guardado a las 22:12),** con una aclaración: *«no porqeu apruebe el plan actual, sino porque es
+  mas facil evaluar el prototipo construido y sobre eso dar feedback»*. Las tres decisiones abiertas (escala, Español
+  igual, repo de GitHub) no las contestó: van las recomendaciones de la cabina (puntos como la meta del coach; Español
+  igual; sin remoto hasta que él lo cree).
+- **Encargo `encargos/PROTO-V1.md`** (commit `c7b0842`). **Taller lanzado** en su propia conversación,
+  `taller-proto-v1` (`local_7856604c-348d-413d-a083-efbaccf92efb`), «fresh», sin worktree, Opus, esfuerzo alto,
+  puerto 8803. Escribe en `prototipo/v1/` y el `index.html` de la raíz; no toca git.
+- **Al llegar su nota:** leer su `NOTAS.md` y sus capturas; commit por ruta en `metodo-cantu-dashboard`; mandarle las
+  capturas al chat; poner al día este relevo.
 
 ## Lo que ya existe en disco y sirve de dato de ejemplo (medido 22:05, solo lectura)
 

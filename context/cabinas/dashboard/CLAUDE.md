@@ -53,8 +53,12 @@ Lo que sigue lo dijo el operador al abrir el hilo (19-nov) o viene de LANDING y 
 1. **Cada propuesta, completa y a pantalla completa; nunca un comparador que encoja la página.** ~~Una sola propuesta por
    ronda~~: **desde el 19-nov (22:40) manda «El método de rondas»** (abajo): en la primera ronda de diseño, 3 direcciones
    claramente distintas en el mismo archivo, cambiadas por parámetros de URL.
-2. **Tono académico de papel y tinta** (Literata), **no «retro»:** nada de sombras duras ni letra mono, que se lee
-   «videojuego».
+2. **No «retro»:** nada de sombras duras ni letra mono, que se lee «videojuego». ~~Tono académico de papel y tinta
+   (Literata)~~: **desde el 20-nov (00:57) Literata deja de ser obligatoria.** Aplicada a todo (cifras, pestañas y
+   botones), con blanco plano, filetes y enlaces subrayados, dio un tablero que él vio *«de hace 20 años»*
+   (`metodo-cantu-dashboard/veredictos/2026-11-20-se-ve-de-hace-20-anos.md` y `-para-y-cambia.md`). Ahora el look se
+   decide en una ronda propia (`encargos/LOOK-1.md`). Lo que se queda: el header, el logo y los colores de su Moodle, y
+   el fondo claro.
 3. **Método Cantú: Español y Matemáticas van separados** (un diagnóstico cada uno); **solo se juntan en el simulador.** El
    tablero lo respeta: ninguna cifra, barra ni calificación mezcla las dos materias fuera del simulador.
 4. **Lo que él revisa va al repo, con commit y push antes de avisarle;** nunca a una carpeta temporal. Las sondas y pruebas

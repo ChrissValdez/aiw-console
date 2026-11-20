@@ -1,42 +1,54 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
-> **Primer relevo.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** (`date`), en la laptop
-> (`LAPTOP-PF6SOUAS`, cuenta suplementaria), al abrir el hilo. El contrato es `context/cabinas/dashboard/CLAUDE.md`.
+> **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día a las
+> **22:09** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
 > - **Todo lo de aquí está medido y lleva fecha. Contrástalo con el disco al abrir: gana el disco.**
 
 ## Dónde estamos
 
-- **Hilo recién abierto.** No hay repo todavía: `projects/metodo-cantu-dashboard` **no existe** (medido 18:55). Es la
-  propuesta por omisión del operador; se crea con su «adelante».
-- **Escrito en `aiw-console`:** este relevo y el contrato `context/cabinas/dashboard/CLAUDE.md`.
-- **Al abrir (18:52–18:55):**
-  - `aiw-console`: `pull` limpio, de `e08aa2a` a `ed00507` (tres commits de LECCIONES, `ramas-integradas.txt`).
-  - `metodo-cantu-landing`: el primer `pull` falló (`fatal: fetch-pack: invalid index-pack output`); el reintento con
-    `fetch` + `merge --ff-only` lo llevó de `a38a4d4` a `aa0fe02` (64 commits). Árbol limpio. Solo lectura.
-  - Sin `.git/index.lock` en los dos.
+- **El repo existe:** `projects/metodo-cantu-dashboard`, git local en `main`, **sin remoto** (el de GitHub lo crea el
+  operador si hace falta). Commit `8954a09` (22:07): sus palabras del arranque y la captura de su Moodle, en
+  `veredictos/`.
+- **Él contestó las preguntas del arranque** (`veredictos/2026-11-19-arranque.md`). Lo esencial:
+  - el dashboard es **una capa encima de Moodle tal cual está**; portarlo a Moodle es **fase 2**: ahora solo el diseño
+    (cómo se ve y cómo funciona);
+  - el problema 1 es el **diagnóstico**: largo, cansa, el alumno olvida; su caso: un alumno de 85 sacó 28/100 y le salió
+    estudiar ~80 % de los temas. Lo quiere **por partes**, y que cada parte actualice el dashboard;
+  - el problema 2 es **la presentación de temas**: 217 lecciones de Matemáticas (152 esenciales, 65 de ventaja) de golpe
+    abruman. El dashboard muestra **el siguiente bloque** y su quiz, y cuánto subiría el puntaje (aproximado);
+  - **historial de simuladores** (calificaciones); el simulador se queda como está: largo y con Mate y Español juntos;
+  - **el coach** (un plugin suyo, por pulir) ya tiene acceso a quizzes, simuladores y diagnósticos y estima el puntaje.
+    **No lo quiere como chat lateral:** integrado al dashboard, que recomiende sin que le pregunten (y se le puede
+    preguntar). Motivación: «estudié 5 temas y mi puntaje subió aprox 30 puntos»; **puntaje meta** según su objetivo;
+  - identidad visual: los dos headers de su Moodle (marino, y el banner verde azulado → ocre) y su logo; el footer es
+    neutro. No hay que calcarlos, pero no desentonar.
+- **En espera:** su «adelante» al concepto y a la tabla (chat del 19-nov, ~22:10), y tres decisiones con recomendación.
 
-## ⏳ En espera del operador
+## Lo que ya existe en disco y sirve de dato de ejemplo (medido 22:05, solo lectura)
 
-Las preguntas mínimas para arrancar (en el chat del 19-nov, 18:56):
-1. **Qué ve el alumno al entrar**, y qué es lo primero que debe poder hacer.
-2. **Qué datos hay hoy en Moodle:** cursos (¿uno por materia?), avance, calificaciones, diagnósticos (¿cuestionarios de
-   Moodle?), simuladores.
-3. **Referencias o capturas:** de su Moodle actual (sin `sesskey` ni datos reales en el repo) o de tableros que le gusten.
-4. Su «adelante» a la tabla de primeros pasos.
+- `cantu-lessons/docs/referencias/RUTA-DE-ESTUDIO.json` (RW-85, 7-nov): **la ruta de estudio de Matemáticas definida
+  para el coach y la página «Mi plan»**. Cinco áreas en orden (Aritmética, Álgebra, Geometría, Datos, Funciones), la
+  secuencia lección/quiz con marca esencial/opcional, peso de cada tema en el examen, horas [ESTIMADO], y las reglas del
+  coach («nunca cambia el orden, solo quita»). Es de LECCIONES: **se lee, no se escribe**. Sus cifras (101 lecciones)
+  no coinciden con las 217 del operador: el prototipo usa las del operador y la estructura de este fichero.
+- `cantu-quizzes-latex/PAA/Examen Diagnostico/Secciones/`: el diagnóstico ya está partido en ficheros por tema dentro de
+  Lectura, Redacción y Matemáticas (61 `.tex`). Tiene 730 preguntas (`PAA/ESTADO.md`) con quinta opción «No conozco la
+  respuesta». Es la base natural del «diagnóstico por partes».
+- `metodo-cantu-landing/prototipos/diseño-actual/imgs/logo-largo.png`: el logo (de ahí se copia, sin escribir en ese
+  repo).
 
 ## Lo que sigue, en orden (propuesto, sin aprobar)
 
-1. Sus respuestas a `veredictos/`, tal cual.
-2. Crear `projects/metodo-cantu-dashboard` (git local) con `index.html` de entrada, `datos/` de ejemplo ficticios y el
-   prototipo.
-3. Prototipo navegable v1, en HTML estático con datos de ejemplo, respetando las reglas de Moodle (sin corchetes,
-   `!important`, sin `<svg>` suelto, JS solo como mejora) y Español / Matemáticas separados.
-4. Capturas a pantalla completa (escritorio y celular), commit y push, y aviso.
-5. Después, y como paso aparte: dónde se monta en Moodle y de dónde salen los datos reales.
+1. Con su «adelante»: un taller en su propia conversación (Opus, esfuerzo alto) construye el **prototipo v1**, HTML
+   estático con un alumno ficticio, en el repo.
+2. Capturas (escritorio y celular) al chat, commit, y aviso.
+3. Rondas sobre sus comentarios, una propuesta por ronda.
+4. **Fase 2, aparte:** dónde se monta en Moodle y de dónde salen los datos reales.
 
 ## Hallazgos sobre otros hilos (se nombran, no se corrigen)
 
 - **El relevo de LANDING está atrasado respecto a su repo:** dice `a38a4d4` y «vuelve a la PC» (19-nov, 02:58), y
-  `origin/main` de `metodo-cantu-landing` está en `aa0fe02`, 64 commits después (rondas hasta AH/AI). Es de LANDING.
+  `origin/main` de `metodo-cantu-landing` estaba en `aa0fe02` (18:55), 64 commits después. Es de LANDING.

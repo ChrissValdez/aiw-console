@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
 > **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día el
-> **2026-11-20 a las 02:21** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **2026-11-20 a las 02:57** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -288,3 +288,21 @@ y sin worktree:
   - Le preguntó si las lleva así o rehace la galería con las dos secciones de las enmiendas.
   - **Sin commitear todavía:** `referencias/dashboards/`, `herramientas/servidor.mjs` (votos) y el `index.html` de la raíz.
     La cabina no lo toca mientras él lo conduce.
+
+### REF-1 rechazada; REF-2 en dos carriles (20-nov, 02:56)
+
+- **REF-1 (`3b18ae4`) rechazada:** *«ningunoi me gusto … las imagenes son dmas de la landing que del dashboar y dos de
+  ellas son celular, el dashboard es para web»* (`veredictos/2026-11-20-ref-1.md`).
+  - La causa fue el encargo de la cabina: «solo páginas públicas» llevó a capturar páginas de venta.
+  - Oura, Ultrahuman y Shopify Sidekick van a «lo que ya sabes que no».
+- **REF-2** (`encargos/REF-2.md`, `afda10d`): **solo tableros web por dentro, en escritorio**, entre 6 y 10 por carril,
+  con evidencia, variedad de estilo y crítico ciego (menos de 8 o «no es tablero por dentro», fuera).
+
+  | carril | taller | fuentes | escribe en | puerto |
+  |---|---|---|---|---|
+  | A | `taller-ref-2a` (`local_f1a13bf1-…e6`) | demos públicas en vivo (Plausible, Grafana Play…), shadcn/ui, Tremor, Vercel y código abierto | `referencias/web-a/` y su renglón de `GUARDABLES` | 8812 |
+  | B | `taller-ref-2b` (`local_b67ccc4e-…b1`) | capturas del producto en sus centros de ayuda y documentación, galerías de pantallas reales sin cuenta y hasta 3 conceptos de Behance o Dribbble | `referencias/web-b/` y su renglón de `GUARDABLES` | 8813 |
+
+  **Choque posible:** los dos editan `herramientas/servidor.mjs`, un renglón cada uno. Al commitear, revisar que queden
+  las dos rutas. El `index.html` de la raíz lo pone la cabina.
+- **Él no contestó** si lanzar 3 prototipos con Oura, Ultrahuman y Shopify; con el rechazo, esa propuesta cae.

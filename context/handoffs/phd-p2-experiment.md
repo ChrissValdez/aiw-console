@@ -86,6 +86,57 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 | Lo que oye el hilo del paper | `PHD/Paper 2/00_HANDOFFS/DESDE_DEV.md` |
 | La nota del hito 1 | `docs/hitos/2026-10-22-hito-1.md`, **histórica**: la junta pasó y la copia para la demo se retiró (2026-10-29) |
 
+## §3a · Estado medido el 2026-11-20 (UTC), en la LAPTOP — leer antes que §3
+
+> Escrito por la cabina que trabajó en la laptop el 2026-11-19 y el 2026-11-20, relevando a «P2_Cabina» de la PC
+> (Remote Control, sin conexión ese día). **§3 y §4 de abajo son del 2026-10-30 y no se actualizaron para `#30` a
+> `#43`**: lo de esos runs está en sus informes (`docs/runs/`), sus veredictos (`docs/verdicts/`) y el git log.
+
+**Al volver a la PC, primero:** `git pull --ff-only` en `phd-p2-experiment` (llega hasta `2a422e5` o más) y en `PHD`
+(hasta `e070f91` o más). La laptop hizo commits en los dos.
+
+| Medido (UTC) | Qué | Valor |
+|---|---|---|
+| 2026-11-20 | Roadmap | **46 runs: 38 `completed`, 8 `active`** (`#32`, `#34`, `#36`, `#38`, `#40`, `#42`, `#44`, `#45`). Los 8 están construidos, verificados y en `main`; **solo esperan la QA del operador** |
+| 2026-11-20 | Suite (laptop) | 4834 passed, 26 deselected, 0 failed (`1fbfb11`) |
+| 2026-11-19 | Codex en la laptop | app 26.1111, CLI `0.169.0-alpha.11.1`, sesión iniciada por el operador; no está en el PATH (el lanzador lo encuentra por la app) |
+
+**Lo que se hizo en la laptop** (todo publicado):
+
+- **Lo que no viajó con la mudanza, resuelto.** `DESDE_DEV.md` de la laptop (860 líneas, md5 LF
+  `67a2a6bc5d2bd96cf384f46ad8dc6c80`) publicado en `PHD` `67b8154`: **la regla del CLAUDE.md de la cabina que impedía
+  añadir entradas ya está cumplida**. Las 4 sesiones de octubre de `data/manual/` (27 ficheros, contra el manifiesto de
+  la mudanza y los SHA-256 de `paf/002/report.md`) y `se_r2rmzxpmx9` (15-nov), en `phd-p2-experiment` `ed562ee`.
+  Los cambios locales de PHD de la laptop, respaldados en `_backups/PHD-laptop-pre-sync_2026-11-19/`.
+- **Carril del paper:** la sesión del foro de la laptop (22-oct) entró al handoff como «Sesión 15b», su hallazgo como
+  **R-28** (R-27 ya era la discrepancia de `estado.py` en la PC), y los borradores del foro, en `PHD` `e070f91`.
+- **O10.P4 «Bench learners against the tutor»** (veredicto `docs/verdicts/2026-11-19-bench-meets-prompt-only-tutor.md`):
+  - `#44` `RUN-P2-BENCH-PROMPT-ONLY-001` (DEVELOPMENT): el Banco juega el tutor de un solo prompt; `tutor` por escenario;
+    **sin `tutor`, el `default_tutor` del servidor, «Prompt Base»** (el operador: «B: Prompt Base», §3 del veredicto);
+    arregla la carrera de `bench.py` `_status` que leía «interrupted» un escenario terminado (fallaba 1–2 de 4).
+  - `#45` `RUN-P2-BENCH-TUTOR-PICKER-001` (INTERFACE): el desplegable de prompts en «Ejecutar un escenario».
+  - Los dos se hicieron en un worktree (excepción al «worktree apagado», por la QA en paralelo; veredicto §2) y entraron
+    juntos en `1fbfb11`. Worktree y rama borrados tras comprobar los 18 ficheros idénticos.
+- `#46` `RUN-P2-DOCS-UPKEEP-001`, cerrado sin QA: los textos que el `#44` dejó falsos.
+- **Propuesta de O10.P5** «PAF on imported conversations»: `docs/proposals/O10-P5-paf-on-bench.md`. Choca con la guarda
+  (e) («never data of the study»), así que es decisión del operador: 5 preguntas, contestables en una línea; recomienda
+  `1 C · 2 A · 3 B · 4 A · 5 A`. Sin runs todavía.
+
+**Pendientes, en orden:**
+
+1. **La QA del operador de los 8 runs**: una sola guía, un solo arranque, ≤32 llamadas de Codex. Está en el chat de la
+   cabina de la laptop del 2026-11-20. Sus fuentes: `RUN-P2-TUTOR-PROMPT-PICKER-001.md` §12 (pasos 1–13, 17),
+   `RUN-P2-BENCH-PROFILE-EDITOR-001.md` §10 (14c–15c; **en 14g hay que elegir «Por etapas»**, porque desde `#44` el
+   Banco elige «Prompt Base» y el peor caso sería 6, no 18) y `RUN-P2-BENCH-TUTOR-PICKER-001.md` §10 (B2–B9). Más la
+   respuesta sobre la v1 de «Prompt Base»: «v1 ACEPTO» o «v1 CAMBIAR».
+2. **Las 5 preguntas de O10.P5**.
+3. **`DESDE_DEV.md`: 25 entradas** con «Estado en el hilo del paper: pendiente» (las cuenta el carril del paper). C-s16
+   sigue esperando el sí del operador.
+4. **La Discussion v3** del Taller del paper vive solo en la carpeta temporal de esa sesión, en la PC.
+
+**Reglas nuevas del operador (2026-11-19):** las tareas largas (suites, builds) van a un taller en una sesión anidada,
+nunca a un proceso en segundo plano de la cabina.
+
 ## §3 · Estado, medido el 2026-10-30
 
 - **Los runs `#1` a `#29` están cerrados** (2026-10-31, 21:44 UTC): 29 de 29 `completed`, ninguno activo. **O6

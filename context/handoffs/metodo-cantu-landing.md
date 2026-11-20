@@ -32,6 +32,13 @@
 
 ## Lo que sigue
 
+> **Adenda del 20-nov, 14:55 (en la PC, antes de cambiar):** el dueño dio feedback de AS
+> (`metodo-cantu-landing/veredictos/2026-11-20-as-comentarios.md`): ajustes en la 1, la 2 y la 3; la 4 como la más débil
+> (base: la b de AI, con cinco variantes); **la página no dice qué se vende**, y dio los paquetes. Pidió revisar primero el
+> storytelling. La propuesta de la cabina está en `metodo-cantu-landing/storytelling/propuesta-oferta-2026-11-20.md`,
+> **por aprobar**, con cuatro preguntas sobre los paquetes. **Lo primero en la otra cuenta:** que la apruebe o la corrija y
+> conteste esas preguntas; luego, la ronda AT. La cuenta principal quedó al 90 % semanal: no se lanzó nada.
+
 1. **Que el dueño revise AS** en el índice. Puede pedir retoques chicos.
 2. **Pasarla a Moodle (MB2):** es la fase siguiente. El dueño dijo que conviene hacerla con cuenta fresca. Antes de
    empezar:

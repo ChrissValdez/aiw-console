@@ -306,3 +306,31 @@ y sin worktree:
   **Choque posible:** los dos editan `herramientas/servidor.mjs`, un renglón cada uno. Al commitear, revisar que queden
   las dos rutas. El `index.html` de la raíz lo pone la cabina.
 - **Él no contestó** si lanzar 3 prototipos con Oura, Ultrahuman y Shopify; con el rechazo, esa propuesta cae.
+
+### Siete talleres a la vez (medido 2026-11-20 03:35)
+
+Él pidió enfocar el tablero como **sistema administrador** (CRM/ERP), instaló los plugins Dashboard Design, frontend-design
+y UI Design Review (verificados con ListPlugins), y pidió aprovechar el 5 % semanal que le quedaba («no es gastarlos por
+gastarlos es aprovecharlos»).
+
+| Taller | Sesión | Carpeta | Puerto | Encargo |
+|---|---|---|---|---|
+| REF-2A | local_f1a13bf1-d48a-4cc0-9d2c-25bfcd0e1ae6 | referencias/web-a/ | 8812 | encargos/REF-2.md |
+| REF-2B | local_b67ccc4e-b36f-4e57-8c3a-422047f99ab1 | referencias/web-b/ | 8813 | encargos/REF-2.md |
+| REF-3 (sistemas de diseño admin) | local_ea467667-c9fd-4762-9cce-d485ef1dc580 | referencias/sistemas/ | 8814 | encargos/REF-3.md |
+| INICIO-ADMIN A (Polaris) | local_df33329b-5499-4c16-a0f7-e7c109b172f4 | prototipo/admin-a/ | 8815 | encargos/INICIO-ADMIN.md |
+| INICIO-ADMIN B (shadcn/ui) | local_e7159957-37dd-4d76-8b6e-53d5676dcfec | prototipo/admin-b/ | 8816 | encargos/INICIO-ADMIN.md |
+| INICIO-ADMIN C (Carbon o Fluent) | local_6be70116-dad7-4caf-850d-2c3c0478d76d | prototipo/admin-c/ | 8817 | encargos/INICIO-ADMIN.md |
+| MODELO-1 (el «aprox.» en JS) | local_8aa29d0c-ef5a-4f55-b5b9-a2d6f70c1d1f | modelo/ | — | encargos/MODELO-1.md |
+
+**Hecho por la cabina:**
+- `/referencias/sistemas/votos.json` añadida a GUARDABLES (9801bb9);
+- encargos REF-3 (9801bb9) e INICIO-ADMIN y MODELO-1 (60b50dd).
+
+**Si los tokens se cortan:** lo de los talleres queda en disco sin commitear. Al renovarse:
+- revisar cada carpeta;
+- que GUARDABLES conserve las líneas de web-a y web-b;
+- commit por ruta, push, y poner las ligas en el index.html de la raíz.
+
+INICIO-ADMIN toma por defecto la recomendación de UX-1 y, en el choque meta/horas, COACH-1 D4 (las horas mandan); él aún
+no decide.

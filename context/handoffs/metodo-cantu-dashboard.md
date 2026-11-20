@@ -334,3 +334,38 @@ gastarlos es aprovecharlos»).
 
 INICIO-ADMIN toma por defecto la recomendación de UX-1 y, en el choque meta/horas, COACH-1 D4 (las horas mandan); él aún
 no decide.
+
+## Pulido 1, variantes de A y ronda de librerías (20-nov, hasta las 17:30)
+
+**Hecho y en GitHub:**
+- los siete talleres de la sección anterior;
+- **Pulido 1**, que dejó los Inicios en 90, 134 y 122 palabras;
+- **VARIANTES-A** (b0664da, e10795b). El crítico ciego califica contra A: A1 (carácter) 8 contra 6,5; A2 (visual) 7,5
+  contra 6,5; A3 (coach) 7,5 contra 6.
+
+**Lo que dijo:**
+- «A es el mejorcito»;
+- los recuadros «se ven muy básicos… no se siente pulido; ¿nos falta una buena librería?».
+
+Aceptó la ronda de librerías: «Sí, lánzala».
+
+**LIBRERIAS-1** (encargo en 98154be) arma el Inicio combinado (A + A1 + A2 + A3) con tres librerías reales:
+
+| Carril | Sesión | Carpeta | Puerto |
+|---|---|---|---|
+| T · Tabler | local_3073f8a3-ca63-4a1e-bab5-f3a5e5fd92f8 | prototipo/lib-tabler/ | 8821 |
+| B · Basecoat | local_fd7f8f58-9323-47fd-85f8-d9ca716fbdd7 | prototipo/lib-basecoat/ | 8822 |
+| W · Web Awesome | local_759484fd-3b21-4920-b84e-5593b3f9864e | prototipo/lib-webawesome/ | 8823 |
+
+**Al terminar:** revisar cada carpeta, commit por ruta, push y una sección nueva arriba en el index.html de la raíz.
+
+**Sin verificar:** la fase 2 como plugin local de Moodle, con CSS y JS propios fuera del filtro de shortcodes.
+
+**Pendiente de él:**
+- qué ejes de A1, A2 y A3 le gustan;
+- UX-1;
+- COACH-1 D1–D9;
+- MODELO-1 M1–M5;
+- la escala real del examen;
+- los votos de las galerías;
+- la incoherencia de C (+35 contra +95 en Matemáticas).

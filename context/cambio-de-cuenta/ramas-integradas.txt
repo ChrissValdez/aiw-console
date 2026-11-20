@@ -162,3 +162,4 @@ cantu-lessons cr-lx-09 63d11ea8
 cantu-lessons cr-lx-12 fb6b770e
 cantu-lessons cr-lx-10 9318bc08
 cantu-lessons cr-lx-13 6957ee7f
+cantu-lessons cr-lx-12 c0210c64

@@ -262,3 +262,29 @@ y sin worktree:
 - **Tras sus votos de REF-1:** varios prototipos del Inicio **simultáneos**, uno por referencia elegida, cada uno en su
   carpeta y con su puerto. Después, el elegido a las siete pantallas: **primero la capa compartida**, y luego las
   pantallas repartidas entre talleres.
+
+### Estado de los tres carriles (20-nov, 02:50)
+
+- **UX-1 ENTREGADO (`355b28a`, empujado).** En `ux/`:
+  - 22 wireframes en gris y 96 capturas;
+  - mapa, flujos, momentos, `coach-lugares.md` y `heuristica.md`;
+  - `NOTAS.md`, con **12 decisiones**. Las grandes:
+    - el diagnóstico deja de ser pestaña y pasa a ser un paso dentro de cada materia;
+    - en celular, una barra de abajo con cinco pestañas en lugar de la tira;
+    - la meta y las horas se ponen el primer día;
+    - el coach se pregunta desde la barra y contesta en una hoja, no en un panel fijo.
+
+  Entrada: `ux/index.html`.
+- **COACH-1 ENTREGADO (`5380725`, empujado).** En `coach/`:
+  - `NOTAS.md` y `catalogo.json` (23 intervenciones);
+  - `herramientas/` (el ejemplo resuelto del modelo);
+  - **9 decisiones (D1–D9)**. **D1 contradice a v1–v3:** con el modelo honesto, el «+30» de Razones es ~+10, y «llegas a
+    tus metas» deja de ser cierto.
+- **Choque entre los dos, a decidir por él:**
+  - UX-1 (dec. 4): la meta manda el plan y las horas confirman;
+  - COACH-1 (D4): las horas arman el plan, como la ruta, y la meta solo dice si llega.
+- **REF-1: el operador habla con el taller directamente.** Interrumpió su turno y preguntó «cuales 3 ?».
+  - El taller encontró **3 que pasaron el filtro original**: Oura (3 Webby 2026), Ultrahuman y Shopify Sidekick.
+  - Le preguntó si las lleva así o rehace la galería con las dos secciones de las enmiendas.
+  - **Sin commitear todavía:** `referencias/dashboards/`, `herramientas/servidor.mjs` (votos) y el `index.html` de la raíz.
+    La cabina no lo toca mientras él lo conduce.

@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
 > **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día a las
-> **22:08** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **22:19** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -9,9 +9,10 @@
 
 ## Dónde estamos
 
-- **El repo existe:** `projects/metodo-cantu-dashboard`, git local en `main`, **sin remoto** (el de GitHub lo crea el
-  operador si hace falta). Commit `8954a09` (22:07): sus palabras del arranque y la captura de su Moodle, en
-  `veredictos/`.
+- **El repo existe:** `projects/metodo-cantu-dashboard`, rama `main`, con remoto
+  `github.com/ChrissValdez/metodo-cantu-dashboard` (privado; lo creó el operador el 19-nov y la cabina lo conectó y
+  empujó a las 22:19). `HEAD` = `origin/main` = `c7b0842` a las 22:19. Commit `8954a09` (22:07): sus palabras del
+  arranque y la captura de su Moodle, en `veredictos/`.
 - **Él contestó las preguntas del arranque** (`veredictos/2026-11-19-arranque.md`). Lo esencial:
   - el dashboard es **una capa encima de Moodle tal cual está**; portarlo a Moodle es **fase 2**: ahora solo el diseño
     (cómo se ve y cómo funciona);

@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
 > **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día a las
-> **23:01** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **23:05** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -95,9 +95,22 @@
     5. el banner;
     6. construir A, B y C;
     7. lo abierto de v1, sobre todo la escala.
-- **EN ESPERA:** sus decisiones sobre el análisis, antes de diseñar la ronda 2. Con ellas: sus palabras a `veredictos/`,
-  encargo `RONDA-2` (A, B y C por `?v=`, servidor Node en `127.0.0.1`, capturas a 3 anchos, guardas, crítico ciego) y
-  un taller nuevo.
+- **Su respuesta al análisis: «Sí, todas»** (guardada a las 23:03 en `veredictos/2026-11-19-v2-analisis.md`, con lo que
+  queda decidido). La escala sigue sin dar: 200–800, no verificada. Las dos preguntas de v1 van por omisión:
+  - la meta por materia;
+  - el diagnóstico en 6 + 3 partes.
+- **Ronda 2 en curso:**
+  - encargo `encargos/RONDA-2.md` (`093094b`, empujado);
+  - **solo el Inicio**, en tres direcciones en `prototipo/v2/dashboard.html?v=a|b|c` y `?estado=nuevo`;
+  - servidor `herramientas/servidor.mjs` en `127.0.0.1:8805`;
+  - capturas a 1440×900, 1366×768 y 390×844, guardas por script y crítico ciego.
+  - **Taller:** `taller-ronda-2` (`local_1e4e2acc-0af2-4b2d-9562-e4e205529dbb`), «fresh», sin worktree, Opus,
+    esfuerzo alto.
+- **Al llegar su nota:**
+  - leer la sección «Ronda 2» de `NOTAS.md`, las capturas y el informe del crítico;
+  - volver a medir corchetes, `<svg>` y que `prototipo/v1` siga intacto;
+  - commit y push;
+  - mandarle las capturas al chat.
 
 ## Lo que ya existe en disco y sirve de dato de ejemplo (medido 22:05, solo lectura)
 

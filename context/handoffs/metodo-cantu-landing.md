@@ -14,7 +14,7 @@
 
 ## Dónde estamos
 
-- **El taller AO terminó el encargo completo** (lo confirmó su , 04:09); falta la revisión de la cabina (`encargos/AO-secciones-2-y-3.md`, carpeta
+- **El taller AO terminó el encargo completo** (lo confirmó su `prototipos/AO-secciones-2-y-3/RELEVO.md`, 04:09); falta la revisión de la cabina (`encargos/AO-secciones-2-y-3.md`, carpeta
   `prototipos/AO-secciones-2-y-3/`).
   - Su estado exacto, lo hecho y lo que falta están en **`prototipos/AO-secciones-2-y-3/RELEVO.md`**.
   - Lo que lleva se commiteó tal cual, para no perderlo. **No está revisado ni en el índice.**

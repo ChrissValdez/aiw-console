@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
 > **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día el
-> **2026-11-20 a las 02:12** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **2026-11-20 a las 02:21** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -245,3 +245,20 @@
 
 - **El relevo de LANDING está atrasado respecto a su repo:** dice `a38a4d4` y «vuelve a la PC» (19-nov, 02:58), y
   `origin/main` de `metodo-cantu-landing` estaba en `aa0fe02` (18:55), 64 commits después. Es de LANDING.
+
+## Tres carriles en paralelo (20-nov, desde las 02:20)
+
+Él (`veredictos/2026-11-20-acelerar.md`): le quedan **menos de 3 horas** de tokens semanales y pidió acelerar sin
+desperdiciar. La cabina abrió carriles con superficies de escritura **disjuntas**, todos con Opus, esfuerzo alto, «fresh»
+y sin worktree:
+
+| carril | taller (id) | escribe en | puerto |
+|---|---|---|---|
+| REF-1: galería, con dos enmiendas (la IA es un plus, y una segunda sección «cómo integrar el coach») | `taller-ref-1` (`local_7af61ef4-…5213`) | `referencias/dashboards/`, `herramientas/servidor.mjs` y el `index.html` de la raíz | 8808 |
+| UX-1: estructura, flujos y wireframes en gris (`encargos/UX-1.md`) | `taller-ux-1` (`local_d8d6b2d5-…f2`) | `ux/` | 8809 |
+| COACH-1: qué dice el coach, cuándo, dónde y con qué datos (`encargos/COACH-1.md`) | `taller-coach-1` (`local_93d6b141-…06`) | `coach/` | 8810 |
+
+- **Solo REF-1 toca el `index.html` de la raíz.** Las ligas de UX-1 y COACH-1 las pone la cabina al commitear.
+- **Tras sus votos de REF-1:** varios prototipos del Inicio **simultáneos**, uno por referencia elegida, cada uno en su
+  carpeta y con su puerto. Después, el elegido a las siete pantallas: **primero la capa compartida**, y luego las
+  pantallas repartidas entre talleres.

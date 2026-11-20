@@ -1,6 +1,6 @@
 # Cabina del hilo DASHBOARD (`metodo-cantu-dashboard`), en Claude Code
 
-> **v0 · 2026-11-19, 18:56 (`date`) · PILOTO.** Lo escribió la propia cabina DASHBOARD en su primera sesión, en la laptop
+> **v0 · 2026-11-19, 18:56 (`date`) · PILOTO** (enmendado a las 22:41: «El método de rondas»). Lo escribió la propia cabina DASHBOARD en su primera sesión, en la laptop
 > (`LAPTOP-PF6SOUAS`, cuenta suplementaria), con el prompt de arranque del operador. Es un contrato sin estrenar: al cerrar
 > la primera ronda, la cabina dice qué sirvió, qué faltó y qué estorbó (en un `VEREDICTO-CLAUDE-v0.md` al lado de este
 > fichero, como hizo LANDING).
@@ -50,8 +50,9 @@ ciclo del run ni el motor de roadmap. **El cierre de cada mensaje (D-082) sí:**
 
 Lo que sigue lo dijo el operador al abrir el hilo (19-nov) o viene de LANDING y él lo repitió para aquí.
 
-1. **Una sola propuesta completa por ronda, a pantalla completa.** Nada de opciones por sección ni comparadores que
-   encojan la página.
+1. **Cada propuesta, completa y a pantalla completa; nunca un comparador que encoja la página.** ~~Una sola propuesta por
+   ronda~~: **desde el 19-nov (22:40) manda «El método de rondas»** (abajo): en la primera ronda de diseño, 3 direcciones
+   claramente distintas en el mismo archivo, cambiadas por parámetros de URL.
 2. **Tono académico de papel y tinta** (Literata), **no «retro»:** nada de sombras duras ni letra mono, que se lee
    «videojuego».
 3. **Método Cantú: Español y Matemáticas van separados** (un diagnóstico cada uno); **solo se juntan en el simulador.** El
@@ -72,6 +73,65 @@ Lo que sigue lo dijo el operador al abrir el hilo (19-nov) o viene de LANDING y 
     captura de Moodle con datos reales, se usa para medir y no se versiona, o se versiona recortada.
 11. **Los talleres, en su propia conversación** (`start_session`, «fresh», misma carpeta, sin worktree, Opus, esfuerzo
     alto), como LANDING desde el 19-nov. La cabina commitea al llegar la nota de cada uno.
+
+## El método de rondas (desde el 19-nov, 22:40)
+
+Tras v1 (*«el diseño del dashboard esta muy feo»*), el operador trajo el método que le funcionó en LANDING y pidió
+aplicarlo «tal cual». **El texto completo, verbatim, es `metodo-cantu-dashboard/veredictos/2026-11-19-v1-comentarios.md`:
+se lee entero antes de cada encargo.** En corto:
+
+1. **Antes de diseñar, análisis por escrito** en `NOTAS.md`, con captura:
+   - qué está mal;
+   - el trabajo de cada zona: qué pregunta contesta, qué se ve en 5 s y qué decisión toma el alumno;
+   - 3–4 referencias de dashboards de calidad (principios, nunca marca, imágenes, textos ni código);
+   - paleta corta y tipografía como tokens en `:root`.
+
+   **Se le enseña antes de diseñar.**
+2. **Skills:**
+   - `frontend-design` y `hallmark` (con su `sloplint`), solo para salir del hoyo en las primeras rondas. Viven en
+     `metodo-cantu-landing/.claude/skills/` y se leen de ahí, sin escribir;
+   - si cambian la identidad, se dejan;
+   - `dataviz` antes de la primera línea de cualquier gráfica.
+3. **3 direcciones** claramente distintas:
+   - en el mismo archivo, con `?v=a|b|c` (y `?kpi=`, `?tabla=`…);
+   - un `index.html` con ligas y miniaturas;
+   - un servidor Node local en `127.0.0.1`;
+   - lo rechazado va a «lo que ya sabes que no» y no vuelve.
+4. **Capturas a 1440×900, 1366×768 y 390×844**, y guardas medidas por script:
+   - sin scroll de lado;
+   - un solo `h1`;
+   - toques de 48 px o más en celular;
+   - tarjetas hermanas de la misma altura;
+   - contraste;
+   - quieto con `prefers-reduced-motion`;
+   - se lee sin JS.
+
+   Y mirar las capturas.
+5. **Crítico ciego** antes de entregarle:
+   - un subagente que solo ve capturas, con nombres neutros y en orden barajado;
+   - califica del 1 al 10;
+   - se corrige y se vuelve a medir;
+   - no sustituye su juicio.
+6. **Cada ronda:**
+   - sus palabras tal cual a `veredictos/AAAA-MM-DD-<ronda>.md` y un encargo;
+   - lo aprobado queda fijo, lo «pendiente» sigue como variante y lo rechazado sale;
+   - si no sabe decir por qué algo no convence: una escala de lo visto, de lo más simple a lo más cargado, y variantes
+     en el punto medio;
+   - estilo:
+     - nada que se mueva solo;
+     - máximo una cosa en movimiento, una vez;
+     - nada retro;
+     - nada gris que flote;
+     - colores de alerta solo donde significan algo.
+7. **Entrega de cada ronda:**
+   - `NOTAS.md`: análisis, tabla de variantes, recomendación y lo que debe decidir;
+   - las capturas;
+   - el `index.html` con lo nuevo arriba y lo anterior abajo con su veredicto.
+
+**Lo que choca con otras reglas, y cómo se resolvió (la cabina; él puede corregirlo):**
+- las variantes por parámetro **sustituyen** a «una sola propuesta por ronda»;
+- Literata, el fondo blanco, Español/Matemáticas separados y las reglas de Moodle **siguen**;
+- los skills no las cambian.
 
 ## Lo que impone Moodle (MB2)
 

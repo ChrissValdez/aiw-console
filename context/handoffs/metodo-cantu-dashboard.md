@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
 > **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día el
-> **2026-11-20 a las 00:59** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **2026-11-20 a las 01:34** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -158,11 +158,31 @@
   - lleva referencias de look actual y un crítico ciego con la A vieja como control («¿de qué año parece?»).
   - **Taller:** `taller-look-1` (`local_b7386350-0480-47f1-8ce2-5c1a744b3e53`), «fresh», sin worktree, Opus, esfuerzo
     alto, puerto 8807.
-- **Al llegar su nota:**
-  - leer `prototipo/look/NOTAS.md`, las capturas y el crítico;
-  - volver a medir: corchetes, `<svg>`, v1/v2/v3 intactos;
-  - commit y push;
-  - mandarle capturas.
+- **LOOK-1 ENTREGADO (`bbf0615`, empujado el 20-nov a las 01:34).** El taller terminó a las 01:30. En `prototipo/look/`:
+  - `inicio.html?piel=producto|mixta|editorial`;
+  - `plan-matematicas.html` (la capa viaja: 0 reglas solo para Mi plan);
+  - `tokens-piel.css` y `piel.css`, que **cargan las hojas de v3**: si v3 cambia, estas páginas cambian;
+  - las referencias: Brilliant, Duolingo, Stripe y Notion;
+  - las capturas y las guardas;
+  - `sloplint`: 0 FAIL;
+  - tres críticos ciegos (`critico.md`).
+
+  La cabina volvió a medir: cero corchetes y cero `<svg>`, v1/v2/v3 intactos. Le mandó 6 capturas.
+  - **El taller contradijo el encargo:** recomienda **Editorial** (Literata solo en el titular del coach y en los títulos;
+    Figtree en la interfaz; tarjetas con filete, radio 20; botón dorado en píldora), no Producto.
+
+    | piel | críticos | «parece de» |
+    |---|---|---|
+    | Editorial | 8, 7,5 y 8 | 2024–2025 |
+    | Mixta | 7,5 | 2023–2024 |
+    | Producto | 6,5–7, «plantilla de SaaS» | 2020–2023 |
+    | la A vieja (control) | 5,5–6 | 2014–2019 |
+  - **Sus decisiones abiertas** (§11 de `NOTAS.md`):
+    1. la piel;
+    2. el dorado como botón;
+    3. Figtree o Roboto;
+    4. volver a poner «puntos» bajo la cifra;
+    5. reanudar la ronda 3.
 - **Después:** con la piel que elija, **reanudar la ronda 3**: vestir las siete pantallas de `prototipo/v3/` con esa
   capa y hacer lo que le faltó (`NOTAS.md`, guardas y crítico).
 

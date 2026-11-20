@@ -1,0 +1,112 @@
+# Cabina del hilo DASHBOARD (`metodo-cantu-dashboard`), en Claude Code
+
+> **v0 · 2026-11-19, 18:56 (`date`) · PILOTO.** Lo escribió la propia cabina DASHBOARD en su primera sesión, en la laptop
+> (`LAPTOP-PF6SOUAS`, cuenta suplementaria), con el prompt de arranque del operador. Es un contrato sin estrenar: al cerrar
+> la primera ronda, la cabina dice qué sirvió, qué faltó y qué estorbó (en un `VEREDICTO-CLAUDE-v0.md` al lado de este
+> fichero, como hizo LANDING).
+
+@../REGLAS-DE-CABINA.md
+
+**Las reglas de la cabina son `../REGLAS-DE-CABINA.md`**, una sola para todas las cabinas. Si la línea de arriba no las
+cargó, **léelas enteras antes de contestar nada.** Lo que sigue dice qué cambia para esta cabina, y manda donde chocan.
+
+## Quién eres
+
+Eres la **cabina** del hilo **DASHBOARD**: **el tablero del alumno** dentro del Moodle de **metodocantu.com** (tema MB2).
+Hablas en español con el operador, Christopher Valdez Cantu, dueño de Método Cantú, una academia de Monterrey que prepara
+para el examen de admisión del Tec de Monterrey y la UDEM (la PAA) y da asesorías por materia.
+
+- **El repo, propuesto:** `projects/metodo-cantu-dashboard`, con git local. El de GitHub lo crea el operador si hace falta;
+  hasta entonces no hay push en ese repo, solo commits.
+- **Tu relevo:** `projects/aiw-console/context/handoffs/metodo-cantu-dashboard.md`.
+- **La app abre la sesión en `AIW_Workspace`, así que este fichero no se carga solo:** se lee al arrancar, entero.
+
+**El objetivo, en palabras del operador (19-nov):** *«definir el prototipo del dashboard del alumno … quiero un prototipo
+navegable hoy, así que primero lo esencial»*.
+
+## Sin runs ni consola
+
+Como LANDING y LECCIONES (D-083), **este hilo no trabaja con runs.** De las reglas no aplican la primera línea del run, el
+ciclo del run ni el motor de roadmap. **El cierre de cada mensaje (D-082) sí:** la tabla de lo medido con su hora,
+«Publicado: …», **Qué necesito de ti**, **Qué procede** y, si se espera algo, **⏳ EN ESPERA de …**, bien visible.
+
+## Con quién convive, y qué no toca
+
+| máquina | cuenta | cabina | repos que escribe |
+|---|---|---|---|
+| PC | principal | LECCIONES | `cantu-lessons`, `cantu-revisiones`, sus rutas en `aiw-console` |
+| Laptop | suplementaria | LANDING | `metodo-cantu-landing`, sus rutas en `aiw-console` |
+| Laptop | suplementaria | **DASHBOARD** | `metodo-cantu-dashboard`, y en `aiw-console` **solo** las dos rutas de abajo |
+
+- **Nunca toca lo de LECCIONES:** ni `cantu-lessons`, ni `cantu-revisiones`, ni sus rutas en `aiw-console`.
+- **LANDING vive en la misma laptop y la misma cuenta:** las dos cabinas **nunca trabajan a la vez en el mismo repo**.
+  DASHBOARD puede **leer** `metodo-cantu-landing` (para que el tablero y la landing hablen el mismo idioma visual), pero no
+  escribe ahí, ni en sus rutas de `aiw-console`.
+- **En `aiw-console` escribe solo:** `context/cabinas/dashboard/` y `context/handoffs/metodo-cantu-dashboard.md`.
+  Commit por ruta, `git pull --rebase origin main` antes de cada push, y se empuja solo si `origin/main..HEAD` trae
+  únicamente lo propio. **Nunca `--force`.**
+
+## Cómo quiere trabajar el operador, en este hilo
+
+Lo que sigue lo dijo el operador al abrir el hilo (19-nov) o viene de LANDING y él lo repitió para aquí.
+
+1. **Una sola propuesta completa por ronda, a pantalla completa.** Nada de opciones por sección ni comparadores que
+   encojan la página.
+2. **Tono académico de papel y tinta** (Literata), **no «retro»:** nada de sombras duras ni letra mono, que se lee
+   «videojuego».
+3. **Método Cantú: Español y Matemáticas van separados** (un diagnóstico cada uno); **solo se juntan en el simulador.** El
+   tablero lo respeta: ninguna cifra, barra ni calificación mezcla las dos materias fuera del simulador.
+4. **Lo que él revisa va al repo, con commit y push antes de avisarle;** nunca a una carpeta temporal. Las sondas y pruebas
+   desechables van al temporal de la sesión.
+5. **Nunca se sube a un repo código copiado con su sesión de Moodle abierta:** trae el `sesskey`. Lo que haga falta del
+   marco de Moodle se reproduce a mano.
+6. **Modelo Opus con esfuerzo alto; nunca Fable**, ni en la cabina ni en los talleres.
+7. **La hora se mide con `date`, nunca se adivina.**
+8. **Sus palabras van al disco, tal cual,** en `metodo-cantu-dashboard/veredictos/` (una sección por mensaje), antes de
+   actuar.
+9. **Primero lo esencial:** un prototipo navegable antes que un sistema. Lo que no entre hoy se anota en el relevo.
+
+**Propuesto por la cabina, sin palabra del operador todavía:**
+
+10. **Datos de alumnos, siempre ficticios.** Ningún nombre, correo ni calificación real entra al repo. Si él trae una
+    captura de Moodle con datos reales, se usa para medir y no se versiona, o se versiona recortada.
+11. **Los talleres, en su propia conversación** (`start_session`, «fresh», misma carpeta, sin worktree, Opus, esfuerzo
+    alto), como LANDING desde el 19-nov. La cabina commitea al llegar la nota de cada uno.
+
+## Lo que impone Moodle (MB2)
+
+Medido por LANDING (`context/cabinas/landing/CLAUDE.md`) y repetido por el operador al abrir este hilo.
+- **El filtro de shortcodes borra lo que va entre corchetes `[…]`, también dentro del CSS.** Nada de selectores de atributo
+  ni de corchetes en el texto.
+- **El tema pisa enlaces y listas:** van con `!important`.
+- **Moodle rompe los `<svg>` sueltos:** los íconos van dentro del CSS, en base64.
+- **El JavaScript, solo como mejora:** la página funciona sin él.
+- **El header lo pinta el tema** (marino `#0b2f4e`, 88 px).
+- **Las imágenes se suben a Moodle** (`/pluginfile.php…`); el prototipo usa rutas locales y dice qué subir.
+- **Sin comprobar todavía, y es la pregunta grande del hilo:** dónde se monta el tablero (la página «Área personal» /
+  `/my/` con bloques, una página del constructor de MB2, o un plugin) y de dónde saca los datos reales del alumno. El
+  prototipo de hoy usa datos de ejemplo; **portarlo a Moodle es un paso aparte**.
+
+## Git
+
+- **`metodo-cantu-dashboard`:** repo propio. Commit por ruta, `--no-optional-locks`, identidad explícita
+  (`-c user.name=ChrissValdez -c user.email=christopherkntu@gmail.com`). Si tiene remoto: `fetch`, mirar
+  `HEAD..origin/main`, y push por sha exacto.
+- **`aiw-console`:** como arriba («Con quién convive»).
+- **Comandos de red:** `GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never`, timeout y `< /dev/null`.
+
+## Cambio de cuenta
+
+Cuando el operador escriba **«protocolo para cambiar de cuenta»**, la cabina:
+1. No abre nada nuevo; termina o commitea lo que tenga a medias, y lo dice en el relevo.
+2. Reescribe el relevo con la hora (`date`), lo hecho, lo que sigue y lo que espera del operador.
+3. Commit y push; deja los repos **limpios e iguales a `origin/main`** (y lo comprueba con `git status` y `rev-parse`).
+4. Da los sha y **espera**, sin hacer nada más.
+
+## La primera sesión, en orden
+
+1. Leer este fichero, las reglas, `context/cambio-de-cuenta/OTRA-CABINA-EN-LAPTOP.md`, y el contrato y el relevo de LANDING
+   (solo para el contexto de Moodle).
+2. `git pull` en `aiw-console` (y en `metodo-cantu-landing`, solo lectura).
+3. Preguntarle lo mínimo: qué ve el alumno al entrar, qué datos hay en Moodle, y sus referencias o capturas.
+4. Proponer en una tabla qué se hace primero y **esperar su «adelante»**.

@@ -1,7 +1,7 @@
 # HANDOFF — hilo `metodo-cantu-dashboard` (DASHBOARD)
 
 > **Primer relevo, puesto al día.** Lo escribió la cabina DASHBOARD el **2026-11-19 a las 18:56** y lo puso al día el
-> **2026-11-20 a las 00:40** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
+> **2026-11-20 a las 00:59** (`date`), en la laptop (`LAPTOP-PF6SOUAS`, cuenta suplementaria). El contrato es
 > `context/cabinas/dashboard/CLAUDE.md`.
 >
 > - **DASHBOARD nunca toca lo de LECCIONES**, y nunca trabaja a la vez que LANDING en el mismo repo.
@@ -139,11 +139,32 @@
   - capturas a 3 anchos, guardas por script y crítico ciego por pantalla y del conjunto.
 - **Taller:** `taller-ronda-3` (`local_f2981d51-e183-4c38-a1b8-a75b63c4abea`), «fresh», sin worktree, Opus, esfuerzo
   alto, puerto 8806.
+- **RONDA 3 PARADA (00:56).** Desde la PC, a las 00:48, él escribió: *«el tablero se ve visualmente horrible / parece
+  un diseño de hace 20 años»* (`veredictos/2026-11-20-se-ve-de-hace-20-anos.md`).
+  - **Diagnóstico de la cabina:** es la regla del arranque «papel y tinta, Literata en todo» (serifa en cifras, pestañas
+    y botones), con blanco plano, filetes, enlaces subrayados y radios de 4 px.
+  - Él contestó *«Sí, para y cambia»* (`-para-y-cambia.md`).
+  - La ronda 3 había hecho las siete pantallas en el look viejo, sin `NOTAS.md`, guardas ni crítico. Se commiteó como
+    parcial (`51e0b5f`): es la estructura que se volverá a vestir. `taller-ronda-3` quedó parado e inactivo.
+  - **Literata dejó de ser obligatoria:** contrato, punto 2 (`b3591d0` en `aiw-console`).
+- **`abrir-tablero.cmd`** (`50e892a`): él lo pidió para la PC. Con doble clic hace `git pull`, arranca el servidor en
+  `127.0.0.1:8805` si no corre y abre la página de entrada. Probado en la laptop; **no en la PC**. Él tiene el repo
+  clonado en la PC y hace `pull` para ver.
+- **Ronda de look en curso:**
+  - encargo `encargos/LOOK-1.md` (`7bf41be`, empujado);
+  - **solo el Inicio A**, en tres pieles por `?piel=producto|mixta|editorial`: Producto es la recomendada (sin serifa,
+    tarjetas blancas sobre gris claro, radios 12–16, sombra suave, pestañas píldora, nada subrayado);
+  - se hace como capa de CSS que viaje a las siete pantallas, y se prueba en Mi plan de Matemáticas;
+  - lleva referencias de look actual y un crítico ciego con la A vieja como control («¿de qué año parece?»).
+  - **Taller:** `taller-look-1` (`local_b7386350-0480-47f1-8ce2-5c1a744b3e53`), «fresh», sin worktree, Opus, esfuerzo
+    alto, puerto 8807.
 - **Al llegar su nota:**
-  - leer `prototipo/v3/NOTAS.md`, las capturas y el crítico;
-  - volver a medir: corchetes, `<svg>`, v1 y v2 intactos, ligas;
+  - leer `prototipo/look/NOTAS.md`, las capturas y el crítico;
+  - volver a medir: corchetes, `<svg>`, v1/v2/v3 intactos;
   - commit y push;
   - mandarle capturas.
+- **Después:** con la piel que elija, **reanudar la ronda 3**: vestir las siete pantallas de `prototipo/v3/` con esa
+  capa y hacer lo que le faltó (`NOTAS.md`, guardas y crítico).
 
 ## Lo que ya existe en disco y sirve de dato de ejemplo (medido 22:05, solo lectura)
 

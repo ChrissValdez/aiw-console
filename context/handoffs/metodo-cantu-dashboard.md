@@ -800,3 +800,23 @@ Su opinión de PIEZAS-1 está en `veredictos/2026-11-21-piezas-1.md` (a826646).
 - **Fuera:** el crítico sacaría §2·5 (medidor), §4·3, §6·5 y §7·5.
 - **Datos:** Español con «faltan 15», porque los +N redondeados no llegan a 660.
 - **Su Moodle:** ¿Mate y Español son cursos aparte?
+
+## PANEL-3 · Probar y votar (2026-11-21, 16:46–17:14)
+
+**Él:** el panel «sigue sin hacerme tan cómodo… un poco confuso, pero vamos en buena dirección». Pasó un método de votación de otro proyecto (votar y comentar desde dentro de cada prototipo, con guardado en el Artifact) y eligió **el panel a la derecha**.
+
+- **Encargo** `encargos/PANEL-3.md` (e7a99a0). **Taller** panel-3 (local_eba2519c…).
+- **Resultado:** panel v3 en `prototipo/panel/` (773a850). No toca las cinco páginas.
+  - Tarjeta por sección, con las 5 opciones con nombre: tocar un nombre cambia la página.
+  - ✓/~/✗ por opción, comentario por sección, comentario general y Enviar.
+  - «Llevas N de 8»: cuenta las secciones con al menos un ✓.
+  - Los ajustes de vista van plegados.
+  - §N en la página abre el panel en esa sección.
+  - **Coach:** a ≥1280 caben los dos abiertos; abajo de 1280, uno a la vez.
+  - **Pruebas del taller:** 417, 0 fallas. Notas en `prototipo/panel/NOTAS-v3.md`.
+- **Guardado:** `votos/<id>` en la base del Artifact (`set` la primera vez, `update` después; un voto quitado queda como `null`), con respaldo en `localStorage` `a3-panel-v3:votos`. Claves por página y número: `curso/s4`, `mate/s6`…
+- **Artifact versión 3**, en la misma liga, con capacidades `db` (votos read view/write owner; votos/{self} write interact) y `user`.
+  - `ArtifactData list votos`: vacía, como yo y como `view`.
+- **La cabina lo revisó** en el navegador integrado, en el empaque local: votar, cambiar opción y «Llevas 1 de 8».
+- **Sin comprobar:** el Artifact publicado (el navegador no tiene su sesión). Tampoco si las páginas que no son `index.html` reciben `claude.use`, ni si `update` acepta claves con «/».
+- **Cuando diga «ya voté»:** `ArtifactData list votos`. Ignorar los `null`. Sus comentarios van tal cual a `veredictos/` y las ✗ salen del panel.

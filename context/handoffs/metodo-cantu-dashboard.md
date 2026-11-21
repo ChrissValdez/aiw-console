@@ -403,3 +403,20 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 | I3 · Navy de marca | local_77162a4e-1be6-4ea3-9187-44649854a831 | prototipo/id-navy/ | 8826 |
 
 **Al terminar:** revisar cada carpeta, commit por ruta, push y una sección nueva arriba en el index.html, con la hoja de identidad y el Inicio de cada carril.
+
+**IDENTIDAD-1 terminó y está en GitHub** (b4c29ec, 07a2d78, 4979137; entrada 1d2145b). Las tres pasan las guardas y ganan al crítico ciego contra lib-webawesome en las dos vueltas:
+
+| Carril | Crítico | Área típico 1440 | Palabras |
+|---|---|---|---|
+| I1 · La cumbre | 8 y 7,5 (base 6,5 y 6) | 88,8 % | 110 |
+| I2 · Dos mundos | 8 y 7,5 (base 6 y 5) | 90,5 % | 115 |
+| I3 · Navy | 7,5 y 8 (base 6 y 6,5) | 87,7 % | 113 |
+
+**Hallazgo de los tres talleres:** la base ya pasaba el 75 % en el estado típico (78,5 %). El espacio desperdiciado estaba **dentro** de las tarjetas, no fuera. I2 midió el contenido dentro del área de tarjetas: 29 % → 43 %. Para la próxima ronda, medir el aire interior.
+
+**Abierto:**
+- I1: el degradado «lodoso» y el croma;
+- I2: ¿el coach cambia de color según la materia?
+- I3: cuánto navy, y anillo contra medidor recto.
+
+Él no ha elegido.

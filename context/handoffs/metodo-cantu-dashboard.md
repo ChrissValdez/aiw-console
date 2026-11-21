@@ -530,3 +530,33 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 - con el Inicio simple, a 1440 queda libre un tercio de la pantalla. Él antes se quejó del espacio desaprovechado.
 
 Él no ha elegido.
+
+## ACADEMICO-2 (21-nov, desde las 00:29)
+
+**Su veredicto de ACADEMICO-1** (`veredictos/2026-11-21-academico-1.md`, 445a3cb):
+- **el coach** pasa a ser un botón en la esquina superior derecha que abre un panel de un tercio o la mitad. La banda en medio desperdiciaba la página en los tres;
+- de D1 le gustó **«Razones y proporciones»**. Su sello de «¿Cómo voy?» parece **velocímetro de coche**: pide ideas escolares (calificaciones, maestro, alumno, tutor, A B C D);
+- **faltan iconos y apoyos visuales**, sobre todo en «Tu plan de estudios»;
+- **«Lo que sigue»:**
+  - un botón para cambiar entre lista (D1) y tarjetas (D3);
+  - renglones más grandes;
+  - tarjetas compactas con el «+N» arriba a la derecha y un reloj junto a las horas;
+  - un ejemplo de bloque de título largo;
+- **fondo liso**: la cuadrícula de D3 se ve mal;
+- **un panel de prueba** en la esquina inferior izquierda que cambie de prototipo, de variante y de iconografía, con nombres cortos. Sustituye abrir tres prototipos desde el índice.
+
+**Encargo:** `encargos/ACADEMICO-2.md` (5ca4b9a). Ya no son tres versiones de lo mismo: es **un solo prototipo «A2»** en tres carriles. Los une un contrato:
+- variantes por URL, con un parámetro por grupo y la clase `v-<grupo>-<opción>` en `<html>`;
+- un `variantes.json` por carpeta;
+- los grupos comunes `estado`, `iconos` (fa/ph/ti) y `coach` (tercio/mitad).
+
+| Carril | Sesión | Carpeta | Puerto |
+|---|---|---|---|
+| E1 · Inicio | local_f1ab9a59-5f8b-4260-83b7-7b7f8176af3e | prototipo/acad2-inicio/ | 8836 |
+| E2 · Plan | local_4f88eda4-4e2d-437d-ad10-47a608cda7bf | prototipo/acad2-plan/ | 8837 |
+| E3 · Panel de prueba | local_b5963bc6-c772-4c7f-9163-df80dd235d19 | prototipo/panel/ | 8838 |
+
+**Al terminar:**
+- la **prueba de integración**: el panel abre A2, cambia variantes, navega de Inicio a Plan y conserva `iconos` y `coach`;
+- commit por ruta y push;
+- en el index.html, una sección arriba que lleve **al panel** (`prototipo/panel/`) en vez de a tres prototipos.

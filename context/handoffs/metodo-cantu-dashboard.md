@@ -442,3 +442,22 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 | P3 · Horizontes | local_c73a7305-62d3-4120-8d9a-3b0b0396871e | prototipo/plan-horizontes/ | 8829 |
 
 **Al terminar:** revisar cada carpeta, commit por ruta, push y una sección arriba en el index.html, con los tres estados de cada carril.
+
+**PLAN-1 terminó y está en GitHub** (3baa61c, 0113ed9, db7231c; entrada 51ed6fa). Las guardas pasan: 0 corchetes y 0 svg en línea.
+
+| Carril | Crítico contra I2 | Palabras típico 1440 |
+|---|---|---|
+| P1 · La semana | 7,5 contra 6 (ajuste 7) | 140 |
+| P2 · La ruta | 8 contra 6 (ajuste 7 → 8) | 140 |
+| P3 · Horizontes | 8 contra 6 | 137 |
+
+**Lo que muestran los tres:**
+- 1055 de 1600, con meta 1300 (640 + 660);
+- con 5 h por semana, la ruta real no le alcanza a Mariana para la meta de Matemáticas («No caben: Datos, Funciones»).
+
+**Abierto:**
+- ¿se dice esa noticia en el Inicio?
+- los bloques de Español y las horas por alumna son inventados;
+- P3 aún usa la ilustración 2 : 3 que a él no le gustó.
+
+Él no ha elegido.

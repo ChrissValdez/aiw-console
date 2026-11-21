@@ -180,3 +180,4 @@ cantu-lessons cr-lx-18 f52a3fce
 cantu-lessons cr-lx-18b e7cac03e
 cantu-lessons cr-lx2-25 1c4baa5a
 cantu-lessons cr-lx2-19 782fadda
+cantu-lessons cr-lx2-24 78c74050

@@ -660,3 +660,42 @@ La cabina propuso aplicarlo sobre A3 y espera su «adelante».
 2. Commit por ruta y push.
 3. Empaquetar y publicar el Artifact privado (cargar antes `artifact-design`), y guardar la liga aquí: se republica siempre en ella.
 4. En el índice, una sección arriba con la liga y las páginas.
+
+**PIEZAS-1 terminó y está en GitHub.**
+
+| Qué | Commit |
+|---|---|
+| Kit | e71ddd5 |
+| Inicio (G1) | f13a969 |
+| Plan (G2) | f6f2aad |
+| Panel v2 (G3) | e169b38 |
+| Entrada del índice | posterior |
+
+**Guardas:** 0 corchetes y 0 svg, también en `kit.css`, y sin «Mariana».
+
+**En vivo, la cabina en el 8805:**
+- las etiquetas §N con su selector «1 2 3 4 5» salen junto a cada sección;
+- elegir §1·4 y el tema oscuro cambia la página **sin recargarla**;
+- el código lo refleja: `Inicio · §1·4 §2·1 §3·1 §4·1 · oscuro`.
+
+Al terminar borró del navegador del panel lo que la prueba había guardado.
+
+**Las opciones 1:**
+
+| Sección | Opción 1 | Lo que dijo el crítico |
+|---|---|---|
+| §1 | boleta por periodos | prefería la nota, §1·4, por medio punto |
+| §2 | la lección junto a su sello | prefería la barra, §2·5 |
+| §3 | un tercio que empuja | — |
+| §4 | lo que falta por bloques | — |
+| §5 | regla de puntos | nueva |
+| §6 | la lección de hoy al frente | nueva |
+| §7 | semana por semana | nueva; vuelve a traer fechas, que él había quitado en PLAN-2 |
+
+**El Artifact está pendiente.** El empaque sale bien, con 16 archivos y 881 KB. Pero la CSP del Artifact solo admite hojas de estilo de Google Fonts, así que bloquearía:
+- el CSS de Web Awesome (native, default y utilities);
+- Font Awesome (`all.min.css` y sus woff2 solid y regular);
+- Phosphor duotone (`style.css` y su woff2);
+- Tabler (`min.css` y su woff2).
+
+Hay que meterlos dentro del paquete, y eso pide descargar unos 10 archivos de jsDelivr, unos 1,3 MB. **La cabina pidió permiso.**

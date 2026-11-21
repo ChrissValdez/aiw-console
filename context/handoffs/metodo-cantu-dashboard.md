@@ -479,3 +479,20 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 | C3 · coach junto al objetivo | local_bce8d633-ba8d-445a-bd73-5dadbce10f2c | prototipo/obj-coach-objetivo/ | 8832 |
 
 **Al terminar:** revisar cada carpeta, commit por ruta, push y una sección arriba en el index.html.
+
+**PLAN-2 terminó y está en GitHub** (72e3861, eb37974, d86fa8d; entrada 649b516). Las guardas pasan y los tres tienen 120 palabras a 1440.
+
+| Carril | Crítico contra P1 | Ajuste |
+|---|---|---|
+| C1 · coach arriba | 8 contra 5 | 7,5 |
+| C2 · coach en columna | 7,5 contra 5,5 | 7 → 8 |
+| C3 · coach junto al objetivo | 7,5 contra 6 | 7 → 8 |
+
+**Lo que dice el modelo:**
+- Razones y proporciones da **+10**, no los +20 de su ejemplo.
+- La meta pide unas 100 horas; con 5 h por semana caben 60 y se llega a ~1250.
+- El repaso no suma puntos propios: para que tenga cifra, habría que cambiar el modelo.
+
+**Abierto:** C2 deja aire en su columna, y C3 entre la frase y el campo.
+
+Él no ha elegido.

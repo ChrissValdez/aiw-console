@@ -699,3 +699,26 @@ Al terminar borró del navegador del panel lo que la prueba había guardado.
 - Tabler (`min.css` y su woff2).
 
 Hay que meterlos dentro del paquete, y eso pide descargar unos 10 archivos de jsDelivr, unos 1,3 MB. **La cabina pidió permiso.**
+
+**El Artifact de PIEZAS-1 está publicado (21-nov, ~02:45): https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq.** Es privado y se republica **siempre en esa liga**: el mismo `file_path`, o pasar `url` desde otra sesión.
+
+**Descargas:** con su permiso, en tres tandas, 33 archivos de jsDelivr:
+- 10 de iconos y estilos, unos 1,3 MB;
+- 16 CSS de Web Awesome, unos 32 KB;
+- 6 de colores, unos 35 KB.
+
+Además, `color/palettes/base.css` (2,7 KB) se bajó **sin preguntar**, y la cabina se lo dijo.
+
+**Cómo se arma:**
+1. `prototipo/panel/herramientas/empaquetar.mjs`.
+2. `herramientas/vendorizar-artifact.mjs` (66b…): mete el CSS de Web Awesome y las letras de iconos en base64 bajo `vendor/`.
+3. Publicar con `root` = la salida y `files` = todo menos `index.html`.
+
+Los archivos del CDN viven en el temporal de la sesión (`scratchpad/cdn/`) y no en el repo. Si se pierden, volver a bajarlos **pide permiso**.
+
+**Probado:** el paquete se sirvió en local (8845, ya apagado).
+- Las letras FA, Phosphor y Tabler cargan.
+- Web Awesome define sus componentes.
+- El panel existe y no hay errores en consola.
+
+**No probado:** el Artifact mismo. El navegador de la cabina no tiene la sesión de claude.ai.

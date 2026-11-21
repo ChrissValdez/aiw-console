@@ -722,3 +722,42 @@ Los archivos del CDN viven en el temporal de la sesión (`scratchpad/cdn/`) y no
 - El panel existe y no hay errores en consola.
 
 **No probado:** el Artifact mismo. El navegador de la cabina no tiene la sesión de claude.ai.
+
+## PIEZAS-2 (21-nov, desde las 03:11)
+
+Su opinión de PIEZAS-1 está en `veredictos/2026-11-21-piezas-1.md` (a826646).
+
+**Por sección:**
+- **§2 ¿Qué hago hoy?:** la 3 (los sellos de D1), con el +10 más resaltado.
+- **§3 El coach:** un botón flotante abajo a la derecha que abre como §3·1.
+- **Lo que sigue:** nada por semana; «+N» por bloque y visual. En lista, el kárdex §7·2; en tarjetas, las barras de §7·4.
+- **Tu plan de estudios (§5):** la 1, con más apoyos visuales.
+- **§1 y §4 (¿Cómo voy? y Lo que sigue del Inicio):** ninguna convence.
+- **§1 y §2 juntas:** deben medir lo mismo de alto.
+- **En todas:** más iconos académicos y poco texto.
+
+**La estructura nueva** es la suya, con la recomendación de la cabina:
+- el PAA es un curso, y la página Plan desaparece;
+- **Inicio = Mis cursos**;
+- **el curso** (resumen) lleva §2 ¿Cómo voy?, §3 ¿Qué hago hoy? y §4 Lo que sigue, con el coach flotante en §5;
+- **Mate y Español**: §6 temario con calificación por bloque y §7 plan de la materia;
+- **Simuladores**: §8 historial;
+- **la navegación:** lo global va arriba (Mis cursos y la miga «Mis cursos › PAA Tec ▾»); la barra teal es el índice del curso (Resumen, Matemáticas, Español, Simuladores); en el Inicio no hay barra.
+
+**Encargo:** `encargos/PIEZAS-2.md` (808571e).
+
+| Carril | Sesión | Carpeta | Puerto |
+|---|---|---|---|
+| H1 · Mis cursos, Simuladores, header y empaque | local_e3e96744-23fc-434d-96a2-12f6a229257f | prototipo/p2-inicio/ (+ empaquetar.mjs) | 8846 |
+| H2 · Curso PAA §2–§5 | local_749abb5f-e536-4f16-a16b-aa3144221670 | prototipo/p2-curso/ | 8847 |
+| H3 · Mate y Español §6–§7 | local_02568c22-dc25-43e3-a274-44c48163a755 | prototipo/p2-materia/ | 8848 |
+
+**Al terminar:**
+1. Emparejar el header si difiere.
+2. Probar en vivo la navegación entre las cinco páginas.
+3. Commit por ruta y push.
+4. Empaquetar y vendorizar con `herramientas/vendorizar-artifact.mjs` y los archivos de `scratchpad/cdn/`, sin bajar nada nuevo.
+5. Republicar **en la misma liga** del Artifact.
+6. Índice y relevo.
+
+**Abierto para él:** en su Moodle, ¿Mate y Español son cursos aparte o partes de un curso PAA?

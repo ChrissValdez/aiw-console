@@ -560,3 +560,24 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 - la **prueba de integración**: el panel abre A2, cambia variantes, navega de Inicio a Plan y conserva `iconos` y `coach`;
 - commit por ruta y push;
 - en el index.html, una sección arriba que lleve **al panel** (`prototipo/panel/`) en vez de a tres prototipos.
+
+**ACADEMICO-2 terminó y está en GitHub.** E2 en fb8885b, E3 en 7b44597, E1 en cbb80d4 y la entrada del índice, que lleva al panel, en dfb721e.
+- **Guardas:** 0 corchetes y 0 svg en Inicio y Plan, sin «Mariana». El panel usa corchetes en su JS, pero no va a Moodle.
+- **Integración**, probada por la cabina en el 8805: el panel abre A2 con sus variantes, pasa de Inicio a Plan conservando `iconos` y `coach`, recoge el botón de lista y tarjetas, y abre D3 en ajuste.
+- **El repaso, alineado con el modelo:** «afianzar la base · unas 3 h», sin «+10», igual en Inicio y Plan. E1 lo tenía con +10 y la cabina se lo pidió.
+
+| Carril | Crítico | Lectura |
+|---|---|---|
+| E1 · Inicio | 6,5 y luego 7, contra 7,5 de D1 | D1 gana por su banda del coach, la que él pidió quitar. `cv`: hoja 9/8,5, abcd 8/7,5, cred 5/5,5 («de gimnasio») |
+| E2 · Plan | 6,5 y luego 8, contra 6,5 de D1 | iconos solo donde hay un dato. Título largo en dos líneas con «…» |
+| E3 · Panel | prueba de uso 7 y 7 | dictaron bien los códigos |
+
+**Le toca decidir:**
+- la idea de «¿Cómo voy?» (hoja, abcd o cred) y, si quiere letras, sus cortes (los de ahora son inventados);
+- si el coach empuja o va encima, y si en tercio o en mitad;
+- si basta el botón «Coach» del header;
+- la iconografía (fa, ph o ti);
+- si «Lo que sigue» va por omisión en lista o en tarjetas, y cómo se trata el título largo;
+- la serifa de las cifras.
+
+Él no ha elegido.

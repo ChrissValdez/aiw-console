@@ -461,3 +461,21 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 - P3 aún usa la ilustración 2 : 3 que a él no le gustó.
 
 Él no ha elegido.
+
+## PLAN-2 (20-nov, desde las 21:55)
+
+**Su veredicto de PLAN-1** (`veredictos/2026-11-20-plan-1.md`): «mejoró mucho».
+- P1 va en buena dirección, con detallitos, y le gustó su barra lateral (icono y texto corto).
+- **No quiere planeación por horarios ni fechas** («confunde»). Quiere **objetivos por bloque** («este bloque de álgebra para subir 20 puntos», con lecciones y quizes) y «te faltan X puntos; a este ritmo ocupas N horas».
+- El coach está escondido en los tres.
+- P2 le pareció bonita y minimalista.
+
+**Encargo:** `encargos/PLAN-2.md` (70df592). Base: plan-semana. Los tres carriles hacen el mismo plan simplificado; cambia el lugar del coach. Máximo 120 palabras.
+
+| Carril | Sesión | Carpeta | Puerto |
+|---|---|---|---|
+| C1 · coach arriba | local_7622609e-df2f-4bfb-a27d-cea49e9b48e1 | prototipo/obj-coach-arriba/ | 8830 |
+| C2 · coach en columna | local_7eada9c4-bc59-4555-8293-be8e9ea7a3ff | prototipo/obj-coach-columna/ | 8831 |
+| C3 · coach junto al objetivo | local_bce8d633-ba8d-445a-bd73-5dadbce10f2c | prototipo/obj-coach-objetivo/ | 8832 |
+
+**Al terminar:** revisar cada carpeta, commit por ruta, push y una sección arriba en el index.html.

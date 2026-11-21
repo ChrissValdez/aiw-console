@@ -635,3 +635,28 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 - al menos dos rondas de corrección.
 
 La cabina propuso aplicarlo sobre A3 y espera su «adelante».
+
+## PIEZAS-1 (21-nov, desde la 01:38)
+
+**Su «adelante»** está en `veredictos/2026-11-21-metodo-por-piezas.md` (aa6bb3c), junto con su método tal cual. Del panel de A3 dijo que «no está tan lejos»: al desplegar opciones tapa la pantalla, y quiere **moverlo** y seguir eligiendo.
+
+**Encargo:** `encargos/PIEZAS-1.md` (ca5b4d4). Aplica su método sobre A3:
+- **secciones §1–§7** (Inicio §1–§4, Plan §5–§7), con cinco opciones cada una;
+- **el contrato:** `id="sec-N"`, la clase `v-sN-K`, `?sN=K` y el evento `a3:variante` en vivo;
+- **los globales**, como clases: escenario, datos (normal/vacío/cargando/error), tema, letra (5 parejas), densidad e iconos;
+- **el kit** con las variables `--k-…`;
+- **un panel v2** que se arrastra y pone la etiqueta §N y un selector «1 2 3 4 5» junto a cada sección;
+- **dos rondas de corrección** (crítico ciego con hasta 6 arreglos por opción, más `ui-review`);
+- **el empaque** para el Artifact. Publica la cabina, en una sola liga.
+
+| Carril | Sesión | Carpeta | Puerto |
+|---|---|---|---|
+| G1 · Inicio §1–§4 | local_f5550179-2a73-43dc-a5dc-41bb2da6f386 | prototipo/p1-inicio/ | 8842 |
+| G2 · Plan §5–§7 | local_4770eccd-3984-4b04-b457-0df75e16e576 | prototipo/p1-plan/ | 8843 |
+| G3 · Kit, panel v2 y empaque | local_c92c8925-3138-40dc-ae17-a9a7919aac8e | prototipo/kit/ + prototipo/panel/ | 8844 |
+
+**Al terminar:**
+1. Probar en vivo el panel, el selector, el arrastre y los globales en las dos páginas.
+2. Commit por ruta y push.
+3. Empaquetar y publicar el Artifact privado (cargar antes `artifact-design`), y guardar la liga aquí: se republica siempre en ella.
+4. En el índice, una sección arriba con la liga y las páginas.

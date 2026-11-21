@@ -420,3 +420,25 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 - I3: cuánto navy, y anillo contra medidor recto.
 
 Él no ha elegido.
+
+## PLAN-1 (20-nov, desde las 21:05)
+
+**Su veredicto de IDENTIDAD-1** (`veredictos/2026-11-20-identidad-1.md`, más su captura de Moodle):
+- **I1:** la paleta es la de mejor imagen, pero sin montañas («parece de hiking»).
+- **I2:** los mejores componentes (materias con barra y meta, cuánto falta, fases del bloque, ahora en horizontal).
+- **El coach es lo más débil.** El sistema recomienda solo; el coach es sutil, se le pregunta y ajusta el plan.
+- **Plan de trabajo completo**, visible sin el coach.
+- **Header navy y barra lateral en teal oscuro**, como su Moodle.
+- **Total sobre 1600** además de las dos mitades.
+
+**REGLA CAMBIADA por él:** el Inicio sí muestra el total sobre 1600. La escala de 200–800 por materia la deduce la cabina; no está verificada.
+
+**Encargo:** `encargos/PLAN-1.md` (289c549). Base: id-materias, con la paleta de I1. Lleva un tercer estado, `?estado=ajuste`, donde el coach cambia el plan.
+
+| Carril | Sesión | Carpeta | Puerto |
+|---|---|---|---|
+| P1 · La semana | local_cb543346-7e51-4027-8794-510436ff9ecd | prototipo/plan-semana/ | 8827 |
+| P2 · La ruta al examen | local_f0cf6a50-b0f9-4f2d-b1fc-1a9aaa0d8327 | prototipo/plan-ruta/ | 8828 |
+| P3 · Horizontes | local_c73a7305-62d3-4120-8d9a-3b0b0396871e | prototipo/plan-horizontes/ | 8829 |
+
+**Al terminar:** revisar cada carpeta, commit por ruta, push y una sección arriba en el index.html, con los tres estados de cada carril.

@@ -496,3 +496,23 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 **Abierto:** C2 deja aire en su columna, y C3 entre la frase y el campo.
 
 Él no ha elegido.
+
+## ACADEMICO-1 (20-nov, desde las 22:40)
+
+**Su veredicto de PLAN-2** (`veredictos/2026-11-20-plan-2.md`):
+- las cifras parecen de app para bajar de peso: quiere **círculos o iconografía académica**;
+- el coach **no** va en columna vertical: es horizontal;
+- el **Inicio simple**: el desglose va en las páginas Plan, Mate, Español y Simuladores;
+- temática académica;
+- **el alumno de ejemplo es Mauro**, no Mariana (aplica de aquí en adelante);
+- pidió tres prototipos nuevos.
+
+**Encargo:** `encargos/ACADEMICO-1.md` (d1f3961). Base: obj-coach-arriba. El Inicio contesta tres preguntas en ≤ 80 palabras: ¿cómo voy?, ¿qué hago hoy?, ¿me ayudas? Cada carril entrega también `plan.html`.
+
+| Carril | Sesión | Carpeta | Puerto |
+|---|---|---|---|
+| D1 · El sello | local_7d56a485-b9ec-4654-b6d6-095307e69e12 | prototipo/acad-sello/ | 8833 |
+| D2 · La hoja de respuestas | local_4cc5a8d5-90d6-4968-aed7-433f821dcf22 | prototipo/acad-respuestas/ | 8834 |
+| D3 · Campus moderno | local_1ebfe30f-e161-4efa-a89e-66f576f0e338 | prototipo/acad-campus/ | 8835 |
+
+**Al terminar:** revisar cada carpeta, commit por ruta, push y una sección arriba en el index.html, con Inicio y Plan de cada carril.

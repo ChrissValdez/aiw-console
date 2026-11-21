@@ -516,3 +516,17 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 | D3 · Campus moderno | local_1ebfe30f-e161-4efa-a89e-66f576f0e338 | prototipo/acad-campus/ | 8835 |
 
 **Al terminar:** revisar cada carpeta, commit por ruta, push y una sección arriba en el index.html, con Inicio y Plan de cada carril.
+
+**ACADEMICO-1 terminó y está en GitHub** (86aca60, 1e0749e, 47aa7d5; entrada ee01d00). Las guardas pasan: 0 corchetes, 0 svg y sin «Mariana». Cada carril trae también `plan.html`. D2 se quedó a medias y terminó tras un empujón; el servidor 8833 de D1 lo cerró la cabina.
+
+| Carril | Crítico contra C1 | Lectura |
+|---|---|---|
+| D1 · El sello | 7,5 contra 6,5, luego 7 contra 7,5 | el sello se leyó «tipo Oura» |
+| D2 · Hoja de respuestas | 8 contra 7 | nadie la confundió con salud ni finanzas |
+| D3 · Campus | 7 y 7 contra 7,5 y 8 | el anillo se leyó «de actividad» |
+
+**Lo que dijeron los críticos:**
+- extrañaron «a tu ritmo llegas a ~1250» en el Inicio;
+- con el Inicio simple, a 1440 queda libre un tercio de la pantalla. Él antes se quejó del espacio desaprovechado.
+
+Él no ha elegido.

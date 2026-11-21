@@ -380,3 +380,26 @@ Aceptó la ronda de librerías: «Sí, lánzala».
 | Web Awesome 3.15.0 | 8 y luego 7 | 106 | — | sin JS se lee; 95 archivos de JS |
 
 Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
+
+## IDENTIDAD-1 (20-nov, desde las 19:05)
+
+**Su veredicto de LIBRERIAS-1** (`veredictos/2026-11-20-librerias-1.md`): la mejor fue Web Awesome, pero ninguna convence.
+- El coach de arriba se ve como «textos sueltos».
+- La franja de puntajes parece «de finanzas».
+- «No estamos encontrando una identidad visual».
+- Lo más importante: «hay mucho espacio desaprovechado».
+
+**Lectura de la cabina:** la marca ya tiene una identidad sin usar, el segundo encabezado de su Moodle (degradado teal → ocre con montañas en capas). Él lo pidió como referencia desde el arranque.
+
+**Encargo:** `encargos/IDENTIDAD-1.md` (9654b34, 2cf5726). Cada carril parte de lib-webawesome y entrega una hoja de identidad y el Inicio. En las tres es obligatorio:
+- área cubierta ≥ 75 % por script;
+- el coach como componente;
+- la franja sin cara de finanzas.
+
+| Carril | Sesión | Carpeta | Puerto |
+|---|---|---|---|
+| I1 · La cumbre | local_95880f2a-22db-414b-9a8d-0d60310bdb61 | prototipo/id-cumbre/ | 8824 |
+| I2 · Dos mundos de color | local_54044158-b0da-4255-9b53-af56d3818c0b | prototipo/id-materias/ | 8825 |
+| I3 · Navy de marca | local_77162a4e-1be6-4ea3-9187-44649854a831 | prototipo/id-navy/ | 8826 |
+
+**Al terminar:** revisar cada carpeta, commit por ruta, push y una sección nueva arriba en el index.html, con la hoja de identidad y el Inicio de cada carril.

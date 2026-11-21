@@ -581,3 +581,28 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 - la serifa de las cifras.
 
 Él no ha elegido.
+
+## ACADEMICO-3 (21-nov, desde la 01:04)
+
+**Su veredicto de A2** (`veredictos/2026-11-21-academico-2.md`, e5a58c8):
+- **el panel no era lo que pidió y «quedó horrible».** Él quiere un solo prototipo y, en el panel, **las variantes de cada sección**, no cambiar entre prototipos;
+- **casi no había variantes por área**: «sobre todo tu plan de estudios»;
+- «Hoy» pasa a llamarse **«Inicio»**;
+- **A2 se ve peor que D1.** La cabina lo atribuye a que A2 estiró las tarjetas para llenar el alto.
+
+**Encargo:** `encargos/ACADEMICO-3.md` (abc45ab). Es un solo prototipo, «A3», y su contrato es:
+- cada sección es un grupo, con código en mayúsculas (`CV`, `HOY`, `CO`, `SIG`, `PE`, `BA`, `LS`) y opciones por letra (`a` por omisión);
+- clase `v-<grupo>-<letra>` e `id="sec-<grupo>"`;
+- `variantes.json` con `secciones` y `globales` (`estado`, `iconos`);
+- cada página carga `../panel/panel.js` con una línea.
+
+| Carril | Sesión | Carpeta | Puerto |
+|---|---|---|---|
+| F1 · Inicio | local_463d059b-625c-4efa-8879-f1518fbc5b28 | prototipo/a3-inicio/ | 8839 |
+| F2 · Plan (PE ≥ 5 variantes) | local_0429c0c3-fa30-4b5e-b165-94490ace3d2c | prototipo/a3-plan/ | 8840 |
+| F3 · Panel nuevo, dentro de la página | local_e9eed6a5-cc9b-4138-bb1a-6cbfe8d21eb2 | prototipo/panel/ (rehecho) | 8841 |
+
+**Al terminar:**
+- correr el validador de F3 contra el 8805 y probar a mano que el panel lee las secciones, resalta y cambia variantes en las dos páginas;
+- commit por ruta y push;
+- en el index.html, una sección arriba que lleve a `prototipo/a3-inicio/inicio.html`. **Ojo:** la entrada de A2 enlaza el panel viejo, que F3 borra; hay que cambiarla a las páginas de A2 directas.

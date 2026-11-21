@@ -711,7 +711,7 @@ Además, `color/palettes/base.css` (2,7 KB) se bajó **sin preguntar**, y la cab
 
 **Cómo se arma:**
 1. `prototipo/panel/herramientas/empaquetar.mjs`.
-2. `herramientas/vendorizar-artifact.mjs` (66b…): mete el CSS de Web Awesome y las letras de iconos en base64 bajo `vendor/`.
+2. `herramientas/vendorizar-artifact.mjs` (87ef279): mete el CSS de Web Awesome y las letras de iconos en base64 bajo `vendor/`.
 3. Publicar con `root` = la salida y `files` = todo menos `index.html`.
 
 Los archivos del CDN viven en el temporal de la sesión (`scratchpad/cdn/`) y no en el repo. Si se pierden, volver a bajarlos **pide permiso**.

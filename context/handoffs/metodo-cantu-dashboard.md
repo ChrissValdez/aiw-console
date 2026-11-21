@@ -606,3 +606,32 @@ Ninguna se probó dentro de Moodle. Él aún no ha dicho cuál elige.
 - correr el validador de F3 contra el 8805 y probar a mano que el panel lee las secciones, resalta y cambia variantes en las dos páginas;
 - commit por ruta y push;
 - en el index.html, una sección arriba que lleve a `prototipo/a3-inicio/inicio.html`. **Ojo:** la entrada de A2 enlaza el panel viejo, que F3 borra; hay que cambiarla a las páginas de A2 directas.
+
+**ACADEMICO-3 terminó y está en GitHub.** F1 en 34f1d00, F2 en eabcbe8, F3 (el panel rehecho; el de A2 queda en el historial) en 52f7fa1, y el índice en 41c5421 (A3 arriba; A2 ahora enlaza sus páginas directas).
+- **Guardas:** 0 corchetes, 0 svg y sin «Mariana».
+- **Integración, probada por la cabina en el 8805:**
+  - la píldora del panel sale en las dos páginas;
+  - elegir CV-B pone `?cv=b` y la clase `v-cv-b`;
+  - el enlace del Inicio al Plan conserva `iconos`;
+  - el Plan carga el panel y enlaza de vuelta a «Inicio».
+
+| Carril | Variantes | Crítico ciego |
+|---|---|---|
+| F1 · Inicio | CV 4 (a = boleta por periodos), HOY 3 (b = como D1), CO 3, SIG 4 | 8 contra D1 7 y A2 6 |
+| F2 · Plan | PE 6 (a = boleta por materia), BA 3 (a = temario), LS 3 | 7 y luego 8, contra A2 7,5 y D1 5,5. La boleta de PE se lee «algo financiera» |
+| F3 · Panel | — | prueba de uso hecha |
+
+**Le toca decidir:**
+- **el código de la vista:** si lleva siempre el estado y los iconos, y en qué orden van;
+- **siglas y nombres:** si se unifican (SIG frente a LS, y «¿Cómo voy?» frente a «Tu boleta»);
+- **el panel abierto:** a 1440 tapa el tercio de abajo.
+
+**21-nov ~01:40: propuso adoptar su método «por piezas»** de la landing:
+- kit común;
+- secciones §N con 5 opciones y un selector junto al número;
+- panel en vivo con letra, claro/oscuro, densidad y estado de datos;
+- las opciones descartadas salen del panel;
+- se publica como Artifact en la misma liga;
+- al menos dos rondas de corrección.
+
+La cabina propuso aplicarlo sobre A3 y espera su «adelante».

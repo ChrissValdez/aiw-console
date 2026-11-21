@@ -761,3 +761,42 @@ Su opinión de PIEZAS-1 está en `veredictos/2026-11-21-piezas-1.md` (a826646).
 6. Índice y relevo.
 
 **Abierto para él:** en su Moodle, ¿Mate y Español son cursos aparte o partes de un curso PAA?
+
+**PIEZAS-2 terminó y está en GitHub.**
+
+| Qué | Commit |
+|---|---|
+| H2 · Curso PAA | 4100ac7 |
+| H1 · Inicio y Simuladores | 6c8dce9 |
+| Empaque | cfc4072 |
+| H3 · Mate y Español | posterior |
+| Arreglo del coach en celular | posterior |
+| Enlaces relativos de Mate y Español | posterior |
+| Índice | posterior |
+
+**Ajustes que pidió la cabina:**
+- H3 copió el header de H1, los cursos de muestra («Técnicas de estudio», «Repaso de Redacción») y el coach §5·1 de H2;
+- H1 puso el coach §5·1 en Simuladores.
+
+**Arreglos de la cabina en carpetas de taller**, por ser de una línea:
+- en el curso, `.mc-app > .coach { align-self: stretch }` bajo 1024 px. Lo halló H3; en celular el coach quedaba a media pantalla y ahora va de 64 a 812;
+- en Mate y Español, la función `conserva()` devolvía `u.pathname…` absoluto, que se rompe empacado. Ahora devuelve la ruta relativa original.
+
+**Probado en el 8805:** las cinco páginas enlazan entre sí con 200, y la barra y el coach salen en las cuatro del curso. En el empaque servido (8845, ya apagado): 0 recursos fallidos, 0 imágenes rotas, letras FA, PH y TI.
+
+**Artifact: versión 2 en la misma liga** (https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq). Se quitaron `plan.html`, `plan-marca.css` y `logo-largo.png` de la raíz.
+
+**Queda un aviso del empaque:** `p2-curso/cabecera.css` no es idéntico al de `p2-inicio`. Se ve igual, porque la miga de H2 no lleva «Curso actual:» oculto.
+
+**Le toca decidir** (de las NOTAS):
+- **§1:** curso al frente (1) o renglones (3, el crítico).
+- **§2:** regla y materias (1) o cascada (2).
+- **§3:** franja del premio (1).
+- **§4:** kárdex con barra +N (1) o frente a frente horas y puntos (2, el crítico).
+- **§5:** píldora (1), con «Velo en…» de la 4.
+- **§6:** kárdex por área (1) o boleta (3).
+- **§7:** escalera (1) o cinta (4).
+- **§8:** columnas (1).
+- **Fuera:** el crítico sacaría §2·5 (medidor), §4·3, §6·5 y §7·5.
+- **Datos:** Español con «faltan 15», porque los +N redondeados no llegan a 660.
+- **Su Moodle:** ¿Mate y Español son cursos aparte?

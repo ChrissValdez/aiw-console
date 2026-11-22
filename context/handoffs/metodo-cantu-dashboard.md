@@ -876,3 +876,35 @@ Su opinión de PIEZAS-1 está en `veredictos/2026-11-21-piezas-1.md` (a826646).
 - además, `ArtifactData list votos` → `rondas.piezas-4`.
 
 **La PC debe ponerse al día:** borrar su `votos/piezas-3.json` sin registrar, `git pull` y reiniciar su 8805 (pasos en `prototipo/panel/NOTAS-v5.md`, «Para el operador»).
+
+## PIEZAS-4 votado y PIEZAS-5 publicado (2026-11-21 23:20 – 2026-11-22 00:34)
+
+**Votos de PIEZAS-4:** llegaron solos por GitHub (`origin/votos` 951f5f7, 23:20): 8 secciones y un comentario general. El Artifact no tenía votos. Quedaron tal cual en `veredictos/2026-11-21-piezas-4.md` (2cf000b, 5ec1982). No se sabe desde qué computadora votó.
+
+**Encargo:** `encargos/PIEZAS-5.md` (3391ee6, bf0e12c). Tres talleres en sesiones anidadas (estaba en la laptop):
+- K1 · `p5-inicio`: §1 y §8, y el empaque para las p5 (a5bcc76).
+- K2 · `p5-curso` (b3902b7):
+  - §2 sin «+105/+90», con «te faltan 245»;
+  - §3, la medalla en 5 colores, sin tiempos;
+  - §4/§4.5 en una sola sección, con filtro Mate/Español, botón lista/tarjetas y bloques que se abren en lecciones y quiz;
+  - §5 con 5 tamaños del coach (ya se vota).
+- K3 · `p5-materia` (7eced21):
+  - §6 sin avance;
+  - el global `colores` en `panel.js` y `colores-materia.css`, con 5 pares;
+  - `probar-v4` 503/512: las 9 que fallan esperan GitHub (taller sin `--con-github`); no se corrió con el repo bare.
+
+**Lo que decidió él y está en el encargo:** el temario no lleva avance. Un bloque cuenta como pasado solo con su quiz; las lecciones son referencia. El avance vive en el plan. Quedan fuera los tiempos «faltan N h» y «N min».
+
+**La cabina arregló:**
+- una sola `cabecera.js` en las tres p5, que conserva `s45` y `colores`, verificado en el navegador;
+- quitó «20 a 25 minutos» del coach del curso (dbfe3d1).
+
+Índice 8fb85f5. **Artifact versión 6**, en la misma liga.
+
+**Choques para que él decida:**
+- las lecciones por bloque: el kit dice 5 en Razones y la ruta 7;
+- los enlaces de lección del curso (`mate.html#ALG-27`) no coinciden con los de la materia (`#leccion-ALG-27`); las dos son ligas de muestra;
+- «13 de 43 temas» en §1·1 y §1·2;
+- las palomitas de lecciones en §3.
+
+**Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-5`, y además `ArtifactData list votos`.

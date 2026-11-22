@@ -14,6 +14,13 @@
 > - **Siempre en español** (lo pidió el dueño). Cada mensaje cierra con «Qué necesito de ti», «Qué procede» y
 >   «⏳ EN ESPERA de …».
 
+> **Adenda del 22-nov, 15:39 (`date`), en la PC. Gana sobre la del 21-nov.**
+> - **La vigente es BB:** `metodo-cantu-landing/prototipos/BB-la-vigente/landing.html` (un fichero:
+>   `…/BB-la-vigente/un-solo-fichero/landing-BB.html`). Es AZ con la 3 «Con el Método Cantú sabes qué estudiar» y la 4
+>   «Elige tu horario», con la lista en dos grupos («Tu horario» / «Incluido en los dos»): la a de BA, que el dueño escogió
+>   («La a»). Veredicto: `veredictos/2026-11-22-az-titulos.md`. Puertos usados hasta 9149 (el siguiente, 9150).
+> - **Abierto, igual que el 21-nov:** Moodle espera a que el dueño diseñe la conexión; Resuelve Esparza = no.
+
 > **Adenda del 21-nov, 19:46 (`date`), en la PC: lo que pasó después del sexto relevo. Gana sobre lo de abajo.**
 > - **La vigente, aprobada:** `metodo-cantu-landing/prototipos/AZ-textos-claros/landing.html` (el dueño: «Me gusto esta
 >   nueva version»). En un solo fichero: `…/AZ-textos-claros/un-solo-fichero/landing-AZ.html`. El README y el índice la

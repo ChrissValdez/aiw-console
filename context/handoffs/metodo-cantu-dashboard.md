@@ -986,3 +986,19 @@ Esta vez llegó sin CRLF y con §5 fija igual en las cuatro páginas. **Artifact
 **Artifact versión 9.** Índice actualizado.
 
 **Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-8`, y además `ArtifactData list votos`.
+
+## PIEZAS-8 votado y PIEZAS-9 publicado (2026-11-22 13:56 – 15:33)
+
+**Votos de PIEZAS-8:** por GitHub (`origin/votos` dade275), enviados a las 13:56. Quedaron en `veredictos/2026-11-22-piezas-8.md` (fa8971f). El comentario de §11 terminaba en «Adeams...»; él dijo: «Ignora ese además solo manda las correcciones tal cual».
+
+**Encargo:** `encargos/PIEZAS-9.md` (07cf33c). §1 y §7 quedaron fijas en la 2. Cuatro sesiones anidadas:
+- L4 (cdec9c4): §11 sobre la 5 con límite y header; el vacío común sin caja; contrato.
+- L2 (6ca8722): §0; §2 con dos opciones y §3 a juego; §4 y §4.5 arreglados.
+- L3 (b96fdfb): encabezado sin conteo; §6; buscador; vacío nuevo.
+- L1 (b7450f0): §1 fija; §8 con la meta en verde; §9 con el botón de la 1 y la línea verde; empaque.
+
+**En el camino:** el push de los cuatro commits juntos dio HTTP 408; se subieron uno por uno.
+
+**Artifact versión 10.** Índice actualizado (89ffa7a).
+
+**Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-9`, y además `ArtifactData list votos`.

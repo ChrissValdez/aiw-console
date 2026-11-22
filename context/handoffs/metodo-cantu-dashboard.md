@@ -908,3 +908,36 @@ Su opinión de PIEZAS-1 está en `veredictos/2026-11-21-piezas-1.md` (a826646).
 - las palomitas de lecciones en §3.
 
 **Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-5`, y además `ArtifactData list votos`.
+
+## PIEZAS-5 votado y PIEZAS-6 publicado (2026-11-22 01:26 – 03:3x)
+
+**Votos de PIEZAS-5:** llegaron por GitHub (`origin/votos` e80bc22): 8 secciones y un comentario general. Quedaron tal cual en `veredictos/2026-11-22-piezas-5.md` (627b604).
+
+**Al dar el sí, él agregó** (citado tal cual en el encargo):
+- más pares de colores, sin quitar los que hay;
+- densidad compacta;
+- Font Awesome con variantes nuevas;
+- fuera el botón «PAA Tec» de la barra lateral;
+- el nombre del curso arriba del Resumen.
+
+**Encargo:** `encargos/PIEZAS-6.md` (f18781a, 21596e5). Cuatro sesiones anidadas, más `p6-comun/` con la cabecera única:
+- L4 · `p6-comun` (5433d99):
+  - 10 pares de colores y 5 oscuros;
+  - botón claro/oscuro;
+  - cifras en Lexend;
+  - compacta y Font Awesome por omisión;
+  - el estado «cargando»;
+  - el panel con §0 y el Temario.
+- L2 · `p6-curso` (d2058c6): §0, más §2, §3 y §5 fijas.
+- L3 · `p6-temario` (cfe0aeb): una sola página con botón Mate/Español.
+- L1 · `p6-inicio` (ed27901): §1, §8 y el empaque.
+
+**Arreglos de la cabina:**
+- CRLF → LF en 23 archivos;
+- L3 quitó sus reglas propias del header, que se enciman a 375;
+- §5 fija como «1» en las cuatro páginas, porque Temario y Simuladores decían «4» y el coach tomaba 440;
+- fuera «20 a 25 minutos», que había vuelto por el generador `curso.mjs` (fdb01f9).
+
+**Artifact versión 7.** Se quitaron los archivos de mate y español de la versión anterior. Índice actualizado.
+
+**Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-6`, y además `ArtifactData list votos`.

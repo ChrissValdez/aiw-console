@@ -27,9 +27,10 @@
 >   le costaba. **Textos:** se proponen en el chat, en tablas, y se corrigen ya aprobados (lo pidió para ahorrar).
 > - **Uso:** el dueño **quitó el tope de uso** para LANDING el 20-nov a las 15:00. Talleres: Opus alto para diseño, Sonnet
 >   medio para lo mecánico; nunca Fable. Puertos usados hasta AY: 9135–9139 (el siguiente, 9140).
-> - **Abierto:** (1) **pasar AZ a Moodle por bloques**, esperando su sí; (2) un pedido de la cabina de **Resuelve Esparza**
->   (por Pato) de una lista corta de estilo visual de esta landing: **no se mandó**, espera el sí o no del dueño (la memoria
->   dice que Método Cantú no se usa como recurso de RE).
+> - **Abierto:** (1) **Moodle, en espera del dueño** (21-nov, 19:59): *«dame chance tenemos que diseñar una conexión para
+>   que analices el código y después analicemos la mejor estrategia de integración»*. No se arma ningún bloque hasta entonces.
+>   (2) El pedido de **Resuelve Esparza** (lista de estilo visual): **no**. El dueño: *«Resuelve esparza no, ya está trabajando
+>   bien y trae su propio flujo»*; se le contestó a esa cabina.
 
 ## Dónde estamos
 

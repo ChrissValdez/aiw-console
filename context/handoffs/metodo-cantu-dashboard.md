@@ -967,3 +967,22 @@ Su opinión de PIEZAS-1 está en `veredictos/2026-11-21-piezas-1.md` (a826646).
 Esta vez llegó sin CRLF y con §5 fija igual en las cuatro páginas. **Artifact versión 8.**
 
 **Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-7`, y además `ArtifactData list votos`.
+
+## PIEZAS-7 votado y PIEZAS-8 publicado (2026-11-22 06:03 – 07:17)
+
+**Votos de PIEZAS-7:** desde la PC, por GitHub (`origin/votos` 1638b6e). La sincronización funcionó sola. Quedaron en `veredictos/2026-11-22-piezas-7.md` (d8415a6), con su mensaje largo para la ronda 8.
+
+**Encargo:** `encargos/PIEZAS-8.md` (16a73db). Cuatro sesiones anidadas:
+- L4 (7be3896):
+  - el panel solo con datos, escenario y colores (el 3 por omisión); letra, tema, oscuro, recuadros, densidad e íconos quedaron fijos;
+  - §10 fija;
+  - §11, el chat del coach.
+- L2 (558cef7): §0, §2 con el botón amarillo «Nuevo simulador», §3 cambia con el filtro.
+- L3 (13a16e7): §6, y §7 nueva con el puntaje centrado.
+- L1 (94013f5): §1, §8, §9, «Nuevo simulador» a la derecha y «Siguiente» sin círculo.
+
+**En el camino:** L2 midió que el bermellón del par 3 daba 4.49:1. La cabina se lo pasó a L4, que lo dejó en `#ba3721` (5.74:1), y L2 quitó su parche.
+
+**Artifact versión 9.** Índice actualizado.
+
+**Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-8`, y además `ArtifactData list votos`.

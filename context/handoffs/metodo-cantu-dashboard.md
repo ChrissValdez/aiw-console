@@ -909,7 +909,7 @@ Su opinión de PIEZAS-1 está en `veredictos/2026-11-21-piezas-1.md` (a826646).
 
 **Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-5`, y además `ArtifactData list votos`.
 
-## PIEZAS-5 votado y PIEZAS-6 publicado (2026-11-22 01:26 – 03:3x)
+## PIEZAS-5 votado y PIEZAS-6 publicado (2026-11-22 01:26 – 03:27)
 
 **Votos de PIEZAS-5:** llegaron por GitHub (`origin/votos` e80bc22): 8 secciones y un comentario general. Quedaron tal cual en `veredictos/2026-11-22-piezas-5.md` (627b604).
 

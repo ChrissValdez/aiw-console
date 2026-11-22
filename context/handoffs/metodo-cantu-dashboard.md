@@ -1002,3 +1002,19 @@ Esta vez llegó sin CRLF y con §5 fija igual en las cuatro páginas. **Artifact
 **Artifact versión 10.** Índice actualizado (89ffa7a).
 
 **Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-9`, y además `ArtifactData list votos`.
+
+## PIEZAS-9 votado y PIEZAS-10 publicado (2026-11-22 15:51 – 16:59)
+
+**Votos de PIEZAS-9:** por GitHub (`origin/votos` 256a2b0). Quedaron en `veredictos/2026-11-22-piezas-9.md` (ddf7928); §9 quedó fija en la 2. Él dejó sin votar §2 y §11; la cabina propuso cómo llenar los huecos y él dijo «Sí, arráncalo».
+
+**Encargo:** `encargos/PIEZAS-10.md` (f8912f5), más un anexo con §12 nueva (ddebb33): su feedback de poner el botón Mate/Español en la banda de §0. Cuatro sesiones anidadas:
+- L4 (d81367a): vista común en p10, contrato con §9 fija.
+- L2 (01bfc51): §0 con 4; encabezado de «Lo que sigue» más grande; §4, §4.5; §12 con 3.
+- L3 (a4f8dd4): §6 con la 2, la 4 y la 5 más 2 nuevas.
+- L1 (cb2e3ce): §8 con el paso del 1055 al 1300; «Siguiente» con las fechas; §9 fija.
+
+Los commits de carril se suben uno por uno (juntos dan HTTP 408). **Artifact versión 11.** Índice actualizado (dfcff88).
+
+**Abierto, sin decidir:** el diagnóstico. Él lo planteó en el chat (por área en vez de 60 preguntas; qué muestra «¿Cómo voy?» sin simulador; cuándo pedir el simulador; los quizzes con niveles Fundamental, PAA y Reto). La cabina le propuso: diagnóstico corto por área como mapa y no calificación, paso de área por prerrequisitos, simulador opcional el día 1 y pedido en un hito, tres estados de «¿Cómo voy?», y un tema = una fila con tres marcas. **Esperando sus respuestas**; no hay nada escrito en el repo.
+
+**Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-10`, y además `ArtifactData list votos`.

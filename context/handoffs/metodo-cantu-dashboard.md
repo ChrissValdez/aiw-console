@@ -845,3 +845,34 @@ Su opinión de PIEZAS-1 está en `veredictos/2026-11-21-piezas-1.md` (a826646).
 - lee `ArtifactData list votos` → `rondas.piezas-3`;
 - ignora los `null`;
 - mezcla por el `actualizado` de cada sección.
+
+## PIEZAS-3 votado y PIEZAS-4 publicado, con votos por GitHub (2026-11-21, 19:48–21:45)
+
+**Dos computadoras.** Él tiene la laptop (donde vive la cabina) y **la PC**. Votó PIEZAS-3 en el 8805 de la PC, y el panel le dijo «Enviado · Claude ya lo ve», pero a la laptop no llegó nada. Subió el JSON al chat:
+- `votos/piezas-3.json` (61314e6);
+- `veredictos/2026-11-21-piezas-3.md` (1fa4d9d).
+
+**Eligió sincronizar «Por GitHub»** (20:00):
+- los votos viajan por la **rama huérfana `votos`** de origin, un `<ronda>.json` en la raíz;
+- `.gitignore` con `votos/*.json` (4a81a18).
+
+**Talleres como subagentes.** Por Remote Control, `start_session` se rechaza. Él aceptó la regla: sesiones anidadas en la laptop y subagentes solo en remoto.
+
+**Encargo:** `encargos/PIEZAS-4.md` (1c13f3e).
+- J1 · `p4-inicio`: §1 y §8, más el empaque (12873ab).
+- J2 · `p4-curso`: §2, §3, §4, §4.5 y el coach de ancho ajustable (323c5de).
+- J3 · `p4-materia`: §6 con §7 dentro; §7 sale (9420ead).
+- J4 · `votos-github.mjs`, `servidor.mjs` y el panel v5 (0fa0957):
+  - estados verde, ámbar y rojo;
+  - 52/52 pruebas con un repo bare y 496/496 sobre las p3;
+  - las 8 fallas de las p4 a 375 px son falsas: miden elementos dentro de `details` cerrados.
+
+**8805 reiniciado** con el servidor nuevo, en segundo plano desde la cabina. Primera subida real hecha: `origin/votos` b1e9ee9 trae `piezas-3.json`, idéntico al de main. El panel de las p4 da verde.
+
+**Artifact versión 5** en la misma liga. Índice 290b321.
+
+**Cuando diga «ya voté»:**
+- `node herramientas/servidor.mjs --leer-votos piezas-4` (baja, mezcla y escribe en local);
+- además, `ArtifactData list votos` → `rondas.piezas-4`.
+
+**La PC debe ponerse al día:** borrar su `votos/piezas-3.json` sin registrar, `git pull` y reiniciar su 8805 (pasos en `prototipo/panel/NOTAS-v5.md`, «Para el operador»).

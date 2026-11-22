@@ -14,6 +14,23 @@
 > - **Siempre en español** (lo pidió el dueño). Cada mensaje cierra con «Qué necesito de ti», «Qué procede» y
 >   «⏳ EN ESPERA de …».
 
+> **Adenda del 21-nov, 19:46 (`date`), en la PC: lo que pasó después del sexto relevo. Gana sobre lo de abajo.**
+> - **La vigente, aprobada:** `metodo-cantu-landing/prototipos/AZ-textos-claros/landing.html` (el dueño: «Me gusto esta
+>   nueva version»). En un solo fichero: `…/AZ-textos-claros/un-solo-fichero/landing-AZ.html`. El README y el índice la
+>   marcan vigente; la tabla sección por sección está en el README. **Lo de «Lo decidido (AS)» de abajo quedó viejo.**
+> - **El camino:** AT (la oferta y los paquetes) → AU (cinco ideas de la 4, ninguna) → AV (vuelta a AF: la 3, la 4 visor y la
+>   6) → AW (pulido; sin la sección de preguntas; títulos centrados) → AX (el **menú de variantes**, `revision.js`) → AY (la
+>   vigente sin variantes) → AZ (textos claros en la 4 y la 5). Veredictos en `veredictos/2026-11-20-a{t..x}-comentarios.md`
+>   y `2026-11-21-ay-textos.md`.
+> - **Cómo se revisa desde AX:** una sola página con el menú flotante «Variantes» abajo a la izquierda
+>   (`prototipos/AX-menu-de-variantes/revision.js`, reusable; `?revision=no` lo esconde). El dueño lo pidió: abrir diez ligas
+>   le costaba. **Textos:** se proponen en el chat, en tablas, y se corrigen ya aprobados (lo pidió para ahorrar).
+> - **Uso:** el dueño **quitó el tope de uso** para LANDING el 20-nov a las 15:00. Talleres: Opus alto para diseño, Sonnet
+>   medio para lo mecánico; nunca Fable. Puertos usados hasta AY: 9135–9139 (el siguiente, 9140).
+> - **Abierto:** (1) **pasar AZ a Moodle por bloques**, esperando su sí; (2) un pedido de la cabina de **Resuelve Esparza**
+>   (por Pato) de una lista corta de estilo visual de esta landing: **no se mandó**, espera el sí o no del dueño (la memoria
+>   dice que Método Cantú no se usa como recurso de RE).
+
 ## Dónde estamos
 
 - **La página está completa y decidida.** La versión vigente es

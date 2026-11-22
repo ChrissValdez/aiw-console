@@ -820,3 +820,28 @@ Su opinión de PIEZAS-1 está en `veredictos/2026-11-21-piezas-1.md` (a826646).
 - **La cabina lo revisó** en el navegador integrado, en el empaque local: votar, cambiar opción y «Llevas 1 de 8».
 - **Sin comprobar:** el Artifact publicado (el navegador no tiene su sesión). Tampoco si las páginas que no son `index.html` reciben `claude.use`, ni si `update` acepta claves con «/».
 - **Cuando diga «ya voté»:** `ArtifactData list votos`. Ignorar los `null`. Sus comentarios van tal cual a `veredictos/` y las ✗ salen del panel.
+
+## PIEZAS-2 votado y PIEZAS-3 publicado (2026-11-21, 17:53–18:46)
+
+**Sus votos de PIEZAS-2** llegaron por el panel desde el 8805: `votos/piezas-2.json`, que el arreglo de emergencia 5746a18 hizo posible.
+- Están tal cual, con la lectura de la cabina, en `veredictos/2026-11-21-piezas-2.md` (af6da75 y 3201d1f).
+- Un solo ✓: §5·1. Lo demás son ~ o ✗.
+
+**Encargo:** `encargos/PIEZAS-3.md` (a8187e6 y 3201d1f). Cuatro talleres:
+- J1 · `p3-inicio`: §1 y §8, más el empaque (a3d4329).
+- J2 · `p3-curso`: §2, §3, §4 en lista, §4.5 en tarjetas y §5 fija en 1. El coach ya no deja columna vacía (345b7ec).
+- J3 · `p3-materia`: §6 y §7; Español sigue a Mate con `votaEn` (1ec23b4).
+- J4 · el panel v4 y `servidor.mjs` (aabff82):
+  - votos por ronda, en `votos/<ronda>.json` (local) o en `votos/<id>` → `rondas.<ronda>` (Artifact);
+  - mezcla por sección, línea verde o roja y «Copiar mis votos»;
+  - una sola lista, sin «Llevas N de 8» y sin «En las otras páginas».
+
+**El 8805 se reinició** con el `servidor.mjs` nuevo. Corre en segundo plano desde la cabina.
+
+**Artifact versión 4** en la misma liga. Las capacidades se conservan. `votos` está vacía.
+
+**Cuando diga «ya voté»:**
+- lee `votos/piezas-3.json` del repo;
+- lee `ArtifactData list votos` → `rondas.piezas-3`;
+- ignora los `null`;
+- mezcla por el `actualizado` de cada sección.

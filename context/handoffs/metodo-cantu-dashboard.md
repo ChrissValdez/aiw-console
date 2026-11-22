@@ -941,3 +941,29 @@ Su opinión de PIEZAS-1 está en `veredictos/2026-11-21-piezas-1.md` (a826646).
 **Artifact versión 7.** Se quitaron los archivos de mate y español de la versión anterior. Índice actualizado.
 
 **Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-6`, y además `ArtifactData list votos`.
+
+## PIEZAS-6 votado y PIEZAS-7 publicado (2026-11-22 04:13 – 05:43)
+
+**Votos de PIEZAS-6:** llegaron por GitHub (`origin/votos` 833042f). Quedaron en `veredictos/2026-11-22-piezas-6.md` (f94ff0c, aa1d86b), junto con:
+- su mensaje del chat sobre colores y oscuros;
+- su nota de la línea gris del desglose, con la captura.
+
+**La PC estaba atascada en PIEZAS-3.** Tenía `votos/piezas-3.json` sin registrar, y el `pull --ff-only` de `abrir-tablero.cmd` fallaba sin avisar. Él apartó el archivo con `Move-Item` y ya bajó todo.
+
+**Encargo:** `encargos/PIEZAS-7.md` (b8bde95), con `p7-comun` copiada por la cabina. Cuatro sesiones anidadas:
+- L4 (806e09a):
+  - el nombre real «Curso de preparación para el Examen de admisión»;
+  - `recuadros` 1 a 5;
+  - 8 pares de colores;
+  - oscuros 1, 3 y 5;
+  - §10, el botón de tema.
+- L2 (adcd7f4): §0 lisa; §4.5 abre sin mover filas (990 aperturas, 0 fallas).
+- L3 (0a4188e): §6 con hover gris.
+- L1 (0f3ae49):
+  - §1;
+  - §8 y la nueva §9 del desglose;
+  - el botón «Nuevo simulador».
+
+Esta vez llegó sin CRLF y con §5 fija igual en las cuatro páginas. **Artifact versión 8.**
+
+**Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-7`, y además `ArtifactData list votos`.

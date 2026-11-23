@@ -1192,3 +1192,28 @@ Lo que dijeron los talleres:
 **Sigue pendiente:** «Configura tu meta» lleva a Simuladores, y ahí no hay dónde configurarla. La próxima ronda empieza en el puerto 8885.
 
 **Cuando diga «ya voté»:** `--leer-votos piezas-15` y `ArtifactData list votos`.
+
+
+## PIEZAS-15 votado y PIEZAS-16 publicado, en la PC (2026-11-23 01:34 – 02:28)
+
+**Su voto** (`veredictos/2026-11-23-piezas-15.md`, 34be461):
+- §21: la 1 ✓, así que queda fija en la 1.
+- §20: 1, 2 y 3 ✗; la 4 ~. «No solo deja mucho que desear visualmente, sino que tampoco me encanta cómo está organizado. Quizás con un sistema de filtros».
+- Al plan: «Sí, lánzalo».
+
+**Encargo:** `encargos/PIEZAS-16.md` (68af381; puertos 8885–8887). Tres sesiones, todas terminadas y con su servidor apagado:
+- L1, copias, §21 fija y empaque (d2e4e73): `local_59c696e3-4c7d-4cba-9008-bf6d0a0f717c`;
+- L3, §20 con 4 nuevas, todas con filtros (187fef6): `local_37c2a8f9-3d81-45e0-8da9-da3b298d20b2`;
+- L4, contrato y probar-v4 (e1827a3): `local_6c81ba90-4232-4e2d-86c6-f7565456c343`.
+
+**Resultados:**
+- `probar-v4`: 901 pruebas y solo las 9 fallas de GitHub; la guarda de filtros, 39/0.
+- El crítico de §20 hizo dos rondas. En la segunda acertó seguro en las cuatro preguntas (la de filtros incluida). Su orden: 3 > 4 > 2 > 1. Ve la 2 «algo más reporte».
+- El empaque: 68 archivos y 0 errores.
+- L3 le mandó a piezas14-l4, por error, el aviso de los filtros; L4 lo recibió reenviado.
+
+**Artifact versión 17**, publicado sin bajar el CDN. Índice: a2d8f61.
+
+**Sigue pendiente:** «Configura tu meta» lleva a Simuladores, y ahí no hay dónde configurarla. La próxima ronda empieza en el puerto 8888.
+
+**Cuando diga «ya voté»:** `--leer-votos piezas-16` y `ArtifactData list votos`.

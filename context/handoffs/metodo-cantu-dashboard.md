@@ -1019,7 +1019,7 @@ Los commits de carril se suben uno por uno (juntos dan HTTP 408). **Artifact ver
 
 **Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-10`, y además `ArtifactData list votos`.
 
-## PIEZAS-10 votado y PIEZAS-11 publicado (2026-11-22 17:25 – 19:40)
+## PIEZAS-10 votado y PIEZAS-11 publicado (2026-11-22 17:25 – 19:38)
 
 **Votos de PIEZAS-10:** por GitHub (`origin/votos` 7d4ec86). Quedaron en `veredictos/2026-11-22-piezas-10.md`; §4 fija en la 1 y §12 en la 2.
 

@@ -1165,3 +1165,30 @@ Lo que dijeron los talleres:
 **Sigue pendiente:** «Configura tu meta» lleva a Simuladores, y ahí no hay dónde configurarla.
 
 **Cuando diga «ya voté»:** `--leer-votos piezas-14` y `ArtifactData list votos`.
+
+
+## PIEZAS-14 votado y PIEZAS-15 publicado, en la PC (2026-11-23 00:05 – 01:18)
+
+**Su voto y su foto** (`veredictos/2026-11-23-piezas-14.md`, con `…-primer-dia.png`; 1be7022):
+- «Lo que sigue», en Primer día con dos filas: las tarjetas se enciman;
+- las tarjetas sin puntos (Primer día, Sin simulador) dejan un hueco feo;
+- §20 el Historial: las cuatro ✗, «no se lee la información de forma amigable».
+- Al plan: «Lánzalo así; te mando feedback cuando salga».
+
+**Encargo:** `encargos/PIEZAS-15.md` (puertos 8881–8884). Cuatro sesiones, todas terminadas y con su servidor apagado:
+- L1, copias y empaque (733ace1): `local_a4dbfbb6-d0cd-40e3-a035-c52c5fcf4b61`;
+- L2, el encime y §21 (31d681b): `local_55d33e93-dde0-4b92-8e20-a6cd87569804`;
+- L3, §20 con 4 nuevas (fccfebd): `local_14594cab-fa03-45b2-8708-d8a1348d1648`;
+- L4, contrato y probar-v4 (46ca2eb): `local_1394057e-bd52-47ff-90d7-c30809519679`.
+
+**Resultados:**
+- El encime: la causa era el `row-gap: 0` de `ol.t9s` (subgrid). Corregido; el grupo p15 de probar-v4 da 45/0, y solo quedan las 9 fallas de GitHub.
+- §21: el crítico ordena 1 > 2 > 3 > 4.
+- §20: el crítico pasó las pruebas de lectura; su orden es 1 > 2 > 4 > 3.
+- El empaque, sin errores: 68 archivos (nuevo: `curso-p15.css`).
+
+**Artifact versión 16**, publicado sin bajar el CDN. Índice: 07927cc.
+
+**Sigue pendiente:** «Configura tu meta» lleva a Simuladores, y ahí no hay dónde configurarla. La próxima ronda empieza en el puerto 8885.
+
+**Cuando diga «ya voté»:** `--leer-votos piezas-15` y `ArtifactData list votos`.

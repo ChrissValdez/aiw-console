@@ -1217,3 +1217,33 @@ Lo que dijeron los talleres:
 **Sigue pendiente:** «Configura tu meta» lleva a Simuladores, y ahí no hay dónde configurarla. La próxima ronda empieza en el puerto 8888.
 
 **Cuando diga «ya voté»:** `--leer-votos piezas-16` y `ArtifactData list votos`.
+
+
+## PIEZAS-16 votado y PIEZAS-17 publicado, en la PC (2026-11-23 02:32 – 04:00)
+
+**Su voto** (`veredictos/2026-11-23-piezas-16.md`, con dos fotos; f68bb05):
+- §4.5: la 3 ✓, así que queda fija en la 3.
+- §20: la 4 ~, otra vez. «Los filtros son la dirección correcta»; las tarjetas «se ven bonitas, pero cuestan para leer»; la tabla de la 4 «intenta tanto ser moderna que se ve mal».
+- Arreglos que pidió: la meta en Sin simulador (§16), el Historial descentrado y el número de «Lo que sigue» en lista pegado a la orilla.
+- Al plan: «Sí, lánzalo». Ya lanzado, pidió **8 variantes de alta calidad** del Historial (adenda 7f4d258) y **apagar la PC al cerrar el encargo**.
+
+**Encargo:** `encargos/PIEZAS-17.md` (01cbfa0, con las adendas 7f4d258 y f3f2dd4; puertos 8888–8890). Tres sesiones, todas terminadas y con su servidor apagado:
+- L1 (0ce6dc8): `local_5c30e180-5391-4be5-9df6-159a5c03e007`;
+- L3 (3f20dcb): `local_59beef6d-cc6f-4960-a41b-e873c410d22e`;
+- L4 (2147d10): `local_f948463a-4fe6-444f-829e-b4885bc289f5`.
+
+**Resultados:**
+- §20 tiene 8 tablas sobrias con filtros, y el Historial queda centrado como el Resumen.
+- Dos críticos ciegos, en 3 o 4 rondas:
+  - el de estética entrega las ocho; su orden es 7, 6, 2, 1, 3, 8 (nota 8), y 4 y 5 (7,5);
+  - el de lectura da a la 4 «con esfuerzo» (es un estado de cuenta de intentos) y a la 6 «la más directa».
+- `probar-v4`: 925 pruebas y solo las 9 fallas de GitHub. El centrado y la meta pasan.
+- El empaque: 68 archivos y 0 errores.
+
+**Artifact versión 18**, publicado sin bajar el CDN. Índice: 8ed73ca.
+
+**Al cerrar:** la PC se apaga por su pedido (protocolo de aviso, `shutdown /s /t 300` y `shutdown /a`).
+
+**Sigue pendiente:** «Configura tu meta» lleva a Simuladores, y ahí no hay dónde configurarla. La próxima ronda empieza en el puerto 8891.
+
+**Cuando diga «ya voté»:** `--leer-votos piezas-17` y `ArtifactData list votos`.

@@ -1099,3 +1099,36 @@ Lo que dijeron los talleres:
 **Índice:** fee14a6.
 
 **Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-12` y `ArtifactData list votos`.
+
+## PIEZAS-12 votado y PIEZAS-13 publicado, en la PC (2026-11-22 22:03 – 22:57)
+
+**Votos de PIEZAS-12:** 9 secciones, por GitHub (`origin/votos` 5bb90ad; en el Artifact no hubo). Además mandó un feedback estructural por chat. Todo está tal cual en `veredictos/2026-11-22-piezas-12.md` (82cec75), con su «Sí, con esas» al análisis de la cabina (4679e3f).
+
+**Lo que dijo:**
+- «es un desorden porque salieron variantes sobre variantes»;
+- en Primer día, «Lo que sigue» listaba áreas con «N bloques» en vez de lecciones;
+- la palomita de §13 significaba «diagnóstico hecho» y él la leía como «área terminada».
+
+**Lo que decidió con la cabina:**
+- «¿Cómo voy?» = avance por área: palomita = terminada; la de en curso, punteada o llena; las demás, sin ícono;
+- el diagnóstico, solo en el botón (§18: tres estados para «hecho»);
+- §13 como tarjeta completa;
+- §19, la segunda vuelta, en el mismo orden de áreas, con A, B y C (la A primero), y el escenario nuevo «Ruta esencial completa»;
+- fijas: §2 en la 1 (con «Configura tu meta»), §8 en la 1, §15 en la 4 y §17 en la 5.
+
+**Encargo:** `encargos/PIEZAS-13.md` (4679e3f). Cuatro sesiones nuevas, todas terminadas y con su servidor apagado:
+- L1 (327d46e): `local_1415f86c-b620-4851-9a07-3136cd5d7b03`;
+- L2 (e91b204): `local_23ae049b-7de4-4072-a2ce-4c89e5b837c0`;
+- L3 (dcafba2): `local_28ad12b3-dee7-4c8e-84a8-32b9dd4b7e54`;
+- L4 (16ed99d): `local_5ee66064-c347-4605-a524-021ace2a87ab`.
+
+**Resultados:**
+- `probar-v4`: 641 pruebas y 9 fallas, todas de GitHub;
+- el empaque, sin errores (L1 ajustó la guarda que dio el falso positivo);
+- L4 y su crítico recomiendan la 3 de §0 y la 1 de §11.
+
+**Pendiente:** el Resumen manda «Configura tu meta» a `simuladores.html#meta` (la tarjeta del último simulador), pero Simuladores todavía no tiene dónde configurar la meta.
+
+**Artifact versión 14**, publicado sin bajar el CDN: `scratchpad/reescribir-sin-cdn.mjs`, con el mismo método que la versión 13. Índice: 630d046.
+
+**Cuando diga «ya voté»:** `--leer-votos piezas-13` y `ArtifactData list votos`.

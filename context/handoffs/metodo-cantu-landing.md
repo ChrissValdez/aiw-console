@@ -14,6 +14,16 @@
 > - **Siempre en español** (lo pidió el dueño). Cada mensaje cierra con «Qué necesito de ti», «Qué procede» y
 >   «⏳ EN ESPERA de …».
 
+> **Adenda del 22-nov, 20:37 (`date`), en la PC: la landing vuelve a la cuenta principal.** El dueño: *«ya volvi, pero no
+> se si hizo el relevo creo que no»*.
+> - **Medido a las 20:36:** los dos repos tenían `git status` limpio y `HEAD` igual a `origin/main`, y no faltaba nada por
+>   subir.
+>   - `metodo-cantu-landing` estaba en `bb7e3c9` (BB).
+>   - `aiw-console` estaba en `dd70526`.
+>   - La cuenta suplementaria no hizo un «1. Cierre» formal, pero su adenda de las 15:39 sí estaba.
+> - **Lo vigente** es lo de la adenda de abajo y el `README.md` del repo.
+> - **«Dónde estamos», «Lo que sigue» y «Lo decidido (AS)»** quedaron viejos. Se reescriben en el próximo cierre.
+
 > **Adenda del 22-nov, 15:39 (`date`), en la PC. Gana sobre la del 21-nov.**
 > - **La vigente es BB:** `metodo-cantu-landing/prototipos/BB-la-vigente/landing.html` (un fichero:
 >   `…/BB-la-vigente/un-solo-fichero/landing-BB.html`). Es AZ con la 3 «Con el Método Cantú sabes qué estudiar» y la 4

@@ -1070,3 +1070,32 @@ Se vuelve a analizar con PIEZAS-11 a la vista.
 - **Publicar:** `node prototipo/panel/herramientas/empaquetar.mjs <scratch>/piezasN-art`, luego `node herramientas/vendorizar-artifact.mjs <scratch>/piezasN-art <scratch>/cdn <scratch>/piezasN-pub` (el `cdn` de la laptop no viaja; en la PC se vuelve a llenar). Publicar con `url` del Artifact, `file_path` = `…pub/index.html`, `root` = `…pub` y el mapa `files` (los archivos que ya no existen, con `null`).
 - **Votos:** al «ya voté», `node herramientas/servidor.mjs --leer-votos piezas-N` y `ArtifactData list votos`; veredicto tal cual en `veredictos/`; luego `index.html` (sección nueva arriba), este relevo, commit y push.
 - **Mensajes:** cerrar con «Qué necesito de ti», «Qué procede» y «⏳ EN ESPERA de …». La hora, con `date`. Antes de crear o cambiar archivos, decirle qué se va a hacer.
+
+## PIEZAS-12 lanzado, integrado y publicado, en la PC (2026-11-22 20:29 – 20:57)
+
+**Plan confirmado:** a las 20:29 la cabina de la PC le confirmó el plan, y él contestó «Sí, lánzalo».
+
+**Talleres:** cuatro sesiones nuevas, todas terminadas, con su servidor apagado.
+
+| Carril | Sesión | Commit |
+|---|---|---|
+| L1 | `local_1bb82b71-c729-4b60-b006-16db06ff5caa` | 583f7ba: Simuladores sin simulador y el empaque de las p12 |
+| L2 | `local_c206b392-84b7-4233-acb0-0408dec27981` | 0770ae8: el Resumen, con §13, §2/§16, §15 y §14; §3 sale |
+| L3 | `local_e24535fc-bb87-49d9-992e-b252ba12f6cf` | 6907c07: el Temario sin los tres textos; §17 |
+| L4 | `local_bb062702-e638-4a57-befe-9e945835dbb9` | e00be32: §0 en dos colores (contraste mínimo 4,85:1), contrato y `probar-v4` |
+
+Lo que dijeron los talleres:
+- **Corrección de L4 al encargo:** §0 de PIEZAS-11 tenía 3 opciones, no la 2 a la 4. Tomó esas tres, y la 4 y la 5 son nuevas. Su crítico recomienda la 5.
+- **`probar-v4`:** 620 pruebas y 9 fallas, todas de GitHub (en un taller siempre fallan).
+- **El aviso de L4 sobre la integración:** pidió volver a correr `probar-v4` si L2 cambiaba algo después de las 20:47. **La cabina no lo volvió a correr.**
+
+**La guarda del empaque da 1 error, y es falso positivo:** «Al dominar lo esencial…» está en la respuesta del coach a «¿Para qué sirve el diagnóstico?» (Primer día), no en «Lo que sigue». Él pidió quitarlo solo de «Lo que sigue». **Queda sin tocar**, para que él lo vea.
+
+**Publicado sin bajar el CDN.** Los `vendor/` ya estaban en el Artifact y se conservan al actualizarlo. Por eso, en lugar de `vendorizar-artifact.mjs`, se usó un script que solo reescribe las ligas del CDN a `vendor/` (`reescribir-sin-cdn.mjs`, en el temporal de la sesión):
+- **Artifact versión 13** (1795402600-6f08), 63 archivos, más los `vendor/` que se conservan;
+- 6 archivos nuevos, ninguno quitado.
+- El Artifact **no se vio en el navegador**: la cabina no tiene sesión en claude.ai.
+
+**Índice:** fee14a6.
+
+**Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-12` y `ArtifactData list votos`.

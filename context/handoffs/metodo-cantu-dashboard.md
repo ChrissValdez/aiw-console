@@ -1046,3 +1046,27 @@ Se vuelve a analizar con PIEZAS-11 a la vista.
 **Artifact versión 12.** Índice actualizado.
 
 **Cuando diga «ya voté»:** `--leer-votos piezas-11` y `ArtifactData list votos`; luego, analizar con él el tablero y el diagnóstico.
+
+## RELEVO A LA PC (2026-11-22 20:17): PIEZAS-12 escrito, sin lanzar
+
+**Por qué:** él sigue el trabajo en la **PC**; la cabina de la laptop se queda quieta. La memoria de Claude (`~/.claude/.../memory/`) **no viaja** entre computadoras: lo que la cabina de la PC necesita está aquí y en el repo.
+
+**Estado exacto:**
+- Los repos `metodo-cantu-dashboard` y `aiw-console` quedaron limpios e iguales a `origin/main` (último commit del tablero: fadb784).
+- **PIEZAS-11:** él no votó en el panel; dio feedback por chat. Está tal cual en `veredictos/2026-11-22-piezas-11.md`.
+- **PIEZAS-12:** el encargo está en `encargos/PIEZAS-12.md` (2b8fe01) y `prototipo/p12-comun/` ya está copiada (fadb784).
+  - **Él pidió confirmar el plan antes de lanzar, y no lo ha confirmado.** Los cuatro talleres se lanzaron por error y se detuvieron un minuto después sin escribir nada; no se reanudan. En la PC se lanzan **sesiones nuevas**.
+  - **Lo único abierto del plan:** el orden de las dos tarjetas de arriba del Resumen. Dijo las dos cosas, así que va como opción (§14).
+- **Artifact:** versión 12 = PIEZAS-11, https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq.
+
+**Lo primero en la PC:** confirmarle el plan de PIEZAS-12 (está en el encargo) y esperar su «sí, lánzalo».
+
+**Cómo se trabaja (resumen de lo aprendido; detalle en las secciones de arriba):**
+- **Talleres:** cuatro sesiones anidadas (`start_session`, `user_asked`, `fresh`, `use_worktree: false`, `effort: high`, nunca Fable), una por carril (L1 inicio y simuladores + `empaquetar.mjs`; L2 resumen; L3 temario; L4 `pN-comun` + `GLOBALES` de `panel.js` + `probar-v4.mjs`). Los briefs de PIEZAS-11 sirven de plantilla: cada uno dice su encargo, su carpeta, su puerto y su marca, y las reglas duras. Puertos de PIEZAS-12: 8869 a 8872.
+- **Revisión según la fase (él, 22-nov):** mientras sea lluvia de ideas, revisión ligera (lo nuevo en 1440 y 375, un crítico, solo el par 3 en claro; lo que no cambia, una pasada), meta de ~30 min por taller. La revisión a fondo de las secciones aprobadas va **al final, todas juntas**, después del rediseño.
+- **Menos texto (él, 22-nov):** nada de leyendas ni frases que expliquen la interfaz.
+- **Commits:** uno por carril (`git -c user.name=ChrissValdez …`, con la línea Co-Authored-By). **Súbelos uno por uno** (`git push origin <sha>:refs/heads/main`), en segundo plano: juntos dan HTTP 408 por las capturas. Si hay cambios sin commit de los talleres, `pull --rebase` falla: si `fetch` dice que solo vas adelante, empuja directo.
+- **Antes del commit:** LF (no CRLF; revisa con Python), fijas con el mismo número en las cuatro páginas, sin «PAA Tec», sin tiempos, sin sesskey, sin corchetes en el CSS. Si la página sale de un generador (`curso.mjs`, `temario.mjs`), el arreglo va también ahí.
+- **Publicar:** `node prototipo/panel/herramientas/empaquetar.mjs <scratch>/piezasN-art`, luego `node herramientas/vendorizar-artifact.mjs <scratch>/piezasN-art <scratch>/cdn <scratch>/piezasN-pub` (el `cdn` de la laptop no viaja; en la PC se vuelve a llenar). Publicar con `url` del Artifact, `file_path` = `…pub/index.html`, `root` = `…pub` y el mapa `files` (los archivos que ya no existen, con `null`).
+- **Votos:** al «ya voté», `node herramientas/servidor.mjs --leer-votos piezas-N` y `ArtifactData list votos`; veredicto tal cual en `veredictos/`; luego `index.html` (sección nueva arriba), este relevo, commit y push.
+- **Mensajes:** cerrar con «Qué necesito de ti», «Qué procede» y «⏳ EN ESPERA de …». La hora, con `date`. Antes de crear o cambiar archivos, decirle qué se va a hacer.

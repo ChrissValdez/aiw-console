@@ -1018,3 +1018,31 @@ Los commits de carril se suben uno por uno (juntos dan HTTP 408). **Artifact ver
 **Abierto, sin decidir:** el diagnóstico. Él lo planteó en el chat (por área en vez de 60 preguntas; qué muestra «¿Cómo voy?» sin simulador; cuándo pedir el simulador; los quizzes con niveles Fundamental, PAA y Reto). La cabina le propuso: diagnóstico corto por área como mapa y no calificación, paso de área por prerrequisitos, simulador opcional el día 1 y pedido en un hito, tres estados de «¿Cómo voy?», y un tema = una fila con tres marcas. **Esperando sus respuestas**; no hay nada escrito en el repo.
 
 **Cuando diga «ya voté»:** `node herramientas/servidor.mjs --leer-votos piezas-10`, y además `ArtifactData list votos`.
+
+## PIEZAS-10 votado y PIEZAS-11 publicado (2026-11-22 17:25 – 19:40)
+
+**Votos de PIEZAS-10:** por GitHub (`origin/votos` 7d4ec86). Quedaron en `veredictos/2026-11-22-piezas-10.md`; §4 fija en la 1 y §12 en la 2.
+
+**Su análisis del diagnóstico** quedó tal cual en `veredictos/2026-11-22-diagnostico-y-ruta.md` (bd47aa9), con lo que decidió:
+- diagnóstico por área, solo de la ruta esencial;
+- nada se bloquea;
+- Español libre;
+- Nivel PAA directo como opción discreta;
+- simulador recomendado hasta el primero;
+- progreso medido por quiz y no por lección.
+
+Se vuelve a analizar con PIEZAS-11 a la vista.
+
+**Encargo:** `encargos/PIEZAS-11.md` (634cb06). Cuatro sesiones anidadas:
+- L2 (8fd7078):
+  - §3 con el progreso por quiz;
+  - §13, la ruta sin simulador.
+- L3 (ab566c7): §6 con niveles de quiz, esencial o de ventaja, y diagnóstico de área.
+- L1 (55e6325): §8 con 3 nuevas; el coach sin simulador.
+- L4 (30c727e): §11 con el chat libre; el escenario «Sin simulador».
+
+**Regla nueva (él):** en lluvia de ideas la revisión es ligera; la revisión a fondo de las secciones aprobadas va al final, todas juntas, después de este rediseño.
+
+**Artifact versión 12.** Índice actualizado.
+
+**Cuando diga «ya voté»:** `--leer-votos piezas-11` y `ArtifactData list votos`; luego, analizar con él el tablero y el diagnóstico.

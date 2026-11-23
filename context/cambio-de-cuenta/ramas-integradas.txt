@@ -192,3 +192,5 @@ cantu-lessons cr-lx3-04 3a9b652a
 cantu-lessons cr-lx3-05 5a419145
 cantu-lessons cr-lx3-06 600134b7
 cantu-lessons cr-lx3-06a edbdb4fd
+cantu-revisiones cr-pl-85-sincroniza-sola 04bc0881
+cantu-lessons cr-pl-85-sincroniza-sola d2aa1ee9

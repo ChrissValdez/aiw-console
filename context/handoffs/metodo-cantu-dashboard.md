@@ -1132,3 +1132,36 @@ Lo que dijeron los talleres:
 **Artifact versión 14**, publicado sin bajar el CDN: `scratchpad/reescribir-sin-cdn.mjs`, con el mismo método que la versión 13. Índice: 630d046.
 
 **Cuando diga «ya voté»:** `--leer-votos piezas-13` y `ArtifactData list votos`.
+
+## PIEZAS-13 votado y PIEZAS-14 publicado, en la PC (2026-11-22 23:07 – 23:49)
+
+**Votos de PIEZAS-13:** 7 secciones, por GitHub (`origin/votos` 45ecb00), más comentarios por chat. Todo tal cual en `veredictos/2026-11-22-piezas-13.md` (3021e27).
+- **Eligió:** §13 en la 1, §16 en la 1, §11 en la 3 y §18 en la 1.
+- **§18:** pidió los botones alineados con los de §2, con el diagnóstico a la izquierda.
+- **§19:** quiere combinar la 1 con el «Ruta esencial completa» de la 3.
+- **§0:** marcó la 1 y la 4 con ~, sin comentario.
+
+**Página nueva, el Historial** (su pedido; «Sí, van esas» a las recomendaciones):
+- la pestaña «Historial»;
+- se ordena por Materia → Área → Bloque → Quiz, con el diagnóstico a la cabeza de cada área;
+- Fundamental y Nivel PAA con sus intentos; el Reto aparte;
+- «Revisar» abre `revision.html`, una página mínima de muestra;
+- los simuladores no van ahí;
+- §20 con 4 opciones.
+
+**Encargo:** `encargos/PIEZAS-14.md` (3021e27). Cuatro sesiones nuevas, todas terminadas y con su servidor apagado:
+- L1 (21e9d0b): `local_b737f1ff-b9ed-4af6-a6df-4ca17155c310`;
+- L2 (c8223b9): `local_85f73a53-58c6-41aa-9025-f83dc7757fdc`;
+- L3, Historial y Temario (1848f2d): `local_5b089fb9-6852-46f4-bb10-fa635b170b46`;
+- L4 (cf3e3c9): `local_11e25526-eb39-4b53-bfa9-6e345308f6a1`.
+
+**Resultados:**
+- `probar-v4` final: solo las 9 fallas de GitHub. §18 quedó alineada en 40 vistas.
+- El empaque, sin errores: 67 archivos con `historial.html` y `revision.html`.
+- **Los críticos recomiendan:** la 2 de §20 (tabla con filtros), la 2 de §0 y la 3 de §19.
+
+**Artifact versión 15**, publicado sin bajar el CDN, como la 13 y la 14. Índice: 9237e4f.
+
+**Sigue pendiente:** «Configura tu meta» lleva a Simuladores, y ahí no hay dónde configurarla.
+
+**Cuando diga «ya voté»:** `--leer-votos piezas-14` y `ArtifactData list votos`.

@@ -1455,3 +1455,34 @@ Lo que dijeron los talleres:
 **La próxima ronda empieza en el puerto 8908.**
 
 **Cuando diga «ya voté»:** `--leer-votos piezas-21` y `maestro-4`.
+
+## MAESTRO-4 y PIEZAS-21 votados; MAESTRO-5 y PIEZAS-22 publicados en la liga única (2026-11-24 02:11 – 02:55)
+
+**Los votos:**
+- **MAESTRO-4:** `veredictos/2026-11-24-maestro-4.md` (4be2356). Pidió:
+  - ninguna tabla que se abra;
+  - menos datos en §1;
+  - la fecha fin de curso;
+  - el buscador junto a «Alumnos»;
+  - propuestas para el último simulador;
+  - otros colores para el diagnóstico.
+- **PIEZAS-21:** `veredictos/2026-11-24-piezas-21.md` (a60baa4). El primer envío llegó vacío («no había votado»); el bueno es el de las 02:18.
+
+**Las rondas:**
+- **MAESTRO-5:** encargo 21c6870; trabajo 2330431, `local_7a576bd7-cd21-4df2-94bc-bb0958c2bf6c`.
+  - Fijos con sus cambios: §0 (el estilo 1), §1 (la 1 limpia) y §2 (la tabla sola de la 2).
+  - Se votan §D con 4, §3 con 3 y §4 con 3.
+- **PIEZAS-22:** encargo 55eca97; trabajo 79faadf, `local_5b0826c6-dfb3-449b-8c55-90e46411f491`, un solo carril.
+  - El brazo es `p22-curso/brazo.svg`, un archivo con un solo path, sin script, en §19 y §45.
+  - §19 y §11 (los botones del coach), con 3 cada una.
+
+**Pidió que le avise de cada ronda en cuanto salga, sin esperar a la otra.**
+- MAESTRO-5 salió primero y se publicó solo en la v25, con el alumno de PIEZAS-21.
+- Para eso se empacó desde un `git worktree` aparte con un `vigente.json` temporal, porque el del repo ya apuntaba a p22. El worktree se quitó después.
+- Luego PIEZAS-22 + MAESTRO-5 en la **v26**.
+
+**El índice:** cce8103.
+
+**La próxima ronda empieza en el puerto 8910.**
+
+**Cuando diga «ya voté»:** `--leer-votos piezas-22` y `maestro-5`. Si alguno llega vacío, preguntarle: puede no haber votado.

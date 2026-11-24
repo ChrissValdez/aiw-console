@@ -26,7 +26,10 @@ La cabina que siga al área no hereda la conversación de esta, solo sus fichero
 ## Lo propio de LECCIONES
 
 - **Lo que espera al operador:** las tres vistas de CR-LX3·07 en la galería CR-LX3 (`docs/carriles/CR-LX3/07.md`, c05f1bbc) y lo que más tenga la cola.
-- **Las ramas locales sin juntar** (medido con `sincronia.mjs` el 24-nov): `cr-fig-04` (2 commits), `cr-lx-13-hoja` (2), `cr-lx3-01` (4), `cr-lx3-02` (1) y `cr-lx3-06` (1). Los worktrees de esas rondas que ya no existen no se tocan: el `git worktree prune` espera el sí del operador.
+- **Las ramas locales que `sincronia.mjs` marca** (24-nov): `cr-fig-04` (2 commits), `cr-lx-13-hoja` (2), `cr-lx3-01` (4), `cr-lx3-02` (1) y `cr-lx3-06` (1).
+  - `cr-lx3-01`, `-02` y `-06` **ya están** en `context/cambio-de-cuenta/ramas-integradas.txt` (líneas 188, 189 y 193): la cabina confirma que lo que traen ya está en `main` (por ejemplo, entró por cherry-pick) y lo dice en el relevo.
+  - `cr-fig-04` y `cr-lx-13-hoja` **no están** en esa lista: se juntan o se declaran.
+  - Los worktrees de esas rondas que ya no existen no se tocan: el `git worktree prune` espera el sí del operador.
 - **`cantu-lessons` y `cantu-revisiones` tenían commits de GitHub sin bajar** (1 y 3, la misma medición): se bajan antes de cerrar.
 - **`tools/cabina/pendientes.mjs`** termina sin salida tras la mudanza: escribe en `_scratch/cabina-lecciones/`, que ya no existe. Se arregla o queda como primer pendiente del relevo. Lo mismo con el vigilante de votos y el script que abre la galería, si apuntan a rutas viejas.
 - **Las reglas de la memoria de la PC que son de LECCIONES** (unas 30 en `MEMORY.md`: el flujo v11, los votos, los carriles nunca ociosos, el turno de cinco, fusionar `bloques.json`, la tesela con hora, el pulido a mitad de tokens, el 8791 con el código viejo, las tres variantes por sección, los apuntes de sistema con `--en`, entre otras) pasan a ficheros como dice el punto 4.

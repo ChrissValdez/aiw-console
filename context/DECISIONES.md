@@ -3725,8 +3725,8 @@ cuentachris: «cada una decide sobre aparatos disponibles».
 
 - **Las dos cuentas trabajan a la vez, cada una en sus repos.** Reemplaza la regla de que nunca trabajaban a la vez.
 - **El registro es `context/metodo-cantu/ASIGNACIONES.md`:** cuentapato lleva LECCIONES y revisiones (`cantu-lessons`,
-  `cantu-revisiones`) y LANDING; cuentachris lleva DASHBOARD; `cantu-studio`, `cantu-quizzes-latex` y el código de la consola,
-  libres. Ahí están tomar y soltar, las dependencias entre repos y lo que espera el sí de Chris.
+  `cantu-revisiones`) y LANDING; cuentachris lleva DASHBOARD y, hoy, `cantu-quizzes-latex`; `cantu-studio` y el código de la
+  consola, libres. Ahí están tomar y soltar, las dependencias entre repos y lo que espera el sí de Chris.
 - **Las cuentas se avisan por el buzón,** `context/metodo-cantu/mensajes/`.
 - **En la máquina no hay rebase** en `aiw-console`: `fetch` y `pull --ff-only` solo si el árbol está limpio y va detrás; si no,
   se para.
@@ -3734,7 +3734,10 @@ cuentachris: «cada una decide sobre aparatos disponibles».
   cuentapato, después del cierre de sus cabinas sueltas en PC-Chris, que incluye pasar a ficheros las reglas que solo están en la
   memoria de PC-Chris. El detalle es `PROYECTO.md` §3.1, §3.2, §5 y §6 (v2).
 
-**Lo que esta decisión NO hace:** no saca a Studio de la pausa (D-079), no aprueba el `git worktree prune`, y no fija las
-preguntas 1, 6, 7 y 8 de `ASIGNACIONES.md`, que esperan el sí de Chris.
+**Lo que contestó Chris** (~09:20 en Monterrey, copiado por cuentachris en el buzón): los cambios al registro los aprueba él en
+la sesión que suelta o toma; el tope de tres es por cuenta; la nube sube directo a `main` solo avisos nuevos del buzón y su línea
+del registro; los repos de una cuenta sin tokens esperan, y cada cuenta deja su relevo al día al 95 %.
+
+**Lo que esta decisión NO hace:** no saca a Studio de la pausa (D-079) y no aprueba el `git worktree prune`.
 
 **Criterio de borrado:** se reabre si dos cuentas chocan en un mismo repo, si el buzón no se lee, o si una cuenta deja de existir.

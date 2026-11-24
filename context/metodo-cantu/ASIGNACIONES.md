@@ -34,7 +34,7 @@ Chris: *«cada una decide sobre aparatos disponibles»*. La columna de arriba es
 | `metodo-cantu-landing` | LANDING | `cuentapato` | activo | 2026-11-24 | Mismo requisito. |
 | `metodo-cantu-dashboard` | DASHBOARD | `cuentachris` | activo | 2026-11-24 | |
 | `cantu-studio` | Studio | — | libre | 2026-11-24 | En pausa (D-079). |
-| `cantu-quizzes-latex` | Banco de quizzes | — | libre | 2026-11-24 | Espera la QA del operador. |
+| `cantu-quizzes-latex` | Banco de quizzes | `cuentachris` | activo | 2026-11-24 | CQL_Cabina (PC-Chris) trabaja ahí hoy, a pedido de la cabina de LECCIONES: el quiz de Propiedades y una versión esencial. Al terminar, Chris decide si se suelta. |
 | `aiw-console` (`context/`) | Contexto compartido | las dos | compartido | 2026-11-24 | Solo registro, relevos y buzón (ver abajo). |
 | `aiw-console` (código de la consola) | Project Console | — | libre, en pausa | 2026-11-24 | Congelado (Pausado_Console_Cabina), como Studio. |
 
@@ -76,10 +76,9 @@ Si aparece otra, se agrega aquí.
 
 ## Tomar un repo
 
-Solo con el sí del operador, dicho en la sesión que lo va a tomar. *(Que baste el sí de Chris en la sesión que suelta o toma está
-pendiente de su sí; ver abajo.)*
+Con el sí de Chris, dicho en la sesión que suelta o toma el repo (D-087).
 
-**`cantu-quizzes-latex`:** que lo tome quien lo necesite, con el sí de Chris. Hoy conviene una cuenta que corra en PC-Chris: ahí
+**`cantu-quizzes-latex`, cuando se suelte:** que lo tome quien lo necesite, con el sí de Chris. Conviene una cuenta que corra en PC-Chris: ahí
 están TeX Live 2025, `pdftotext` y CertUtil (el XML de Moodle). En la nube TeX se instala cada vez (~5 min) y Moodle solo está en
 la máquina.
 
@@ -117,17 +116,19 @@ Las dos cuentas escriben aquí, pero solo en esto:
     entre cabinas, y un rebase reescribiría commits locales de otra o fallaría a medias con el árbol sucio.
   - **En la nube:** `git pull --rebase origin main` está bien; el checkout es solo del hilo.
 - Se empuja solo si `origin/main..HEAD` trae únicamente lo propio. **Nunca `--force`.**
-- Desde la nube, a la rama del hilo y por PR (PROYECTO.md §4). *(La excepción del buzón, abajo, espera el sí de Chris.)*
+- Desde la nube, a la rama del hilo y por PR (PROYECTO.md §4), **salvo** un aviso nuevo en `mensajes/` y la línea propia de este
+  registro, que van directo a `main` (Chris, pregunta 7).
 
-**`PROYECTO.md` y este fichero se cambian solo con el sí del operador.**
+**`PROYECTO.md` y este fichero se cambian solo con el sí de Chris** (en este fichero, dicho en la sesión que suelta o toma).
 
-## Lo que espera el sí de Chris
+## Lo que contestó Chris (2026-11-24, ~09:20 en Monterrey)
 
-cuentachris dio su recomendación; **nada de esto vale hasta que Chris diga sí.**
+Sus respuestas a las preguntas del PR 1, tal cual las copió cuentachris en
+`mensajes/leidos/2026-11-24-1521-cuentachris-cuentapato-respuestas-pr1.md`:
 
-| # | Pregunta | Recomendación de cuentachris |
+| # | Pregunta | Lo que vale |
 |---|---|---|
-| 1 | ¿Quién aprueba tomar o soltar un repo? | Chris, en la sesión que suelta o toma. |
-| 6 | ¿El tope de tres sesiones a la vez es global o por cuenta? | Por cuenta. |
-| 7 | ¿La nube puede empujar directo a `main` en `aiw-console`? | Sí, pero solo avisos nuevos en `mensajes/` y la línea propia de este registro. |
-| 8 | ¿Qué pasa con los repos de una cuenta que se queda sin tokens? | Esperan, no cambian de dueño. Cada cuenta deja su relevo al día al 90 % de su tope, porque al 0 ya no puede hacer el cierre. |
+| 1 | ¿Quién aprueba un cambio en este registro? | Chris, en la sesión que suelta o toma el repo. |
+| 6 | ¿El tope de tres sesiones es por cuenta o entre las dos? | Por cuenta: *«cada una paga sus tokens y usa su propio aparato»*. |
+| 7 | ¿La nube puede subir directo a `main`? | Sí, pero solo avisos nuevos en `mensajes/` y su propia línea de este registro. |
+| 8 | Si a una cuenta se le acaban los tokens, ¿sus repos pasan a la otra? | Esperan, salvo que Chris diga otra cosa. Cada cuenta deja su relevo al día al **95 %** de su uso semanal, porque al 0 ya no puede hacer el cierre. |

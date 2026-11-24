@@ -1637,3 +1637,39 @@ Lo que dijeron los talleres:
 **La próxima ronda empieza en el puerto 8915.**
 
 **Cuando diga «ya voté»:** `--leer-votos maestro-8`.
+
+## MAESTRO-8 votado; MAESTRO-9 publicado, v32. Relevo antes de la mudanza (2026-11-24 06:27 – 07:22)
+
+**Los votos:** `veredictos/2026-11-24-maestro-8.md` (2fa9a277).
+
+**La ronda:** encargo d5766666; trabajo 3dccd4eb, `local_fc377491-1d58-4884-b2c2-ad8bc08a751e`.
+
+**Lo fijo:**
+- §3a en la 1: la meta va arriba de «Ver revisión», y «Ver revisión» queda donde decía «Los últimos 6 de 15».
+- §3b en la 1, con una notita por materia.
+- §5 en la 2, con el resalte sutil (filete y cifra 800).
+- §D en la 1, con el título y el buscador en un renglón.
+- El resaltado de renglones: el hover no toca la línea, y lo abierto lleva el tinte teal.
+
+**Lo que se vota:**
+- **§G** (clave 8), con 3.
+- **§Q** (clave 9), con 4; la 3 es la recomendada.
+- **§P** (clave 10), con 3. La tabla de preguntas más falladas salió.
+- **§C**, «Mis cursos» (clave 1), con 3.
+
+**Las favoritas del crítico:** §G·2, §Q·3, §P·3 y §C·1.
+
+**Lo medido:** 286 vistas y 1104 escenarios, 0 fallas. Lo publicado es la **v32**, con PIEZAS-24. El índice va en 801550d8.
+
+**Cuando diga «ya voté»:** `--leer-votos maestro-9`. Él pidió votar **después** de la mudanza.
+
+**La mudanza a `AIW_Workspace\Metodo_Cantu` (aprobada por él el 24-nov):**
+- Se hace paso a paso, comprobando cada paso. La hace una sesión nueva en la raíz de `AIW_Workspace`, no la cabina DASHBOARD.
+- El plan es el de la otra cuenta (Laptop-Chris). Ojo con:
+  - **las memorias de las cabinas**, que cuelgan de la ruta de `AIW_Workspace`;
+  - **el `git worktree prune`** de lessons (40 de 147 ya no existen) y revisiones (2), que necesita su sí;
+  - **los servidores apagados**.
+- **Medido a las 07:22, antes de la mudanza:** en origin/main solo traen `Metodo_Cantu` aiw-console (1 archivo), cantu-studio (88) y cantu-lessons (8). Dashboard, landing, quizzes y revisiones no traen ninguno. cantu-studio tiene 1 archivo sin commit.
+- Después de la mudanza, DASHBOARD se reabre desde su lugar nuevo y retoma aquí. Los scripts de publicar de la cabina, que viven fuera del repo, usan la ruta vieja y se ajustan al retomar.
+
+**La próxima ronda empieza en el puerto 8916.**

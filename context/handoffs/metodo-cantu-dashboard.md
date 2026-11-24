@@ -1247,3 +1247,56 @@ Lo que dijeron los talleres:
 **Sigue pendiente:** «Configura tu meta» lleva a Simuladores, y ahí no hay dónde configurarla. La próxima ronda empieza en el puerto 8891.
 
 **Cuando diga «ya voté»:** `--leer-votos piezas-17` y `ArtifactData list votos`.
+
+## PIEZAS-17 votado, PIEZAS-18 publicado, la auditoría de Moodle y dos prototipos nuevos (2026-11-23 15:00 – 18:56)
+
+**Sus votos de PIEZAS-17:** están en `veredictos/2026-11-23-piezas-17.md` (509e77b).
+- **§20:** 1 ~, 2 ✗, 3 ✗, 4 ~, 5 ~, 6 ✗, 7 ✗, 8 ✗. La base queda así: agrupar por área como la 5, la tabla de la 1, los filtros por estado y una lista de filtros para votar.
+- **El panel:** pidió números en tres modos (Pendientes, Todas, Ocultar), las fijas plegadas y un botón «Ir a [escenario]».
+- **La meta en Primer día:** seguía desacomodada.
+
+**Encargo:** `encargos/PIEZAS-18.md` (b0f0d8e, puertos 8891 a 8893). Tres carriles, todos terminados y con su servidor apagado:
+- **L1** (081ff35): `local_d53a3930-3adc-4c5d-9e7a-580229f5ad27`. Reprodujo lo de la meta en Primer día (21 de 96 vistas salían mal) y lo arregló en `p18-curso/curso-p14.css`.
+- **L3** (0be2757): `local_92c4a748-a2d5-4a61-8cc0-1eb2e6bdfa23`. §20 en 4 opciones sobre la misma base, y §22 con la lista de filtros para votar.
+- **L4** (44bd886): `local_932a7199-9ebe-4d1c-986a-9d1b246b621e`. Los tres cambios del panel. `probar-v4` corrió 1066 pruebas y solo fallaron las 9 de GitHub.
+- **L4 no verificó:**
+  - lo nuevo en modo oscuro;
+  - si la prueba de escenarios en vivo hace parpadear la página;
+  - el botón «Ir a» cambia el escenario, pero no la materia; él tiene que decidir si eso basta.
+
+**Lo que se publicó:**
+- **El empaque:** 68 archivos y 0 errores. La única liga externa sigue siendo el cargador de Web Awesome, igual que en la v18.
+- **La versión 19 del Artifact,** con la etiqueta «PIEZAS-18».
+- **El índice:** 4b71ff0.
+
+**Lo que se habló aparte:**
+- **Los tipos de curso y el acceso:** `veredictos/2026-11-23-tipos-de-curso.md`.
+  - **Lo que decidió él:**
+    - un curso por cada cosa que se estudia;
+    - el switch es por materia, y Español lleva dentro Lectura y Redacción;
+    - el acceso se quita por fecha, puesta por grupo o por alumno;
+    - el aviso de que se acaba va por correo;
+    - sin tarjetas de «Terminado»;
+    - agrupar los cursos se diseña pensando en la UANL.
+  - **Lo que propuso la cabina y él no ha confirmado:**
+    - dos tipos de curso: Examen de admisión y Materia;
+    - el simulador de la UANL vive en el curso de áreas comunes.
+- **La auditoría de Moodle,** de solo lectura y por SSH: `fase2/AUDITORIA.md` y `fase2/INVENTARIO.md` (c9b6a37).
+  - **Los seis hallazgos altos:**
+    - no hay respaldo;
+    - no hay servicio de correo;
+    - el modo debug se muestra en pantalla;
+    - el chat hace llamadas que esperan hasta 120 s;
+    - el servidor tiene 1.9 GB de RAM y no tiene swap;
+    - el chat carga sus librerías de un CDN sin versión fija.
+  - **La recomendación:** un plugin local, `local_metodocantu_dashboard`.
+  - **Las decisiones que esperan a Chris:** la fase 0 y su presupuesto, el servicio de correo, qué fuente manda sobre el avance, plan por bloque o por lección, y la prueba de carga.
+
+**Los prototipos nuevos**, que él pidió con un «sí, los dos». Sus encargos están en c88e411:
+- **MAESTRO-1** (puerto 8894, `prototipo/maestro-1/`): `local_aaa2c2ed-e684-480c-8530-d5e79c4523d6`. Son las pantallas del maestro: sus cursos y grupos, la tabla del grupo, la ficha del alumno y la vista por quiz.
+- **CURSOS-1** (puerto 8895, `prototipo/cursos-1/`): `local_d0259e07-dbfc-4f2a-9fbf-acfde1d88a80`. Es «Mis cursos» agrupado por familia.
+- A las 18:56 los dos esperaban a su crítico ciego. **Falta ver si el panel de votar funciona fuera de una carpeta `pN-`:** `prefijo()` en `panel.js` solo reconoce las carpetas `pN-`.
+
+**La próxima ronda de piezas empieza en el puerto 8896.**
+
+**Cuando diga «ya voté»:** `--leer-votos piezas-18` y `ArtifactData list votos`.

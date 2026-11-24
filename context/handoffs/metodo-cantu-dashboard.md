@@ -1357,3 +1357,34 @@ Lo que dijeron los talleres:
 **La próxima ronda empieza en el puerto 8900.**
 
 **Cuando diga «ya voté»:** `--leer-votos piezas-19`, `maestro-2` y `cursos-1`, más `ArtifactData list votos` en las dos ligas.
+
+## PIEZAS-19 y MAESTRO-2 votados; PIEZAS-20 y MAESTRO-3 publicados; UNIR-1 en curso (2026-11-23 22:10 – 23:35)
+
+**Los votos** llegaron por `origin/votos` (9ec1832); en los Artifacts, nada.
+- **Los veredictos:** `veredictos/2026-11-23-piezas-19.md` y `-maestro-2.md` (997a75e).
+- **CURSOS-1:** sin enviar; solo §1 de antes.
+- **Comentarios cortados:** §1 de MAESTRO-2 («Además...») y §22 de PIEZAS-18 («el área de filtros»). Se le preguntaron; sin respuesta aún.
+
+**Las rondas**, con los encargos `PIEZAS-20.md` y `MAESTRO-3.md` (6b2fba5):
+- **PIEZAS-20:**
+  - L1 86d9e7f, `local_067c917a-d4b6-493f-ad05-8760782b90a5`: paleta 0 por omisión, escenario «Cambio de área», §20 fija en la 3 sin medallas, contrato, `probar-v4` (1367, solo las 9 de GitHub) y empaque;
+  - L2 57d689b, `local_7f299984-329a-4a2d-b55e-0f0eff88e6df`: §6 con 3 variantes de la 1;
+  - L3 0e95739, `local_7765bce0-8983-44bd-9eef-d0060cfea76b`: §0 y §14 fijas, §19 con 3 y §23 (el bloqueo por diagnóstico) con 3.
+- **MAESTRO-3:** 242e358, `local_dde117eb-14a7-402a-8a53-167d2f09e384`. §1 fija en la 2, §2 con 4, §3 y §4 con 3; 124 de 124 guardas.
+
+**Lo publicado:**
+- **El Artifact del alumno, v22:** 72 archivos.
+- **El Artifact de maestro y cursos, v3:** MAESTRO-3 en lugar de MAESTRO-2, más CURSOS-1; el panel, copiado del principal v22.
+  - La portada se repone con `<scratch>/portada-m3.mjs <portada-nuevos-v2.html> <nuevos-pub>/index.html`.
+- **El índice:** 38430dd.
+
+**Su pedido para la siguiente ronda** (23:19, «no lo juntes en esta»):
+- Un solo prototipo de alumno y maestro, con un switch en el panel y en el menú de la bolita, y una portada mínima de dos botones.
+- Está tal cual en `veredictos/2026-11-23-siguiente-ronda-alumno-y-maestro.md` (6b20113).
+- Dijo «Sí, en cuanto se libere», así que se lanzó **UNIR-1** (`encargos/UNIR-1.md`, 6dcc832) tras integrar L1: puerto 8904, `local_6538bfc9-f159-4bec-9d28-9f93fedb3b76`.
+- Escribe en el panel, en la cabecera de `p20-comun` y `maestro-3`, en `vigente.json` y en el empaque unido.
+- **Al integrarlo**, publicar el empaque unido en la liga principal (JLDq…) y dejar de usar la de maestro (FWp1…).
+
+**La próxima ronda empieza en el puerto 8905.**
+
+**Cuando diga «ya voté»:** `--leer-votos piezas-20` y `maestro-3`, más `ArtifactData list votos` en las ligas.

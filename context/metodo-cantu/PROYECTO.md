@@ -20,6 +20,8 @@
 > - *«lo mas importante es trabajar en repos diferentes por cuenta»*
 > - *«tu encargate de la revision de lecciones y landing page, el dashboard se lo dejamos a la otra cuenta»*
 > - *«pero necesitamos una manera de avisar de esa forma de trabajo y tener protocolos de cambio»*
+>
+> La revisó cuentachris (de acuerdo con el reparto, cuatro objeciones ya incorporadas). La decisión es **D-087**, que enmienda D-086.
 
 ## 1. Qué es
 
@@ -86,10 +88,10 @@ Todos son de GitHub (`ChrissValdez/<repo>`). En disco están bajo `C:\Users\chri
 
 | Área | Cómo se lleva | Por qué |
 |---|---|---|
-| LECCIONES y revisiones | **Cabina anidada al coordinador**, permanente | La de más flujo y más oficio: galerías, votos, carriles. |
+| LECCIONES y revisiones | **cuentapato:** su hilo fijo «Revisión de lecciones» (D-087) | La de más flujo y más oficio: galerías, votos, carriles. |
 | DASHBOARD | **Cabina anidada**, en cuanto se publique la v33 | Su ronda (votos, encargo, publicar) es continua. |
 | Quizzes | **Sin cabina:** talleres que abre el coordinador | Hoy solo espera la QA del operador. |
-| LANDING | **Sin cabina:** talleres que abre el coordinador | Casi cerrada; quedan rondas cortas. |
+| LANDING | **cuentapato:** su hilo fijo «Landing» (D-087) | Casi cerrada; quedan rondas cortas. |
 | Studio | **Nada** mientras siga en pausa (D-079) | Si el operador la saca de la pausa, se le abre una cabina. |
 
 **La cabina anidada:**
@@ -104,7 +106,8 @@ Todos son de GitHub (`ChrissValdez/<repo>`). En disco están bajo `C:\Users\chri
 
 **Lo que cruza áreas** (por ejemplo, LECCIONES pide preguntas nuevas al banco): lo decide el coordinador con el operador. El encargo se escribe en el repo del área que lo aplica, y a su cabina se le manda una línea que nombra el fichero. **El contrato sigue siendo un fichero:** el aviso de una sesión anidada trae solo sus primeros 400 caracteres.
 
-**El tope de tres es global:** como mucho tres sesiones trabajando a la vez, sumando cabinas y talleres de todas las áreas.
+**El tope de tres:** como mucho tres sesiones trabajando a la vez, sumando cabinas y talleres. Con D-087 se propone que sea **por
+cuenta** *(pendiente del sí de Chris)*.
 
 **El cambio de cuenta apaga todo el árbol.** Antes de cambiar, cada cabina anidada deja su relevo al día, como dice `context/cambio-de-cuenta/PROTOCOLO.md`.
 
@@ -121,15 +124,23 @@ Todos son de GitHub (`ChrissValdez/<repo>`). En disco están bajo `C:\Users\chri
 
 **El reparto vive en `context/metodo-cantu/ASIGNACIONES.md`:** qué cuenta tiene cada repo, si está activo o libre, y desde cuándo.
 Ahí también están los protocolos para tomar y soltar un repo. A 24-nov:
-- **cuentapato** (Project en la nube): revisión de lecciones (`cantu-lessons` y `cantu-revisiones`) y la LANDING.
-- **cuentachris** (coordinador local en la PC): el DASHBOARD.
-- **Libres:** `cantu-studio` y `cantu-quizzes-latex`.
+- **cuentapato:** revisión de lecciones (`cantu-lessons` y `cantu-revisiones`) y la LANDING.
+- **cuentachris:** el DASHBOARD.
+- **Libres:** `cantu-studio` y `cantu-quizzes-latex`. **Libre y en pausa:** el código de la consola en `aiw-console`.
+
+**Una cuenta no está atada a un aparato.** Cada una decide en qué aparato disponible corre (laptop-Chris, PC-Chris, PC-Pato).
+Chris: *«cada una decide sobre aparatos disponibles»*.
+
+**Antes de que cuentapato escriba en LECCIONES o LANDING,** las cabinas sueltas de esas áreas (en PC-Chris: CL_Cabina_PC_Chris y
+MC-LandingPage, paradas el 24-nov) terminan su cierre (`CIERRE-DE-CABINA.md`), **incluido el paso 4**: las unas 35 reglas de esas
+áreas que solo están en la memoria de PC-Chris pasan a `context/cabinas/lecciones/` y `context/cabinas/landing/`. Solo una sesión
+en PC-Chris puede hacerlo.
 
 **Las reglas:**
 1. **Antes de escribir en un repo**, `git pull` de `aiw-console` y mirar `ASIGNACIONES.md`. En un repo de la otra cuenta no se
    escribe nada. Leerlo sí se puede.
-2. **`aiw-console` es el único repo compartido**, y solo para el registro, los relevos y el buzón. Commits chicos, por ruta, y
-   `git pull --rebase` antes de cada push (§4).
+2. **`aiw-console` es el único repo compartido**, y solo para el registro, los relevos y el buzón. Commits chicos y por ruta.
+   Antes de cada push: en la máquina, `git fetch`; si el árbol está limpio y `HEAD` solo va detrás, `git pull --ff-only`; si no, **se para** y se le dice al operador (el checkout es compartido entre cabinas, y un rebase reescribiría commits de otra). En la nube, `git pull --rebase` (§4).
 3. **Las cuentas se avisan por el buzón,** `context/metodo-cantu/mensajes/`: un fichero por aviso (su `README.md` dice cómo). Al
    abrir sesión, cada cuenta lee los que le tocan.
 4. **Lo que cruza a un repo ajeno** se pide por el buzón al dueño, con el encargo en un fichero; lo aplica el dueño.
@@ -137,8 +148,8 @@ Ahí también están los protocolos para tomar y soltar un repo. A 24-nov:
    «Revisión de lecciones» y otro «Landing». En la PC: una cabina por área.
 6. **`PROYECTO.md` y `ASIGNACIONES.md` se cambian solo con el sí del operador.**
 
-**Esto cambia la tabla de §3.1:** las áreas de cuentapato ya no tienen cabina anidada en la PC; viven en sus hilos de la nube.
-§3.1 queda para las áreas de cuentachris.
+**Esto enmienda D-086 (D-087):** §3.1 queda para las áreas de cuentachris; las de cuentapato viven en sus hilos fijos. Las tablas de
+§3.1, §5 y §6 ya lo dicen.
 
 ## 4. Las reglas del operador para todas las áreas
 
@@ -177,7 +188,7 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 **Git:**
 - Commit con `git -c user.name=ChrissValdez -c user.email=<el de la cuenta> commit … -- <rutas>`, y al final la línea `Co-Authored-By` del asistente.
 - Push por sha: `git push origin <sha>:refs/heads/main`.
-- En `aiw-console`, antes de empujar, `git pull --rebase origin main` y se mide `git log origin/main..HEAD`. **Si trae commits ajenos, no se empuja.** Es un checkout compartido entre cabinas, y desde el 24-nov también entre cuentas (§3.2).
+- En `aiw-console`, antes de empujar: en la máquina, `git fetch`; si el árbol está limpio y `HEAD` solo va detrás, `git pull --ff-only`; si no, **se para** y se le dice al operador (el checkout es compartido entre cabinas, y un rebase reescribiría commits de otra). En la nube, `git pull --rebase`. Luego se mide `git log origin/main..HEAD`. **Si trae commits ajenos, no se empuja.** Es un checkout compartido entre cabinas, y desde el 24-nov también entre cuentas (§3.2).
 - **Nunca** se hace push forzado ni `reset --hard`.
 - **Desde un hilo en la nube no se empuja a `main`:** se empuja a la rama del hilo y se abre un PR. El push a `main` solo se hace desde la máquina (sesión local o Remote Control). *(propuesto por la laptop, aprobado por el operador, 2026-11-24)*
 - **`git worktree prune` pide su sí.**
@@ -211,8 +222,8 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 | Área | Estado | Por dónde seguir |
 |---|---|---|
 | DASHBOARD | Encargos MAESTRO-10 y PIEZAS-25 (875fe157), con sus talleres anidados al coordinador, trabajando desde las 08:50. Publicado: la v32. | Al entregar, el coordinador integra y publica la v33; luego pasa a su cabina anidada (§6). |
-| LECCIONES | Lo lleva su cabina suelta en la PC. Lo último: CR-LX3·07 (c05f1bbc), tres vistas de la galería CR-LX3 que esperan su voto. Su relevo en `handoffs/` es del 19-nov. | El cierre de §6. `node tools/cabina/pendientes.mjs` no sirve tras la mudanza: su carpeta de `_scratch` ya no existe. |
-| LANDING | Lo lleva su cabina suelta. Vigente: BB. El título de la sección 2 espera uno nuevo (`veredictos/2026-11-23-seccion-2-tono.md`). | El cierre de §6; luego, talleres del coordinador. |
+| LECCIONES | Pasa a cuentapato (D-087). Su cabina suelta en PC-Chris (CL_Cabina_PC_Chris) no se mueve desde el 20-nov y le falta el cierre. Lo último: CR-LX3·07 (c05f1bbc), tres vistas de la galería CR-LX3 que esperan su voto. Su relevo en `handoffs/` es del 19-nov. | El cierre de §6 en PC-Chris; luego, el hilo de cuentapato. `node tools/cabina/pendientes.mjs` no sirve tras la mudanza: su carpeta de `_scratch` ya no existe. |
+| LANDING | Pasa a cuentapato (D-087). Su cabina suelta en PC-Chris (MC-LandingPage) está parada y le falta el cierre. Vigente: BB. El título de la sección 2 espera uno nuevo (`veredictos/2026-11-23-seccion-2-tono.md`). | El cierre de §6 en PC-Chris; luego, el hilo de cuentapato. |
 | Quizzes | Sin cabina viva. Espera la QA del operador (`PAA/tickets/qa-visual-FINAL-2.md`). El relevo vigente es `PAA/HANDOFF.md`; el de `handoffs/` es de septiembre. | Talleres del coordinador. |
 | Studio | **En pausa** (D-079). | No se toca sin su palabra. |
 
@@ -223,8 +234,8 @@ Esta tabla es una **foto fechada**. El coordinador la vuelve a medir al abrir, l
 | Etapa | Área | Qué se hace | Estado |
 |---|---|---|---|
 | 1 | Quizzes | El coordinador pone al día su relevo en `handoffs/` desde `PAA/HANDOFF.md`. | Por hacer |
-| 2 | LANDING | Su cabina suelta hace el cierre (`CIERRE-DE-CABINA.md`, al lado) y se archiva con su sí. | Por hacer |
-| 3 | LECCIONES y revisiones | Su cabina suelta hace el cierre, con lo propio de LECCIONES del mismo fichero. El coordinador abre su cabina anidada y la suelta se archiva con su sí. | Cierre pedido el 24-nov |
+| 2 | LANDING | Su cabina suelta en PC-Chris hace el cierre (`CIERRE-DE-CABINA.md`, al lado), con sus reglas de memoria pasadas a ficheros, y avisa a cuentapato por el buzón. Chris la archiva. Desde ahí la lleva cuentapato (D-087). | Por hacer |
+| 3 | LECCIONES y revisiones | Igual que la 2, con lo propio de LECCIONES del mismo fichero. Desde ahí la lleva cuentapato (D-087). | Cierre pedido el 24-nov |
 | 3b | DASHBOARD | Tras la v33, el coordinador pone al día su relevo y le abre su cabina anidada. | Tras la v33 |
 | 4 | Studio | Solo si el operador la saca de la pausa. | En pausa |
 

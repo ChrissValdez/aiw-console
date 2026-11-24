@@ -3700,3 +3700,41 @@ El detalle es `context/metodo-cantu/PROYECTO.md` §3.1, §5 y §6 (v1).
 
 **Criterio de borrado:** se reabre si el coordinador se vuelve el cuello de botella, si los avisos de las cabinas gastan
 más de lo que ahorran, o al migrar a un Project de la nube, donde las sesiones anidadas de la PC no se mudan.
+
+## D-087 — MÉTODO CANTÚ: LAS DOS CUENTAS A LA VEZ, CADA UNA EN SUS REPOS (ENMIENDA A D-086)
+
+**Fecha:** 2026-11-24 · **Proyecto:** Método Cantú · **Origen:** un hilo del Project «Metodo_Cantu» en la nube (cuentapato),
+con la revisión del coordinador de PC-Chris (cuentachris). **Estado: propuesta, en el PR 1 de `aiw-console`. Vale cuando el
+operador la apruebe.**
+
+Lo pidió Pato el 2026-11-24. Sus palabras, tal cual:
+
+> necesitamos una estrategia de trabajo para tener proyecto Metodo cantu en ambas cuentas
+> […] pero lo mas importante es trabajar en repos diferentes por cuenta
+> Es decir si a ti te delego la galeria de cantu revisiones
+> que la otra cuenta no trabaje en eso simultaneamente
+
+> tu encargate de la revision de lecciones
+> y landing page
+> el dashboard se lo dejamos a la otra cuenta
+
+cuentachris, al revisar el PR: «DE ACUERDO con el reparto», con cuatro objeciones que el PR ya incorpora. Chris, citado por
+cuentachris: «cada una decide sobre aparatos disponibles».
+
+### La regla
+
+- **Las dos cuentas trabajan a la vez, cada una en sus repos.** Reemplaza la regla de que nunca trabajaban a la vez.
+- **El registro es `context/metodo-cantu/ASIGNACIONES.md`:** cuentapato lleva LECCIONES y revisiones (`cantu-lessons`,
+  `cantu-revisiones`) y LANDING; cuentachris lleva DASHBOARD; `cantu-studio`, `cantu-quizzes-latex` y el código de la consola,
+  libres. Ahí están tomar y soltar, las dependencias entre repos y lo que espera el sí de Chris.
+- **Las cuentas se avisan por el buzón,** `context/metodo-cantu/mensajes/`.
+- **En la máquina no hay rebase** en `aiw-console`: `fetch` y `pull --ff-only` solo si el árbol está limpio y va detrás; si no,
+  se para.
+- **Enmienda a D-086:** el coordinador de la PC lleva solo las áreas de cuentachris. LECCIONES y LANDING pasan a hilos fijos de
+  cuentapato, después del cierre de sus cabinas sueltas en PC-Chris, que incluye pasar a ficheros las reglas que solo están en la
+  memoria de PC-Chris. El detalle es `PROYECTO.md` §3.1, §3.2, §5 y §6 (v2).
+
+**Lo que esta decisión NO hace:** no saca a Studio de la pausa (D-079), no aprueba el `git worktree prune`, y no fija las
+preguntas 1, 6, 7 y 8 de `ASIGNACIONES.md`, que esperan el sí de Chris.
+
+**Criterio de borrado:** se reabre si dos cuentas chocan en un mismo repo, si el buzón no se lee, o si una cuenta deja de existir.

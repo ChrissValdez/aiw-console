@@ -1300,3 +1300,20 @@ Lo que dijeron los talleres:
 **La próxima ronda de piezas empieza en el puerto 8896.**
 
 **Cuando diga «ya voté»:** `--leer-votos piezas-18` y `ArtifactData list votos`.
+
+**Adenda de las 19:03 (`date`): MAESTRO-1 y CURSOS-1 publicados en un Artifact aparte.**
+- **El Artifact:** https://claude.ai/artifact/FWp12BZQX2Z1DLmQf88U2M (v1). Trae una portada con las dos ligas y declara la misma base `votos` que el principal. Los votos se guardan aparte de PIEZAS-18: sus nombres son `maestro-1` y `cursos-1`.
+- **Cómo quedó el empaque:** se conserva la forma del repo, con `maestro-1/`, `cursos-1/`, `p18-comun/` y, copiados del Artifact principal, `kit/`, `panel/` y `vendor/`. El script es `<scratch>/empacar-nuevos.mjs`.
+- **La liga «Seguir» de CURSOS-1** quedó en `#`.
+- **Los commits:** CURSOS-1 22d54df, MAESTRO-1 f5ff479 e índice 3000ddd.
+- **Las sesiones:** `local_aaa2c2ed-e684-480c-8530-d5e79c4523d6` (maestro1) y `local_d0259e07-dbfc-4f2a-9fbf-acfde1d88a80` (cursos1).
+- **Lo que reportaron los talleres:**
+  - el panel funciona fuera de `pN-`, aunque pide las páginas `p3-*` de más;
+  - el «Escenario» del panel no hace nada en CURSOS-1, que tiene su propio selector al pie;
+  - «Ver la sección» no cambia de pantalla en MAESTRO-1; se arregla si `irA()` manda el evento `a3:ver`, y eso le toca a L4.
+- **Para él:**
+  - el nombre del PAA, porque «Curso para Examen de admisión» no dice PAA;
+  - la etiqueta «En curso», que se repite en todas las tarjetas;
+  - el nombre «Nivel parcial» para Cálculo;
+  - revisar las preguntas del maestro, en `prototipo/maestro-1/NOTAS.md` §0.
+- **Cuando diga «ya voté» en estos:** `ArtifactData list votos` en la liga nueva. `--leer-votos` no los ve.

@@ -449,3 +449,34 @@ de llave 0. El parser bueno quedó en `_scratch\CORR-NQ4\parser.mjs`.
 **How to apply:** en cualquier taller de CQL que parsee preguntas (Dominio y rango, desigualdades, Estadística),
 equilibrar llaves y comprobar que códigos únicos = `\begin{multi}` crudos. Ver `aiw-workspace-conventions` y
 `corregir-tras-verificacion`.
+
+## Añadido por la cabina de CQL al cerrar (2026-11-24, 09:28)
+
+*No venía de la memoria de PC-Chris: son dos reglas que la cabina aprendió en su último tramo, y dos punteros de arriba
+que la mudanza dejó sin destino.*
+
+### La tarjeta de un taller caduca a los 7 días
+
+- En un turno que empezó otra sesión (un mensaje de CL_Cabina, por ejemplo), la app no deja abrir sesiones: el taller
+  solo se puede proponer como tarjeta, y la arranca el operador.
+- **Si nadie la arranca, caduca a los 7 días sin avisar.** Le pasó a NUEVAS-FG: se propuso el 2026-11-06 y el 11-24 no
+  había corrido.
+- **How to apply:**
+  - cada tarjeta se apunta en `PAA/HANDOFF.md` con su fecha de caducidad;
+  - al abrir, la cabina mira si el taller corrió (informe en `PAA/tickets/`, carpeta en `_scratch`);
+  - si no corrió, lo vuelve a proponer o se lo recuerda al operador.
+
+### `fs.cpSync` de Node muere en las rutas de Español
+
+- Copiar el árbol de `Banco de Preguntas\Español` con `fs.cpSync` termina con el código 127 y sin mensaje. Pasó en el
+  censo de BUILD-FINAL-3, el 2026-11-06.
+- **How to apply:** en los andamiajes, copiar con una función recursiva propia (`readdirSync` + `copyFileSync`), y
+  comprobar después el censo y los MD5.
+
+### Punteros de arriba que ya no existen
+
+- `build-documentos-completos` cita `_scratch\BUILD-FINAL\*.js`, y `parser-intervalos-semiabiertos` cita
+  `_scratch\CORR-NQ4\parser.mjs`. **La mudanza del 24-nov vació `_scratch`, y ninguno de los dos existe ya.**
+- Lo versionado para compilar está en `Metodo_Cantu\cantu-quizzes-latex\PAA\herramientas\build-final\`, y lo de
+  alineación en `PAA\herramientas\alineacion\`.
+- El parser que equilibra llaves hay que reescribirlo con la receta de esa entrada.

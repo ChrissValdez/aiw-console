@@ -1735,3 +1735,13 @@ Lo que dijeron los talleres:
 **Lo que espera al operador:** votar MAESTRO-10 (§C, §F y §A) en la liga. Cuando diga «ya voté»: `git fetch origin votos`, `herramientas/votos-a-veredicto.mjs` y el veredicto tal cual.
 
 **Lo que sigue:** la cabina anidada de DASHBOARD (PROYECTO.md §6, etapa 3b), que arranca leyendo este bloque. La próxima ronda empieza en el puerto **8918**.
+
+## 2026-11-24, 10:17 · MAESTRO-10 votada; MAESTRO-11 integrada; v34 publicada
+
+**Quién:** el coordinador de Método Cantú (Cuenta Chris, PC-Chris). Desde D-087 (PR 1, 2874d6d) el dashboard es el único repo de la Cuenta Chris.
+
+- **Veredicto MAESTRO-10** (`veredictos/2026-11-24-maestro-10.md`, eb961ab6), sus votos tal cual: §C la 1; §A la 2; §F la 2 con «quita el numero de intento ya esta ordenado por orden».
+- **MAESTRO-11** (encargo 7797fd3d, taller `local_fedbe379-c7a0-4808-b5db-daa7f0184efe`, ya archivado), 5d1a278b: §C·1, §A·2 y §F·2 fijos (la notita solo dice la fecha), **sin votos**. Arreglos: la notita de §F ya no tapa (cuelga de su teja; 72 medidas); a 375, «Avance por área» entera (349/349) y las fechas de §P a 11 px en dos renglones. Guardas: texto sin fallas; 219 vistas + 78 a 375; recorrido 376; igual pixel a pixel a lo elegido.
+- **Lo que el crítico dejó y no se tocó** (para él): §F sin mouse no hay fecha (es la 2 que eligió); §A, el filete entre alumnos abiertos igual de fino que los de dentro y el hover que apenas se nota; §C, el peso de «Activos esta semana» y el aire de los botones a 375; la leyenda de «Avance por área» a 375 («Español» sola); la ficha muy larga en el teléfono.
+- **Publicado:** la **v34** en https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq (version id 1795537052-9a68), 89 archivos sin `vendor/`. `vigente.json`: alumno PIEZAS-25, maestro MAESTRO-11. Índice de la raíz: c770d480. No se revisó abierta en el navegador.
+- **Lo que espera al operador:** mirar la v34. No hay votos pendientes. La próxima ronda, del maestro o del alumno, la propone el coordinador con lo que él diga; empieza en el puerto **8919**.

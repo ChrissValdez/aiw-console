@@ -175,14 +175,14 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 - Cerca de la renovación, la prioridad es la prisa, no el ahorro.
 - Hay que ahorrar tokens sin ir más lento: menos pasos, carriles cortos, tope de tres a la vez.
 
-## 5. Dónde se quedó cada área (2026-11-24, 09:00)
+## 5. Dónde se quedó cada área (2026-11-24, 09:21)
 
 | Área | Estado | Por dónde seguir |
 |---|---|---|
-| DASHBOARD | Encargos MAESTRO-10 y PIEZAS-25 (875fe157), con sus talleres anidados al coordinador, trabajando desde las 08:50. Publicado: la v32. | Al entregar, el coordinador integra y publica la v33; luego pasa a su cabina anidada (§6). |
-| LECCIONES | Lo lleva su cabina suelta en la PC. Lo último: CR-LX3·07 (c05f1bbc), tres vistas de la galería CR-LX3 que esperan su voto. Su relevo en `handoffs/` es del 19-nov. | El cierre de §6. `node tools/cabina/pendientes.mjs` no sirve tras la mudanza: su carpeta de `_scratch` ya no existe. |
-| LANDING | Lo lleva su cabina suelta. Vigente: BB. El título de la sección 2 espera uno nuevo (`veredictos/2026-11-23-seccion-2-tono.md`). | El cierre de §6; luego, talleres del coordinador. |
-| Quizzes | Sin cabina viva. Espera la QA del operador (`PAA/tickets/qa-visual-FINAL-2.md`). El relevo vigente es `PAA/HANDOFF.md`; el de `handoffs/` es de septiembre. | Talleres del coordinador. |
+| DASHBOARD | MAESTRO-10 (9234492e) y PIEZAS-25 (23cab277) integrados. Publicado: la **v33**. Espera los votos de MAESTRO-10. | El último bloque de su relevo; luego su cabina anidada (§6). |
+| LECCIONES | La trabaja la cabina de LECCIONES de la **Cuenta Pato**, en laptop-Chris (CR-LX3·07, c05f1bbc, tres vistas de la galería CR-LX3 que esperan su voto). La cabina suelta de PC-Chris, CL_Cabina_PC_Chris, no se mueve desde el 20-nov. Su relevo en `handoffs/` es del 19-nov. | El PR 1 de `aiw-console` (ASIGNACIONES.md), por fusionar. `node tools/cabina/pendientes.mjs` no sirve tras vaciar `_scratch`. |
+| LANDING | Cabina suelta MC-LandingPage (Cuenta Chris, PC-Chris), parada desde el 23-nov a las 22:13. Vigente: BB. El título de la sección 2 espera uno nuevo (`veredictos/2026-11-23-seccion-2-tono.md`). | El cierre de `CIERRE-DE-CABINA.md`; el PR 1 la pasa a la Cuenta Pato. |
+| Quizzes | **CQL_Cabina** (Cuenta Chris, PC-Chris) trabaja ahí el 24-nov, a pedido de la cabina de LECCIONES: el quiz de Propiedades y una versión esencial. Espera la QA del operador (`PAA/tickets/qa-visual-FINAL-2.md`). El relevo vigente es `PAA/HANDOFF.md`; el de `handoffs/` es de septiembre. | Su cierre, cuando termine lo de hoy. |
 | Studio | **En pausa** (D-079). | No se toca sin su palabra. |
 
 Esta tabla es una **foto fechada**. El coordinador la vuelve a medir al abrir, leyendo cada relevo, y no la toma por cierta.
@@ -194,7 +194,9 @@ Esta tabla es una **foto fechada**. El coordinador la vuelve a medir al abrir, l
 | 1 | Quizzes | El coordinador pone al día su relevo en `handoffs/` desde `PAA/HANDOFF.md`. | Por hacer |
 | 2 | LANDING | Su cabina suelta hace el cierre (`CIERRE-DE-CABINA.md`, al lado) y se archiva con su sí. | Por hacer |
 | 3 | LECCIONES y revisiones | Su cabina suelta hace el cierre, con lo propio de LECCIONES del mismo fichero. El coordinador abre su cabina anidada y la suelta se archiva con su sí. | Cierre pedido el 24-nov |
-| 3b | DASHBOARD | Tras la v33, el coordinador pone al día su relevo y le abre su cabina anidada. | Tras la v33 |
+| 3b | DASHBOARD | Tras la v33, el coordinador pone al día su relevo y le abre su cabina anidada. | Relevo al día (v33); falta abrir la cabina |
 | 4 | Studio | Solo si el operador la saca de la pausa. | En pausa |
 
-**Lo que sigue esperando la palabra del operador:** el `git worktree prune` de `cantu-lessons` y `cantu-revisiones` (más de 50 worktrees que ya no existen, medido con `sincronia.mjs` el 24-nov), y si Studio entra al proyecto solo para leerse.
+**Las etapas 2 y 3 cambian si se fusiona el PR 1** (las dos cuentas a la vez, LECCIONES y LANDING para la Cuenta Pato): el cierre de las cabinas sueltas de PC-Chris sigue haciendo falta, pero ya no les sigue una cabina anidada aquí.
+
+**Lo que sigue esperando la palabra del operador:** el `git worktree prune` de `cantu-lessons` y `cantu-revisiones`. El de la mudanza ya se hizo con su sí (`AIW_Workspace/MUDANZA-PC.md`, paso 5). Este es por los registros que quedaron huérfanos cuando él vació `_scratch` el 24-nov: 134 de 136 en lessons y 24 de 25 en revisiones, medido con `git worktree list` a las 09:05. También espera si Studio entra al proyecto solo para leerse.

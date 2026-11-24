@@ -1713,3 +1713,25 @@ Lo que dijeron los talleres:
 4. Lo publicado es la v33 o la que siga.
 
 **Leer votos:** `git fetch origin votos` y luego `git show origin/votos:<slug>.json`. El script que los pasaba a veredicto vivía en el scratchpad de la sesión de la cabina. Una sesión nueva escribe el veredicto con los votos y comentarios **tal cual**, con el formato de los anteriores.
+
+## MAESTRO-10 y PIEZAS-25 integrados; v33 publicada. Lo lleva el coordinador (2026-11-24 08:46 – 09:21)
+
+**Quién:** el coordinador de Método Cantú (Cuenta Chris, PC-Chris), por D-086. La cabina suelta MC_Dashboard_PC cerró a las ~09:10: subió `herramientas/votos-a-veredicto.mjs` (9d2409b9) y archivó sus talleres. Lo que solo vivía en su conversación está copiado en `AIW_Workspace/_scratch/coordinador/de-mc-dashboard/` (`claude-dashboard-oficio.md`, para el `CLAUDE.md` de DASHBOARD) y en `AIW_Workspace/MUDANZA-PC.md`. Los dos pasan a git cuando DASHBOARD tenga su cabina anidada.
+
+**Las rondas:**
+- Encargos `encargos/MAESTRO-10.md` y `encargos/PIEZAS-25.md` (875fe157), tras su «Sí, lánzalos».
+- **PIEZAS-25** (taller `local_06cae52c-7659-4b79-bf4c-c1d26ac49c97`), 23cab277: en el Historial, un solo quiz o diagnóstico abierto a la vez, como en el Temario; el renglón tocado no se mueve. `probar-v4`: 1004 pruebas, 0 fallas (la prueba nueva abre cuatro seguidos). Fijo, sin votos.
+- **MAESTRO-10** (taller `local_1f88c00d-f826-4cd0-87bd-66c372656ee6`), 9234492e:
+  - **Fijo:** §Q, las barras, con «Sin presentar» a la izquierda de «Menos de 60» y una línea de 2 px; §P, la 2; §G, la 1, con «Ver resultados del grupo».
+  - **Se vota:** §C Mis cursos (clave 1), 3 en tabla con encabezado en los botones; §F la calificación y la fecha (clave 11, nueva), 3; §A lo abierto en las listas (clave 12, nueva), 3: la 1 solo deja uno abierto, la 2 y la 3 dejan varios, sin gris.
+  - **Favoritas del crítico:** §C·2, §F·3 y §A·3.
+  - **Medido por el taller:** lo abierto pintaba rgb(226, 239, 237), croma 0,014: por eso él lo veía gris. Ahora va en blanco. Guardas: 270 vistas y 1104 del recorrido, 0 fallas.
+  - **Choque anotado:** en MAESTRO-7 dijo que la calificación y la fecha en un renglón «se lee mal»; §F·3 las vuelve a juntar, con pastilla y filete.
+  - **Sin tocar:** «Avance por área» sale cortada a 375 desde MAESTRO-8; en §F·2, la notita tapa la fila de arriba.
+- **Guardas del coordinador** sobre lo nuevo (p25: 198 ficheros; maestro-10: 20): 0 CR, 0 corchetes en CSS, 0 `<svg>`, 0 `sesskey`, 0 «PAA Tec», 0 rutas a la ronda anterior.
+
+**Lo publicado:** la **v33** en https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq (version id 1795533626-83ee): 89 archivos del empaque unido, sin `vendor/`. `vigente.json`: alumno PIEZAS-25, maestro MAESTRO-10. Índice de la raíz: 399042d2. No se revisó abierta en el navegador: el panel de esta PC no tiene sesión de claude.ai.
+
+**Lo que espera al operador:** votar MAESTRO-10 (§C, §F y §A) en la liga. Cuando diga «ya voté»: `git fetch origin votos`, `herramientas/votos-a-veredicto.mjs` y el veredicto tal cual.
+
+**Lo que sigue:** la cabina anidada de DASHBOARD (PROYECTO.md §6, etapa 3b), que arranca leyendo este bloque. La próxima ronda empieza en el puerto **8918**.

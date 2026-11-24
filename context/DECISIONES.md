@@ -3725,8 +3725,8 @@ cuentachris: «cada una decide sobre aparatos disponibles».
 
 - **Las dos cuentas trabajan a la vez, cada una en sus repos.** Reemplaza la regla de que nunca trabajaban a la vez.
 - **El registro es `context/metodo-cantu/ASIGNACIONES.md`:** cuentapato lleva LECCIONES y revisiones (`cantu-lessons`,
-  `cantu-revisiones`) y LANDING; cuentachris lleva DASHBOARD y, hoy, `cantu-quizzes-latex`; `cantu-studio` y el código de la
-  consola, libres. Ahí están tomar y soltar, las dependencias entre repos y lo que espera el sí de Chris.
+  `cantu-revisiones`) y LANDING; `cantu-quizzes-latex` también, desde las 15:37 UTC (Chris: *«si no es tan pesado entonces si
+  mandaselo a la cuenta Pato»*); cuentachris lleva DASHBOARD; `cantu-studio` y el código de la consola, libres. Ahí están tomar y soltar, las dependencias entre repos y lo que espera el sí de Chris.
 - **Las cuentas se avisan por el buzón,** `context/metodo-cantu/mensajes/`.
 - **En la máquina no hay rebase** en `aiw-console`: `fetch` y `pull --ff-only` solo si el árbol está limpio y va detrás; si no,
   se para.

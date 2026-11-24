@@ -90,7 +90,7 @@ Todos son de GitHub (`ChrissValdez/<repo>`). En disco están bajo `C:\Users\chri
 |---|---|---|
 | LECCIONES y revisiones | **cuentapato:** su hilo fijo «Revisión de lecciones» (D-087) | La de más flujo y más oficio: galerías, votos, carriles. |
 | DASHBOARD | **Cabina anidada**, en cuanto se publique la v33 | Su ronda (votos, encargo, publicar) es continua. |
-| Quizzes | **Sin cabina:** talleres que abre el coordinador | Hoy solo espera la QA del operador. |
+| Quizzes | **cuentapato** (D-087), desde el 24-nov a las 15:37 UTC | Lo soltó cuentachris con el sí de Chris. |
 | LANDING | **cuentapato:** su hilo fijo «Landing» (D-087) | Casi cerrada; quedan rondas cortas. |
 | Studio | **Nada** mientras siga en pausa (D-079) | Si el operador la saca de la pausa, se le abre una cabina. |
 
@@ -124,8 +124,9 @@ trabajando a la vez en cada cuenta, sumando cabinas y talleres.
 
 **El reparto vive en `context/metodo-cantu/ASIGNACIONES.md`:** qué cuenta tiene cada repo, si está activo o libre, y desde cuándo.
 Ahí también están los protocolos para tomar y soltar un repo. A 24-nov:
-- **cuentapato:** revisión de lecciones (`cantu-lessons` y `cantu-revisiones`) y la LANDING.
-- **cuentachris:** el DASHBOARD y, hoy, `cantu-quizzes-latex` (CQL_Cabina; al terminar, Chris decide si se suelta).
+- **cuentapato:** revisión de lecciones (`cantu-lessons` y `cantu-revisiones`), la LANDING y los quizzes (`cantu-quizzes-latex`,
+  desde el 24-nov a las 15:37 UTC, con el sí de Chris).
+- **cuentachris:** el DASHBOARD.
 - **Libre:** `cantu-studio`. **Libre y en pausa:** el código de la consola en `aiw-console`.
 
 **Una cuenta no está atada a un aparato.** Cada una decide en qué aparato disponible corre (laptop-Chris, PC-Chris, PC-Pato).
@@ -224,7 +225,7 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 | DASHBOARD | MAESTRO-10 (9234492e) y PIEZAS-25 (23cab277) integrados. Publicado: la **v33**. Espera los votos de MAESTRO-10. | El último bloque de su relevo; luego su cabina anidada (§6). |
 | LECCIONES | **Pasa a cuentapato (D-087).** La trabaja la cabina de LECCIONES de la Cuenta Pato (CR-LX3·07, c05f1bbc, tres vistas de la galería CR-LX3 que esperan su voto). La cabina suelta de PC-Chris, CL_Cabina_PC_Chris, no se mueve desde el 20-nov y le falta el cierre. Su relevo en `handoffs/` es del 19-nov. | El cierre de §6 en PC-Chris; luego, el hilo de cuentapato. `node tools/cabina/pendientes.mjs` no sirve tras vaciar `_scratch`. |
 | LANDING | **Pasa a cuentapato (D-087).** Cabina suelta MC-LandingPage (Cuenta Chris, PC-Chris), parada desde el 23-nov a las 22:13; le falta el cierre. Vigente: BB. El título de la sección 2 espera uno nuevo (`veredictos/2026-11-23-seccion-2-tono.md`). | El cierre de §6 en PC-Chris; luego, el hilo de cuentapato. |
-| Quizzes | **CQL_Cabina** (Cuenta Chris, PC-Chris) trabaja ahí el 24-nov, a pedido de la cabina de LECCIONES: el quiz de Propiedades y una versión esencial. Espera la QA del operador (`PAA/tickets/qa-visual-FINAL-2.md`). El relevo vigente es `PAA/HANDOFF.md`; el de `handoffs/` es de septiembre. | Su cierre, cuando termine lo de hoy. |
+| Quizzes | **Pasa a cuentapato** (24-nov, 15:37 UTC, sí de Chris). CQL_Cabina de PC-Chris hizo su cierre (`0f5b7c2`, `3daff28`) y está archivada. Encargos emitidos (`cb9f952`): PROP-QUIZ, ESENCIAL-ALG y NUEVAS-FG. La QA de BUILD-FINAL-3 sigue esperando a Chris. | El relevo `context/handoffs/cantu-quizzes-latex.md`; luego los talleres, en ese orden, y BUILD-FINAL-4. |
 | Studio | **En pausa** (D-079). | No se toca sin su palabra. |
 
 Esta tabla es una **foto fechada**. El coordinador la vuelve a medir al abrir, leyendo cada relevo, y no la toma por cierta.

@@ -34,20 +34,31 @@ Chris: *«cada una decide sobre aparatos disponibles»*. La columna de arriba es
 | `metodo-cantu-landing` | LANDING | `cuentapato` | activo | 2026-11-24 | Mismo requisito. |
 | `metodo-cantu-dashboard` | DASHBOARD | `cuentachris` | activo | 2026-11-24 | |
 | `cantu-studio` | Studio | — | libre | 2026-11-24 | En pausa (D-079). |
-| `cantu-quizzes-latex` | Banco de quizzes | `cuentachris` | activo | 2026-11-24 | CQL_Cabina (PC-Chris) trabaja ahí hoy, a pedido de la cabina de LECCIONES: el quiz de Propiedades y una versión esencial. Al terminar, Chris decide si se suelta. |
+| `cantu-quizzes-latex` | Banco de quizzes | `cuentapato` | activo | 2026-11-24 | Lo soltó cuentachris (CQL_Cabina cerrada: `0f5b7c2` en el repo, `3daff28` aquí). Chris: *«si no es tan pesado entonces si mandaselo a la cuenta Pato»*. Orden: PROP-QUIZ, ESENCIAL-ALG, NUEVAS-FG y luego BUILD-FINAL-4 (aviso `leidos/2026-11-24-1537-…`). |
 | `aiw-console` (`context/`) | Contexto compartido | las dos | compartido | 2026-11-24 | Solo registro, relevos y buzón (ver abajo). |
 | `aiw-console` (código de la consola) | Project Console | — | libre, en pausa | 2026-11-24 | Congelado (Pausado_Console_Cabina), como Studio. |
 
 ### El requisito antes de escribir en LECCIONES y LANDING
 
-Las cabinas sueltas de esas áreas siguen en PC-Chris, paradas (medido por cuentachris el 24-nov, 09:10): CL_Cabina_PC_Chris
-(LECCIONES, sin moverse desde el 20-nov) y MC-LandingPage (LANDING). **cuentapato no escribe en esos tres repos** hasta que:
+**✅ Cumplido el 24-nov** (cuentachris): las reglas pasaron a ficheros en `43df531` (`context/cabinas/MEMORIA-COMUN.md` y
+`context/cabinas/{lecciones,landing,quizzes}/MEMORIA-PC-CHRIS.md`), y las tres cabinas sueltas de PC-Chris (LECCIONES, LANDING y
+quizzes) hicieron su cierre y están archivadas. Relevos: `metodo-cantu-landing.md` (`9ba9d12`) y `cantu-quizzes-latex.md`
+(`3daff28`). **Antes de escribir en esos repos, cuentapato lee esos ficheros de memoria.**
+
+Lo que se pedía: las cabinas sueltas de esas áreas estaban en PC-Chris, paradas (medido por cuentachris el 24-nov, 09:10):
+CL_Cabina_PC_Chris (LECCIONES, sin moverse desde el 20-nov) y MC-LandingPage (LANDING). cuentapato no escribía en esos repos hasta que:
 1. cada una termine su cierre (`CIERRE-DE-CABINA.md`), **incluido el paso 4**: las unas 30 reglas de LECCIONES y 5 de LANDING que
    solo están en la memoria de PC-Chris pasan a `context/cabinas/lecciones/` y `context/cabinas/landing/`. Solo una sesión en
    PC-Chris puede hacerlo; cuentachris lo hace si Chris dice que sí;
 2. avise a `cuentapato` por el buzón, con los sha y «cierre hecho».
 
 Después, Chris las archiva.
+
+### Lo que no se toca
+
+- **`cr-fig-04` (LECCIONES)** solo existe en el disco de PC-Chris (punta `618d8716`, 17-nov; la guarda de figuras de la regla 46,
+  +807). No está en origin ni integrada. **Nadie la borra ni hace prune** hasta que Chris decida si se sube como respaldo, se junta
+  o se descarta. Antes de juntarla, revisar el diff (`modo-seco-comprobar-antes`). Aviso: `leidos/2026-11-24-1527-…`.
 
 ### Las dependencias entre repos
 

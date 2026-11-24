@@ -1,6 +1,6 @@
 {
   "schema": "aiw_registry_digest_v1",
-  "generated_at": "2026-08-08T21:13:22.679Z",
+  "generated_at": "2026-11-24T13:40:04.861Z",
   "generated_from": "aiw-registry-digest@1.0.0",
   "derived": true,
   "do_not_edit": "DERIVED FILE — DO NOT EDIT BY HAND. Regenerate with `node tools/project-console/build-registry-digest.mjs`. Every field below is measured from the registry and from each registered project's own canonical sources; a hand edit is overwritten by the next run and, until then, is a claim no measurement supports.",
@@ -10,13 +10,15 @@
     "path": "project-console/projects.json",
     "registry_model": "project_registry_v1",
     "title": "AIW Console",
-    "sha1": "27d0379442fb09d5f25002ce07b99beedeaa1ef0",
-    "project_count": 4,
+    "sha1": "28d177e4dff4f6d98249d91a853d23002600427d",
+    "project_count": 6,
     "keys": [
       "aiw-console",
       "cantu-studio",
       "cantu-quizzes-latex",
-      "aiw"
+      "cantu-lessons",
+      "aiw",
+      "phd-p2-experiment"
     ]
   },
   "dirty_reading": {
@@ -66,87 +68,67 @@
       },
       "git": {
         "available": true,
-        "head": "bb7e51817c2fd025700ed15c71ed460f47596229",
+        "head": "ddd39e08584052fd4cda373deb7cc7a6ef7eaeb4",
         "branch": "main",
         "dirty": {
           "is_dirty": true,
           "tracked_changed": [
-            ".project/docs_index.json",
-            ".project/git_history.json",
-            ".project/guardrails.json",
-            ".project/no_claims.json",
-            ".project/roadmap.json",
-            ".project/snapshot.json",
-            "roadmap/roadmap.json"
+            "project-console/projects.json",
+            "projects.config.json"
           ],
-          "untracked": [
-            "context/aiw-console/records/DIGEST-DE-CABINA-O4-P18.md",
-            "context/aiw-console/records/REPARACION-COMPONENTE-REGLA-MATEMATICA-CANTU.md",
-            "context/aiw/records/2026-08-08-RUN-41-PARADA-Y-INFORME-DE-OPCIONES.md",
-            "tests/registry-digest.test.mjs",
-            "tools/project-console/build-registry-digest.mjs"
-          ],
+          "untracked": [],
           "counts": {
-            "tracked_changed": 7,
-            "untracked": 5
+            "tracked_changed": 2,
+            "untracked": 0
           },
           "self_excluded": [
             "project-console/projects.digest.json"
           ]
         }
       },
-      "operational_status": "active",
+      "operational_status": "idle",
       "runs": {
-        "total": 57,
+        "total": 82,
         "by_status": {
-          "active": 1,
-          "completed": 49,
-          "planned": 7
+          "completed": 79,
+          "planned": 3
         }
       },
-      "active_runs": [
-        {
-          "run_id": "RUN-CONSOLE-DIGEST-CABINA-001",
-          "title": "Digest for the cockpit",
-          "queue_order": 50,
-          "objective_id": "O4",
-          "phase_id": "O4.P18"
-        }
-      ],
+      "active_runs": [],
       "next_step": {
         "present": true,
-        "run_id": "RUN-CONSOLE-PARIDAD-RENDER-CANTU-001",
-        "title": "Global console renders Cantu (parity, operator QA)",
-        "queue_order": 51,
+        "run_id": "RUN-CANTU-PROJECT-CONSOLE-DEEP-AUDIT-001",
+        "title": "Deep visual audit of the console, led by the operator",
+        "queue_order": 80,
         "objective_id": "O4",
-        "phase_id": "O4.P16",
+        "phase_id": "O4.P17",
         "queue_group": "ready_next"
       },
       "no_claims": {
         "present": true,
         "source": {
           "path": "governance/no_claims.json",
-          "sha1": "8830489ab7ba9455ab9add805e5b8e820b5664df",
-          "bytes": 2905
+          "sha1": "d02fbf18ef7cfa768845fac202e9440f0b9288fd",
+          "bytes": 3052
         },
         "total": 5
       },
       "sources": [
         {
           "path": "roadmap/roadmap.json",
-          "sha1": "01416af70f0e015b4eb1cae081309ba108af2776",
-          "bytes": 140641
+          "sha1": "33487c3f2c3e7e6a3614b8cacd5e5023ad0cfd7d",
+          "bytes": 243033
         },
         {
           "path": "governance/no_claims.json",
-          "sha1": "8830489ab7ba9455ab9add805e5b8e820b5664df",
-          "bytes": 2905
+          "sha1": "d02fbf18ef7cfa768845fac202e9440f0b9288fd",
+          "bytes": 3052
         }
       ]
     },
     {
       "key": "cantu-studio",
-      "root_declared": "../../cantu-studio",
+      "root_declared": "../../Metodo_Cantu/cantu-studio",
       "measured": true,
       "canonical": {
         "layout": "project_local_aiw",
@@ -156,50 +138,35 @@
       },
       "git": {
         "available": true,
-        "head": "e0a4033e35c7a3e808492fbe91ee070bb4999f82",
+        "head": "a3d0bbcfddba6d4a99ccea50f66bc8fb81baf5c3",
         "branch": "main",
         "dirty": {
-          "is_dirty": true,
-          "tracked_changed": [
-            "src/builders/web/partials/renderRule.js",
-            "tools/author-lite/editor-ui/src/features/editor/components/web/WebBlockEditor.jsx"
-          ],
-          "untracked": [
-            "QA/temp/RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001/rule_header_centering_evidence.html",
-            "docs/_historical_run_record/RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001-OPERATOR-QA-PACKET-ROUND-2.md"
-          ],
+          "is_dirty": false,
+          "tracked_changed": [],
+          "untracked": [],
           "counts": {
-            "tracked_changed": 2,
-            "untracked": 2
+            "tracked_changed": 0,
+            "untracked": 0
           },
           "self_excluded": []
         }
       },
-      "operational_status": "active",
+      "operational_status": "idle",
       "runs": {
-        "total": 75,
+        "total": 277,
         "by_status": {
-          "active": 1,
-          "completed": 36,
-          "planned": 38
+          "completed": 267,
+          "planned": 10
         }
       },
-      "active_runs": [
-        {
-          "run_id": "RUN-JAME-RULE-COMPONENT-REPAIR-AND-ACTIVATION-001",
-          "title": "Audit and implement the Rule component",
-          "queue_order": 35,
-          "objective_id": "O1",
-          "phase_id": "O1.P2"
-        }
-      ],
+      "active_runs": [],
       "next_step": {
         "present": true,
-        "run_id": "RUN-CANTU-EDITOR-SIDE-PANEL-COLLAPSE-001",
-        "title": "Let the author collapse and restore the editor side panel",
-        "queue_order": 37,
-        "objective_id": "O4",
-        "phase_id": "O4.P5",
+        "run_id": "RUN-CANTU-CALCULATION-CONTRACT-001",
+        "title": "The vertical calculation the engine already draws: its contract",
+        "queue_order": 268,
+        "objective_id": "O8",
+        "phase_id": "O8.P1",
         "queue_group": "ready_next"
       },
       "no_claims": {
@@ -214,8 +181,8 @@
       "sources": [
         {
           "path": ".aiw/roadmap/roadmap.json",
-          "sha1": "67588079ec032adb77428a97668b7aca21a2bc3f",
-          "bytes": 157720
+          "sha1": "fc7b9510b4f79c710c633f6157a3a1df52d60eef",
+          "bytes": 2053111
         },
         {
           "path": ".aiw/guardrails/no_claims.json",
@@ -226,7 +193,7 @@
     },
     {
       "key": "cantu-quizzes-latex",
-      "root_declared": "../../cantu-quizzes-latex",
+      "root_declared": "../../Metodo_Cantu/cantu-quizzes-latex",
       "measured": true,
       "canonical": {
         "layout": "repo_root",
@@ -236,50 +203,30 @@
       },
       "git": {
         "available": true,
-        "head": "02893a5552ff6244bf78f8b35dd9033a46519cde",
+        "head": "2ad85f2f26c0f193733b8139e9144b3f166ea18c",
         "branch": "main",
         "dirty": {
-          "is_dirty": true,
-          "tracked_changed": [
-            "PAA/Examen Diagnostico/Examen_Diagnostico-moodle.xml",
-            "PAA/Examen Diagnostico/Examen_Diagnostico.log",
-            "PAA/Examen Diagnostico/Examen_Diagnostico.pdf",
-            "PAA/Examen Diagnostico/Examen_Diagnostico.synctex.gz"
-          ],
+          "is_dirty": false,
+          "tracked_changed": [],
           "untracked": [],
           "counts": {
-            "tracked_changed": 4,
+            "tracked_changed": 0,
             "untracked": 0
           },
           "self_excluded": []
         }
       },
-      "operational_status": "active",
+      "operational_status": "idle",
       "runs": {
-        "total": 42,
+        "total": 100,
         "by_status": {
-          "active": 1,
-          "completed": 1,
-          "planned": 40
+          "completed": 100
         }
       },
-      "active_runs": [
-        {
-          "run_id": "RUN-QUIZZES-FRACTIONS-REVIEW-PILOT-001",
-          "title": "Review ARI-FA-Fracciones against the rubric, as the pilot",
-          "queue_order": 2,
-          "objective_id": "O5",
-          "phase_id": "O5.P1"
-        }
-      ],
+      "active_runs": [],
       "next_step": {
-        "present": true,
-        "run_id": "RUN-QUIZZES-REVIEW-ARI-FA-OPERACIONES-001",
-        "title": "Review ARI-FA-Operaciones against the rubric",
-        "queue_order": 3,
-        "objective_id": "O5",
-        "phase_id": "O5.P1",
-        "queue_group": "ready_next"
+        "present": false,
+        "absent_reason": "no run is in the queue group `ready_next`"
       },
       "no_claims": {
         "present": false,
@@ -288,14 +235,14 @@
       "sources": [
         {
           "path": "roadmap/roadmap.json",
-          "sha1": "c8aca1d4b920e5458e1f0ba0936017ae7b78fad5",
-          "bytes": 97673
+          "sha1": "1a3fe4ab2ca200ac1fa7a0c6bc7525c2a2d0c4a3",
+          "bytes": 485724
         }
       ]
     },
     {
-      "key": "aiw",
-      "root_declared": "../../../aiw",
+      "key": "cantu-lessons",
+      "root_declared": "../../Metodo_Cantu/cantu-lessons",
       "measured": true,
       "canonical": {
         "layout": "repo_root",
@@ -305,21 +252,240 @@
       },
       "git": {
         "available": true,
-        "head": "38bb00bb07e1a27a7981b28ff1c7e584213f40db",
+        "head": "167a73e8dac66e22ada4305c79a72f0e0ee50184",
         "branch": "main",
         "dirty": {
-          "is_dirty": true,
-          "tracked_changed": [
-            ".project/docs_index.json",
-            ".project/guardrails.json",
-            ".project/no_claims.json",
-            ".project/roadmap.json",
-            ".project/snapshot.json",
-            "roadmap/roadmap.json"
-          ],
+          "is_dirty": false,
+          "tracked_changed": [],
           "untracked": [],
           "counts": {
-            "tracked_changed": 6,
+            "tracked_changed": 0,
+            "untracked": 0
+          },
+          "self_excluded": []
+        }
+      },
+      "operational_status": "active",
+      "runs": {
+        "total": 30,
+        "by_status": {
+          "active": 25,
+          "completed": 5
+        }
+      },
+      "active_runs": [
+        {
+          "run_id": "RUN-LESSONS-ARI-PROPERTIES-OF-OPERATIONS-001",
+          "title": "L02 · The properties of operations",
+          "queue_order": 4,
+          "objective_id": "O1",
+          "phase_id": "O1.P3"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-OPERATING-WITH-SIGNS-001",
+          "title": "L03 · Operating with signs",
+          "queue_order": 5,
+          "objective_id": "O1",
+          "phase_id": "O1.P3"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-ORDER-OF-OPERATIONS-001",
+          "title": "L04 · The order of operations",
+          "queue_order": 6,
+          "objective_id": "O1",
+          "phase_id": "O1.P3"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-PLACE-VALUE-ROUNDING-ESTIMATION-001",
+          "title": "L05 · Place value, rounding and estimation",
+          "queue_order": 7,
+          "objective_id": "O1",
+          "phase_id": "O1.P3"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-ADDING-SUBTRACTING-DECIMALS-001",
+          "title": "L06 · Adding and subtracting with decimals",
+          "queue_order": 9,
+          "objective_id": "O1",
+          "phase_id": "O1.P3"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-MULTIPLYING-DIVIDING-DECIMALS-001",
+          "title": "L07 · Multiplying and dividing with decimals",
+          "queue_order": 10,
+          "objective_id": "O1",
+          "phase_id": "O1.P3"
+        },
+        {
+          "run_id": "RUN-LESSONS-LESSON-INDEX-STATUS-HISTORY-001",
+          "title": "Lesson index with status and version history",
+          "queue_order": 11,
+          "objective_id": "O1",
+          "phase_id": "O1.P3"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-PREPARING-WORD-PROBLEMS-001",
+          "title": "L08 · Preparing a word problem",
+          "queue_order": 12,
+          "objective_id": "O1",
+          "phase_id": "O1.P4"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-SETTING-UP-WORD-PROBLEMS-001",
+          "title": "L09 · How a word problem is set up",
+          "queue_order": 13,
+          "objective_id": "O1",
+          "phase_id": "O1.P4"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-SCIENTIFIC-NOTATION-001",
+          "title": "L11 · Scientific notation",
+          "queue_order": 15,
+          "objective_id": "O1",
+          "phase_id": "O1.P4"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-DIVISIBILITY-PRIME-FACTORIZATION-001",
+          "title": "L12 · Divisibility and prime factorization",
+          "queue_order": 16,
+          "objective_id": "O1",
+          "phase_id": "O1.P4"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-GCD-LCM-COPRIMES-001",
+          "title": "L13 · GCD, LCM and coprimes",
+          "queue_order": 17,
+          "objective_id": "O1",
+          "phase_id": "O1.P5"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-REMAINDERS-CYCLES-COUNTING-001",
+          "title": "L14 · Remainders, cycles and counting",
+          "queue_order": 18,
+          "objective_id": "O1",
+          "phase_id": "O1.P5"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-MODELING-NUMBERS-WITH-ALGEBRA-001",
+          "title": "L15 · Modeling numbers with algebra",
+          "queue_order": 19,
+          "objective_id": "O1",
+          "phase_id": "O1.P5"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-FRACTIONS-READ-SIMPLIFY-COMPARE-001",
+          "title": "L16 · The fraction: read, simplify and compare",
+          "queue_order": 20,
+          "objective_id": "O1",
+          "phase_id": "O1.P5"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-OPERATING-WITH-FRACTIONS-001",
+          "title": "L17 · Operating with fractions and the order of resolution",
+          "queue_order": 21,
+          "objective_id": "O1",
+          "phase_id": "O1.P5"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-READING-FRACTION-PROBLEMS-001",
+          "title": "L18 · Reading a fraction problem",
+          "queue_order": 22,
+          "objective_id": "O1",
+          "phase_id": "O1.P6"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-WHAT-A-PERCENTAGE-IS-001",
+          "title": "L19 · What a percentage is and the three calculations",
+          "queue_order": 23,
+          "objective_id": "O1",
+          "phase_id": "O1.P6"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-APPLY-UNDO-CHAIN-PERCENTAGES-001",
+          "title": "L20 · Apply, undo and chain percentages",
+          "queue_order": 24,
+          "objective_id": "O1",
+          "phase_id": "O1.P6"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-PERCENTAGE-OF-WHAT-001",
+          "title": "L21 · Percentage of what?",
+          "queue_order": 25,
+          "objective_id": "O1",
+          "phase_id": "O1.P6"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-SIMPLE-INTEREST-001",
+          "title": "L22 · Simple interest",
+          "queue_order": 26,
+          "objective_id": "O1",
+          "phase_id": "O1.P6"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-COMPOUND-INTEREST-OFFERS-001",
+          "title": "L23 · Compound interest and choosing between offers",
+          "queue_order": 27,
+          "objective_id": "O1",
+          "phase_id": "O1.P7"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-WHAT-A-SET-IS-001",
+          "title": "L24 · What a set is and how it is written",
+          "queue_order": 28,
+          "objective_id": "O1",
+          "phase_id": "O1.P7"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-SET-OPERATIONS-VENN-LAWS-001",
+          "title": "L25 · Set operations, Venn diagrams and laws",
+          "queue_order": 29,
+          "objective_id": "O1",
+          "phase_id": "O1.P7"
+        },
+        {
+          "run_id": "RUN-LESSONS-ARI-COUNTING-WITH-SETS-001",
+          "title": "L26 · Counting with sets",
+          "queue_order": 30,
+          "objective_id": "O1",
+          "phase_id": "O1.P7"
+        }
+      ],
+      "next_step": {
+        "present": false,
+        "absent_reason": "no run is in the queue group `ready_next`"
+      },
+      "no_claims": {
+        "present": false,
+        "absent_reason": "no file at the layout's no_claims path (governance/no_claims.json)"
+      },
+      "sources": [
+        {
+          "path": "roadmap/roadmap.json",
+          "sha1": "edc2f803fece99198563e4835bba354d49b9b211",
+          "bytes": 68834
+        }
+      ]
+    },
+    {
+      "key": "aiw",
+      "root_declared": "../../aiw",
+      "measured": true,
+      "canonical": {
+        "layout": "repo_root",
+        "roadmap": "roadmap/roadmap.json",
+        "no_claims": "governance/no_claims.json",
+        "declared_model": "roadmap_tree_v1"
+      },
+      "git": {
+        "available": true,
+        "head": "f7640bdcd0ae291d4e87b0036673d81630dc0670",
+        "branch": "main",
+        "dirty": {
+          "is_dirty": false,
+          "tracked_changed": [],
+          "untracked": [],
+          "counts": {
+            "tracked_changed": 0,
             "untracked": 0
           },
           "self_excluded": []
@@ -378,6 +544,113 @@
           "path": "governance/no_claims.json",
           "sha1": "ee1a31aeec6ca77e225836d925441c09683ca2d1",
           "bytes": 5391
+        }
+      ]
+    },
+    {
+      "key": "phd-p2-experiment",
+      "root_declared": "../../projects/phd-p2-experiment",
+      "measured": true,
+      "canonical": {
+        "layout": "repo_root",
+        "roadmap": "roadmap/roadmap.json",
+        "no_claims": "governance/no_claims.json",
+        "declared_model": "roadmap_tree_v1"
+      },
+      "git": {
+        "available": true,
+        "head": "2a422e5def5c8200d072f92355c185744b788e65",
+        "branch": "main",
+        "dirty": {
+          "is_dirty": false,
+          "tracked_changed": [],
+          "untracked": [],
+          "counts": {
+            "tracked_changed": 0,
+            "untracked": 0
+          },
+          "self_excluded": []
+        }
+      },
+      "operational_status": "active",
+      "runs": {
+        "total": 46,
+        "by_status": {
+          "active": 8,
+          "completed": 38
+        }
+      },
+      "active_runs": [
+        {
+          "run_id": "RUN-P2-TUTOR-SPACE-001",
+          "title": "Open the panel's Tutor space and show the session's trace: the conversation as stored, downloadable, with a button to view it as the tutor's debug log, and no label naming PAF's format",
+          "queue_order": 32,
+          "objective_id": "O10",
+          "phase_id": "O10.P1"
+        },
+        {
+          "run_id": "RUN-P2-TUTOR-EDITOR-001",
+          "title": "Add the tutor's configuration editor to the Tutor space: a button, two plain text areas for the general configuration and the policy, the merged prompt read-only, a new version on each save, and the choice of tutor when a session opens",
+          "queue_order": 34,
+          "objective_id": "O10",
+          "phase_id": "O10.P2"
+        },
+        {
+          "run_id": "RUN-P2-TUTOR-EDITOR-SIMPLE-001",
+          "title": "Simplify the tutor's editor as the operator asked: only the two texts, a subtle note and a «Ver versión final» module with the merged prompt of what is written, and the versions as a plain history with Editar and Eliminar",
+          "queue_order": 36,
+          "objective_id": "O10",
+          "phase_id": "O10.P2"
+        },
+        {
+          "run_id": "RUN-P2-TUTOR-PROMPT-PICKER-001",
+          "title": "Replace the tutor's choice with a dropdown of prompts, «Prompt Base» first, «Por etapas» second and «+ Agregar prompt» last, where the selected prompt is the one the tutor uses and entering a prompt edits its name, its two texts and its versions",
+          "queue_order": 38,
+          "objective_id": "O10",
+          "phase_id": "O10.P2"
+        },
+        {
+          "run_id": "RUN-P2-BENCH-SPACE-001",
+          "title": "Give the page's «Banco» space its function: the learner profiles in words, a short form that says the worst case of calls before playing a scenario, and the scenario turn by turn with the learner's hidden state beside the conversation",
+          "queue_order": 40,
+          "objective_id": "O10",
+          "phase_id": "O10.P3"
+        },
+        {
+          "run_id": "RUN-P2-BENCH-PROFILE-EDITOR-001",
+          "title": "Show the bench's one basic profile in plain words and let the operator edit it as versions, with the learner's fixed phrases in view and each scenario naming the profile version it ran with",
+          "queue_order": 42,
+          "objective_id": "O10",
+          "phase_id": "O10.P3"
+        },
+        {
+          "run_id": "RUN-P2-BENCH-PROMPT-ONLY-001",
+          "title": "Let the bench play its learner against the prompt-only tutor, a named prompt and its version chosen per scenario with that tutor's worst case, say which tutor played, and fix the status race that reads a finished scenario as interrupted",
+          "queue_order": 44,
+          "objective_id": "O10",
+          "phase_id": "O10.P4"
+        },
+        {
+          "run_id": "RUN-P2-BENCH-TUTOR-PICKER-001",
+          "title": "Choose the tutor in the bench's scenario form with the prompts' dropdown, and show in each scenario which prompt and version it played",
+          "queue_order": 45,
+          "objective_id": "O10",
+          "phase_id": "O10.P4"
+        }
+      ],
+      "next_step": {
+        "present": false,
+        "absent_reason": "no run is in the queue group `ready_next`"
+      },
+      "no_claims": {
+        "present": false,
+        "absent_reason": "no file at the layout's no_claims path (governance/no_claims.json)"
+      },
+      "sources": [
+        {
+          "path": "roadmap/roadmap.json",
+          "sha1": "8fe45c37c3bb38b4bbfbafb3fe38a9bde5090daf",
+          "bytes": 205621
         }
       ]
     }

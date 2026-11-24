@@ -164,7 +164,7 @@ decidida, lo que venga es una sola versión.
 ## Técnico
 
 - **La memoria de la PC no viaja.** Lo necesario está en este relevo y en el `CLAUDE.md`.
-- **Capturas:** `puppeteer-core` de `projects/cantu-lessons/tools/render/` por `createRequire`, solo leyendo de ahí.
+- **Capturas:** `puppeteer-core` de `Metodo_Cantu/cantu-lessons/tools/render/` por `createRequire`, solo leyendo de ahí.
   - Chrome está en `C:/Program Files/Google/Chrome/Application/chrome.exe`.
   - Un navegador por página.
   - Para cerrar procesos, solo los propios.
@@ -174,7 +174,7 @@ decidida, lo que venga es una sola versión.
 - **La vista previa de la app** usa `landing-lamina` de `AIW_Workspace/.claude/launch.json`, que no está en ningún
   repo:
   - `"runtimeExecutable": "node"`;
-  - `"runtimeArgs": ["projects/metodo-cantu-landing/direccion/servidor.mjs"]`;
+  - `"runtimeArgs": ["Metodo_Cantu/metodo-cantu-landing/direccion/servidor.mjs"]`;
   - `"port": 8792`.
 
 ## Git

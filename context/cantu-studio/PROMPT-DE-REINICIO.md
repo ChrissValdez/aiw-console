@@ -210,9 +210,9 @@ ARRANQUE, en este orden y midiendo, no suponiendo:
    averiguarlo. Si hay alguno, borralo y declaralo.
 3. Prueba la capacidad: que se lee el workspace, que git log responde, que el borrado
    funciona y que .git es escribible. Si algo falla, declara modo ESPEJO.
-4. Lee tu relevo desde disco: projects/aiw-console/context/handoffs/cantu-studio.md
+4. Lee tu relevo desde disco: aiw-console/context/handoffs/cantu-studio.md
    Y CONTRASTA SUS CIFRAS CONTRA EL CANONICO. Gana el disco.
-5. El canonico es projects/cantu-studio/.aiw/roadmap/roadmap.json -- con .aiw/ -- y su
+5. El canonico es Metodo_Cantu/cantu-studio/.aiw/roadmap/roadmap.json -- con .aiw/ -- y su
    forma es objectives[].phases[].runs[]. Leer obj.runs devuelve 0: es una sonda mal
    escrita, no un canonico vacio. OJO: el aiw/ SIN punto de la raiz es OTRO repo, y
    .project/roadmap.json es la proyeccion, no la fuente.

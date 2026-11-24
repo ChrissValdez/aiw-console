@@ -26,7 +26,7 @@ repo arranca:
 - `console/` — el prototipo de la consola global, retirado por D-048; queda como
   historia.
 
-La consola local de Cantu sigue en su repo (`projects/cantu-studio`) hasta el
+La consola local de Cantu sigue en su repo (`Metodo_Cantu/cantu-studio`) hasta el
 corte (`RUN-CONSOLE-CORTE-RETIRO-LOCAL-001`), que es también cuando D-035 manda
 borrar el fork.
 

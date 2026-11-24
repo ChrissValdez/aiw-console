@@ -25,7 +25,7 @@ import { detectRootLayout, flattenRoadmapTree } from "../tools/projector/project
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
-const SIBLING_ROOT = resolve(REPO_ROOT, "..", "cantu-studio");
+const SIBLING_ROOT = resolve(REPO_ROOT, "..", "Metodo_Cantu", "cantu-studio");
 
 // ---------------------------------------------------------------- fixtures
 

@@ -27,7 +27,7 @@ Empieza cuando el operador escribe «protocolo para cambiar de cuenta», o cuand
 1. No se abre ningún encargo nuevo. Cada carril termina la lección en la que está, con su commit y su relevo; lo que no alcance a
    terminar se commitea tal cual en su rama y se dice en el handoff.
 2. La cabina integra y publica lo entregado, y corre `pendientes.mjs`.
-3. Corre `node projects/aiw-console/context/cambio-de-cuenta/sincronia.mjs` desde `AIW_Workspace` hasta que diga **EN ORDEN**:
+3. Corre `node aiw-console/context/cambio-de-cuenta/sincronia.mjs` desde `AIW_Workspace` hasta que diga **EN ORDEN**:
    - una rama de carril sin integrar se integra, o se nombra en el handoff;
    - votos sin sincronizar: se le pide al operador «Sincronizar». La cabina nunca escribe en `respuestas.*`.
 4. Reescribe `HANDOFF.md`:
@@ -57,8 +57,8 @@ En la PC, o desde fuera con Chrome Remote Desktop:
 Antes de tocar nada:
 
 1. Lee `HANDOFF.md` y este protocolo.
-2. Lee lo de su cabina: en LECCIONES, `projects/aiw-console/context/cabinas/lecciones/CLAUDE.md` y el relevo
-   `projects/aiw-console/context/handoffs/cantu-lessons.md`.
+2. Lee lo de su cabina: en LECCIONES, `aiw-console/context/cabinas/lecciones/CLAUDE.md` y el relevo
+   `aiw-console/context/handoffs/cantu-lessons.md`.
 3. Corre `sincronia.mjs`, y en LECCIONES también `pendientes.mjs`. Con eso compara lo que dice el handoff con lo que hay en git.
 4. Le dice al operador, en una tabla, dónde estamos y qué haría primero, y espera su «adelante».
 5. **Nada se rehace sin mirar antes `git log origin/main`.**
@@ -71,10 +71,10 @@ abrir sesiones: entonces va como agente de fondo de la cabina, o se le pide al o
 
 ```text
 Eres la cabina de LECCIONES (CL_Cabina) del workspace AIW. Trabajas en otra cuenta de Claude, pero en la misma PC y en las mismas carpetas que la otra cuenta: nunca trabajan las dos a la vez. Antes de hacer nada:
-1. Lee projects/aiw-console/context/cambio-de-cuenta/PROTOCOLO.md y sigue su «3. Arranque».
-2. Lee projects/aiw-console/context/cambio-de-cuenta/HANDOFF.md: ahí está dónde nos quedamos y qué sigue.
-3. Lee projects/aiw-console/context/cabinas/lecciones/CLAUDE.md y el relevo projects/aiw-console/context/handoffs/cantu-lessons.md.
-4. Corre node projects/aiw-console/context/cambio-de-cuenta/sincronia.mjs desde AIW_Workspace.
+1. Lee aiw-console/context/cambio-de-cuenta/PROTOCOLO.md y sigue su «3. Arranque».
+2. Lee aiw-console/context/cambio-de-cuenta/HANDOFF.md: ahí está dónde nos quedamos y qué sigue.
+3. Lee aiw-console/context/cabinas/lecciones/CLAUDE.md y el relevo aiw-console/context/handoffs/cantu-lessons.md.
+4. Corre node aiw-console/context/cambio-de-cuenta/sincronia.mjs desde AIW_Workspace.
 Luego dime en una tabla dónde estamos y qué harías primero, y espera mi «adelante». No rehagas nada que ya esté en git. Cuando te escriba «protocolo para cambiar de cuenta», haz el «1. Cierre» y espera a que vuelva.
 ```
 

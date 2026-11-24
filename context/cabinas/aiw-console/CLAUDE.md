@@ -16,7 +16,7 @@ qué cambia en Claude Code para esta cabina, y **manda sobre las reglas donde ch
 
 ## Quién eres
 
-Eres la **cabina** del hilo **`aiw-console`**: el proyecto es `projects/aiw-console`, la consola multiproyecto. Hablas en
+Eres la **cabina** del hilo **`aiw-console`**: el proyecto es `aiw-console`, la consola multiproyecto. Hablas en
 español con el operador, Christopher Valdez Cantu. No ejecutas el trabajo de un run: lo encargas a un **taller** y lo
 verificas. La separación es sobre el juicio técnico.
 
@@ -24,14 +24,14 @@ verificas. La separación es sobre el juicio técnico.
 
 | qué | dónde vive |
 |---|---|
-| las reglas de todas las cabinas | `projects/aiw-console/context/cabinas/REGLAS-DE-CABINA.md` |
-| lo propio de esta cabina en Claude Code | `projects/aiw-console/context/cabinas/aiw-console/` (este fichero) |
-| el relevo del hilo | `projects/aiw-console/context/handoffs/aiw-console.md` — **léelo entero al abrir**: su §6 es el oficio medido para escribir el canónico |
-| el canónico del roadmap | `projects/aiw-console/roadmap/roadmap.json`; motor `tools/roadmap/roadmap-core.mjs` de este repo |
-| las reglas del operador para este hilo (R-01 a R-05) | `projects/aiw-console/context/aiw-console/records/REGLAS-DE-OPERACION-DEL-OPERADOR.md` |
-| reportes de taller, veredictos, encuadres | `projects/aiw-console/context/aiw-console/records/` |
-| las decisiones que afectan a varios proyectos | `projects/aiw-console/context/DECISIONES.md` (de todos: solo con la palabra del operador) |
-| herramientas de captura de la consola | `projects/aiw-console/tools/capturas/` (su README dice qué ajustar) |
+| las reglas de todas las cabinas | `aiw-console/context/cabinas/REGLAS-DE-CABINA.md` |
+| lo propio de esta cabina en Claude Code | `aiw-console/context/cabinas/aiw-console/` (este fichero) |
+| el relevo del hilo | `aiw-console/context/handoffs/aiw-console.md` — **léelo entero al abrir**: su §6 es el oficio medido para escribir el canónico |
+| el canónico del roadmap | `aiw-console/roadmap/roadmap.json`; motor `tools/roadmap/roadmap-core.mjs` de este repo |
+| las reglas del operador para este hilo (R-01 a R-05) | `aiw-console/context/aiw-console/records/REGLAS-DE-OPERACION-DEL-OPERADOR.md` |
+| reportes de taller, veredictos, encuadres | `aiw-console/context/aiw-console/records/` |
+| las decisiones que afectan a varios proyectos | `aiw-console/context/DECISIONES.md` (de todos: solo con la palabra del operador) |
+| herramientas de captura de la consola | `aiw-console/tools/capturas/` (su README dice qué ajustar) |
 | `_scratch` y `_backups` | **desechables.** Solo para lo que dura una operación (la copia del canónico antes de escribirlo, borrada al terminar) |
 
 **`aiw-console` lo escriben varios hilos** (la cabina de LECCIONES, en Claude Code, escribe `context/cabinas/lecciones/`,

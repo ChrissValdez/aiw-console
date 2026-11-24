@@ -21,7 +21,7 @@ import { buildGitHistory, detectDefaultBranch, resolveGitBin } from "../tools/pr
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
-const CANTU = resolve(REPO_ROOT, "..", "cantu-studio");
+const CANTU = resolve(REPO_ROOT, "..", "Metodo_Cantu", "cantu-studio");
 const FIXED_NOW = "2026-07-27T00:00:00.000Z";
 
 // A stub Git reader: answers the four read-only questions the chain can ask, from a plain

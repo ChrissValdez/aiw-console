@@ -2,7 +2,7 @@
 // Lo que cambió en las claves de una galería entre <antes-sha> y origin/main, agrupado por vista, con los comentarios tal cual.
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
-const REV = 'C:/Users/chris/Documents/AIW_Workspace/projects/cantu-revisiones';
+const REV = 'C:/Users/chris/Documents/AIW_Workspace/Metodo_Cantu/cantu-revisiones';
 const [antes, g, salida] = process.argv.slice(2);
 const leer = (ref) => { try { return JSON.parse(execSync(`git -C ${REV} show ${ref}:galerias/${g}/respuestas.json`, { maxBuffer: 1 << 26 }).toString()).claves || {}; } catch { return {}; } };
 const A = leer(antes), B = leer('origin/main');

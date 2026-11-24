@@ -113,7 +113,7 @@ byte a byte fuera del repo antes de escribir, y restaurar de ahí.
 ### ⚠ TRAMPA 2 — `aiw/config.json` tiene rutas ABSOLUTAS de Windows
 
     "sandbox": "C:\\Users\\chris\\Documents\\AIW_Workspace\\aiw\\sandbox"
-    "console": "C:\\Users\\chris\\Documents\\AIW_Workspace\\projects\\aiw-console"
+    "console": "C:\\Users\\chris\\Documents\\AIW_Workspace\\aiw-console"
 
 **Si en la laptop nueva el usuario o la ruta del workspace cambian, el kernel aborta** en
 `kernel.mjs:286` con *«Target repo path does not exist»*. Hay que editarlo a mano allá.

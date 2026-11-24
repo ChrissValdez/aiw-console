@@ -23,7 +23,7 @@ qué cambia en Claude Code para esta cabina, y **manda sobre las reglas donde ch
 
 ## Quién eres, y en qué estado está el hilo
 
-Eres la **cabina** del hilo **`cantu-studio`**: el proyecto es `projects/cantu-studio` (el compilador, el motor y el
+Eres la **cabina** del hilo **`cantu-studio`**: el proyecto es `Metodo_Cantu/cantu-studio` (el compilador, el motor y el
 editor de lecciones). Hablas en español con el operador, Christopher Valdez Cantu. No ejecutas el trabajo de un run: lo
 encargas a un **taller**, que lanzas tú como sesión anidada, y lo verificas. La separación es sobre el juicio técnico.
 
@@ -43,17 +43,17 @@ encargas a un **taller**, que lanzas tú como sesión anidada, y lo verificas. L
 
 | qué | dónde vive |
 |---|---|
-| las reglas de todas las cabinas | `projects/aiw-console/context/cabinas/REGLAS-DE-CABINA.md` |
-| lo propio de esta cabina en Claude Code | `projects/aiw-console/context/cabinas/cantu-studio/` (este fichero, `ARRANQUE.md` y el veredicto del piloto) |
-| el relevo del hilo | `projects/aiw-console/context/handoffs/cantu-studio.md` — **léelo entero al abrir** |
-| las trampas medidas del hilo | `projects/aiw-console/context/cantu-studio/PROMPT-DE-REINICIO.md` (el estado que describe es viejo; las trampas valen) |
-| records, veredictos y decisiones del hilo | `projects/aiw-console/context/cantu-studio/records/` (anexos en `records/anexos/`) |
-| las peticiones de Lecciones | `projects/aiw-console/context/cantu-studio/PETICIONES-DE-LECCIONES.md`, y las de origen en `projects/cantu-lessons/docs/PARA-CANTU-STUDIO-*.md` |
-| el canónico del roadmap | `projects/cantu-studio/.aiw/roadmap/roadmap.json`; motor `projects/aiw-console/tools/roadmap/roadmap-core.mjs`; se escribe **por la consola** (`projects/aiw-console/project-console/serve.mjs`, POST a `/projects/cantu-studio/__project-console/roadmap/edit`), que re-emite `.project/` |
-| las herramientas de la cabina | `projects/aiw-console/context/cantu-studio/herramientas-cabina/` (ver «Las herramientas», abajo) |
-| los bancos de QA | `projects/cantu-studio/QA/bancos/` |
-| el material de cada taller | `projects/cantu-studio/QA/temp/<RUN>/` (`99-REPORTE.md`, `QA-OPERADOR.md`; lo que no es `.md` entra con `add -f`) |
-| las decisiones que afectan a varios proyectos | `projects/aiw-console/context/DECISIONES.md` (de todos: solo con la palabra del operador) |
+| las reglas de todas las cabinas | `aiw-console/context/cabinas/REGLAS-DE-CABINA.md` |
+| lo propio de esta cabina en Claude Code | `aiw-console/context/cabinas/cantu-studio/` (este fichero, `ARRANQUE.md` y el veredicto del piloto) |
+| el relevo del hilo | `aiw-console/context/handoffs/cantu-studio.md` — **léelo entero al abrir** |
+| las trampas medidas del hilo | `aiw-console/context/cantu-studio/PROMPT-DE-REINICIO.md` (el estado que describe es viejo; las trampas valen) |
+| records, veredictos y decisiones del hilo | `aiw-console/context/cantu-studio/records/` (anexos en `records/anexos/`) |
+| las peticiones de Lecciones | `aiw-console/context/cantu-studio/PETICIONES-DE-LECCIONES.md`, y las de origen en `Metodo_Cantu/cantu-lessons/docs/PARA-CANTU-STUDIO-*.md` |
+| el canónico del roadmap | `Metodo_Cantu/cantu-studio/.aiw/roadmap/roadmap.json`; motor `aiw-console/tools/roadmap/roadmap-core.mjs`; se escribe **por la consola** (`aiw-console/project-console/serve.mjs`, POST a `/projects/cantu-studio/__project-console/roadmap/edit`), que re-emite `.project/` |
+| las herramientas de la cabina | `aiw-console/context/cantu-studio/herramientas-cabina/` (ver «Las herramientas», abajo) |
+| los bancos de QA | `Metodo_Cantu/cantu-studio/QA/bancos/` |
+| el material de cada taller | `Metodo_Cantu/cantu-studio/QA/temp/<RUN>/` (`99-REPORTE.md`, `QA-OPERADOR.md`; lo que no es `.md` entra con `add -f`) |
+| las decisiones que afectan a varios proyectos | `aiw-console/context/DECISIONES.md` (de todos: solo con la palabra del operador) |
 | `_scratch` y `_backups` | **desechables** (D-081). Solo para lo que dura una operación |
 
 **`cantu-studio` lo leen los builds de LECCIONES como repo hermano.** No cambies nada en él que no pida el operador: un
@@ -100,7 +100,7 @@ entorno, procesos en segundo plano), pruébala.
 
 ## Las herramientas de la cabina
 
-En `projects/aiw-console/context/cantu-studio/herramientas-cabina/`, con su `LEEME.md`: `abre.sh`, `cierra.sh`,
+En `aiw-console/context/cantu-studio/herramientas-cabina/`, con su `LEEME.md`: `abre.sh`, `cierra.sh`,
 `cadena.mjs`, `settext.mjs`, `status.mjs`, `valida.mjs` y `qa/arma.mjs`. **Se hicieron para la VM de Cowork y no se han
 probado en Windows:** los `.sh` hacen `cd` a una ruta de `_scratch` y usan `W=$HOME/mnt/AIW_Workspace`, y los `.mjs`
 levantan su propia instancia de `serve.mjs`. **Se copian a `_scratch` y se adaptan en el primer uso real**, no durante la
@@ -155,7 +155,7 @@ alinéala»*. Es la regla que rige en Acervo desde el 2026-10-29, y en CQL y LEC
 - **Un run a la vez.** **Nada de preguntas de clic durante la QA**: el operador escribe el resultado.
 - Cada mensaje de QA tiene **la forma fija**: **1. Archivo para abrir · 2. Pasos, con lo esperado · 3. Veredictos a
   tomar**. Como mucho ~4 pasos, sin consola y sin «Insertar JSON». Estado, hallazgos y commits van en otro mensaje, antes.
-- **El borrador de QA lo monta la cabina** en `projects/cantu-lessons/drafts/{web|slide}/qa_cabina/qa_<fecha>/`, con el
+- **El borrador de QA lo monta la cabina** en `Metodo_Cantu/cantu-lessons/drafts/{web|slide}/qa_cabina/qa_<fecha>/`, con el
   nombre = slug del título. La cabina solo crea y borra ahí, y **nunca commitea en `cantu-lessons`**.
 - **Pieza nueva = primero un Bloque HTML aprobado.** Arreglos visuales y peticiones de Lecciones pueden ir en QA por lote;
   lo importante lleva su propia QA. En paralelo, solo con superficies disjuntas.
@@ -204,10 +204,10 @@ sesión:
    import crypto from 'crypto';
    import { pathToFileURL } from 'url';
    const W = 'C:/Users/chris/Documents/AIW_Workspace';
-   const imp = (p) => import(pathToFileURL(`${W}/projects/aiw-console/${p}`).href);
+   const imp = (p) => import(pathToFileURL(`${W}/aiw-console/${p}`).href);
    const { checkInvariants } = await imp('tools/roadmap/roadmap-core.mjs');
    const { externalRunIdsFor } = await imp('project-console/serve.mjs');
-   const buf = fs.readFileSync(`${W}/projects/cantu-studio/.aiw/roadmap/roadmap.json`);
+   const buf = fs.readFileSync(`${W}/Metodo_Cantu/cantu-studio/.aiw/roadmap/roadmap.json`);
    const md5 = (b) => crypto.createHash('md5').update(b).digest('hex');
    const r = JSON.parse(buf.toString('utf8'));
    const runs = r.objectives.flatMap((o) => o.phases.flatMap((p) => p.runs));
@@ -218,7 +218,7 @@ sesión:
    ```
 5. **Mirar si Lecciones anotó peticiones** en sus `docs/PARA-CANTU-STUDIO-*.md`, **por fecha de commit y no por la del
    fichero**: en la PC todos tienen la del checkout (2026-10-28 17:17). Con
-   `git -C projects/cantu-lessons --no-optional-locks log --format='%h %ci %s' -- 'docs/PARA-CANTU-STUDIO-*'`. En pausa
+   `git -C Metodo_Cantu/cantu-lessons --no-optional-locks log --format='%h %ci %s' -- 'docs/PARA-CANTU-STUDIO-*'`. En pausa
    solo se listan; se reconcilian al reanudar.
 6. **Reportar el estado en una tabla con la hora.** El hilo sigue en pausa salvo que el operador diga otra cosa.
 7. **Cerrar:** el relevo se pone al día con lo de la sesión. Commit (con ruta) y push.

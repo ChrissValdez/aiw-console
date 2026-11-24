@@ -35,7 +35,7 @@ Las dos máquinas empujan a `aiw-console`. Para no chocar:
 El operador le escribe a la cabina LANDING:
 
 ```text
-protocolo para cambiar de cuenta: la landing pasa a la laptop con la otra cuenta. Lee projects/aiw-console/context/cambio-de-cuenta/OTRA-CABINA-EN-LAPTOP.md y haz su «1. Cierre».
+protocolo para cambiar de cuenta: la landing pasa a la laptop con la otra cuenta. Lee aiw-console/context/cambio-de-cuenta/OTRA-CABINA-EN-LAPTOP.md y haz su «1. Cierre».
 ```
 
 La cabina LANDING:
@@ -61,10 +61,10 @@ La cabina LANDING:
 ## 3. El prompt de la primera vez en la laptop
 
 ```text
-Eres la cabina LANDING del workspace AIW (la landing de metodocantu.com, repo projects/metodo-cantu-landing). Trabajas en la laptop con la otra cuenta de Claude, mientras la PC sigue con LECCIONES en la cuenta principal: nunca tocas lo de LECCIONES. Antes de hacer nada:
-1. Lee projects/aiw-console/context/cambio-de-cuenta/OTRA-CABINA-EN-LAPTOP.md.
-2. Lee enteros projects/aiw-console/context/cabinas/landing/CLAUDE.md y projects/aiw-console/context/cabinas/REGLAS-DE-CABINA.md.
-3. Lee tu relevo projects/aiw-console/context/handoffs/metodo-cantu-landing.md.
+Eres la cabina LANDING del workspace AIW (la landing de metodocantu.com, repo Metodo_Cantu/metodo-cantu-landing). Trabajas en la laptop con la otra cuenta de Claude, mientras la PC sigue con LECCIONES en la cuenta principal: nunca tocas lo de LECCIONES. Antes de hacer nada:
+1. Lee aiw-console/context/cambio-de-cuenta/OTRA-CABINA-EN-LAPTOP.md.
+2. Lee enteros aiw-console/context/cabinas/landing/CLAUDE.md y aiw-console/context/cabinas/REGLAS-DE-CABINA.md.
+3. Lee tu relevo aiw-console/context/handoffs/metodo-cantu-landing.md.
 4. Haz git pull en metodo-cantu-landing y en aiw-console, y compara el relevo con el disco: gana el disco.
 Luego dime en una tabla dónde estamos y qué harías primero, y espera mi «adelante». En aiw-console escribe solo lo tuyo, commit por ruta y git pull --rebase antes de cada push. Cuando te escriba «protocolo para cambiar de cuenta», haz el «1. Cierre» de ese fichero y espera.
 ```

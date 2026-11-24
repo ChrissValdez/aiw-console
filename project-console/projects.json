@@ -3,10 +3,10 @@
   "title": "AIW Console",
   "projects": [
     { "key": "aiw-console", "root": ".." },
-    { "key": "cantu-studio", "root": "../../cantu-studio" },
-    { "key": "cantu-quizzes-latex", "root": "../../cantu-quizzes-latex" },
-    { "key": "cantu-lessons", "root": "../../cantu-lessons" },
-    { "key": "aiw", "root": "../../../aiw" },
-    { "key": "phd-p2-experiment", "root": "../../phd-p2-experiment" }
+    { "key": "cantu-studio", "root": "../../Metodo_Cantu/cantu-studio" },
+    { "key": "cantu-quizzes-latex", "root": "../../Metodo_Cantu/cantu-quizzes-latex" },
+    { "key": "cantu-lessons", "root": "../../Metodo_Cantu/cantu-lessons" },
+    { "key": "aiw", "root": "../../aiw" },
+    { "key": "phd-p2-experiment", "root": "../../projects/phd-p2-experiment" }
   ]
 }

@@ -35,11 +35,11 @@ Remote Control (`PROTOCOLO.md`, §2). Así no se instala nada.
 
 ```text
 Eres la cabina de LECCIONES (CL_Cabina) del workspace AIW. Trabajas en la LAPTOP con la cuenta de pato; la PC, con la cuenta principal, queda en espera y no toca LECCIONES mientras tú trabajes. Antes de hacer nada:
-1. Lee projects/aiw-console/context/cambio-de-cuenta/LECCIONES-EN-LAPTOP.md, PROTOCOLO.md (su «3. Arranque») y HANDOFF.md de esa carpeta.
-2. Lee enteros projects/aiw-console/context/cabinas/lecciones/CLAUDE.md, projects/aiw-console/context/cabinas/REGLAS-DE-CABINA.md y el relevo projects/aiw-console/context/handoffs/cantu-lessons.md.
+1. Lee aiw-console/context/cambio-de-cuenta/LECCIONES-EN-LAPTOP.md, PROTOCOLO.md (su «3. Arranque») y HANDOFF.md de esa carpeta.
+2. Lee enteros aiw-console/context/cabinas/lecciones/CLAUDE.md, aiw-console/context/cabinas/REGLAS-DE-CABINA.md y el relevo aiw-console/context/handoffs/cantu-lessons.md.
 3. Haz git pull en cantu-lessons, cantu-revisiones y aiw-console, y compara el HANDOFF con git log origin/main: gana el disco.
-4. Mide la laptop, sin instalar nada: hostname, ruta de AIW_Workspace, versiones de git y node, si existe Chrome y en qué ruta, si cantu-lessons/tools/render/node_modules existe, y si node tools/cabina/pendientes.mjs 8797 corre (desde cantu-lessons). Las herramientas de la cabina están en projects/aiw-console/context/cabinas/lecciones/herramientas/cabina/: traen rutas de la PC (C:/Users/chris/..., DESKTOP-525K0IS, la ruta de Chrome); dime cuáles hay que adaptar.
-5. Corre node projects/aiw-console/context/cambio-de-cuenta/sincronia.mjs desde AIW_Workspace.
+4. Mide la laptop, sin instalar nada: hostname, ruta de AIW_Workspace, versiones de git y node, si existe Chrome y en qué ruta, si cantu-lessons/tools/render/node_modules existe, y si node tools/cabina/pendientes.mjs 8797 corre (desde cantu-lessons). Las herramientas de la cabina están en aiw-console/context/cabinas/lecciones/herramientas/cabina/: traen rutas de la PC (C:/Users/chris/..., DESKTOP-525K0IS, la ruta de Chrome); dime cuáles hay que adaptar.
+5. Corre node aiw-console/context/cambio-de-cuenta/sincronia.mjs desde AIW_Workspace.
 Luego dime en una tabla dónde estamos, qué le falta a la laptop para trabajar (y cómo lo arreglarías) y qué harías primero, y espera mi «adelante». No rehagas nada que ya esté en git; nunca toques el 8791, ni respuestas.*, ni votes. Cuando te escriba «protocolo para cambiar de cuenta», haz el «1. Cierre» de PROTOCOLO.md y espera.
 ```
 

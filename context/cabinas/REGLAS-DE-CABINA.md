@@ -51,10 +51,10 @@ inventarlo sí.
 Repos en disco, bajo la ruta que el host declare — **medido el 2026-08-08**:
 
     aiw\                            — el kernel (nivel raíz: el SISTEMA)
-    projects\aiw-console\           — la consola + el contexto de cabina
-    projects\cantu-studio\          — Cantu Studio
-    projects\cantu-lessons\         — inactivo; existe porque cantu-studio lo lee
-    projects\cantu-quizzes-latex\   — CLONADO Y ACTIVO
+    aiw-console\           — la consola + el contexto de cabina
+    Metodo_Cantu\cantu-studio\          — Cantu Studio
+    Metodo_Cantu\cantu-lessons\         — inactivo; existe porque cantu-studio lo lee
+    Metodo_Cantu\cantu-quizzes-latex\   — CLONADO Y ACTIVO
     _backups\                       — respaldos fuera de todo repo
     _scratch\                       — trabajo suelto fuera de todo repo
 
@@ -96,7 +96,7 @@ claves usa el canónico que va a tocar, y usa el motor que las conoce.
 
 **Y hay un detalle operativo medido el 2026-08-12 que ahorra media hora:** el CLI de
 edición de `cantu-studio` **se niega a escribir** por una dependencia externa que es legal.
-La vía que funciona es **la consola**: levantar `projects/aiw-console/project-console/serve.mjs`
+La vía que funciona es **la consola**: levantar `aiw-console/project-console/serve.mjs`
 en un puerto libre y hacer POST a
 `/projects/<proyecto>/__project-console/roadmap/edit` — dry-run primero, luego apply con el
 baseline. `serve.mjs` compone `externalRunIds` y **re-emite `.project/` él solo** tras cada

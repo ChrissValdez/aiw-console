@@ -55,7 +55,7 @@ if (tope) setInterval(() => {
     if (estados.length || ajenos.length) process.exit(0);
   } catch (x) { console.error(new Date().toISOString() + ' espejo: ' + String(x.message).split('\n')[0]); }
 }, Number(process.env.VIGILAR_CADA_MS || 60000));
-const G = process.env.VIGILAR_GALERIAS || 'C:/Users/chris/Documents/AIW_Workspace/projects/cantu-revisiones/galerias/';
+const G = process.env.VIGILAR_GALERIAS || 'C:/Users/chris/Documents/AIW_Workspace/Metodo_Cantu/cantu-revisiones/galerias/';
 const QUIETO = (+process.argv[2] || 120) * 1000, CADA = 5000;
 const foto = () => {
   const r = {};

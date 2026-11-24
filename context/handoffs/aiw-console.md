@@ -46,7 +46,7 @@ commit (hijo de `9a90a72`) o uno posterior.
 
 ## 1. DÓNDE ESTAMOS
 
-`projects/aiw-console/roadmap/roadmap.json`, medido el 2026-10-29 a las 10:18:
+`aiw-console/roadmap/roadmap.json`, medido el 2026-10-29 a las 10:18:
 - md5 **normalizado (LF) `3e088141bcb1b7196f0540b8b10a1067`**, el mismo que da el blob de HEAD y el mismo que el del
   10-21;
 - md5 del **árbol (CRLF, en la PC) `927c6670a6623510ae7c26f8a7ebceac`**.

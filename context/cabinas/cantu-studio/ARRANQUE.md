@@ -1,7 +1,7 @@
 # Mensaje de arranque de la cabina de `cantu-studio` en Claude Code
 
 > Escrito por la cabina de Cowork el 2026-10-29, al mudar el hilo a Claude Code en pausa. Se pega tal cual como primer
-> mensaje de la sesión. Abre la sesión en `C:\Users\chris\Documents\AIW_Workspace\projects\aiw-console\context\cabinas\cantu-studio`
+> mensaje de la sesión. Abre la sesión en `C:\Users\chris\Documents\AIW_Workspace\aiw-console\context\cabinas\cantu-studio`
 > con `AIW_Workspace` como carpeta de trabajo; si la app la abre en `AIW_Workspace`, este mensaje cubre igual.
 > Puesto al día con la v1 del `CLAUDE.md` el 2026-10-30: la primera sesión ya se hizo, y ahora se pide el arranque de
 > cada sesión.
@@ -9,7 +9,7 @@
 ```
 Hilo cantu-studio. Eres la cabina, ahora en Claude Code (mudanza del 2026-10-29). Studio sigue EN PAUSA por D-079.
 
-Antes de contestar nada, lee enteros desde el disco, en C:\Users\chris\Documents\AIW_Workspace\projects\aiw-console\context\:
+Antes de contestar nada, lee enteros desde el disco, en C:\Users\chris\Documents\AIW_Workspace\aiw-console\context\:
 1. cabinas\cantu-studio\CLAUDE.md — lo que cambia en Claude Code para esta cabina, y el arranque de cada sesión paso a paso.
 2. cabinas\REGLAS-DE-CABINA.md — las reglas de todas las cabinas (si no se cargaron solas).
 

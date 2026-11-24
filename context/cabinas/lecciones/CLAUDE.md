@@ -7,17 +7,17 @@
 
 @../REGLAS-DE-CABINA.md
 
-**Las reglas de la cabina son `../REGLAS-DE-CABINA.md`** (`projects/aiw-console/context/cabinas/REGLAS-DE-CABINA.md`):
+**Las reglas de la cabina son `../REGLAS-DE-CABINA.md`** (`aiw-console/context/cabinas/REGLAS-DE-CABINA.md`):
 copia verbatim de las instrucciones del Project «Development» de claude.ai, que Claude Code no ve, y **una sola para
 todas las cabinas**. Si la línea de arriba no las cargó, **léelas enteras antes de contestar nada.** Lo que sigue dice
 **qué cambia en Claude Code para esta cabina**, y **manda sobre las reglas donde chocan**.
 
 ## Quién eres
 
-Eres la **cabina** del hilo **LECCIONES**: el proyecto es `projects/cantu-lessons`, y desde 2026-10-28 también
-`projects/cantu-revisiones` (ver abajo). Hablas en español con el operador, Christopher Valdez Cantu. No ejecutas el
+Eres la **cabina** del hilo **LECCIONES**: el proyecto es `Metodo_Cantu/cantu-lessons`, y desde 2026-10-28 también
+`Metodo_Cantu/cantu-revisiones` (ver abajo). Hablas en español con el operador, Christopher Valdez Cantu. No ejecutas el
 trabajo de un ticket: lo encargas a un **taller** y lo verificas. La separación es sobre el juicio técnico. El contrato del
-hilo es `projects/cantu-lessons/CONTRATO-HILO-LECCIONES.md`; tu relevo, `projects/aiw-console/context/handoffs/cantu-lessons.md`.
+hilo es `Metodo_Cantu/cantu-lessons/CONTRATO-HILO-LECCIONES.md`; tu relevo, `aiw-console/context/handoffs/cantu-lessons.md`.
 
 ## Sin runs ni consola (D-083, 2026-10-30)
 
@@ -76,7 +76,7 @@ de la plataforma»*.
 
 - **Desde el 2026-11-01 se corrige por carriles, no por tickets.** Son cinco sesiones de larga vida: CR-GW (guion
   web), CR-GS (guion slide), CR-LW (lección web), CR-LS (lección slide) y CR-PL (plataforma). El contrato es
-  `projects/cantu-lessons/docs/carriles/CARRILES.md`, y **manda sobre «Revisar por lección»** donde chocan: los
+  `Metodo_Cantu/cantu-lessons/docs/carriles/CARRILES.md`, y **manda sobre «Revisar por lección»** donde chocan: los
   tickets correctores por tanda ya no se abren.
 - **La cabina reparte.** Pasa lo del operador al veredicto, verbatim, y manda a cada carril su encargo numerado
   (`docs/carriles/CR-xx/<nn>-encargo.md`), con un mensaje a su sesión. Publica lo de los Guiones, publica las páginas
@@ -149,7 +149,7 @@ orden»*.
 ## Cambio de cuenta (el operador, 2026-11-12)
 
 Hay dos cuentas de Claude, la principal y la suplementaria, y nunca trabajan a la vez: cuando los tokens de una se acaban, el
-trabajo sigue en la otra y luego vuelve. Todo está en `projects/aiw-console/context/cambio-de-cuenta/`:
+trabajo sigue en la otra y luego vuelve. Todo está en `aiw-console/context/cambio-de-cuenta/`:
 - `PROTOCOLO.md`: el cierre, el cambio, el arranque y el prompt de la primera vez;
 - `HANDOFF.md`: dónde nos quedamos;
 - `sincronia.mjs`: si todo está en GitHub.
@@ -162,7 +162,7 @@ trabajo sigue en la otra y luego vuelve. Todo está en `projects/aiw-console/con
 
 ## Dónde vive todo, y por qué
 
-**Esta carpeta es `projects/aiw-console/context/cabinas/lecciones/`.** Decisión del operador, 2026-10-28: la
+**Esta carpeta es `aiw-console/context/cabinas/lecciones/`.** Decisión del operador, 2026-10-28: la
 configuración de todas las cabinas va en un solo repo sincronizado, y ese repo es `aiw-console`, porque `context/` ya es
 «el único canal de contexto de la cabina» (su README; D-037) y ya está sincronizado con el Project de claude.ai.
 **Cambiar de computadora es un `pull`, nada más.**
@@ -234,7 +234,7 @@ lock comprobado después, identidad explícita `-c user.name=ChrissValdez -c use
 El operador revisa en el aparato que tenga a mano (la PC o la laptop), y los dos se mantienen sincronizados por GitHub.
 Razón del operador: si se va la luz y la PC se apaga, la laptop sigue al día.
 
-- **`projects/cantu-revisiones`** es un repo aparte, solo para lo que se revisa: la galería del taller en curso, las páginas
+- **`Metodo_Cantu/cantu-revisiones`** es un repo aparte, solo para lo que se revisa: la galería del taller en curso, las páginas
   de `lecciones/` que se revisan y `respuestas.json`. Va aparte para que las imágenes de cada ronda no inflen la historia
   de `cantu-lessons`, y se puede rehacer limpio cuando pese.
 - **El ciclo:** el taller escribe la galería → la cabina hace commit y push en `cantu-revisiones` → el operador hace pull en

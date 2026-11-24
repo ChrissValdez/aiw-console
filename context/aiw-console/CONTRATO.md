@@ -68,9 +68,9 @@ lo largo de este contrato. Donde ambos digan cosas distintas, manda éste.
 Cotejado de primera mano el **2026-07-23** contra `docs/snapshot-schema-v1.md` y
 contra los tres snapshots en disco:
 
-- `projects/aiw-console/.aiw/views/project_console.snapshot.json`
+- `aiw-console/.aiw/views/project_console.snapshot.json`
 - `aiw/.aiw/project_console.snapshot.json`
-- `projects/cantu-studio/.aiw/views/project_console.snapshot.json`
+- `Metodo_Cantu/cantu-studio/.aiw/views/project_console.snapshot.json`
 
 Toda afirmación de tipo, clave o ruta lleva cita `archivo:línea` o medición en
 disco. Lo no comprobable desde disco en esta sesión se marca **[NO VERIFICADO]**.
@@ -79,10 +79,10 @@ proyector.
 
 Rutas relativas a la raíz de trabajo `C:\Users\chris\Documents\AIW_Workspace`.
 Abreviaturas heredadas del audit: **CANTU-PCJS** =
-`projects/cantu-studio/docs/project-console/assets/project-console.js`;
-**CON-PCJS** = `projects/aiw-console/docs/project-console/assets/project-console.js`;
-**CANTU-VALID** = `projects/cantu-studio/tools/project-console/validate-project-console-state.mjs`;
-**CON-PROJ** = `projects/aiw-console/tools/projector/project.mjs`.
+`Metodo_Cantu/cantu-studio/docs/project-console/assets/project-console.js`;
+**CON-PCJS** = `aiw-console/docs/project-console/assets/project-console.js`;
+**CANTU-VALID** = `Metodo_Cantu/cantu-studio/tools/project-console/validate-project-console-state.mjs`;
+**CON-PROJ** = `aiw-console/tools/projector/project.mjs`.
 
 ---
 
@@ -317,7 +317,7 @@ el schema-doc para expresar lo que la clave ya expresa.
 ### El enemigo, con los hechos reales de Cantu
 
 El snapshot de Cantu falla en las tres a la vez. Medido en disco sobre
-`projects/cantu-studio/.aiw/views/project_console.snapshot.json`:
+`Metodo_Cantu/cantu-studio/.aiw/views/project_console.snapshot.json`:
 
 ```
 generated_from_run = "RUN-JAME-ROADMAP-STANDARDIZATION-AIW-COMPATIBLE-AUDIT-001"
@@ -435,7 +435,7 @@ afirmación de cuándo aplica.
 > significado de `depends_on` (una referencia que no resuelve localmente puede ser
 > externa legal, no colgante). Ese campo tenía un consumidor **vivo desde el primer
 > día** — el validador de Cantu,
-> `projects/cantu-studio/tools/project-console/validate-project-console-state.mjs`
+> `Metodo_Cantu/cantu-studio/tools/project-console/validate-project-console-state.mjs`
 > — que lo leía con el supuesto viejo y, tras la extracción de O0, se puso **rojo**.
 > La Regla 2 cambió el significado de un campo en uso sin ejercitarlo contra quien
 > lo usaba: exactamente el disparo de D-026, en un caso sin artefacto nuevo.
@@ -463,7 +463,7 @@ Alcance: claves de primer nivel de `no_claims_summary`, `validation_summary` y
 
 Archivos medidos:
 
-- **A** = `projects/aiw-console/.aiw/views/project_console.snapshot.json`
+- **A** = `aiw-console/.aiw/views/project_console.snapshot.json`
   (`generated_at` = `2026-07-22T21:38:08.898Z`)
 - **B** = `aiw/.aiw/project_console.snapshot.json`
   (`generated_at` = `2026-07-11T05:41:17.843Z`)
@@ -556,8 +556,8 @@ Fuentes de evidencia, leídas completas antes de redactar:
   estado real del toolchain (2026-07-23).
 
 Alias de datos, heredados de la medición: **CANTU-ROADMAP** =
-`projects/cantu-studio/.aiw/roadmap/roadmap.json`; **CONSOLE-SNAP** =
-`projects/aiw-console/.aiw/views/project_console.snapshot.json`; **AIW-SNAP** =
+`Metodo_Cantu/cantu-studio/.aiw/roadmap/roadmap.json`; **CONSOLE-SNAP** =
+`aiw-console/.aiw/views/project_console.snapshot.json`; **AIW-SNAP** =
 `aiw/.aiw/project_console.snapshot.json`. **CANTU-PCJS** y **CANTU-VALID** como en
 la cabecera de la capa 1.
 
@@ -572,7 +572,7 @@ identidad de `taxonomy_model` entre ambos snapshots y el `model` de ambos árbol
 **Todo reproduce la medición sin desviación.** Para §10.a, §10.c y el Anexo B se
 leyeron además de primera mano las líneas citadas de CANTU-ROADMAP (:2 y :199),
 CANTU-PCJS, CANTU-VALID y
-`projects/cantu-studio/.aiw/state/project_status.json`.
+`Metodo_Cantu/cantu-studio/.aiw/state/project_status.json`.
 
 No se ejecutó git en ninguna forma. No se levantó la consola, el validador ni el
 proyector. Lo no comprobable desde disco en esta sesión se marca **[NO VERIFICADO]**.
@@ -590,8 +590,8 @@ archivos el 2026-07-23:
   `depends_on`, **0** destinos inexistentes. Frontera de O0: **8** aristas
   cruzadas, las **8** entre objetivos distintos. Frontera del subconjunto de 6:
   **4** aristas, las **4** intra-objetivo, objetivos partidos {O0, O2}.
-- `projects/aiw-console/.aiw/views/roadmap.json` — 16 runs, 16 ids únicos.
-- `projects/aiw-console/.aiw/roadmap/roadmap.json` — mismo conjunto de 16 (la
+- `aiw-console/.aiw/views/roadmap.json` — 16 runs, 16 ids únicos.
+- `aiw-console/.aiw/roadmap/roadmap.json` — mismo conjunto de 16 (la
   copia de entrega del patrón canónico+copia, AUDIT:821-825).
 - **Intersección de `run_id` entre los dos roadmaps: 0.**
 
@@ -612,7 +612,7 @@ Fuente nueva: **MEDICION-PROYECTOR** =
 `context/aiw-console/records/MEDICION-PROYECTOR.md` — medición read-only del
 emisor (el proyector de AIW y el history-builder), leída completa antes de
 redactar la ampliación de §10.d. Alias de código heredados de ese record:
-**PROJ** = `projects/aiw-console/tools/projector/project.mjs`.
+**PROJ** = `aiw-console/tools/projector/project.mjs`.
 
 Para §10.d se midió además **de primera mano**, con recorrido propio de los
 archivos el 2026-07-23:
@@ -621,14 +621,14 @@ archivos el 2026-07-23:
   `RUN-<PROYECTO>-<SLUG>-<NNN>`, **0** excepciones; prefijos `JAME` (48) y
   `CANTU` (17); **0** ids con minúsculas; `<NNN>` = `001` en los **65**.
 - **O0 tras el re-archivo de D-042** — 12 runs, prefijos `CANTU` (8) y `JAME` (4).
-- `projects/aiw-console/.aiw/views/roadmap.json` — 16 ids, **0** casan la forma.
+- `aiw-console/.aiw/views/roadmap.json` — 16 ids, **0** casan la forma.
 - `aiw/objectives/` — los 16 nombres de archivo `.md` bajo
   `{pending, parked, processed}` coinciden uno a uno con esos 16 ids; los de
   `processed/` llevan prefijo de estado (`APPROVED-`, `ERROR-`, `HUMAN_REVIEW-`).
 - Releídas de primera mano las líneas citadas de `aiw/queue.mjs` (`:58`), de
   **PROJ** (`:38`, `:40`, `:188-196`, `:235`, `:247`, `:258-262`, `:269`,
   `:423`, `:463-466`, `:475-483`) y de
-  `projects/cantu-studio/tools/project-console/build-git-history-snapshot.mjs`
+  `Metodo_Cantu/cantu-studio/tools/project-console/build-git-history-snapshot.mjs`
   (`:26`, `:186`).
 
 Todo reproduce MEDICION-PROYECTOR sin desviación. No se ejecutó git en ninguna
@@ -840,14 +840,14 @@ DOS roadmaps vigentes que llevan runs, no uno:
 
 | Archivo | Runs | `run_id` únicos | Familia de id |
 |---|---:|---:|---|
-| `projects/cantu-studio/.aiw/roadmap/roadmap.json` (CANTU-ROADMAP) | 65 | 65 | `RUN-<PREFIJO>-<TEMA>-NNN` |
-| `projects/aiw-console/.aiw/views/roadmap.json` (`:4`, `:13`) | 16 | 16 | `NNN-tema`, `APPROVED-*`, `ERROR-*`, `HUMAN_REVIEW-*` |
+| `Metodo_Cantu/cantu-studio/.aiw/roadmap/roadmap.json` (CANTU-ROADMAP) | 65 | 65 | `RUN-<PREFIJO>-<TEMA>-NNN` |
+| `aiw-console/.aiw/views/roadmap.json` (`:4`, `:13`) | 16 | 16 | `NNN-tema`, `APPROVED-*`, `ERROR-*`, `HUMAN_REVIEW-*` |
 
 **81 ids, 81 distintos, intersección CERO** (medición propia 2026-07-23). El
 segundo vive en el repo de la consola pero **describe a AIW**: su único objetivo se
 titula `aiw` y se resume "16 AIW objectives (pending, parked, processed)"
-(`projects/aiw-console/.aiw/views/roadmap.json:6-7`). Su copia de entrega
-(`projects/aiw-console/.aiw/roadmap/roadmap.json`) lleva el mismo conjunto de 16 —
+(`aiw-console/.aiw/views/roadmap.json:6-7`). Su copia de entrega
+(`aiw-console/.aiw/roadmap/roadmap.json`) lleva el mismo conjunto de 16 —
 patrón canónico+copia (AUDIT:821-825), no un tercer espacio de ids. No se midieron
 los archivos legacy del mismo directorio de Cantu (`roadmap_v2.json`,
 `roadmap_v2_normalized_proposal.json`, `legacy_run_disposition_map_v2.json`):
@@ -1884,7 +1884,7 @@ tramo 3, cuando D-026 exija el test-de-consumidor contra el lector real (§9).
   los otros 64, la celda deriva de nada. Además, renderer y validador leen
   `current_stage` como campo de OTRAS fuentes — `current_focus` de
   `project_status.json` (CANTU-PCJS:1101, :1586; CANTU-VALID:1928), que en Cantu sí
-  lo provee hoy (`projects/cantu-studio/.aiw/state/project_status.json:212`), y
+  lo provee hoy (`Metodo_Cantu/cantu-studio/.aiw/state/project_status.json:212`), y
   `snapshot.current_status_summary.current_stage` (CANTU-VALID:1931), lectura que
   contra la familia v1, donde `current_status_summary` es string (§3), no puede
   devolver nada nunca.

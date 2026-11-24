@@ -1,5 +1,5 @@
 import fs from 'node:fs'; import path from 'node:path'; import { pathToFileURL } from 'node:url';
-const ROOT = process.env.HOME + '/mnt/AIW_Workspace/projects/cantu-studio';
+const ROOT = process.env.HOME + '/mnt/AIW_Workspace/Metodo_Cantu/cantu-studio';
 const API = path.join(ROOT, 'tools/studio/compiler-api');
 const base = JSON.parse(fs.readFileSync(path.join(ROOT, 'QA/temp/RUN-CANTU-PREVIEW-PAGE-TRYOUT-CONTROLS-001/_leccion-de-medida.json'), 'utf8'));
 const card = JSON.parse(fs.readFileSync(path.join(ROOT, 'QA/temp/RUN-CANTU-CARD-INNER-BOX-CONTRACT-001/5-QA-2-seccion-L01-con-recuadro.json'), 'utf8'));

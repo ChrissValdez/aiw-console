@@ -96,9 +96,9 @@ cada respuesta» de las reglas, manda esto: las instrucciones y las preguntas de
 
 | qué | dónde vive |
 |---|---|
-| las reglas de todas las cabinas | `projects/aiw-console/context/cabinas/REGLAS-DE-CABINA.md` |
-| lo propio de esta cabina en Claude Code | `projects/aiw-console/context/cabinas/phd-p2-experiment/` (este fichero) |
-| **el relevo del hilo** | `projects/aiw-console/context/handoffs/phd-p2-experiment.md`: **léelo entero al abrir.** Su §1 son las reglas propias del hilo; su §4, los pendientes |
+| las reglas de todas las cabinas | `aiw-console/context/cabinas/REGLAS-DE-CABINA.md` |
+| lo propio de esta cabina en Claude Code | `aiw-console/context/cabinas/phd-p2-experiment/` (este fichero) |
+| **el relevo del hilo** | `aiw-console/context/handoffs/phd-p2-experiment.md`: **léelo entero al abrir.** Su §1 son las reglas propias del hilo; su §4, los pendientes |
 | el repo | `projects/phd-p2-experiment` |
 | el canónico del roadmap | `projects/phd-p2-experiment/roadmap/roadmap.json`; el motor es el de `aiw-console` (`tools/roadmap/roadmap-core.mjs`), conducido por su consola |
 | las reglas de los talleres | `projects/phd-p2-experiment/AGENTS.md` (las lee el taller, no tú; tú las haces cumplir en cada ticket) |
@@ -107,7 +107,7 @@ cada respuesta» de las reglas, manda esto: las instrucciones y las preguntas de
 | el informe de cada run | `projects/phd-p2-experiment/docs/runs/<RUN_ID>.md` |
 | sesiones manuales | `projects/phd-p2-experiment/data/manual/` (el operador aprobó versionarlas el 2026-10-29; el cambio va en el próximo ticket de DEVELOPMENT) |
 | **la fuente de verdad del paper** | `AIW_Workspace/PHD/Paper 2/` (repo `PHD`): **solo lectura** para la cabina y los talleres, salvo `00_HANDOFFS/DESDE_DEV.md` (§«El canal con el paper»); lo escribe el carril del paper (§«Los dos carriles», D-085) |
-| las decisiones que afectan a varios proyectos | `projects/aiw-console/context/DECISIONES.md` (de todos: solo con la palabra del operador) |
+| las decisiones que afectan a varios proyectos | `aiw-console/context/DECISIONES.md` (de todos: solo con la palabra del operador) |
 | `_scratch` y `_backups` | **desechables.** Solo para lo que dura una operación (el respaldo del canónico antes de un cambio estructural, borrado al cerrar su run) |
 
 **`aiw-console` lo escriben varios hilos**: `pull --ff-only` justo antes de cada escritura, `add` siempre por nombre, y
@@ -144,7 +144,7 @@ entorno, procesos en segundo plano), pruébala.
   publique dice si es del árbol o normalizado (LF). El canónico de `phd-p2-experiment` al `deb51ee`: árbol
   `6b6bc90162a672574008f37625ca9720`, normalizado `2e1384c296a1fb1a92ffcb89acc9efaa`.
 - **La consola del operador vive en el puerto 8788.** Para escribir el canónico, la cabina levanta la suya
-  (`projects/aiw-console/project-console/serve.mjs`) en otro puerto libre con la variable `PC_PORT` (en Cowork se usó el
+  (`aiw-console/project-console/serve.mjs`) en otro puerto libre con la variable `PC_PORT` (en Cowork se usó el
   8797), hace POST a `/projects/phd-p2-experiment/__project-console/roadmap/edit` (dry-run, `remap` publicado, apply con
   el `baseline`), y **la para por su PID** al terminar. `serve.mjs` re-emite `.project/` solo.
 - **Lo que no viajó con la mudanza** (relevo §6): la `.venv` (se rehace desde `requirements.lock`), `data/` (se copia

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 const [plantilla, msg] = process.argv.slice(2);
-const V = 'C:/Users/chris/Documents/AIW_Workspace/projects/cantu-lessons/docs/veredictos/2026-10-16-lectura-de-las-seis-lecciones-web.md';
+const V = 'C:/Users/chris/Documents/AIW_Workspace/Metodo_Cantu/cantu-lessons/docs/veredictos/2026-10-16-lectura-de-las-seis-lecciones-web.md';
 const m = fs.readFileSync(msg, 'utf8');
 const t = fs.readFileSync(plantilla, 'utf8').replace('MENSAJE', () => m);
 let s = fs.readFileSync(V, 'utf8');

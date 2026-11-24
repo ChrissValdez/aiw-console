@@ -9,7 +9,7 @@
 
 ## Dónde estamos
 
-- **El repo existe:** `projects/metodo-cantu-dashboard`, rama `main`, con remoto
+- **El repo existe:** `Metodo_Cantu/metodo-cantu-dashboard`, rama `main`, con remoto
   `github.com/ChrissValdez/metodo-cantu-dashboard` (privado; lo creó el operador el 19-nov y la cabina lo conectó y
   empujó a las 22:19). `HEAD` = `origin/main` = `c7b0842` a las 22:19. Commit `8954a09` (22:07): sus palabras del
   arranque y la captura de su Moodle, en `veredictos/`.

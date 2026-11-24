@@ -22,7 +22,7 @@ import { snapshotSummary } from "../project-console/assets/project-shell.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..");
-const CANTU = resolve(REPO_ROOT, "..", "cantu-studio");
+const CANTU = resolve(REPO_ROOT, "..", "Metodo_Cantu", "cantu-studio");
 const RENDERER = join(REPO_ROOT, "project-console", "assets", "project-console.js");
 
 const REAL = [["aiw-console", REPO_ROOT], ["cantu-studio", CANTU]]

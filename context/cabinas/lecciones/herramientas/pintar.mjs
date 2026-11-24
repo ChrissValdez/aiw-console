@@ -6,7 +6,7 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-const R = process.env.HOME + '/mnt/AIW_Workspace/projects/cantu-lessons/'; const lecciones = async () => [];
+const R = process.env.HOME + '/mnt/AIW_Workspace/Metodo_Cantu/cantu-lessons/'; const lecciones = async () => [];
 const st = await import(pathToFileURL(R + 'tools/revision/lib/studio.mjs').href);
 const cod = await import(pathToFileURL(R + 'tools/revision/lib/codigos.mjs').href);
 let [salida, ...pares] = process.argv.slice(2);

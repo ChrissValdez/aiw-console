@@ -7,7 +7,7 @@ SPU=$(cd "$(dirname "$0")" && pwd)   # esta carpeta: herramientas de la cabina
 TMPD=$(mktemp -d)
 W=/c/Users/chris/Documents/AIW_Workspace
 cd $W && timeout 900 node _scratch/cabina-lecciones/integrar.mjs $SHA --sin-publicar 2>&1 | grep -E 'cherry-pick|empujado' | head -3
-cd $W/projects/cantu-lessons && git pull -q --rebase
+cd $W/Metodo_Cantu/cantu-lessons && git pull -q --rebase
 node $SPU/filas.mjs $INF $LEC
 git commit -q -m "cabina: registro, las filas de $LEC ($CAR)
 
@@ -18,11 +18,11 @@ SLUG=$(echo "$CARP" | sed "s/^$LEC-//" | tr '-' '_')
 D=$(ls drafts/web/matematicas_paa/*/$SLUG.web.draft.json | head -1)
 timeout 600 node tools/revision/build.mjs $D 2>&1 | grep -E "$LEC.*(VERDE|AMARILLO|ROJO)|✖" | head -3 | cut -c1-220
 cd tools/revision && timeout 300 node publicar-paginas.mjs $LEC 2>&1 | grep "· $LEC" | head -1 | cut -c1-200
-cd $W/projects/cantu-revisiones && git add -- lecciones && git commit -q -m "lecciones: $LEC «$TIT», la web ($CAR)
+cd $W/Metodo_Cantu/cantu-revisiones && git add -- lecciones && git commit -q -m "lecciones: $LEC «$TIT», la web ($CAR)
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" -- lecciones && git fetch -q && git rebase -q origin/main && git push -q origin HEAD:main
 PAG=$(git log --oneline -1 | cut -c1-7)
-cd $W/projects/cantu-lessons && H=$(date +%H:%M)
+cd $W/Metodo_Cantu/cantu-lessons && H=$(date +%H:%M)
 printf '%s\n' "## $LEC «$TIT», la web, publicada ($(date +%F), $H)" "" "- **$CAR** ($SHA): $VER" "  - Filas del registro, puestas por la cabina ($REG). Páginas: $PAG." > $TMPD/nota.md
 git pull -q --rebase && node "$SPU/anexar-veredicto.mjs" $TMPD/nota.md "$SPU/vacio.txt" | tail -1
 git commit -q -m "cabina: veredicto, $LEC publicada
@@ -30,7 +30,7 @@ git commit -q -m "cabina: veredicto, $LEC publicada
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" -- docs/veredictos/2026-10-16-lectura-de-las-seis-lecciones-web.md 2>/dev/null && git push -q origin HEAD:main
 T="$LEC web publicada ($CAR; páginas $PAG)"
 printf '%s' "$T" > $TMPD/relevo.txt
-cd $W/projects/aiw-console && git pull --rebase -q && node "$SPU/relevo.mjs" context/handoffs/cantu-lessons.md $(date +%H:%M) $TMPD/relevo.txt | tail -1
+cd $W/aiw-console && git pull --rebase -q && node "$SPU/relevo.mjs" context/handoffs/cantu-lessons.md $(date +%H:%M) $TMPD/relevo.txt | tail -1
 git commit -q -m "cantu-lessons: relevo, $LEC publicada
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" -- context/handoffs/cantu-lessons.md

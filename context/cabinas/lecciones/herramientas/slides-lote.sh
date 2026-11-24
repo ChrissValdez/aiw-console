@@ -9,7 +9,7 @@ TMPD=$(mktemp -d)
 W=/c/Users/chris/Documents/AIW_Workspace
 cd $W
 for s in "${SHAS[@]}"; do timeout 900 node _scratch/cabina-lecciones/integrar.mjs $s --sin-publicar 2>&1 | grep -E 'cherry-pick|ya estaba' | head -1 | cut -c1-140; done
-cd $W/projects/cantu-lessons && git pull -q --rebase
+cd $W/Metodo_Cantu/cantu-lessons && git pull -q --rebase
 for L in "${LECS[@]}"; do node $SPU/filas.mjs $INF $L; done
 if ! git diff --quiet -- docs/BLOQUES-PROVISIONALES.md; then git commit -q -m "cabina: registro, las filas de ${LECS[*]} en slide ($CAR)
 
@@ -22,7 +22,7 @@ for L in "${LECS[@]}"; do
   timeout 600 node tools/revision/build.mjs $D --slide 2>&1 | grep -E "$L.*(VERDE|AMARILLO|ROJO)|✖" | head -2 | cut -c1-200
 done
 cd tools/revision && timeout 600 node publicar-paginas.mjs "${LECS[@]}" 2>&1 | grep -E "· ALG-" | cut -c1-120
-cd $W/projects/cantu-revisiones && git add -- lecciones && git commit -q -m "lecciones: ${LECS[*]}, las slides ($CAR)
+cd $W/Metodo_Cantu/cantu-revisiones && git add -- lecciones && git commit -q -m "lecciones: ${LECS[*]}, las slides ($CAR)
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" -- lecciones && git fetch -q && git rebase -q origin/main && git push -q origin HEAD:main
 echo "páginas $(git log --oneline -1 | cut -c1-7)"

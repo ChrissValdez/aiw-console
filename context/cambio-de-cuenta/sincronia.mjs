@@ -7,15 +7,24 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
-const P = path.resolve(AQUI, '..', '..', '..');            // AIW_Workspace/projects
+const W = path.resolve(AQUI, '..', '..', '..');            // AIW_Workspace
+// Desde la mudanza del 24-nov: aiw-console en la raíz, los repos de Cantú en Metodo_Cantu\, y aiw y
+// projects\phd-p2-experiment solo como avisos (no están en PROPIOS).
+const MC = path.join(W, 'Metodo_Cantu');
+const REPOS = [
+  path.join(W, 'aiw-console'),
+  ...(fs.existsSync(MC) ? fs.readdirSync(MC).sort().map((r) => path.join(MC, r)) : []),
+  path.join(W, 'aiw'),
+  path.join(W, 'projects', 'phd-p2-experiment'),
+];
 const PROPIOS = ['cantu-lessons', 'cantu-revisiones', 'aiw-console'];
 const revisadas = new Set(fs.readFileSync(path.join(AQUI, 'ramas-integradas.txt'), 'utf8')
   .split(/\r?\n/).filter((l) => l && !l.startsWith('#')).map((l) => l.trim()));
 const g = (dir, ...a) => execFileSync('git', ['-C', dir, ...a], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trimEnd();
 
 const faltas = [], avisos = [];
-for (const r of fs.readdirSync(P).sort()) {
-  const dir = path.join(P, r);
+for (const dir of REPOS) {
+  const r = path.basename(dir);
   if (!fs.existsSync(path.join(dir, '.git'))) continue;
   const propio = PROPIOS.includes(r);
   const mal = (t) => (propio ? faltas : avisos).push(`${r}: ${t}`);

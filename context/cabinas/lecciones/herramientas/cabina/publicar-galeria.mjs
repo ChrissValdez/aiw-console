@@ -14,7 +14,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const W = 'C:/Users/chris/Documents/AIW_Workspace';
-const REV = W + '/projects/cantu-revisiones', LES = W + '/projects/cantu-lessons';
+const REV = W + '/Metodo_Cantu/cantu-revisiones', LES = W + '/Metodo_Cantu/cantu-lessons';
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const a = process.argv.slice(2);
 const opt = (k, d) => { const i = a.indexOf('--' + k); return i >= 0 ? a[i + 1] : d; };

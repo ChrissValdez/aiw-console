@@ -3657,3 +3657,46 @@ La tabla V-hilos del paper (dos hilos, 2026-10-19), que esto cambia, la actualiz
 
 **Criterio de borrado:** se reabre si los dos carriles se contradicen en la práctica, o si el operador vuelve a un hilo
 por proyecto.
+
+## D-086 — MÉTODO CANTÚ: UN COORDINADOR PARA TODO, CON CABINAS ANIDADAS DONDE HAY FLUJO Y TALLERES SUELTOS DONDE NO
+
+**Fecha:** 2026-11-24 · **Proyecto:** Método Cantú (`cantu-lessons`, `cantu-revisiones`, `cantu-quizzes-latex`,
+`metodo-cantu-dashboard`, `metodo-cantu-landing`, `cantu-studio`) · **Origen:** el coordinador de Método Cantú (Claude
+Code, en la PC).
+
+Decidido por **Christopher Valdez Cantu** el **2026-11-24**, en la sesión del coordinador. Sus palabras, tal cual:
+
+> esos proyectos que dice que lo lleva su cabina lo que quiero justamente es traerlo aqui todo
+> ya que todo se conecta
+> los quizes, las lecciones, las revisiones el dashboard, el studio
+>
+> que opinas?  que se ocupa para esto?
+
+> que tal si las cabinas son sesiones anidadas a esta? que opinas? lo recomiendas?
+
+El coordinador recomendó el modelo mixto de abajo. La respuesta:
+
+> Sí, escríbelo
+
+### La regla
+
+- **El coordinador lleva Método Cantú entero** y se queda delgado: reparte, junta lo que cruza áreas, integra lo de sus
+  talleres y le pregunta al operador. El oficio de cada área vive en sus ficheros y en su cabina.
+- **Cabina anidada al coordinador** (`start_session`, «fresh», sin worktree, Opus alto, nunca Fable): **LECCIONES y
+  revisiones**, y **DASHBOARD** en cuanto se publique la v33. Lanza sus propios talleres, integra y publica su área, y
+  avisa al coordinador solo al cerrar algo.
+- **Sin cabina, con talleres del coordinador:** **Quizzes** y **LANDING**.
+- **Studio:** nada mientras siga en pausa (D-079).
+- **El tope de tres a la vez es global**, sumando cabinas y talleres. **El contrato sigue siendo un fichero.**
+- **El paso es por etapas**, con el cierre de `context/metodo-cantu/CIERRE-DE-CABINA.md`. Ninguna cabina suelta se
+  archiva sin el sí del operador.
+
+El detalle es `context/metodo-cantu/PROYECTO.md` §3.1, §5 y §6 (v1).
+
+**Lo que esta decisión NO hace:**
+- no saca a Studio de la pausa (D-079);
+- no toca `phd-p2-experiment`, `PHD`, `Resuelve-Esparza` ni `aiw`;
+- no aprueba el `git worktree prune` de `cantu-lessons` ni de `cantu-revisiones`, que sigue esperando su sí.
+
+**Criterio de borrado:** se reabre si el coordinador se vuelve el cuello de botella, si los avisos de las cabinas gastan
+más de lo que ahorran, o al migrar a un Project de la nube, donde las sesiones anidadas de la PC no se mudan.

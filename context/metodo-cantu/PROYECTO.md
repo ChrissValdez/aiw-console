@@ -9,10 +9,15 @@
 > - **Mañana** lo lee el coordinador de un **Project de claude.ai/code**. La receta para mudarlo está en `MIGRAR-A-PROJECTS.md`, al lado.
 >
 > Los dos leen este mismo fichero desde GitHub. **Si una regla cambia, se cambia aquí**, no solo en la memoria de una máquina.
+>
+> **v1 · 2026-11-24, 09:00 (`date`).** El coordinador, en la PC, escribió el **modelo mixto** (§3.1, §5 y §6; la decisión es D-086). Las palabras del operador:
+> - *«esos proyectos que dice que lo lleva su cabina lo que quiero justamente es traerlo aqui todo ya que todo se conecta los quizes, las lecciones, las revisiones el dashboard, el studio»*
+> - *«que tal si las cabinas son sesiones anidadas a esta? que opinas? lo recomiendas?»*
+> - Al modelo mixto que propuso el coordinador: *«Sí, escríbelo»*
 
 ## 1. Qué es
 
-Método Cantú es el negocio de preparación para el examen de admisión (PAA). Hoy lo llevan cinco hilos, cada uno con su repo y su cabina.
+Método Cantú es el negocio de preparación para el examen de admisión (PAA). **Desde el 24-nov lo lleva entero el coordinador**: los quizzes, las lecciones, las revisiones, el dashboard, la landing y Studio, porque todo se conecta. Hasta ese día lo llevaban cinco hilos sueltos, cada uno con su repo y su cabina. Cómo se reparte ahora está en §3.1.
 
 **El coordinador:**
 - **no hace el trabajo de las rondas**: reparte el trabajo en hilos, uno por tarea;
@@ -68,6 +73,36 @@ Todos son de GitHub (`ChrissValdez/<repo>`). En disco están bajo `C:\Users\chri
   - con qué puerto o número empieza lo siguiente.
 
 **Las cabinas de hoy siguen vivas** mientras se pasa a este modelo. Ninguna se cierra sin el sí del operador. El coordinador puede trabajar con ellas: les pide que dejen su relevo al día y lee de ahí.
+
+### 3.1 El modelo mixto: cabinas anidadas y talleres sueltos (D-086, 24-nov)
+
+**La idea:** el coordinador se queda **delgado**. El oficio de cada área vive en sus ficheros (`CLAUDE.md`, reglas y relevo) y en la conversación de su cabina, no en la del coordinador.
+
+| Área | Cómo se lleva | Por qué |
+|---|---|---|
+| LECCIONES y revisiones | **Cabina anidada al coordinador**, permanente | La de más flujo y más oficio: galerías, votos, carriles. |
+| DASHBOARD | **Cabina anidada**, en cuanto se publique la v33 | Su ronda (votos, encargo, publicar) es continua. |
+| Quizzes | **Sin cabina:** talleres que abre el coordinador | Hoy solo espera la QA del operador. |
+| LANDING | **Sin cabina:** talleres que abre el coordinador | Casi cerrada; quedan rondas cortas. |
+| Studio | **Nada** mientras siga en pausa (D-079) | Si el operador la saca de la pausa, se le abre una cabina. |
+
+**La cabina anidada:**
+- La abre el coordinador desde su sesión (`start_session`): «fresh», sin worktree, en `AIW_Workspace`, Opus con esfuerzo alto. **Nunca Fable.**
+- Arranca leyendo enteros su `CLAUDE.md`, `context/cabinas/REGLAS-DE-CABINA.md`, este fichero y su relevo.
+- Lanza sus propios talleres, anidados a ella; integra y publica su área, como hacían las cabinas sueltas.
+- **El operador le habla directo** para votar o decidir lo de su área.
+- **Al coordinador le avisa solo al cerrar algo:** una ronda publicada, algo que espera al operador, o algo que toca otra área. No en cada paso: cada aviso despierta al coordinador y gasta tokens.
+- **Una sola cabina por área.** Una cabina suelta de antes se archiva con el sí del operador cuando su relevo pasó a la anidada (§6).
+
+**Los talleres del coordinador** (Quizzes y LANDING): el encargo en un fichero del repo del área, un taller anidado al coordinador, y el coordinador integra y publica.
+
+**Lo que cruza áreas** (por ejemplo, LECCIONES pide preguntas nuevas al banco): lo decide el coordinador con el operador. El encargo se escribe en el repo del área que lo aplica, y a su cabina se le manda una línea que nombra el fichero. **El contrato sigue siendo un fichero:** el aviso de una sesión anidada trae solo sus primeros 400 caracteres.
+
+**El tope de tres es global:** como mucho tres sesiones trabajando a la vez, sumando cabinas y talleres de todas las áreas.
+
+**El cambio de cuenta apaga todo el árbol.** Antes de cambiar, cada cabina anidada deja su relevo al día, como dice `context/cambio-de-cuenta/PROTOCOLO.md`.
+
+**En un Project de la nube** las sesiones anidadas de la PC no se mudan: este modelo se revisa al migrar (`MIGRAR-A-PROJECTS.md`).
 
 **El cambio de cuenta:**
 - Hay dos cuentas de Claude, y **nunca trabajan a la vez**.
@@ -140,14 +175,26 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 - Cerca de la renovación, la prioridad es la prisa, no el ahorro.
 - Hay que ahorrar tokens sin ir más lento: menos pasos, carriles cortos, tope de tres a la vez.
 
-## 5. Dónde se quedó cada área (2026-11-24)
+## 5. Dónde se quedó cada área (2026-11-24, 09:00)
 
 | Área | Estado | Por dónde seguir |
 |---|---|---|
-| DASHBOARD | MAESTRO-9 y PIEZAS-24 votados, con los votos guardados (13e58922). Publicado en la v32. | MAESTRO-10 y PIEZAS-25 están propuestos y **esperan su sí**. Ver el último bloque de su relevo. |
-| LECCIONES | Lo lleva su cabina en la PC. | Su relevo y `cantu-lessons/estado/`. `node tools/cabina/pendientes.mjs` da la cola. |
-| LANDING | Lo lleva su cabina (MC-LandingPage). | Su relevo, sección «Abierto, para después». |
-| Quizzes | El banco y sus correcciones. | Su relevo y `PAA/tickets/`. |
+| DASHBOARD | Encargos MAESTRO-10 y PIEZAS-25 (875fe157), con sus talleres anidados al coordinador, trabajando desde las 08:50. Publicado: la v32. | Al entregar, el coordinador integra y publica la v33; luego pasa a su cabina anidada (§6). |
+| LECCIONES | Lo lleva su cabina suelta en la PC. Lo último: CR-LX3·07 (c05f1bbc), tres vistas de la galería CR-LX3 que esperan su voto. Su relevo en `handoffs/` es del 19-nov. | El cierre de §6. `node tools/cabina/pendientes.mjs` no sirve tras la mudanza: su carpeta de `_scratch` ya no existe. |
+| LANDING | Lo lleva su cabina suelta. Vigente: BB. El título de la sección 2 espera uno nuevo (`veredictos/2026-11-23-seccion-2-tono.md`). | El cierre de §6; luego, talleres del coordinador. |
+| Quizzes | Sin cabina viva. Espera la QA del operador (`PAA/tickets/qa-visual-FINAL-2.md`). El relevo vigente es `PAA/HANDOFF.md`; el de `handoffs/` es de septiembre. | Talleres del coordinador. |
 | Studio | **En pausa** (D-079). | No se toca sin su palabra. |
 
 Esta tabla es una **foto fechada**. El coordinador la vuelve a medir al abrir, leyendo cada relevo, y no la toma por cierta.
+
+## 6. El paso al modelo mixto, por etapas
+
+| Etapa | Área | Qué se hace | Estado |
+|---|---|---|---|
+| 1 | Quizzes | El coordinador pone al día su relevo en `handoffs/` desde `PAA/HANDOFF.md`. | Por hacer |
+| 2 | LANDING | Su cabina suelta hace el cierre (`CIERRE-DE-CABINA.md`, al lado) y se archiva con su sí. | Por hacer |
+| 3 | LECCIONES y revisiones | Su cabina suelta hace el cierre, con lo propio de LECCIONES del mismo fichero. El coordinador abre su cabina anidada y la suelta se archiva con su sí. | Cierre pedido el 24-nov |
+| 3b | DASHBOARD | Tras la v33, el coordinador pone al día su relevo y le abre su cabina anidada. | Tras la v33 |
+| 4 | Studio | Solo si el operador la saca de la pausa. | En pausa |
+
+**Lo que sigue esperando la palabra del operador:** el `git worktree prune` de `cantu-lessons` y `cantu-revisiones` (más de 50 worktrees que ya no existen, medido con `sincronia.mjs` el 24-nov), y si Studio entra al proyecto solo para leerse.

@@ -1568,3 +1568,38 @@ Lo que dijeron los talleres:
 - Al integrarlo: `vigente.json` a MAESTRO-7 y publicar la v30.
 
 **La próxima ronda empieza en el puerto 8914.**
+
+## MAESTRO-7 publicado, v30 (2026-11-24 04:56)
+
+**El trabajo:** 9e7ac39, `local_1112902f-b56b-4662-8f78-75b967f31a5c`. `vigente.json` queda en PIEZAS-24 + MAESTRO-7, con el nombre «MAESTRO-7».
+
+**Lo fijo:**
+- §4 agrupada por área como en la 3, con el switch de la 1. Ordenar ordena dentro del área, y cada área se colapsa.
+- El detalle del quiz: tocar un alumno abre sus intentos de ese quiz.
+
+**Lo que se vota:**
+- **§3, con 3 opciones:**
+  1. gráfica y tabla de todos;
+  2. toda la gráfica y el detalle del simulador que toques;
+  3. su página, con el botón «Historial completo».
+
+  El panel lleva a Bruno (15 simuladores).
+- **§5 nueva** (clave `6`, etiqueta «5»), con 3 opciones:
+  1. renglones finos con los intentos en línea;
+  2. tarjetitas con tejas, como el alumno;
+  3. una tabla por área con colapsar, como §4.
+
+  Las tres llevan switch de materia, sin «Todas (26)», y el diagnóstico en su propio renglón con sus intentos.
+
+**Datos inventados:** los diagnósticos tienen 2 o 3 intentos. Bruno presentó el de Álgebra tres veces: 36, 50 y 62.
+
+**Lo medido:** 222 vistas y 729 escenarios, 0 fallas.
+
+**El crítico:**
+- §3 con 4 simuladores: «se distinguen, aunque poco».
+- Sus favoritas: §3·3 y §5·3.
+- Sobre si el maestro se siente un solo sistema: «a medias», porque los menús de área de §5·1 y §5·2 no hablan igual que el colapsar.
+
+**La próxima ronda empieza en el puerto 8914.**
+
+**Cuando diga «ya voté»:** `--leer-votos maestro-7`, y también `piezas-24`, por si deja comentarios.

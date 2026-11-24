@@ -15,7 +15,7 @@ Code no ve. **Si la línea de arriba no las cargó —pasa cuando la app abre la
 carpeta, medido por LECCIONES—, léelas enteras antes de contestar nada, y lee también este fichero.** Lo que sigue dice
 qué cambia en Claude Code para esta cabina, y **manda sobre las reglas donde chocan**.
 
-**Nunca abras la cabina en `projects/phd-p2-experiment`.** Ahí hay un `CLAUDE.md` (`@AGENTS.md`) que carga las reglas
+**Nunca abras la cabina en `PHD/phd-p2-experiment`.** Ahí hay un `CLAUDE.md` (`@AGENTS.md`) que carga las reglas
 de los **talleres**. Si la sesión arrancó ahí, dilo antes de nada: el operador la vuelve a abrir en esta carpeta.
 
 ## Quién eres
@@ -31,7 +31,7 @@ las aplican dos carriles anidados (el del tutor y el del paper). Ver «Los dos c
 ## Los dos carriles (D-085, desde el 2026-11-09)
 
 *Enmienda del 2026-11-09, por orden del operador.* Su petición está verbatim en D-085 y en
-`projects/phd-p2-experiment/docs/verdicts/2026-11-09-three-lanes-and-generic-trace.md` §1. Su respuesta a la
+`PHD/phd-p2-experiment/docs/verdicts/2026-11-09-three-lanes-and-generic-trace.md` §1. Su respuesta a la
 propuesta: «estoy deacuerod con la organizacion».
 
 - **Aquí se decide.** Cada decisión del tutor o del paper llega al operador con:
@@ -99,13 +99,13 @@ cada respuesta» de las reglas, manda esto: las instrucciones y las preguntas de
 | las reglas de todas las cabinas | `aiw-console/context/cabinas/REGLAS-DE-CABINA.md` |
 | lo propio de esta cabina en Claude Code | `aiw-console/context/cabinas/phd-p2-experiment/` (este fichero) |
 | **el relevo del hilo** | `aiw-console/context/handoffs/phd-p2-experiment.md`: **léelo entero al abrir.** Su §1 son las reglas propias del hilo; su §4, los pendientes |
-| el repo | `projects/phd-p2-experiment` |
-| el canónico del roadmap | `projects/phd-p2-experiment/roadmap/roadmap.json`; el motor es el de `aiw-console` (`tools/roadmap/roadmap-core.mjs`), conducido por su consola |
-| las reglas de los talleres | `projects/phd-p2-experiment/AGENTS.md` (las lee el taller, no tú; tú las haces cumplir en cada ticket) |
-| veredictos del operador, verbatim | `projects/phd-p2-experiment/docs/verdicts/` |
-| contratos | `projects/phd-p2-experiment/docs/contracts/` |
-| el informe de cada run | `projects/phd-p2-experiment/docs/runs/<RUN_ID>.md` |
-| sesiones manuales | `projects/phd-p2-experiment/data/manual/` (el operador aprobó versionarlas el 2026-10-29; el cambio va en el próximo ticket de DEVELOPMENT) |
+| el repo | `PHD/phd-p2-experiment` |
+| el canónico del roadmap | `PHD/phd-p2-experiment/roadmap/roadmap.json`; el motor es el de `aiw-console` (`tools/roadmap/roadmap-core.mjs`), conducido por su consola |
+| las reglas de los talleres | `PHD/phd-p2-experiment/AGENTS.md` (las lee el taller, no tú; tú las haces cumplir en cada ticket) |
+| veredictos del operador, verbatim | `PHD/phd-p2-experiment/docs/verdicts/` |
+| contratos | `PHD/phd-p2-experiment/docs/contracts/` |
+| el informe de cada run | `PHD/phd-p2-experiment/docs/runs/<RUN_ID>.md` |
+| sesiones manuales | `PHD/phd-p2-experiment/data/manual/` (el operador aprobó versionarlas el 2026-10-29; el cambio va en el próximo ticket de DEVELOPMENT) |
 | **la fuente de verdad del paper** | `AIW_Workspace/PHD/Paper 2/` (repo `PHD`): **solo lectura** para la cabina y los talleres, salvo `00_HANDOFFS/DESDE_DEV.md` (§«El canal con el paper»); lo escribe el carril del paper (§«Los dos carriles», D-085) |
 | las decisiones que afectan a varios proyectos | `aiw-console/context/DECISIONES.md` (de todos: solo con la palabra del operador) |
 | `_scratch` y `_backups` | **desechables.** Solo para lo que dura una operación (el respaldo del canónico antes de un cambio estructural, borrado al cerrar su run) |

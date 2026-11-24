@@ -1603,3 +1603,37 @@ Lo que dijeron los talleres:
 **La próxima ronda empieza en el puerto 8914.**
 
 **Cuando diga «ya voté»:** `--leer-votos maestro-7`, y también `piezas-24`, por si deja comentarios.
+
+## MAESTRO-7 votado; MAESTRO-8 publicado, v31 (2026-11-24 05:12 – 06:11)
+
+**Los votos:** `veredictos/2026-11-24-maestro-7.md` (14a16ff8).
+- §3: la 3 ~.
+- §5: la 3 ~.
+- Pidió el acceso a la revisión de cada intento.
+- §D: los encabezados se ven como renglones.
+- El resaltado del renglón no se ve sobre el velo de color.
+- Por chat (05:14): quitar la leyenda de §4 y usar verde, rojo y gris para los estados. Va copiado tal cual en el encargo.
+- Tomé «otra cosa que agregar al ticket» como su sí para lanzar.
+
+**La ronda:** encargo 30c9bdc7; trabajo f6d7dfd8, `local_9776236c-25ed-459d-bbb0-91824ce790e3`.
+
+**Lo fijo:**
+- §4 sin leyenda.
+- Los estados en todo el maestro: verde aprobado, rojo sin aprobar (carmesí #a3124f, que ya no se confunde con Español) y gris faltan.
+- El resaltado del renglón se ve sobre el velo de color.
+- «Ver revisión» en cada intento, que lleva a una pantalla de muestra sin preguntas inventadas.
+- §3 en la 3 y §5 con la 3 como base.
+
+**Lo que se vota:**
+- **§3a**, el acceso a la página de simuladores (clave 3), con 4 opciones.
+- **§3b**, el estilo de la gráfica (clave 7), con 3.
+- **§5** (clave 6), con 4.
+- **§D** (clave 5), con 3.
+
+**Las favoritas del crítico:** §3a·2, §3b·1, §5·1 y §D·1. Dijo que el maestro «en general sí» se siente un solo sistema.
+
+**Lo medido:** 352 vistas y 818 escenarios, 0 fallas. Lo publicado es la **v31**, con PIEZAS-24.
+
+**La próxima ronda empieza en el puerto 8915.**
+
+**Cuando diga «ya voté»:** `--leer-votos maestro-8`.

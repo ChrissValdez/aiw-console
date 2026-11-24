@@ -1388,3 +1388,38 @@ Lo que dijeron los talleres:
 **La próxima ronda empieza en el puerto 8905.**
 
 **Cuando diga «ya voté»:** `--leer-votos piezas-20` y `maestro-3`, más `ArtifactData list votos` en las ligas.
+
+## UNIR-1 integrado: alumno y maestro en una sola liga (2026-11-24 00:23)
+
+**Integrado:** addff38, `local_6538bfc9-f159-4bec-9d28-9f93fedb3b76`.
+- El switch Alumno | Maestro en el panel.
+- El menú de la bolita, en `p20-comun/cabecera.*` y en `maestro-3/yo.*`.
+- `prototipo/vigente.json`.
+- `empaquetar-unido.mjs`.
+
+**Pruebas:**
+- 125/0 en el repo y 125/0 empacado.
+- `probar-v4`: 1372, y solo fallan las 9 de GitHub.
+- Las guardas de MAESTRO-3, sin fallas.
+- El crítico: 4/5 en computadora y 3/5 en celular.
+
+**Publicado en la liga principal, v23** (JLDq…), con la portada de dos botones y las rutas `alumno/…` y `maestro/…`.
+- El empaque: `node prototipo/panel/herramientas/empaquetar-unido.mjs <scratch>/unido --vendor`.
+- Se publica todo menos `unido.json`.
+- Los archivos viejos de la raíz (curso.html, etc.) siguen en el Artifact, sin ligas; no se borraron.
+- La cabina no pudo abrirlo: el navegador del panel no tiene sesión de claude.ai.
+
+**La liga de maestro y cursos (FWp1…, v3)** queda vieja; ya no se publica ahí.
+- CURSOS-1 no entra en la liga única.
+
+**El índice:** cfc4602.
+
+**Para la siguiente ronda:**
+- cambiar `vigente.json` y volver a empacar;
+- un `maestro-4/` necesita `yo.js` y `yo.css` (ver `prototipo/panel/NOTAS-unir1.md` §2).
+
+**Lo que señaló el crítico y queda para él** (NOTAS-unir1 §3):
+- en el celular, la burbuja de votar cambia de forma;
+- la bolita no indica que abre un menú;
+- no hay vuelta a la portada;
+- el maestro no tiene botón de tema.

@@ -1515,3 +1515,33 @@ Lo que dijeron los talleres:
 - avisarle.
 
 **La próxima ronda empieza en el puerto 8912.**
+
+## MAESTRO-6 publicado en la liga única, v28 (2026-11-24 04:03)
+
+**El trabajo:** fa73086, `local_43d8c581-6f17-498c-8d63-186b981bface`. `vigente.json` queda en PIEZAS-23 + MAESTRO-6, con el nombre «MAESTRO-6».
+
+**Lo que trae:**
+- §D fija en la 4.
+- **§3, con 3 opciones.** Todas llevan la gráfica de barras del alumno hacia la derecha y el Historial con los intentos por quiz (una lista que se abre, no una tabla). Lo que cambia es cómo se ven los 15 simuladores:
+  1. la gráfica se recorre de lado;
+  2. «Ver los 15» en la misma caja;
+  3. una página propia, `#/alumno/<id>/simuladores`.
+- **§4, con 3 variantes de la 2.** Todas llevan los quizzes numerados, el switch de materia, el filtro esencial/complementaria, sin cifras arriba ni estrella/medalla, y «Aprobaron» en azul marino en lugar de verde. Varían así:
+  1. la columna N.º y segmentados;
+  2. una pastilla, pestañas y un menú;
+  3. agrupados por área, un interruptor y botones.
+
+**Datos inventados:** Bruno (`paa-a-11`) tiene 15 simuladores.
+
+**Lo medido:** 164 vistas y 793 escenarios, 0 fallas. Con 15 simuladores, la columna mide 453 px contra 476 del avance por área.
+
+**Para que decida Chris, del crítico:**
+- el color de Español se parece al naranja de «sin aprobar»;
+- el interruptor de §4·3 se lee peor que las pestañas;
+- quedó una duda sobre qué color quería cambiar en «aprobado».
+
+**El índice:** b9fa5d9.
+
+**La próxima ronda empieza en el puerto 8912.**
+
+**Cuando diga «ya voté»:** `--leer-votos maestro-6`. El alumno (PIEZAS-23) no trae nada que votar.

@@ -86,6 +86,62 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
 | Lo que oye el hilo del paper | `PHD/Paper 2/00_HANDOFFS/DESDE_DEV.md` |
 | La nota del hito 1 | `docs/hitos/2026-10-22-hito-1.md`, **histórica**: la junta pasó y la copia para la demo se retiró (2026-10-29) |
 
+## §3b · Estado medido el 2026-11-24 a las 14:10 UTC, en la PC — leer antes que §3a y §3
+
+> Lo escribió la cabina de la PC (`P2_Cabina`, sesión `local_a5364997`). Lo de `#47` a `#54` está en sus informes
+> (`docs/runs/`) y en dos ficheros del 24-nov: `docs/proposals/2026-11-24-simplify-experiment.md` y
+> `docs/verdicts/2026-11-24-three-archetypes.md` (§5 y §6 son adendas).
+
+| Medido (UTC) | Qué | Valor |
+|---|---|---|
+| 2026-11-24 14:10 | `phd-p2-experiment` | `main` en `d7e2b2e`, igual que `origin/main`. Sin rastrear: `data/manual/se_g28ky3t68b/`, la sesión viva de Chris; se commitea cuando cierre su servidor |
+| 2026-11-24 14:10 | Roadmap | **54 runs: 39 `completed`, 15 `active`**. Los 8 de §3a (`#32` … `#45`), más `#48` a `#54`. Todos están construidos, verificados y en `main`, y **solo esperan la QA del operador** |
+| 2026-11-24 14:10 | `PHD` | `e070f91`, igual que `origin/main`. Sin rastrear: `Tareas/`, que es de Chris |
+
+**Lo que se hizo del 21 al 24 de noviembre** (todo publicado):
+
+- **El experimento, simplificado.** A pedido de Chris: «demasiadas opciones y configuraciones… dificil justificar cada
+  micro desicion… simplificarlo hace que sea mas reproducible».
+  - El inventario y las opciones están en `docs/proposals/2026-11-24-simplify-experiment.md`.
+  - Lo construyó `#50` `RUN-P2-SIMPLIFY-PROTOTYPE-001`:
+    - el perfil se reduce a 3 decisiones;
+    - lo demás queda en el plegable «Fijo en el experimento»;
+    - el alumno siempre usa frases de plantilla;
+    - la depuración muestra una línea «Entendió / Hizo» por mensaje.
+- **Tres arquetipos con nombre** (`#52`):
+  - `lo-sabe` «Casi lo sabe»
+  - `le-cuesta` «Se atora»
+  - `busca-la-respuesta` «Busca atajos»
+- **Archivar perfiles** (`#51`).
+- **«Básico» borrado** por decisión de Chris (`#53`). Las pruebas usan su copia en `tests/fixtures/bench-profiles/basico/`.
+- **Dos recortes** (`#54`):
+  - «Busca atajos» solo pide la respuesta;
+  - se muestran 5 frases fijas en vez de 11.
+- **La demo para el asesor.** Son 12 conversaciones, 95 llamadas, todas terminadas:
+  - 3 arquetipos × 2 intentos × 2 tutores, 5 mensajes cada una;
+  - los resultados están en `data/bench/` (no versionado);
+  - la página está en https://claude.ai/artifact/7Kpzd2CoL3HVLateMMaBip. Es privada: Chris la comparte con el asesor.
+
+**Pendientes, en orden:**
+
+1. **La mudanza del repo** a `AIW_Workspace\PHD\phd-p2-experiment`, con dos repos (Chris dijo «Sí, con dos repos»).
+   PHD ignora la carpeta con `/phd-p2-experiment/` en su `.gitignore`.
+   - **Espera a que la mudanza de `aiw-console` a la raíz termine en la PC** (`AIW_Workspace\MUDANZA-PC.md`).
+   - Pasos:
+     1. Chris cierra su servidor, y se commitea `se_g28ky3t68b`.
+     2. Se archivan los 8 talleres (`#47` a `#54`) y se corre `git worktree prune`.
+     3. Se hace commit y push del `.gitignore` en PHD.
+     4. Se mueve con `[IO.Directory]::Move`, y después `git worktree repair`.
+     5. Se rehace la `.venv`. Es una instalación: la hace Chris o la autoriza.
+     6. Se actualiza la línea de `project-console/projects.json` y el digest (`node tools/project-console/build-registry-digest.mjs`).
+     7. Se arreglan las rutas `projects/phd-p2-experiment` del `CLAUDE.md` de la cabina. Las de `aiw-console` ya las
+        cambió la laptop en `1198d5a`.
+     8. Se comprueban la suite, los finales de línea, la consola y el Banco de Chris.
+   - Después, probar con un trabajo chico el coordinador en la nube (proyecto de claude.ai), como lo usa Método Cantú.
+2. **La QA del operador de los 15 runs activos**, y su opinión sobre la demo.
+3. **T1 de la propuesta de simplificación** (las frases que dependen del tutor): a, b o c. Se recomienda a.
+4. **PAF (O10.P5)**, con las 5 preguntas de §3a.
+
 ## §3a · Estado medido el 2026-11-20 (UTC), en la LAPTOP — leer antes que §3
 
 > Escrito por la cabina que trabajó en la laptop el 2026-11-19 y el 2026-11-20, relevando a «P2_Cabina» de la PC

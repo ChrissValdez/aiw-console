@@ -1745,3 +1745,12 @@ Lo que dijeron los talleres:
 - **Lo que el crítico dejó y no se tocó** (para él): §F sin mouse no hay fecha (es la 2 que eligió); §A, el filete entre alumnos abiertos igual de fino que los de dentro y el hover que apenas se nota; §C, el peso de «Activos esta semana» y el aire de los botones a 375; la leyenda de «Avance por área» a 375 («Español» sola); la ficha muy larga en el teléfono.
 - **Publicado:** la **v34** en https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq (version id 1795537052-9a68), 89 archivos sin `vendor/`. `vigente.json`: alumno PIEZAS-25, maestro MAESTRO-11. Índice de la raíz: c770d480. No se revisó abierta en el navegador.
 - **Lo que espera al operador:** mirar la v34. No hay votos pendientes. La próxima ronda, del maestro o del alumno, la propone el coordinador con lo que él diga; empieza en el puerto **8919**.
+
+## 2026-11-24, 11:03 · MAESTRO-12 y PIEZAS-26 integradas; v35 publicada
+
+- **Veredictos** (69723c27): MAESTRO-11 y PIEZAS-25, sus comentarios tal cual (el de PIEZAS-25, guardado sin enviar). Encargos MAESTRO-12 y PIEZAS-26 (d02e6b63), tras su «Sí, lánzalos». Los dos, sin votos.
+- **PIEZAS-26** (5d2150bd): Español sin Reto en todas las páginas del alumno, quitado en los generadores de las p26 (temario.mjs, historial.mjs, curso.mjs); `kit/` y `modelo/` sin tocar; Matemáticas idéntica. probar-v4: 1029 / 0, con una guarda nueva (en Español no aparece «Reto»).
+- **MAESTRO-12** (a72ff190): la notita de la fecha arriba de su teja, donde no la tapa el cursor; «Su ficha» como botón; el filtro Todos / Esenciales / Complementarios, y en Español sin filtro ni complementarios; Español sin Reto, también en `datos.js`. Cifras que cambian (NOTAS §4): la ruta esencial del PAA pasa de 49 a 51 quizzes (dos de Lectura dejan de ser complementarios) y cinco alumnos ganan uno. Guardas: texto sin fallas, 220 + 378 vistas sin fallas; crítico, dos pasadas.
+- **Pendiente para una ronda de PIEZAS:** en el Temario del alumno, «Información cuantitativa y diagramas» y «Resumen» (Lectura) siguen marcados como opcionales (`datos-extra.json` de p18); en el maestro ya son de la ruta.
+- **Publicado:** la **v35** en https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq (version id 1795539806-746d). `vigente.json`: alumno PIEZAS-26, maestro MAESTRO-12. Índice: d2977e97. No se revisó abierta en el navegador.
+- **Lo que espera al operador:** mirar la v35; no hay votos. La próxima ronda empieza en el puerto **8921**.

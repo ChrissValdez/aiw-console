@@ -1548,7 +1548,7 @@ Lo que dijeron los talleres:
 
 ## PIEZAS-24 publicado, v29 (2026-11-24 04:43)
 
-**Los votos:**  y  (35c9e08). Pidió:
+**Los votos:** `veredictos/2026-11-24-maestro-6.md` y `-piezas-23.md` (35c9e08). Pidió:
 - §4: la agrupación por área de la 3 con el switch de la 1; ordenar dentro del área; colapsar por área.
 - §3: las opciones se veían iguales (solo cambiaban con Bruno, que tiene 15).
 - En el detalle del quiz, los intentos de cada alumno; el historial como el del alumno; el diagnóstico en su propio renglón.

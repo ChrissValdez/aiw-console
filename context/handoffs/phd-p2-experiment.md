@@ -122,9 +122,18 @@ de `aiw-console` (por `serve.mjs`). Carriles: `DEVELOPMENT` (el que se usa si no
   - los resultados están en `data/bench/` (no versionado);
   - la página está en https://claude.ai/artifact/7Kpzd2CoL3HVLateMMaBip. Es privada: Chris la comparte con el asesor.
 
+**La mudanza, hecha el 2026-11-24 de 14:16 a 14:26 UTC.** El repo vive en `AIW_Workspace\PHD\phd-p2-experiment`.
+- Commits: `f53d226` (la sesión de Chris), PHD `5171a8c` (el `.gitignore`), aiw-console `c407bcb` (`projects.json` y
+  el `CLAUDE.md` de la cabina) y el digest después.
+- La `.venv` funcionó sin reinstalar. Los 8 worktrees se movieron con el repo y se arreglaron con
+  `git worktree repair <rutas>`. 36 pruebas en verde.
+- `AIW_Workspace\aiw` lo borró Chris a propósito (14:19 UTC): «se volvio obsoleto el proyecto», y el repo sigue en
+  GitHub. El digest lo marca «no existe».
+- Falta la suite completa y que Chris abra su Banco.
+
 **Pendientes, en orden:**
 
-1. **La mudanza del repo** a `AIW_Workspace\PHD\phd-p2-experiment`, con dos repos (Chris dijo «Sí, con dos repos»).
+1. ~~**La mudanza del repo**~~ (hecha; arriba) a `AIW_Workspace\PHD\phd-p2-experiment`, con dos repos (Chris dijo «Sí, con dos repos»).
    PHD ignora la carpeta con `/phd-p2-experiment/` en su `.gitignore`.
    - **Espera a que la mudanza de `aiw-console` a la raíz termine en la PC** (`AIW_Workspace\MUDANZA-PC.md`).
    - Pasos:

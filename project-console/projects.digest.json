@@ -1,6 +1,6 @@
 {
   "schema": "aiw_registry_digest_v1",
-  "generated_at": "2026-11-24T13:40:04.861Z",
+  "generated_at": "2026-11-24T14:26:36.174Z",
   "generated_from": "aiw-registry-digest@1.0.0",
   "derived": true,
   "do_not_edit": "DERIVED FILE — DO NOT EDIT BY HAND. Regenerate with `node tools/project-console/build-registry-digest.mjs`. Every field below is measured from the registry and from each registered project's own canonical sources; a hand edit is overwritten by the next run and, until then, is a claim no measurement supports.",
@@ -10,7 +10,7 @@
     "path": "project-console/projects.json",
     "registry_model": "project_registry_v1",
     "title": "AIW Console",
-    "sha1": "28d177e4dff4f6d98249d91a853d23002600427d",
+    "sha1": "ca01b28977a9e76de1d39686b2653e0e58af07dd",
     "project_count": 6,
     "keys": [
       "aiw-console",
@@ -68,17 +68,14 @@
       },
       "git": {
         "available": true,
-        "head": "ddd39e08584052fd4cda373deb7cc7a6ef7eaeb4",
+        "head": "c407bcbbfc6c4a304f4c0666ed0ba7047176eade",
         "branch": "main",
         "dirty": {
-          "is_dirty": true,
-          "tracked_changed": [
-            "project-console/projects.json",
-            "projects.config.json"
-          ],
+          "is_dirty": false,
+          "tracked_changed": [],
           "untracked": [],
           "counts": {
-            "tracked_changed": 2,
+            "tracked_changed": 0,
             "untracked": 0
           },
           "self_excluded": [
@@ -108,21 +105,21 @@
         "present": true,
         "source": {
           "path": "governance/no_claims.json",
-          "sha1": "d02fbf18ef7cfa768845fac202e9440f0b9288fd",
-          "bytes": 3052
+          "sha1": "310d66948425f648f481f1347be31677b01303c1",
+          "bytes": 3103
         },
         "total": 5
       },
       "sources": [
         {
           "path": "roadmap/roadmap.json",
-          "sha1": "33487c3f2c3e7e6a3614b8cacd5e5023ad0cfd7d",
-          "bytes": 243033
+          "sha1": "857575689f78b7ff0475a4421f94b4369f8de510",
+          "bytes": 244288
         },
         {
           "path": "governance/no_claims.json",
-          "sha1": "d02fbf18ef7cfa768845fac202e9440f0b9288fd",
-          "bytes": 3052
+          "sha1": "310d66948425f648f481f1347be31677b01303c1",
+          "bytes": 3103
         }
       ]
     },
@@ -138,14 +135,16 @@
       },
       "git": {
         "available": true,
-        "head": "a3d0bbcfddba6d4a99ccea50f66bc8fb81baf5c3",
+        "head": "24bf43c9fe5008ddbee00e97c4feea068a0eebcf",
         "branch": "main",
         "dirty": {
-          "is_dirty": false,
-          "tracked_changed": [],
+          "is_dirty": true,
+          "tracked_changed": [
+            "tools/studio/editor-ui/package-lock.json"
+          ],
           "untracked": [],
           "counts": {
-            "tracked_changed": 0,
+            "tracked_changed": 1,
             "untracked": 0
           },
           "self_excluded": []
@@ -181,8 +180,8 @@
       "sources": [
         {
           "path": ".aiw/roadmap/roadmap.json",
-          "sha1": "fc7b9510b4f79c710c633f6157a3a1df52d60eef",
-          "bytes": 2053111
+          "sha1": "99738718e63745db3d8c15525681c12350b8c056",
+          "bytes": 2056710
         },
         {
           "path": ".aiw/guardrails/no_claims.json",
@@ -203,7 +202,7 @@
       },
       "git": {
         "available": true,
-        "head": "2ad85f2f26c0f193733b8139e9144b3f166ea18c",
+        "head": "81cf90d997d6ca548d9f1f6df948ebb24e65e7ac",
         "branch": "main",
         "dirty": {
           "is_dirty": false,
@@ -235,8 +234,8 @@
       "sources": [
         {
           "path": "roadmap/roadmap.json",
-          "sha1": "1a3fe4ab2ca200ac1fa7a0c6bc7525c2a2d0c4a3",
-          "bytes": 485724
+          "sha1": "e55267c0491e1140f80ee88bac5082fd34ceaeb9",
+          "bytes": 484207
         }
       ]
     },
@@ -252,7 +251,7 @@
       },
       "git": {
         "available": true,
-        "head": "167a73e8dac66e22ada4305c79a72f0e0ee50184",
+        "head": "a66873c71a45741193fed51ce96ba09303c58d1b",
         "branch": "main",
         "dirty": {
           "is_dirty": false,
@@ -461,95 +460,20 @@
       "sources": [
         {
           "path": "roadmap/roadmap.json",
-          "sha1": "edc2f803fece99198563e4835bba354d49b9b211",
-          "bytes": 68834
+          "sha1": "3cc34ff83423a08c85f1d795d3a40b59a82cda14",
+          "bytes": 69161
         }
       ]
     },
     {
       "key": "aiw",
       "root_declared": "../../aiw",
-      "measured": true,
-      "canonical": {
-        "layout": "repo_root",
-        "roadmap": "roadmap/roadmap.json",
-        "no_claims": "governance/no_claims.json",
-        "declared_model": "roadmap_tree_v1"
-      },
-      "git": {
-        "available": true,
-        "head": "f7640bdcd0ae291d4e87b0036673d81630dc0670",
-        "branch": "main",
-        "dirty": {
-          "is_dirty": false,
-          "tracked_changed": [],
-          "untracked": [],
-          "counts": {
-            "tracked_changed": 0,
-            "untracked": 0
-          },
-          "self_excluded": []
-        }
-      },
-      "operational_status": "active",
-      "runs": {
-        "total": 46,
-        "by_status": {
-          "active": 2,
-          "completed": 25,
-          "planned": 19
-        }
-      },
-      "active_runs": [
-        {
-          "run_id": "RUN-AIW-REAL-LOAD-MEASUREMENT-001",
-          "title": "Run the first real objective against a large repository with a test net",
-          "queue_order": 22,
-          "objective_id": "O3",
-          "phase_id": "O3.P2"
-        },
-        {
-          "run_id": "RUN-AIW-DECOUPLED-QUEUE-LAUNCHER-001",
-          "title": "Make the queue survive the terminal that launched it",
-          "queue_order": 41,
-          "objective_id": "O7",
-          "phase_id": "O7.P1"
-        }
-      ],
-      "next_step": {
-        "present": true,
-        "run_id": "RUN-AIW-SHARED-WORKING-BRANCH-001",
-        "title": "Let consecutive runs share one working branch so their work chains",
-        "queue_order": 28,
-        "objective_id": "O3",
-        "phase_id": "O3.P7",
-        "queue_group": "ready_next"
-      },
-      "no_claims": {
-        "present": true,
-        "source": {
-          "path": "governance/no_claims.json",
-          "sha1": "ee1a31aeec6ca77e225836d925441c09683ca2d1",
-          "bytes": 5391
-        },
-        "total": 4
-      },
-      "sources": [
-        {
-          "path": "roadmap/roadmap.json",
-          "sha1": "40aed7f75a36d8c2a037fa392883b2b63814254c",
-          "bytes": 124020
-        },
-        {
-          "path": "governance/no_claims.json",
-          "sha1": "ee1a31aeec6ca77e225836d925441c09683ca2d1",
-          "bytes": 5391
-        }
-      ]
+      "measured": false,
+      "absent_reason": "the registered root does not exist on this machine"
     },
     {
       "key": "phd-p2-experiment",
-      "root_declared": "../../projects/phd-p2-experiment",
+      "root_declared": "../../PHD/phd-p2-experiment",
       "measured": true,
       "canonical": {
         "layout": "repo_root",
@@ -559,7 +483,7 @@
       },
       "git": {
         "available": true,
-        "head": "2a422e5def5c8200d072f92355c185744b788e65",
+        "head": "f53d2269ff689c834d1f24745b3c7291304322b7",
         "branch": "main",
         "dirty": {
           "is_dirty": false,
@@ -574,10 +498,10 @@
       },
       "operational_status": "active",
       "runs": {
-        "total": 46,
+        "total": 54,
         "by_status": {
-          "active": 8,
-          "completed": 38
+          "active": 15,
+          "completed": 39
         }
       },
       "active_runs": [
@@ -636,6 +560,55 @@
           "queue_order": 45,
           "objective_id": "O10",
           "phase_id": "O10.P4"
+        },
+        {
+          "run_id": "RUN-P2-PANEL-SIMPLE-FIRST-001",
+          "title": "Take the panel from simple to complex, the bench first: drop the small descriptive lines, choose the learner's profile in a dropdown with edit and new, fold the seed and the turns, say the cost in one line, and open an executed scenario and its debug views with only what matters",
+          "queue_order": 48,
+          "objective_id": "O10",
+          "phase_id": "O10.P4"
+        },
+        {
+          "run_id": "RUN-P2-BENCH-ARCHETYPE-CARD-001",
+          "title": "Show and edit the bench's learner profile as an archetype card on top, who the student is and how they behave in words, with the knobs folded under «Ver los ajustes»",
+          "queue_order": 49,
+          "objective_id": "O10",
+          "phase_id": "O10.P4"
+        },
+        {
+          "run_id": "RUN-P2-SIMPLIFY-PROTOTYPE-001",
+          "title": "Show the simplified experiment in the bench so the operator can judge it by seeing it: a learner profile of three choices, the rest fixed in one read-only fold, a form without mode, turns or seed, and one plain line per turn instead of the debug dump",
+          "queue_order": 50,
+          "objective_id": "O10",
+          "phase_id": "O10.P4"
+        },
+        {
+          "run_id": "RUN-P2-BENCH-ARCHIVE-PROFILE-001",
+          "title": "Archive and unarchive a whole bench profile, so a profile the experiment no longer uses leaves the bench's list without deleting anything",
+          "queue_order": 51,
+          "objective_id": "O10",
+          "phase_id": "O10.P4"
+        },
+        {
+          "run_id": "RUN-P2-BENCH-ARCHETYPE-NAMES-001",
+          "title": "Name the bench's learner by its archetype only: the profile dropdown shows just the name, archived profiles go to a fold, and the editor can archive and unarchive a profile",
+          "queue_order": 52,
+          "objective_id": "O10",
+          "phase_id": "O10.P4"
+        },
+        {
+          "run_id": "RUN-P2-BENCH-REMOVE-BASICO-001",
+          "title": "Remove the old «Básico» profile from the bench's folder, the operator's word, and give the tests their own copy of it as a fixture",
+          "queue_order": 53,
+          "objective_id": "O10",
+          "phase_id": "O10.P4"
+        },
+        {
+          "run_id": "RUN-P2-BENCH-FIXED-CUTS-001",
+          "title": "Two cuts in the bench's «Fijo en el experimento»: «Busca atajos» asks for the answer as its only trick, and the fold lists only the phrases the three archetypes can say",
+          "queue_order": 54,
+          "objective_id": "O10",
+          "phase_id": "O10.P4"
         }
       ],
       "next_step": {
@@ -649,8 +622,8 @@
       "sources": [
         {
           "path": "roadmap/roadmap.json",
-          "sha1": "8fe45c37c3bb38b4bbfbafb3fe38a9bde5090daf",
-          "bytes": 205621
+          "sha1": "27e65afa17579e047d3347cd9d3582993a4bcd73",
+          "bytes": 228379
         }
       ]
     }

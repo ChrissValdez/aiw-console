@@ -14,6 +14,12 @@
 > - *«esos proyectos que dice que lo lleva su cabina lo que quiero justamente es traerlo aqui todo ya que todo se conecta los quizes, las lecciones, las revisiones el dashboard, el studio»*
 > - *«que tal si las cabinas son sesiones anidadas a esta? que opinas? lo recomiendas?»*
 > - Al modelo mixto que propuso el coordinador: *«Sí, escríbelo»*
+>
+> **v2 · 2026-11-24, 15:10 UTC (`date -u`). Propuesta en PR, sin fusionar.** Un hilo del Project en la nube escribió **las dos
+> cuentas a la vez, en repos distintos** (§3.2 y `ASIGNACIONES.md`, al lado), a pedido del operador:
+> - *«lo mas importante es trabajar en repos diferentes por cuenta»*
+> - *«tu encargate de la revision de lecciones y landing page, el dashboard se lo dejamos a la otra cuenta»*
+> - *«pero necesitamos una manera de avisar de esa forma de trabajo y tener protocolos de cambio»*
 
 ## 1. Qué es
 
@@ -105,9 +111,34 @@ Todos son de GitHub (`ChrissValdez/<repo>`). En disco están bajo `C:\Users\chri
 **En un Project de la nube** las sesiones anidadas de la PC no se mudan: este modelo se revisa al migrar (`MIGRAR-A-PROJECTS.md`).
 
 **El cambio de cuenta:**
-- Hay dos cuentas de Claude, y **nunca trabajan a la vez**.
-- El relevo entre cuentas va por `context/cambio-de-cuenta/` (`PROTOCOLO.md` y `HANDOFF.md`).
+- Hay dos cuentas de Claude. **Trabajan a la vez, pero cada una en sus repos** (§3.2). *(Hasta el 24-nov la regla era que nunca
+  trabajaban a la vez; la reemplaza §3.2.)*
+- El relevo completo de una cuenta a la otra, cuando a una se le acaban los tokens, sigue yendo por `context/cambio-de-cuenta/`
+  (`PROTOCOLO.md` y `HANDOFF.md`). Ahora además mueve los repos en `ASIGNACIONES.md`: soltar y tomar.
 - **La verdad está en git:** lo que no está en GitHub no cuenta como hecho.
+
+### 3.2 Dos cuentas a la vez, en repos distintos (24-nov)
+
+**El reparto vive en `context/metodo-cantu/ASIGNACIONES.md`:** qué cuenta tiene cada repo, si está activo o libre, y desde cuándo.
+Ahí también están los protocolos para tomar y soltar un repo. A 24-nov:
+- **cuentapato** (Project en la nube): revisión de lecciones (`cantu-lessons` y `cantu-revisiones`) y la LANDING.
+- **cuentachris** (coordinador local en la PC): el DASHBOARD.
+- **Libres:** `cantu-studio` y `cantu-quizzes-latex`.
+
+**Las reglas:**
+1. **Antes de escribir en un repo**, `git pull` de `aiw-console` y mirar `ASIGNACIONES.md`. En un repo de la otra cuenta no se
+   escribe nada. Leerlo sí se puede.
+2. **`aiw-console` es el único repo compartido**, y solo para el registro, los relevos y el buzón. Commits chicos, por ruta, y
+   `git pull --rebase` antes de cada push (§4).
+3. **Las cuentas se avisan por el buzón,** `context/metodo-cantu/mensajes/`: un fichero por aviso (su `README.md` dice cómo). Al
+   abrir sesión, cada cuenta lee los que le tocan.
+4. **Lo que cruza a un repo ajeno** se pide por el buzón al dueño, con el encargo en un fichero; lo aplica el dueño.
+5. **Un hilo o una cabina fija por área.** Cada tarea nueva del área va a su hilo o cabina, no a uno nuevo. En la nube: un hilo
+   «Revisión de lecciones» y otro «Landing». En la PC: una cabina por área.
+6. **`PROYECTO.md` y `ASIGNACIONES.md` se cambian solo con el sí del operador.**
+
+**Esto cambia la tabla de §3.1:** las áreas de cuentapato ya no tienen cabina anidada en la PC; viven en sus hilos de la nube.
+§3.1 queda para las áreas de cuentachris.
 
 ## 4. Las reglas del operador para todas las áreas
 
@@ -146,7 +177,7 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 **Git:**
 - Commit con `git -c user.name=ChrissValdez -c user.email=<el de la cuenta> commit … -- <rutas>`, y al final la línea `Co-Authored-By` del asistente.
 - Push por sha: `git push origin <sha>:refs/heads/main`.
-- En `aiw-console`, antes de empujar, se mide `git log origin/main..HEAD`. **Si trae commits ajenos, no se empuja.** Es un checkout compartido entre cabinas.
+- En `aiw-console`, antes de empujar, `git pull --rebase origin main` y se mide `git log origin/main..HEAD`. **Si trae commits ajenos, no se empuja.** Es un checkout compartido entre cabinas, y desde el 24-nov también entre cuentas (§3.2).
 - **Nunca** se hace push forzado ni `reset --hard`.
 - **Desde un hilo en la nube no se empuja a `main`:** se empuja a la rama del hilo y se abre un PR. El push a `main` solo se hace desde la máquina (sesión local o Remote Control). *(propuesto por la laptop, aprobado por el operador, 2026-11-24)*
 - **`git worktree prune` pide su sí.**

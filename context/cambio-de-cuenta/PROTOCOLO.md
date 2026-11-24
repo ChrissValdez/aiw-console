@@ -4,6 +4,10 @@
 > justo donde se quedó, y luego vuelve. *«nunca quiero trabajarlas en simultáneo en el mismo proyecto, es para relevo, solo que quiero
 > que el relevo sea sin fricción»*. Lo escribió la cabina de LECCIONES el mismo día.
 
+> **2026-11-24:** «nunca a la vez» ya no es la regla general: las dos cuentas trabajan a la vez en repos distintos
+> (`../metodo-cantu/PROYECTO.md` §3.2 y `../metodo-cantu/ASIGNACIONES.md`). Este protocolo sigue valiendo para el relevo completo
+> de una cuenta a la otra, cuando a una se le acaban los tokens.
+
 ## Lo fijo
 
 - **Dos cuentas, nunca a la vez:** la **principal** y la **suplementaria**. La app de escritorio tiene una sola cuenta abierta: eso

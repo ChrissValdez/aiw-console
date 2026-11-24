@@ -3,6 +3,8 @@
 > **v0 · 2026-11-24, 09:00 (`date`).** Lo escribió el coordinador de Método Cantú, en la PC, tras el «Sí, escríbelo» del operador al modelo mixto (`PROYECTO.md` §3.1 y §6; D-086).
 >
 > **Para quién:** la cabina suelta de un área que pasa a cabina anidada al coordinador (LECCIONES) o a talleres del coordinador (LANDING). Lo lee **entero** antes de empezar.
+>
+> **Enmienda · 2026-11-24 (D-087, propuesta).** LECCIONES y LANDING pasan a **cuentapato** (`ASIGNACIONES.md`), no al coordinador de la PC. El cierre es el mismo; cambia a quién se avisa (paso 6). El paso 4 es **requisito** antes de que cuentapato escriba en esos repos, y solo lo puede hacer una sesión en PC-Chris.
 
 ## Por qué
 
@@ -21,7 +23,7 @@ La cabina que siga al área no hereda la conversación de esta, solo sus fichero
    Lo de antes queda en el historial de git del fichero; lo vencido no se arrastra.
 4. **Pasa a ficheros las reglas de su área que solo están en la memoria de la PC** (`C:\Users\chris\.claude\projects\C--Users-chris-Documents-AIW-Workspace\memory\`). Van a su `context/cabinas/<área>/CLAUDE.md` o a un fichero al lado, que el `CLAUDE.md` cite. **Las memorias no se borran.**
 5. **Commit y push**, con las reglas de `PROYECTO.md` §4: rutas propias, identidad explícita, `origin/main..HEAD` medido en `aiw-console` y push por sha. Comprueba que sus repos quedan limpios e iguales a `origin/main`.
-6. **Avisa al coordinador** con una línea: los sha y «cierre hecho». Luego **espera**, sin hacer nada más. La archiva el operador.
+6. **Avisa a la cuenta que recibe el área** con un aviso en el buzón (`context/metodo-cantu/mensajes/`, LECCIONES y LANDING a `cuentapato`): los sha y «cierre hecho». Luego **espera**, sin hacer nada más. La archiva el operador.
 
 ## Lo propio de LECCIONES
 

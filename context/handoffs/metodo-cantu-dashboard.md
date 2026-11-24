@@ -1673,3 +1673,43 @@ Lo que dijeron los talleres:
 - Después de la mudanza, DASHBOARD se reabre desde su lugar nuevo y retoma aquí. Los scripts de publicar de la cabina, que viven fuera del repo, usan la ruta vieja y se ajustan al retomar.
 
 **La próxima ronda empieza en el puerto 8916.**
+
+## Mudanza hecha en la PC; DASHBOARD listo para el coordinador (2026-11-24 08:09 – 08:42)
+
+**La mudanza:**
+- Las carpetas de la PC (DESKTOP-525K0IS) quedaron iguales a las de la laptop. El repo vive ahora en **`AIW_Workspace\Metodo_Cantu\metodo-cantu-dashboard`**.
+- El plan, el paso a paso y lo medido están en `AIW_Workspace\MUDANZA-PC.md`, que no está en ningún repo.
+- **El empaque unido, corrido desde la ruta nueva, sale idéntico a la v32:** 90 ficheros, y solo cambia la hora en `unido.json`.
+
+**Lo que aún cita la ruta vieja:** las herramientas de rondas cerradas (`prototipo/<ronda>/herramientas/*.mjs`) y `prototipo/panel/herramientas/probar.mjs`. Fallan si se corren tal cual, y no se tocan a mano.
+
+**El coordinador:**
+- Desde hoy, Método Cantú tiene un **coordinador** que reparte el trabajo en hilos: `aiw-console/context/metodo-cantu/PROYECTO.md`.
+- La receta para mudarlo a un Project de claude.ai/code está en `MIGRAR-A-PROJECTS.md`. **En esta cuenta Projects todavía no está disponible.**
+- DASHBOARD sigue como hasta ahora: su cabina, o un hilo que abra el coordinador, retoma desde este bloque.
+
+**El estado:**
+- **Lo publicado:** la **v32**, en https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq. Lleva MAESTRO-9 y PIEZAS-24.
+- **`vigente.json`:** apunta a MAESTRO-9 (`maestro-9/maestro.html`) y PIEZAS-24 (`p24-inicio/inicio.html`).
+- **Los votos están guardados:** `veredictos/2026-11-24-maestro-9.md` y `veredictos/2026-11-24-piezas-24.md` (13e58922). No hay votos sin leer.
+- **El congelamiento terminó:** el operador congeló encargos y talleres hasta la mudanza, y la mudanza ya está hecha.
+
+**Lo propuesto, que espera su «sí» para escribir los encargos:**
+- **MAESTRO-10**, en el puerto 8916.
+  - **Fijo:**
+    - §Q, las barras: «Sin presentar» a la izquierda de «menos de 60», con una línea que los separe;
+    - §P en la 2;
+    - §G, el botón sutil, con un texto más claro, como «Ver resultados del grupo».
+  - **Se vota:**
+    - §C en 3 variantes, todas en tabla, con encabezado en la columna de los botones;
+    - la calificación y la fecha del desglose, en 3 formas que no parezcan fracción;
+    - lo abierto en las listas, en 3 variantes: una que solo deja abrir uno a la vez y dos con otro tratamiento, sin fondo gris.
+- **PIEZAS-25**, en el puerto 8917: en el Historial del alumno, solo un quiz abierto a la vez, como en el Temario. Fijo.
+
+**Cómo publicar desde una sesión nueva:**
+1. Desde el repo, en una carpeta temporal: `node prototipo/panel/herramientas/empaquetar-unido.mjs <temporal>/unido --vendor`.
+2. Antes de publicar, la sesión nueva hace **`Artifact read`** de la liga. Una publicación a una liga que esa sesión no ha leído se rechaza.
+3. Se publica `index.html` con `url` = la liga y `root` = `<temporal>/unido`, y en `files` cada fichero del paquete **menos `vendor/`**. Font Awesome ya está en la liga desde una publicación anterior.
+4. Lo publicado es la v33 o la que siga.
+
+**Leer votos:** `git fetch origin votos` y luego `git show origin/votos:<slug>.json`. El script que los pasaba a veredicto vivía en el scratchpad de la sesión de la cabina. Una sesión nueva escribe el veredicto con los votos y comentarios **tal cual**, con el formato de los anteriores.

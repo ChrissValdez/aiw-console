@@ -1545,3 +1545,26 @@ Lo que dijeron los talleres:
 **La próxima ronda empieza en el puerto 8912.**
 
 **Cuando diga «ya voté»:** `--leer-votos maestro-6`. El alumno (PIEZAS-23) no trae nada que votar.
+
+## PIEZAS-24 publicado, v29 (2026-11-24 04:43)
+
+**Los votos:**  y  (35c9e08). Pidió:
+- §4: la agrupación por área de la 3 con el switch de la 1; ordenar dentro del área; colapsar por área.
+- §3: las opciones se veían iguales (solo cambiaban con Bruno, que tiene 15).
+- En el detalle del quiz, los intentos de cada alumno; el historial como el del alumno; el diagnóstico en su propio renglón.
+
+**Encargos:** 556e2ce.
+
+**PIEZAS-24:** c10fc5a, `local_ed45103b-3122-4c1a-9097-96a1e7ca4670`.
+- En el Historial, el diagnóstico de cada área es un renglón como un quiz y despliega sus intentos.
+- `probar-v4` da 1002/0.
+- Publicado en la **v29**, con MAESTRO-6. El índice va en este mismo cierre.
+
+**MAESTRO-7:** `local_1112902f-b56b-4662-8f78-75b967f31a5c`, en el puerto 8912. Sigue en taller.
+- §4 fija con colapsar por área.
+- §3 con 3 opciones que se distinguen.
+- §5 nueva, el historial de la ficha.
+- El detalle del quiz con intentos.
+- Al integrarlo: `vigente.json` a MAESTRO-7 y publicar la v30.
+
+**La próxima ronda empieza en el puerto 8914.**

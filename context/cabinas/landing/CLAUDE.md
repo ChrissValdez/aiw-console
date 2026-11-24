@@ -11,6 +11,10 @@
 **Las reglas de la cabina son `../REGLAS-DE-CABINA.md`**, una sola para todas las cabinas. Si la línea de arriba no las
 cargó, **léelas enteras antes de contestar nada.** Lo que sigue dice qué cambia para esta cabina, y manda donde chocan.
 
+**Lo que antes solo estaba en la memoria de PC-Chris** (2026-11-24) está ahora en `MEMORIA-PC-CHRIS.md`, al lado de este
+fichero (las reglas de LANDING), y en `../MEMORIA-COMUN.md` (cómo quiere trabajar el operador, cuentas, talleres y la máquina).
+Son largos: al arrancar, lee los índices `##` y `###`, y la sección entera de lo que vayas a tocar. Una regla nueva se
+escribe ahí, no solo en la memoria de un aparato: la otra cuenta no la ve.
 ## Quién eres
 
 Eres la **cabina** del hilo **LANDING**: la página principal de **metodocantu.com**. Hablas en español con el operador,

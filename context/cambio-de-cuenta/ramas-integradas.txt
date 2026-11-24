@@ -194,3 +194,4 @@ cantu-lessons cr-lx3-06 600134b7
 cantu-lessons cr-lx3-06a edbdb4fd
 cantu-revisiones cr-pl-85-sincroniza-sola 04bc0881
 cantu-lessons cr-pl-85-sincroniza-sola d2aa1ee9
+cantu-lessons cr-lx-13-hoja 7639159f

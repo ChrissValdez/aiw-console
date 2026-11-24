@@ -1,136 +1,174 @@
 # HANDOFF — hilo `metodo-cantu-landing` (LANDING)
 
-> **Sexto relevo: la landing pasa a la otra cuenta (la suplementaria).** Lo escribió la cabina LANDING el **2026-11-20
-> hacia las 07:52** (`date`), en la PC, al pedir el dueño: *«dame el handsoff para cambiar de cuenta de forma limpia y
-> seguir en la otra cuenta»*. Se siguió el «1. Cierre» de `context/cambio-de-cuenta/OTRA-CABINA-EN-LAPTOP.md`.
-> Sustituye al quinto (20-nov, 04:10). Lo de antes está en el historial de git de este fichero.
+> **Séptimo relevo: el cierre de la cabina suelta.** La cabina era MC-LandingPage, de la Cuenta Chris, en PC-Chris.
 >
+> - **Cuándo y cómo:** lo escribió esa misma cabina el **2026-11-24 a las 09:25** (`date`), en la PC. Siguió
+>   `context/metodo-cantu/CIERRE-DE-CABINA.md`.
+> - **Quién lo pidió:** el coordinador de Método Cantú, con el «Sí, a las dos» del operador.
+> - **Adónde va la LANDING:** a la **Cuenta Pato**, por el PR 1 de `aiw-console` (D-087), que estaba por fusionar al
+>   escribir esto.
+> - **Qué sustituye:** el sexto relevo y sus tres adendas. Lo de antes está en el historial de git de este fichero.
+>
+> **Reglas:**
 > - **LANDING nunca toca lo de LECCIONES.**
-> - **Todo lo de aquí lleva fecha. Contrástalo con el disco al abrir: gana el disco.**
-> - **Al abrir:**
->   - lee enteros `context/cabinas/landing/CLAUDE.md` (su punto 1 tiene una enmienda del 20-nov) y
->     `context/cabinas/REGLAS-DE-CABINA.md`;
->   - haz `git pull` en `metodo-cantu-landing` y en `aiw-console`.
-> - **Siempre en español** (lo pidió el dueño). Cada mensaje cierra con «Qué necesito de ti», «Qué procede» y
->   «⏳ EN ESPERA de …».
+> - **Todo lo de aquí lleva fecha.** Contrástalo con el disco al abrir: gana el disco.
+> - **Siempre en español.** Cada mensaje cierra con estas cinco partes:
+>   - la tabla de lo medido, con su hora;
+>   - «Publicado»;
+>   - «Qué necesito de ti»;
+>   - «Qué procede»;
+>   - «⏳ EN ESPERA de …».
+>
+> **Al abrir:**
+> 1. Lee enteros estos tres ficheros:
+>    - `context/cabinas/landing/CLAUDE.md` (su punto 1 tiene una enmienda del 20-nov);
+>    - `context/cabinas/REGLAS-DE-CABINA.md`;
+>    - `context/metodo-cantu/PROYECTO.md`.
+> 2. Haz `git pull --ff-only` en `Metodo_Cantu/metodo-cantu-landing` y en `aiw-console`.
 
-> **Adenda del 22-nov, 20:37 (`date`), en la PC: la landing vuelve a la cuenta principal.** El dueño: *«ya volvi, pero no
-> se si hizo el relevo creo que no»*.
-> - **Medido a las 20:36:** los dos repos tenían `git status` limpio y `HEAD` igual a `origin/main`, y no faltaba nada por
->   subir.
->   - `metodo-cantu-landing` estaba en `bb7e3c9` (BB).
->   - `aiw-console` estaba en `dd70526`.
->   - La cuenta suplementaria no hizo un «1. Cierre» formal, pero su adenda de las 15:39 sí estaba.
-> - **Lo vigente** es lo de la adenda de abajo y el `README.md` del repo.
-> - **«Dónde estamos», «Lo que sigue» y «Lo decidido (AS)»** quedaron viejos. Se reescriben en el próximo cierre.
+## Dónde estamos (24-nov, 09:25)
 
-> **Adenda del 22-nov, 15:39 (`date`), en la PC. Gana sobre la del 21-nov.**
-> - **La vigente es BB:** `metodo-cantu-landing/prototipos/BB-la-vigente/landing.html` (un fichero:
->   `…/BB-la-vigente/un-solo-fichero/landing-BB.html`). Es AZ con la 3 «Con el Método Cantú sabes qué estudiar» y la 4
->   «Elige tu horario», con la lista en dos grupos («Tu horario» / «Incluido en los dos»): la a de BA, que el dueño escogió
->   («La a»). Veredicto: `veredictos/2026-11-22-az-titulos.md`. Puertos usados hasta 9149 (el siguiente, 9150).
-> - **Abierto, igual que el 21-nov:** Moodle espera a que el dueño diseñe la conexión; Resuelve Esparza = no.
+**La vigente es BB**, aprobada el 22-nov.
 
-> **Adenda del 21-nov, 19:46 (`date`), en la PC: lo que pasó después del sexto relevo. Gana sobre lo de abajo.**
-> - **La vigente, aprobada:** `metodo-cantu-landing/prototipos/AZ-textos-claros/landing.html` (el dueño: «Me gusto esta
->   nueva version»). En un solo fichero: `…/AZ-textos-claros/un-solo-fichero/landing-AZ.html`. El README y el índice la
->   marcan vigente; la tabla sección por sección está en el README. **Lo de «Lo decidido (AS)» de abajo quedó viejo.**
-> - **El camino:** AT (la oferta y los paquetes) → AU (cinco ideas de la 4, ninguna) → AV (vuelta a AF: la 3, la 4 visor y la
->   6) → AW (pulido; sin la sección de preguntas; títulos centrados) → AX (el **menú de variantes**, `revision.js`) → AY (la
->   vigente sin variantes) → AZ (textos claros en la 4 y la 5). Veredictos en `veredictos/2026-11-20-a{t..x}-comentarios.md`
->   y `2026-11-21-ay-textos.md`.
-> - **Cómo se revisa desde AX:** una sola página con el menú flotante «Variantes» abajo a la izquierda
->   (`prototipos/AX-menu-de-variantes/revision.js`, reusable; `?revision=no` lo esconde). El dueño lo pidió: abrir diez ligas
->   le costaba. **Textos:** se proponen en el chat, en tablas, y se corrigen ya aprobados (lo pidió para ahorrar).
-> - **Uso:** el dueño **quitó el tope de uso** para LANDING el 20-nov a las 15:00. Talleres: Opus alto para diseño, Sonnet
->   medio para lo mecánico; nunca Fable. Puertos usados hasta AY: 9135–9139 (el siguiente, 9140).
-> - **Abierto:** (1) **Moodle, en espera del dueño** (21-nov, 19:59): *«dame chance tenemos que diseñar una conexión para
->   que analices el código y después analicemos la mejor estrategia de integración»*. No se arma ningún bloque hasta entonces.
->   (2) El pedido de **Resuelve Esparza** (lista de estilo visual): **no**. El dueño: *«Resuelve esparza no, ya está trabajando
->   bien y trae su propio flujo»*; se le contestó a esa cabina.
+- **Dónde está:** `prototipos/BB-la-vigente/landing.html`. Se abre con `?movimiento=si`.
+- **Qué es:** AZ con dos títulos nuevos.
+  - La 3 es «Con el Método Cantú sabes qué estudiar».
+  - La 4 es «Elige tu horario», con la lista en dos grupos («Tu horario» y «Incluido en los dos»).
+  - Es la a de BA. Él dijo *«La a»* (`veredictos/2026-11-22-az-titulos.md`).
+- **El `README.md` del repo** trae la tabla de lo que quedó en cada sección.
 
-## Dónde estamos
+**Lo último hecho**, en `metodo-cantu-landing`:
 
-- **La página está completa y decidida.** La versión vigente es
-  **`metodo-cantu-landing/prototipos/AS-pregunta-papas/landing.html`**, que se abre con `?movimiento=si`.
-  - El `README.md` del repo la marca como vigente, con lo que quedó en cada sección.
-  - En `index.html` está arriba, como «AS».
-- **No hay ningún taller a medias.** AQ y AR terminaron, se revisaron y están commiteados. AS la hizo la cabina (una
-  línea).
-- **Al cerrar, todo está commiteado y subido:**
-  - `metodo-cantu-landing` en `dd87ab7`;
-  - `aiw-console` en el commit de este relevo.
-- **El sitio publicado sigue siendo su original:** nada se ha portado a Moodle.
-- **La cuenta principal quedó al 86 % semanal** (se renueva el sábado 21-nov a las 00:00, hora local). El dueño
-  reservó el 12 % para otro trabajo: con esa cuenta, nada pasa del 88 % sin su sí. La cuenta suplementaria tiene su
-  propio uso: míralo al abrir.
-
-## Lo que sigue
-
-> **Adenda del 20-nov, 14:55 (en la PC, antes de cambiar):** el dueño dio feedback de AS
-> (`metodo-cantu-landing/veredictos/2026-11-20-as-comentarios.md`): ajustes en la 1, la 2 y la 3; la 4 como la más débil
-> (base: la b de AI, con cinco variantes); **la página no dice qué se vende**, y dio los paquetes. Pidió revisar primero el
-> storytelling. La propuesta de la cabina está en `metodo-cantu-landing/storytelling/propuesta-oferta-2026-11-20.md`,
-> **por aprobar**, con cuatro preguntas sobre los paquetes. **Lo primero en la otra cuenta:** que la apruebe o la corrija y
-> conteste esas preguntas; luego, la ronda AT. La cuenta principal quedó al 90 % semanal: no se lanzó nada.
-
-1. **Que el dueño revise AS** en el índice. Puede pedir retoques chicos.
-2. **Pasarla a Moodle (MB2):** es la fase siguiente. El dueño dijo que conviene hacerla con cuenta fresca. Antes de
-   empezar:
-   - leer en el `README.md` del repo «Dónde vive» (un bloque HTML por sección, con prefijos de clase propios, imágenes por
-     `pluginfile.php` y todo a WhatsApp);
-   - leer el punto 6 del `CLAUDE.md`: **nunca subir código con la sesión de Moodle abierta**;
-   - el SSH a su servidor de Moodle quedó para después (*«depsues trabajo en eso»*).
-3. **Los datos que solo él tiene** (FALTA en `storytelling/texto-v2.md`) siguen sin entrar:
-   - quién da las clases;
-   - testimonios;
-   - el paquete y el próximo grupo;
-   - en cuánto tiempo contestan;
-   - qué mide el express, cuánto dura y cómo llegan los resultados.
-
-## Lo decidido, sección por sección (AS, 20-nov)
-
-| sección | lo que quedó | veredicto |
+| commit | cuándo | qué |
 |---|---|---|
-| encabezado | el botón de WhatsApp, amarillo | `2026-11-20-ar-comentarios.md` |
-| 1 · portada | sin caja y sin la frase de apoyo | `2026-11-20-ap-comentarios.md` |
-| 2 | «No es falta de ganas: es que nadie te dijo qué estudiar.» y «Con Método Cantú sabes qué estudiar y en qué orden.»; las dos tarjetas; «Que cada hora cuente.» a mano junto al logo | ídem |
-| 3 · los 4 pasos | la b de AQ: uno a la vez, flechas, la hoja del alto de la tarjeta y sin hueco abajo | `2026-11-20-aq-comentarios.md` |
-| 4 | la a; la franja «¿Buscas asesoría para alguna materia?» · «También te ayudamos con materias de prepa y universidad.» | ídem |
-| 5 | seis preguntas; entran «¿Todavía estoy a tiempo?», «Soy papá o mamá: ¿cómo veo su avance?» (antes de la última) y «¿Cómo me inscribo?»; el botón dorado | `2026-11-20-aq-comentarios.md`, `2026-11-20-ar-comentarios.md` |
-| 6 | el footer marino con las burbujas, sin tijeras ni recorte | `2026-11-20-ap-comentarios.md` |
+| `bb7e3c9` | 22-nov, 15:39 | BB: la vigente con la 4 a; el índice y el README |
+| `6a6b11d` | 23-nov, 22:12 | Veredicto: el título de la 2 suena agresivo |
+| `0d7aa55` | 23-nov, 22:13 | Veredicto: las tres primeras propuestas para ese título, fuera |
 
-**La estrategia de pulido (desde el 20-nov, tras AM):** un solo prototipo, con hasta tres variantes por sección. Él
-descarta, y lo decidido se fija en la ronda siguiente (`veredictos/2026-11-20-am-comentarios.md`). Con la página ya
-decidida, lo que venga es una sola versión.
+**Medido al cerrar (24-nov, 09:24):**
+- Los dos repos tienen `git status` limpio, y su `HEAD` es igual a `origin/main`.
+  - `metodo-cantu-landing` está en `0d7aa55`.
+  - `aiw-console` está en `92cace0`, antes de este relevo.
+- En `metodo-cantu-landing` no hay ramas locales aparte de `main`.
+- **No hay nada a medias:** ningún taller está abierto.
 
-## El camino del 20-nov
+**Lo publicado:**
+- **El repo:** https://github.com/ChrissValdez/metodo-cantu-landing (`main`).
+- **El índice local:** se abre con doble clic en
+  `C:\Users\chris\Documents\AIW_Workspace\Metodo_Cantu\metodo-cantu-landing\abrir-landing.cmd`. Queda en
+  http://127.0.0.1:8792/.
+- **BB:** http://127.0.0.1:8792/prototipos/BB-la-vigente/landing.html?movimiento=si.
+  - En disco está en `C:\Users\chris\Documents\AIW_Workspace\Metodo_Cantu\metodo-cantu-landing\prototipos\BB-la-vigente\landing.html`.
+  - La versión en un solo fichero es `…\BB-la-vigente\un-solo-fichero\landing-BB.html`.
+- **En Moodle no hay nada:** el sitio publicado sigue con su landing original.
 
-| ronda | qué fue | quién |
-|---|---|---|
-| AM | un solo prototipo con las correcciones juntas | taller, Opus |
-| AN | tres variantes por sección | taller, Opus |
-| AO | la 2 con otra narrativa, la 3 sin espacio perdido, las tijeras | taller, Opus |
-| AP | la 2 en otro diseño, la 3 con la hoja protagonista, las tijeras en el borde | taller, Opus |
-| AQ | casi final: la 1 sin caja, la 2 con tarjetas y firma, tres de la 3 sobre AN | taller, Opus |
-| AR | la 3 b fija, la franja de asesorías, dos preguntas nuevas | taller, Sonnet, esfuerzo medio |
-| AS | la pregunta para los papás | la cabina, sin encargo |
+### Lo que espera al operador
 
-**Sus palabras, tal cual:** `veredictos/` (80 ficheros al 20-nov, 07:52). Los encargos están en `encargos/`.
+**1. El título de la sección 2 de BB.**
 
-**Puertos de los talleres:** AM 9080–84, AN 9085–89, AO 9090–94, AP 9095–99, AQ 9100–04 (no lo usó: trabajó por
-`file://`), AR 9105–09. El siguiente es 9110.
+Hoy la sección dice esto:
+- el título: «2. No es falta de ganas: es que nadie te dijo qué estudiar.»;
+- el subtítulo: «Con Método Cantú sabes qué estudiar y en qué orden.»;
+- las dos tarjetas, «Estudiando por tu cuenta» y «Con Método Cantú»;
+- al pie: «Que cada hora cuente.».
+
+Sus palabras del 23-nov fueron: *«suena a uqe le estas diciendo Estas tontito, nosotros tre ayudamos, necesitamos un
+stortytelling mejor»*.
+
+**La primera ronda quedó fuera.** Él dijo: *«a muy complejo / b es lo mismo / c no suena bien»*.
+- A: «El examen abarca mucho, y no todo pesa igual.»
+- B: «Las ganas ya las traes.»
+- C: «¿Por dónde empiezo?»
+
+**Lo que busca:** algo simple, sin «ganas» y que no sea una pregunta.
+
+**La segunda ronda** se le mandó en el chat el 23-nov, después de las 22:13. **No ha contestado.** Solo está escrita
+aquí:
+
+| | Título (2.) | Lo que dijo antes | Nota |
+|---|---|---|---|
+| **1 ★** | «Tu esfuerzo, bien dirigido.» | El 19-nov le sonó bien (`veredictos/2026-11-19-ab-comentarios.md`). | Es la recomendada. El alumno pone el esfuerzo y el método lo dirige. No le dice al alumno qué le falta, y cierra bien con «Que cada hora cuente.». |
+| 2 | «Que tu esfuerzo se vea en tu puntaje.» | El 19-nov dijo que *«suena mucho mejor»* (`veredictos/2026-11-19-texto-v4-d-y-claridad-del-servicio.md`). | Con el pie, la sección tendría dos frases que empiezan con «Que…». Si la escoge, se propone quitar «Que cada hora cuente.». |
+| 3 | «Estudiar por tu cuenta o con un plan.» | Nueva. | Nombra las dos tarjetas que vienen abajo. |
+
+En las tres opciones se quedan el subtítulo, las tarjetas y el pie, salvo lo dicho en la 2.
+
+- **Dónde está todo lo demás:** `C:\Users\chris\Documents\AIW_Workspace\Metodo_Cantu\metodo-cantu-landing\veredictos\2026-11-23-seccion-2-tono.md`.
+- **Ojo al aplicar:** la 3 se titula «Con el Método Cantú sabes qué estudiar». Eso repite el subtítulo de la 2. Hay que
+  enseñárselo y proponerle cambiar uno de los dos.
+
+**2. Moodle (MB2), en espera de él** desde el 21-nov a las 19:59. Él dijo: *«dame chance tenemos que diseñar una
+conexión para que analices el código y después analicemos la mejor estrategia de integración»*. Hasta entonces no se
+arma ningún bloque.
+
+**3. Los datos que solo él tiene.** Están marcados como FALTA en `storytelling/texto-v2.md`:
+- quién da las clases, con su foto;
+- de dos a tres testimonios;
+- la duración, las horas por semana, el tamaño del grupo y cuántos simuladores;
+- el próximo grupo;
+- qué recibe el papá o la mamá;
+- cómo es el examen diagnóstico gratis.
+
+### Lo que sigue, en orden
+
+1. **Cuando escoja el título de la 2:**
+   1. Su palabra va tal cual a `veredictos/`.
+   2. Se hace **BC**, una copia de BB en `prototipos/BC-…/` con la 2 nueva, y su encargo en `encargos/BC-….md`. Es un
+      cambio de una línea, y lo puede hacer quien integra, sin taller.
+   3. Se rehace el fichero único con `herramientas/unsolo.mjs` y las fotos con `fotos.mjs`.
+   4. Se actualiza `index.html`: BC va arriba y BB pasa a `V` con su veredicto.
+   5. Se actualiza el `README.md`.
+   6. Commit, push y la captura para él.
+   - **Puertos:** hasta BB se usaron del 9080 al 9149. **El siguiente es el 9150.**
+2. **Moodle,** cuando él lo abra.
+3. **Los datos del punto 3,** cuando los dé.
+
+### Las herramientas después de la mudanza del 24-nov
+
+- **El repo cambió de carpeta.** Ahora está en `AIW_Workspace\Metodo_Cantu\metodo-cantu-landing`; antes estaba en
+  `projects\`.
+- **`abrir-landing.cmd` y `.ps1` funcionan.** Se probaron a las 09:25 con `-SinNavegador -SinEsperar`, desde la carpeta
+  nueva:
+  - el pull salió al día;
+  - el servidor arrancó en 8792;
+  - el servidor se apagó.
+- **La vista previa de la app (`landing-lamina`) ya no existe.** `AIW_Workspace/.claude/` está vacía (medido el 24-nov).
+  - No estaba en ningún repo.
+  - Si hace falta, se rehace con `node`, `Metodo_Cantu/metodo-cantu-landing/direccion/servidor.mjs` y el puerto 8792.
+- **Las capturas** usan `puppeteer-core` de `Metodo_Cantu/cantu-lessons/tools/render/`. Sigue ahí (medido).
+- **Las rutas `projects\…` de los prototipos viejos son historia:** no se corrigen.
+- **`_scratch/landing/` ya no existe:** él vació `_scratch` el 24-nov.
+
+## El camino
+
+- De A a AL: búsqueda, rondas de diseño y textos.
+- 20-nov: de AM a AS, con tres variantes por sección.
+- 20 y 21-nov: de AT a AZ.
+  - AT: la oferta y los paquetes.
+  - AX: el menú de variantes.
+  - AZ: textos claros.
+- 22-nov: BA y BB.
+- **El detalle:** el `README.md` y el `index.html` del repo.
+- **Sus palabras, tal cual:** en `veredictos/`. El 24-nov tenía 87 ficheros: 81 `.md` y 6 imágenes.
+- **Los encargos:** en `encargos/`, uno por ronda.
 
 ## Cómo se trabaja (lo que la memoria de la PC sabía)
 
 - **Talleres:**
   - se lanzan como sesión anidada (`start_session`: user_asked, fresh, sin worktree, wake_when_done);
-  - Opus 5.5 con esfuerzo alto para diseñar, Sonnet con esfuerzo medio para lo mecánico, **nunca Fable**;
+  - Opus 5.5 con esfuerzo alto para diseñar, Sonnet con esfuerzo medio para lo mecánico; **nunca Fable**;
   - cada uno escribe solo en `prototipos/<ID>/` y no usa git, `_scratch` ni el puerto 8792;
   - no usan los skills `hallmark` ni `frontend-design`;
   - se les dice «si lanzas algo en segundo plano, espera y sigue»;
-  - la cabina los lanza: nunca se le pide al dueño.
+  - los lanza quien coordina, nunca el dueño.
+- **Cada ronda va en una carpeta nueva.** Las de antes son historia y no se tocan.
 - **Las palabras del dueño van a `veredictos/` antes de actuar.** Las decisiones, en una tabla.
+- **Los textos se proponen en el chat:**
+  - van en tablas, con una recomendación y su porqué;
+  - ya aprobados, se aplican sin otra ronda (lo pidió para ahorrar).
+- **Para revisar variantes,** se usa una sola página con el menú flotante «Variantes», abajo a la izquierda
+  (`prototipos/AX-menu-de-variantes/revision.js`). Se esconde con `?revision=no`. Lo pidió él: abrir diez ligas le
+  costaba.
 - **Al entregar un taller:**
   1. leer `NOTAS.md` y mirar las capturas;
   2. commitear la carpeta;
@@ -142,59 +180,59 @@ decidida, lo que venga es una sola versión.
      - la miniatura en `inventario/miniaturas/<id>.webp`;
   4. push;
   5. mandarle las capturas.
-- **`index.html` es CRLF:** se edita con un script de Node que pasa a LF, cambia con guardas que fallan si no casan y
-  reescribe `\r\n`. Después se comprueba «LF sueltos: 0». Los scripts se escriben con la herramienta de escribir o con
-  un heredoc entre comillas (`<<'EOF'`), nunca con `node -e "..."` que lleve comillas invertidas.
-- **Cuando se le pide escoger,** se le da la recomendación con su porqué (lo pidió así), en una tabla, y se le cita
-  tal cual.
+- **`index.html` es CRLF:**
+  - se edita con un script de Node que pasa a LF, cambia con guardas que fallan si no casan y reescribe `\r\n`;
+  - después se comprueba que quedan 0 LF sueltos;
+  - los scripts se escriben con la herramienta de escribir o con un heredoc entre comillas (`<<'EOF'`), nunca con
+    `node -e "..."` que lleve comillas invertidas.
 
-## Lo que hay en el repo (al 20-nov, 07:52)
+## Lo que hay en el repo (al 24-nov)
 
 | ruta | qué es |
 |---|---|
-| `README.md` | **«La versión vigente»** arriba, y luego cómo vive la landing en Moodle |
-| `index.html` | **la página de entrada:** «Lo que sigue», el nuevo arriba con sus enlaces, las versiones anteriores con su veredicto (`V`), lo que se rescata y lo que no, y el mapa |
-| `abrir-landing.cmd` + `.ps1` | **el botón que usa el dueño:** hace `git pull`, levanta `node direccion/servidor.mjs` en 8792 si no está y abre el navegador |
-| `direccion/servidor.mjs` | el servidor local (`127.0.0.1:8792`) |
-| `storytelling/` | los textos aprobados y el análisis |
-| `prototipos/` | de A a AS. **Vigente: AS**; las demás son historia |
-| `encargos/` | un encargo por ronda, con sus reglas en `RONDA-EFG.md` y `RONDA-QRSTU.md` |
-| `veredictos/` | sus palabras, tal cual |
+| `README.md` | **«La versión vigente»** (BB) arriba, con la tabla por sección, y luego cómo vive la landing en Moodle |
+| `index.html` | **La página de entrada:** el nuevo arriba con sus enlaces, las versiones anteriores con su veredicto (`V`), lo que se rescata y lo que no, y el mapa |
+| `abrir-landing.cmd` y `.ps1` | **El botón que usa el dueño:** hace `git pull --ff-only`, levanta `node direccion/servidor.mjs` en 8792 si no está y abre el navegador |
+| `direccion/servidor.mjs` | El servidor local (`127.0.0.1:8792`) |
+| `storytelling/` | Los textos aprobados y el análisis |
+| `prototipos/` | De A a BB. **La vigente es BB**; las demás son historia |
+| `encargos/` | Un encargo por ronda (`<ID>-….md`; el de BB es `BB-la-vigente.md`). Las reglas de las primeras rondas están en los `RONDA-*.md` |
+| `veredictos/` | Sus palabras, tal cual |
 
 ## Técnico
 
-- **La memoria de la PC no viaja.** Lo necesario está en este relevo y en el `CLAUDE.md`.
-- **Capturas:** `puppeteer-core` de `Metodo_Cantu/cantu-lessons/tools/render/` por `createRequire`, solo leyendo de ahí.
-  - Chrome está en `C:/Program Files/Google/Chrome/Application/chrome.exe`.
-  - Un navegador por página.
-  - Para cerrar procesos, solo los propios.
-- **Su Windows tiene las animaciones apagadas** (Chrome lo lee como `reduce`): los prototipos aceptan
+- **La memoria de la PC no viaja.** Lo necesario está en este relevo, en el `CLAUDE.md` y en `PROYECTO.md`.
+- **Capturas:**
+  - con `puppeteer-core` de `Metodo_Cantu/cantu-lessons/tools/render/`, cargado por `createRequire` y solo leyendo de
+    ahí;
+  - Chrome está en `C:/Program Files/Google/Chrome/Application/chrome.exe`;
+  - un navegador por página;
+  - para cerrar procesos, solo los propios.
+- **Su Windows tiene las animaciones apagadas** (Chrome lo lee como `reduce`). Por eso los prototipos aceptan
   `?movimiento=si`.
 - **La hora se mide con `date` antes de escribirla.**
-- **La vista previa de la app** usa `landing-lamina` de `AIW_Workspace/.claude/launch.json`, que no está en ningún
-  repo:
-  - `"runtimeExecutable": "node"`;
-  - `"runtimeArgs": ["Metodo_Cantu/metodo-cantu-landing/direccion/servidor.mjs"]`;
-  - `"port": 8792`.
 
 ## Git
 
 - **`metodo-cantu-landing`:**
-  - el commit va por ruta, con identidad explícita (`-c user.name=ChrissValdez -c user.email=christopherkntu@gmail.com`);
+  - el commit va por ruta, con identidad explícita: `-c user.name=ChrissValdez -c user.email=<el de la cuenta>`;
   - el mensaje termina con `Co-Authored-By`;
-  - antes del push: `fetch` y comprobar que `HEAD..origin/main` está en 0;
-  - el push va por sha (`git push origin <sha>:refs/heads/main`);
+  - antes del push, `fetch`, y se comprueba que `HEAD..origin/main` está en 0;
+  - el push va por sha: `git push origin <sha>:refs/heads/main`;
   - los comandos de red llevan `GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never`, un timeout y `< /dev/null`.
-- **`aiw-console`:**
+- **`aiw-console`** (`PROYECTO.md` §4):
   - LANDING escribe solo `context/cabinas/landing/` y este fichero;
-  - el commit va por ruta, y antes de empujar se hace `git pull --rebase origin main`;
-  - se empuja solo si `origin/main..HEAD` trae solo lo propio;
-  - nunca `--force`.
+  - antes de escribir, `fetch`; si el árbol está limpio y solo va detrás, `pull --ff-only`;
+  - el commit va por ruta;
+  - se empuja solo si `origin/main..HEAD` trae solo lo propio, y por sha;
+  - **nunca** rebase, `--force` ni `reset --hard`.
 
 ## Abierto, para después
 
 - **Nada se ha probado en Safari, en Firefox ni en un celular real.**
 - **A 320 px,** la etiqueta «Con Método Cantú» de la hoja de la portada se sale durante su animación de entrada.
-- **La franja de asesorías:** a 1024 y a 320 px, «universidad.» cae sola en el último renglón. Al dueño no le molestó.
+  - Se midió en AS: [NO VERIFICADO] en BB.
+- **La franja de asesorías,** de AS: a 1024 y a 320 px, «universidad.» cae sola en el último renglón. Al dueño no le
+  molestó.
+  - [NO VERIFICADO] en BB: la 4 cambió en AZ y en BA.
 - **El contorno de los botones dorados sobre fondo claro** contrasta 1.6:1. El texto del botón sí pasa.
-- **`_scratch/landing/` en la PC** (de la cabina de LECCIONES): no se borra sin su palabra.

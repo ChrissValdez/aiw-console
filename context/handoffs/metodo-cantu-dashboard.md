@@ -1486,3 +1486,32 @@ Lo que dijeron los talleres:
 **La próxima ronda empieza en el puerto 8910.**
 
 **Cuando diga «ya voté»:** `--leer-votos piezas-22` y `maestro-5`. Si alguno llega vacío, preguntarle: puede no haber votado.
+
+## PIEZAS-22 y MAESTRO-5 votados; PIEZAS-23 publicado, MAESTRO-6 en taller (2026-11-24 03:02 – 03:53)
+
+**Los votos:**
+- **PIEZAS-22:** `veredictos/2026-11-24-piezas-22.md` (a494fe0).
+  - §11 en la 1.
+  - §19 en la 3, con el brazo también en la lista de «Lo que sigue».
+- **MAESTRO-5:** `veredictos/2026-11-24-maestro-5.md` (0e490d6).
+  - §D en la 4.
+  - §3: las tres ~. Quiere la gráfica que crece hacia la derecha, cómo ver la lista completa cuando hay 15 simuladores, y los intentos de cada examen como en el historial del alumno.
+  - §4: la 2 ~, con seis cambios.
+
+**Las rondas:**
+- **PIEZAS-23:** encargo 9cac8da; trabajo 660e3a9, `local_90655ab0-ef04-41b9-a574-4d5a9729ae83`.
+  - §11 y §19 fijas; el brazo en la lista; nada que votar en el alumno.
+  - `probar-v4` da 1002/0.
+  - Quedan dos `fa-star` en chips del coach («¿Qué sigue?»): no marcan refuerzo y se quedaron.
+  - Publicada sola en la **v27**, con MAESTRO-5. El índice va en c37558d.
+- **MAESTRO-6:** encargo 5d5e09e; `local_43d8c581-6f17-498c-8d63-186b981bface`, en el puerto 8911. Sigue en taller.
+  - §D fija en la 4.
+  - §3 con 3 opciones: gráfica hacia la derecha, lista completa con 15, intentos por examen.
+  - §4 con 3 variantes de la 2.
+
+**Al integrar MAESTRO-6:**
+- poner `vigente.json` en MAESTRO-6;
+- empacar y publicar la v28;
+- avisarle.
+
+**La próxima ronda empieza en el puerto 8912.**

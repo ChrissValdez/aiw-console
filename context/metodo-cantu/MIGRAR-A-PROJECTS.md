@@ -1,6 +1,6 @@
 # Mudar el coordinador de Método Cantú a un Project de claude.ai/code
 
-> **v0 · 2026-11-24, 08:40 (`date`).** Lo escribió la cabina DASHBOARD en la PC, junto con `PROYECTO.md`, con el sí del operador.
+> **v0 · 2026-11-24, 08:38 (`date`).** Lo escribió la cabina DASHBOARD en la PC, junto con `PROYECTO.md`, con el sí del operador.
 
 ## Por qué todavía no
 

@@ -1674,7 +1674,7 @@ Lo que dijeron los talleres:
 
 **La próxima ronda empieza en el puerto 8916.**
 
-## Mudanza hecha en la PC; DASHBOARD listo para el coordinador (2026-11-24 08:09 – 08:42)
+## Mudanza hecha en la PC; DASHBOARD listo para el coordinador (2026-11-24 08:09 – 08:38)
 
 **La mudanza:**
 - Las carpetas de la PC (DESKTOP-525K0IS) quedaron iguales a las de la laptop. El repo vive ahora en **`AIW_Workspace\Metodo_Cantu\metodo-cantu-dashboard`**.

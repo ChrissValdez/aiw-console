@@ -45,6 +45,7 @@ Todos son de GitHub (`ChrissValdez/<repo>`). En disco están bajo `C:\Users\chri
 **Al abrir:**
 1. Toma la hora con `date`.
 2. Hace `git fetch` y corre `node context/cambio-de-cuenta/sincronia.mjs` desde `aiw-console`.
+   - En un hilo en la nube, `sincronia.mjs` mide **GitHub**, no el disco de la máquina. Para saber si una máquina tiene trabajo sin empujar, se corre ahí (Remote Control). *(propuesto por la laptop, aprobado por el operador, 2026-11-24)*
 3. Lee el relevo del área que toca.
 
 **No supone el estado:** lo mide.
@@ -57,6 +58,7 @@ Todos son de GitHub (`ChrissValdez/<repo>`). En disco están bajo `C:\Users\chri
   - hace commit y push por sha.
 - **El modelo:** Opus con esfuerzo alto. **Nunca Fable.** Sonnet solo para lo mecánico.
 - En la PC, el hilo se abre en `AIW_Workspace`, la carpeta de las cabinas, para que lea la memoria de la máquina.
+- **Un hilo en la nube no ve la memoria de la máquina**, salvo por Remote Control abierto en `AIW_Workspace`. Por eso las reglas van copiadas en este fichero. *(propuesto por la laptop, aprobado por el operador, 2026-11-24)*
 
 **Al cerrar cada tarea:**
 - Actualiza el relevo del área, `context/handoffs/<repo>.md`. Ahí escribe:
@@ -111,6 +113,7 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 - Push por sha: `git push origin <sha>:refs/heads/main`.
 - En `aiw-console`, antes de empujar, se mide `git log origin/main..HEAD`. **Si trae commits ajenos, no se empuja.** Es un checkout compartido entre cabinas.
 - **Nunca** se hace push forzado ni `reset --hard`.
+- **Desde un hilo en la nube no se empuja a `main`:** se empuja a la rama del hilo y se abre un PR. El push a `main` solo se hace desde la máquina (sesión local o Remote Control). *(propuesto por la laptop, aprobado por el operador, 2026-11-24)*
 - **`git worktree prune` pide su sí.**
 
 **Seguridad y datos:**
@@ -118,7 +121,7 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 - **Los datos de alumnos son ficticios.**
 - No van contraseñas, llaves ni datos personales en los ficheros.
 - **Las descargas piden su permiso.**
-- **Borrar pide su sí.** Sin él, lo cerrado se mueve a `D:/AIW_frio`.
+- **Borrar pide su sí.** Sin él, lo cerrado se mueve a `D:/AIW_frio`, **solo en la PC**: la laptop no tiene unidad `D:`. *(propuesto por la laptop, aprobado por el operador, 2026-11-24)*
 
 **Cómo diseñar:**
 - **Variantes por componente:** se dan tres por sección en las rondas de diseño.

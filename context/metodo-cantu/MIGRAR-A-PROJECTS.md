@@ -59,3 +59,8 @@ En la pestaña **Code** de la app de escritorio, o en claude.ai/code, aparece **
 
 - **Publicar la liga del prototipo** (Artifact): DASHBOARD publica desde una sesión de la PC. Hay que ver si un hilo del proyecto puede hacerlo, o si eso se queda en una sesión local.
 - **LaTeX** (los quizzes y las lecciones) y **Moodle**: corren en la PC. Los hilos que los necesiten van con la tarjeta de la PC, no en la nube.
+
+**Probado el 2026-11-24 desde un hilo del Project de la laptop** *(propuesto por la laptop, aprobado por el operador, 2026-11-24)*:
+- **Artifacts:** un hilo en la nube sí publica la liga.
+- **LaTeX:** sí compila en la nube. El contenedor no trae TeX: se instala texlive con `apt-get` (texlive-xetex, -latex-extra, -fonts-extra, -pictures, -science y fonts-font-awesome; unos 5 min) y se compila con `xelatex -shell-escape`. `PAA/Examen Diagnostico/Examen_Diagnostico.tex` salió en 47 páginas sin error. Sin `-shell-escape` falla el paquete moodle («Base64 conversion failed»).
+- **Moodle:** sigue solo en la máquina.

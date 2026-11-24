@@ -1423,3 +1423,35 @@ Lo que dijeron los talleres:
 - la bolita no indica que abre un menú;
 - no hay vuelta a la portada;
 - el maestro no tiene botón de tema.
+
+## PIEZAS-20 y MAESTRO-3 votados; PIEZAS-21 y MAESTRO-4 publicados en la liga única (2026-11-24 00:36 – 01:28)
+
+**Los votos** llegaron por `origin/votos` (7f12dbc). Los veredictos son `veredictos/2026-11-24-piezas-20.md` y `-maestro-3.md` (47f659c); el de maestro trae su mensaje tal cual.
+- **Lo que pidió para el maestro:**
+  - opciones **por componente**, no por pantalla;
+  - tablas que no se vean básicas ni saturadas;
+  - más variantes.
+- **El error de la cabina:** fijar §1 de MAESTRO-3 por un ✓ que traía cambios.
+- **La regla nueva** (en `encargos/PIEZAS-21.md`): un ✓ con comentario de cambios no fija la sección.
+
+**Las rondas**, con los encargos `PIEZAS-21.md` y `MAESTRO-4.md` (1528e76):
+- **MAESTRO-4:** 8485239, `local_9b3ba984-41e9-46f1-b94b-fa0200773f4f`.
+  - §0, el estilo de tabla global, con 5 opciones.
+  - §1 en tabla, con 3.
+  - §2, la tabla de alumnos, con 4; lo de arriba, fijo.
+  - §3, las tablas de la ficha, con 3; el acomodo, fijo.
+  - §4, la tabla de quizzes, con 3.
+- **PIEZAS-21 L1:** 1ee85c6, `local_8f7fbe34-816b-4985-9c66-7dea1bbef19b`.
+  - §6 fija; §20 con aire y el diagnóstico al inicio; §22 con tres filtros.
+  - El menú: Resumen, Simuladores, Historial, Temario.
+  - `vigente.json` con PIEZAS-21 y MAESTRO-4.
+  - `probar-v4`: 1319, con 2 fallas de la prueba, ya arregladas.
+- **PIEZAS-21 L2:** f7c9ebd, `local_a8608df3-51ea-431e-8cc1-e0cd33d96458`. §23 fija en la 3, §19 con 3 y el menú.
+
+**Publicado:**
+- **La liga única v24** (JLDq…), con el empaque unido `--vendor`, de 88 archivos.
+- **El índice:** c9f07fb.
+
+**La próxima ronda empieza en el puerto 8908.**
+
+**Cuando diga «ya voté»:** `--leer-votos piezas-21` y `maestro-4`.

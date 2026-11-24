@@ -1,5 +1,21 @@
 # Relevo — hilo `cantu-quizzes-latex` (CQL)
 
+## Lo último — 2026-11-24, 15:55 UTC: PROP-QUIZ aplicado (cuentapato, hilo en la nube)
+
+> **Desde el 24-nov el repo es de cuentapato** (aviso `mensajes/2026-11-24-1537-…`). Lo de abajo, «Dónde estamos» del cierre,
+> sigue valiendo salvo lo que corrige este bloque.
+
+- **PROP-QUIZ, hecho:** en el PR 1 de `cantu-quizzes-latex` (rama `claude/project-thread-w7c8ly`, commit `a1845fd`), por fusionar.
+  - De las 65 preguntas de Propiedades salen **8** (RW-85 decía ≈ 7): 3 por ARI-03 y 1 por ARI-04 → Operaciones; 4 por ARI-16 → Fracciones.
+    Pato eligió «Mover las 8». Las 3 dudosas (Fácil 022, Medio 012 y 029) y las 7 de la igualdad se quedan.
+  - **Propiedades · Medio queda en 33 de 40: faltan 7.** Reponerlas es otro encargo, por escribir.
+  - Detalle: `PAA/tickets/quiz-propiedades/informe-PROP-QUIZ.md`. Registro: fila 457.
+- **En la nube sí se compila:** TeX Live de Debian por `apt` (~5 min) y `xelatex -shell-escape` con `extra_mem_bot/top=40000000`.
+  Aritmética entera: 601 páginas, 2 min 30 s. El envoltorio `_test-ARI.tex` se arma del preámbulo de `Matematicas.tex`.
+- **Lo que sigue, en orden:** fusionar el PR 1 → avisar a LECCIONES → ESENCIAL-ALG → NUEVAS-FG (+ VERIF-NUEVAS-FG) → BUILD-FINAL-4.
+- **Los números con que empieza lo que sigue:** la fila **458** del registro. Operaciones Fácil 034 y Medio 066, Fracciones Fácil 037
+  y Medio 049 ya están usados. Los de cuadráticas (`Facil-027`, `Medio-058`) y BUILD-FINAL-4 no cambian.
+
 ## Dónde estamos — 2026-11-24, 09:29 (`date`): el cierre de la cabina suelta
 
 > **Sustituye a todo el relevo anterior**, que era del 2026-09-12 y está vencido. Lo viejo sigue en el historial de git de

@@ -1317,3 +1317,43 @@ Lo que dijeron los talleres:
   - el nombre «Nivel parcial» para Cálculo;
   - revisar las preguntas del maestro, en `prototipo/maestro-1/NOTAS.md` §0.
 - **Cuando diga «ya voté» en estos:** `ArtifactData list votos` en la liga nueva. `--leer-votos` no los ve.
+
+## PIEZAS-18 y MAESTRO-1 votados; PIEZAS-19 y MAESTRO-2 publicados (2026-11-23 19:22 – 20:50)
+
+**La meta en Sin simulador** («ya van como 3 rondas»): la cabina la reprodujo en su navegador a 900 px.
+- **La causa:** `.p16__pie` iba con `flex-end`, y en Típico es `space-between`.
+- **El arreglo:** 8a58936, publicado en la v20.
+- **La guarda nueva:** cada escenario se compara contra Típico al mismo ancho. Está en `probar-v4` desde PIEZAS-19, con 221 de 221.
+
+**Los votos** llegaron por `origin/votos` (b8faedc), porque votó en las páginas del repo; en los Artifacts no había nada.
+- **Corrección a la adenda de las 19:03:** `--leer-votos maestro-1` y `cursos-1` sí los ven.
+- **Los veredictos:** `veredictos/2026-11-23-piezas-18.md`, `-maestro-1.md` y `-cursos-1.md` (a7e6d35).
+- **PIEZAS-18:** §0 y §14 sin votar.
+- **CURSOS-1:** solo §1 (1 ~ y 3 ~, «muy monocromático»), sin enviar.
+
+**Las rondas nuevas**, con los encargos `PIEZAS-19.md` y `MAESTRO-2.md` (067615b):
+- **PIEZAS-19:**
+  - L1 1b08bb8, `local_f0f3f29e-4290-41af-9bbc-b4948f36a265`;
+  - L3 40152fd, `local_c1c8f0dd-f068-4d34-9cb7-7dfb5e39cba2`;
+  - L4 5b04659, `local_3973d18f-4a56-47ce-acb2-19098120d0e8`;
+  - 1300 pruebas, y solo fallan las 9 de GitHub;
+  - lo que trae: §20 con 4 opciones (un renglón por nivel), §22 decidida (los seis filtros), §6 con 2 opciones, §19 con 3 y el evento `a3:ver` en el panel.
+- **MAESTRO-2:** c7eea77, `local_303828f8-739f-4cb1-aacd-5b3a24690863`. 108 de 108 guardas; el crítico pasó las 6 pruebas.
+
+**Lo publicado:**
+- **El Artifact del alumno, v21:** 70 archivos.
+- **El Artifact de maestro y cursos, v2:** MAESTRO-2 en lugar de MAESTRO-1, más CURSOS-1 y el panel nuevo, copiado del principal.
+  - El empaque es `<scratch>/empacar-nuevos2.mjs <proto> <salida> maestro-2 cursos-1`.
+  - Ojo: borra la salida, así que hay que reponer el `index.html` desde `<scratch>/portada-v1.html`, con su ronda.
+- **El índice:** 7fad4f1.
+
+**Quedan para él:**
+- cómo seguía su comentario de §22, que se cortó en «el área de filtros»;
+- qué opción del Historial «no jala»;
+- las 4 decisiones de MAESTRO-2 que el taller dejó en `NOTAS.md` §5;
+- §2 y §3 de CURSOS-1;
+- §0 y §14 del alumno.
+
+**La próxima ronda empieza en el puerto 8900.**
+
+**Cuando diga «ya voté»:** `--leer-votos piezas-19`, `maestro-2` y `cursos-1`, más `ArtifactData list votos` en las dos ligas.

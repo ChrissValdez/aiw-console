@@ -174,3 +174,53 @@ Cuando el operador escriba **«protocolo para cambiar de cuenta»**, la cabina:
 2. `git pull` en `aiw-console` (y en `metodo-cantu-landing`, solo lectura).
 3. Preguntarle lo mínimo: qué ve el alumno al entrar, qué datos hay en Moodle, y sus referencias o capturas.
 4. Proponer en una tabla qué se hace primero y **esperar su «adelante»**.
+
+## Lo que aprendió la cabina suelta, de PIEZAS a MAESTRO-9 (escrito al cerrarse, 2026-11-24)
+
+> La cabina DASHBOARD suelta se cerró el 24-nov para pasar al modelo mixto (D-086, `context/metodo-cantu/CIERRE-DE-CABINA.md`). Esto es lo que trabajó y que no estaba escrito arriba. **Donde choca con lo de arriba, manda esto**, porque es más nuevo. Su estado al cerrar está en `context/handoffs/metodo-cantu-dashboard.md`, y el coordinador lo reescribe tras la v33.
+
+**El prototipo unido y su liga:**
+- Desde UNIR-1 hay **un solo prototipo**, con alumno y maestro. Se publica en **una sola liga**: https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq (la v32 tiene MAESTRO-9 y PIEZAS-24).
+- **`prototipo/vigente.json`** dice qué ronda va en cada lado (`alumno.inicio`, `maestro.inicio`). Lo cambia quien integra, nunca un taller.
+- **El paquete** se arma con `node prototipo/panel/herramientas/empaquetar-unido.mjs <temporal>/unido --vendor`.
+  - Se publica `index.html` con `root` = esa carpeta, y en `files` todo **menos `vendor/`**, que ya vive en la liga.
+  - Una sesión nueva hace antes `Artifact read` de la liga, o la publicación se rechaza.
+- **El `index.html` de la raíz del repo** lleva la ronda nueva arriba, con su liga. Es CRLF: se inserta con node tras `  <main>`, nunca con `sed -i` ni Edit, que dejan LF.
+
+**Los votos:**
+- Él vota en el panel «Probar y votar», que guarda en la rama **`votos`**, un JSON por ronda.
+- Se leen con `git fetch origin votos` y `git show origin/votos:<slug>.json`.
+- Se pasan al veredicto con **`herramientas/votos-a-veredicto.mjs`** (9d2409b9): sus comentarios van tal cual.
+- **Un ✓ o un ~ con comentario de cambios no fija la sección tal cual:** se aplica el cambio.
+- **Un mensaje suyo por chat durante la ronda** («otra cosa que agregar al ticket») va verbatim al encargo.
+
+**El ciclo de una ronda:**
+1. Votos → veredicto (commit).
+2. Plan en una tabla → su «Sí, lánzalo».
+3. Encargo (commit).
+4. Talleres: fresh, Opus, esfuerzo alto, sin worktree; uno por lado si hay alumno y maestro. Puertos consecutivos: MAESTRO-10 usó el 8916 y PIEZAS-25 el 8917.
+5. Integrar: guardas → commit por ruta → push por sha → `vigente.json`.
+6. Publicar → `index.html` de la raíz → relevo.
+7. Aviso: **la primera ronda que salga se avisa sola**, para no bloquear sus votos.
+
+**Las guardas de cada entrega**, medidas por script y no a ojo:
+- LF en lo nuevo (medido con Node);
+- ni «PAA Tec» ni `sesskey` en html/js/css (el comentario de `plan.css` está aceptado);
+- ningún `[` en el CSS;
+- ningún `<svg>` en línea;
+- ninguna ruta de una ronda anterior fuera de comentarios;
+- más las de «El método de rondas» (anchos, un `h1`, toques, contraste, sin JS).
+
+**El maestro (MAESTRO-1 a 9), sus reglas:**
+- **Variantes por componente**, no pantallas enteras.
+- **Un mismo sistema en todo el maestro.**
+- **Nada explicativo:** sin leyendas ni renglones que expliquen. Él quitó la leyenda de §4: *«se ve fea es como explicativo»*.
+- **Los estados:** verde aprobado, rojo sin aprobar (carmesí `#a3124f`, que no se confunde con Español) y gris faltan.
+- **«Ver revisión» en cada intento.**
+- **Los renglones:** el hover no cambia el borde, y lo abierto lleva otro tono, no el gris del hover.
+- Las opciones de una sección deben **verse distintas para cualquier alumno**. En MAESTRO-6 §3 se veían iguales con pocos simuladores.
+
+**Lo que la mudanza del 24-nov dejó roto:**
+- Las herramientas de rondas cerradas (`prototipo/<ronda>/herramientas/*.mjs`) y `prototipo/panel/herramientas/probar.mjs` citan `AIW_Workspace/projects/...`. Fallan si se corren tal cual. No se arreglaron: las de rondas cerradas no se vuelven a correr, y `probar.mjs` se arregla si alguien lo necesita.
+- El empaque unido sí funciona desde la ruta nueva: sale idéntico a la v32.
+

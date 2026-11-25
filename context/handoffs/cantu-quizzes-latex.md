@@ -1,5 +1,20 @@
 # Relevo — hilo `cantu-quizzes-latex` (CQL)
 
+## Lo último — 2026-11-25, 03:35 UTC: el quiz de Propiedades, cerrado (cuentapato, nube)
+
+- **PROP-QUIZ fusionado** (PR 1, `d9664fa`), y **REP-PROP fusionado** (PR 2, `11989f5`).
+  - REP-PROP escribió 7 nuevas en Propiedades · Medio. VERIF-REP-PROP, en otra sesión: 4 VALIDA, 048 y 053 bajadas a Fácil
+    (`Facil-026` y `027`) y 050 fuera por gemela de Medio-017. Se repusieron 054, 055 y 056, y VERIF-REP-PROP-2 las dio VALIDA.
+  - **Propiedades: Fácil 26 (meta 20), Medio 40 (meta 40).** Sin faltante.
+  - Notas que no bloquean: la retro de Facil-027 mide 7 caracteres sobre el máximo de su fichero, y el 0 ya es la clave en 4 de Medio.
+- **LECCIONES, avisada** (hilo «Lecciones y Galería Español»). Le toca alinear el guion de ARI-02, que da por quitadas las 7 de la igualdad.
+- **La verificación ciega se hace con un hilo aparte**, que abre el coordinador. Deja sus entregables en
+  `/mnt/project-files/quizzes/verif-rep-prop/`, y la cabina los integra.
+- **Lo que sigue, en orden:** ESENCIAL-ALG → NUEVAS-FG (+ VERIF-NUEVAS-FG) → BUILD-FINAL-4 → Moodle.
+- **Los números con que empieza lo que sigue:** la fila **461** del registro. Ya están usados, y gastados aunque no estén en el
+  banco: Propiedades-Facil hasta 027 y Propiedades-Medio hasta 056 (048, 050 y 053 de Medio no existen). Los de Operaciones y
+  Fracciones, como en el bloque de abajo.
+
 ## Lo último — 2026-11-24, 15:55 UTC: PROP-QUIZ aplicado (cuentapato, hilo en la nube)
 
 > **Desde el 24-nov el repo es de cuentapato** (aviso `mensajes/2026-11-24-1537-…`). Lo de abajo, «Dónde estamos» del cierre,

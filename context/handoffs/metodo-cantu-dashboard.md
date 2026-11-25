@@ -1762,3 +1762,10 @@ Lo que dijeron los talleres:
 - **Publicado:** la **v36** en https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq (version id 1795567508-7c90), 88 archivos sin `vendor/`. `vigente.json`: alumno PIEZAS-26, maestro MAESTRO-13. Índice: c218f695. No se revisó abierta en el navegador.
 - **Sigue pendiente para una ronda de PIEZAS:** los dos quizzes de Lectura opcionales en el Temario del alumno (ver el bloque de las 11:03).
 - **Lo que espera al operador:** votar §P de MAESTRO-13 en la liga. Cuando diga «ya voté»: `git fetch origin votos`, `votos-a-veredicto.mjs` y el veredicto tal cual. La próxima ronda empieza en el puerto **8922**.
+
+## 2026-11-24, 20:47 · MAESTRO-13 votada; MAESTRO-14 integrada; v37 publicada, con un voto
+
+- **Veredicto MAESTRO-13** (`veredictos/2026-11-24-maestro-13.md`, ea7ce65b): §P 1 ~ · 2 ~ · 3 ✗ · 4 ✗; pidió otra ronda, con otros formatos y otra información, o quitar el componente y repartir arriba como en el grupo. «Ya estamos cercanos a la opción que es.»
+- **MAESTRO-14** (encargo c4e4e296, taller `local_1da40794-9243-4971-b92d-bd2e09a66fab`, ya archivado), 0da9f289. Solo §P, se vota con 5: 1 barras con la cifra en cada tramo; 2 la línea con los tres estados; 3 sin el componente (tarjetas a la izquierda, «Mejor calificación de Nivel PAA» a la derecha); 4 «A quién atender» con «Su ficha →»; 5 intentos de Nivel PAA hasta aprobar. Las otras 12 secciones, iguales a MAESTRO-13. Guardas: 296 vistas + recorrido 378, sin fallas; crítico, dos pasadas. **El taller recomienda la 4** (o la 2 si quiere la tendencia); el coordinador también la 4.
+- **Publicado:** la **v37** en https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq (version id 1795574797-9437), 88 archivos sin `vendor/`. `vigente.json`: alumno PIEZAS-26, maestro MAESTRO-14. Índice: 034c6237. No se revisó abierta en el navegador.
+- **Lo que espera al operador:** votar §P de MAESTRO-14. Sigue pendiente la ronda de PIEZAS de los dos quizzes de Lectura opcionales en el Temario del alumno, y su decisión sobre `cr-fig-04`. La próxima ronda empieza en el puerto **8923**.

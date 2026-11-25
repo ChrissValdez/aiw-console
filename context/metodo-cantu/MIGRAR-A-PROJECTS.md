@@ -64,3 +64,24 @@ En la pestaña **Code** de la app de escritorio, o en claude.ai/code, aparece **
 - **Artifacts:** un hilo en la nube sí publica la liga.
 - **LaTeX:** sí compila en la nube. El contenedor no trae TeX: se instala texlive con `apt-get` (texlive-xetex, -latex-extra, -fonts-extra, -pictures, -science y fonts-font-awesome; unos 5 min) y se compila con `xelatex -shell-escape`. `PAA/Examen Diagnostico/Examen_Diagnostico.tex` salió en 47 páginas sin error. Sin `-shell-escape` falla el paquete moodle («Base64 conversion failed»).
 - **Moodle:** sigue solo en la máquina.
+
+## La Cuenta Chris, el 2026-11-25 (v1)
+
+> **v1 · 2026-11-25, 01:56 (`date`).** Lo escribió el coordinador de la Cuenta Chris en PC-Chris. El operador: *«ya tengo proyectos en claude activo / ya se habilito en mi cuenta / es decir ya puedo terminar la migracion a la nube de este chat»*, y luego *«Sí, tras la v38»*.
+
+**Ya llegó:** Projects está habilitado en la Cuenta Chris. Se migra **después de publicar la v38** del dashboard (MAESTRO-15 y PIEZAS-27), para que no quede una ronda a medias.
+
+**Lo que cambia contra la receta de arriba** (desde D-087, la Cuenta Chris solo es dueña de `metodo-cantu-dashboard`):
+- **El nombre del proyecto:** «Metodo_Cantu», como en la Cuenta Pato. Cada cuenta tiene el suyo; no se comparten.
+- **Los repos (paso 4): tres, no siete.**
+  - `ChrissValdez/metodo-cantu-dashboard`: el suyo.
+  - `ChrissValdez/aiw-console`: relevos, `ASIGNACIONES.md` y el buzón con la Cuenta Pato.
+  - `ChrissValdez/cantu-lessons`: **solo lectura**; las pruebas del dashboard usan `tools/render/` (puppeteer-core) y `modelo/desde-ruta.mjs` lee `docs/referencias/RUTA-DE-ESTUDIO`. No se escribe en él (es de la Cuenta Pato).
+- **El mensaje (paso 3)**, texto propuesto:
+  > Coordina el dashboard de Método Cantú (Cuenta Chris). Lee aiw-console/context/metodo-cantu/PROYECTO.md, ASIGNACIONES.md, el buzón (context/metodo-cantu/mensajes/) y el relevo context/handoffs/metodo-cantu-dashboard.md, y dime en qué se quedó y qué espera mi sí.
+- **`settings.local.json` (paso 2):** en PC-Chris **no existe** (medido el 25-nov: `AIW_Workspace\.claude\` está vacía). El operador lo copia a mano desde la laptop.
+- **El ciclo de rondas en la nube:** los votos (`origin/votos`), los encargos y los veredictos son git, así que van igual. Lo que hay que probar en el primer hilo:
+  - lanzar un taller (un hilo por ronda) y que avise al coordinador;
+  - las guardas y `probar-v4` (Chrome con puppeteer-core): en la nube, o con la tarjeta de la PC;
+  - publicar la liga con `Artifact read` antes (https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq), con `empaquetar-unido.mjs --vendor`.
+- **El coordinador local (paso 8):** deja el relevo al día, avisa a la Cuenta Pato por el buzón y se archiva con el sí del operador.

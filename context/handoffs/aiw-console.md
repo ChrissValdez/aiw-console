@@ -1,5 +1,87 @@
 # Relevo — hilo `aiw-console`
 
+## ⏸ EN UNA PANTALLA — 2026-11-25: el hilo en pausa, listo para mudarse a un Project en la nube
+
+> Adenda del **2026-11-25, 02:20 en PC-Chris (08:20 UTC, `date`)**. La escribió la cabina en pausa (sesión
+> «Pausado_Console_Cabina», Cuenta Chris en PC-Chris), a pedido del coordinador de Método Cantú, que actuaba de parte de
+> Chris: Console se muda a un Project propio de claude.ai/code, separado del de Método Cantú, **y sigue en pausa**. El
+> cuerpo de abajo, desde «Fecha: 2026-10-29», sigue vigente salvo lo que esta adenda corrige.
+
+**Estado: EN PAUSA.** Según `context/metodo-cantu/ASIGNACIONES.md`, «`aiw-console` (código de la consola) | Project
+Console | — | libre, en pausa | 2026-11-24 | Congelado (Pausado_Console_Cabina), como Studio». Nadie lo tiene. **Antes
+de escribir en el código o en el canónico, se toma con el sí de Chris** («Tomar un repo», en ASIGNACIONES). `context/`
+es compartido y sigue sus propias reglas.
+
+**En qué me quedé.** La última sesión de trabajo fue la del 2026-10-29: arranque en Claude Code, relevo, veredicto del
+`CLAUDE.md` y dos reglas (formato de cierre y checkout compartido). Desde entonces este hilo no ha tocado nada.
+Medido el 2026-11-25 a las 02:19:
+- HEAD = `origin/main` = `fc7cb92`; árbol limpio; sin locks en los 13 repos del workspace.
+- Canónico md5 **LF `3e088141bcb1b7196f0540b8b10a1067`**: el mismo del 10-21. Último commit que lo toca: `6ac4128`, del 10-21.
+- **82 runs: completed 79 · planned 3 · active 0.**
+
+**Por qué está en pausa.** La cola no tiene nada que la cabina pueda ejecutar sola:
+- el `#80` «Deep visual audit of the console, led by the operator» lo pausó el operador;
+- el `#81` y el `#82` esperan a Cantu Studio, en pausa por D-079;
+- según D-083, LECCIONES ya no usa la consola de *features*;
+- el 2026-11-24, el reparto de D-087 dejó el código de la consola libre y congelado.
+
+**Lo que espera el sí de Chris.** Ninguna de estas cosas está empezada:
+1. **Descongelar y tomar** el código de la consola (protocolo de ASIGNACIONES).
+2. **Reanudar el `#80`.** Su primer paso es un taller que vuelve a medir
+   `context/aiw-console/records/GUIA-RECORRIDO-77-2026-10-20.md` contra la consola de hoy.
+3. **Quitar `aiw` del registro de la consola.** Todavía apuntan a él `project-console/projects.json` (`../../aiw`) y
+   `projects.config.json` y su `.bak`, en la raíz del repo (`../aiw`). Chris mandó `aiw` a la Papelera el 11-24
+   («es un proyecto viejo que ya no planeo usar», `AIW_Workspace\MUDANZA-PC.md`), y su snapshot da 404. MUDANZA-PC lo deja para «cuando se descongele aiw-console».
+4. **La v1 del `CLAUDE.md`**, con lo que propone `context/cabinas/aiw-console/VEREDICTO-PILOTO-2026-10-29.md`. A eso se
+   suma un choque: el `CLAUDE.md` dice «la cabina nunca lanza un taller por su cuenta», y la regla que Chris dio después
+   en otras cabinas es que la cabina los lanza como sesión anidada.
+5. Lo que ya esperaba: el `#81` y el `#82` (D-079), y D-074, que no tiene run.
+
+**Lo que solo existe en este disco (PC-Chris), medido a las 02:19:**
+- `aiw-console\.aiw\`, que git ignora: 4 ficheros de julio (`roadmap/roadmap.json` y tres snapshots de `views/`).
+  [INFERENCIA] Son salida vieja de la consola local, y no hacen falta para seguir.
+- Dos notas de la memoria de Claude Code de la Cuenta Chris: `cabina-aiw-console-claude-code.md` y
+  `aiw-console-checkout-compartido.md`. Lo que dicen ya está en el `CLAUDE.md` («Git», 7) y en el §6 de este relevo.
+- La consola del operador en el 8788 (`start-console.cmd`). Su registro usa rutas relativas al layout de esta PC
+  (`../../Metodo_Cantu/<repo>`, `../../PHD/phd-p2-experiment`).
+- **Nada** en `_scratch` ni en `_backups`: `_scratch\pulido-ui-78\` ya no existe.
+
+**Una dependencia que no está en ASIGNACIONES.** La cabina de phd-p2 escribe su canónico con el motor y el `serve.mjs`
+de este repo:
+- dónde lo dice: `PHD/cabina/CABINA.md` líneas 107 y 151, y `PHD/PROYECTO.md` línea 67;
+- además regenera aquí `project-console/projects.digest.json` (`b3374dc`).
+
+Mientras el código siga congelado no pasa nada. **Quien lo descongele avisa a phd-p2 antes de cambiar
+`tools/roadmap/` o `project-console/`.** Además, el checkout de la PC tiene que seguir existiendo para phd-p2 y para
+`context/`.
+
+**Lo que cambió desde el 10-29 y corrige el cuerpo de abajo:**
+- **Rutas.** `projects/aiw-console` pasó a ser `aiw-console`, en la raíz. Los repos de Método Cantú están en
+  `Metodo_Cantu/`, y phd-p2 en `PHD/phd-p2-experiment`. El kernel `aiw` ya no está en la PC.
+- **Locks:** hoy hay 13 repos en el workspace.
+- **Decisiones:** la última es **D-087**. D-082 es el formato de cierre.
+- **El `CLAUDE.md` y el §6 son de la PC.** En la nube, para `aiw-console` manda «Cómo se empuja» de ASIGNACIONES:
+  - se trabaja en la rama del hilo y se sube por PR;
+  - van directo a `main` solo un aviso nuevo en `mensajes/` y la línea propia del registro;
+  - `pull --rebase` está bien, porque allí el checkout es solo del hilo.
+
+**Para el Project en la nube** (lo que se le contestó al coordinador):
+- **Repos:**
+  - `ChrissValdez/aiw-console`, con escritura;
+  - solo de lectura, para que la consola multiproyecto vea a los demás: `ChrissValdez/cantu-studio`,
+    `ChrissValdez/cantu-quizzes-latex`, `ChrissValdez/cantu-lessons` y `ChrissValdez/phd-p2-experiment`. El de Studio pasa
+    a escritura solo si se retoma el `#81`, y después de tomarlo;
+  - `aiw` no hace falta.
+- **Solo en la PC:**
+  - que Chris recorra la consola con sus ojos (el `#80` y toda QA visual), en el 8788 o en otro puerto;
+  - las capturas de `tools/capturas/shot.mjs`, que usan el Chrome de Windows;
+  - servir la consola con los seis proyectos tal como se ven en disco;
+  - el checkout que usa phd-p2.
+
+  La suite, el motor y escribir el canónico con `serve.mjs` solo necesitan Node: corren también en la nube.
+
+---
+
 **Fecha:** 2026-10-29 · **Sustituye** al relevo del 2026-10-21 y a sus avisos de la mudanza del 10-28 y el 10-29.
 
 Esta fue **la primera sesión de la cabina en Claude Code**, en la PC (`DESKTOP-525K0IS`), el 2026-10-29 de las 10:17 a

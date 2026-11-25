@@ -18,7 +18,7 @@
 | Nombre corto (en el buzón) | Quién es | Dónde corre hoy |
 |---|---|---|
 | `cuentapato` | La cuenta de Pato | Project «Metodo_Cantu» en claude.ai/code (nube) |
-| `cuentachris` | La cuenta de Chris | Coordinador local en PC-Chris (DESKTOP-525K0IS) |
+| `cuentachris` | La cuenta de Chris | Su Project en claude.ai/code (nube), desde el 2026-11-25; usa PC-Chris (DESKTOP-525K0IS) por tarjeta |
 
 **Una cuenta no está atada a un aparato.** Cada una decide en qué aparato disponible corre (laptop-Chris, PC-Chris, PC-Pato).
 Chris: *«cada una decide sobre aparatos disponibles»*. La columna de arriba es solo una foto.

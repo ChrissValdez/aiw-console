@@ -1754,3 +1754,11 @@ Lo que dijeron los talleres:
 - **Pendiente para una ronda de PIEZAS:** en el Temario del alumno, «Información cuantitativa y diagramas» y «Resumen» (Lectura) siguen marcados como opcionales (`datos-extra.json` de p18); en el maestro ya son de la ruta.
 - **Publicado:** la **v35** en https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq (version id 1795539806-746d). `vigente.json`: alumno PIEZAS-26, maestro MAESTRO-12. Índice: d2977e97. No se revisó abierta en el navegador.
 - **Lo que espera al operador:** mirar la v35; no hay votos. La próxima ronda empieza en el puerto **8921**.
+
+## 2026-11-24, 18:45 · MAESTRO-12 comentada; MAESTRO-13 integrada; v36 publicada, con un voto
+
+- **Veredicto MAESTRO-12** (`veredictos/2026-11-24-maestro-12.md`, bc9ec75d): su comentario general, tal cual (seis cosas del maestro; del alumno, nada).
+- **MAESTRO-13** (encargo 47583ba6, taller `local_70e6607d-2822-4ab8-b5b0-1a9f65780daa`, ya archivado), de830dde. Fijos: §1 el diagnóstico del historial como un renglón más; §2 sin Fundamental / Nivel PAA / Reto en el diagnóstico y sin «El que cuenta» (nada lo sustituye; el último intento ya no se marca); §3 los encabezados de los diagnósticos del grupo alineados (0,01 px); §5 sin el filtro de la tabla de alumnos del detalle del quiz; §6 «Otro quiz» por materia y luego por área. **Se vota §P** «El grupo, semana a semana» (sec-10): la 1 es la de hoy y la 2–4, sin barras. Guardas: 280 vistas + recorrido 378, sin fallas; crítico, dos pasadas.
+- **Publicado:** la **v36** en https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq (version id 1795567508-7c90), 88 archivos sin `vendor/`. `vigente.json`: alumno PIEZAS-26, maestro MAESTRO-13. Índice: c218f695. No se revisó abierta en el navegador.
+- **Sigue pendiente para una ronda de PIEZAS:** los dos quizzes de Lectura opcionales en el Temario del alumno (ver el bloque de las 11:03).
+- **Lo que espera al operador:** votar §P de MAESTRO-13 en la liga. Cuando diga «ya voté»: `git fetch origin votos`, `votos-a-veredicto.mjs` y el veredicto tal cual. La próxima ronda empieza en el puerto **8922**.

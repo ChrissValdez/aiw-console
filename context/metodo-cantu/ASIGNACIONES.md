@@ -57,9 +57,10 @@ Después, Chris las archiva.
 
 ### Lo que no se toca
 
-- **`cr-fig-04` (LECCIONES)** solo existe en el disco de PC-Chris (punta `618d8716`, 17-nov; la guarda de figuras de la regla 46,
-  +807). No está en origin ni integrada. **Nadie la borra ni hace prune** hasta que Chris decida si se sube como respaldo, se junta
-  o se descarta. Antes de juntarla, revisar el diff (`modo-seco-comprobar-antes`). Aviso: `leidos/2026-11-24-1527-…`.
+- **`cr-fig-04` (LECCIONES)** ya está en GitHub como rama de respaldo: `origin/cr-fig-04`, punta `618d8716` (17-nov; la guarda de figuras
+  de la regla 46, +807). **No está integrada en main.** Chris decidió el 2026-11-25 subirla como respaldo y que la Cuenta Pato, dueña de
+  lecciones, decida si la junta o la descarta. Antes de juntarla, revisar el diff (`modo-seco-comprobar-antes`). Aviso:
+  `mensajes/2026-11-25-0747-cuentachris-cuentapato-cr-fig-04-en-github.md`.
 
 ### Las dependencias entre repos
 

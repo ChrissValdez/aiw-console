@@ -1770,7 +1770,7 @@ Lo que dijeron los talleres:
 - **Publicado:** la **v37** en https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq (version id 1795574797-9437), 88 archivos sin `vendor/`. `vigente.json`: alumno PIEZAS-26, maestro MAESTRO-14. Índice: 034c6237. No se revisó abierta en el navegador.
 - **Lo que espera al operador:** votar §P de MAESTRO-14. Sigue pendiente la ronda de PIEZAS de los dos quizzes de Lectura opcionales en el Temario del alumno, y su decisión sobre `cr-fig-04`. La próxima ronda empieza en el puerto **8923**.
 
-## 2026-11-25, 02:30 · MAESTRO-14 votada; MAESTRO-15 y PIEZAS-27 integradas; v38 publicada. Lo último antes de mudarse a la nube
+## 2026-11-25, 02:06 · MAESTRO-14 votada; MAESTRO-15 y PIEZAS-27 integradas; v38 publicada. Lo último antes de mudarse a la nube
 
 - **Veredicto MAESTRO-14** (`veredictos/2026-11-24-maestro-14.md`, 88507623): §P 1 ~ · 2 ✗ · 3 ~ · 4 ✗ · 5 ✗; «las opciones 1 y 3 son las mejores, dejemoslas como opciones validas de momento despues decido la final».
 - **MAESTRO-15** (encargo fc305f72, taller `local_c3ac6e39-ed36-4bc8-ae04-7b174d047276`), ec732337: §P con 2 opciones, la 1 (barras con la cifra en cada tramo) y **la 2 = la 3 de MAESTRO-14** (sin el componente: tarjetas a la izquierda, «Mejor calificación de Nivel PAA» a la derecha). Lo demás, igual a MAESTRO-14 (132 vistas pixel a pixel). **§P sigue abierta: él escoge la final cuando quiera** (no hay votos pendientes en la liga; si dice cuál, la siguiente ronda la fija y quita la otra).

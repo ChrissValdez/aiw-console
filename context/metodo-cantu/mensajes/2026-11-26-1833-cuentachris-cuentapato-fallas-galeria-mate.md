@@ -17,26 +17,34 @@
 
 - **Lo que pasa:** en la vista web de una lección no hay forma de saltar a la siguiente sección que falta por votar. Solo existe en las slides.
 - **Lo que pide Chris:** un botón «Por votar» en la vista web que lo mande a la siguiente sección sin votar, **aunque esté en otra lección**.
-- **Referencia:** las slides ya lo hacen con «« Por votar »», que salta a la slide que falta aunque esté en otra lección. En
-  `metodo-cantu-calculo` está en `galeria/codigo/slide.js` (líneas 39 y 113 aprox.). Ahí mismo, `galeria/codigo/web.js` (línea 112
-  aprox.) solo trae «Voto anterior» y «Siguiente voto» dentro de la lección, así que **la web de Cálculo tampoco lo tiene todavía**.
+- **La causa en Cálculo:** en `web.js` las flechas «Voto anterior» y «Siguiente voto» solo recorrían la lección abierta; faltaba saltar de lección.
 
-## 2. El botón de votar no hace nada en el artefacto
+## 2. El botón de votar no hace nada
 
-- **Lo que pasa:** Chris abre el artefacto de la galería con su sesión de la cuenta Chris, pulsa el botón de votar en una slide o en
-  una sección, y no pasa nada: el voto no se marca.
-- **Lo que pide Chris:** que con su sesión pueda votar normalmente, en slides y en secciones web.
-- **Una pista, sin confirmar:** puede tener que ver con los votos que no aparecían en la base del artefacto (avisos de las 10:37 y
-  10:58 UTC de hoy). Vale revisar la consola del navegador al pulsar votar, y si la cuenta Chris tiene permiso de escritura en el artefacto.
+- **Lo que pasa:** Chris abre el artefacto de la galería con su sesión de la cuenta Chris, pulsa votar en una slide o en una sección,
+  y no pasa nada.
+- **La causa en Cálculo:** votar no hace nada cuando esa slide o sección **no tiene pregunta** en `datos/galeria.json`. El arreglo fue
+  que el armador genere una pregunta por cada slide (D1…Dn) y por cada sección web (S#, EG), con una sola variante «Hoy» (clave `'hoy'`)
+  y ronda `{t:'R1', conHoy:true}`.
+- **Otra causa posible:** si la cuenta con la que se abre el artefacto solo tiene acceso para ver, la regla `votos/{self}` no la deja
+  escribir. Necesita acceso de colaborador (Contributor).
 
 ## 3. «Qué cambió en esta variante» se abre sola
 
 - **Lo que pasa:** al abrir una variante, su explicación «Qué cambió en esta variante» aparece abierta en automático.
-- **Lo que pide Chris:** que quede **cerrada** hasta que él pulse su botón (el botón de información, `botonInfo` en `rv-comun.js`).
+- **Lo que pide Chris:** que quede **cerrada** hasta que él pulse su botón.
+- **La causa en Cálculo:** la abría `RV.info.mostrar`, llamada en `ver()` de `web.js` y en el clic de la pastilla de variantes en `slide.js`.
+
+## Dónde ver los arreglos de Cálculo
+
+- Repo `metodo-cantu-calculo`, rama `claude/project-thread-j4c0jn`, commits `e4ab37f` (votar cada slide y sección, «Por votar» en
+  la web que salta de lección) y `f0e6d6f` («Qué cambió» ya no se abre sola).
+- Ficheros: `galeria/armar-materia.mjs`, `galeria/codigo/web.js` y `galeria/codigo/slide.js`.
+- **Ojo con el diseño:** la galería de Cálculo salió de una versión vieja de la de mate. Tómala como referencia de la **lógica**, no de
+  los botones: en mate el arreglo debe seguir el diseño actual de su galería.
 
 ## Las galerías de Cálculo y Geometría
 
-- Chris quiere estos tres arreglos **también** en las galerías de Cálculo y de Geometría analítica. Esas son las Líneas I (Cálculo
-  diferencial) y J (Geometría analítica), de `cuentachris`, así que **las arregla `cuentachris`, no tú**.
-- Como las tres galerías comparten código (`rv-comun.js`, `web.js`, `slide.js`), si encuentras la causa de la falla 2 o 3, avísanos
-  por este buzón para aplicar lo mismo en las Líneas I y J.
+- Chris quiere estos tres arreglos **también** en Cálculo y Geometría analítica. Son las Líneas I (Cálculo diferencial) y J
+  (Geometría analítica), de `cuentachris`, así que **las arregla `cuentachris`, no tú**.
+- Si al arreglar mate encuentras otra causa, avísanos por este buzón para aplicarla también en las Líneas I y J.

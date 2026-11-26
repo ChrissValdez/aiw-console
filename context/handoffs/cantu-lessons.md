@@ -10,6 +10,19 @@
 > **La cabina abre leyendo enteros** `context/cabinas/lecciones/CLAUDE.md` y `context/cabinas/REGLAS-DE-CABINA.md`. La
 > app abre la sesión en `AIW_Workspace`, así que ese `CLAUDE.md` **no se carga solo**.
 
+## Se suelta a la Cuenta Chris (2026-11-26, 04:40 UTC) — galería como artefacto
+
+> Lo escribió `cuentapato` al soltar `cantu-lessons` y `cantu-revisiones` (ASIGNACIONES.md). **Regresan a `cuentapato` al terminar.**
+
+- **El encargo:** `cantu-revisiones/prototipos/galeria-artefacto/README.md` (PR #2 de cantu-revisiones) y el aviso
+  `mensajes/2026-11-26-0430-cuentapato-cuentachris-galeria-artefacto-pasa.md`.
+- **Main de `cantu-lessons`** en `121fac3` (CR-LX3·08, ARI-01·S1 «Para saber más» de los naturales).
+- **Abierto:** PR #1 de cantu-lessons, «ARI-02: alinear el guion con el quiz de Propiedades», espera el sí de Pato.
+- **La ronda CR-LX3** sigue abierta en la galería local; no se tocó desde la nube.
+- **`cr-fig-04`** sigue de respaldo en GitHub, sin decidir (ver ASIGNACIONES.md).
+- **Al regresar:** compartir con `cuentapato` como Editor todo artefacto nuevo, subir todo a GitHub y dejar los PR en el aviso
+  (`mensajes/2026-11-26-0430-cuentapato-cuentachris-accesos-y-regreso.md`).
+
 ## Dónde estamos (2026-11-19, 00:50) — Datos y Funciones, todas escritas y publicadas
 
 > Lo escribió la cabina al cerrar el pedido del operador del 18-nov, 15:30: *«visto bueno, lanza todas las leciones de las areas de

@@ -29,8 +29,8 @@ Chris: *«cada una decide sobre aparatos disponibles»*. La columna de arriba es
 
 | Repo | Área | Dueño | Estado | Desde | Nota |
 |---|---|---|---|---|---|
-| `cantu-lessons` | Revisión de lecciones | `cuentapato` | activo | 2026-11-24 | Va junto con `cantu-revisiones`: se toman y se sueltan juntos. **Escribe cuando se cumpla el requisito de abajo.** |
-| `cantu-revisiones` | Revisión de lecciones (galería) | `cuentapato` | activo | 2026-11-24 | Va junto con `cantu-lessons`. Mismo requisito. |
+| `cantu-lessons` | Revisión de lecciones | — | libre, para `cuentachris` | 2026-11-26 | Lo soltó `cuentapato` para que lo tome `cuentachris` mientras dure el trabajo de la galería como artefacto; **al terminar regresa a `cuentapato`**. Va junto con `cantu-revisiones`. Pato: *«actualiza ASIGNACIONES.md para soltar esos dos repos y pasarlos a la Cuenta Chris mientras dure este trabajo, anotando que regresan a ti al terminar»*. Relevo: `context/handoffs/cantu-lessons.md`. Aviso: `mensajes/2026-11-26-0430-…-galeria-artefacto-pasa.md`. |
+| `cantu-revisiones` | Revisión de lecciones (galería) | — | libre, para `cuentachris` | 2026-11-26 | Lo soltó `cuentapato` para que lo tome `cuentachris` mientras dure el trabajo de la galería como artefacto; **al terminar regresa a `cuentapato`**. Va junto con `cantu-lessons`. Pato: *«actualiza ASIGNACIONES.md para soltar esos dos repos y pasarlos a la Cuenta Chris mientras dure este trabajo, anotando que regresan a ti al terminar»*. Relevo: `context/handoffs/cantu-revisiones.md`. Aviso: `mensajes/2026-11-26-0430-…-galeria-artefacto-pasa.md`. |
 | `metodo-cantu-landing` | LANDING | `cuentapato` | activo | 2026-11-24 | Mismo requisito. |
 | `metodo-cantu-dashboard` | DASHBOARD | `cuentachris` | activo | 2026-11-24 | |
 | `cantu-studio` | Studio | — | libre | 2026-11-24 | En pausa (D-079). |

@@ -40,6 +40,8 @@ a los dos va en un solo commit. Antes de commitear aquí, `node context/metodo-c
 | `cantu-studio` | Studio | — | libre | 2026-11-24 | En pausa (D-079). |
 | `cantu-quizzes-latex` | Banco de quizzes | `cuentapato` | activo | 2026-11-24 | Lo soltó cuentachris (CQL_Cabina cerrada: `0f5b7c2` en el repo, `3daff28` aquí). Chris: *«si no es tan pesado entonces si mandaselo a la cuenta Pato»*. Orden: PROP-QUIZ, ESENCIAL-ALG, NUEVAS-FG y luego BUILD-FINAL-4 (aviso `leidos/2026-11-24-1537-…`). |
 | `cantu-espanol` | Lecciones de Español PAA (lectura y redacción) | `cuentapato` | activo | 2026-11-24 | Repo nuevo; lo creó Pato. Pato: *«esto es un proyecto nuevo, que entra en Metodo_cantu / Y lo quiero trabajar aqui en esta cuenta»*. Su galería irá en un repo aparte, sin cruzarse con la de mate. Hilo: «Planear las lecciones de Español PAA». |
+| `metodo-cantu-calculo` | Asesorías UANL: Cálculo diferencial (Línea I) | `cuentachris` | activo | 2026-11-26 | Repo nuevo de Chris. Lo toma `cuentachris` al crear la Línea I. Chris (26-nov): *«vamos a hacer dos lineas nuevas y pausar la linea H»*. |
+| `metodo-cantu-geometria-analitica` | Asesorías UANL: Geometría analítica (Línea J) | `cuentachris` | activo | 2026-11-26 | Repo nuevo de Chris. Lo toma `cuentachris` al crear la Línea J. Mismas palabras de Chris. |
 | `aiw-console` (`context/`) | Contexto compartido | las dos | compartido | 2026-11-24 | Solo registro, relevos y buzón (ver abajo). |
 | `aiw-console` (código de la consola) | Project Console | — | libre, en pausa | 2026-11-24 | Congelado (Pausado_Console_Cabina), como Studio. |
 

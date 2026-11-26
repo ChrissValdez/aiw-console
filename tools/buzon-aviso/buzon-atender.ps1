@@ -1,4 +1,4 @@
-<#
+﻿<#
   buzon-atender.ps1 — atiende al momento los avisos del buzón con Claude Code de la cuenta que los recibe.
 
   Lo lanza buzon-aviso.ps1 cuando hay avisos en la cola (%LOCALAPPDATA%\buzon-aviso\cola.txt). Corre uno a la vez

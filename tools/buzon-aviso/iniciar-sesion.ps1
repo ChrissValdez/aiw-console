@@ -1,4 +1,4 @@
-<#
+﻿<#
   iniciar-sesion.ps1 — inicia sesión UNA vez en Claude Code con una cuenta, en su propia carpeta.
   Así, en la misma PC, el aviso del buzón puede abrir Claude Code como Cuenta Pato o como Cuenta Chris sin mezclar.
 

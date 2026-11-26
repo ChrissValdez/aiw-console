@@ -171,6 +171,7 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
   - la liga directa y la ruta completa de cada fichero;
   - cuántas preguntas hay;
   - en qué página.
+- **Los archivos se entregan adjuntos, nunca solo como liga (26-nov).** Un PDF, un XML o cualquier fichero que el operador deba abrir se copia a la carpeta del proyecto (`/mnt/project-files/`) y se adjunta en el mensaje. La liga al repo puede ir además, pero no sola: las ligas de GitHub no le abren. Palabras del operador (Chris, 2026-11-26): *«traeme los pdfs, no los logro abrir con ese link no es la primera vez que me pasa guardalo como regla para todos los proyectos»*.
 
 **Cómo medir y escribir:**
 - **La hora se mide con `date`**, nunca se adivina, ni en mensajes, ni en commits, ni en ficheros.

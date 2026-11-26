@@ -8,8 +8,10 @@
     3. por cada aviso que no haya avisado antes en este aparato, muestra una notificación de Windows
        que dice para qué cuenta es y su tema. Al hacer clic se abre el aviso en GitHub.
 
-  No mueve avisos a leidos/ ni escribe nada en el repo: eso lo sigue haciendo la cuenta que lo lee
-  (mensajes/README.md). Lo ya avisado se guarda en %LOCALAPPDATA%\buzon-aviso\avisados.txt.
+  Este script no mueve avisos a leidos/ ni escribe nada en el repo. Si se instaló con -Atender, además pone el aviso
+  en una cola y lanza buzon-atender.ps1, que abre Claude Code con la cuenta que lo recibe para que lo atienda
+  (y esa sesión sí lo mueve a leidos/, como dice mensajes/README.md).
+  Lo ya avisado se guarda en %LOCALAPPDATA%\buzon-aviso\avisados.txt; así cada aviso se avisa y se atiende una sola vez.
 
   Debe correr con Windows PowerShell 5.1 (powershell.exe), no con pwsh 7: las notificaciones usan WinRT.
 #>
@@ -33,6 +35,11 @@ $Avisados  = Join-Path $Estado 'avisados.txt'
 $Bitacora  = Join-Path $Estado 'bitacora.txt'
 $Nombres   = @{ cuentapato = 'Cuenta Pato'; cuentachris = 'Cuenta Chris' }
 $AppId     = '{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}\WindowsPowerShell\v1.0\powershell.exe'
+$Cola      = Join-Path $Estado 'cola.txt'
+$Candado   = Join-Path $Estado 'atender.lock'
+$Config    = $null
+$rutaConfig = Join-Path $Estado 'config.json'
+if (Test-Path $rutaConfig) { $Config = Get-Content -Path $rutaConfig -Raw -Encoding UTF8 | ConvertFrom-Json }
 
 New-Item -ItemType Directory -Force -Path $Estado | Out-Null
 
@@ -108,8 +115,31 @@ try {
     $tema = $n.Fichero -replace '^\d{4}-\d{2}-\d{2}-\d{4}-[a-z]+-[a-z]+-', '' -replace '\.md$', '' -replace '-', ' '
     $primera = & git -C $Repo show "${Ref}:$Carpeta/$($n.Fichero)" 2>$null | Select-Object -First 1
     if ($primera -match '^#\s+(.+)$') { $tema = $Matches[1] }
-    Notificar ("Buzón: mensaje para " + $Nombres[$n.A]) ("De " + $Nombres[$n.De] + ": " + $tema) ($Web + $n.Fichero)
+    $atiende = $Config -and $Config.atender -and $Config.cuentas.PSObject.Properties.Name -contains $n.A
+    $sufijo = ''
+    if ($atiende) { $sufijo = ' Claude de esa cuenta ya lo está atendiendo.' }
+    Notificar ("Buzón: mensaje para " + $Nombres[$n.A]) ("De " + $Nombres[$n.De] + ": " + $tema + '.' + $sufijo) ($Web + $n.Fichero)
     Anotar "Avisado: $($n.Fichero)"
+    if ($atiende) {
+      Add-Content -Path $Cola -Value ($n.Fichero + '|' + $n.A) -Encoding UTF8
+      Anotar "En cola para atender: $($n.Fichero)"
+    }
+  }
+
+  # 4. Si hay avisos en cola y no hay quien los atienda ya, se lanza el que atiende (buzon-atender.ps1), aparte,
+  #    para que esta revisión de cada minuto no se quede esperando.
+  if ((Test-Path $Cola) -and (Get-Content -Path $Cola -Encoding UTF8 | Where-Object { $_ })) {
+    $vivo = $false
+    if (Test-Path $Candado) {
+      $pidViejo = (Get-Content -Path $Candado -Encoding UTF8 | Select-Object -First 1)
+      if ($pidViejo -and (Get-Process -Id ([int]$pidViejo) -ErrorAction SilentlyContinue)) { $vivo = $true }
+    }
+    if (-not $vivo) {
+      Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList @(
+        '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-WindowStyle', 'Hidden',
+        '-File', ('"' + (Join-Path $PSScriptRoot 'buzon-atender.ps1') + '"'))
+      Anotar 'Lancé al que atiende la cola.'
+    }
   }
 } catch {
   Anotar ('Error: ' + $_.Exception.Message)

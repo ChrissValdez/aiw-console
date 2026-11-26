@@ -1,4 +1,4 @@
-<#
+﻿<#
   instalar.ps1 — enciende el aviso del buzón en este aparato.
   Crea la tarea «Buzon aviso» en el Programador de tareas de Windows: corre cada minuto mientras la
   sesión de Windows está abierta. Muestra al final una notificación de prueba.

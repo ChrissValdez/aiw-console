@@ -1,4 +1,4 @@
-<#
+﻿<#
   buzon-aviso.ps1 — avisa en Windows cuando llega un aviso nuevo al buzón entre cuentas.
 
   Cero tokens: no llama a Claude. Cada vez que corre (el Programador de tareas lo corre cada minuto):

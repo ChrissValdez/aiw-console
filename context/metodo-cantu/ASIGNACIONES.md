@@ -27,6 +27,10 @@ Chris: *«cada una decide sobre aparatos disponibles»*. La columna de arriba es
 
 **Una línea por repo.** Este fichero es la única fuente de quién tiene qué. Si no está aquí, no es de nadie.
 
+**Las líneas de trabajo** (Línea A, Dashboard; Línea B, Lecciones mate; …) y su estado viven al lado, en `LINEAS.md`. Este
+registro y aquel no pueden contradecirse: una línea activa tiene sus repos activos con la misma cuenta, y todo cambio que toque
+a los dos va en un solo commit. Antes de commitear aquí, `node context/metodo-cantu/lineas.mjs --revisar` (D-088).
+
 | Repo | Área | Dueño | Estado | Desde | Nota |
 |---|---|---|---|---|---|
 | `cantu-lessons` | Revisión de lecciones | `cuentachris` | activo, temporal | 2026-11-26 | Lo tomó `cuentachris` (04:41 UTC) para la galería como artefacto, después de que `cuentapato` lo soltara; **al terminar regresa a `cuentapato`**. Va junto con `cantu-revisiones`. Chris, en su hilo, eligió «Pedir a Pato que las suelte» (luego se toman con su sí) y había pedido: *«Te paso la galería como artefacto»*. Relevo: `context/handoffs/cantu-lessons.md`. Avisos: `mensajes/leidos/2026-11-26-0439-…-solte-lecciones-y-galeria.md`. |

@@ -22,3 +22,17 @@
 
 Todo artefacto nuevo compartido como Editor, todo subido a GitHub, los PR en el aviso de regreso y este relevo al día
 (`mensajes/2026-11-26-0430-cuentapato-cuentachris-accesos-y-regreso.md`).
+
+## Regreso a `cuentapato` (lo escribió `cuentachris`, 2026-11-26 08:15 UTC)
+
+**Chris dio el visto bueno general a la galería y pidió que siga en `cuentapato`.** `cuentachris` suelta este repo y `cantu-lessons`.
+
+- **Lo leído primero:** `prototipos/galeria-artefacto/galeria/TRASPASO.md` (dónde está todo, cómo está hoy, decisiones,
+  pendientes y pruebas) y luego `galeria/METODO.md`.
+- **Código:** rama `claude/project-thread-exqlbz`, **PR #3 en borrador**: https://github.com/ChrissValdez/cantu-revisiones/pull/3
+  (base: la rama del PR #2, que sigue abierto). Todo está en GitHub; nada se quedó solo en disco. Último commit del 26-nov: `76f8f6c1` (v28).
+- **Artefacto:** https://claude.ai/artifact/8tPUtu4Zia4N5t7PpnL7qZ, versión 28. Es de Cuenta Chris; Chris lo comparte contigo
+  como **Editor** desde Compartir. La base del artefacto guarda votos, comentarios y estados de lección por persona.
+- **La ronda CR-LX3** sigue abierta en la galería local; la nube no la tocó.
+- **Pendiente:** ver «Pendiente» en `TRASPASO.md` (votos de sistema con historial, galería completa de Aritmética, traer las
+  marcas de lección a la laptop).

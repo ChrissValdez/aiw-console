@@ -1,5 +1,9 @@
 # HANDOFF — hilo `cantu-lessons` (LECCIONES)
 
+> **2026-11-26 08:15 UTC · regreso a `cuentapato`.** `cuentachris` tuvo este repo prestado (desde las 04:41 UTC) para la galería como
+> artefacto y **no le hizo ningún cambio**. Lo suelta junto con `cantu-revisiones`; el relevo de la galería está en
+> `context/handoffs/cantu-revisiones.md` («Regreso a `cuentapato`»). Lo de abajo sigue igual.
+
 > **Quinto relevo de este hilo.** Lo escribió la cabina el **2026-10-31 a las 00:05** en la PC (`DESKTOP-525K0IS`), antes
 > de que el operador compactara la conversación de la cabina (la que abrió el 2026-10-29). Sustituye al cuarto relevo
 > (2026-10-29, con añadidos del 30; está en git, `aiw-console` `f118fed`, con la tabla de lo que salió del relevo de

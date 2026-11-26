@@ -3741,3 +3741,24 @@ del registro; los repos de una cuenta sin tokens esperan, y cada cuenta deja su 
 **Lo que esta decisión NO hace:** no saca a Studio de la pausa (D-079) y no aprueba el `git worktree prune`.
 
 **Criterio de borrado:** se reabre si dos cuentas chocan en un mismo repo, si el buzón no se lee, o si una cuenta deja de existir.
+
+## D-088 — MÉTODO CANTÚ: LAS LÍNEAS DE TRABAJO Y SUS ESTADOS EN UN SOLO REGISTRO
+
+**Fecha:** 2026-11-26 · **Proyecto:** Método Cantú · **Origen:** un hilo del Project «Metodo_Cantu» de cuentachris. **Estado:
+propuesta, en PR. Vale cuando Chris la apruebe.**
+
+Lo pidió Chris el 2026-11-26: *«hay que pulir el sistema de estados para que jale al 100»*.
+
+### La regla
+
+- **`context/metodo-cantu/LINEAS.md` es la única fuente** de qué líneas hay (letra y nombre), qué cuenta lleva cada una y en qué
+  estado está: activa, pausada, archivada o libre (en traspaso), con «Regresa a» para los préstamos.
+- **La cuenta se escribe fija** (`cuentachris`, `cuentapato`); «Aquí» y «la otra cuenta» los arma cada lector con
+  `node context/metodo-cantu/lineas.mjs --cuenta <la suya>`.
+- **No contradice a `ASIGNACIONES.md`:** una línea activa tiene sus repos activos con su cuenta; dos cuentas nunca tienen activas
+  líneas que comparten repo; un cambio que toca a los dos registros va en un solo commit, revisado con `lineas.mjs --revisar`.
+- **Las instrucciones de cada Project** guardan el formato del cierre, pero la lista de líneas la leen de este fichero.
+
+**Lo que esta decisión NO hace:** no cambia quién tiene ningún repo, ni saca a Studio de la pausa (D-079).
+
+**Criterio de borrado:** se reabre si el cierre de una cuenta vuelve a mostrar un estado que no está en `LINEAS.md`.

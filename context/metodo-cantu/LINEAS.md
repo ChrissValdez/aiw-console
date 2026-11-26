@@ -27,11 +27,11 @@ lee. El script de abajo lo traduce.
 | Línea | Nombre | Cuenta | Estado | Regresa a | Repos | Desde | Nota |
 |---|---|---|---|---|---|---|---|
 | A | Dashboard | `cuentachris` | pausada | — | `metodo-cantu-dashboard` | 2026-11-26 | Reparto de D-087. Pausada por Chris el 26-nov (*«vamos a pausar el dashboard (no archivado, pausado, sigue vivo…)»*) para avanzar otras líneas. Quedó en la v41 (MAESTRO-16 y PIEZAS-27), sin votos pendientes; se retoma con su relevo. El repo sigue de `cuentachris`. |
-| B | Lecciones mate | — | libre | `cuentapato` | `cantu-lessons`, `cantu-revisiones` | 2026-11-26 | Préstamo terminado: `cuentachris` la soltó a las 08:15 UTC con la galería como artefacto lista (v28, PR #3 de `cantu-revisiones`). La toma `cuentapato` y borra «Regresa a»; en ese mismo commit reanuda la Línea F. |
+| B | Lecciones mate | `cuentapato` | activa | — | `cantu-lessons`, `cantu-revisiones` | 2026-11-26 | Regresó de `cuentachris` (08:15 UTC) con la galería como artefacto (v28, PR #3 de `cantu-revisiones`); la tomó `cuentapato` a las 08:20 UTC. Pato (26-nov): *«Toma la Línea B y sus dos repos, y reanuda la Línea F, como dice el aviso»*. |
 | C | Lecciones español | `cuentapato` | activa | — | `cantu-espanol` | 2026-11-24 | Repo nuevo que creó Pato. Su galería irá aparte de la de mate. |
 | D | Landing | `cuentapato` | activa | — | `metodo-cantu-landing` | 2026-11-24 | Antes de escribir, leer `context/cabinas/landing/MEMORIA-PC-CHRIS.md`. |
 | E | Quizzes | `cuentapato` | activa | — | `cantu-quizzes-latex` | 2026-11-24 | La soltó `cuentachris` el 24-nov. |
-| F | Revisiones | `cuentapato` | pausada | — | `cantu-revisiones`, `cantu-lessons` | 2026-11-26 | Pausada porque sus repos están con `cuentachris` por la Línea B (la ronda CR-LX3 sigue abierta en la galería local). Se reanuda cuando regresen. |
+| F | Revisiones | `cuentapato` | activa | — | `cantu-revisiones`, `cantu-lessons` | 2026-11-26 | Reanudada a las 08:20 UTC, al regresar sus repos de la Línea B. La ronda CR-LX3 sigue abierta en la galería local. |
 | G | Studio | — | archivada | — | `cantu-studio` | 2026-11-26 | Chris la archivó el 26-nov. En `ASIGNACIONES.md` su repo sigue libre y en pausa (D-079). |
 | H | Asesorías UANL | `cuentachris` | activa | — | — | 2026-11-26 | Sin repo. Fecha en que se nombró la línea (aviso del formato de cierre, 03:19 UTC). |
 

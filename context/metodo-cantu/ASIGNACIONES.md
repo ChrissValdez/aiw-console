@@ -33,8 +33,8 @@ a los dos va en un solo commit. Antes de commitear aquí, `node context/metodo-c
 
 | Repo | Área | Dueño | Estado | Desde | Nota |
 |---|---|---|---|---|---|
-| `cantu-lessons` | Revisión de lecciones | — | libre | 2026-11-26 | `cuentachris` lo soltó (2026-11-26 08:15 UTC) al terminar la galería como artefacto; **regresa a `cuentapato`**, que lo toma. Va junto con `cantu-revisiones`. Chris: *«si cierralo y pasale el mensaje a cuenta pato para seguir alla»*. Relevo: `context/handoffs/cantu-lessons.md`. Aviso: `mensajes/2026-11-26-0815-cuentachris-cuentapato-regreso-galeria.md`. |
-| `cantu-revisiones` | Revisión de lecciones (galería) | — | libre | 2026-11-26 | `cuentachris` lo soltó (2026-11-26 08:15 UTC) al terminar la galería como artefacto; **regresa a `cuentapato`**, que lo toma. Va junto con `cantu-lessons`. Chris: *«si cierralo y pasale el mensaje a cuenta pato para seguir alla»*. Relevo: `context/handoffs/cantu-revisiones.md`. Aviso: `mensajes/2026-11-26-0815-cuentachris-cuentapato-regreso-galeria.md`. |
+| `cantu-lessons` | Revisión de lecciones | `cuentapato` | activo | 2026-11-26 | Regresó de `cuentachris` (préstamo de la galería como artefacto, 04:41–08:15 UTC); lo tomó `cuentapato` a las 08:20 UTC. Va junto con `cantu-revisiones`. Pato (26-nov): *«Toma la Línea B y sus dos repos, y reanuda la Línea F, como dice el aviso»*. Relevo: `context/handoffs/cantu-lessons.md`. |
+| `cantu-revisiones` | Revisión de lecciones (galería) | `cuentapato` | activo | 2026-11-26 | Regresó de `cuentachris` (préstamo de la galería como artefacto, 04:41–08:15 UTC); lo tomó `cuentapato` a las 08:20 UTC. Va junto con `cantu-lessons`. Pato (26-nov): *«Toma la Línea B y sus dos repos, y reanuda la Línea F, como dice el aviso»*. Relevo: `context/handoffs/cantu-revisiones.md`. |
 | `metodo-cantu-landing` | LANDING | `cuentapato` | activo | 2026-11-24 | Mismo requisito. |
 | `metodo-cantu-dashboard` | DASHBOARD | `cuentachris` | activo | 2026-11-24 | |
 | `cantu-studio` | Studio | — | libre | 2026-11-24 | En pausa (D-079). |

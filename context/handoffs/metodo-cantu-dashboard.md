@@ -1780,3 +1780,22 @@ Lo que dijeron los talleres:
 - **La mudanza a la nube:** Projects ya está en la Cuenta Chris. Receta: `context/metodo-cantu/MIGRAR-A-PROJECTS.md`, sección «La Cuenta Chris, el 2026-11-25 (v1)» (ac3acb4): tres repos (dashboard, aiw-console y cantu-lessons solo lectura). Falta: Chris copia `settings.local.json` de la laptop y escribe `/send-to-project Metodo_Cantu` en el chat del coordinador local.
 - **Lo que sigue (para el coordinador en la nube):** esperar a que Chris escoja la final de §P o pida otra cosa. La próxima ronda empieza en el puerto **8925**.
 - **Pasados a git antes de mudarse** (lo que solo vivía en el disco): el oficio de la cabina suelta, al final de `context/cabinas/dashboard/CLAUDE.md`; y `MUDANZA-PC.md`, copiado a `context/metodo-cantu/MUDANZA-PC-2026-11-24.md`. Los originales siguen en el disco (`_scratch/coordinador/de-mc-dashboard/` y la raíz de `AIW_Workspace`); borrarlos pide su sí.
+
+## 2026-11-26, 03:19 UTC · TAMANO-1 y TAMANO-2: botones de tamaño y «votar» abajo; v39 y v40 publicadas (ya en la nube)
+
+**Quién:** el hilo del dashboard en el Project de la Cuenta Chris (claude.ai/code). Sin taller: solo el panel de prueba.
+
+- **Lo que pidió Chris:** en la ventana de app no sirven Ctrl + ni Ctrl con la rueda; quería A− y A+ en la barra y que «votar»
+  dejara de estorbar a media altura. Escogió la opción C: *«vamos a intentar en tu recomendacion que no me lo imagino si nverlo»*.
+  Luego: *«falta a la izquirda de esos dos botones (dentro del mismo circulo que encuadra ambos botones) un boton de reset tamaño»*.
+- **TAMANO-1** (1242c901, ae22a12c): en `prototipo/panel/panel.js` y `panel.css`, A− y A+ en la barra azul (zoom de la página de
+  80 a 160 %, recordado en el navegador; no sale abajo de 700 px) y «votar» abajo a la derecha, justo encima de «Tu coach» (sin
+  coach, en su lugar; con el coach abierto, a su izquierda). Publicada la **v39** (1795658100-04eb).
+- **TAMANO-2** (33354694): el botón de tamaño normal (100 %), a la izquierda de A−, en la misma cápsula. Publicada la **v40**
+  (1795662163-baf5). Notas: `prototipo/panel/NOTAS-tamano1.md`.
+- **Sin fusionar:** los dos van en la rama `claude/project-thread-pjoi8q` del dashboard, PR 1 en borrador
+  (https://github.com/ChrissValdez/metodo-cantu-dashboard/pull/1). `main` sigue en b85e2a29 (v38). `vigente.json` no cambió.
+- **Borrado con su sí:** `AIW_Workspace/MUDANZA-PC.md` de PC-Chris (idéntico a `context/metodo-cantu/MUDANZA-PC-2026-11-24.md`).
+  `_scratch/` ya no existía. Chris: todo el trabajo va dentro de un repo; la carpeta temporal, dentro del repo del dashboard.
+- **Lo que espera a Chris:** ver la v40 y dar su visto bueno a los botones y al PR 1; escoger la final de §P de MAESTRO-15.
+  La próxima ronda empieza en el puerto **8925**.

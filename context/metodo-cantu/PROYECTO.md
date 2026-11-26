@@ -23,6 +23,9 @@
 >
 > La revisó cuentachris (de acuerdo con el reparto, cuatro objeciones ya incorporadas). La decisión es **D-087**, que enmienda D-086.
 
+> **v3 · 2026-11-26, 03:19 UTC (`date -u`). Propuesta en PR.** El hilo del dashboard de la Cuenta Chris, en la nube, puso al día §5 (decía la
+> v33), con el sí de Chris: *«la respuesta es si»*.
+
 ## 1. Qué es
 
 Método Cantú es el negocio de preparación para el examen de admisión (PAA). **Desde el 24-nov lo lleva entero el coordinador**: los quizzes, las lecciones, las revisiones, el dashboard, la landing y Studio, porque todo se conecta. Hasta ese día lo llevaban cinco hilos sueltos, cada uno con su repo y su cabina. Cómo se reparte ahora está en §3.1.
@@ -218,15 +221,19 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 - Cerca de la renovación, la prioridad es la prisa, no el ahorro.
 - Hay que ahorrar tokens sin ir más lento: menos pasos, carriles cortos, tope de tres a la vez.
 
-## 5. Dónde se quedó cada área (2026-11-24, 09:21)
+## 5. Dónde se quedó cada área (2026-11-26, 03:19 UTC)
 
-| Área | Estado | Por dónde seguir |
-|---|---|---|
-| DASHBOARD | MAESTRO-10 (9234492e) y PIEZAS-25 (23cab277) integrados. Publicado: la **v33**. Espera los votos de MAESTRO-10. | El último bloque de su relevo; luego su cabina anidada (§6). |
-| LECCIONES | **Pasa a cuentapato (D-087).** La trabaja la cabina de LECCIONES de la Cuenta Pato (CR-LX3·07, c05f1bbc, tres vistas de la galería CR-LX3 que esperan su voto). La cabina suelta de PC-Chris, CL_Cabina_PC_Chris, no se mueve desde el 20-nov y le falta el cierre. Su relevo en `handoffs/` es del 19-nov. | El cierre de §6 en PC-Chris; luego, el hilo de cuentapato. `node tools/cabina/pendientes.mjs` no sirve tras vaciar `_scratch`. |
-| LANDING | **Pasa a cuentapato (D-087).** Cabina suelta MC-LandingPage (Cuenta Chris, PC-Chris), parada desde el 23-nov a las 22:13; le falta el cierre. Vigente: BB. El título de la sección 2 espera uno nuevo (`veredictos/2026-11-23-seccion-2-tono.md`). | El cierre de §6 en PC-Chris; luego, el hilo de cuentapato. |
-| Quizzes | **Pasa a cuentapato** (24-nov, 15:37 UTC, sí de Chris). CQL_Cabina de PC-Chris hizo su cierre (`0f5b7c2`, `3daff28`) y está archivada. Encargos emitidos (`cb9f952`): PROP-QUIZ, ESENCIAL-ALG y NUEVAS-FG. La QA de BUILD-FINAL-3 sigue esperando a Chris. | El relevo `context/handoffs/cantu-quizzes-latex.md`; luego los talleres, en ese orden, y BUILD-FINAL-4. |
-| Studio | **En pausa** (D-079). | No se toca sin su palabra. |
+| Área | Cuenta | Estado | Por dónde seguir |
+|---|---|---|---|
+| DASHBOARD | cuentachris | Publicada la **v40** (https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq): alumno PIEZAS-27 y maestro MAESTRO-15, más TAMANO-1 y TAMANO-2 (A−, A+ y «tamaño normal» en la barra azul; «votar» abajo, encima de «Tu coach»). TAMANO-1 y 2 están en el PR 1 del dashboard, **sin fusionar** (rama `claude/project-thread-pjoi8q`). Espera a Chris: su visto bueno de los botones y el PR, y la final de **§P** de MAESTRO-15 (la 1 o la 2). | El último bloque de su relevo. La próxima ronda empieza en el puerto **8925**. |
+| LECCIONES y revisiones | cuentapato | Las lleva su hilo fijo «Revisión de lecciones» (D-087). El cierre de la cabina suelta de PC-Chris se hizo el 24-nov (`43df531`; ver `ASIGNACIONES.md`). `cr-fig-04` está en GitHub como rama de respaldo y la decide cuentapato. | Su relevo, `context/handoffs/cantu-lessons.md`. |
+| LANDING | cuentapato | La lleva su hilo fijo «Landing» (D-087). Cierre de la cabina suelta hecho el 24-nov (`9ba9d12`). | Su relevo, `context/handoffs/metodo-cantu-landing.md`. |
+| Quizzes | cuentapato | Desde el 24-nov, 15:37 UTC (sí de Chris). | Su relevo, `context/handoffs/cantu-quizzes-latex.md`. |
+| Español PAA | cuentapato | Repo nuevo `cantu-espanol`; hilo «Planear las lecciones de Español PAA». | Lo que diga cuentapato por el buzón. |
+| Studio | — | **En pausa** (D-079). | No se toca sin su palabra. |
+
+**Las filas de cuentapato** solo dicen quién lleva el área: su estado vive en su relevo y no se midió aquí (cuentachris no
+escribe en esos repos).
 
 Esta tabla es una **foto fechada**. El coordinador la vuelve a medir al abrir, leyendo cada relevo, y no la toma por cierta.
 

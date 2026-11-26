@@ -33,7 +33,9 @@ lee. El script de abajo lo traduce.
 | E | Quizzes | `cuentapato` | activa | — | `cantu-quizzes-latex` | 2026-11-24 | La soltó `cuentachris` el 24-nov. |
 | F | Revisiones | `cuentapato` | activa | — | `cantu-revisiones`, `cantu-lessons` | 2026-11-26 | Reanudada a las 08:20 UTC, al regresar sus repos de la Línea B. La ronda CR-LX3 sigue abierta en la galería local. |
 | G | Studio | — | archivada | — | `cantu-studio` | 2026-11-26 | Chris la archivó el 26-nov. En `ASIGNACIONES.md` su repo sigue libre y en pausa (D-079). |
-| H | Asesorías UANL | `cuentachris` | activa | — | — | 2026-11-26 | Sin repo. Fecha en que se nombró la línea (aviso del formato de cierre, 03:19 UTC). |
+| H | Asesorías UANL | `cuentachris` | pausada | — | — | 2026-11-26 | Sin repo. Se nombró a las 03:19 UTC (aviso del formato de cierre). Pausada a las 10:28 UTC: el trabajo de asesorías sigue en las Líneas I y J, una por materia. Chris (26-nov): *«vamos a hacer dos lineas nuevas y pausar la linea H»*. |
+| I | Cálculo diferencial | `cuentachris` | activa | — | `metodo-cantu-calculo` | 2026-11-26 | Línea nueva para preparar las asesorías UANL de Cálculo diferencial (Plan 440). Referencias ordenadas en el PR #1 de su repo. Chris (26-nov): *«vamos a hacer dos lineas nuevas … la linea de gemoetria analitica Y la linea de caluclo»*. |
+| J | Geometría analítica | `cuentachris` | activa | — | `metodo-cantu-geometria-analitica` | 2026-11-26 | Línea nueva para preparar las asesorías UANL de Geometría analítica (Plan 440). Repo nuevo con el programa analítico y un solucionario de Lehmann. Mismas palabras de Chris que la Línea I. |
 
 ### Los estados
 

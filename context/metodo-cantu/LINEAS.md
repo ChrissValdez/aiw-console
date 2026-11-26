@@ -36,6 +36,7 @@ lee. El script de abajo lo traduce.
 | H | Asesorías UANL | `cuentachris` | pausada | — | — | 2026-11-26 | Sin repo. Se nombró a las 03:19 UTC (aviso del formato de cierre). Pausada a las 10:28 UTC: el trabajo de asesorías sigue en las Líneas I y J, una por materia. Chris (26-nov): *«vamos a hacer dos lineas nuevas y pausar la linea H»*. |
 | I | Cálculo diferencial | `cuentachris` | activa | — | `metodo-cantu-calculo` | 2026-11-26 | Línea nueva para preparar las asesorías UANL de Cálculo diferencial (Plan 440). Referencias ordenadas en el PR #1 de su repo. Chris (26-nov): *«vamos a hacer dos lineas nuevas … la linea de gemoetria analitica Y la linea de caluclo»*. |
 | J | Geometría analítica | `cuentachris` | activa | — | `metodo-cantu-geometria-analitica` | 2026-11-26 | Línea nueva para preparar las asesorías UANL de Geometría analítica (Plan 440). Repo nuevo con el programa analítico y un solucionario de Lehmann. Mismas palabras de Chris que la Línea I. |
+| K | Redes sociales | `cuentachris` | activa | — | `metodo-cantu-redes` | 2026-11-26 | Línea nueva para las redes sociales de Método Cantú; la investigación de estrategia está en curso (hilo «Definir estrategia de redes para Método Cantú»). Repo nuevo de Chris, con logo y flyer; Pato ya tiene acceso. Chris (26-nov): *«has una linea formal de Redes sociales de Método Cantú … porque lo vamos a trabajar e investigar a fondo ya hasta tengo repo»*. |
 
 ### Los estados
 

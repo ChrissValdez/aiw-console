@@ -1799,3 +1799,27 @@ Lo que dijeron los talleres:
   `_scratch/` ya no existía. Chris: todo el trabajo va dentro de un repo; la carpeta temporal, dentro del repo del dashboard.
 - **Lo que espera a Chris:** ver la v40 y dar su visto bueno a los botones y al PR 1; escoger la final de §P de MAESTRO-15.
   La próxima ronda empieza en el puerto **8925**.
+
+## 2026-11-26, 05:20 UTC · MAESTRO-15 votada; MAESTRO-16 integrada; v41 publicada. LÍNEA A PAUSADA
+
+**Quién:** el hilo del dashboard en el Project de la Cuenta Chris (claude.ai/code).
+
+- **Veredicto MAESTRO-15** (`veredictos/2026-11-26-maestro-15.md`): §P 1 ✗ · 2 ✓, sin comentario. Votó en la liga publicada: los
+  votos de la liga viven en **la base del Artifact** (colección `votos`, un documento por persona, `rondas.<ronda>`), no en
+  `origin/votos` (esa rama solo la llena el servidor local del repo). Se leen con `ArtifactData list` sobre la liga.
+- **MAESTRO-16** (encargo, ronda y `vigente.json` en el PR 2 del dashboard, fusionado: b07fa27a): §P fija en la 2, sin el
+  componente; las barras salieron con su código y su CSS. Sin taller aparte. Guardas sin fallas; `mirar.mjs` 132 vistas sin fallas;
+  igual a MAESTRO-15 con `?s10=2` (detalle en `prototipo/maestro-16/NOTAS.md`). `mirar.mjs` ya corre en la nube con
+  `MIRAR_RENDER` (una carpeta con `puppeteer-core`) y `MIRAR_CHROME` (`/opt/pw-browsers/chromium-1243/chrome-linux64/chrome`).
+- **Publicado:** la **v41** en https://claude.ai/artifact/JLDqDNMqEVUPe1X2aMMhTq (1795669999-5235). `vigente.json`: alumno
+  PIEZAS-27, maestro MAESTRO-16. **El maestro ya no tiene ninguna sección por votar.**
+- **Fusionados:** PR 1 (TAMANO-1 y 2, c0b0eb60) y PR 2 (MAESTRO-16, b07fa27a) del dashboard; PR 4 de `aiw-console` (§5 de
+  `PROYECTO.md`, fde4d62).
+- **Cómo se publica desde la nube** (lo aprendido): `empaquetar-unido.mjs <temporal>/pub --vendor`; publicar `index.html` con
+  `root` = esa carpeta y en `files` solo lo que cambió (el resto se conserva). Antes, `Artifact read` con `paths` de cada archivo
+  que se va a reemplazar, o la publicación se rechaza.
+- **LÍNEA A PAUSADA** por Chris el 26-nov: *«vamos a pausar el dashboard (no archivado, pausado, sigue vivo, solo que de momento lo
+  quiero pausar en l oque avanzo otros hilos)»*. `LINEAS.md` (e52d131). El repo sigue de `cuentachris`.
+- **Para retomarla:** no hay votos ni rondas pendientes. La próxima ronda (del maestro o del alumno) la propone el hilo con lo que
+  Chris diga, y empieza en el puerto **8925**. Lo que el crítico dejó sin tocar en rondas anteriores sigue anotado en los bloques
+  de MAESTRO-11 en adelante.

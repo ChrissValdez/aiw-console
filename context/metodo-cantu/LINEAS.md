@@ -26,7 +26,7 @@ lee. El script de abajo lo traduce.
 
 | Línea | Nombre | Cuenta | Estado | Regresa a | Repos | Desde | Nota |
 |---|---|---|---|---|---|---|---|
-| A | Dashboard | `cuentachris` | activa | — | `metodo-cantu-dashboard`, `metodo-cantu-tutor` | 2026-11-27 | Reparto de D-087. Pausada por Chris el 26-nov para avanzar otras líneas; quedó en la v41 (MAESTRO-16 y PIEZAS-27). Reanudada el 27-nov (03:05 UTC): ya se trabaja en esta cuenta con el piloto de Moodle. Sus dos repos son de `cuentachris`; el del tutor entró el 27-nov y, si se abre una línea propia del tutor, se mueve ahí. |
+| A | Dashboard | `cuentachris` | activa | — | `metodo-cantu-dashboard`, `metodo-cantu-tutor` | 2026-11-27 | Reparto de D-087. Pausada por Chris el 26-nov para avanzar otras líneas; quedó en la v41 (MAESTRO-16 y PIEZAS-27). Reanudada el 27-nov (03:05 UTC): ya se trabaja en esta cuenta con el piloto de Moodle. Sus dos repos son de `cuentachris`; el del tutor entró el 27-nov y, si se abre una línea propia del tutor, se mueve ahí. Chris (27-nov): *«Si reanudala se está trabajando los estados deben de reflejar el estado de la linea»*. |
 | B | Lecciones mate | `cuentapato` | activa | — | `cantu-lessons`, `cantu-revisiones` | 2026-11-26 | Regresó de `cuentachris` (08:15 UTC) con la galería como artefacto (v28, PR #3 de `cantu-revisiones`); la tomó `cuentapato` a las 08:20 UTC. Pato (26-nov): *«Toma la Línea B y sus dos repos, y reanuda la Línea F, como dice el aviso»*. |
 | C | Lecciones español | `cuentapato` | activa | — | `cantu-espanol` | 2026-11-24 | Repo nuevo que creó Pato. Su galería irá aparte de la de mate. |
 | D | Landing | `cuentapato` | activa | — | `metodo-cantu-landing` | 2026-11-24 | Antes de escribir, leer `context/cabinas/landing/MEMORIA-PC-CHRIS.md`. |

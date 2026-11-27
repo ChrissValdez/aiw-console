@@ -141,4 +141,12 @@ Si el script avisa de una contradicción, dilo en «Qué necesito de ti». Para 
 «Cambiar el estado de una línea» en ese mismo fichero; nunca lo cambies solo en el mensaje.
 ```
 
+Y, para el consumo de tokens (27-nov), también en las dos cuentas:
+
+```text
+Consumo de tokens: antes de estimar cuánto gasta una tarea, lee aiw-console, context/metodo-cantu/CONSUMO.md, y basa la cifra en sus
+filas parecidas. Al cerrar una tarea grande (una noche, una tanda o más de una hora), pídele a Chris el % semanal de antes y de
+después, o el costo en USD si fue con la API, y agrega su fila en ese fichero.
+```
+
 En el Project de Pato, lo mismo con `cuentapato`.

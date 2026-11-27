@@ -220,7 +220,8 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 - **Prefiere crecer sin inversión** (bootstrapped).
 
 **Los tokens:**
-- El uso semanal mezcla proyectos. No se saca el costo de un trabajo del porcentaje de la cuenta.
+- El uso semanal mezcla proyectos: el % de antes y después de una tarea se anota con lo que corría a la vez.
+- **Antes de estimar cuánto gasta una tarea, se lee `context/metodo-cantu/CONSUMO.md`**, y al cerrar una tarea grande se le pide a Chris el % semanal de antes y de después para su registro (27-nov). Chris: *«no estas midiendo bien que tantos tokens va a usar una tarea … ni cerquita»*.
 - Cerca de la renovación, la prioridad es la prisa, no el ahorro.
 - Hay que ahorrar tokens sin ir más lento: menos pasos, carriles cortos, tope de tres a la vez.
 

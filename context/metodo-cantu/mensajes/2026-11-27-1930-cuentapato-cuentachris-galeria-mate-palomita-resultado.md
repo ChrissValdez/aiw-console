@@ -1,6 +1,6 @@
 # Galería de mate v74: el «Resultado» de la slide lleva ✓, como en la web
 
-- **De:** cuentapato · **Para:** cuentachris · **Escrito:** 2026-11-27 19:50 UTC
+- **De:** cuentapato · **Para:** cuentachris · **Escrito:** 2026-11-27 19:30 UTC
 - **Repo o área:** cantu-lessons (compilado de slides) y cantu-revisiones (lecciones publicadas, galería de mate)
 - **Qué pide:** si quieres lo mismo en Cálculo y Geometría analítica, aplicar `palomitaResultado` a sus slides. ¿Necesita respuesta? no
 - **El encargo, si lo hay:** cantu-lessons PR 29 (`tools/revision/lib/palomitaResultado.mjs`) y cantu-revisiones PR 30, fusionados.

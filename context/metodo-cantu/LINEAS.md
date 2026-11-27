@@ -80,7 +80,18 @@ entre repos» en `ASIGNACIONES.md`).
 
 ## Cambiar el estado de una línea
 
-**Quién aprueba:** Chris, igual que en `ASIGNACIONES.md` (pregunta 1), dicho en la sesión que hace el cambio.
+**Quién aprueba:** Chris, igual que en `ASIGNACIONES.md` (pregunta 1), dicho en la sesión que hace el cambio. Para reanudar una
+línea propia al empezar a trabajar en ella, el sí ya está dado (abajo).
+
+**El estado sigue al trabajo.** La tabla dice lo que pasa de verdad, no lo que se planeó. Chris (27-nov): *«se está trabajando los
+estados deben de reflejar el estado de la linea»*.
+- **Si se trabaja en una línea propia que dice `pausada`, se reanuda.** La sesión que hace el trabajo la pone `activa` con la fecha
+  en ese mismo hilo, a más tardar junto con el primer commit del trabajo. Que el operador pida trabajo en esa línea ya es su sí:
+  no se le pregunta otra vez.
+- **Pausar no es automático.** Una línea activa no se pausa porque nadie la tocó un rato: se pausa cuando Chris lo dice.
+- **La línea de la otra cuenta no se reanuda desde aquí** (ver abajo): si hace falta trabajar en ella, se pide por el buzón.
+- **Antes de armar el 📍 Estado**, la sesión mira si trabajó en alguna línea que la tabla no tiene `activa` en su cuenta. Si la
+  hay, la corrige antes de mandar el mensaje.
 
 **Siempre en un solo commit:** la línea de esta tabla y, si cambia algún repo, su línea de `ASIGNACIONES.md`. Así nunca queda
 un momento en que los dos registros se contradicen. Antes del commit, `node context/metodo-cantu/lineas.mjs --revisar` debe salir
@@ -88,7 +99,7 @@ sin errores.
 
 | Cambio | Lo hace | Pasos | ¿Aviso en el buzón? |
 |---|---|---|---|
-| **Pausar o reanudar** una línea propia | La cuenta que la tiene | Cambia su estado y la fecha. | No hace falta: la otra cuenta lo ve al hacer `git pull`. Sí, si le afecta algo (un repo que lee). |
+| **Pausar o reanudar** una línea propia | La cuenta que la tiene | Cambia su estado y la fecha. Reanudar, en cuanto se trabaja en ella (arriba). | No hace falta: la otra cuenta lo ve al hacer `git pull`. Sí, si le afecta algo (un repo que lee). |
 | **Pasar a la otra cuenta** | Primero la que la tiene, luego la que llega | 1. La que la tiene **suelta**: suelta sus repos (`ASIGNACIONES.md`, «Soltar un repo») y aquí pone cuenta `—` y `libre`, en el mismo commit. 2. Deja aviso nombrando el relevo. 3. La que llega **toma**: toma los repos y aquí pone su cuenta y `activa`, en el mismo commit. | **Sí**, al soltar y al tomar. |
 | **Prestar** (pasar y que regrese) | Igual que pasar | Igual que pasar, y quien toma escribe en «Regresa a» la cuenta dueña. | Sí, y otro aviso al regresarla, con la lista de regreso (accesos como Editor, todo en GitHub, enlaces de los PR). |
 | **Regresar un préstamo** | La que la tiene prestada | Suelta como arriba; la dueña la toma y borra «Regresa a». Si una línea quedó pausada por el préstamo (F), su cuenta la reanuda en ese mismo commit. | Sí. |

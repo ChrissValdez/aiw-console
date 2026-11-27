@@ -211,6 +211,7 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 - **Un mismo sistema visual.**
 - **Nada explicativo de más:** sin leyendas ni textos que expliquen la pantalla.
 - **Los estados van en verde, rojo y gris:** aprobado, sin aprobar y falta.
+- **Notas destacadas en la web de las lecciones (Pato, 27-nov):** las largas van plegadas por defecto (franja con su título y «Ver»), y **las de un renglón van abiertas y sin «Ver»**. Corta = hasta unos 90 caracteres visibles, a lo mucho una fórmula de un renglón, sin lista, tabla, imagen ni ejemplo Incorrecto/Correcto. Si el texto repite el título, va sin título. En la slide todo va desplegado. Palabras de Pato: *«las notas destacada que tienen contenido de un solo renglon no se escondan, son las largas las que no queria desplegadas por default»*. Mate: cantu-lessons `tools/revision/lib/formato-web/` (PR 22).
 - **Lo que él revisa se publica**: en una liga de Artifact o en el repo, nunca en `_scratch`.
 
 **Del negocio:**

@@ -214,6 +214,11 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 - **Notas destacadas en la web de las lecciones (Pato, 27-nov):** las largas van plegadas por defecto (franja con su título y «Ver»), y **las de un renglón van abiertas y sin «Ver»**. Corta = hasta unos 90 caracteres visibles, a lo mucho una fórmula de un renglón, sin lista, tabla, imagen ni ejemplo Incorrecto/Correcto. Si el texto repite el título, va sin título. En la slide todo va desplegado. Palabras de Pato: *«las notas destacada que tienen contenido de un solo renglon no se escondan, son las largas las que no queria desplegadas por default»*. Mate: cantu-lessons `tools/revision/lib/formato-web/` (PR 22).
 - **Lo que él revisa se publica**: en una liga de Artifact o en el repo, nunca en `_scratch`.
 
+**De los quizzes (28-nov, pedido de Cuenta Chris reenviado por Pato):**
+- **La revisión v1.6 del Simulador y del Diagnóstico la corre Cuenta Chris en su PC.** Cuenta Pato no la corre ni toca esos `.tex`: cuando llegan resultados a `main`, solo pone al día el índice y el tablero.
+- **El tablero del estado de los quizzes** es https://claude.ai/artifact/DWYMW5XrP5kHSkDJbx7myk (sale de `cantu-quizzes-latex/PAA/herramientas/indice/tablero.py`) y se republica siempre en esa misma liga.
+- **Lo vigila una tarea programada cada 3 horas** en el hilo «Publicar el estado de los quizzes»: si cambió `PAA/` en `main`, revisa el índice contra los repos vecinos, sube `de-fuera.json` si quedó viejo y republica el tablero. Avisa a Pato solo si cambia algún porcentaje.
+
 **Del negocio:**
 - **Español y Matemáticas van separados:** un diagnóstico cada uno. Solo se juntan en el simulador.
 - **Las guías de la UDEM:** solo Álgebra I y II. Una referencia nueva se aprueba antes.

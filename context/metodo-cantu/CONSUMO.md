@@ -32,6 +32,8 @@
 | 2 | 2026-11-27 | `[NO VERIFICADO]` | `[NO VERIFICADO]` | Una tarea con 10 % restante | `[NO VERIFICADO]` | «No alcanza» (más de 10 %) | 90 % → ~92-93 % | **2-3 %** | Contado por el coordinador al abrir este hilo. |
 | 3 | hasta 2026-11-27 | `cuentachris` (llave de API) | E, Quizzes | Revisión del banco v1.6 con la API: tandas 1 a 8 y parte de la 9 | Opus, high | — | USD | **~197 USD** | Unos 0.04 a 0.09 USD por pregunta según el archivo. La llave se quedó sin saldo a media tanda 9 (*«Credit balance is too low»*). |
 | 4 | 2026-11-27, 15:53-17:03 (hora de Chris) | `cuentapato` (llave de API) | E, Quizzes | Revisión v1.6, resto de la tanda 9: 13 archivos, 458 preguntas | Opus, high | — | Saldo de la consola: 181.35 → 177 USD | **22.98 USD según el script** (0.050 USD por pregunta); **~4.35 USD según la consola** | Las dos cifras no cuadran; puede ser retraso de la consola. Hay que volver a mirar la página Cost en un día. Unos 70 min en total (~9 s por pregunta). Total del banco desde el piloto, según el script: **219.98 USD**. |
+| 5 | 2026-11-27, 17:08-19:29 (hora de Chris) | `cuentapato` (suscripción) | A, Dashboard | Subida del dashboard a Moodle, etapas 1 a 4: respaldo, tutor, quiz (0.4.0) y lección (0.4.1), con `claude -p` desde la PC (`moodle/subida/correr.ps1`) | Opus (`--model opus`), high | Topes: 104 USD (6 + 8 + 50 + 40) | `[SIN ANTES]` → ~95 % | **38.79 USD equivalentes** según `claude -p` (0.74 + 2.14 + 1.97 + 25.80 + 8.14); 126 min | La etapa 1 corrió dos veces: la primera se detuvo a los 2.6 min por la regla de alumnos. La etapa 3 fue lo más pesado: 25.80 USD eq y 72 min. La etapa 4: 8.14 USD eq y 37 min. Más tres pruebas cortas del lanzador. Chris dio el 95 % a las 19:27, con la etapa 4 por cerrar. No se sabe qué más corrió esa tarde en la cuenta de Pato. A las 19:29 arrancó la etapa 5 con la suscripción y Chris la cortó en menos de un minuto, para dejarle a Pato ~3 %. |
+| 6 | 2026-11-27, 19:33-19:48 (hora de Chris) | `cuentapato` (llave de API) | A, Dashboard | Subida, etapa 5: la prueba final como alumno (19 pantallas en celular y computadora, fotos, registros del servidor) | Opus (`--model opus`), high | Tope: 12 USD | USD | **3.40 USD según `claude -p`**; 15.2 min | Más unos centavos de la prueba de la llave con Haiku. Falta mirar la página Cost de la consola, que puede ir atrasada (fila 4). |
 
 ## Cómo estimar (sale de los datos de arriba)
 
@@ -45,6 +47,9 @@
 - **Revisión v1.6 con Opus high:** unos **0.05 USD por pregunta** (0.04 a 0.09 según el archivo) y unos 9 segundos por pregunta.
 - Un archivo de 20 preguntas cuesta ~1 USD; uno de 60, ~2.5 a 3.5 USD.
 - El script da su propio total; la consola de Claude (página Cost) es la cifra que manda, pero puede ir atrasada (fila 4).
+- **Subida a Moodle con `claude -p`, Opus high (filas 5 y 6):** una etapa que programa, instala y prueba costó de 8 a 26 USD
+  (35 a 72 min). Una que solo revisa y prueba, de 2 a 3.4 USD. Los topes de las etapas 1 a 5 sumaban 116 USD y se gastaron
+  42 USD, poco más de un tercio.
 
 ### Lo que falta medir
 - Cuánto gasta un hilo normal de una hora, por línea.

@@ -216,6 +216,7 @@ Vienen de la memoria de la PC (`C:\Users\chris\.claude\projects\C--Users-chris-D
 
 **De los quizzes (28-nov, pedido de Cuenta Chris reenviado por Pato):**
 - **La revisión v1.6 del Simulador y del Diagnóstico la corre Cuenta Chris en su PC.** Cuenta Pato no la corre ni toca esos `.tex`: cuando llegan resultados a `main`, solo pone al día el índice y el tablero.
+- **Aprende Libre es referencia externa** (Pato, 28-nov): sirve para consultar el temario, el tipo de preguntas y la dificultad. **No se revisa ni se corrige.** En el índice, la página de estado y el tablero sale como «Referencia», sin columna de verificación, pero visible.
 - **El tablero del estado de los quizzes** es https://claude.ai/artifact/DWYMW5XrP5kHSkDJbx7myk (sale de `cantu-quizzes-latex/PAA/herramientas/indice/tablero.py`) y se republica siempre en esa misma liga.
 - **Lo vigila una tarea programada cada 3 horas** en el hilo «Publicar el estado de los quizzes»: si cambió `PAA/` en `main`, revisa el índice contra los repos vecinos, sube `de-fuera.json` si quedó viejo y republica el tablero. Avisa a Pato solo si cambia algún porcentaje.
 

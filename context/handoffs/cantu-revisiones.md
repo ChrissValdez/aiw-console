@@ -36,3 +36,13 @@ Todo artefacto nuevo compartido como Editor, todo subido a GitHub, los PR en el 
 - **La ronda CR-LX3** sigue abierta en la galería local; la nube no la tocó.
 - **Pendiente:** ver «Pendiente» en `TRASPASO.md` (votos de sistema con historial, galería completa de Aritmética, traer las
   marcas de lección a la laptop).
+
+## 2026-11-28 · cuentachris retoma la galería de mate (Línea B)
+
+- **v78 publicada** (03:15 UTC) en https://claude.ai/artifact/8tPUtu4Zia4N5t7PpnL7qZ: solo cambia `web.js`. Arregla el
+  comentario de Chris del 27-nov en ARI-06·S1: el paso a paso «¿Cómo se resta con decimales?» salía con los 8 pasos a la vez.
+  Las variantes redactadas copiaban los mismos `name` e `id` de los radios de la sección real; ahora cada copia lleva los
+  suyos (`aislarRadios`). Afecta a las 11 lecciones con paso a paso de radios. Recorrido de esas 11: 0 fallas.
+  cantu-revisiones PR 32 (fusionado, 908ab7d).
+- **Espera a Chris:** revisar la v77/v78; votar ALUMNO-PAA y las 55 recomendaciones; decidir si se hacen las 32 variantes
+  «Los mismos pasos que la web». Siguen abiertas la ronda CR-LX3 (galería local) y la rama `cr-fig-04`.
